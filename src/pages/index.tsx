@@ -103,7 +103,7 @@ const WeatherPlease = () => {
               It will take up to 24 hours for new data to be received.
             </Text>
             <Button>
-              Find out how to easily get your own free private key
+              Get my own free private key
             </Button>
           </div>
         }
