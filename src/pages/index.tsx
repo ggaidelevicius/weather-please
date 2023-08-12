@@ -12,13 +12,18 @@ const WeatherPlease = () => {
   const [currentHour, setCurrentHour] = useState<number>(new Date().getHours())
   const [opened, { open, close }] = useDisclosure(false)
   const [config, setConfig] = useState<ConfigProps>({
+    // api: '',
     api: '43f0866f05bae986f738a40d62beaa35',
     lat: '',
     lon: '',
   })
 
   useEffect(() => {
-    if (localStorage.config && localStorage.config.api && localStorage.config.lat && localStorage.config.lon) {
+    let storedData = null
+    if (localStorage.config) {
+      storedData = JSON.parse(localStorage.config)
+    }
+    if (storedData && storedData.api && storedData.lat && storedData.lon) {
       setConfig(JSON.parse(localStorage.config))
     } else {
       open()
@@ -97,27 +102,56 @@ const WeatherPlease = () => {
         closeOnEscape={false}
         withCloseButton={false}
       >
-        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '1.25rem', justifyContent: 'center' }}>
-          <img src="/favicon.png" alt="Weather Please logo" style={{ maxWidth: '4rem' }} />
-          <Title order={1}>Weather <span style={{ color: '#ea5e57' }}>Please</span></Title>
-        </div>
-        <Text>
-          To get started, let&apos;s set your location.
-        </Text>
-        <Text
-          color="dimmed"
-          size="sm"
-        >
-          If your browser prompts you for location permissions, please select &quot;allow&quot;.
-        </Text>
+        {!config.lat && !config.lon &&
+          <>
+            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '1.25rem', justifyContent: 'center' }}>
+              <img src="/favicon.png" alt="Weather Please logo" style={{ maxWidth: '4rem' }} />
+              <Title order={1}>Weather <span style={{ color: '#ea5e57' }}>Please</span></Title>
+            </div>
+            <Text>
+              To get started, let&apos;s set your location.
+            </Text>
+            <Text
+              color="dimmed"
+              size="sm"
+            >
+              If your browser prompts you for location permissions, please select &quot;allow&quot;.
+            </Text>
 
-        <Button
-          onClick={handleClick}
-          mt="xs"
-          fullWidth
-        >
-          Set my location
-        </Button>
+            <Button
+              onClick={handleClick}
+              mt="xs"
+              fullWidth
+            >
+              Set my location
+            </Button>
+          </>
+        }
+        {config.lat && config.lon && !config.api &&
+          <>
+            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '1.25rem', justifyContent: 'center' }}>
+              <img src="/favicon.png" alt="Weather Please logo" style={{ maxWidth: '4rem' }} />
+              <Title order={1}>Weather <span style={{ color: '#ea5e57' }}>Please</span></Title>
+            </div>
+            <Text>
+              Next, let&apos;s configure your API key.
+            </Text>
+            <Text
+              color="dimmed"
+              size="sm"
+            >
+              Click here to register for an API key.
+            </Text>
+
+            <Button
+              onClick={handleClick}
+              mt="xs"
+              fullWidth
+            >
+              Set my location
+            </Button>
+          </>
+        }
       </Modal>
     </>
   )
