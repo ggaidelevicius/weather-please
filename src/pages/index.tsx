@@ -5,6 +5,7 @@ import styles from './styles.module.css'
 
 const WeatherPlease = () => {
   const [weatherData, setWeatherData] = useState<[] | TileProps[]>([])
+  const [currentHour, setCurrentHour] = useState(new Date().getHours())
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,13 +27,16 @@ const WeatherPlease = () => {
       })
       setWeatherData(data)
     }
+    fetchData()
 
-    if (weatherData.length === 0) {
-      fetchData()
-    }
+    setInterval(() => {
+      if (new Date().getHours() !== currentHour) {
+        setCurrentHour(new Date().getHours())
+      }
+    }, 6e4)
 
     return () => { }
-  })
+  }, [currentHour])
 
   const tiles = weatherData.map((day) => <Tile key={day.day} {...day} />)
 

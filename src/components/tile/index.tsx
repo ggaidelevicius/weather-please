@@ -6,6 +6,7 @@ import { BasicWeather, WeatherDetail } from './weather'
 const Tile = (props: TileProps) => {
   const { day } = props
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
   return (
     <Card component="article" padding="lg" radius="md">
       <Title order={2} className={styles.title}>
