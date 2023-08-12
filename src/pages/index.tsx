@@ -3,9 +3,11 @@ import Tile from '@/components/tile'
 import type { TileProps } from '@/components/tile/types'
 import { Button, Modal, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
 import type { ConfigProps } from './types'
+
 
 const WeatherPlease = () => {
   const [weatherData, setWeatherData] = useState<[] | TileProps[]>([])
@@ -94,19 +96,32 @@ const WeatherPlease = () => {
     <>
       <main className={styles.main}>
         {tiles}
-        {tooManyRequests &&
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-            <Title color="white" sx={{ textAlign: 'center', textWrap: 'balance' }}>
-              Too many requests have been made using the shared API key
-            </Title>
-            <Text>
-              It will take up to 24 hours for new data to be received.
-            </Text>
-            <Button>
-              Get my own free private key
-            </Button>
-          </div>
-        }
+        <AnimatePresence>
+          {tooManyRequests &&
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center'
+              }}>
+              <Title color="white" sx={{ textAlign: 'center', textWrap: 'balance' }}>
+                Too many requests have been made using the shared API key
+              </Title>
+              <Text>
+                It will take up to 24 hours for new data to be received.
+              </Text>
+              <Button>
+                Get my own free private key
+              </Button>
+            </motion.div>
+          }
+        </AnimatePresence>
       </main>
 
       {/* <Modal
