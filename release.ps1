@@ -59,4 +59,7 @@ $updatedManifestContent | Set-Content -Path $manifestPath
 # Save the updated content back to package.json
 $updatedPackageContent | Set-Content -Path $packagePath
 
+# Copy manifest.json to the 'extension' directory
+Copy-Item -Path "manifest.json" -Destination 'extension'
+
 Write-Host "Version in manifest.json and package.json updated to: $newVersion"
