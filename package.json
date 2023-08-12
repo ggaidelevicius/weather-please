@@ -1,12 +1,13 @@
 {
   "name": "weather-please",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && move out\\_next out\\next && powershell -ExecutionPolicy Bypass -File build.ps1",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "release": "pnpm build && powershell -ExecutionPolicy Bypass -File release.ps1"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -18,11 +19,13 @@
     "@types/node": "20.4.10",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
+    "add": "^2.0.6",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.13",
     "next": "13.4.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.1",
     "typescript": "5.1.6"
   }
 }
