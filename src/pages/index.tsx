@@ -11,6 +11,7 @@ const WeatherPlease = () => {
   const [weatherData, setWeatherData] = useState<[] | TileProps[]>([])
   const [currentHour, setCurrentHour] = useState<number>(new Date().getHours())
   const [opened, { open, close }] = useDisclosure(false)
+  const [tooManyRequests, setTooManyRequests] = useState<boolean>(false)
   const [config, setConfig] = useState<ConfigProps>({
     // api: '',
     api: '43f0866f05bae986f738a40d62beaa35',
@@ -36,21 +37,25 @@ const WeatherPlease = () => {
     const fetchData = async () => {
       const req = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${config.lat}&lon=${config.lon}&exclude=minutely,alerts&units=metric&appid=${config.api}`)
       const res = await req.json()
-      const data = res.daily.slice(0, 3).map((day: any) => {
-        return (
-          {
-            day: day.dt,
-            max: day.temp.max,
-            min: day.temp.min,
-            description: day.weather[0].description,
-            icon: day.weather[0].icon,
-            humidity: day.humidity,
-            wind: day.wind_speed,
-            rain: day.pop,
-          }
-        )
-      })
-      setWeatherData(data)
+      if (res?.cod === 429) {
+        setTooManyRequests(true)
+      } else {
+        const data = res.daily.slice(0, 3).map((day: any) => {
+          return (
+            {
+              day: day.dt,
+              max: day.temp.max,
+              min: day.temp.min,
+              description: day.weather[0].description,
+              icon: day.weather[0].icon,
+              humidity: day.humidity,
+              wind: day.wind_speed,
+              rain: day.pop,
+            }
+          )
+        })
+        setWeatherData(data)
+      }
     }
 
     if (config.api && config.lat && config.lon) {
@@ -89,9 +94,22 @@ const WeatherPlease = () => {
     <>
       <main className={styles.main}>
         {tiles}
+        {tooManyRequests &&
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+            <Title color="white" sx={{ textAlign: 'center', textWrap: 'balance' }}>
+              Too many requests have been made using the shared API key
+            </Title>
+            <Text>
+              It will take up to 24 hours for new data to be received.
+            </Text>
+            <Button>
+              Find out how to easily get your own free private key
+            </Button>
+          </div>
+        }
       </main>
 
-      <Modal
+      {/* <Modal
         opened={opened}
         onClose={close}
         centered
@@ -152,7 +170,7 @@ const WeatherPlease = () => {
             </Button>
           </>
         }
-      </Modal>
+      </Modal> */}
     </>
   )
 }
