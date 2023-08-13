@@ -6,7 +6,7 @@ export interface BasicWeatherProps {
 }
 
 export interface WeatherDetailProps {
-  humidity: number
+  uv: number
   wind: number
   rain: number
 }

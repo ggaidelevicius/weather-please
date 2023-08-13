@@ -3,32 +3,28 @@ import Tile from '@/components/tile'
 import type { TileProps } from '@/components/tile/types'
 import { Button, Modal, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
 import type { ConfigProps } from './types'
-
 
 const WeatherPlease = () => {
   const [weatherData, setWeatherData] = useState<[] | TileProps[]>([])
   const [currentHour, setCurrentHour] = useState<number>(new Date().getHours())
   const [opened, { open, close }] = useDisclosure(false)
-  const [tooManyRequests, setTooManyRequests] = useState<boolean>(false)
   const [config, setConfig] = useState<ConfigProps>({
-    // api: '',
-    api: '43f0866f05bae986f738a40d62beaa35',
     lat: '',
     lon: '',
   })
 
   useEffect(() => {
-    let storedData = null
-    if (localStorage.config) {
-      storedData = JSON.parse(localStorage.config)
+    const storedData = localStorage?.config ? JSON.parse(localStorage.config) : null
+
+    if (storedData) {
+      setConfig(storedData)
     }
-    if (storedData && storedData.api && storedData.lat && storedData.lon) {
-      setConfig(JSON.parse(localStorage.config))
-    } else {
+    else {
+      console.log(storedData)
       open()
     }
     return () => { }
@@ -37,30 +33,25 @@ const WeatherPlease = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const req = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${config.lat}&lon=${config.lon}&exclude=minutely,alerts&units=metric&appid=${config.api}`)
-      const res = await req.json()
-      if (res?.cod === 429) {
-        setTooManyRequests(true)
-      } else {
-        const data = res.daily.slice(0, 3).map((day: any) => {
-          return (
-            {
-              day: day.dt,
-              max: day.temp.max,
-              min: day.temp.min,
-              description: day.weather[0].description,
-              icon: day.weather[0].icon,
-              humidity: day.humidity,
-              wind: day.wind_speed,
-              rain: day.pop,
-            }
-          )
-        })
-        setWeatherData(data)
-      }
+      let req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&forecast_days=3`)
+      let res = await req.json()
+      const data = res.daily.time.map((day: any, i: number) => {
+        return (
+          {
+            day,
+            max: res.daily.temperature_2m_max[i],
+            min: res.daily.temperature_2m_min[i],
+            description: res.daily.weathercode[i],
+            uv: res.daily.uv_index_max[i],
+            wind: res.daily.windspeed_10m_max[i],
+            rain: res.daily.precipitation_probability_max[i],
+          }
+        )
+      })
+      setWeatherData(data)
     }
 
-    if (config.api && config.lat && config.lon) {
+    if (config.lat && config.lon) {
       fetchData()
     }
 
@@ -83,48 +74,39 @@ const WeatherPlease = () => {
         })
       })
     })
+    close()
   }
 
   useEffect(() => {
-    localStorage.config = JSON.stringify(config)
+    setTimeout(() => {
+      localStorage.config = JSON.stringify(config)
+    }, 1e3)
     return () => { }
   }, [config])
 
-  const tiles = weatherData.map((day) => <Tile key={day.day} {...day} />)
+  const tiles = () => (
+    <AnimatePresence>
+      {(weatherData.map((day, i: number) => (
+        <motion.div
+          key={day.day}
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: i * .075 } }}
+          exit={{ scale: 0.95, opacity: 0 }}
+        >
+          <Tile {...day} />
+        </motion.div>
+      )))
+      }
+    </AnimatePresence>
+  )
 
   return (
     <>
       <main className={styles.main}>
-        {tiles}
-        <AnimatePresence>
-          {tooManyRequests &&
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1rem',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center'
-              }}>
-              <Title color="white" sx={{ textAlign: 'center', textWrap: 'balance' }}>
-                Too many requests have been made using the shared API key
-              </Title>
-              <Text>
-                It will take up to 24 hours for new data to be received.
-              </Text>
-              <Button>
-                Get my own free private key
-              </Button>
-            </motion.div>
-          }
-        </AnimatePresence>
+        {tiles()}
       </main>
 
-      {/* <Modal
+      <Modal
         opened={opened}
         onClose={close}
         centered
@@ -150,7 +132,6 @@ const WeatherPlease = () => {
             >
               If your browser prompts you for location permissions, please select &quot;allow&quot;.
             </Text>
-
             <Button
               onClick={handleClick}
               mt="xs"
@@ -160,32 +141,7 @@ const WeatherPlease = () => {
             </Button>
           </>
         }
-        {config.lat && config.lon && !config.api &&
-          <>
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '1.25rem', justifyContent: 'center' }}>
-              <img src="/favicon.png" alt="Weather Please logo" style={{ maxWidth: '4rem' }} />
-              <Title order={1}>Weather <span style={{ color: '#ea5e57' }}>Please</span></Title>
-            </div>
-            <Text>
-              Next, let&apos;s configure your API key.
-            </Text>
-            <Text
-              color="dimmed"
-              size="sm"
-            >
-              Click here to register for an API key.
-            </Text>
-
-            <Button
-              onClick={handleClick}
-              mt="xs"
-              fullWidth
-            >
-              Set my location
-            </Button>
-          </>
-        }
-      </Modal> */}
+      </Modal>
     </>
   )
 }

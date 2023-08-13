@@ -4,7 +4,7 @@ export interface TileProps {
   min: number
   description: string
   icon: string
-  humidity: number
   wind: number
   rain: number
+  uv: number
 }

@@ -14,12 +14,42 @@ import {
   Snow,
   Thunderstorm,
 } from '@/assets/images'
-import { IconCloudRain, IconDroplet, IconWind } from '@tabler/icons-react'
+import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
 import styles from './styles.module.css'
 import type { BasicWeatherProps, WeatherDetailProps } from './types'
 
 export const BasicWeather = (props: BasicWeatherProps) => {
   const { max, min, description, icon } = props
+  const descriptionMap = {
+    '0': 'clear sky',
+    '1': 'mainly clear',
+    '2': 'partly cloudy',
+    '3': 'overcast',
+    '45': 'fog',
+    '48': 'depositing rime fog',
+    '51': 'light drizzle',
+    '53': 'moderate drizzle',
+    '55': 'dense drizzle',
+    '56': 'light freezing drizzle',
+    '57': 'dense freezing drizzle',
+    '61': 'slight rain',
+    '63': 'moderate rain',
+    '65': 'heavy rain',
+    '66': 'light freezing rain',
+    '67': 'heavy freezing rain',
+    '71': 'slight snow fall',
+    '73': 'moderate snow fall',
+    '75': 'heavy snow fall',
+    '77': 'snow grains',
+    '80': 'slight rain showers',
+    '81': 'moderate rain showers',
+    '82': 'violent rain showers',
+    '85': 'slight snow showers',
+    '86': 'heavy snow showers',
+    '95': 'thunderstorm',
+    '96': 'thunderstorm with slight hail',
+    '99': 'thunderstorm with heavy hail',
+  }
   const iconMap = {
     '01d': ClearSky,
     '01n': ClearSky,
@@ -53,7 +83,7 @@ export const BasicWeather = (props: BasicWeatherProps) => {
           </div>
         </div>
         <div>
-          {description}
+          {descriptionMap[description as keyof typeof descriptionMap]}
         </div>
       </div>
       {icon &&
@@ -64,14 +94,14 @@ export const BasicWeather = (props: BasicWeatherProps) => {
 }
 
 export const WeatherDetail = (props: WeatherDetailProps) => {
-  const { humidity, wind, rain } = props
+  const { uv, wind, rain } = props
 
   return (
     <div className={styles.detailContainer}>
       <div className={styles.detail}>
-        <IconDroplet size='1.1rem' />
+        <IconUvIndex size='1.1rem' />
         <span>
-          {`${Math.round(humidity)}%`}
+          {`${Math.round(uv)}`}
         </span>
       </div>
       <div className={styles.detail}>
@@ -83,7 +113,7 @@ export const WeatherDetail = (props: WeatherDetailProps) => {
       <div className={styles.detail}>
         <IconCloudRain size='1.1rem' />
         <span>
-          {`${Math.round(rain * 100)}%`}
+          {`${Math.round(rain)}%`}
         </span>
       </div>
     </div>
