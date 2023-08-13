@@ -22,11 +22,13 @@ const WeatherPlease = () => {
     lat: '',
     lon: '',
     periodicLocationUpdate: false,
+    useMetric: true,
   })
   const [input, setInput] = useState<ConfigProps>({
     lat: '',
     lon: '',
     periodicLocationUpdate: false,
+    useMetric: true,
   })
 
   const compareObjects = (obj1: any, obj2: any) => {
@@ -71,7 +73,7 @@ const WeatherPlease = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&forecast_days=3`)
+        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&forecast_days=3${config.useMetric ? '' : '&temperature_unit=fahrenheit&windspeed_unit=mph'}`)
         const res = await req.json()
         const data = res.daily.time.map((day: any, i: number) => {
           return (
@@ -186,7 +188,7 @@ const WeatherPlease = () => {
           animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 1 } }}
           exit={{ scale: 0.95, opacity: 0 }}
         >
-          <Tile {...day} />
+          <Tile {...day} useMetric={config.useMetric} />
         </motion.div>
       )))
       }

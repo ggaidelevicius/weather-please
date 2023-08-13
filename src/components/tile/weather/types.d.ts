@@ -9,4 +9,5 @@ export interface WeatherDetailProps {
   uv: number
   wind: number
   rain: number
+  useMetric: boolean
 }

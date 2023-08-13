@@ -100,7 +100,7 @@ export const BasicWeather = (props: BasicWeatherProps) => {
 }
 
 export const WeatherDetail = (props: WeatherDetailProps) => {
-  const { uv, wind, rain } = props
+  const { uv, wind, rain, useMetric } = props
 
   return (
     <div className={styles.detailContainer}>
@@ -113,7 +113,7 @@ export const WeatherDetail = (props: WeatherDetailProps) => {
       <div className={styles.detail}>
         <IconWind size='1.1rem' />
         <span>
-          {`${Math.round(wind)} m/s`}
+          {`${Math.round(wind)} ${useMetric ? 'km/h' : 'mph'}`}
         </span>
       </div>
       <div className={styles.detail}>

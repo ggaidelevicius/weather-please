@@ -108,6 +108,12 @@ const Settings = (props: any) => {
         <Text size="sm" color="dimmed">
           Note: This requires browser permissions
         </Text>
+        <Switch
+          label="Use metric number format"
+          mt="md"
+          checked={input.useMetric}
+          onChange={(e) => { handleChange('useMetric', e.target.checked) }}
+        />
         <Button
           onClick={() => { handleClick('manual'); close() }}
           mt="md"
