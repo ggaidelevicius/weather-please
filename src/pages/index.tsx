@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Settings from '@/components/settings'
 import Tile from '@/components/tile'
 import type { TileProps } from '@/components/tile/types'
 import { Button, Modal, Text, TextInput, Title } from '@mantine/core'
@@ -27,6 +28,7 @@ const WeatherPlease = () => {
     const storedData = localStorage?.config ? JSON.parse(localStorage.config) : null
     if (storedData) {
       setConfig(storedData)
+      setInput(storedData)
     }
     else {
       open()
@@ -130,6 +132,12 @@ const WeatherPlease = () => {
       <main className={styles.main}>
         {tiles()}
       </main>
+
+      <Settings
+        input={input}
+        handleChange={handleChange}
+        handleClick={handleClick}
+      />
 
       <Modal
         opened={opened}
