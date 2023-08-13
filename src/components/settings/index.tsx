@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { ActionIcon, Button, Modal, Text, TextInput, Title, Switch, Skeleton } from '@mantine/core'
+import { ActionIcon, Button, Modal, Skeleton, Switch, Text, TextInput, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconSettings } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
