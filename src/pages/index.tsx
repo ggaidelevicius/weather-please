@@ -2,7 +2,7 @@
 import Settings from '@/components/settings'
 import Tile from '@/components/tile'
 import type { TileProps } from '@/components/tile/types'
-import { Button, Modal, Text, TextInput, Title } from '@mantine/core'
+import { Button, Loader, Modal, Text, TextInput, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
@@ -117,7 +117,7 @@ const WeatherPlease = () => {
         <motion.div
           key={day.day}
           initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: i * .075 } }}
+          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 1 } }}
           exit={{ scale: 0.95, opacity: 0 }}
         >
           <Tile {...day} />
@@ -129,6 +129,19 @@ const WeatherPlease = () => {
 
   return (
     <>
+      <AnimatePresence>
+        {weatherData.length === 0 && config.lat && config.lon &&
+          <motion.div
+            initial={{ scale: 1, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            style={{ position: 'absolute', width: '100%', margin: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <Loader variant="dots" size="lg" />
+          </motion.div>
+        }
+      </AnimatePresence>
+
       <main className={styles.main}>
         {tiles()}
       </main>
