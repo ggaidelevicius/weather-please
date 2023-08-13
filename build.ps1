@@ -4,10 +4,15 @@ if (Test-Path $extensionPath -PathType Container) {
   Remove-Item $extensionPath -Recurse -Force
 }
 
-# Replace content in HTML files
-Get-ChildItem -Path "out\*.html" | ForEach-Object {
+# Replace content in HTML and JS files
+Get-ChildItem -Path "out" -File -Include *.html, *.js -Recurse | ForEach-Object {
   $content = Get-Content $_.FullName
-  $modifiedContent = $content -replace '/_next/', '/next/'
+  if ($_.Extension -eq ".html") {
+    $modifiedContent = $content -replace '/_next/', '/next/'
+  }
+  elseif ($_.Extension -eq ".js") {
+    $modifiedContent = $content -replace '/_next/', '/next/'
+  }
   $modifiedContent | Set-Content -Path $_.FullName -Force
 }
 
