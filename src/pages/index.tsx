@@ -39,8 +39,8 @@ const WeatherPlease = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      let req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&forecast_days=3`)
-      let res = await req.json()
+      const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&forecast_days=3`)
+      const res = await req.json()
       const data = res.daily.time.map((day: any, i: number) => {
         return (
           {

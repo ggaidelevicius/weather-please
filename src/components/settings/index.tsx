@@ -57,7 +57,7 @@ const Settings = (props: any) => {
       >
         <Title order={1}>Settings</Title>
         <Text mt="md">
-          Based on the provided information, your location is <strong>{location.suburb}, {location.country}</strong>
+          Based on the provided information, your location is {(location.suburb || location.country) && <strong>{location.suburb && `${location.suburb},`} {location.country}</strong>}
         </Text>
         <Text>
           If this is incorrect, please update the values below.
