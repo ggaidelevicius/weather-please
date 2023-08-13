@@ -185,19 +185,33 @@ const WeatherPlease = () => {
               label="Latitude"
               withAsterisk
               value={input.lat}
-              onChange={(e) => { handleChange('lat', e.target.value) }}
+              onChange={(e) => { handleChange('lat', e.target.value.trim()) }}
+              error={(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/).test(input.lat) || input.lat === '' ? undefined : 'Invalid latitude value'}
             />
             <TextInput
               mt="xs"
               label="Longitude"
               withAsterisk
               value={input.lon}
-              onChange={(e) => { handleChange('lon', e.target.value) }}
+              onChange={(e) => { handleChange('lon', e.target.value.trim()) }}
+              error={(/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(input.lon) || input.lon === '' ? undefined : 'Invalid longitude value'}
             />
+            <Text
+              component="a"
+              href="https://support.google.com/maps/answer/18539?hl=en&co=GENIE.Platform%3DDesktop#:~:text=Get%20the%20coordinates,latitude%20and%20longitude."
+              target="_blank"
+              rel="noopener noreferrer"
+              size="sm"
+              color="blue"
+              sx={{ '&:hover': { textDecoration: 'underline' } }}
+            >
+              Unsure how to find these? Click here.
+            </Text>
             <Button
               onClick={() => { handleClick('manual') }}
               mt="md"
               fullWidth
+              disabled={!(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/).test(input.lat) || !(/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(input.lon)}
             >
               Set my location
             </Button>

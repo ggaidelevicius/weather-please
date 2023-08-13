@@ -1,4 +1,4 @@
 export interface ConfigProps {
-  lat: number | string
-  lon: number | string
+  lat: string
+  lon: string
 }
