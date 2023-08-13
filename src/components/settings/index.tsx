@@ -56,8 +56,8 @@ const Settings = (props: any) => {
         }}
       >
         <Title order={1}>Settings</Title>
-        <Text mt="md">
-          Based on the provided information, your location is {(!location.suburb || !location.country) && <span><Skeleton width={160} height={21} sx={{ display: 'inline-block' }} /></span>} {(location.suburb || location.country) && <strong>{location.suburb && `${location.suburb},`} {location.country}</strong>}
+        <Text mt="md" sx={{ display: 'flex', alignItems: 'center' }}>
+          Based on the provided information, your location is&nbsp;{(!location.suburb || !location.country) && <Skeleton width={160} height={21} sx={{ display: 'inline-block' }} />} {(location.suburb || location.country) && <strong>{location.suburb && `${location.suburb},`} {location.country}</strong>}
         </Text>
         <Text>
           If this is incorrect, please update the values below.
