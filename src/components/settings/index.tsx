@@ -92,7 +92,7 @@ const Settings = (props: any) => {
         <Switch
           label="Periodically update location automatically"
           mt="md"
-          value={config.periodicLocationUpdate}
+          checked={config.periodicLocationUpdate}
           onChange={(e) => { handleChange('periodicLocationUpdate', e.target.checked) }}
         />
         <Text size="sm" color="dimmed">
