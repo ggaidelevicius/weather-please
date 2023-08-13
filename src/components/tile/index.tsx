@@ -1,6 +1,6 @@
 import { Card, Title } from '@mantine/core'
 import styles from './styles.module.css'
-import { TileProps } from './types'
+import type { TileProps } from './types'
 import { BasicWeather, WeatherDetail } from './weather'
 
 const Tile = (props: TileProps) => {
