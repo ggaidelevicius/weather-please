@@ -25,7 +25,6 @@ const WeatherPlease = () => {
 
   useEffect(() => {
     const storedData = localStorage?.config ? JSON.parse(localStorage.config) : null
-
     if (storedData) {
       setConfig(storedData)
     }
