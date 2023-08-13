@@ -27,11 +27,37 @@ const WeatherPlease = () => {
     periodicLocationUpdate: false,
   })
 
+  const compareObjects = (obj1: any, obj2: any) => {
+    const keys1 = Object.keys(obj1)
+    const keys2 = Object.keys(obj2)
+
+    return keys1.length === keys2.length && keys1.every(key => keys2.includes(key))
+  }
+
+  const mergeObjects = (targetObj: any, sourceObj: any) => {
+    const mergedObject = { ...targetObj }
+
+    Object.keys(sourceObj).forEach(key => {
+      if (!mergedObject.hasOwnProperty(key)) {
+        mergedObject[key] = sourceObj[key]
+      }
+    })
+
+    return mergedObject
+  }
+
   useEffect(() => {
     const storedData = localStorage?.config ? JSON.parse(localStorage.config) : null
     if (storedData) {
-      setConfig(storedData)
-      setInput(storedData)
+      const doShapesMatch = compareObjects(storedData, config)
+      if (doShapesMatch) {
+        setConfig(storedData)
+        setInput(storedData)
+      } else {
+        const mergedObject = mergeObjects(storedData, config)
+        setConfig(mergedObject)
+        setInput(mergedObject)
+      }
     }
     else {
       open()
