@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Tile from '@/components/tile'
 import type { TileProps } from '@/components/tile/types'
-import { Button, Modal, Text, Title } from '@mantine/core'
+import { Button, Modal, Text, TextInput, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
@@ -11,8 +11,14 @@ import type { ConfigProps } from './types'
 const WeatherPlease = () => {
   const [weatherData, setWeatherData] = useState<[] | TileProps[]>([])
   const [currentHour, setCurrentHour] = useState<number>(new Date().getHours())
+  const [loading, setLoading] = useState<boolean>(false)
+  const [geolocationError, setGeolocationError] = useState<boolean>(false)
   const [opened, { open, close }] = useDisclosure(false)
   const [config, setConfig] = useState<ConfigProps>({
+    lat: '',
+    lon: '',
+  })
+  const [input, setInput] = useState<ConfigProps>({
     lat: '',
     lon: '',
   })
@@ -63,18 +69,40 @@ const WeatherPlease = () => {
     return () => { }
   }, [currentHour, config])
 
-  const handleClick = () => {
-    navigator.geolocation.getCurrentPosition((pos) => {
-      setConfig((prev: ConfigProps) => {
-        return ({
-          ...prev,
-          lat: pos.coords.latitude,
-          lon: pos.coords.longitude,
-        })
+  const handleChange = (k: 'lat' | 'lon', v: string) => {
+    setInput((prev: ConfigProps) => {
+      return ({
+        ...prev,
+        [k]: v,
       })
     })
-    close()
   }
+
+
+  const handleClick = (method: 'auto' | 'manual') => {
+    if (method === 'auto') {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        setConfig((prev: ConfigProps) => {
+          return ({
+            ...prev,
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude,
+          })
+        })
+      })
+      setTimeout(() => { setGeolocationError(true) }, 5e3)
+    } else {
+      setConfig(input)
+    }
+  }
+
+  useEffect(() => {
+    if (config.lat && config.lon) {
+      close()
+    }
+    return () => { }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config])
 
   useEffect(() => {
     setTimeout(() => {
@@ -126,19 +154,55 @@ const WeatherPlease = () => {
         <Text sx={{ fontSize: '1.05rem' }}>
           To get started, let&apos;s set your location.
         </Text>
-        <Text
-          color="dimmed"
-          size="sm"
-        >
-          If your browser prompts you for location permissions, please select &quot;allow&quot;.
-        </Text>
-        <Button
-          onClick={handleClick}
-          mt="md"
-          fullWidth
-        >
-          Set my location
-        </Button>
+        {!geolocationError &&
+          <>
+            <Text
+              color="dimmed"
+              size="sm"
+            >
+              If your browser prompts you for location permissions, please select &quot;allow&quot;.
+            </Text>
+            <Button
+              onClick={() => { handleClick('auto'); setLoading(true) }}
+              mt="md"
+              fullWidth
+              loading={loading}
+            >
+              Set my location
+            </Button>
+          </>
+        }
+        {geolocationError &&
+          <>
+            <Text color="dimmed" size="sm">
+              Looks like we can&apos;t grab your location info automatically.
+            </Text>
+            <Text color="dimmed" size="sm">
+              Please enter it manually below.
+            </Text>
+            <TextInput
+              mt="md"
+              label="Latitude"
+              withAsterisk
+              value={input.lat}
+              onChange={(e) => { handleChange('lat', e.target.value) }}
+            />
+            <TextInput
+              mt="xs"
+              label="Longitude"
+              withAsterisk
+              value={input.lon}
+              onChange={(e) => { handleChange('lon', e.target.value) }}
+            />
+            <Button
+              onClick={() => { handleClick('manual') }}
+              mt="md"
+              fullWidth
+            >
+              Set my location
+            </Button>
+          </>
+        }
       </Modal>
     </>
   )

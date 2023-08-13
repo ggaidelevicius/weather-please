@@ -8,7 +8,7 @@ const Tile = (props: TileProps) => {
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
   return (
-    <Card component="article" padding="lg" radius="md">
+    <Card component="article" padding="lg" radius="md" sx={{ userSelect: 'none' }}>
       <Title order={2} className={styles.title}>
         {days[new Date(day * 1000).getDay()]}
       </Title>
