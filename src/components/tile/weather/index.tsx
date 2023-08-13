@@ -51,24 +51,34 @@ export const BasicWeather = (props: BasicWeatherProps) => {
     '99': 'thunderstorm with heavy hail',
   }
   const iconMap = {
-    '01d': ClearSky,
-    '01n': ClearSky,
-    '02d': FewClouds,
-    '02n': FewClouds,
-    '03d': OvercastClouds, // where is scattered?
-    '03n': OvercastClouds, // where is scattered?
-    '04d': BrokenClouds,
-    '04n': BrokenClouds,
-    '09d': LightRain,
-    '09n': LightRain,
-    '10d': ShowerRain,
-    '10n': ShowerRain,
-    '11d': Thunderstorm,
-    '11n': Thunderstorm,
-    '13d': Snow,
-    '13n': Snow,
-    '50d': Mist,
-    '50n': Mist,
+    '0': ClearSky,
+    '1': FewClouds,
+    '2': OvercastClouds,
+    '3': BrokenClouds,
+    '45': Mist,
+    '48': Mist,
+    '51': LightDrizzle,
+    '53': ShowerDrizzle,
+    '55': ShowerDrizzle,
+    '56': ShowerDrizzle,
+    '57': ShowerDrizzle,
+    '61': LightRain,
+    '63': ShowerRain,
+    '65': ShowerRain,
+    '66': LightRain,
+    '67': ShowerRain,
+    '71': Snow,
+    '73': Snow,
+    '75': Snow,
+    '77': Snow,
+    '80': ShowerRain,
+    '81': ShowerRain,
+    '82': ShowerRain,
+    '85': Snow,
+    '86': Snow,
+    '95': Thunderstorm,
+    '96': Thunderstorm,
+    '99': Thunderstorm,
   }
 
   return (
@@ -86,9 +96,7 @@ export const BasicWeather = (props: BasicWeatherProps) => {
           {descriptionMap[description as keyof typeof descriptionMap]}
         </div>
       </div>
-      {icon &&
-        <img src={iconMap[icon as keyof typeof iconMap].src} alt="" className={styles.image} />
-      }
+      <img src={iconMap[description as keyof typeof iconMap].src} alt="" className={styles.image} />
     </div>
   )
 }
