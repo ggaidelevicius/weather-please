@@ -50,8 +50,8 @@ const WeatherPlease = () => {
   useEffect(() => {
     const storedData = localStorage?.config ? JSON.parse(localStorage.config) : null
     if (storedData) {
-      const doShapesMatch = compareObjects(storedData, config)
-      if (doShapesMatch) {
+      const objectShapesMatch = compareObjects(storedData, config)
+      if (objectShapesMatch) {
         setConfig(storedData)
         setInput(storedData)
       } else {
