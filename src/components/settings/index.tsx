@@ -3,7 +3,6 @@ import { ActionIcon, Button, Modal, Skeleton, Switch, Text, TextInput, Title } f
 import { useDisclosure } from '@mantine/hooks'
 import { IconSettings } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
-import styles from './styles.module.css'
 import type { Location } from './types'
 
 const Settings = (props: any) => {
@@ -33,12 +32,12 @@ const Settings = (props: any) => {
   return (
     <>
       <ActionIcon
-        className={styles.button}
         aria-label="Open settings"
         title="Open settings"
         variant="light"
         color="dark"
         onClick={open}
+        style={{ position: 'absolute', bottom: '1rem', right: '1rem' }}
       >
         <IconSettings />
       </ActionIcon>
