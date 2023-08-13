@@ -82,12 +82,9 @@ const WeatherPlease = () => {
   const handleClick = (method: 'auto' | 'manual') => {
     if (method === 'auto') {
       navigator.geolocation.getCurrentPosition((pos) => {
-        setConfig((prev: ConfigProps) => {
-          return ({
-            ...prev,
-            lat: pos.coords.latitude,
-            lon: pos.coords.longitude,
-          })
+        setConfig({
+          lat: pos.coords.latitude.toString(),
+          lon: pos.coords.longitude.toString(),
         })
       })
       setTimeout(() => { setGeolocationError(true) }, 5e3)
