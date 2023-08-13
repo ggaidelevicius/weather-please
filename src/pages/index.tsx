@@ -12,16 +12,19 @@ import type { ConfigProps } from './types'
 const WeatherPlease = () => {
   const [weatherData, setWeatherData] = useState<[] | TileProps[]>([])
   const [currentHour, setCurrentHour] = useState<number>(new Date().getHours())
+  const [currentDate, setCurrentDate] = useState<number>(new Date().getDate())
   const [loading, setLoading] = useState<boolean>(false)
   const [geolocationError, setGeolocationError] = useState<boolean>(false)
   const [opened, { open, close }] = useDisclosure(false)
   const [config, setConfig] = useState<ConfigProps>({
     lat: '',
     lon: '',
+    periodicLocationUpdate: false,
   })
   const [input, setInput] = useState<ConfigProps>({
     lat: '',
     lon: '',
+    periodicLocationUpdate: false,
   })
 
   useEffect(() => {
@@ -70,7 +73,7 @@ const WeatherPlease = () => {
     return () => { }
   }, [currentHour, config])
 
-  const handleChange = (k: 'lat' | 'lon', v: string) => {
+  const handleChange = (k: 'lat' | 'lon' | 'periodicLocationUpdate', v: string | boolean) => {
     setInput((prev: ConfigProps) => {
       return ({
         ...prev,
@@ -79,14 +82,14 @@ const WeatherPlease = () => {
     })
   }
 
-
   const handleClick = (method: 'auto' | 'manual') => {
     if (method === 'auto') {
       navigator.geolocation.getCurrentPosition((pos) => {
-        setConfig({
+        setConfig((prev) => ({
+          ...prev,
           lat: pos.coords.latitude.toString(),
           lon: pos.coords.longitude.toString(),
-        })
+        }))
       })
       setTimeout(() => { setGeolocationError(true) }, 5e3)
     } else {
@@ -110,6 +113,25 @@ const WeatherPlease = () => {
     }, 1e3)
     return () => { }
   }, [config])
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (new Date().getDate() !== currentDate) {
+        setCurrentDate(new Date().getDate())
+      }
+    }, 6e4)
+
+    if (config.periodicLocationUpdate) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        setConfig((prev) => ({
+          ...prev,
+          lat: pos.coords.latitude.toString(),
+          lon: pos.coords.longitude.toString(),
+        }))
+      })
+    }
+    return () => { }
+  }, [currentDate, config.periodicLocationUpdate])
 
   const tiles = () => (
     <AnimatePresence>

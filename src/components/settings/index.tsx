@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { ActionIcon, Button, Modal, Text, TextInput, Title } from '@mantine/core'
+import { ActionIcon, Button, Modal, Text, TextInput, Title, Switch } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconSettings } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
@@ -88,6 +88,15 @@ const Settings = (props: any) => {
           sx={{ '&:hover': { textDecoration: 'underline' } }}
         >
           Unsure how to find these? Click here.
+        </Text>
+        <Switch
+          label="Periodically update location automatically"
+          mt="md"
+          value={config.periodicLocationUpdate}
+          onChange={(e) => { handleChange('periodicLocationUpdate', e.target.checked) }}
+        />
+        <Text size="sm" color="dimmed">
+          Note: This requires browser permissions
         </Text>
         <Button
           onClick={() => { handleClick('manual'); close() }}
