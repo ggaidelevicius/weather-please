@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { ActionIcon, Button, Modal, Text, TextInput, Title, Switch } from '@mantine/core'
+import { ActionIcon, Button, Modal, Text, TextInput, Title, Switch, Skeleton } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconSettings } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
@@ -57,7 +57,7 @@ const Settings = (props: any) => {
       >
         <Title order={1}>Settings</Title>
         <Text mt="md">
-          Based on the provided information, your location is {(location.suburb || location.country) && <strong>{location.suburb && `${location.suburb},`} {location.country}</strong>}
+          Based on the provided information, your location is {(!location.suburb || !location.country) && <span><Skeleton width={160} height={21} sx={{ display: 'inline-block' }} /></span>} {(location.suburb || location.country) && <strong>{location.suburb && `${location.suburb},`} {location.country}</strong>}
         </Text>
         <Text>
           If this is incorrect, please update the values below.
