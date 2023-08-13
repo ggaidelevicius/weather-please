@@ -3,12 +3,10 @@ import {
   BrokenClouds,
   ClearSky,
   FewClouds,
-  // eslint-disable-next-line no-unused-vars
   LightDrizzle,
   LightRain,
   Mist,
   OvercastClouds,
-  // eslint-disable-next-line no-unused-vars
   ShowerDrizzle,
   ShowerRain,
   Snow,
@@ -19,7 +17,7 @@ import styles from './styles.module.css'
 import type { BasicWeatherProps, WeatherDetailProps } from './types'
 
 export const BasicWeather = (props: BasicWeatherProps) => {
-  const { max, min, description, icon } = props
+  const { max, min, description } = props
   const descriptionMap = {
     '0': 'clear sky',
     '1': 'mainly clear',

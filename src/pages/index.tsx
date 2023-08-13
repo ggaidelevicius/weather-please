@@ -24,7 +24,6 @@ const WeatherPlease = () => {
       setConfig(storedData)
     }
     else {
-      console.log(storedData)
       open()
     }
     return () => { }
