@@ -2,11 +2,33 @@
 import { ActionIcon, Button, Modal, Text, TextInput, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconSettings } from '@tabler/icons-react'
+import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
+import type { Location } from './types'
 
 const Settings = (props: any) => {
-  const { input, handleChange, handleClick } = props
+  const { input, handleChange, handleClick, config } = props
   const [opened, { open, close }] = useDisclosure(false)
+  const [location, setLocation] = useState<Location>({
+    country: '',
+    suburb: '',
+  })
+
+  useEffect(() => {
+    const reverseGeocode = async () => {
+      const req = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${config.lat}&lon=${config.lon}&format=json`)
+      const res = await req.json()
+      const { address: { country, suburb } } = res
+      setLocation({
+        country: country,
+        suburb: suburb,
+      })
+    }
+    if (config.lat && config.lon && opened) {
+      reverseGeocode()
+    }
+    return () => { }
+  }, [config, opened])
 
   return (
     <>
@@ -29,10 +51,19 @@ const Settings = (props: any) => {
         padding="lg"
         radius="md"
         withCloseButton={false}
+        sx={{
+          maxWidth: '70ch',
+        }}
       >
         <Title order={1}>Settings</Title>
+        <Text mt="md">
+          Based on the provided information, your location is <strong>{location.suburb}, {location.country}</strong>
+        </Text>
+        <Text>
+          If this is incorrect, please update the values below.
+        </Text>
         <TextInput
-          mt="md"
+          mt="xs"
           label="Latitude"
           withAsterisk
           value={input.lat}

@@ -150,6 +150,7 @@ const WeatherPlease = () => {
         input={input}
         handleChange={handleChange}
         handleClick={handleClick}
+        config={config}
       />
 
       <Modal
