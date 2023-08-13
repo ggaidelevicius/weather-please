@@ -36,7 +36,12 @@
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
-  justify-content: space-between;
+}
+
+@media (min-width: 901px) {
+  .detailContainer {
+      justify-content: space-between;
+    }
 }
 
 .detail {
