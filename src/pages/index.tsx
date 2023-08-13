@@ -117,6 +117,11 @@ const WeatherPlease = () => {
           lat: pos.coords.latitude.toString(),
           lon: pos.coords.longitude.toString(),
         }))
+        setInput((prev) => ({
+          ...prev,
+          lat: pos.coords.latitude.toString(),
+          lon: pos.coords.longitude.toString(),
+        }))
       })
       setTimeout(() => { setGeolocationError(true) }, 5e3)
     } else {
