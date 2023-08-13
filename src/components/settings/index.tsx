@@ -25,6 +25,7 @@ const Settings = (props: any) => {
           suburb: suburb,
         })
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.warn(e)
         notifications.show({
           title: 'Error',

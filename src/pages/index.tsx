@@ -88,6 +88,7 @@ const WeatherPlease = () => {
         })
         setWeatherData(data)
       } catch (e: any) {
+        // eslint-disable-next-line no-console
         console.warn(e)
         // why can't i pass the value of state into message here?
         notifications.show({
