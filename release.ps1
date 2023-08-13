@@ -6,7 +6,7 @@ param(
 
 # Check if $releaseType parameter is provided
 if (-not $releaseType) {
-  $releaseType = Read-Host "Enter the release type ('major', 'minor', or 'patch'): "
+  $releaseType = Read-Host "Enter the release type ('major', 'minor', or 'patch')"
 }
 
 # Validate the provided release type

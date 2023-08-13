@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { ActionIcon, Button, Modal, Skeleton, Switch, Text, TextInput, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { notifications } from '@mantine/notifications'
 import { IconSettings } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 import type { Location } from './types'
@@ -15,13 +16,22 @@ const Settings = (props: any) => {
 
   useEffect(() => {
     const reverseGeocode = async () => {
-      const req = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${config.lat}&lon=${config.lon}&format=json`)
-      const res = await req.json()
-      const { address: { country, suburb } } = res
-      setLocation({
-        country: country,
-        suburb: suburb,
-      })
+      try {
+        const req = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${config.lat}&lon=${config.lon}&format=json`)
+        const res = await req.json()
+        const { address: { country, suburb } } = res
+        setLocation({
+          country: country,
+          suburb: suburb,
+        })
+      } catch (e) {
+        console.warn(e)
+        notifications.show({
+          title: 'Error',
+          message: 'An error has occurred while fetching your location. Please check the console for more details.',
+          color: 'red',
+        })
+      }
     }
     if (config.lat && config.lon && opened) {
       reverseGeocode()

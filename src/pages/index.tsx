@@ -5,6 +5,7 @@ import Tile from '@/components/tile'
 import type { TileProps } from '@/components/tile/types'
 import { Loader } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { notifications } from '@mantine/notifications'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
@@ -69,22 +70,32 @@ const WeatherPlease = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&forecast_days=3`)
-      const res = await req.json()
-      const data = res.daily.time.map((day: any, i: number) => {
-        return (
-          {
-            day,
-            max: res.daily.temperature_2m_max[i],
-            min: res.daily.temperature_2m_min[i],
-            description: res.daily.weathercode[i],
-            uv: res.daily.uv_index_max[i],
-            wind: res.daily.windspeed_10m_max[i],
-            rain: res.daily.precipitation_probability_max[i],
-          }
-        )
-      })
-      setWeatherData(data)
+      try {
+        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&forecast_days=3`)
+        const res = await req.json()
+        const data = res.daily.time.map((day: any, i: number) => {
+          return (
+            {
+              day,
+              max: res.daily.temperature_2m_max[i],
+              min: res.daily.temperature_2m_min[i],
+              description: res.daily.weathercode[i],
+              uv: res.daily.uv_index_max[i],
+              wind: res.daily.windspeed_10m_max[i],
+              rain: res.daily.precipitation_probability_max[i],
+            }
+          )
+        })
+        setWeatherData(data)
+      } catch (e: any) {
+        console.warn(e)
+        // why can't i pass the value of state into message here?
+        notifications.show({
+          title: 'Error',
+          message: 'An error has occurred while fetching weather data. Please check the console for more details.',
+          color: 'red',
+        })
+      }
     }
 
     if (config.lat && config.lon) {
