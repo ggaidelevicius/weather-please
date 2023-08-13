@@ -123,7 +123,7 @@ const WeatherPlease = () => {
           <img src="/favicon.png" alt="Weather Please logo" style={{ maxWidth: '4rem' }} />
           <Title order={1}>Weather <span style={{ color: '#ea5e57' }}>Please</span></Title>
         </div>
-        <Text>
+        <Text sx={{ fontSize: '1.05rem' }}>
           To get started, let&apos;s set your location.
         </Text>
         <Text
@@ -134,7 +134,7 @@ const WeatherPlease = () => {
         </Text>
         <Button
           onClick={handleClick}
-          mt="lg"
+          mt="md"
           fullWidth
         >
           Set my location
