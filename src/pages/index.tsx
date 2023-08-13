@@ -78,7 +78,9 @@ const WeatherPlease = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      localStorage.config = JSON.stringify(config)
+      if (config.lat && config.lon) {
+        localStorage.config = JSON.stringify(config)
+      }
     }, 1e3)
     return () => { }
   }, [config])
@@ -116,30 +118,26 @@ const WeatherPlease = () => {
         closeOnEscape={false}
         withCloseButton={false}
       >
-        {!config.lat && !config.lon &&
-          <>
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '1.25rem', justifyContent: 'center' }}>
-              <img src="/favicon.png" alt="Weather Please logo" style={{ maxWidth: '4rem' }} />
-              <Title order={1}>Weather <span style={{ color: '#ea5e57' }}>Please</span></Title>
-            </div>
-            <Text>
-              To get started, let&apos;s set your location.
-            </Text>
-            <Text
-              color="dimmed"
-              size="sm"
-            >
-              If your browser prompts you for location permissions, please select &quot;allow&quot;.
-            </Text>
-            <Button
-              onClick={handleClick}
-              mt="xs"
-              fullWidth
-            >
-              Set my location
-            </Button>
-          </>
-        }
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '2rem', justifyContent: 'center' }}>
+          <img src="/favicon.png" alt="Weather Please logo" style={{ maxWidth: '4rem' }} />
+          <Title order={1}>Weather <span style={{ color: '#ea5e57' }}>Please</span></Title>
+        </div>
+        <Text>
+          To get started, let&apos;s set your location.
+        </Text>
+        <Text
+          color="dimmed"
+          size="sm"
+        >
+          If your browser prompts you for location permissions, please select &quot;allow&quot;.
+        </Text>
+        <Button
+          onClick={handleClick}
+          mt="lg"
+          fullWidth
+        >
+          Set my location
+        </Button>
       </Modal>
     </>
   )
