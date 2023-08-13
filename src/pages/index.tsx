@@ -117,6 +117,7 @@ const WeatherPlease = () => {
         closeOnClickOutside={false}
         closeOnEscape={false}
         withCloseButton={false}
+        trapFocus={false}
       >
         <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '2rem', justifyContent: 'center' }}>
           <img src="/favicon.png" alt="Weather Please logo" style={{ maxWidth: '4rem' }} />
