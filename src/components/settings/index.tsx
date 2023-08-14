@@ -48,7 +48,7 @@ const Settings = (props: any) => {
         variant="light"
         color="dark"
         onClick={open}
-        style={{ position: 'absolute', bottom: '1rem', right: '1rem' }}
+        style={{ position: 'fixed', bottom: '1rem', right: '1rem' }}
       >
         <IconSettings aria-hidden />
       </ActionIcon>
