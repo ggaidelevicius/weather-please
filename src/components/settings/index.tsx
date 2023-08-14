@@ -50,7 +50,7 @@ const Settings = (props: any) => {
         onClick={open}
         style={{ position: 'absolute', bottom: '1rem', right: '1rem' }}
       >
-        <IconSettings />
+        <IconSettings aria-hidden />
       </ActionIcon>
 
       <Modal
@@ -67,7 +67,7 @@ const Settings = (props: any) => {
       >
         <Title order={1}>Settings</Title>
         <Text mt="md" sx={{ display: 'flex', alignItems: 'center' }}>
-          Based on the provided information, your location is&nbsp;{(!location.suburb || !location.country) && <Skeleton width={160} height={21} sx={{ display: 'inline-block' }} />} {(location.suburb || location.country) && <strong>{location.suburb && `${location.suburb},`} {location.country}</strong>}
+          Based on the provided information, your location is&nbsp;{(!location.suburb || !location.country) && <Skeleton width={160} height={21} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {(location.suburb || location.country) && <strong>{location.suburb && `${location.suburb},`} {location.country}</strong>}
         </Text>
         <Text>
           If this is incorrect, please update the values below.

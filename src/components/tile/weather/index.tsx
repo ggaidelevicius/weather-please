@@ -17,7 +17,7 @@ import styles from './styles.module.css'
 import type { BasicWeatherProps, WeatherDetailProps } from './types'
 
 export const BasicWeather = (props: BasicWeatherProps) => {
-  const { max, min, description } = props
+  const { max, min, description, useMetric } = props
   const descriptionMap = {
     '0': 'clear sky',
     '1': 'mainly clear',
@@ -83,16 +83,25 @@ export const BasicWeather = (props: BasicWeatherProps) => {
     <div className={styles.container}>
       <div className={styles.textContainer}>
         <div className={styles.temperatureContainer}>
-          <div>
+          <div aria-hidden>
             {Math.round(max)}
           </div>
-          <div>
+          <span className='visuallyHidden'>
+            {`The maximum temperature will be ${Math.round(max)} degrees ${useMetric ? 'celsius' : 'fahrenheit'}.`}
+          </span>
+          <div aria-hidden>
             {Math.round(min)}
           </div>
+          <span className='visuallyHidden'>
+            {`The minimum temperature will be ${Math.round(min)} degrees ${useMetric ? 'celsius' : 'fahrenheit'}.`}
+          </span>
         </div>
-        <div>
+        <div aria-hidden>
           {descriptionMap[description as keyof typeof descriptionMap]}
         </div>
+        <span className='visuallyHidden'>
+          {`The expected type of weather is ${descriptionMap[description as keyof typeof descriptionMap]}.`}
+        </span>
       </div>
       <img src={iconMap[description as keyof typeof iconMap].src} alt="" className={styles.image} />
     </div>
@@ -100,26 +109,35 @@ export const BasicWeather = (props: BasicWeatherProps) => {
 }
 
 export const WeatherDetail = (props: WeatherDetailProps) => {
-  const { uv, wind, rain, useMetric } = props
+  const { uv, wind, rain, useMetric, index } = props
 
   return (
     <div className={styles.detailContainer}>
       <div className={styles.detail}>
-        <IconUvIndex size='1.1rem' />
-        <span>
+        <IconUvIndex size='1.1rem' aria-hidden />
+        <span aria-hidden>
           {`${Math.round(uv)}`}
         </span>
-      </div>
-      <div className={styles.detail}>
-        <IconWind size='1.1rem' />
-        <span>
-          {`${Math.round(wind)} ${useMetric ? 'km/h' : 'mph'}`}
+        <span className='visuallyHidden'>
+          {`${index === 0 ? 'Today\'s UV index is' : 'The UV index will be'} ${Math.round(uv)}`}
         </span>
       </div>
       <div className={styles.detail}>
-        <IconCloudRain size='1.1rem' />
-        <span>
+        <IconWind size='1.1rem' aria-hidden />
+        <span aria-hidden>
+          {`${Math.round(wind)} ${useMetric ? 'km/h' : 'mph'}`}
+        </span>
+        <span className='visuallyHidden'>
+          {`${index === 0 ? 'Today\'s maximum wind speed is' : 'The maximum wind speed will be'} ${Math.round(wind)} ${useMetric ? 'kilometers per hour' : 'miles per hour'}`}
+        </span>
+      </div>
+      <div className={styles.detail}>
+        <IconCloudRain size='1.1rem' aria-hidden />
+        <span aria-hidden>
           {`${Math.round(rain)}%`}
+        </span>
+        <span className='visuallyHidden'>
+          {`${index === 0 ? 'Today there is a' : 'There will be'} a ${Math.round(rain)}% chance of precipitation`}
         </span>
       </div>
     </div>

@@ -3,6 +3,7 @@ export interface BasicWeatherProps {
   min: number
   description: string
   icon: string
+  useMetric: boolean
 }
 
 export interface WeatherDetailProps {
@@ -10,4 +11,5 @@ export interface WeatherDetailProps {
   wind: number
   rain: number
   useMetric: boolean
+  index: number
 }

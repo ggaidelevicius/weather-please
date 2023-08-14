@@ -8,4 +8,5 @@ export interface TileProps {
   rain: number
   uv: number
   useMetric: boolean
+  index: number
 }
