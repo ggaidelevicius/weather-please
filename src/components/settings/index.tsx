@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { ActionIcon, Button, Modal, Skeleton, Switch, Text, TextInput, Title } from '@mantine/core'
+import { ActionIcon, Button, Divider, Modal, Skeleton, Switch, Text, TextInput, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import { IconSettings } from '@tabler/icons-react'
@@ -94,7 +94,7 @@ const Settings = (props: any) => {
           target="_blank"
           rel="noopener noreferrer"
           size="sm"
-          color="blue"
+          color="lightblue"
           sx={{ '&:hover': { textDecoration: 'underline' } }}
         >
           Unsure how to find these? Click here.
@@ -114,6 +114,7 @@ const Settings = (props: any) => {
           checked={input.useMetric}
           onChange={(e) => { handleChange('useMetric', e.target.checked) }}
         />
+
         <Button
           onClick={() => { handleClick('manual'); close() }}
           mt="md"
@@ -122,6 +123,20 @@ const Settings = (props: any) => {
         >
           Save
         </Button>
+        <Divider sx={{ marginTop: '1.75rem', marginBottom: '1.5rem' }} />
+        <Text size="sm">
+          We&apos;d love to bring Weather Please to more languages.
+        </Text>
+        <Text size="sm" color="dimmed">
+          If you can help by providing translations, please reach out at <Text
+            component="a"
+            href="mailto:weatherplease.dev@gmail.com"
+            color="lightblue"
+            sx={{ '&:hover': { textDecoration: 'underline' } }}
+          >
+            weatherplease.dev@gmail.com
+          </Text>
+        </Text>
       </Modal>
     </>
   )

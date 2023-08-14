@@ -81,7 +81,7 @@ const Initialisation = (props: any) => {
             target="_blank"
             rel="noopener noreferrer"
             size="sm"
-            color="blue"
+            color="lightblue"
             sx={{ '&:hover': { textDecoration: 'underline' } }}
           >
             Unsure how to find these? Click here.
