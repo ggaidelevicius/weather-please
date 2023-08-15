@@ -9,7 +9,7 @@ const Alert = (props: AlertProps) => {
   const { totalPrecipitation, hoursOfExtremeUv, useMetric } = props
 
   let precipitationAlert = null
-  if ((useMetric && totalPrecipitation >= 15) || totalPrecipitation >= 0.590551) {
+  if ((useMetric && totalPrecipitation >= 0) || totalPrecipitation >= 0.590551) {
     precipitationAlert = (
       <MantineAlert
         className={styles.alert}
@@ -49,26 +49,21 @@ const Alert = (props: AlertProps) => {
     }
   }
 
+  const motionProps = {
+    initial: { scale: 1, opacity: 0 },
+    animate: { scale: 1, opacity: 1, transition: { type: 'spring', duration: 1, delay: 2.375 } },
+    exit: { scale: 0.95, opacity: 0 },
+    className: styles.wrapper,
+  }
+
   return (
     <AnimatePresence>
       {precipitationAlert &&
-        <motion.div
-          initial={{ scale: 1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: 1.475 } }}
-          exit={{ scale: 0.95, opacity: 0 }}
-          className={styles.wrapper}
-          key='precipitation'
-        >
+        <motion.div {...motionProps} key='precipitation'>
           {precipitationAlert}
         </motion.div>}
       {uvAlert &&
-        <motion.div
-          initial={{ scale: 1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: 1.475 } }}
-          exit={{ scale: 0.95, opacity: 0 }}
-          className={styles.wrapper}
-          key='uv'
-        >
+        <motion.div {...motionProps} key='uv'>
           {uvAlert}
         </motion.div>}
     </AnimatePresence>
