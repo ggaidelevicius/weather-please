@@ -133,18 +133,14 @@ const Alert = (props: AlertProps) => {
     }
   }, [hoursOfExtremeUv])
 
-  const motionProps = {
-    initial: { scale: 1, opacity: 0 },
-    exit: { scale: 0.95, opacity: 0 },
-    className: styles.wrapper,
-  }
-
   const tiles = () => (
     <AnimatePresence>
       {(alerts.map((alert, i: number) => (
         <motion.div
-          {...motionProps}
+          initial={{ scale: 1, opacity: 0 }}
           animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 0.9 } }}
+          exit={{ scale: 0.95, opacity: 0 }}
+          className={styles.wrapper}
           key={`alert-${i}`}
         >
           {alert}
