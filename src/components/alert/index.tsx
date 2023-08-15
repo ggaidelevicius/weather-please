@@ -26,7 +26,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
           styles={{ message: { fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' } }}
           key='precipitationAlert'
         >
-          <IconInfoCircle size="2rem" strokeWidth={1.5} />
+          <IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
           {totalPrecipitation}{useMetric ? 'mm' : 'in'} of precipitation expected over the next 6 hours
         </MantineAlert>
       )
@@ -61,7 +61,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
       if (timeUntilHighWind > 1) {
         windAlert = (
           <MantineAlert {...alertProps} >
-            <IconInfoCircle size="2rem" strokeWidth={1.5} />
+            <IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
             High wind starting in {timeUntilHighWind} hours
           </MantineAlert>
         )
@@ -69,7 +69,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
         const durationOfHighWind = hoursOfHighWind.indexOf(false)
         windAlert = (
           <MantineAlert {...alertProps}>
-            <IconInfoCircle size="2rem" strokeWidth={1.5} />
+            <IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
             High wind for the next {durationOfHighWind > 0 ? `${durationOfHighWind} hours` : durationOfHighWind < 0 ? '12 hours' : 'hour'}
           </MantineAlert>
         )
@@ -106,7 +106,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
       if (timeUntilExtremeUv > 1) {
         uvAlert = (
           <MantineAlert {...alertProps} >
-            <IconAlertTriangle size="2rem" strokeWidth={1.5} />
+            <IconAlertTriangle size="2rem" strokeWidth={1.5} aria-hidden />
             Extreme UV starting in {timeUntilExtremeUv} hours
           </MantineAlert>
         )
@@ -114,7 +114,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
         const durationOfExtremeUv = hoursOfExtremeUv.indexOf(false)
         uvAlert = (
           <MantineAlert {...alertProps}>
-            <IconAlertTriangle size="2rem" strokeWidth={1.5} />
+            <IconAlertTriangle size="2rem" strokeWidth={1.5} aria-hidden />
             Extreme UV for the next {durationOfExtremeUv > 0 ? `${durationOfExtremeUv} hours` : durationOfExtremeUv < 0 ? '12 hours' : 'hour'}
           </MantineAlert>
         )
@@ -150,7 +150,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
       if (timeUntilLowVisibility > 1) {
         visibilityAlert = (
           <MantineAlert {...alertProps} >
-            <IconInfoCircle size="2rem" strokeWidth={1.5} />
+            <IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
             Low visibility starting in {timeUntilLowVisibility} hours
           </MantineAlert>
         )
@@ -158,7 +158,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
         const durationOfLowVisibility = hoursOfLowVisibility.indexOf(false)
         visibilityAlert = (
           <MantineAlert {...alertProps}>
-            <IconInfoCircle size="2rem" strokeWidth={1.5} />
+            <IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
             Low visibility for the next {durationOfLowVisibility > 0 ? `${durationOfLowVisibility} hours` : durationOfLowVisibility < 0 ? '12 hours' : 'hour'}
           </MantineAlert>
         )
