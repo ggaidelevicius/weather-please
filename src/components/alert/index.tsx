@@ -18,7 +18,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
 
   useEffect(() => {
     let precipitationAlert: ReactElement | null = null
-    if ((useMetric && totalPrecipitation >= 15) || totalPrecipitation >= 0.590551) {
+    if ((useMetric && totalPrecipitation >= 15) || (!useMetric && totalPrecipitation >= 0.590551)) {
       precipitationAlert = (
         <MantineAlert
           className={styles.alert}
