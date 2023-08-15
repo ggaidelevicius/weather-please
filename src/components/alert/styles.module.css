@@ -2,6 +2,12 @@
   grid-column: 1/4;
 }
 
+@media (max-width: 900px) {
+  .wrapper {
+    grid-column: 1
+  }
+}
+
 .alert {
   display: flex;
   gap: 2rem;

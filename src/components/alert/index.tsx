@@ -6,7 +6,7 @@ import styles from './styles.module.css'
 import type { AlertProps } from './types'
 
 const Alert = (props: AlertProps) => {
-  const { totalPrecipitation, hoursOfExtremeUv, useMetric } = props
+  const { totalPrecipitation, hoursOfExtremeUv, hoursOfHighWind, useMetric } = props
 
   let precipitationAlert = null
   if ((useMetric && totalPrecipitation >= 15) || totalPrecipitation >= 0.590551) {
@@ -20,6 +20,34 @@ const Alert = (props: AlertProps) => {
         {totalPrecipitation}{useMetric ? 'mm' : 'in'} of precipitation expected over the next 6 hours
       </MantineAlert>
     )
+  }
+
+  let windAlert = null
+  if (hoursOfHighWind.includes(true)) {
+    const alertProps = {
+      className: styles.alert,
+      radius: 'md',
+      styles: { message: { fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' } },
+    }
+    const timeUntilHighWind = hoursOfHighWind.indexOf(true) + 1
+    if (timeUntilHighWind > 1) {
+      windAlert = (
+        <MantineAlert {...alertProps} >
+          <IconInfoCircle size="2rem" strokeWidth={1.5} />
+
+          High wind starting in {timeUntilHighWind} hours
+        </MantineAlert>
+      )
+    } else {
+      const durationOfHighWind = hoursOfHighWind.indexOf(false)
+      windAlert = (
+        <MantineAlert {...alertProps}>
+          <IconInfoCircle size="2rem" strokeWidth={1.5} />
+
+          High wind for the next {durationOfHighWind > 0 ? `${durationOfHighWind} hours` : durationOfHighWind < 0 ? '12 hours' : 'hour'}
+        </MantineAlert>
+      )
+    }
   }
 
   let uvAlert = null
@@ -43,7 +71,7 @@ const Alert = (props: AlertProps) => {
       uvAlert = (
         <MantineAlert {...alertProps}>
           <IconAlertTriangle size="2rem" strokeWidth={1.5} />
-          Extreme UV for the next {durationOfExtremeUv > 0 ? `${durationOfExtremeUv} hours` : 'hour'}
+          Extreme UV for the next {durationOfExtremeUv > 0 ? `${durationOfExtremeUv} hours` : durationOfExtremeUv < 0 ? '12 hours' : 'hour'}
         </MantineAlert>
       )
     }
@@ -61,11 +89,18 @@ const Alert = (props: AlertProps) => {
       {precipitationAlert &&
         <motion.div {...motionProps} key='precipitation'>
           {precipitationAlert}
-        </motion.div>}
+        </motion.div>
+      }
+      {windAlert &&
+        <motion.div {...motionProps} key='wind'>
+          {windAlert}
+        </motion.div>
+      }
       {uvAlert &&
         <motion.div {...motionProps} key='uv'>
           {uvAlert}
-        </motion.div>}
+        </motion.div>
+      }
     </AnimatePresence>
   )
 }
