@@ -185,7 +185,7 @@ const WeatherPlease = () => {
         <motion.div
           key={day.day}
           initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 1 } }}
+          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 0.75 } }}
           exit={{ scale: 0.95, opacity: 0 }}
         >
           <Tile {...day} useMetric={config.useMetric} index={i} />
