@@ -2,7 +2,7 @@ import { Alert as MantineAlert } from '@mantine/core'
 import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { ReactElement } from 'react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
 import type { AlertProps } from './types'
 
