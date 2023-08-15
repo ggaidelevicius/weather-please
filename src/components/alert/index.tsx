@@ -9,7 +9,7 @@ const Alert = (props: AlertProps) => {
   const { totalPrecipitation, hoursOfExtremeUv, useMetric } = props
 
   let precipitationAlert = null
-  if ((useMetric && totalPrecipitation >= 0) || totalPrecipitation >= 0.590551) {
+  if ((useMetric && totalPrecipitation >= 12) || totalPrecipitation >= 0.590551) {
     precipitationAlert = (
       <MantineAlert
         className={styles.alert}
