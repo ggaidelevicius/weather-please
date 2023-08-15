@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+import Alert from '@/components/alert'
+import type { CurrentWeatherProps } from '@/components/alert/types'
 import Initialisation from '@/components/intialisation'
 import Settings from '@/components/settings'
 import Tile from '@/components/tile'
@@ -12,7 +14,11 @@ import styles from './styles.module.css'
 import type { ConfigProps } from './types'
 
 const WeatherPlease = () => {
-  const [weatherData, setWeatherData] = useState<[] | TileProps[]>([])
+  const [currentWeatherData, setCurrentWeatherData] = useState<CurrentWeatherProps>({
+    totalPrecipitation: 0,
+    hoursOfExtremeUv: [false],
+  })
+  const [futureWeatherData, setFutureWeatherData] = useState<[] | TileProps[]>([])
   const [currentHour, setCurrentHour] = useState<number>(new Date().getHours())
   const [currentDate, setCurrentDate] = useState<number>(new Date().getDate())
   const [loading, setLoading] = useState<boolean>(false)
@@ -23,12 +29,14 @@ const WeatherPlease = () => {
     lon: '',
     periodicLocationUpdate: false,
     useMetric: true,
+    showAlerts: true,
   })
   const [input, setInput] = useState<ConfigProps>({
     lat: '',
     lon: '',
     periodicLocationUpdate: false,
     useMetric: true,
+    showAlerts: true,
   })
 
   const compareObjects = (obj1: any, obj2: any) => {
@@ -73,9 +81,9 @@ const WeatherPlease = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&forecast_days=3${config.useMetric ? '' : '&temperature_unit=fahrenheit&windspeed_unit=mph'}`)
+        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index&forecast_days=3${config.useMetric ? '' : '&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch'}`)
         const res = await req.json()
-        const data = res.daily.time.map((day: any, i: number) => {
+        const futureData = res.daily.time.map((day: any, i: number) => {
           return (
             {
               day,
@@ -88,7 +96,11 @@ const WeatherPlease = () => {
             }
           )
         })
-        setWeatherData(data)
+        setFutureWeatherData(futureData)
+        setCurrentWeatherData({
+          totalPrecipitation: res.hourly.precipitation.slice(0, 6).reduce((p: number, c: number) => p + c),
+          hoursOfExtremeUv: res.hourly.uv_index.slice(0, 12).map((val: number) => val >= 11),
+        })
       } catch (e: any) {
         // eslint-disable-next-line no-console
         console.warn(e)
@@ -181,7 +193,7 @@ const WeatherPlease = () => {
 
   const tiles = () => (
     <AnimatePresence>
-      {(weatherData.map((day, i: number) => (
+      {(futureWeatherData.map((day, i: number) => (
         <motion.div
           key={day.day}
           initial={{ scale: 0.95, opacity: 0 }}
@@ -198,7 +210,7 @@ const WeatherPlease = () => {
   return (
     <>
       <AnimatePresence>
-        {weatherData.length === 0 && config.lat && config.lon &&
+        {futureWeatherData.length === 0 && config.lat && config.lon &&
           <motion.div
             initial={{ scale: 1, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -212,6 +224,9 @@ const WeatherPlease = () => {
 
       <main className={styles.main}>
         {tiles()}
+        {config.showAlerts &&
+          <Alert {...currentWeatherData} useMetric={config.useMetric} />
+        }
       </main>
 
       <Settings

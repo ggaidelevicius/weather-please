@@ -3,4 +3,5 @@ export interface ConfigProps {
   lon: string
   periodicLocationUpdate: boolean
   useMetric: boolean
+  showAlerts: true
 }

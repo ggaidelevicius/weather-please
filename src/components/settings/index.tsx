@@ -114,7 +114,12 @@ const Settings = (props: any) => {
           checked={input.useMetric}
           onChange={(e) => { handleChange('useMetric', e.target.checked) }}
         />
-
+        <Switch
+          label="Show weather alerts"
+          mt="md"
+          checked={input.showAlerts}
+          onChange={(e) => { handleChange('showAlerts', e.target.checked) }}
+        />
         <Button
           onClick={() => { handleClick('manual'); close() }}
           mt="md"
