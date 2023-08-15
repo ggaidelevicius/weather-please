@@ -107,7 +107,7 @@ const WeatherPlease = () => {
         // eslint-disable-next-line no-console
         console.warn(e)
         // why can't i pass the value of state into message here?
-        // why are these errors sometimes being shown + a console warning occuring despite data seemingly being fetched just fine?
+        // why are these errors sometimes being shown + a console warning occurring despite data seemingly being fetched just fine?
         notifications.show({
           title: 'Error',
           message: 'An error has occurred while fetching weather data. Please check the console for more details.',
