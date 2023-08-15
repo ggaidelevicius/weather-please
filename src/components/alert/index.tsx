@@ -17,7 +17,7 @@ const Alert = (props: AlertProps) => {
         styles={{ message: { fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' } }}
       >
         <IconInfoCircle size="2rem" strokeWidth={1.5} />
-        {useMetric ? `${totalPrecipitation}mm` : `${totalPrecipitation / 25.4}in`} of precipitation expected over the next 6 hours
+        {totalPrecipitation}{useMetric ? 'mm' : 'in'} of precipitation expected over the next 6 hours
       </MantineAlert>
     )
   }
