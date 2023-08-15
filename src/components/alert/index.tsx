@@ -43,7 +43,7 @@ const Alert = (props: AlertProps) => {
       uvAlert = (
         <MantineAlert {...alertProps}>
           <IconAlertTriangle size="2rem" strokeWidth={1.5} />
-          Extreme UV for the next {durationOfExtremeUv} hours
+          Extreme UV for the next {durationOfExtremeUv > 0 ? `${durationOfExtremeUv} hours` : 'hour'}
         </MantineAlert>
       )
     }
