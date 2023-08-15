@@ -19,6 +19,7 @@ const WeatherPlease: FC<any> = () => {
     totalPrecipitation: 0,
     hoursOfExtremeUv: [false],
     hoursOfHighWind: [false],
+    hoursOfLowVisibility: [false],
   })
   const [futureWeatherData, setFutureWeatherData] = useState<[] | TileProps[]>([])
   const [currentHour, setCurrentHour] = useState<number>(new Date().getHours())
@@ -83,7 +84,7 @@ const WeatherPlease: FC<any> = () => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m&forecast_days=3${config.useMetric ? '' : '&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch'}`)
+        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility&forecast_days=3${config.useMetric ? '' : '&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch'}`)
         const res = await req.json()
         const futureData = res.daily.time.map((day: unknown, i: number) => {
           return (
@@ -103,6 +104,7 @@ const WeatherPlease: FC<any> = () => {
           totalPrecipitation: res.hourly.precipitation.slice(0, 6).reduce((p: number, c: number) => p + c),
           hoursOfExtremeUv: res.hourly.uv_index.slice(0, 12).map((val: number) => val >= 11),
           hoursOfHighWind: res.hourly.windspeed_10m.slice(0, 12).map((val: number) => val >= (config.useMetric ? 60 : 37)),
+          hoursOfLowVisibility: res.hourly.visibility.slice(0, 12).map((val: number) => val <= 200),
         })
       } catch (e: any) {
         // eslint-disable-next-line no-console

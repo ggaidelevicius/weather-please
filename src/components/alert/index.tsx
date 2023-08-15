@@ -7,7 +7,13 @@ import styles from './styles.module.css'
 import type { AlertProps } from './types'
 
 const Alert: FC<AlertProps> = (props: AlertProps) => {
-  const { totalPrecipitation, hoursOfExtremeUv, hoursOfHighWind, useMetric } = props
+  const {
+    totalPrecipitation,
+    hoursOfExtremeUv,
+    hoursOfHighWind,
+    hoursOfLowVisibility,
+    useMetric,
+  } = props
   const [alerts, setAlerts] = useState<ReactElement[] | []>([])
 
   useEffect(() => {
@@ -56,7 +62,6 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
         windAlert = (
           <MantineAlert {...alertProps} >
             <IconInfoCircle size="2rem" strokeWidth={1.5} />
-
             High wind starting in {timeUntilHighWind} hours
           </MantineAlert>
         )
@@ -65,7 +70,6 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
         windAlert = (
           <MantineAlert {...alertProps}>
             <IconInfoCircle size="2rem" strokeWidth={1.5} />
-
             High wind for the next {durationOfHighWind > 0 ? `${durationOfHighWind} hours` : durationOfHighWind < 0 ? '12 hours' : 'hour'}
           </MantineAlert>
         )
@@ -133,12 +137,56 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
     }
   }, [hoursOfExtremeUv])
 
+  useEffect(() => {
+    let visibilityAlert: ReactElement | null = null
+    if (hoursOfLowVisibility.includes(true)) {
+      const alertProps = {
+        className: styles.alert,
+        radius: 'md',
+        styles: { message: { fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' } },
+        key: 'visibilityAlert',
+      }
+      const timeUntilLowVisibility = hoursOfLowVisibility.indexOf(true) + 1
+      if (timeUntilLowVisibility > 1) {
+        visibilityAlert = (
+          <MantineAlert {...alertProps} >
+            <IconInfoCircle size="2rem" strokeWidth={1.5} />
+            Low visibility starting in {timeUntilLowVisibility} hours
+          </MantineAlert>
+        )
+      } else {
+        const durationOfLowVisibility = hoursOfLowVisibility.indexOf(false)
+        visibilityAlert = (
+          <MantineAlert {...alertProps}>
+            <IconInfoCircle size="2rem" strokeWidth={1.5} />
+            Low visibility for the next {durationOfLowVisibility > 0 ? `${durationOfLowVisibility} hours` : durationOfLowVisibility < 0 ? '12 hours' : 'hour'}
+          </MantineAlert>
+        )
+      }
+      setAlerts((prev) => {
+        const prevVisibilityAlertIndex = prev.findIndex(
+          (alert) => alert.key === 'visibilityAlert'
+        )
+
+        if (prevVisibilityAlertIndex !== -1) {
+          const newAlerts = [...prev]
+          newAlerts[prevVisibilityAlertIndex] = visibilityAlert as ReactElement
+          return newAlerts
+        } else {
+          return [...prev, visibilityAlert as ReactElement]
+        }
+      })
+    } else {
+      setAlerts((prev) => prev.filter(alert => alert.key !== 'visibilityAlert'))
+    }
+  }, [hoursOfLowVisibility])
+
   const tiles = () => (
     <AnimatePresence>
       {(alerts.map((alert, i: number) => (
         <motion.div
           initial={{ scale: 1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 0.9 } }}
+          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 1.9 } }}
           exit={{ scale: 0.95, opacity: 0 }}
           className={styles.wrapper}
           key={`alert-${i}`}
