@@ -10,3 +10,5 @@ export interface TileProps {
   useMetric: boolean
   index: number
 }
+
+export type Days = 'Sunday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday'

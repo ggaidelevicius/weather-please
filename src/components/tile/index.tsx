@@ -1,11 +1,12 @@
 import { Card, Title } from '@mantine/core'
+import type { FC } from 'react'
 import styles from './styles.module.css'
-import type { TileProps } from './types'
+import type { Days, TileProps } from './types'
 import { BasicWeather, WeatherDetail } from './weather'
 
-const Tile = (props: TileProps) => {
+const Tile: FC<TileProps> = (props: TileProps) => {
   const { day } = props
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const days: Days[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
   return (
     <Card component="article" padding="lg" radius="md" sx={{ userSelect: 'none' }}>

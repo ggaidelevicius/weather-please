@@ -3,10 +3,11 @@ import { ActionIcon, Button, Divider, Modal, Skeleton, Switch, Text, TextInput, 
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import { IconSettings } from '@tabler/icons-react'
+import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import type { Location } from './types'
 
-const Settings = (props: any) => {
+const Settings: FC<any> = (props: any) => {
   const { input, handleChange, handleClick, config } = props
   const [opened, { open, close }] = useDisclosure(false)
   const [location, setLocation] = useState<Location>({
@@ -15,7 +16,7 @@ const Settings = (props: any) => {
   })
 
   useEffect(() => {
-    const reverseGeocode = async () => {
+    const reverseGeocode = async (): Promise<void> => {
       try {
         const req = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${config.lat}&lon=${config.lon}&format=json`)
         const res = await req.json()

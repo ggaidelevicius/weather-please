@@ -13,10 +13,11 @@ import {
   Thunderstorm,
 } from '@/assets/images'
 import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
+import type { FC } from 'react'
 import styles from './styles.module.css'
 import type { BasicWeatherProps, WeatherDetailProps } from './types'
 
-export const BasicWeather = (props: BasicWeatherProps) => {
+export const BasicWeather: FC<BasicWeatherProps> = (props: BasicWeatherProps) => {
   const { max, min, description, useMetric } = props
   const descriptionMap = {
     '0': 'clear sky',
@@ -108,7 +109,7 @@ export const BasicWeather = (props: BasicWeatherProps) => {
   )
 }
 
-export const WeatherDetail = (props: WeatherDetailProps) => {
+export const WeatherDetail: FC<WeatherDetailProps> = (props: WeatherDetailProps) => {
   const { uv, wind, rain, useMetric, index } = props
 
   return (

@@ -1,12 +1,12 @@
 import { Alert as MantineAlert } from '@mantine/core'
 import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import type { ReactElement } from 'react'
+import type { FC, ReactElement } from 'react'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
 import type { AlertProps } from './types'
 
-const Alert = (props: AlertProps) => {
+const Alert: FC<AlertProps> = (props: AlertProps) => {
   const { totalPrecipitation, hoursOfExtremeUv, hoursOfHighWind, useMetric } = props
   const [alerts, setAlerts] = useState<ReactElement[] | []>([])
 
