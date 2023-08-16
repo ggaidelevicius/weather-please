@@ -4,9 +4,9 @@ Weather Please is a new tab replacement extension that is suitable for any brows
 
 It displays maximum and minimum temperatures, a general prognosis, maximum UV index, maximum wind speed, and chance of precipitation for the current day, as well as 2 days into the future.
 
-It also displays weather alerts in the case of extreme UV, high precipitation, high wind, and low visibility. All alerts are fully toggleable on a per-alert-type basis.
+It also displays weather alerts in the case of extreme UV, high precipitation, high wind, and low visibility. All alerts are fully toggleable on a per alert-type basis.
 
-Metric and imperial number formats are supported.
+Both metric and imperial number formats are supported.
 
 Weather please uses [Open Meteo](https://open-meteo.com/) as the source for all weather data. At the time of writing, the Open Meteo platform is FOSS, and does not require the end-user to provide an API key.
 
@@ -14,7 +14,7 @@ Weather please uses [Open Meteo](https://open-meteo.com/) as the source for all 
 
 ## Translations
 
-If you can help by providing translations, please [reach out via email](mailto:weatherplease.dev@gmail.com).
+If you would like to help by providing translations, please [reach out via email](mailto:weatherplease.dev@gmail.com).
 
 ## Development
 Weather Please is built using [Next.js](https://nextjs.org/). It uses the [Mantine component library](https://mantine.dev/), [Tabler Icons](https://tablericons.com/), and [Framer Motion](https://www.framer.com/motion/).
