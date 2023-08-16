@@ -205,20 +205,17 @@ const WeatherPlease: FC<any> = () => {
     return () => { }
   }, [currentDate, config.periodicLocationUpdate])
 
-  const tiles = () => (
-    <AnimatePresence>
-      {(futureWeatherData.map((day, i: number) => (
-        <motion.div
-          key={day.day}
-          initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 0.75 } }}
-          exit={{ scale: 0.95, opacity: 0 }}
-        >
-          <Tile {...day} useMetric={config.useMetric} index={i} />
-        </motion.div>
-      )))
-      }
-    </AnimatePresence>
+  const tiles = () => (futureWeatherData.map((day, i: number) => (
+    <motion.div
+      key={day.day}
+      initial={{ scale: 0.95, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 0.75 } }}
+      exit={{ scale: 0.95, opacity: 0 }}
+      layout
+    >
+      <Tile {...day} useMetric={config.useMetric} index={i} />
+    </motion.div>
+  ))
   )
 
   return (
@@ -236,19 +233,21 @@ const WeatherPlease: FC<any> = () => {
         }
       </AnimatePresence>
 
-      <main className={styles.main}>
-        {tiles()}
-        {config.showAlerts &&
-          <Alert
-            {...currentWeatherData}
-            useMetric={config.useMetric}
-            showUvAlerts={config.showUvAlerts}
-            showWindAlerts={config.showWindAlerts}
-            showVisibilityAlerts={config.showVisibilityAlerts}
-            showPrecipitationAlerts={config.showPrecipitationAlerts}
-          />
-        }
-      </main>
+      <AnimatePresence>
+        <motion.main layout className={styles.main}>
+          {tiles()}
+          {config.showAlerts &&
+            <Alert
+              {...currentWeatherData}
+              useMetric={config.useMetric}
+              showUvAlerts={config.showUvAlerts}
+              showWindAlerts={config.showWindAlerts}
+              showVisibilityAlerts={config.showVisibilityAlerts}
+              showPrecipitationAlerts={config.showPrecipitationAlerts}
+            />
+          }
+        </motion.main>
+      </AnimatePresence>
 
       <Settings
         input={input}

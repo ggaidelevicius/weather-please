@@ -1,6 +1,6 @@
 import { Alert as MantineAlert } from '@mantine/core'
 import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import type { FC, ReactElement } from 'react'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
@@ -209,20 +209,18 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
     return () => { }
   }, [hoursOfLowVisibility, showVisibilityAlerts])
 
-  const tiles = () => (
-    <AnimatePresence>
-      {(alerts.map((alert, i: number) => (
-        <motion.div
-          initial={{ scale: 1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 1.9 } }}
-          exit={{ scale: 0.95, opacity: 0 }}
-          className={styles.wrapper}
-          key={`alert-${i}`}
-        >
-          {alert}
-        </motion.div>
-      )))}
-    </AnimatePresence>
+  const tiles = () => (alerts.map((alert, i: number) => (
+    <motion.div
+      initial={{ scale: 1, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 1.9 } }}
+      exit={{ scale: 0.95, opacity: 0 }}
+      className={styles.wrapper}
+      key={`alert-${i}`}
+      layout
+    >
+      {alert}
+    </motion.div>
+  ))
   )
 
   return (
