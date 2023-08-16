@@ -27,7 +27,7 @@ const WeatherPlease: FC<any> = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [geolocationError, setGeolocationError] = useState<boolean>(false)
   const [opened, { open, close }] = useDisclosure(false)
-  const [config, setConfig] = useState<ConfigProps>({
+  const initialState = {
     lat: '',
     lon: '',
     periodicLocationUpdate: false,
@@ -37,18 +37,9 @@ const WeatherPlease: FC<any> = () => {
     showWindAlerts: true,
     showVisibilityAlerts: true,
     showPrecipitationAlerts: true,
-  })
-  const [input, setInput] = useState<ConfigProps>({
-    lat: '',
-    lon: '',
-    periodicLocationUpdate: false,
-    useMetric: true,
-    showAlerts: true,
-    showUvAlerts: true,
-    showWindAlerts: true,
-    showVisibilityAlerts: true,
-    showPrecipitationAlerts: true,
-  })
+  }
+  const [config, setConfig] = useState<ConfigProps>(initialState)
+  const [input, setInput] = useState<ConfigProps>(initialState)
 
   const compareObjects = (obj1: any, obj2: any): boolean => {
     const keys1 = Object.keys(obj1)
