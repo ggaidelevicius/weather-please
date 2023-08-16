@@ -47,6 +47,16 @@ const Settings: FC<any> = (props: any) => {
     return () => { }
   }, [config, opened])
 
+  const generateLocation = (args: Partial<any>): string | null => {
+    let specificLocation = args?.village ?? args?.town ?? args?.suburb ?? args?.county ?? null
+    if (specificLocation) {
+      specificLocation = `${specificLocation}, `
+    }
+    const broadLocation = args?.state ?? args?.country ?? null
+
+    return specificLocation ? `${specificLocation}${broadLocation}` : specificLocation
+  }
+
   return (
     <>
       <ActionIcon
@@ -75,7 +85,7 @@ const Settings: FC<any> = (props: any) => {
         <Title order={1}>Settings</Title>
         <Title order={2} mt="md">Location</Title>
         <Text mt="xs" sx={{ display: 'flex', alignItems: 'center' }}>
-          Based on the provided information, your location is&nbsp;{(!location.country) && <Skeleton width={160} height={21} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {(location.suburb || location.country || location.town || location.village) && <strong>{location.town && `${location.town}, `}{location.suburb && `${location.suburb}, `}{location.village && `${location.village}, `}{location.county && `${location.county}, `}{location.state && `${location.state}, `}{location.country}.</strong>}
+          Based on the provided information, your location is&nbsp;{(!location.country) && <Skeleton width={160} height={21} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {location.country && <strong>{generateLocation(location)}</strong>}
         </Text>
         <Text>
           If this is incorrect, please update the values below.
