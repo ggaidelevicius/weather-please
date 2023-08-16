@@ -120,7 +120,7 @@ export const WeatherDetail: FC<WeatherDetailProps> = (props: WeatherDetailProps)
           {`${Math.round(uv)}`}
         </span>
         <span className='visuallyHidden'>
-          {`${index === 0 ? 'Today\'s UV index is' : 'The UV index will be'} ${Math.round(uv)}`}
+          {`${index === 0 ? 'Today\'s maximum UV index is' : 'The maximum UV index will be'} ${Math.round(uv)}`}
         </span>
       </div>
       <div className={styles.detail}>
