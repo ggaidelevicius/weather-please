@@ -69,7 +69,7 @@ const Settings: FC<any> = (props: any) => {
         <Title order={1}>Settings</Title>
         <Title order={2} mt="md">Location</Title>
         <Text mt="xs" sx={{ display: 'flex', alignItems: 'center' }}>
-          Based on the provided information, your location is&nbsp;{(!location.suburb || !location.country) && <Skeleton width={160} height={21} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {(location.suburb || location.country) && <strong>{location.suburb && `${location.suburb},`} {location.country}.</strong>}
+          Based on the provided information, your location is&nbsp;{(!location.country) && <Skeleton width={160} height={21} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {(location.suburb || location.country) && <strong>{location.suburb && `${location.suburb},`} {location.country}.</strong>}
         </Text>
         <Text>
           If this is incorrect, please update the values below.

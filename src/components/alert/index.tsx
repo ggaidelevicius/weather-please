@@ -32,7 +32,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
             key='precipitationAlert'
           >
             <IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
-            {totalPrecipitation}{useMetric ? 'mm' : 'in'} of precipitation expected over the next 6 hours
+            {totalPrecipitation.toPrecision(2)}{useMetric ? 'mm' : 'in'} of precipitation expected over the next 6 hours
           </MantineAlert>
         )
         setAlerts((prev) => {
