@@ -67,7 +67,8 @@ const Settings: FC<any> = (props: any) => {
         }}
       >
         <Title order={1}>Settings</Title>
-        <Text mt="md" sx={{ display: 'flex', alignItems: 'center' }}>
+        <Title order={2} mt="md">Location</Title>
+        <Text mt="xs" sx={{ display: 'flex', alignItems: 'center' }}>
           Based on the provided information, your location is&nbsp;{(!location.suburb || !location.country) && <Skeleton width={160} height={21} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {(location.suburb || location.country) && <strong>{location.suburb && `${location.suburb},`} {location.country}.</strong>}
         </Text>
         <Text>
@@ -109,17 +110,47 @@ const Settings: FC<any> = (props: any) => {
         <Text size="sm" color="dimmed">
           Note: This requires browser permissions
         </Text>
-        <Switch
-          label="Use metric number format"
-          mt="md"
-          checked={input.useMetric}
-          onChange={(e) => { handleChange('useMetric', e.target.checked) }}
-        />
+        <Title order={2} mt="md">Alerts</Title>
         <Switch
           label="Show weather alerts"
           mt="md"
           checked={input.showAlerts}
           onChange={(e) => { handleChange('showAlerts', e.target.checked) }}
+        />
+        {input.showAlerts &&
+          <>
+            <Switch
+              label="Show extreme UV alerts"
+              mt="md"
+              checked={input.showUvAlerts}
+              onChange={(e) => { handleChange('showUvAlerts', e.target.checked) }}
+            />
+            <Switch
+              label="Show high precipitation alerts"
+              mt="md"
+              checked={input.showPrecipitationAlerts}
+              onChange={(e) => { handleChange('showPrecipitationAlerts', e.target.checked) }}
+            />
+            <Switch
+              label="Show high wind alerts"
+              mt="md"
+              checked={input.showWindAlerts}
+              onChange={(e) => { handleChange('showWindAlerts', e.target.checked) }}
+            />
+            <Switch
+              label="Show low visibility alerts"
+              mt="md"
+              checked={input.showVisibilityAlerts}
+              onChange={(e) => { handleChange('showVisibilityAlerts', e.target.checked) }}
+            />
+          </>
+        }
+        <Title order={2} mt="md">Miscellaneous</Title>
+        <Switch
+          label="Use metric number format"
+          mt="md"
+          checked={input.useMetric}
+          onChange={(e) => { handleChange('useMetric', e.target.checked) }}
         />
         <Button
           onClick={() => { handleClick('manual'); close() }}

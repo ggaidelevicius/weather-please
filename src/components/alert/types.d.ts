@@ -7,4 +7,8 @@ export interface CurrentWeatherProps {
 
 export interface AlertProps extends CurrentWeatherProps {
   useMetric: boolean;
+  showUvAlerts: boolean;
+  showWindAlerts: boolean;
+  showVisibilityAlerts: boolean;
+  showPrecipitationAlerts: boolean;
 }

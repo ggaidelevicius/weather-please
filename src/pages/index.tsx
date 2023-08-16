@@ -33,6 +33,10 @@ const WeatherPlease: FC<any> = () => {
     periodicLocationUpdate: false,
     useMetric: true,
     showAlerts: true,
+    showUvAlerts: true,
+    showWindAlerts: true,
+    showVisibilityAlerts: true,
+    showPrecipitationAlerts: true,
   })
   const [input, setInput] = useState<ConfigProps>({
     lat: '',
@@ -40,6 +44,10 @@ const WeatherPlease: FC<any> = () => {
     periodicLocationUpdate: false,
     useMetric: true,
     showAlerts: true,
+    showUvAlerts: true,
+    showWindAlerts: true,
+    showVisibilityAlerts: true,
+    showPrecipitationAlerts: true,
   })
 
   const compareObjects = (obj1: any, obj2: any): boolean => {
@@ -231,7 +239,14 @@ const WeatherPlease: FC<any> = () => {
       <main className={styles.main}>
         {tiles()}
         {config.showAlerts &&
-          <Alert {...currentWeatherData} useMetric={config.useMetric} />
+          <Alert
+            {...currentWeatherData}
+            useMetric={config.useMetric}
+            showUvAlerts={config.showUvAlerts}
+            showWindAlerts={config.showWindAlerts}
+            showVisibilityAlerts={config.showVisibilityAlerts}
+            showPrecipitationAlerts={config.showPrecipitationAlerts}
+          />
         }
       </main>
 
