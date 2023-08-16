@@ -12,7 +12,9 @@ const Settings: FC<any> = (props: any) => {
   const [opened, { open, close }] = useDisclosure(false)
   const [location, setLocation] = useState<Location>({
     country: '',
+    town: '',
     suburb: '',
+    village: '',
   })
 
   useEffect(() => {
@@ -20,10 +22,14 @@ const Settings: FC<any> = (props: any) => {
       try {
         const req = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${config.lat}&lon=${config.lon}&format=json`)
         const res = await req.json()
-        const { address: { country, suburb } } = res
+        const { address: { country, suburb, town, village, state, county } } = res
         setLocation({
           country: country,
           suburb: suburb,
+          town: town,
+          village: village,
+          state: state,
+          county: county,
         })
       } catch (e) {
         // eslint-disable-next-line no-console
@@ -69,7 +75,7 @@ const Settings: FC<any> = (props: any) => {
         <Title order={1}>Settings</Title>
         <Title order={2} mt="md">Location</Title>
         <Text mt="xs" sx={{ display: 'flex', alignItems: 'center' }}>
-          Based on the provided information, your location is&nbsp;{(!location.country) && <Skeleton width={160} height={21} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {(location.suburb || location.country) && <strong>{location.suburb && `${location.suburb},`} {location.country}.</strong>}
+          Based on the provided information, your location is&nbsp;{(!location.country) && <Skeleton width={160} height={21} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {(location.suburb || location.country || location.town || location.village) && <strong>{location.town && `${location.town}, `}{location.suburb && `${location.suburb}, `}{location.village && `${location.village}, `}{location.county && `${location.county}, `}{location.state && `${location.state}, `}{location.country}.</strong>}
         </Text>
         <Text>
           If this is incorrect, please update the values below.
