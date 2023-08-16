@@ -113,7 +113,7 @@ const Settings: FC<any> = (props: any) => {
         <Title order={2} mt="xl">Alerts</Title>
         <Switch
           label="Show weather alerts"
-          mt="md"
+          mt="xs"
           checked={input.showAlerts}
           onChange={(e) => { handleChange('showAlerts', e.target.checked) }}
         />
@@ -149,7 +149,7 @@ const Settings: FC<any> = (props: any) => {
         <Title order={2} mt="xl">Miscellaneous</Title>
         <Switch
           label="Use metric number format"
-          mt="md"
+          mt="xs"
           checked={input.useMetric}
           onChange={(e) => { handleChange('useMetric', e.target.checked) }}
         />
