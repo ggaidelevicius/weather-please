@@ -1,9 +1,11 @@
-import { MantineProvider } from '@mantine/core'
+import { MantineProvider, createEmotionCache } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import type { FC } from 'react'
 import './styles.css'
+
+const cache = createEmotionCache({ key: 'weather-please' })
 
 const App: FC<AppProps> = (props: AppProps) => {
   const { Component, pageProps } = props
@@ -16,6 +18,7 @@ const App: FC<AppProps> = (props: AppProps) => {
         <link rel="icon" href="/favicon.png" />
       </Head>
       <MantineProvider
+        emotionCache={cache}
         withGlobalStyles
         withNormalizeCSS
         theme={{
