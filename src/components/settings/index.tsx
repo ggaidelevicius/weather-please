@@ -47,14 +47,14 @@ const Settings: FC<any> = (props: any) => {
     return () => { }
   }, [config, opened])
 
-  const generateLocation = (args: Partial<any>): string | null => {
+  const generateLocation = (args: Partial<any>): string => {
     let specificLocation = args?.village ?? args?.town ?? args?.suburb ?? args?.county ?? null
     if (specificLocation) {
       specificLocation = `${specificLocation}, `
     }
-    const broadLocation = args?.state ?? args?.country ?? null
+    const broadLocation = args?.state ?? args.country
 
-    return specificLocation ? `${specificLocation}${broadLocation}` : specificLocation
+    return specificLocation ? `${specificLocation}${broadLocation}` : broadLocation
   }
 
   return (
