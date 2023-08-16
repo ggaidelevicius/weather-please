@@ -110,7 +110,7 @@ const Settings: FC<any> = (props: any) => {
         <Text size="sm" color="dimmed">
           Note: This requires browser permissions
         </Text>
-        <Title order={2} mt="md">Alerts</Title>
+        <Title order={2} mt="xl">Alerts</Title>
         <Switch
           label="Show weather alerts"
           mt="md"
@@ -146,7 +146,7 @@ const Settings: FC<any> = (props: any) => {
             />
           </>
         }
-        <Title order={2} mt="md">Miscellaneous</Title>
+        <Title order={2} mt="xl">Miscellaneous</Title>
         <Switch
           label="Use metric number format"
           mt="md"
