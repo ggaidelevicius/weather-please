@@ -119,6 +119,7 @@ const Settings: FC<any> = (props: any) => {
         />
         {input.showAlerts &&
           <>
+            <Divider my="md" variant="dashed" />
             <Switch
               label="Show extreme UV alerts"
               mt="md"
