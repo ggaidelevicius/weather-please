@@ -94,19 +94,15 @@ const WeatherPlease: FC<any> = () => {
       try {
         const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility&forecast_days=3${config.useMetric ? '' : '&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch'}`)
         const res = await req.json()
-        const futureData = res.daily.time.map((day: unknown, i: number) => {
-          return (
-            {
-              day,
-              max: res.daily.temperature_2m_max[i],
-              min: res.daily.temperature_2m_min[i],
-              description: res.daily.weathercode[i],
-              uv: res.daily.uv_index_max[i],
-              wind: res.daily.windspeed_10m_max[i],
-              rain: res.daily.precipitation_probability_max[i],
-            }
-          )
-        })
+        const futureData = res.daily.time.map((day: unknown, i: number) => ({
+          day,
+          max: res.daily.temperature_2m_max[i],
+          min: res.daily.temperature_2m_min[i],
+          description: res.daily.weathercode[i],
+          uv: res.daily.uv_index_max[i],
+          wind: res.daily.windspeed_10m_max[i],
+          rain: res.daily.precipitation_probability_max[i],
+        }))
         setFutureWeatherData(futureData)
         setCurrentWeatherData({
           totalPrecipitation: res.hourly.precipitation.slice(0, 6).reduce((p: number, c: number) => p + c),
