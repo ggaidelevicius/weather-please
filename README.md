@@ -11,6 +11,7 @@ Both metric and imperial number formats are supported.
 Weather please uses [Open Meteo](https://open-meteo.com/) as the source for all weather data. At the time of writing, the Open Meteo platform is FOSS, and does not require the end-user to provide an API key.
 
 [Get Weather Please for Google Chrome](https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn)
+[Try a live demo](https://weather-please-extension.vercel.app/)
 
 ## Translations
 
