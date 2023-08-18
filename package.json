@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "next build && move out\\_next out\\next && node build",
+        "build": "next build && node build",
         "start": "next start",
         "lint": "next lint",
         "release": "pnpm build && node release"

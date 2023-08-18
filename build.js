@@ -1,8 +1,21 @@
 /* eslint-disable no-console */
 const fs = require('fs-extra')
 const glob = require('glob')
+const { execSync } = require('child_process')
+const os = require('os')
 
-async function main () {
+const moveCommand = os.platform() === 'win32' ? 'move' : 'mv'
+const sourcePath = 'out/_next'
+const destinationPath = 'out/next'
+
+try {
+  execSync(`${moveCommand} ${sourcePath} ${destinationPath}`)
+  console.log('Moved _next directory to next.')
+} catch (error) {
+  console.error('Move operation failed:', error)
+}
+
+const main = async () => {
   const extensionPath = 'extension'
 
   // Remove the 'extension' directory if it exists
