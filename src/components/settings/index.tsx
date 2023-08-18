@@ -195,8 +195,8 @@ const Settings: FC<any> = (props: any) => {
         <Text size="sm" component="a" href="https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews" sx={{ '&:hover': { textDecoration: 'underline' } }} target="_blank">
           ⭐ Leave a review
         </Text>
-        {/* <Text size="sm" component="a" href="https://patreon.com/WeatherPlease" sx={{ '&:hover': { textDecoration: 'underline' } }} target="_blank">
-          ☕ Show your support
+        {/* <Text size="sm" component="a" href="https://www.buymeacoffee.com/ggaidelevicius" sx={{ '&:hover': { textDecoration: 'underline' } }} target="_blank">
+          ☕ Buy me a coffee
         </Text> */}
       </Modal>
     </>
