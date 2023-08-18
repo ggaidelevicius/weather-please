@@ -84,10 +84,10 @@ const Settings: FC<any> = (props: any) => {
       >
         <Title order={1}>Settings</Title>
         <Title order={2} mt="md">Location</Title>
-        <Text mt="xs" sx={{ display: 'flex', alignItems: 'center' }}>
-          Based on the provided information, your location is&nbsp;{(!location.country) && <Skeleton width={160} height={21} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {location.country && <strong>{generateLocation(location)}</strong>}
+        <Text mt="xs" sx={{ display: 'flex', flexDirection: 'column' }}>
+          Based on the provided information, your location is:{(!location.country) && <Skeleton width={160} height={21} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {location.country && <strong>{generateLocation(location)}</strong>}
         </Text>
-        <Text>
+        <Text sx={{ marginTop: '0.25rem' }}>
           If this is incorrect, please update the values below.
         </Text>
         <TextInput
