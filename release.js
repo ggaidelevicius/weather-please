@@ -53,4 +53,5 @@ function processReleaseType (releaseType) {
   fs.copyFileSync(manifestPath, 'extension/manifest.json')
 
   console.log(`Version in manifest.json and package.json updated to: ${newVersion}`)
+  process.exit(0)
 }
