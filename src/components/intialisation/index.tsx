@@ -28,7 +28,7 @@ const Initialisation: FC<any> = (props: any) => {
       trapFocus={false}
     >
       <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '2rem', justifyContent: 'center' }}>
-        <img src="/favicon.png" alt="Weather Please logo" style={{ maxWidth: '4rem' }} />
+        <img src="/favicon.png" alt="Weather Please logo" style={{ height: '4rem', width: '4rem' }} />
         <Title order={1}>Weather <span style={{ color: '#ea5e57' }}>Please</span></Title>
       </div>
       <Text sx={{ fontSize: '1.05rem' }}>
