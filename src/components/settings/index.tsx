@@ -87,7 +87,7 @@ const Settings: FC<any> = (props: any) => {
         <Text mt="xs" sx={{ display: 'flex', flexDirection: 'column' }}>
           Based on the provided information, your location is:{(!location.country) && <Skeleton width={160} height={24.8} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {location.country && <strong>{generateLocation(location)}</strong>}
         </Text>
-        <Text sx={{ marginTop: '0.25rem' }}>
+        <Text mt="xs">
           If this is incorrect, please update the values below.
         </Text>
         <TextInput
@@ -190,6 +190,10 @@ const Settings: FC<any> = (props: any) => {
           >
             weatherplease.dev@gmail.com
           </Text>
+        </Text>
+        <Divider sx={{ marginTop: '0.875rem', marginBottom: '0.75rem' }} variant="dashed" />
+        <Text size="sm" component="a" href="https://patreon.com/WeatherPlease" sx={{ '&:hover': { textDecoration: 'underline' } }} target="_blank">
+          ☕ Show your support
         </Text>
       </Modal>
     </>
