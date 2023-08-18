@@ -1,35 +1,52 @@
 {
-    "name": "weather-please",
-    "version": "2.3.15",
-    "private": true,
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build && node build",
-        "start": "next start",
-        "lint": "next lint",
-        "release": "pnpm build && node release"
-    },
-    "dependencies": {
-        "@emotion/react": "^11.11.1",
-        "@emotion/server": "^11.11.0",
-        "@mantine/core": "^6.0.19",
-        "@mantine/hooks": "^6.0.19",
-        "@mantine/next": "^6.0.19",
-        "@mantine/notifications": "^6.0.19",
-        "@tabler/icons-react": "^2.30.0",
-        "framer-motion": "^10.15.2",
-        "next": "13.4.16",
-        "react": "18.2.0",
-        "react-dom": "18.2.0"
-    },
-    "devDependencies": {
-        "@types/node": "20.5.0",
-        "@types/react": "18.2.20",
-        "@types/react-dom": "18.2.7",
-        "eslint": "8.47.0",
-        "eslint-config-next": "13.4.16",
-        "fs-extra": "^11.1.1",
-        "glob": "^10.3.3",
-        "typescript": "5.1.6"
-    }
+  "name": "weather-please",
+  "version": "2.3.15",
+  "description": "Savor the elegance and grace of Weather Please as it integrates flawlessly into your browser. A symphony of design and performance awaits – where weather meets artistry in the most subtle, yet captivating, manner.",
+  "private": true,
+  "author": {
+    "name": "Gus Gaidelevicius"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ggaidelevicius/weather-please.git"
+  },
+  "homepage": "https://github.com/ggaidelevicius/weather-please",
+  "bugs": {
+    "url": "https://github.com/ggaidelevicius/weather-please/issues"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://patreon.com/WeatherPlease"
+  },
+  "license": "SEE LICENSE IN license.md",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && node build",
+    "start": "next start",
+    "lint": "next lint",
+    "release": "pnpm build && node release"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/server": "^11.11.0",
+    "@mantine/core": "^6.0.19",
+    "@mantine/hooks": "^6.0.19",
+    "@mantine/next": "^6.0.19",
+    "@mantine/notifications": "^6.0.19",
+    "@tabler/icons-react": "^2.30.0",
+    "framer-motion": "^10.15.2",
+    "next": "13.4.16",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.5.0",
+    "@types/react": "18.2.20",
+    "@types/react-dom": "18.2.7",
+    "eslint": "8.47.0",
+    "eslint-config-next": "13.4.16",
+    "fs-extra": "^11.1.1",
+    "glob": "^10.3.3",
+    "typescript": "5.1.6"
+  }
 }
