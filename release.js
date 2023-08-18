@@ -47,8 +47,8 @@ function processReleaseType (releaseType) {
   manifestContent.version = newVersion
   packageContent.version = newVersion
 
-  fs.writeFileSync(manifestPath, JSON.stringify(manifestContent, null, 4))
-  fs.writeFileSync(packagePath, JSON.stringify(packageContent, null, 4))
+  fs.writeFileSync(manifestPath, JSON.stringify(manifestContent, null,2))
+  fs.writeFileSync(packagePath, JSON.stringify(packageContent, null, 2))
 
   fs.copyFileSync(manifestPath, 'extension/manifest.json')
 
