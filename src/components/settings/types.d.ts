@@ -1,4 +1,4 @@
-import type { ConfigProps, HandleChange, HandleClick } from "@/pages/types";
+import type { ConfigProps, HandleChange, HandleClick } from '@/pages/types'
 
 export interface Location {
   suburb?: string;
