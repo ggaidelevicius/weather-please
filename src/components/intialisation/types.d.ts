@@ -1,7 +1,7 @@
 import type { ConfigProps, HandleChange, HandleClick } from '@/pages/types'
 import type { Dispatch } from 'react'
 
-export interface Props {
+export interface InitialisationProps {
   opened: boolean;
   geolocationError: boolean;
   handleClick: HandleClick;

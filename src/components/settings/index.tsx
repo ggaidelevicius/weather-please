@@ -5,9 +5,9 @@ import { notifications } from '@mantine/notifications'
 import { IconSettings } from '@tabler/icons-react'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
-import type { Location, Props } from './types'
+import type { Location, SettingsProps } from './types'
 
-const Settings: FC<Props> = (props: Props) => {
+const Settings: FC<SettingsProps> = (props: SettingsProps) => {
   const { input, handleChange, handleClick, config } = props
   const [opened, { open, close }] = useDisclosure(false)
   const [location, setLocation] = useState<Location>({

@@ -9,7 +9,7 @@ export interface Location {
   county?: string;
 }
 
-export interface Props {
+export interface SettingsProps {
   input: ConfigProps;
   handleChange: HandleChange;
   handleClick: HandleClick;
