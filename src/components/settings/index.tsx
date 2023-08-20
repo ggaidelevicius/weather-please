@@ -85,7 +85,7 @@ const Settings: FC<SettingsProps> = (props: SettingsProps) => {
           body: {
             display: 'flex',
             flexDirection: 'column',
-          }
+          },
         }}
       >
         <Title order={1}>Settings</Title>
