@@ -10,4 +10,19 @@ export interface ConfigProps {
   showPrecipitationAlerts: boolean;
 }
 
-export type HandleChangeKey = 'lat' | 'lon' | 'periodicLocationUpdate' | 'showAlerts' | 'showUvAlerts' | 'showPrecipitationAlerts' | 'showWindAlerts' | 'showVisibilityAlerts' | 'useMetric'
+export type HandleChangeKey =
+  | 'lat'
+  | 'lon'
+  | 'periodicLocationUpdate'
+  | 'showAlerts'
+  | 'showUvAlerts'
+  | 'showPrecipitationAlerts'
+  | 'showWindAlerts'
+  | 'showVisibilityAlerts'
+  | 'useMetric';
+
+// eslint-disable-next-line no-unused-vars
+export type HandleChange = (k: HandleChangeKey, v: string | boolean) => void;
+
+// eslint-disable-next-line no-unused-vars
+export type HandleClick = (method: 'auto' | 'manual') => void;
