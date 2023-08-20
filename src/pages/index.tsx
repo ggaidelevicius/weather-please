@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
 import type { ConfigProps, HandleChange, HandleClick } from './types'
 
-const WeatherPlease: FC<any> = () => {
+const WeatherPlease: FC = () => {
   const [currentWeatherData, setCurrentWeatherData] = useState<CurrentWeatherProps>({
     totalPrecipitation: {
       precipitation: {
@@ -47,14 +47,14 @@ const WeatherPlease: FC<any> = () => {
   const [config, setConfig] = useState<ConfigProps>(initialState)
   const [input, setInput] = useState<ConfigProps>(initialState)
 
-  const compareObjects = (obj1: any, obj2: any): boolean => {
+  const compareObjects = (obj1: Partial<unknown>, obj2: Partial<unknown>): boolean => {
     const keys1 = Object.keys(obj1)
     const keys2 = Object.keys(obj2)
 
     return keys1.length === keys2.length && keys1.every(key => keys2.includes(key))
   }
 
-  const mergeObjects = (targetObj: any, sourceObj: any) => {
+  const mergeObjects = (targetObj: Partial<any>, sourceObj: Partial<any>) => {
     const mergedObject = { ...targetObj }
 
     Object.keys(sourceObj).forEach(key => {

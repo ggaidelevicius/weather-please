@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { Button, Modal, Text, TextInput, Title } from '@mantine/core'
 import type { FC } from 'react'
+import type { Props } from './types'
 
-const Initialisation: FC<any> = (props: any) => {
+const Initialisation: FC<Props> = (props: Props) => {
   const {
     opened,
     geolocationError,
