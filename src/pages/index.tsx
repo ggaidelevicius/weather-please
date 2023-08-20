@@ -63,7 +63,7 @@ const WeatherPlease: FC = () => {
       }
     })
 
-    return mergedObject
+    return mergedObject as ConfigProps
   }
 
   useEffect(() => {
