@@ -16,7 +16,13 @@ import type { ConfigProps } from './types'
 
 const WeatherPlease: FC<any> = () => {
   const [currentWeatherData, setCurrentWeatherData] = useState<CurrentWeatherProps>({
-    totalPrecipitation: 0,
+    totalPrecipitation: {
+      precipitation: {
+        value: 0,
+        flag: false,
+      },
+      duration: [false],
+    },
     hoursOfExtremeUv: [false],
     hoursOfHighWind: [false],
     hoursOfLowVisibility: [false],
@@ -96,7 +102,15 @@ const WeatherPlease: FC<any> = () => {
         }))
         setFutureWeatherData(futureData)
         setCurrentWeatherData({
-          totalPrecipitation: res.hourly.precipitation.slice(0, 6).reduce((p: number, c: number) => p + c),
+          totalPrecipitation: {
+            precipitation: res.hourly.precipitation.slice(0, 24).reduce((p: { value: number, flag: boolean }, c: number) => {
+              if (p.flag || c === 0) {
+                return { value: p.value, flag: true }
+              }
+              return { value: p.value + c, flag: false }
+            }, { value: 0, flag: false }),
+            duration: res.hourly.precipitation.slice(0, 24).map((val: number) => val > 0),
+          },
           hoursOfExtremeUv: res.hourly.uv_index.slice(0, 12).map((val: number) => val >= 11),
           hoursOfHighWind: res.hourly.windspeed_10m.slice(0, 12).map((val: number) => val >= (config.useMetric ? 60 : 37)),
           hoursOfLowVisibility: res.hourly.visibility.slice(0, 12).map((val: number) => val <= 200),

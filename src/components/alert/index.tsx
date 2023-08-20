@@ -22,8 +22,9 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
 
   useEffect(() => {
     if (showPrecipitationAlerts) {
+      const { precipitation, duration } = totalPrecipitation
       let precipitationAlert: ReactElement | null = null
-      if ((useMetric && totalPrecipitation >= 15) || (!useMetric && totalPrecipitation >= 0.590551)) {
+      if ((useMetric && precipitation.value >= 15) || (!useMetric && precipitation.value >= 0.590551)) {
         precipitationAlert = (
           <MantineAlert
             className={styles.alert}
@@ -32,7 +33,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
             key='precipitationAlert'
           >
             <IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
-            {totalPrecipitation.toFixed(2)}{useMetric ? 'mm' : 'in'} of precipitation expected over the next 6 hours
+            {precipitation.value.toFixed(2)}{useMetric ? 'mm' : 'in'} of precipitation expected over the next {duration.indexOf(false) === 1 ? 'hour' : `${duration.indexOf(false)} hours`}
           </MantineAlert>
         )
         setAlerts((prev) => {

@@ -1,5 +1,5 @@
 export interface CurrentWeatherProps {
-  totalPrecipitation: number;
+  totalPrecipitation: TotalPrecipitation;
   hoursOfExtremeUv: boolean[];
   hoursOfHighWind: boolean[];
   hoursOfLowVisibility: boolean[];
@@ -11,4 +11,12 @@ export interface AlertProps extends CurrentWeatherProps {
   showWindAlerts: boolean;
   showVisibilityAlerts: boolean;
   showPrecipitationAlerts: boolean;
+}
+
+interface TotalPrecipitation {
+  precipitation: {
+    value: number;
+    flag: boolean;
+  };
+  duration: boolean[];
 }
