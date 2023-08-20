@@ -1,6 +1,6 @@
 # <img src="https://raw.githubusercontent.com/ggaidelevicius/weather-please/main/public/favicon.png" alt="Weather Please logo" width="50"> Weather Please
 
-Weather Please is a new tab replacement extension that is suitable for any browser that supports extensions, such as chromium.
+Weather Please is a new tab replacement extension that is suitable for any browser that supports extensions (such as chromium).
 
 It displays maximum and minimum temperatures, a general prognosis, maximum UV index, maximum wind speed, and chance of precipitation for the current day, as well as 2 days into the future.
 
