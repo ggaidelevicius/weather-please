@@ -81,6 +81,12 @@ const Settings: FC<SettingsProps> = (props: SettingsProps) => {
         sx={{
           maxWidth: '70ch',
         }}
+        styles={{
+          body: {
+            display: 'flex',
+            flexDirection: 'column',
+          }
+        }}
       >
         <Title order={1}>Settings</Title>
         <Title order={2} mt="md">Location</Title>
@@ -192,8 +198,11 @@ const Settings: FC<SettingsProps> = (props: SettingsProps) => {
           </Text>
         </Text>
         <Divider sx={{ marginTop: '0.875rem', marginBottom: '0.75rem' }} variant="dashed" />
-        <Text size="sm" component="a" href="https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews" sx={{ '&:hover': { textDecoration: 'underline' } }} target="_blank">
+        <Text size="sm" color="lightblue" component="a" href="https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews" sx={{ '&:hover': { textDecoration: 'underline' } }} target="_blank">
           ⭐ Leave a review
+        </Text>
+        <Text size="sm" color="lightblue" component="a" href="https://github.com/ggaidelevicius/weather-please/issues" sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target="_blank">
+          🦗 Report a bug
         </Text>
         {/* <Text size="sm" component="a" href="https://www.buymeacoffee.com/ggaidelevicius" sx={{ '&:hover': { textDecoration: 'underline' } }} target="_blank">
           ☕ Buy me a coffee
