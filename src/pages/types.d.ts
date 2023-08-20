@@ -9,3 +9,5 @@ export interface ConfigProps {
   showVisibilityAlerts: boolean;
   showPrecipitationAlerts: boolean;
 }
+
+export type HandleChangeKey = 'lat' | 'lon' | 'periodicLocationUpdate' | 'showAlerts' | 'showUvAlerts' | 'showPrecipitationAlerts' | 'showWindAlerts' | 'showVisibilityAlerts' | 'useMetric'

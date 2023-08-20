@@ -12,7 +12,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
-import type { ConfigProps } from './types'
+import type { ConfigProps, HandleChangeKey } from './types'
 
 const WeatherPlease: FC<any> = () => {
   const [currentWeatherData, setCurrentWeatherData] = useState<CurrentWeatherProps>({
@@ -141,7 +141,7 @@ const WeatherPlease: FC<any> = () => {
     return () => { }
   }, [currentHour, config])
 
-  const handleChange = (k: 'lat' | 'lon' | 'periodicLocationUpdate', v: string | boolean): void => {
+  const handleChange = (k: HandleChangeKey, v: string | boolean): void => {
     setInput((prev: ConfigProps) => {
       return ({
         ...prev,
