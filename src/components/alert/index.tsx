@@ -218,6 +218,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
       className={styles.wrapper}
       key={`alert-${i}`}
       layout
+      style={{ background: 'none' }}
     >
       {alert}
     </motion.div>

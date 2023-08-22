@@ -213,6 +213,7 @@ const WeatherPlease: FC = () => {
       animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 0.75 } }}
       exit={{ scale: 0.95, opacity: 0 }}
       layout
+      style={{ background: 'none' }}
     >
       <Tile {...day} useMetric={config.useMetric} index={i} />
     </motion.div>
@@ -227,7 +228,7 @@ const WeatherPlease: FC = () => {
             initial={{ scale: 1, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
-            style={{ position: 'absolute', width: '100%', margin: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            style={{ position: 'absolute', width: '100%', margin: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none' }}
           >
             <Loader variant="dots" size="lg" />
           </motion.div>
@@ -235,7 +236,7 @@ const WeatherPlease: FC = () => {
       </AnimatePresence>
 
       <AnimatePresence>
-        <motion.main layout className={styles.main}>
+        <motion.main layout className={styles.main} style={{ background: 'none' }}>
           {tiles()}
           {config.showAlerts &&
             <Alert
