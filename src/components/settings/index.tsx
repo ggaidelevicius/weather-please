@@ -59,13 +59,13 @@ const Settings: FC<SettingsProps> = (props: SettingsProps) => {
   }
 
   useEffect(() => {
-    const userAgent = navigator.userAgent
+    const userAgent = navigator.userAgent.toLowerCase()
 
-    if (userAgent.toLowerCase().includes('safari/')) {
+    if (userAgent.includes('safari/')) {
       // pending review
-    } else if (userAgent.toLowerCase().includes('firefox/')) {
+    } else if (userAgent.includes('firefox/')) {
       setReviewLink('https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/')
-    } else if (userAgent.toLowerCase().includes('edg/')) {
+    } else if (userAgent.includes('edg/')) {
       // pending review
     }
 
