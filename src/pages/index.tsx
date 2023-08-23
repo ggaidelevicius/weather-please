@@ -142,7 +142,7 @@ const WeatherPlease: FC = () => {
   }, [currentHour, config])
 
   const handleChange: HandleChange = (k, v) => {
-    setInput((prev: ConfigProps) => {
+    setInput((prev) => {
       return ({
         ...prev,
         [k]: v,
