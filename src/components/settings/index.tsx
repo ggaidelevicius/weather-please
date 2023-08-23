@@ -10,6 +10,7 @@ import type { Location, SettingsProps } from './types'
 const Settings: FC<SettingsProps> = (props: SettingsProps) => {
   const { input, handleChange, handleClick, config } = props
   const [opened, { open, close }] = useDisclosure(false)
+  const [reviewLink, setReviewLink] = useState('https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews')
   const [location, setLocation] = useState<Location>({
     country: '',
     town: '',
@@ -56,6 +57,20 @@ const Settings: FC<SettingsProps> = (props: SettingsProps) => {
 
     return specificLocation ? `${specificLocation}${broadLocation}` : broadLocation
   }
+
+  useEffect(() => {
+    const userAgent = navigator.userAgent
+
+    if (userAgent.toLowerCase().includes('safari/')) {
+      // pending review
+    } else if (userAgent.toLowerCase().includes('firefox/')) {
+      setReviewLink('https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/')
+    } else if (userAgent.toLowerCase().includes('edg/')) {
+      // pending review
+    }
+
+    return () => { }
+  }, [])
 
   return (
     <>
@@ -198,7 +213,7 @@ const Settings: FC<SettingsProps> = (props: SettingsProps) => {
           </Text>
         </Text>
         <Divider sx={{ marginTop: '0.875rem', marginBottom: '0.75rem' }} variant="dashed" />
-        <Text size="sm" color="lightblue" component="a" href="https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews" sx={{ '&:hover': { textDecoration: 'underline' } }} target="_blank">
+        <Text size="sm" color="lightblue" component="a" href={reviewLink} sx={{ '&:hover': { textDecoration: 'underline' } }} target="_blank">
           ⭐ Leave a review
         </Text>
         <Text size="sm" color="lightblue" component="a" href="https://github.com/ggaidelevicius/weather-please/issues" sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target="_blank">
