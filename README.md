@@ -23,7 +23,7 @@ If you would like to help by providing translations, please [reach out via email
 ## Development
 Weather Please is built using [Next.js](https://nextjs.org/). It uses the [Mantine component library](https://mantine.dev/), [Tabler Icons](https://tablericons.com/), and [Framer Motion](https://www.framer.com/motion/).
 
-To run the development environment locally, first clone this repo and ensure that you have [Node.js](https://nodejs.org) >= 18.16.1 installed. Next, run ```pnpm i```, and finally ```pnpm dev```.
+To run the development environment locally, first clone this repo and ensure that you have [Node.js](https://nodejs.org) >= 20.5.1 installed. Next, run ```pnpm i```, and finally ```pnpm dev```.
 
 There are no environment variables to configure.
 
