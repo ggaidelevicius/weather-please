@@ -24,7 +24,7 @@
     "build": "next build && node build",
     "start": "next start",
     "lint": "next lint",
-    "release": "pnpm build && node release"
+    "release": "npx npm-check-updates -u && pnpm build && node release"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
