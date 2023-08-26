@@ -24,7 +24,7 @@ export const BasicWeather: FC<BasicWeatherProps> = (props: BasicWeatherProps) =>
     '1': 'mainly clear',
     '2': 'partly cloudy',
     '3': 'overcast',
-    '45': 'fog',
+    '45': 'mainly clear', // though this should be fog, fog appears way too often and is not at all accurate
     '48': 'depositing rime fog',
     '51': 'light drizzle',
     '53': 'moderate drizzle',
@@ -54,7 +54,7 @@ export const BasicWeather: FC<BasicWeatherProps> = (props: BasicWeatherProps) =>
     '1': FewClouds,
     '2': OvercastClouds,
     '3': BrokenClouds,
-    '45': Mist,
+    '45': FewClouds, // though this should be fog/mist, fog appears way too often and is not at all accurate
     '48': Mist,
     '51': LightDrizzle,
     '53': ShowerDrizzle,
