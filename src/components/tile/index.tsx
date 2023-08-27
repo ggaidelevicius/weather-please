@@ -24,12 +24,11 @@ const Tile: FC<TileProps> = (props: TileProps) => {
       <Title
         order={2}
         className={styles.title}
-        aria-label={`${days[new Date(day * 1000).getDay()]}, ${new Date(day * 1000).getDate()} ${months[new Date(day * 1000).getMonth()]}`}
       >
-        <span aria-hidden className={classnames(styles.day, hovering ? styles.dayHover : undefined)}>
+        <span className={classnames(styles.day, hovering ? styles.dayHover : undefined)}>
           {days[new Date(day * 1000).getDay()]}
         </span>
-        <span aria-hidden className={classnames(styles.date, hovering ? styles.dateHover : undefined)}>
+        <span className={classnames(styles.date, hovering ? styles.dateHover : undefined)}>
           {`${new Date(day * 1000).getDate()} ${months[new Date(day * 1000).getMonth()]}`}
         </span>
       </Title>
