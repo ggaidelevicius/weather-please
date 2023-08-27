@@ -43,6 +43,7 @@ const WeatherPlease: FC = () => {
     showWindAlerts: true,
     showVisibilityAlerts: true,
     showPrecipitationAlerts: true,
+    daysToRetrieve: '3',
   }
   const [config, setConfig] = useState<ConfigProps>(initialState)
   const [input, setInput] = useState<ConfigProps>(initialState)
@@ -89,7 +90,7 @@ const WeatherPlease: FC = () => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility&forecast_days=3${config.useMetric ? '' : '&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch'}`)
+        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility&forecast_days=${config.daysToRetrieve}${config.useMetric ? '' : '&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch'}`)
         const res = await req.json()
         const futureData = res.daily.time.map((day: unknown, i: number) => ({
           day,
@@ -220,6 +221,33 @@ const WeatherPlease: FC = () => {
   ))
   )
 
+  const determineGridColumns = (): number => {
+    const value = parseInt(config.daysToRetrieve)
+
+    switch (value) {
+      case 1:
+        return 1
+      case 2:
+        return 2
+      case 3:
+        return 3
+      case 4:
+        return 4
+      case 5:
+        return 5
+      case 6:
+        return 3
+      case 7:
+        return 3
+      case 8:
+        return 4
+      case 9:
+        return 3
+      default:
+        return 3
+    }
+  }
+
   return (
     <>
       <AnimatePresence>
@@ -236,7 +264,7 @@ const WeatherPlease: FC = () => {
       </AnimatePresence>
 
       <AnimatePresence>
-        <motion.main layout className={styles.main} style={{ background: 'none' }}>
+        <motion.main layout className={styles.main} style={{ background: 'none', gridTemplateColumns: `repeat(${determineGridColumns()}, 1fr)` }}>
           {tiles()}
           {config.showAlerts &&
             <Alert
@@ -246,6 +274,7 @@ const WeatherPlease: FC = () => {
               showWindAlerts={config.showWindAlerts}
               showVisibilityAlerts={config.showVisibilityAlerts}
               showPrecipitationAlerts={config.showPrecipitationAlerts}
+              width={determineGridColumns()}
             />
           }
         </motion.main>

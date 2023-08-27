@@ -11,6 +11,7 @@ export interface AlertProps extends CurrentWeatherProps {
   showWindAlerts: boolean;
   showVisibilityAlerts: boolean;
   showPrecipitationAlerts: boolean;
+  width: number;
 }
 
 interface TotalPrecipitation {

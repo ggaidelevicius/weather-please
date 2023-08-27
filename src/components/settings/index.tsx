@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { ActionIcon, Button, Divider, Modal, Skeleton, Switch, Text, TextInput, Title } from '@mantine/core'
+import { ActionIcon, Button, Divider, Modal, NativeSelect, Skeleton, Switch, Text, TextInput, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import { IconSettings } from '@tabler/icons-react'
@@ -184,6 +184,13 @@ const Settings: FC<SettingsProps> = (props: SettingsProps) => {
           </>
         }
         <Title order={2} mt="xl">Miscellaneous</Title>
+        <NativeSelect
+          mt="xs"
+          label="Number of days to forecast"
+          value={input.daysToRetrieve}
+          onChange={(e) => { handleChange('daysToRetrieve', e.target.value) }}
+          data={['1', '2', '3', '4', '5', '6', '7', '8', '9']}
+        />
         <Switch
           label="Use metric number format"
           mt="xs"

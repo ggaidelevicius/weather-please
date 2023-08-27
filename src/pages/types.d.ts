@@ -8,6 +8,7 @@ export interface ConfigProps {
   showWindAlerts: boolean;
   showVisibilityAlerts: boolean;
   showPrecipitationAlerts: boolean;
+  daysToRetrieve: string;
 }
 
 export type HandleChangeKey =
@@ -19,7 +20,8 @@ export type HandleChangeKey =
   | 'showPrecipitationAlerts'
   | 'showWindAlerts'
   | 'showVisibilityAlerts'
-  | 'useMetric';
+  | 'useMetric'
+  | 'daysToRetrieve';
 
 // eslint-disable-next-line no-unused-vars
 export type HandleChange = (k: HandleChangeKey, v: string | boolean) => void;

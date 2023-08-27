@@ -17,6 +17,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
     showWindAlerts,
     showVisibilityAlerts,
     showPrecipitationAlerts,
+    width,
   } = props
   const [alerts, setAlerts] = useState<ReactElement[] | []>([])
 
@@ -218,7 +219,7 @@ const Alert: FC<AlertProps> = (props: AlertProps) => {
       className={styles.wrapper}
       key={`alert-${i}`}
       layout
-      style={{ background: 'none' }}
+      style={{ background: 'none', gridColumn: `1/${width + 1}` }}
     >
       {alert}
     </motion.div>

@@ -2,9 +2,9 @@
   grid-column: 1/4;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1150px) {
   .wrapper {
-    grid-column: 1
+    grid-column: 1 !important;
   }
 }
 
