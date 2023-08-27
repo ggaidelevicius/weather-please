@@ -1,4 +1,38 @@
 .title {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.day,
+.date {
+  opacity: 1;
+  width: 100%;
+  position: relative;
+  transition: 0.2s ease-out;
+}
+
+.day {
+  transform: scale(1);
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+
+.dayHover {
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+.date {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+.dateHover {
+  transform: scale(1);
+  opacity: 1;
+  transition-delay: 0.4s;
 }
