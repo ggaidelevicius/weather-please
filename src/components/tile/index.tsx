@@ -6,7 +6,7 @@ import styles from './styles.module.css'
 import type { Days, Months, TileProps } from './types'
 import { BasicWeather, WeatherDetail } from './weather'
 
-const Tile: FC<TileProps> = (props: TileProps) => {
+const Tile: FC<TileProps> = (props) => {
   const { day } = props
   const [hovering, setHovering] = useState<boolean>(false)
   const days: Days[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']

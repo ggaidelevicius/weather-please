@@ -3,7 +3,7 @@ import { Button, Modal, Text, TextInput, Title } from '@mantine/core'
 import type { FC } from 'react'
 import type { InitialisationProps } from './types'
 
-const Initialisation: FC<InitialisationProps> = (props: InitialisationProps) => {
+const Initialisation: FC<InitialisationProps> = (props) => {
   const {
     opened,
     geolocationError,

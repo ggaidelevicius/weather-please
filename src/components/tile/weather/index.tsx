@@ -17,7 +17,7 @@ import type { FC } from 'react'
 import styles from './styles.module.css'
 import type { BasicWeatherProps, WeatherDetailProps } from './types'
 
-export const BasicWeather: FC<BasicWeatherProps> = (props: BasicWeatherProps) => {
+export const BasicWeather: FC<BasicWeatherProps> = (props) => {
   const { max, min, description, useMetric } = props
   const descriptionMap = {
     '0': 'clear sky',
@@ -109,7 +109,7 @@ export const BasicWeather: FC<BasicWeatherProps> = (props: BasicWeatherProps) =>
   )
 }
 
-export const WeatherDetail: FC<WeatherDetailProps> = (props: WeatherDetailProps) => {
+export const WeatherDetail: FC<WeatherDetailProps> = (props) => {
   const { uv, wind, rain, useMetric, index } = props
 
   return (

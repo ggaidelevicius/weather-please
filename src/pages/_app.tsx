@@ -7,7 +7,7 @@ import './styles.css'
 
 const cache = createEmotionCache({ key: 'weather-please' })
 
-const App: FC<AppProps> = (props: AppProps) => {
+const App: FC<AppProps> = (props) => {
   const { Component, pageProps } = props
 
   return (

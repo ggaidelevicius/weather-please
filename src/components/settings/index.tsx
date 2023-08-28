@@ -7,7 +7,7 @@ import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import type { Location, SettingsProps } from './types'
 
-const Settings: FC<SettingsProps> = (props: SettingsProps) => {
+const Settings: FC<SettingsProps> = (props) => {
   const { input, handleChange, handleClick, config } = props
   const [opened, { open, close }] = useDisclosure(false)
   const [reviewLink, setReviewLink] = useState('https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews')

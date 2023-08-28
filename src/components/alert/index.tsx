@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
 import type { AlertProps } from './types'
 
-const Alert: FC<AlertProps> = (props: AlertProps) => {
+const Alert: FC<AlertProps> = (props) => {
   const {
     totalPrecipitation,
     hoursOfExtremeUv,
