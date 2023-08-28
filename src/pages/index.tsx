@@ -5,7 +5,7 @@ import Initialisation from '@/components/intialisation'
 import Settings from '@/components/settings'
 import Tile from '@/components/tile'
 import type { TileProps } from '@/components/tile/types'
-import { Loader } from '@mantine/core'
+import { Loader, Text } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -304,6 +304,17 @@ const WeatherPlease: FC = () => {
         opened={opened}
         close={close}
       />
+
+      <Text
+        sx={{ position: 'fixed', bottom: '1rem', left: '1rem', '&:hover': { textDecoration: 'underline' } }}
+        color="dimmed"
+        size="xs"
+        component="a"
+        href="https://open-meteo.com/"
+        target="_blank"
+      >
+        weather data provided by open-meteo
+      </Text>
     </>
   )
 }
