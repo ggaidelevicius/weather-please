@@ -3,6 +3,7 @@ const fs = require('fs-extra')
 const glob = require('glob')
 const { execSync } = require('child_process')
 const os = require('os')
+const path = require('path')
 
 const moveCommand = os.platform() === 'win32' ? 'move' : 'mv'
 const sourcePath = 'out/_next'
@@ -15,37 +16,37 @@ try {
   console.error('Move operation failed:', error)
 }
 
-const main = async () => {
+const main = () => {
   const extensionPath = 'extension'
 
   // Remove the 'extension' directory if it exists
-  await fs.remove(extensionPath)
+  if (fs.existsSync(extensionPath)) {
+    fs.removeSync(extensionPath)
+  }
 
   // Replace content in HTML and JS files
   const files = glob.sync('out/**/*.{html,js}', { nodir: true })
   for (const file of files) {
-    let content = await fs.readFile(file, 'utf-8')
+    let content = fs.readFileSync(file, 'utf-8')
     content = content.replace(/\/_next\//g, '/next/')
-    await fs.writeFile(file, content, 'utf-8')
+    fs.writeFileSync(file, content, 'utf-8')
   }
 
   // Create a new 'extension' directory
-  await fs.mkdir(extensionPath)
+  fs.mkdirSync(extensionPath)
 
-  // Move index.html and favicon.png to the 'extension' directory
-  await fs.move('out/index.html', `${extensionPath}/index.html`)
-  await fs.move('out/favicon.png', `${extensionPath}/favicon.png`)
-
-  // Copy 'next' directory contents
-  await fs.copy('out/next', `${extensionPath}/next`)
-
-  // Remove the 'out' directory
-  await fs.remove('out')
-
-  // Copy manifest.json to the 'extension' directory
-  await fs.copy('manifest.json', `${extensionPath}/manifest.json`)
+  // Perform related operations
+  fs.moveSync(path.join('out', 'index.html'), path.join(extensionPath, 'index.html'))
+  fs.moveSync(path.join('out', 'favicon.png'), path.join(extensionPath, 'favicon.png'))
+  fs.copySync(path.join('out', 'next'), path.join(extensionPath, 'next'))
+  fs.removeSync('out')
+  fs.copySync('manifest.json', path.join(extensionPath, 'manifest.json'))
 
   console.log('Processing completed.')
 }
 
-main().catch(error => console.error('An error occurred:', error))
+try {
+  main()
+} catch (error) {
+  console.error('An error occurred:', error)
+}
