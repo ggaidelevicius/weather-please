@@ -219,7 +219,7 @@ const Alert: FC<AlertProps> = (props) => {
       className={styles.wrapper}
       key={`alert-${i}`}
       layout
-      style={{ background: 'none', gridColumn: `1/${width + 1}` }}
+      style={{ gridColumn: `1/${width + 1}` }}
     >
       {alert}
     </motion.div>

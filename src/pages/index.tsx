@@ -265,7 +265,13 @@ const WeatherPlease: FC = () => {
       </AnimatePresence>
 
       <AnimatePresence>
-        <motion.main layout className={styles.main} style={{ background: 'none', gridTemplateColumns: `repeat(${determineGridColumns()}, 1fr)` }}>
+        <motion.main
+          layout
+          className={styles.main}
+          style={{
+            gridTemplateColumns: `repeat(${determineGridColumns()}, 1fr)`,
+          }}
+        >
           {tiles()}
           {config.showAlerts &&
             <Alert
