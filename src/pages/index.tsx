@@ -222,8 +222,8 @@ const WeatherPlease: FC = () => {
   ))
   )
 
-  const determineGridColumns = (): number => {
-    const value = parseInt(config.daysToRetrieve)
+  const determineGridColumns = (daysToRetrieve: string): number => {
+    const value = parseInt(daysToRetrieve)
 
     switch (value) {
       case 1:
@@ -269,7 +269,7 @@ const WeatherPlease: FC = () => {
           layout
           className={styles.main}
           style={{
-            gridTemplateColumns: `repeat(${determineGridColumns()}, 1fr)`,
+            gridTemplateColumns: `repeat(${determineGridColumns(config.daysToRetrieve)}, 1fr)`,
           }}
         >
           {tiles()}
@@ -281,7 +281,7 @@ const WeatherPlease: FC = () => {
               showWindAlerts={config.showWindAlerts}
               showVisibilityAlerts={config.showVisibilityAlerts}
               showPrecipitationAlerts={config.showPrecipitationAlerts}
-              width={determineGridColumns()}
+              width={determineGridColumns(config.daysToRetrieve)}
             />
           }
         </motion.main>
