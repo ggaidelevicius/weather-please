@@ -109,7 +109,7 @@ const processReleaseType = (releaseType) => {
   modifyManifest({
     'browser_specific_settings': {
       'gecko': {
-        'id': 'addon@example.com',
+        'id': '{9282bc49-b1b4-4f46-b135-1dfe00f182c9}',
       },
     },
   }, [])
