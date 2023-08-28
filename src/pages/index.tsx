@@ -130,7 +130,7 @@ const WeatherPlease: FC = () => {
       }
     }
 
-    if (config.lat && config.lon) { // additional logic that checks whether fields that changed actually warrant re-fetching is required here now
+    if (config.lat && config.lon) {
       fetchData()
     }
 
@@ -141,7 +141,7 @@ const WeatherPlease: FC = () => {
     }, 6e4)
 
     return () => { }
-  }, [currentHour, config])
+  }, [currentHour, config.lat, config.lon, config.daysToRetrieve, config.useMetric])
 
   const handleChange: HandleChange = (k, v) => {
     setInput((prev) => {
