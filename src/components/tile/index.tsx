@@ -7,10 +7,13 @@ import type { Days, Months, TileProps } from './types'
 import { BasicWeather, WeatherDetail } from './weather'
 
 const Tile: FC<TileProps> = (props) => {
-  const { day } = props
+  const { day, identifier } = props
   const [hovering, setHovering] = useState<boolean>(false)
   const days: Days[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const months: Months[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+  let tileDay = days[new Date(day * 1000).getDay()]
+  let tileDate = `${new Date(day * 1000).getDate()} ${months[new Date(day * 1000).getMonth()]}`
 
   return (
     <Card
@@ -26,10 +29,10 @@ const Tile: FC<TileProps> = (props) => {
         className={styles.title}
       >
         <span className={classnames(styles.day, hovering ? styles.dayHover : undefined)}>
-          {days[new Date(day * 1000).getDay()]}
+          {identifier === 'day' ? tileDay : tileDate}
         </span>
         <span className={classnames(styles.date, hovering ? styles.dateHover : undefined)}>
-          {`${new Date(day * 1000).getDate()} ${months[new Date(day * 1000).getMonth()]}`}
+          {identifier === 'day' ? tileDate : tileDay}
         </span>
       </Title>
       <BasicWeather {...props} />

@@ -191,9 +191,19 @@ const Settings: FC<SettingsProps> = (props) => {
           onChange={(e) => { handleChange('daysToRetrieve', e.target.value) }}
           data={['1', '2', '3', '4', '5', '6', '7', '8', '9']}
         />
+        <NativeSelect
+          mt="xs"
+          label="Identifier"
+          value={input.identifier}
+          onChange={(e) => { handleChange('identifier', e.target.value) }}
+          data={[
+            { label: 'Day', value: 'day' },
+            { label: 'Date', value: 'date' },
+          ]}
+        />
         <Switch
           label="Use metric number format"
-          mt="xs"
+          mt="md"
           checked={input.useMetric}
           onChange={(e) => { handleChange('useMetric', e.target.checked) }}
         />

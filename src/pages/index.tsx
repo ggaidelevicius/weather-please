@@ -33,7 +33,7 @@ const WeatherPlease: FC = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [geolocationError, setGeolocationError] = useState<boolean>(false)
   const [opened, { open, close }] = useDisclosure(false)
-  const initialState = {
+  const initialState: ConfigProps = {
     lat: '',
     lon: '',
     periodicLocationUpdate: false,
@@ -44,6 +44,7 @@ const WeatherPlease: FC = () => {
     showVisibilityAlerts: true,
     showPrecipitationAlerts: true,
     daysToRetrieve: '3',
+    identifier: 'day',
   }
   const [config, setConfig] = useState<ConfigProps>(initialState)
   const [input, setInput] = useState<ConfigProps>(initialState)
@@ -129,7 +130,7 @@ const WeatherPlease: FC = () => {
       }
     }
 
-    if (config.lat && config.lon) {
+    if (config.lat && config.lon) { // additional logic that checks whether fields that changed actually warrant re-fetching is required here now
       fetchData()
     }
 
@@ -216,7 +217,7 @@ const WeatherPlease: FC = () => {
       layout
       style={{ background: 'none' }}
     >
-      <Tile {...day} useMetric={config.useMetric} index={i} />
+      <Tile {...day} useMetric={config.useMetric} identifier={config.identifier} index={i} />
     </motion.div>
   ))
   )
