@@ -304,27 +304,15 @@ const WeatherPlease: FC = () => {
         opened={opened}
         close={close}
       />
-      <AnimatePresence>
-        <motion.div
-          initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 3 } }}
-          exit={{ scale: 0.95, opacity: 0 }}
-          style={{ position: 'fixed', bottom: '1rem', left: '1rem' }}
-        >
-          {futureWeatherData.length > 0 &&
-            <Text
-              sx={{ '&:hover': { textDecoration: 'underline' } }}
-              color="dimmed"
-              size="xs"
-              component="a"
-              href="https://open-meteo.com/"
-              target="_blank"
-            >
-              weather data provided by open-meteo
-            </Text>
-          }
-        </motion.div>
-      </AnimatePresence>
+
+      <a
+        href="https://open-meteo.com/"
+        target="_blank"
+        className={styles.link}
+        style={{ position: 'fixed', bottom: '1rem', left: '1rem', fontSize: '0.75rem', color: 'hsl(220deg 2.78% 57.65%)', lineHeight: 1, textDecoration: 'none' }}
+      >
+        weather data provided by open-meteo
+      </a>
     </>
   )
 }

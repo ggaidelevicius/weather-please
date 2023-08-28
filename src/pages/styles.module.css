@@ -6,6 +6,10 @@
   overflow: hidden;
 }
 
+.link:hover {
+  text-decoration: underline !important;
+}
+
 @media (max-width: 1150px) {
   .main {
     grid-template-columns: repeat(1, 1fr) !important;
