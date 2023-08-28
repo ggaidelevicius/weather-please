@@ -10,16 +10,6 @@ PACKAGE_PATH = 'package.json'
 const args = process.argv.slice(2)
 const releaseType = args[0]
 
-if (!releaseType) {
-  console.log('Enter the release type (\'major\', \'minor\', or \'patch\'): ')
-  process.stdin.once('data', (data) => {
-    const input = data.toString().trim()
-    processReleaseType(input)
-  })
-} else {
-  processReleaseType(releaseType)
-}
-
 const bumpVersion = (currentVersion, releaseType) => {
   const [major, minor, patch] = currentVersion.split('.').map(Number)
 
@@ -43,11 +33,11 @@ const createZipWithContents = (zip, contentPath, zipName) => {
       zip.addFile(zipFolderPath + '/', Buffer.alloc(0))
     } else {
       items.forEach(item => {
-        const itemPath = path.join(folderPath, item)
+        const itemPath = folderPath + '/' + item
         if (fs.statSync(itemPath).isDirectory()) {
-          addFolderContentsToZip(itemPath, path.join(zipFolderPath, item))
-        } else if (path.extname(item).toLowerCase() !== '.zip') {
-          zip.addFile(path.join(zipFolderPath, item), fs.readFileSync(itemPath))
+          addFolderContentsToZip(itemPath, zipFolderPath ? zipFolderPath + '/' + item : item)
+        } else if (itemPath.slice(-4).toLowerCase() !== '.zip') {
+          zip.addFile(zipFolderPath ? zipFolderPath + '/' + item : item, fs.readFileSync(itemPath))
         }
       })
     }
@@ -56,7 +46,7 @@ const createZipWithContents = (zip, contentPath, zipName) => {
   addFolderContentsToZip(contentPath)
 
   zip.writeZip(zipName)
-  fs.renameSync(zipName, path.join(EXTENSION_DIR, zipName))
+  fs.renameSync(zipName, EXTENSION_DIR + '/' + zipName)
 }
 
 const addAttributesToManifest = (attributes) => {
@@ -134,8 +124,8 @@ const packageSource = () => {
     const entries = fs.readdirSync(dir)
 
     entries.forEach(entry => {
-      const fullPath = path.join(dir, entry)
-      const zipPath = path.join(zipDir, entry)
+      const fullPath = dir + '/' + entry
+      const zipPath = zipDir + '/' + entry
 
       if (fs.statSync(fullPath).isDirectory()) {
         // add the directory itself (for empty folders too)
@@ -143,7 +133,7 @@ const packageSource = () => {
 
         // recursively add its content
         addContentToZip(fullPath, zipPath)
-      } else if (!fullPath.includes('extension') && path.extname(fullPath) !== '.zip') {
+      } else if (!fullPath.includes('extension') && fullPath.slice(-4) !== '.zip') {
         zip.addLocalFile(fullPath, zipDir)
       }
     })
@@ -151,8 +141,8 @@ const packageSource = () => {
 
   // add all FILES from the root directory
   fs.readdirSync('./').forEach(file => {
-    const fullPath = path.join('./', file)
-    if (fs.statSync(fullPath).isFile() && path.extname(fullPath) !== '.zip') {
+    const fullPath = './' + file
+    if (fs.statSync(fullPath).isFile() && fullPath.slice(-4) !== '.zip') {
       zip.addLocalFile(fullPath)
     }
   })
@@ -163,5 +153,15 @@ const packageSource = () => {
 
   const zipFileName = 'src.zip'
   zip.writeZip(zipFileName)
-  fs.renameSync(zipFileName, path.join(EXTENSION_DIR, zipFileName))
+  fs.renameSync(zipFileName, EXTENSION_DIR + '/' + zipFileName)
+}
+
+if (!releaseType) {
+  console.log('Enter the release type (\'major\', \'minor\', or \'patch\'): ')
+  process.stdin.once('data', (data) => {
+    const input = data.toString().trim()
+    processReleaseType(input)
+  })
+} else {
+  processReleaseType(releaseType)
 }
