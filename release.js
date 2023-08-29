@@ -6,7 +6,7 @@ const AdmZip = require('adm-zip')
 const EXTENSION_DIR = 'extension'
 const MANIFEST_PATH = 'manifest.json'
 const PACKAGE_PATH = 'package.json'
-const PBXPROJ_PATH = path.join('platforms', 'apply', 'Weather Please.xcodeproj', 'project.pbxproj')
+const PBXPROJ_PATH = path.join('platforms', 'apple', 'Weather Please.xcodeproj', 'project.pbxproj')
 
 const args = process.argv.slice(2)
 const releaseType = args[0]
@@ -29,13 +29,13 @@ const bumpVersion = (currentVersion, releaseType) => {
 const updatePbxprojVersion = (newVersion) => {
   let pbxContent = fs.readFileSync(PBXPROJ_PATH, 'utf-8')
 
-  pbxContent = pbxContent.replace(
-    /CURRENT_PROJECT_VERSION = \d+\.\d+\.\d+/,
+  pbxContent = pbxContent.replaceAll(
+    /CURRENT_PROJECT_VERSION = \d+\.\d+\.\d+/g,
     `CURRENT_PROJECT_VERSION = ${newVersion}`
   )
 
-  pbxContent = pbxContent.replace(
-    /MARKETING_VERSION = \d+\.\d+\.\d+/,
+  pbxContent = pbxContent.replaceAll(
+    /MARKETING_VERSION = \d+\.\d+\.\d+/g,
     `MARKETING_VERSION = ${newVersion}`
   )
 
