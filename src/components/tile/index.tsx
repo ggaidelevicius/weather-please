@@ -20,7 +20,7 @@ const Tile: FC<TileProps> = (props) => {
       component="article"
       padding="lg"
       radius="md"
-      sx={{ userSelect: 'none' }}
+      sx={{ userSelect: 'none', cursor: 'default' }}
       onMouseEnter={() => { setHovering(true) }}
       onMouseLeave={() => { setHovering(false) }}
     >
