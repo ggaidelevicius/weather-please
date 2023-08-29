@@ -1,4 +1,4 @@
-# Privacy Policy for "Weather Please" Browser Extension
+# Privacy Policy for the "Weather Please" Browser Extension
 
 _Last updated: August 29, 2023_
 
