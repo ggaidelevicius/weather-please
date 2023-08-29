@@ -235,17 +235,27 @@ const WeatherPlease: FC = () => {
         })
       } else {
         const fetchSafariGeoData = async () => {
-          const req = await fetch('http://ip-api.com/json/', {
-            method: 'GET',
-            mode: 'cors',
-          })
-          const res = await req.json()
-          const { latitude, longitude } = res
-          setConfig((prev) => ({
-            ...prev,
-            lat: latitude,
-            lon: longitude,
-          }))
+          try {
+            const req = await fetch('http://ip-api.com/json/', {
+              method: 'GET',
+              mode: 'cors',
+            })
+            const res = await req.json()
+            const { latitude, longitude } = res
+            setConfig((prev) => ({
+              ...prev,
+              lat: latitude,
+              lon: longitude,
+            }))
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.warn(e)
+            notifications.show({
+              title: 'Error',
+              message: 'An error has occurred while fetching location data. Please check the console for more details.',
+              color: 'red',
+            })
+          }
         }
         fetchSafariGeoData()
       }
