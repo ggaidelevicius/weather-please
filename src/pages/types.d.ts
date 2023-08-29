@@ -10,6 +10,7 @@ export interface ConfigProps {
   showPrecipitationAlerts: boolean;
   daysToRetrieve: string;
   identifier: 'day' | 'date';
+  shareCrashesAndErrors: boolean;
 }
 
 export type HandleChangeKey =
@@ -23,7 +24,8 @@ export type HandleChangeKey =
   | 'showVisibilityAlerts'
   | 'useMetric'
   | 'daysToRetrieve'
-  | 'identifier';
+  | 'identifier'
+  | 'shareCrashesAndErrors';
 
 // eslint-disable-next-line no-unused-vars
 export type HandleChange = (k: HandleChangeKey, v: string | boolean) => void;
