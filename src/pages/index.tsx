@@ -8,6 +8,7 @@ import type { TileProps } from '@/components/tile/types'
 import { Loader } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
+import * as Sentry from '@sentry/nextjs'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
@@ -45,9 +46,24 @@ const WeatherPlease: FC = () => {
     showPrecipitationAlerts: true,
     daysToRetrieve: '3',
     identifier: 'day',
+    shareCrashesAndErrors: false,
   }
   const [config, setConfig] = useState<ConfigProps>(initialState)
   const [input, setInput] = useState<ConfigProps>(initialState)
+
+  useEffect(() => {
+    if (config.shareCrashesAndErrors) {
+      Sentry.init({
+        dsn: 'https://f3641aec69a23937c89259888e252f19@o4505788641771520.ingest.sentry.io/4505788646817792',
+        tracesSampleRate: 1,
+        debug: false,
+        replaysOnErrorSampleRate: 1.0,
+        replaysSessionSampleRate: 0,
+        beforeSend: (event) => event,
+      })
+    }
+    return () => { }
+  }, [config.shareCrashesAndErrors])
 
   const compareObjects = (obj1: Partial<unknown>, obj2: Partial<unknown>): boolean => {
     const keys1 = Object.keys(obj1)

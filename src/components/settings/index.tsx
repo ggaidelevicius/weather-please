@@ -216,6 +216,12 @@ const Settings: FC<SettingsProps> = (props) => {
           checked={input.useMetric}
           onChange={(e) => { handleChange('useMetric', e.target.checked) }}
         />
+        <Switch
+          label='Share anonymised crash data and error logs'
+          mt='md'
+          checked={input.shareCrashesAndErrors}
+          onChange={(e) => { handleChange('shareCrashesAndErrors', e.target.checked) }}
+        />
         <Button
           onClick={() => { handleClick('manual'); close() }}
           mt='md'

@@ -23,7 +23,7 @@ Weather please uses [Open Meteo](https://open-meteo.com/) as the source for all 
 If you would like to help by providing translations, please [reach out via email](mailto:weatherplease.dev@gmail.com).
 
 ## Development
-Weather Please is built using [Next.js](https://nextjs.org/). It uses the [Mantine component library](https://mantine.dev/), [Tabler Icons](https://tablericons.com/), and [Framer Motion](https://www.framer.com/motion/).
+Weather Please is built using [Next.js](https://nextjs.org/). It uses the [Mantine component library](https://mantine.dev/), [Tabler Icons](https://tablericons.com/), and [Framer Motion](https://www.framer.com/motion/). [Sentry](https://sentry.io/) is used for error reporting.
 
 To run the development environment locally, first clone this repo and ensure that you have [Node.js](https://nodejs.org) >= 20.5.1 installed. Next, run ```pnpm i```, and finally ```pnpm dev```.
 
