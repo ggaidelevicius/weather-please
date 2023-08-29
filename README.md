@@ -14,6 +14,8 @@ Weather please uses [Open Meteo](https://open-meteo.com/) as the source for all 
 
 [Get Weather Please for Firefox](https://addons.mozilla.org/en-US/firefox/addon/weather-please/)
 
+[Get Weather Please for Edge](https://microsoftedge.microsoft.com/addons/detail/weather-please/genbleeffmekfnbkfpgdkdpggamcgflo)
+
 [Try a live demo](https://weather-please-extension.vercel.app/)
 
 ## Translations
