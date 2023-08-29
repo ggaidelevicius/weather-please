@@ -66,7 +66,7 @@ const Settings: FC<SettingsProps> = (props) => {
     } else if (userAgent.includes('firefox/')) {
       setReviewLink('https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/')
     } else if (userAgent.includes('edg/')) {
-      // pending review
+      setReviewLink('https://microsoftedge.microsoft.com/addons/detail/weather-please/genbleeffmekfnbkfpgdkdpggamcgflo')
     }
 
     return () => { }
