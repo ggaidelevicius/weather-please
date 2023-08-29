@@ -155,7 +155,7 @@ const WeatherPlease: FC = () => {
   const handleClick: HandleClick = async (method) => {
     const userAgent = navigator.userAgent.toLowerCase()
 
-    if (method === 'auto' && !userAgent.includes('safari/')) {
+    if (method === 'auto' && (!(userAgent.indexOf('safari') !== -1 && userAgent.indexOf('chrome') === -1))) {
       navigator.geolocation.getCurrentPosition((pos) => {
         setConfig((prev) => ({
           ...prev,
@@ -169,23 +169,29 @@ const WeatherPlease: FC = () => {
         }))
       })
       setTimeout(() => { setGeolocationError(true) }, 5e3)
-    } else if (method === 'auto' && userAgent.includes('safari/')) {
-      const ipReq = await fetch('https://api.ipify.org/?format=json')
-      const ipRes = await ipReq.json()
-      const { ip } = ipRes
-      const geoReq = await fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`)
-      const geoRes = await geoReq.json()
-      const { latitude, longitude } = geoRes
-      setConfig((prev) => ({
-        ...prev,
-        lat: latitude,
-        lon: longitude,
-      }))
-      setInput((prev) => ({
-        ...prev,
-        lat: latitude,
-        lon: longitude,
-      }))
+    } else if (method === 'auto' && ((userAgent.indexOf('safari') !== -1) && userAgent.indexOf('chrome') === -1)) {
+      try {
+        const req = await fetch('http://ip-api.com/json/', {
+          method: 'GET',
+          mode: 'cors',
+        })
+        const res = await req.json()
+        const { lat, lon } = res
+        setConfig((prev) => ({
+          ...prev,
+          lat: lat,
+          lon: lon,
+        }))
+        setInput((prev) => ({
+          ...prev,
+          lat: lat,
+          lon: lon,
+        }))
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.warn(e)
+        setGeolocationError(true)
+      }
       setTimeout(() => { setGeolocationError(true) }, 5e3)
     } else {
       setConfig(input)
@@ -219,7 +225,7 @@ const WeatherPlease: FC = () => {
     if (config.periodicLocationUpdate) {
       const userAgent = navigator.userAgent.toLowerCase()
 
-      if (!userAgent.includes('safari/')) {
+      if (!(userAgent.indexOf('safari') !== -1) && userAgent.indexOf('chrome') === -1) {
         navigator.geolocation.getCurrentPosition((pos) => {
           setConfig((prev) => ({
             ...prev,
@@ -229,12 +235,12 @@ const WeatherPlease: FC = () => {
         })
       } else {
         const fetchSafariGeoData = async () => {
-          const ipReq = await fetch('https://api.ipify.org/?format=json')
-          const ipRes = await ipReq.json()
-          const { ip } = ipRes
-          const geoReq = await fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`)
-          const geoRes = await geoReq.json()
-          const { latitude, longitude } = geoRes
+          const req = await fetch('http://ip-api.com/json/', {
+            method: 'GET',
+            mode: 'cors',
+          })
+          const res = await req.json()
+          const { latitude, longitude } = res
           setConfig((prev) => ({
             ...prev,
             lat: latitude,
@@ -298,7 +304,7 @@ const WeatherPlease: FC = () => {
             exit={{ scale: 0.95, opacity: 0 }}
             style={{ position: 'absolute', width: '100%', margin: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none' }}
           >
-            <Loader variant="dots" size="lg" />
+            <Loader variant='dots' size='lg' />
           </motion.div>
         }
       </AnimatePresence>
@@ -345,8 +351,8 @@ const WeatherPlease: FC = () => {
       />
 
       <a
-        href="https://open-meteo.com/"
-        target="_blank"
+        href='https://open-meteo.com/'
+        target='_blank'
         className={styles.link}
         style={{ position: 'fixed', bottom: '1rem', left: '1rem', fontSize: '0.75rem', color: 'hsl(220deg 2.78% 57.65%)', lineHeight: 1, textDecoration: 'none' }}
       >

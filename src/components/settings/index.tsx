@@ -10,6 +10,7 @@ import type { Location, SettingsProps } from './types'
 const Settings: FC<SettingsProps> = (props) => {
   const { input, handleChange, handleClick, config } = props
   const [opened, { open, close }] = useDisclosure(false)
+  const [usingSafari, setUsingSafari] = useState<boolean>(false)
   const [reviewLink, setReviewLink] = useState('https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews')
   const [location, setLocation] = useState<Location>({
     country: '',
@@ -61,7 +62,8 @@ const Settings: FC<SettingsProps> = (props) => {
   useEffect(() => {
     const userAgent = navigator.userAgent.toLowerCase()
 
-    if (userAgent.includes('safari/')) {
+    if (userAgent.indexOf('safari') !== -1 && userAgent.indexOf('chrome') === -1) {
+      setUsingSafari(true)
       // pending review
     } else if (userAgent.includes('firefox/')) {
       setReviewLink('https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/')
@@ -144,9 +146,16 @@ const Settings: FC<SettingsProps> = (props) => {
           checked={input.periodicLocationUpdate}
           onChange={(e) => { handleChange('periodicLocationUpdate', e.target.checked) }}
         />
-        <Text size="sm" color="dimmed">
-          Note: This requires browser permissions
-        </Text>
+        {!usingSafari &&
+          <Text size="sm" color="dimmed">
+            Note: This requires browser permissions
+          </Text>
+        }
+        {usingSafari &&
+          <Text size="sm" color="dimmed">
+            Note: This currently does not work well in Safari, and may be inaccurate
+          </Text>
+        }
         <Title order={2} mt="xl">Alerts</Title>
         <Switch
           label="Show weather alerts"
@@ -231,10 +240,10 @@ const Settings: FC<SettingsProps> = (props) => {
         </Text>
         <Divider sx={{ marginTop: '0.875rem', marginBottom: '0.75rem' }} variant="dashed" />
         <Text size="sm" color="lightblue" component="a" href={reviewLink} sx={{ '&:hover': { textDecoration: 'underline' } }} target="_blank">
-          ⭐ Leave a review
+          🌟 Leave a review
         </Text>
         <Text size="sm" color="lightblue" component="a" href="https://github.com/ggaidelevicius/weather-please/issues" sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target="_blank">
-          🦗 Report a bug
+          🐛 Report a bug
         </Text>
         {/* <Text size="sm" component="a" href="https://www.buymeacoffee.com/ggaidelevicius" sx={{ '&:hover': { textDecoration: 'underline' } }} target="_blank">
           ☕ Buy me a coffee
