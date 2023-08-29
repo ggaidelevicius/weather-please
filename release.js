@@ -153,7 +153,7 @@ const packageSource = () => {
 
         // recursively add its content
         addContentToZip(fullPath, zipPath)
-      } else if (!fullPath.includes('extension') && fullPath.slice(-4) !== '.zip') {
+      } else if (!fullPath.includes('extension') && fullPath.slice(-4) !== '.zip' && !fullPath.includes('.sentryclirc')) {
         zip.addLocalFile(fullPath, zipDir)
       }
     })
