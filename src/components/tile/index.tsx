@@ -17,9 +17,9 @@ const Tile: FC<TileProps> = (props) => {
 
   return (
     <Card
-      component="article"
-      padding="lg"
-      radius="md"
+      component='article'
+      padding='lg'
+      radius='md'
       sx={{ userSelect: 'none', cursor: 'default' }}
       onMouseEnter={() => { setHovering(true) }}
       onMouseLeave={() => { setHovering(false) }}

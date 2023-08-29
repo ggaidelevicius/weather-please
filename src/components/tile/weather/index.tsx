@@ -104,7 +104,7 @@ export const BasicWeather: FC<BasicWeatherProps> = (props) => {
           {`The expected type of weather is ${descriptionMap[description as keyof typeof descriptionMap]}.`}
         </span>
       </div>
-      <img src={iconMap[description as keyof typeof iconMap].src} alt="" className={styles.image} />
+      <img src={iconMap[description as keyof typeof iconMap].src} alt='' className={styles.image} />
     </div>
   )
 }

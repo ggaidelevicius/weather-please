@@ -147,7 +147,7 @@ const packageSource = () => {
     }
   })
 
-  // add "src" and "public" folders, preserving their structure
+  // add 'src' and 'public' folders, preserving their structure
   addContentToZip('./src', 'src')
   addContentToZip('./public', 'public')
 

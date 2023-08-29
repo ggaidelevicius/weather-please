@@ -9,7 +9,7 @@ export default class _Document extends Document {
   render () {
     return (
       <Html>
-        <Head lang="en" />
+        <Head lang='en' />
         <body>
           <Main />
           <NextScript />
