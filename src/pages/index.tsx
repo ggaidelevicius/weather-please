@@ -152,8 +152,10 @@ const WeatherPlease: FC = () => {
     })
   }
 
-  const handleClick: HandleClick = (method) => {
-    if (method === 'auto') {
+  const handleClick: HandleClick = async (method) => {
+    const userAgent = navigator.userAgent.toLowerCase()
+
+    if (method === 'auto' && !userAgent.includes('safari/')) {
       navigator.geolocation.getCurrentPosition((pos) => {
         setConfig((prev) => ({
           ...prev,
@@ -166,6 +168,24 @@ const WeatherPlease: FC = () => {
           lon: pos.coords.longitude.toString(),
         }))
       })
+      setTimeout(() => { setGeolocationError(true) }, 5e3)
+    } else if (method === 'auto' && userAgent.includes('safari/')) {
+      const ipReq = await fetch('https://api.ipify.org/?format=json')
+      const ipRes = await ipReq.json()
+      const { ip } = ipRes
+      const geoReq = await fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`)
+      const geoRes = await geoReq.json()
+      const { latitude, longitude } = geoRes
+      setConfig((prev) => ({
+        ...prev,
+        lat: latitude,
+        lon: longitude,
+      }))
+      setInput((prev) => ({
+        ...prev,
+        lat: latitude,
+        lon: longitude,
+      }))
       setTimeout(() => { setGeolocationError(true) }, 5e3)
     } else {
       setConfig(input)
@@ -197,13 +217,32 @@ const WeatherPlease: FC = () => {
     }, 6e4)
 
     if (config.periodicLocationUpdate) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        setConfig((prev) => ({
-          ...prev,
-          lat: pos.coords.latitude.toString(),
-          lon: pos.coords.longitude.toString(),
-        }))
-      })
+      const userAgent = navigator.userAgent.toLowerCase()
+
+      if (!userAgent.includes('safari/')) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+          setConfig((prev) => ({
+            ...prev,
+            lat: pos.coords.latitude.toString(),
+            lon: pos.coords.longitude.toString(),
+          }))
+        })
+      } else {
+        const fetchSafariGeoData = async () => {
+          const ipReq = await fetch('https://api.ipify.org/?format=json')
+          const ipRes = await ipReq.json()
+          const { ip } = ipRes
+          const geoReq = await fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`)
+          const geoRes = await geoReq.json()
+          const { latitude, longitude } = geoRes
+          setConfig((prev) => ({
+            ...prev,
+            lat: latitude,
+            lon: longitude,
+          }))
+        }
+        fetchSafariGeoData()
+      }
     }
     return () => { }
   }, [currentDate, config.periodicLocationUpdate])
