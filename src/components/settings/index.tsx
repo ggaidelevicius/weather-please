@@ -156,6 +156,24 @@ const Settings: FC<SettingsProps> = (props) => {
             Note: This currently does not work well in Safari, and may be inaccurate
           </Text>
         }
+        <Title order={2} mt='xl'>Tiles</Title>
+        <NativeSelect
+          mt='xs'
+          label='Number of days to forecast'
+          value={input.daysToRetrieve}
+          onChange={(e) => { handleChange('daysToRetrieve', e.target.value) }}
+          data={['1', '2', '3', '4', '5', '6', '7', '8', '9']}
+        />
+        <NativeSelect
+          mt='xs'
+          label='Identifier'
+          value={input.identifier}
+          onChange={(e) => { handleChange('identifier', e.target.value) }}
+          data={[
+            { label: 'Day', value: 'day' },
+            { label: 'Date', value: 'date' },
+          ]}
+        />
         <Title order={2} mt='xl'>Alerts</Title>
         <Switch
           label='Show weather alerts'
@@ -193,23 +211,6 @@ const Settings: FC<SettingsProps> = (props) => {
           </>
         }
         <Title order={2} mt='xl'>Miscellaneous</Title>
-        <NativeSelect
-          mt='xs'
-          label='Number of days to forecast'
-          value={input.daysToRetrieve}
-          onChange={(e) => { handleChange('daysToRetrieve', e.target.value) }}
-          data={['1', '2', '3', '4', '5', '6', '7', '8', '9']}
-        />
-        <NativeSelect
-          mt='xs'
-          label='Identifier'
-          value={input.identifier}
-          onChange={(e) => { handleChange('identifier', e.target.value) }}
-          data={[
-            { label: 'Day', value: 'day' },
-            { label: 'Date', value: 'date' },
-          ]}
-        />
         <Switch
           label='Use metric number format'
           mt='md'
