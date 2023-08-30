@@ -153,7 +153,7 @@ const packageSource = () => {
 
         // recursively add its content
         addContentToZip(fullPath, zipPath)
-      } else if (!fullPath.includes('extension') && fullPath.slice(-4) !== '.zip' && !fullPath.includes('.sentryclirc')) {
+      } else if (!fullPath.includes('extension') && fullPath.slice(-4) !== '.zip') {
         zip.addLocalFile(fullPath, zipDir)
       }
     })
@@ -162,7 +162,7 @@ const packageSource = () => {
   // add all FILES from the root directory
   fs.readdirSync('./').forEach(file => {
     const fullPath = './' + file
-    if (fs.statSync(fullPath).isFile() && fullPath.slice(-4) !== '.zip') {
+    if (fs.statSync(fullPath).isFile() && fullPath.slice(-4) !== '.zip' && fullPath !== './.sentryclirc') {
       zip.addLocalFile(fullPath)
     }
   })
