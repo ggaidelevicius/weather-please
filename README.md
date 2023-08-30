@@ -16,6 +16,8 @@ Weather please uses [Open Meteo](https://open-meteo.com/) as the source for all 
 
 [Get Weather Please for Edge](https://microsoftedge.microsoft.com/addons/detail/weather-please/genbleeffmekfnbkfpgdkdpggamcgflo)
 
+[Get Weather Please for Safari](https://apps.apple.com/au/app/weather-please/id6462968576)
+
 [Try a live demo](https://weather-please.app/)
 
 ## Translations
