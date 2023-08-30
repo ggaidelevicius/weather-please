@@ -252,7 +252,7 @@ const Settings: FC<SettingsProps> = (props) => {
           🐛 Report a bug
         </Text>
         <Text size='sm' color='lightblue' component='a' href='https://github.com/ggaidelevicius/weather-please/blob/main/privacy.md' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
-          🛡️ Privacy policy
+          🔒 Privacy policy
         </Text>
         {/* <Text size='sm' component='a' href='https://www.buymeacoffee.com/ggaidelevicius' sx={{ '&:hover': { textDecoration: 'underline' } }} target='_blank'>
           ☕ Buy me a coffee
