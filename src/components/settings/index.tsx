@@ -238,11 +238,11 @@ const Settings: FC<SettingsProps> = (props) => {
         <Text size='sm' color='dimmed'>
           If you can help by providing translations, please reach out at <Text
             component='a'
-            href='mailto:weatherplease.dev@gmail.com'
+            href='mailto:contact@weather-please.app'
             color='lightblue'
             sx={{ '&:hover': { textDecoration: 'underline' } }}
           >
-            weatherplease.dev@gmail.com
+            contact@weather-please.app
           </Text>
         </Text>
         <Divider sx={{ marginTop: '0.875rem', marginBottom: '0.75rem' }} variant='dashed' />

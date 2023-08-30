@@ -20,7 +20,7 @@ Weather please uses [Open Meteo](https://open-meteo.com/) as the source for all 
 
 ## Translations
 
-If you would like to help by providing translations, please [reach out via email](mailto:weatherplease.dev@gmail.com).
+If you would like to help by providing translations, please [reach out via email](mailto:contact@weather-please.app).
 
 ## Development
 Weather Please is built using [Next.js](https://nextjs.org/). It uses the [Mantine component library](https://mantine.dev/), [Tabler Icons](https://tablericons.com/), and [Framer Motion](https://www.framer.com/motion/). [Sentry](https://sentry.io/) is used for error reporting.
