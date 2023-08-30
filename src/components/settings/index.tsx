@@ -64,7 +64,7 @@ const Settings: FC<SettingsProps> = (props) => {
 
     if (userAgent.indexOf('safari') !== -1 && userAgent.indexOf('chrome') === -1) {
       setUsingSafari(true)
-      // pending review
+      setReviewLink('https://apps.apple.com/au/app/weather-please/id6462968576')
     } else if (userAgent.includes('firefox/')) {
       setReviewLink('https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/')
     } else if (userAgent.includes('edg/')) {
