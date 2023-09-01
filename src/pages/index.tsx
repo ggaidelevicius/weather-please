@@ -53,20 +53,6 @@ const WeatherPlease: FC = () => {
   const [usingFreshData, setUsingFreshData] = useState<boolean>(false)
 
   useEffect(() => {
-    const removeLocalStorageData = () => {
-      if (localStorage.data) {
-        localStorage.removeItem('data')
-      }
-    }
-
-    window.addEventListener('beforeunload', removeLocalStorageData)
-
-    return () => {
-      window.removeEventListener('beforeunload', removeLocalStorageData)
-    }
-  }, [])
-
-  useEffect(() => {
     if (config.shareCrashesAndErrors) {
       Sentry.init({
         dsn: 'https://f3641aec69a23937c89259888e252f19@o4505788641771520.ingest.sentry.io/4505788646817792',
@@ -135,7 +121,7 @@ const WeatherPlease: FC = () => {
         }))
         setFutureWeatherData(futureData)
         localStorage.data = JSON.stringify(futureData)
-        setCurrentWeatherData({
+        const alerts = {
           totalPrecipitation: {
             precipitation: res.hourly.precipitation.slice(currentHour, currentHour + 25).reduce((p: { value: number, flag: boolean }, c: number) => {
               if (p.flag || c === 0) {
@@ -148,7 +134,11 @@ const WeatherPlease: FC = () => {
           hoursOfExtremeUv: res.hourly.uv_index.slice(currentHour, currentHour + 13).map((val: number) => val >= 11),
           hoursOfHighWind: res.hourly.windspeed_10m.slice(currentHour, currentHour + 13).map((val: number) => val >= (config.useMetric ? 60 : 37)),
           hoursOfLowVisibility: res.hourly.visibility.slice(currentHour, currentHour + 13).map((val: number) => val <= 200),
-        })
+        }
+        setCurrentWeatherData(alerts)
+        localStorage.alerts = JSON.stringify(alerts)
+        const now = new Date()
+        localStorage.lastUpdated = `${now.getDate()}-${now.getHours()}`
       } catch (e: any) {
         // eslint-disable-next-line no-console
         console.warn(e)
@@ -164,12 +154,15 @@ const WeatherPlease: FC = () => {
 
     if (
       localStorage.data
+      && localStorage.lastUpdated
+      && new Date().getDate() === parseInt(localStorage.lastUpdated.split('-')[0])
+      && new Date().getHours() === parseInt(localStorage.lastUpdated.split('-')[1])
       && JSON.parse(localStorage.data).length === parseInt(config.daysToRetrieve)
-      && new Date().getDay() === new Date(JSON.parse(localStorage.data)[0].day * 1000).getDay()
     ) {
       const data = JSON.parse(localStorage.data)
+      const alerts = JSON.parse(localStorage.alerts)
       setFutureWeatherData(data)
-      setTimeout(() => { localStorage.removeItem('data') }, 30e4)
+      setCurrentWeatherData(alerts)
     } else {
       if (config.lat && config.lon) {
         fetchData()
