@@ -163,7 +163,7 @@ const WeatherPlease: FC = () => {
 
     if (localStorage.data) {
       setFutureWeatherData(JSON.parse(localStorage.data))
-      setTimeout(() => { localStorage.removeItem('data') }, 5e3)
+      setTimeout(() => { localStorage.removeItem('data') }, 30e4)
     } else {
       if (config.lat && config.lon) {
         fetchData()
