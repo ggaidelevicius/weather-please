@@ -135,19 +135,20 @@ const WeatherPlease: FC = () => {
         }))
         setFutureWeatherData(futureData)
         localStorage.data = JSON.stringify(futureData)
+        const currentHour = new Date().getHours()
         setCurrentWeatherData({
           totalPrecipitation: {
-            precipitation: res.hourly.precipitation.slice(0, 24).reduce((p: { value: number, flag: boolean }, c: number) => {
+            precipitation: res.hourly.precipitation.slice(currentHour, currentHour + 24).reduce((p: { value: number, flag: boolean }, c: number) => {
               if (p.flag || c === 0) {
                 return { value: p.value, flag: true }
               }
               return { value: p.value + c, flag: false }
             }, { value: 0, flag: false }),
-            duration: res.hourly.precipitation.slice(0, 24).map((val: number) => val > 0),
+            duration: res.hourly.precipitation.slice(currentHour, currentHour + 24).map((val: number) => val > 0),
           },
-          hoursOfExtremeUv: res.hourly.uv_index.slice(0, 12).map((val: number) => val >= 11),
-          hoursOfHighWind: res.hourly.windspeed_10m.slice(0, 12).map((val: number) => val >= (config.useMetric ? 60 : 37)),
-          hoursOfLowVisibility: res.hourly.visibility.slice(0, 12).map((val: number) => val <= 200),
+          hoursOfExtremeUv: res.hourly.uv_index.slice(currentHour, currentHour + 12).map((val: number) => val >= 11),
+          hoursOfHighWind: res.hourly.windspeed_10m.slice(currentHour, currentHour + 12).map((val: number) => val >= (config.useMetric ? 60 : 37)),
+          hoursOfLowVisibility: res.hourly.visibility.slice(currentHour, currentHour + 12).map((val: number) => val <= 200),
         })
       } catch (e: any) {
         // eslint-disable-next-line no-console
@@ -162,8 +163,13 @@ const WeatherPlease: FC = () => {
       }
     }
 
-    if (localStorage.data && JSON.parse(localStorage.data).length === parseInt(config.daysToRetrieve)) {
-      setFutureWeatherData(JSON.parse(localStorage.data))
+    if (
+      localStorage.data
+      && JSON.parse(localStorage.data).length === parseInt(config.daysToRetrieve)
+      && new Date().getDay() === new Date(JSON.parse(localStorage.data)[0].day * 1000).getDay()
+    ) {
+      const data = JSON.parse(localStorage.data)
+      setFutureWeatherData(data)
       setTimeout(() => { localStorage.removeItem('data') }, 30e4)
     } else {
       if (config.lat && config.lon) {
