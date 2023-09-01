@@ -52,6 +52,20 @@ const WeatherPlease: FC = () => {
   const [input, setInput] = useState<ConfigProps>(initialState)
 
   useEffect(() => {
+    const removeLocalStorageData = () => {
+      if (localStorage.data) {
+        localStorage.removeItem('data')
+      }
+    }
+
+    window.addEventListener('beforeunload', removeLocalStorageData)
+
+    return () => {
+      window.removeEventListener('beforeunload', removeLocalStorageData)
+    }
+  }, [])
+
+  useEffect(() => {
     if (config.shareCrashesAndErrors) {
       Sentry.init({
         dsn: 'https://f3641aec69a23937c89259888e252f19@o4505788641771520.ingest.sentry.io/4505788646817792',
@@ -119,6 +133,7 @@ const WeatherPlease: FC = () => {
           rain: res.daily.precipitation_probability_max[i],
         }))
         setFutureWeatherData(futureData)
+        localStorage.data = JSON.stringify(futureData)
         setCurrentWeatherData({
           totalPrecipitation: {
             precipitation: res.hourly.precipitation.slice(0, 24).reduce((p: { value: number, flag: boolean }, c: number) => {
@@ -146,8 +161,13 @@ const WeatherPlease: FC = () => {
       }
     }
 
-    if (config.lat && config.lon) {
-      fetchData()
+    if (localStorage.data) {
+      setFutureWeatherData(JSON.parse(localStorage.data))
+      setTimeout(() => { localStorage.removeItem('data') }, 5e3)
+    } else {
+      if (config.lat && config.lon) {
+        fetchData()
+      }
     }
 
     setInterval(() => {
