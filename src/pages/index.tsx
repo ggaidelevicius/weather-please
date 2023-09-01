@@ -135,7 +135,6 @@ const WeatherPlease: FC = () => {
         }))
         setFutureWeatherData(futureData)
         localStorage.data = JSON.stringify(futureData)
-        const currentHour = new Date().getHours()
         setCurrentWeatherData({
           totalPrecipitation: {
             precipitation: res.hourly.precipitation.slice(currentHour, currentHour + 24).reduce((p: { value: number, flag: boolean }, c: number) => {
