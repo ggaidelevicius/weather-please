@@ -50,6 +50,7 @@ const WeatherPlease: FC = () => {
   }
   const [config, setConfig] = useState<ConfigProps>(initialState)
   const [input, setInput] = useState<ConfigProps>(initialState)
+  const [usingFreshData, setUsingFreshData] = useState<boolean>(false)
 
   useEffect(() => {
     const removeLocalStorageData = () => {
@@ -161,7 +162,7 @@ const WeatherPlease: FC = () => {
       }
     }
 
-    if (localStorage.data) {
+    if (localStorage.data && JSON.parse(localStorage.data).length === config.daysToRetrieve) {
       setFutureWeatherData(JSON.parse(localStorage.data))
       setTimeout(() => { localStorage.removeItem('data') }, 30e4)
     } else {
@@ -246,6 +247,7 @@ const WeatherPlease: FC = () => {
     setTimeout(() => {
       if (config.lat && config.lon) {
         localStorage.config = JSON.stringify(config)
+        setUsingFreshData(true)
       }
     }, 1e3)
     return () => { }
@@ -301,18 +303,24 @@ const WeatherPlease: FC = () => {
     return () => { }
   }, [currentDate, config.periodicLocationUpdate])
 
-  const tiles = () => (futureWeatherData.map((day, i: number) => (
-    <motion.div
-      key={day.day}
-      initial={{ scale: 0.95, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 0.75 } }}
-      exit={{ scale: 0.95, opacity: 0 }}
-      layout
-      style={{ background: 'none' }}
-    >
-      <Tile {...day} useMetric={config.useMetric} identifier={config.identifier} index={i} />
-    </motion.div>
-  ))
+  const tiles = () => (futureWeatherData.map((day, i: number) => {
+    let delayBaseline = 0.75
+    if (localStorage.data) {
+      delayBaseline = 0
+    }
+    return (
+      <motion.div
+        key={day.day}
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + delayBaseline } }}
+        exit={{ scale: 0.95, opacity: 0 }}
+        layout
+        style={{ background: 'none' }}
+      >
+        <Tile {...day} useMetric={config.useMetric} identifier={config.identifier} index={i} />
+      </motion.div>
+    )
+  })
   )
 
   const determineGridColumns = (daysToRetrieve: string): number => {
@@ -359,7 +367,7 @@ const WeatherPlease: FC = () => {
 
       <AnimatePresence>
         <motion.main
-          layout
+          layout={usingFreshData}
           className={styles.main}
           style={{
             gridTemplateColumns: `repeat(${determineGridColumns(config.daysToRetrieve)}, 1fr)`,
