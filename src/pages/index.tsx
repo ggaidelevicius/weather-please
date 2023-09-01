@@ -258,11 +258,13 @@ const WeatherPlease: FC = () => {
             })
             const res = await req.json()
             const { latitude, longitude } = res
-            setConfig((prev) => ({
-              ...prev,
-              lat: latitude,
-              lon: longitude,
-            }))
+            if (latitude && longitude) {
+              setConfig((prev) => ({
+                ...prev,
+                lat: latitude,
+                lon: longitude,
+              }))
+            }
           } catch (e) {
             // eslint-disable-next-line no-console
             console.warn(e)
