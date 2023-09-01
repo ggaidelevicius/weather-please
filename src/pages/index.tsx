@@ -162,7 +162,7 @@ const WeatherPlease: FC = () => {
       }
     }
 
-    if (localStorage.data && JSON.parse(localStorage.data).length === config.daysToRetrieve) {
+    if (localStorage.data) { // need to do something for when number of days to retrieve changes
       setFutureWeatherData(JSON.parse(localStorage.data))
       setTimeout(() => { localStorage.removeItem('data') }, 30e4)
     } else {
