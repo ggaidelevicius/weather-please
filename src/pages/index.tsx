@@ -137,17 +137,17 @@ const WeatherPlease: FC = () => {
         localStorage.data = JSON.stringify(futureData)
         setCurrentWeatherData({
           totalPrecipitation: {
-            precipitation: res.hourly.precipitation.slice(currentHour, currentHour + 24).reduce((p: { value: number, flag: boolean }, c: number) => {
+            precipitation: res.hourly.precipitation.slice(currentHour, currentHour + 25).reduce((p: { value: number, flag: boolean }, c: number) => {
               if (p.flag || c === 0) {
                 return { value: p.value, flag: true }
               }
               return { value: p.value + c, flag: false }
             }, { value: 0, flag: false }),
-            duration: res.hourly.precipitation.slice(currentHour, currentHour + 24).map((val: number) => val > 0),
+            duration: res.hourly.precipitation.slice(currentHour, currentHour + 25).map((val: number) => val > 0),
           },
-          hoursOfExtremeUv: res.hourly.uv_index.slice(currentHour, currentHour + 12).map((val: number) => val >= 11),
-          hoursOfHighWind: res.hourly.windspeed_10m.slice(currentHour, currentHour + 12).map((val: number) => val >= (config.useMetric ? 60 : 37)),
-          hoursOfLowVisibility: res.hourly.visibility.slice(currentHour, currentHour + 12).map((val: number) => val <= 200),
+          hoursOfExtremeUv: res.hourly.uv_index.slice(currentHour, currentHour + 13).map((val: number) => val >= 11),
+          hoursOfHighWind: res.hourly.windspeed_10m.slice(currentHour, currentHour + 13).map((val: number) => val >= (config.useMetric ? 60 : 37)),
+          hoursOfLowVisibility: res.hourly.visibility.slice(currentHour, currentHour + 13).map((val: number) => val <= 200),
         })
       } catch (e: any) {
         // eslint-disable-next-line no-console
