@@ -138,7 +138,7 @@ const WeatherPlease: FC = () => {
         setCurrentWeatherData(alerts)
         localStorage.alerts = JSON.stringify(alerts)
         const now = new Date()
-        localStorage.lastUpdated = `${now.getDate()}-${now.getHours()}`
+        localStorage.lastUpdated = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`
       } catch (e: any) {
         // eslint-disable-next-line no-console
         console.warn(e)
@@ -155,8 +155,10 @@ const WeatherPlease: FC = () => {
     if (
       localStorage.data
       && localStorage.lastUpdated
-      && new Date().getDate() === parseInt(localStorage.lastUpdated.split('-')[0])
-      && new Date().getHours() === parseInt(localStorage.lastUpdated.split('-')[1])
+      && new Date().getFullYear() === parseInt(localStorage.lastUpdated.split('-')[0])
+      && new Date().getMonth() === parseInt(localStorage.lastUpdated.split('-')[1])
+      && new Date().getDate() === parseInt(localStorage.lastUpdated.split('-')[2])
+      && new Date().getHours() === parseInt(localStorage.lastUpdated.split('-')[3])
       && JSON.parse(localStorage.data).length === parseInt(config.daysToRetrieve)
     ) {
       const data = JSON.parse(localStorage.data)
