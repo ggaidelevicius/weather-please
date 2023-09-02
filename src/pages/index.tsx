@@ -124,7 +124,7 @@ const WeatherPlease: FC = () => {
         const alerts = {
           totalPrecipitation: {
             precipitation: res.hourly.precipitation.slice(currentHour, currentHour + 25).reduce((p: { value: number, flag: boolean }, c: number) => {
-              if (p.flag || c === 0) { // ideally instead of checking at current index for 0 to decide to stop, we'd look at current index + 1
+              if (p.flag || c === 0) { // ideally instead of checking at current index for 0 to decide to stop, we'd look at current index AND current index + 1
                 return { value: p.value, flag: true }
               }
               return { value: p.value + c, flag: false }
