@@ -298,16 +298,17 @@ const WeatherPlease: FC = () => {
 * here to prevent a race condition when a new tab is opened where we might save empty
 * values for lat and lon. Upon saving data, we set usingFreshData to true so that we fetch
 * new data.
-*
-* TODO: Can we remove the setTimeout by checking to see that values are valid? Perhaps regex?
 */
   useEffect(() => {
-    setTimeout(() => {
-      if (config.lat && config.lon) {
-        localStorage.config = JSON.stringify(config)
-        setUsingFreshData(true)
-      }
-    }, 1e3)
+    if (
+      config.lat
+      && config.lon
+      && (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/).test(config.lat)
+      && (/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(config.lon)
+    ) {
+      localStorage.config = JSON.stringify(config)
+      setUsingFreshData(true)
+    }
     return () => { }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.lat, config.lon])
