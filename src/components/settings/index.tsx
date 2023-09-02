@@ -183,7 +183,6 @@ const Settings: FC<SettingsProps> = (props) => {
             <Divider my='md' variant='dashed' />
             <Switch
               label='Show extreme UV alerts'
-              mt='md'
               checked={input.showUvAlerts}
               onChange={(e) => { handleChange('showUvAlerts', e.target.checked) }}
             />
