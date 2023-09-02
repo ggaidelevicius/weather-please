@@ -47,7 +47,7 @@ const Settings: FC<SettingsProps> = (props) => {
       reverseGeocode()
     }
     return () => { }
-  }, [config, opened])
+  }, [config.lat, config.lon, opened])
 
   const generateLocation = (args: Partial<any>): string => {
     let specificLocation = args?.village ?? args?.town ?? args?.suburb ?? args?.county ?? null
