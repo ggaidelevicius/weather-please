@@ -140,6 +140,7 @@ const WeatherPlease: FC = () => {
         localStorage.alerts = JSON.stringify(alerts)
         const now = new Date()
         localStorage.lastUpdated = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`
+        setChangedLocation(false)
       } catch (e: any) {
         // eslint-disable-next-line no-console
         console.warn(e)
@@ -170,7 +171,6 @@ const WeatherPlease: FC = () => {
     } else {
       if (config.lat && config.lon) {
         fetchData()
-        setChangedLocation(false)
       }
     }
 
