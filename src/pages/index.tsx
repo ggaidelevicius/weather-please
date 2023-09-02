@@ -57,7 +57,7 @@ const WeatherPlease: FC = () => {
  * When "config" is read from localStorage or is changed directly, we check to see if the user has given permission to share crash and error data.
  * If permission has been given, we initialise Sentry.
  *
- * TODO: Un-initialise Sentry if a user has decided to opt-out without requiring that they refresh or open a new tab for changes to take effect
+ * TODO: Un-initialise Sentry if a user has decided to opt-out without requiring that they refresh or open a new tab for changes to take effect.
  */
   useEffect(() => {
     if (config.shareCrashesAndErrors) {
@@ -125,7 +125,7 @@ const WeatherPlease: FC = () => {
 * If the above conditions are satisfied, we parse localStorage data and set both "futureWeatherData"
 * (tiles) and "currentWeatherData" (alerts) states using that data.
 *
-* If they aren't we fetch fresh data. If we successfully fetch fresh data, we save it to state as well
+* If they aren't satisfied, we fetch fresh data. If we successfully fetch fresh data, we save it to state as well
 * as localStorage. We also note when we data was last updated, which is used when we open a new tab or
 * browser window to assess whether we can continue using stale data.
 *
@@ -283,16 +283,14 @@ const WeatherPlease: FC = () => {
 
   /**
 * If lat and lon have been configured, we close the <Initialisation /> modal.
-*
-* TODO: We should be checking to see if it is even opened to begin with
 */
   useEffect(() => {
-    if (config.lat && config.lon) {
+    if (opened && config.lat && config.lon) {
       close()
     }
     return () => { }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config])
+  }, [opened, config.lat, config.lon])
 
   /**
 * If lat and lon have been changed, we save them to localStorage. We use a setTimeout
@@ -313,6 +311,11 @@ const WeatherPlease: FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.lat, config.lon])
 
+  /**
+* Once a minute, we first check to see if it's the same day or not. If it's a new day and
+* the user has opted to receive periodic location updates, we check their geolocation using
+* the same geolocation identifying techniques as we use in the handleClick function.
+*/
   useEffect(() => {
     setTimeout(() => {
       if (new Date().getDate() !== currentDate) {
