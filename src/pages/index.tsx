@@ -122,8 +122,8 @@ const WeatherPlease: FC = () => {
 
   /**
 * We first check to see if we have existing weather data stored in localStorage, if we're still in
-* the same hour that the previous data was retrieved, if we've changed our location in "config" since
-* the last check, and whether we've changed how many days of data we want to retrieve.
+* the same hour that the previous data was retrieved, if we've not changed our location in "config" since
+* the last check, and if we've not changed how many days of data we want to retrieve.
 *
 * If the above conditions are satisfied, we parse localStorage data and set both "futureWeatherData"
 * (tiles) and "currentWeatherData" (alerts) states using that data.
