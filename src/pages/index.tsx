@@ -294,8 +294,9 @@ const WeatherPlease: FC = () => {
   }, [opened, config.lat, config.lon])
 
   /**
-* If lat and lon have been changed, we save them to localStorage. Upon saving data,
-* we set usingFreshData to true so that we fetch new data.
+* As long as config.lat and config.lon are valid values, we commit
+* "config" to localStorage. Upon saving data, if we have updated our
+* geolocation, we set usingFreshData to true so that we fetch new data.
 */
   useEffect(() => {
     if (
@@ -305,11 +306,13 @@ const WeatherPlease: FC = () => {
       && (/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(config.lon)
     ) {
       localStorage.config = JSON.stringify(config)
-      setUsingFreshData(true)
+      if (changedLocation) {
+        setUsingFreshData(true)
+      }
     }
     return () => { }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config.lat, config.lon])
+  }, [config])
 
   /**
 * Once a minute, we first check to see if it's the same day or not. If it's a new day and
