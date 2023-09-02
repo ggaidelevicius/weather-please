@@ -85,16 +85,16 @@ export const BasicWeather: FC<BasicWeatherProps> = (props) => {
       <div className={styles.textContainer}>
         <div className={styles.temperatureContainer}>
           <div aria-hidden>
-            {Math.round(max)}
+            {useMetric ? Math.round(max) : Math.round((max * 9 / 5) + 32)}
           </div>
           <span className='visuallyHidden'>
-            {`The maximum temperature will be ${Math.round(max)} degrees ${useMetric ? 'celsius' : 'fahrenheit'}.`}
+            {`The maximum temperature will be ${useMetric ? Math.round(max) : Math.round((max * 9/5) + 32)} degrees ${useMetric ? 'celsius' : 'fahrenheit'}.`}
           </span>
           <div aria-hidden>
-            {Math.round(min)}
+            {useMetric ? Math.round(min) : Math.round((min * 9 / 5) + 32)}
           </div>
           <span className='visuallyHidden'>
-            {`The minimum temperature will be ${Math.round(min)} degrees ${useMetric ? 'celsius' : 'fahrenheit'}.`}
+            {`The minimum temperature will be ${useMetric ? Math.round(min) : Math.round((min * 9 / 5) + 32)} degrees ${useMetric ? 'celsius' : 'fahrenheit'}.`}
           </span>
         </div>
         <div aria-hidden>
@@ -126,10 +126,10 @@ export const WeatherDetail: FC<WeatherDetailProps> = (props) => {
       <div className={styles.detail}>
         <IconWind size='1.1rem' aria-hidden />
         <span aria-hidden>
-          {`${Math.round(wind)} ${useMetric ? 'km/h' : 'mph'}`}
+          {`${useMetric ? Math.round(wind) : Math.round(wind / 1.609344)} ${useMetric ? 'km/h' : 'mph'}`}
         </span>
         <span className='visuallyHidden'>
-          {`${index === 0 ? 'Today\'s maximum wind speed is' : 'The maximum wind speed will be'} ${Math.round(wind)} ${useMetric ? 'kilometers per hour' : 'miles per hour'}`}
+          {`${index === 0 ? 'Today\'s maximum wind speed is' : 'The maximum wind speed will be'} ${useMetric ? Math.round(wind) : Math.round(wind / 1.609344)} ${useMetric ? 'kilometers per hour' : 'miles per hour'}`}
         </span>
       </div>
       <div className={styles.detail}>

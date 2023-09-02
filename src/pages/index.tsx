@@ -136,14 +136,11 @@ const WeatherPlease: FC = () => {
 * determine whether we should be flagging precipitation as being stopped, as there are circumstances
 * where we could be having intermittent precipitation and still be reaching the total precipitation
 * threshold to be displaying an alert.
-*
-* TODO: If useMetric is changed, we need to fetch fresh data again. Is it worth just manually converting
-* data instead of fetching again?
 */
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility&forecast_days=${config.daysToRetrieve}${config.useMetric ? '' : '&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch'}`)
+        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility&forecast_days=${config.daysToRetrieve}`)
         const res = await req.json()
         const futureData = res.daily.time.map((day: unknown, i: number) => ({
           day,
@@ -167,7 +164,7 @@ const WeatherPlease: FC = () => {
             duration: res.hourly.precipitation.slice(currentHour, currentHour + 25).map((val: number) => val > 0),
           },
           hoursOfExtremeUv: res.hourly.uv_index.slice(currentHour, currentHour + 13).map((val: number) => val >= 11),
-          hoursOfHighWind: res.hourly.windspeed_10m.slice(currentHour, currentHour + 25).map((val: number) => val >= (config.useMetric ? 60 : 37)),
+          hoursOfHighWind: res.hourly.windspeed_10m.slice(currentHour, currentHour + 25).map((val: number) => val >= 60),
           hoursOfLowVisibility: res.hourly.visibility.slice(currentHour, currentHour + 25).map((val: number) => val <= 200),
         }
         setCurrentWeatherData(alerts)
