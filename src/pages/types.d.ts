@@ -27,8 +27,22 @@ export type HandleChangeKey =
   | 'identifier'
   | 'shareCrashesAndErrors';
 
+/**
+ * Handles changes for "input" state.
+ *
+ * Previous attributes are spread, then new ones are merged in, overwriting old ones if they exist.
+ */
 // eslint-disable-next-line no-unused-vars
 export type HandleChange = (k: HandleChangeKey, v: string | boolean) => void;
 
+/**
+ * Handles the click of the "saved" button in initialisation.
+ *
+ * If browser geolocation permissions are given, we first try to automatically get location via browser API.
+ *
+ * On safari, we instead use a third-party service as safari prompts for browser permissions on a daily basis.
+ *
+ * If these automatic methods fail, we instead prompt the user to manually input their latitude and longitude.
+ */
 // eslint-disable-next-line no-unused-vars
 export type HandleClick = (method: 'auto' | 'manual') => void;
