@@ -10,8 +10,8 @@ export interface Location {
 }
 
 export interface SettingsProps {
-  input: ConfigProps;
-  handleChange: HandleChange;
-  handleClick: HandleClick;
-  config: ConfigProps;
+  readonly input: ConfigProps;
+  readonly handleChange: HandleChange;
+  readonly handleClick: HandleClick;
+  readonly config: ConfigProps;
 }

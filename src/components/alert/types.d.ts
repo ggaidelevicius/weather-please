@@ -1,23 +1,23 @@
 export interface CurrentWeatherProps {
-  totalPrecipitation: TotalPrecipitation;
-  hoursOfExtremeUv: boolean[];
-  hoursOfHighWind: boolean[];
-  hoursOfLowVisibility: boolean[];
+  readonly totalPrecipitation: TotalPrecipitation;
+  readonly hoursOfExtremeUv: boolean[];
+  readonly hoursOfHighWind: boolean[];
+  readonly hoursOfLowVisibility: boolean[];
 }
 
 export interface AlertProps extends CurrentWeatherProps {
-  useMetric: boolean;
-  showUvAlerts: boolean;
-  showWindAlerts: boolean;
-  showVisibilityAlerts: boolean;
-  showPrecipitationAlerts: boolean;
-  width: number;
+  readonly useMetric: boolean;
+  readonly showUvAlerts: boolean;
+  readonly showWindAlerts: boolean;
+  readonly showVisibilityAlerts: boolean;
+  readonly showPrecipitationAlerts: boolean;
+  readonly width: number;
 }
 
 interface TotalPrecipitation {
-  precipitation: {
-    value: number;
-    flag: boolean;
+  readonly precipitation: {
+    readonly value: number;
+    readonly flag: boolean;
   };
-  duration: boolean[];
+  readonly duration: boolean[];
 }

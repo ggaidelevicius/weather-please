@@ -1,15 +1,15 @@
 export interface BasicWeatherProps {
-  max: number;
-  min: number;
-  description: string;
-  icon: string;
-  useMetric: boolean;
+  readonly max: number;
+  readonly min: number;
+  readonly description: string;
+  readonly icon: string;
+  readonly useMetric: boolean;
 }
 
 export interface WeatherDetailProps {
-  uv: number;
-  wind: number;
-  rain: number;
-  useMetric: boolean;
-  index: number;
+  readonly uv: number;
+  readonly wind: number;
+  readonly rain: number;
+  readonly useMetric: boolean;
+  readonly index: number;
 }
