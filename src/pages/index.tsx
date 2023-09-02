@@ -54,10 +54,10 @@ const WeatherPlease: FC = () => {
   const [changedLocation, setChangedLocation] = useState<boolean>(false)
 
   /**
- * When "config" is read from localStorage or is changed directly, we check to see if the user has given permission to share crash and error data.
- * If permission has been given, we initialise Sentry.
+ * When "config" is read from localStorage or is changed directly, we check to see if the user
+ * has given permission to share crash and error data.
  *
- * TODO: Un-initialise Sentry if a user has decided to opt-out without requiring that they refresh or open a new tab for changes to take effect.
+ * If permission has been given, we initialise Sentry.
  */
   useEffect(() => {
     if (config.shareCrashesAndErrors) {
@@ -69,8 +69,12 @@ const WeatherPlease: FC = () => {
         replaysSessionSampleRate: 0,
         beforeSend: (event) => event,
       })
+    } else {
+      Sentry.close()
     }
-    return () => { }
+    return () => {
+      Sentry.close()
+    }
   }, [config.shareCrashesAndErrors])
 
   const compareObjects: CompareObjects = (obj1, obj2) => {
@@ -305,7 +309,7 @@ const WeatherPlease: FC = () => {
       }
     }, 1e3)
     return () => { }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.lat, config.lon])
 
   /**
