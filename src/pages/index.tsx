@@ -51,6 +51,7 @@ const WeatherPlease: FC = () => {
   const [config, setConfig] = useState<ConfigProps>(initialState)
   const [input, setInput] = useState<ConfigProps>(initialState)
   const [usingFreshData, setUsingFreshData] = useState<boolean>(false)
+  const [changedLocation, setChangedLocation] = useState<boolean>(false)
 
   useEffect(() => {
     if (config.shareCrashesAndErrors) {
@@ -160,6 +161,7 @@ const WeatherPlease: FC = () => {
       && new Date().getDate() === parseInt(localStorage.lastUpdated.split('-')[2])
       && new Date().getHours() === parseInt(localStorage.lastUpdated.split('-')[3])
       && JSON.parse(localStorage.data).length === parseInt(config.daysToRetrieve)
+      && !changedLocation
     ) {
       const data = JSON.parse(localStorage.data)
       const alerts = JSON.parse(localStorage.alerts)
@@ -168,6 +170,7 @@ const WeatherPlease: FC = () => {
     } else {
       if (config.lat && config.lon) {
         fetchData()
+        setChangedLocation(false)
       }
     }
 
@@ -178,7 +181,7 @@ const WeatherPlease: FC = () => {
     }, 6e4)
 
     return () => { }
-  }, [currentHour, config.lat, config.lon, config.daysToRetrieve, config.useMetric])
+  }, [currentHour, config.lat, config.lon, config.daysToRetrieve, config.useMetric, changedLocation])
 
   const handleChange: HandleChange = (k, v) => {
     setInput((prev) => {
@@ -194,6 +197,9 @@ const WeatherPlease: FC = () => {
 
     if (method === 'auto' && (!(userAgent.indexOf('safari') !== -1 && userAgent.indexOf('chrome') === -1))) {
       navigator.geolocation.getCurrentPosition((pos) => {
+        if ((config.lat !== pos.coords.latitude.toString()) || (config.lon !== pos.coords.longitude.toString())) {
+          setChangedLocation(true)
+        }
         setConfig((prev) => ({
           ...prev,
           lat: pos.coords.latitude.toString(),
@@ -214,6 +220,9 @@ const WeatherPlease: FC = () => {
         })
         const res = await req.json()
         const { lat, lon } = res
+        if ((config.lat !== lat) || (config.lon !== lon)) {
+          setChangedLocation(true)
+        }
         setConfig((prev) => ({
           ...prev,
           lat: lat,
@@ -231,13 +240,16 @@ const WeatherPlease: FC = () => {
       }
       setTimeout(() => { setGeolocationError(true) }, 5e3)
     } else {
+      if ((config.lat !== input.lat) || config.lon !== input.lon) {
+        setChangedLocation(true)
+      }
       setConfig(input)
     }
   }
 
   useEffect(() => {
     if (config.lat && config.lon) {
-      close()
+      close() // should we check for opened here?
     }
     return () => { }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -265,6 +277,9 @@ const WeatherPlease: FC = () => {
 
       if (!(userAgent.indexOf('safari') !== -1) && userAgent.indexOf('chrome') === -1) {
         navigator.geolocation.getCurrentPosition((pos) => {
+          if ((config.lat !== pos.coords.latitude.toString()) || (config.lon !== pos.coords.longitude.toString())) {
+            setChangedLocation(true)
+          }
           setConfig((prev) => ({
             ...prev,
             lat: pos.coords.latitude.toString(),
@@ -281,6 +296,9 @@ const WeatherPlease: FC = () => {
             const res = await req.json()
             const { latitude, longitude } = res
             if (latitude && longitude) {
+              if ((config.lat !== latitude) || (config.lon !== longitude)) {
+                setChangedLocation(true)
+              }
               setConfig((prev) => ({
                 ...prev,
                 lat: latitude,
@@ -301,6 +319,7 @@ const WeatherPlease: FC = () => {
       }
     }
     return () => { }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDate, config.periodicLocationUpdate])
 
   const tiles = (futureWeatherData.map((day, i: number) => {
