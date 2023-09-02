@@ -63,7 +63,7 @@ const WeatherPlease: FC = () => {
         replaysSessionSampleRate: 0,
         beforeSend: (event) => event,
       })
-    }
+    } // need to re-opt-out if someone changes their mind without having to reload the page
     return () => { }
   }, [config.shareCrashesAndErrors])
 
