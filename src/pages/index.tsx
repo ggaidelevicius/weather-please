@@ -317,7 +317,7 @@ const WeatherPlease: FC = () => {
 * the same geolocation identifying techniques as we use in the handleClick function.
 */
   useEffect(() => {
-    setTimeout(() => {
+    setInterval(() => {
       if (new Date().getDate() !== currentDate) {
         setCurrentDate(new Date().getDate())
       }
