@@ -209,13 +209,15 @@ const WeatherPlease: FC = () => {
       }
     }
 
-    setInterval(() => {
+    const checkHour = setInterval(() => {
       if (new Date().getHours() !== currentHour) {
         setCurrentHour(new Date().getHours())
       }
     }, 6e4)
 
-    return () => { }
+    return () => {
+      clearInterval(checkHour)
+    }
   }, [currentHour, config.lat, config.lon, config.daysToRetrieve, config.useMetric, changedLocation])
 
   const handleChange: HandleChange = (k, v) => {
