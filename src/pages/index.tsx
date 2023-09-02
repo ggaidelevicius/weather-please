@@ -54,7 +54,7 @@ const WeatherPlease: FC = () => {
   const [changedLocation, setChangedLocation] = useState<boolean>(false)
 
   /**
- * When config is read from localStorage or is changed directly, we check to see if the user has given permission to share crash and error data.
+ * When "config" is read from localStorage or is changed directly, we check to see if the user has given permission to share crash and error data.
  * If permission has been given, we initialise Sentry.
  *
  * TODO: Un-initialise Sentry if a user has decided to opt-out without requiring that they refresh or open a new tab for changes to take effect
@@ -95,7 +95,7 @@ const WeatherPlease: FC = () => {
   /**
 * We check to see if we've previously saved "config" into localStorage.
 * If it exists, we parse it and set the states of both "config" and "input" to the parsed value.
-* If it doesn't exist, we open the initialisation modal.
+* If it doesn't exist, we open the <Initialisation /> modal.
 */
   useEffect(() => {
     const storedData = localStorage?.config ? JSON.parse(localStorage.config) : null
@@ -117,6 +117,29 @@ const WeatherPlease: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  /**
+* We first check to see if we have existing weather data stored in localStorage, if we're still in
+* the same hour that the previous data was retrieved, if we've changed our location in "config" since
+* the last check, and whether we've changed how many days of data we want to retrieve.
+*
+* If the above conditions are satisfied, we parse localStorage data and set both "futureWeatherData"
+* (tiles) and "currentWeatherData" (alerts) states using that data.
+*
+* If they aren't we fetch fresh data. If we successfully fetch fresh data, we save it to state as well
+* as localStorage. We also note when we data was last updated, which is used when we open a new tab or
+* browser window to assess whether we can continue using stale data.
+*
+* Once a minute, we check to see if the current hour is the same as the hour saved in state. Upon changing
+* the value of currentHour's state, the effect is run again.
+*
+* TODO: totalPrecipitation should be checking against the current index AND current index + 1 to
+* determine whether we should be flagging precipitation as being stopped, as there are circumstances
+* where we could be having intermittent precipitation and still be reaching the total precipitation
+* threshold to be displaying an alert.
+*
+* TODO: If useMetric is changed, we need to fetch fresh data again. Is it worth just manually converting
+* data instead of fetching again?
+*/
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
@@ -136,7 +159,7 @@ const WeatherPlease: FC = () => {
         const alerts = {
           totalPrecipitation: {
             precipitation: res.hourly.precipitation.slice(currentHour, currentHour + 25).reduce((p: { value: number, flag: boolean }, c: number) => {
-              if (p.flag || c === 0) { // ideally instead of checking at current index for 0 to decide to stop, we'd look at current index AND current index + 1
+              if (p.flag || c === 0) {
                 return { value: p.value, flag: true }
               }
               return { value: p.value + c, flag: false }
@@ -258,14 +281,27 @@ const WeatherPlease: FC = () => {
     }
   }
 
+  /**
+* If lat and lon have been configured, we close the <Initialisation /> modal.
+*
+* TODO: We should be checking to see if it is even opened to begin with
+*/
   useEffect(() => {
     if (config.lat && config.lon) {
-      close() // should we check for opened here?
+      close()
     }
     return () => { }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
+  /**
+* If lat and lon have been changed, we save them to localStorage. We use a setTimeout
+* here to prevent a race condition when a new tab is opened where we might save empty
+* values for lat and lon. Upon saving data, we set usingFreshData to true so that we fetch
+* new data.
+*
+* TODO: Can we remove the setTimeout by checking to see that values are valid? Perhaps regex?
+*/
   useEffect(() => {
     setTimeout(() => {
       if (config.lat && config.lon) {
@@ -274,7 +310,8 @@ const WeatherPlease: FC = () => {
       }
     }, 1e3)
     return () => { }
-  }, [config])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config.lat, config.lon])
 
   useEffect(() => {
     setTimeout(() => {

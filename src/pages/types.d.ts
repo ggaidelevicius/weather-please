@@ -10,23 +10,23 @@ export interface ConfigProps {
   showVisibilityAlerts: boolean;
   showPrecipitationAlerts: boolean;
   daysToRetrieve: string;
-  identifier: "day" | "date";
+  identifier: 'day' | 'date';
   shareCrashesAndErrors: boolean;
 }
 
 export type HandleChangeKey =
-  | "lat"
-  | "lon"
-  | "periodicLocationUpdate"
-  | "showAlerts"
-  | "showUvAlerts"
-  | "showPrecipitationAlerts"
-  | "showWindAlerts"
-  | "showVisibilityAlerts"
-  | "useMetric"
-  | "daysToRetrieve"
-  | "identifier"
-  | "shareCrashesAndErrors";
+  | 'lat'
+  | 'lon'
+  | 'periodicLocationUpdate'
+  | 'showAlerts'
+  | 'showUvAlerts'
+  | 'showPrecipitationAlerts'
+  | 'showWindAlerts'
+  | 'showVisibilityAlerts'
+  | 'useMetric'
+  | 'daysToRetrieve'
+  | 'identifier'
+  | 'shareCrashesAndErrors';
 
 /**
  * Handles changes for "input" state.
@@ -46,7 +46,7 @@ export type HandleChange = (k: HandleChangeKey, v: string | boolean) => void;
  * If these automatic methods fail, we instead prompt the user to manually input their latitude and longitude.
  */
 // eslint-disable-next-line no-unused-vars
-export type HandleClick = (method: "auto" | "manual") => void;
+export type HandleClick = (method: 'auto' | 'manual') => void;
 
 /**
  * Compares the shape of the two objects, in this case the config object in localStorage against initialState.
