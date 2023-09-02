@@ -117,7 +117,6 @@ const WeatherPlease: FC = () => {
     else {
       open()
     }
-    return () => { }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -291,7 +290,6 @@ const WeatherPlease: FC = () => {
     if (opened && config.lat && config.lon) {
       close()
     }
-    return () => { }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [opened, config.lat, config.lon])
 
@@ -312,7 +310,6 @@ const WeatherPlease: FC = () => {
         setUsingFreshData(true)
       }
     }
-    return () => { }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
@@ -324,7 +321,7 @@ const WeatherPlease: FC = () => {
 * TODO: Can these geolocation identifying techniques be abstracted?
 */
   useEffect(() => {
-    setInterval(() => {
+    const checkDate = setInterval(() => {
       if (new Date().getDate() !== currentDate) {
         setCurrentDate(new Date().getDate())
       }
@@ -334,16 +331,26 @@ const WeatherPlease: FC = () => {
       const userAgent = navigator.userAgent.toLowerCase()
 
       if (!(userAgent.indexOf('safari') !== -1) && userAgent.indexOf('chrome') === -1) {
-        navigator.geolocation.getCurrentPosition((pos) => {
-          if ((config.lat !== pos.coords.latitude.toString()) || (config.lon !== pos.coords.longitude.toString())) {
-            setChangedLocation(true)
-          }
-          setConfig((prev) => ({
-            ...prev,
-            lat: pos.coords.latitude.toString(),
-            lon: pos.coords.longitude.toString(),
-          }))
-        })
+        try {
+          navigator.geolocation.getCurrentPosition((pos) => {
+            if ((config.lat !== pos.coords.latitude.toString()) || (config.lon !== pos.coords.longitude.toString())) {
+              setChangedLocation(true)
+            }
+            setConfig((prev) => ({
+              ...prev,
+              lat: pos.coords.latitude.toString(),
+              lon: pos.coords.longitude.toString(),
+            }))
+          })
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.warn(e)
+          notifications.show({
+            title: 'Error',
+            message: 'An error has occurred while periodically updating location. Please check the console for more details.',
+            color: 'red',
+          })
+        }
       } else {
         const fetchSafariGeoData = async () => {
           try {
@@ -376,7 +383,9 @@ const WeatherPlease: FC = () => {
         fetchSafariGeoData()
       }
     }
-    return () => { }
+    return () => {
+      clearInterval(checkDate)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDate, config.periodicLocationUpdate])
 
