@@ -315,6 +315,8 @@ const WeatherPlease: FC = () => {
 * Once a minute, we first check to see if it's the same day or not. If it's a new day and
 * the user has opted to receive periodic location updates, we check their geolocation using
 * the same geolocation identifying techniques as we use in the handleClick function.
+*
+* TODO: Can these geolocation identifying techniques be abstracted?
 */
   useEffect(() => {
     setInterval(() => {
