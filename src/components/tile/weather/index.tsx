@@ -115,7 +115,7 @@ export const WeatherDetail: FC<WeatherDetailProps> = (props) => {
   return (
     <div className={styles.detailContainer}>
       <div className={styles.detail}>
-        <IconUvIndex size='1.1rem' aria-hidden />
+        <IconUvIndex size={18} aria-hidden />
         <span aria-hidden>
           {`${Math.round(uv)}`}
         </span>
@@ -124,7 +124,7 @@ export const WeatherDetail: FC<WeatherDetailProps> = (props) => {
         </span>
       </div>
       <div className={styles.detail}>
-        <IconWind size='1.1rem' aria-hidden />
+        <IconWind size={18} aria-hidden />
         <span aria-hidden>
           {`${useMetric ? Math.round(wind) : Math.round(wind / 1.609344)} ${useMetric ? 'km/h' : 'mph'}`}
         </span>
@@ -133,7 +133,7 @@ export const WeatherDetail: FC<WeatherDetailProps> = (props) => {
         </span>
       </div>
       <div className={styles.detail}>
-        <IconCloudRain size='1.1rem' aria-hidden />
+        <IconCloudRain size={18} aria-hidden />
         <span aria-hidden>
           {`${Math.round(rain)}%`}
         </span>
