@@ -13,7 +13,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
-import type { ConfigProps, HandleChange, HandleClick } from './types'
+import type { CompareObjects, ConfigProps, HandleChange, HandleClick, MergeObjects } from './types'
 
 const WeatherPlease: FC = () => {
   const [currentWeatherData, setCurrentWeatherData] = useState<CurrentWeatherProps>({
@@ -53,6 +53,12 @@ const WeatherPlease: FC = () => {
   const [usingFreshData, setUsingFreshData] = useState<boolean>(false)
   const [changedLocation, setChangedLocation] = useState<boolean>(false)
 
+  /**
+ * When config is read from localStorage or is changed directly, we check to see if the user has given permission to share crash and error data.
+ * If permission has been given, we initialise Sentry.
+ *
+ * TODO: Un-initialise Sentry if a user has decided to opt-out without requiring that they refresh or open a new tab for changes to take effect
+ */
   useEffect(() => {
     if (config.shareCrashesAndErrors) {
       Sentry.init({
@@ -63,18 +69,18 @@ const WeatherPlease: FC = () => {
         replaysSessionSampleRate: 0,
         beforeSend: (event) => event,
       })
-    } // need to re-opt-out if someone changes their mind without having to reload the page
+    }
     return () => { }
   }, [config.shareCrashesAndErrors])
 
-  const compareObjects = (obj1: Partial<unknown>, obj2: Partial<unknown>): boolean => {
+  const compareObjects: CompareObjects = (obj1, obj2) => {
     const keys1 = Object.keys(obj1)
     const keys2 = Object.keys(obj2)
 
     return keys1.length === keys2.length && keys1.every(key => keys2.includes(key))
   }
 
-  const mergeObjects = (targetObj: Partial<any>, sourceObj: Partial<any>) => {
+  const mergeObjects: MergeObjects = (targetObj, sourceObj) => {
     const mergedObject = { ...targetObj }
 
     Object.keys(sourceObj).forEach(key => {
@@ -86,6 +92,11 @@ const WeatherPlease: FC = () => {
     return mergedObject as ConfigProps
   }
 
+  /**
+* We check to see if we've previously saved "config" into localStorage.
+* If it exists, we parse it and set the states of both "config" and "input" to the parsed value.
+* If it doesn't exist, we open the initialisation modal.
+*/
   useEffect(() => {
     const storedData = localStorage?.config ? JSON.parse(localStorage.config) : null
     if (storedData) {
