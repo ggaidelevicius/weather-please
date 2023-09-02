@@ -46,7 +46,6 @@ const Settings: FC<SettingsProps> = (props) => {
     if (config.lat && config.lon && opened) {
       reverseGeocode()
     }
-    return () => { }
   }, [config.lat, config.lon, opened])
 
   const generateLocation = (args: Partial<any>): string => {
@@ -70,8 +69,6 @@ const Settings: FC<SettingsProps> = (props) => {
     } else if (userAgent.includes('edg/')) {
       setReviewLink('https://microsoftedge.microsoft.com/addons/detail/weather-please/genbleeffmekfnbkfpgdkdpggamcgflo')
     }
-
-    return () => { }
   }, [])
 
   return (

@@ -56,8 +56,6 @@ const Alert: FC<AlertProps> = (props) => {
     } else {
       setAlerts((prev) => prev.filter(alert => alert.key !== 'precipitationAlert'))
     }
-
-    return () => { }
   }, [useMetric, totalPrecipitation, showPrecipitationAlerts])
 
   useEffect(() => {
@@ -106,8 +104,6 @@ const Alert: FC<AlertProps> = (props) => {
     } else {
       setAlerts((prev) => prev.filter(alert => alert.key !== 'windAlert'))
     }
-
-    return () => { }
   }, [hoursOfHighWind, showWindAlerts])
 
   useEffect(() => {
@@ -157,8 +153,6 @@ const Alert: FC<AlertProps> = (props) => {
     } else {
       setAlerts((prev) => prev.filter(alert => alert.key !== 'uvAlert'))
     }
-
-    return () => { }
   }, [hoursOfExtremeUv, showUvAlerts])
 
   useEffect(() => {
@@ -207,8 +201,6 @@ const Alert: FC<AlertProps> = (props) => {
     } else {
       setAlerts((prev) => prev.filter(alert => alert.key !== 'visibilityAlert'))
     }
-
-    return () => { }
   }, [hoursOfLowVisibility, showVisibilityAlerts])
 
   const tiles = () => (alerts.map((alert, i: number) => (
