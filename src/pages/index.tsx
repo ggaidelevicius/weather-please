@@ -294,10 +294,8 @@ const WeatherPlease: FC = () => {
   }, [opened, config.lat, config.lon])
 
   /**
-* If lat and lon have been changed, we save them to localStorage. We use a setTimeout
-* here to prevent a race condition when a new tab is opened where we might save empty
-* values for lat and lon. Upon saving data, we set usingFreshData to true so that we fetch
-* new data.
+* If lat and lon have been changed, we save them to localStorage. Upon saving data,
+* we set usingFreshData to true so that we fetch new data.
 */
   useEffect(() => {
     if (
