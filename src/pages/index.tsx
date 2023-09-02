@@ -301,7 +301,7 @@ const WeatherPlease: FC = () => {
     return () => { }
   }, [currentDate, config.periodicLocationUpdate])
 
-  const tiles = () => (futureWeatherData.map((day, i: number) => {
+  const tiles = (futureWeatherData.map((day, i: number) => {
     let delayBaseline = 0.75
     if (localStorage.data) {
       delayBaseline = 0
@@ -371,7 +371,7 @@ const WeatherPlease: FC = () => {
             gridTemplateColumns: `repeat(${determineGridColumns(config.daysToRetrieve)}, 1fr)`,
           }}
         >
-          {tiles()}
+          {tiles}
           {config.showAlerts &&
             <Alert
               {...currentWeatherData}
