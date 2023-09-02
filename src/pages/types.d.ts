@@ -33,7 +33,6 @@ export type HandleChangeKey =
  *
  * Previous attributes are spread, then new ones are merged in, overwriting old ones if they exist.
  */
-// eslint-disable-next-line no-unused-vars
 export type HandleChange = (k: HandleChangeKey, v: string | boolean) => void;
 
 /**
@@ -45,7 +44,6 @@ export type HandleChange = (k: HandleChangeKey, v: string | boolean) => void;
  *
  * If these automatic methods fail, we instead prompt the user to manually input their latitude and longitude.
  */
-// eslint-disable-next-line no-unused-vars
 export type HandleClick = (method: 'auto' | 'manual') => void;
 
 /**
@@ -61,7 +59,6 @@ export type CompareObjects = (
  *
  * Preserves the values of the target object keys (in this case the config object in localStorage) if they exist.
  */
-// eslint-disable-next-line no-unused-vars
 export type MergeObjects = (
   targetObj: Partial<any>,
   sourceObj: Partial<any>
