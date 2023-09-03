@@ -12,7 +12,7 @@ export interface TileProps {
   readonly identifier: 'day' | 'date';
 }
 
-export type Days =
+export type Day =
   | 'Sunday'
   | 'Monday'
   | 'Tuesday'
@@ -21,7 +21,7 @@ export type Days =
   | 'Friday'
   | 'Saturday';
 
-export type Months =
+export type Month =
   | 'January'
   | 'February'
   | 'March'
