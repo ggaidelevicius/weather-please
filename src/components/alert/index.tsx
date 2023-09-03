@@ -21,6 +21,18 @@ const Alert: FC<AlertProps> = (props) => {
   } = props
   const [alerts, setAlerts] = useState<ReactElement[] | []>([])
 
+  /**
+   * Checks for significant precipitation and updates the alert list accordingly.
+   *
+   * If showPrecipitationAlerts is enabled and the total precipitation is beyond a certain
+   * threshold (dependent on whether metric measurements are in use), a precipitation alert is created
+   * and added to the alerts list. If conditions do not warrant an alert, or if alerts for precipitation
+   * are turned off, any existing precipitation alert is removed from the list.
+   *
+   * The threshold is 15mm for metric and approximately 0.59 inches for non-metric measurements.
+   *
+   * Note: Converting mm to inches uses the value 25.4 (1 inch is approximately 25.4mm).
+   */
   useEffect(() => {
     if (showPrecipitationAlerts) {
       const { precipitation, duration } = totalPrecipitation
@@ -58,6 +70,19 @@ const Alert: FC<AlertProps> = (props) => {
     }
   }, [useMetric, totalPrecipitation, showPrecipitationAlerts])
 
+  /**
+   * Monitors wind conditions and updates the alert list accordingly.
+   *
+   * If showWindAlerts is enabled and there are upcoming hours of high wind, a wind alert
+   * is created to notify the user about the situation. The alert provides details either
+   * about when high wind conditions will start or how long they will last, based on the
+   * current and forecasted conditions.
+   *
+   * The alert is dynamically generated based on the hoursOfHighWind array, where each entry
+   * indicates whether the wind will be high for the corresponding hour. If conditions do
+   * not warrant an alert, or if wind alerts are turned off, any existing wind alert is removed
+   * from the list.
+   */
   useEffect(() => {
     if (showWindAlerts) {
       let windAlert: ReactElement | null = null
@@ -106,6 +131,19 @@ const Alert: FC<AlertProps> = (props) => {
     }
   }, [hoursOfHighWind, showWindAlerts])
 
+  /**
+   * Monitors UV conditions and updates the alert list accordingly.
+   *
+   * If showUvAlerts is enabled and there are upcoming hours with extreme UV exposure, a UV alert
+   * is created to warn the user about the potentially harmful conditions. The alert provides
+   * information either about when the extreme UV exposure will begin or its expected duration,
+   * based on the current and forecasted UV conditions.
+   *
+   * The alert is dynamically generated based on the hoursOfExtremeUv array, where each entry
+   * indicates whether UV exposure will be extreme for the respective hour. If conditions do
+   * not require an alert, or if UV alerts are disabled, any existing UV alert is removed
+   * from the list.
+   */
   useEffect(() => {
     if (showUvAlerts) {
       let uvAlert: ReactElement | null = null
@@ -155,6 +193,19 @@ const Alert: FC<AlertProps> = (props) => {
     }
   }, [hoursOfExtremeUv, showUvAlerts])
 
+  /**
+   * Monitors visibility conditions and manages the alert list accordingly.
+   *
+   * When showVisibilityAlerts is enabled and upcoming hours indicate low visibility,
+   * a visibility alert is generated to notify the user of potentially challenging conditions.
+   * Depending on the forecast, the alert either indicates when the low visibility is
+   * expected to start or provides the estimated duration of the low visibility condition.
+   *
+   * Alerts are dynamically produced based on the hoursOfLowVisibility array, which reflects
+   * the visibility forecast for each hour. If conditions do not warrant an alert, or
+   * if visibility alerts are turned off, any existing visibility alert is promptly removed
+   * from the list.
+   */
   useEffect(() => {
     if (showVisibilityAlerts) {
       let visibilityAlert: ReactElement | null = null
