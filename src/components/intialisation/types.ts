@@ -1,5 +1,5 @@
-import type { ConfigProps, HandleChange, HandleClick } from '@/pages/types'
-import type { Dispatch } from 'react'
+import type { ConfigProps, HandleChange, HandleClick } from '@/util/types'
+import type { Dispatch, SetStateAction } from 'react'
 
 export interface InitialisationProps {
   readonly opened: boolean;

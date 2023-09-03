@@ -3,7 +3,7 @@ import { Notifications } from '@mantine/notifications'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import type { FC } from 'react'
-import './styles.css'
+import '@/styles/styles.css'
 
 const cache = createEmotionCache({ key: 'weather-please' })
 

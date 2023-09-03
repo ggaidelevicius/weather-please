@@ -12,8 +12,8 @@ import * as Sentry from '@sentry/nextjs'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
-import styles from './styles.module.css'
-import type { CompareObjects, ConfigProps, HandleChange, HandleClick, MergeObjects } from './types'
+import styles from '@/styles/styles.module.css'
+import type { CompareObjects, ConfigProps, HandleChange, HandleClick, MergeObjects } from '@/util/types'
 
 const WeatherPlease: FC = () => {
   const [currentWeatherData, setCurrentWeatherData] = useState<CurrentWeatherProps>({
