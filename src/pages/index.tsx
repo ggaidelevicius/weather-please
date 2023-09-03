@@ -110,12 +110,12 @@ const WeatherPlease: FC = () => {
   useEffect(() => {
     const storedData = localStorage?.config ? JSON.parse(localStorage.config) : null
     if (storedData) {
-      const objectShapesMatch = compareObjects(storedData, config)
+      const objectShapesMatch = compareObjects(storedData, config) // should we be comparing against initialState here instead?
       if (objectShapesMatch) {
         setConfig(storedData)
         setInput(storedData)
       } else {
-        const mergedObject = mergeObjects(storedData, config)
+        const mergedObject = mergeObjects(storedData, config) // should we be comparing against initialState here instead?
         setConfig(mergedObject as ConfigProps)
         setInput(mergedObject as ConfigProps) // we lose the generic capability of the function here
       }
