@@ -54,11 +54,19 @@ const WeatherPlease: FC = () => {
   const [changedLocation, setChangedLocation] = useState<boolean>(false)
 
   /**
- * When "config" is read from localStorage or is changed directly, we check to see if the user
- * has given permission to share crash and error data.
- *
- * If permission has been given, we initialise Sentry.
- */
+   * Initializes or closes the Sentry error reporting based on user permissions.
+   *
+   * When the `config.shareCrashesAndErrors` value changes (either read from localStorage or
+   * updated in the app), this effect hook checks its value. If the user has granted permission,
+   * Sentry is initialized to capture and report crashes and errors. If the permission is not given,
+   * Sentry is closed to stop any error reporting.
+   *
+   * This hook depends on `config.shareCrashesAndErrors` to re-run whenever its value changes.
+   *
+   * Note:
+   * 1. The cleanup function ensures that Sentry is closed when this component is unmounted.
+   * 2. It's important to ensure that `config` is correctly initialized before this hook runs.
+   */
   useEffect(() => {
     if (config.shareCrashesAndErrors) {
       Sentry.init({
@@ -97,10 +105,14 @@ const WeatherPlease: FC = () => {
   }
 
   /**
-* We check to see if we've previously saved "config" into localStorage.
-* If it exists, we parse it and set the states of both "config" and "input" to the parsed value.
-* If it doesn't exist, we open the <Initialisation /> modal.
-*/
+  * On component mount, this effect hook checks the localStorage for a saved "config".
+  *
+  * - If "config" exists in localStorage, it is parsed and the states of both "config" and "input" are set.
+  *   - If the object shape of the stored data matches the current "config", both states are directly set to the stored value.
+  *   - If they don't match, the stored data is merged with the current "config" and the merged result is set to both states.
+  *
+  * - If "config" does not exist in localStorage, the <Initialisation /> modal is opened to prompt the user for initial configuration.
+  */
   useEffect(() => {
     const storedData = localStorage?.config ? JSON.parse(localStorage.config) : null
     if (storedData) {
@@ -121,25 +133,21 @@ const WeatherPlease: FC = () => {
   }, [])
 
   /**
-* We first check to see if we have existing weather data stored in localStorage, if we're still in
-* the same hour that the previous data was retrieved, if we've not changed our location in "config" since
-* the last check, and if we've not changed how many days of data we want to retrieve.
-*
-* If the above conditions are satisfied, we parse localStorage data and set both "futureWeatherData"
-* (tiles) and "currentWeatherData" (alerts) states using that data.
-*
-* If they aren't satisfied, we fetch fresh data. If we successfully fetch fresh data, we save it to state as well
-* as localStorage. We also note when we data was last updated, which is used when we open a new tab or
-* browser window to assess whether we can continue using stale data.
-*
-* Once a minute, we check to see if the current hour is the same as the hour saved in state. Upon changing
-* the value of currentHour's state, the effect is run again.
-*
-* TODO: totalPrecipitation should be checking against the current index AND current index + 1 to
-* determine whether we should be flagging precipitation as being stopped, as there are circumstances
-* where we could be having intermittent precipitation and still be reaching the total precipitation
-* threshold to be displaying an alert.
-*/
+  * This effect hook manages fetching and updating weather data.
+  *
+  * - Initially, it checks localStorage to determine if we can use cached weather data. For cached data to be used:
+  *   - The current hour should match when the data was last updated.
+  *   - The user location and data retrieval preferences in "config" shouldn't have changed since the last fetch.
+  *
+  * - If the criteria for cached data are met, it sets the weather states using data from localStorage.
+  *
+  * - Otherwise, it fetches fresh weather data, saves it to the state and localStorage, and updates the time of the last update.
+  *
+  * - To ensure data freshness, every minute the hook checks if the hour has changed. If it has, the effect reruns to potentially fetch fresh data.
+  *
+  * TODO:
+  * - "totalPrecipitation" logic needs refinement to ensure correct precipitation alerting under certain conditions.
+  */
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
@@ -284,8 +292,8 @@ const WeatherPlease: FC = () => {
   }
 
   /**
-* If lat and lon have been configured, we close the <Initialisation /> modal.
-*/
+  * Closes the <Initialisation /> modal if it's opened and both "lat" and "lon" are configured in the "config".
+  */
   useEffect(() => {
     if (opened && config.lat && config.lon) {
       close()
@@ -294,10 +302,10 @@ const WeatherPlease: FC = () => {
   }, [opened, config.lat, config.lon])
 
   /**
-* As long as config.lat and config.lon are valid values, we commit
-* "config" to localStorage. Upon saving data, if we have updated our
-* geolocation, we set usingFreshData to true so that we fetch new data.
-*/
+    * Commits the "config" to localStorage if "config.lat" and "config.lon" are valid latitude and longitude values, respectively.
+    * Latitude: -90 to +90, Longitude: -180 to +180.
+    * If the geolocation has been updated, it sets "usingFreshData" to true, indicating the need to fetch fresh data.
+    */
   useEffect(() => {
     if (
       config.lat
@@ -314,12 +322,17 @@ const WeatherPlease: FC = () => {
   }, [config])
 
   /**
-* Once a minute, we first check to see if it's the same day or not. If it's a new day and
-* the user has opted to receive periodic location updates, we check their geolocation using
-* the same geolocation identifying techniques as we use in the handleClick function.
-*
-* TODO: Can these geolocation identifying techniques be abstracted?
-*/
+  * Periodically (every minute) checks if the current date has changed.
+  * If it's a new day and the user has opted-in for periodic location updates,
+  * the user's geolocation is checked:
+  * - For non-Safari browsers, the built-in Geolocation API is utilized.
+  * - For Safari, an external service (ip-api.com) is used to fetch geolocation data.
+  *
+  * If the geolocation has changed from what's saved in "config", the "changedLocation" flag is set to true.
+  *
+  * TODO:
+  *  - Consider abstracting the geolocation identifying techniques for code reusability and maintainability.
+  */
   useEffect(() => {
     const checkDate = setInterval(() => {
       if (new Date().getDate() !== currentDate) {
