@@ -62,4 +62,4 @@ export type CompareObjects = (
 export type MergeObjects = (
   targetObj: Record<keyof any, any>,
   sourceObj: Record<keyof any, any>
-) => ConfigProps;
+) => Record<keyof any, any>;
