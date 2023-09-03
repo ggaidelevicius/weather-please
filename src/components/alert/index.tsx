@@ -254,7 +254,7 @@ const Alert: FC<AlertProps> = (props) => {
     }
   }, [hoursOfLowVisibility, showVisibilityAlerts])
 
-  const tiles = () => (alerts.map((alert, i: number) => (
+  const tiles = (alerts.map((alert, i: number) => (
     <motion.div
       initial={{ scale: 1, opacity: 0 }}
       animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 1.9 } }}
@@ -271,7 +271,7 @@ const Alert: FC<AlertProps> = (props) => {
 
   return (
     <>
-      {tiles()}
+      {tiles}
     </>
   )
 }
