@@ -110,8 +110,8 @@ const WeatherPlease: FC = () => {
         setInput(storedData)
       } else {
         const mergedObject = mergeObjects(storedData, config)
-        setConfig(mergedObject)
-        setInput(mergedObject)
+        setConfig(mergedObject as ConfigProps)
+        setInput(mergedObject as ConfigProps) // we lose the generic capability of the function here
       }
     }
     else {
