@@ -50,8 +50,8 @@ export type HandleClick = (method: 'auto' | 'manual') => void;
  * Compares the shape of the two objects, in this case the config object in localStorage against initialState.
  */
 export type CompareObjects = (
-  obj1: Partial<unknown>,
-  obj2: Partial<unknown>
+  obj1: Record<keyof any, any>,
+  obj2: Record<keyof any, any>
 ) => boolean;
 
 /**
@@ -60,6 +60,6 @@ export type CompareObjects = (
  * Preserves the values of the target object keys (in this case the config object in localStorage) if they exist.
  */
 export type MergeObjects = (
-  targetObj: Partial<any>,
-  sourceObj: Partial<any>
+  targetObj: Record<keyof any, any>,
+  sourceObj: Record<keyof any, any>
 ) => ConfigProps;
