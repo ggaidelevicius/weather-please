@@ -1,12 +1,20 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+let config = {
   reactStrictMode: true,
-  output: process.env.NEXT_PUBLIC === 'true' ? 'standalone' : 'export',
-  assetPrefix: '.',
-  images: {
-    unoptimized: process.env.NEXT_PUBLIC === 'true' ? false : true,
-  },
 }
+
+if (process.env.NEXT_PUBLIC !== 'true') {
+  config = {
+    reactStrictMode: true,
+    output: 'export',
+    assetPrefix: '.',
+    images: {
+      unoptimized: true,
+    },
+  }
+}
+
+/** @type {import('next').NextConfig} */
+const nextConfig = config
 
 module.exports = nextConfig
 
