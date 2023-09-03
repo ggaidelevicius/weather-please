@@ -4,6 +4,7 @@ import { Notifications } from '@mantine/notifications'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import type { FC } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 
 const cache = createEmotionCache({ key: 'weather-please' })
 
@@ -27,6 +28,9 @@ const App: FC<AppProps> = (props) => {
       >
         <Notifications />
         <Component {...pageProps} />
+        {process.env.NEXT_PUBLIC_DEMO === 'true' &&
+          <Analytics />
+        }
       </MantineProvider>
     </>
   )
