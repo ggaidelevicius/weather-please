@@ -60,12 +60,6 @@ const WeatherPlease: FC = () => {
    * updated in the app), this effect hook checks its value. If the user has granted permission,
    * Sentry is initialized to capture and report crashes and errors. If the permission is not given,
    * Sentry is closed to stop any error reporting.
-   *
-   * This hook depends on `config.shareCrashesAndErrors` to re-run whenever its value changes.
-   *
-   * Note:
-   * 1. The cleanup function ensures that Sentry is closed when this component is unmounted.
-   * 2. It's important to ensure that `config` is correctly initialized before this hook runs.
    */
   useEffect(() => {
     if (config.shareCrashesAndErrors) {
