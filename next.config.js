@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export',
+  output: process.env.NEXT_PUBLIC === 'true' ? 'standalone' : 'export',
   assetPrefix: '.',
+  images: {
+    unoptimized: process.env.NEXT_PUBLIC === 'true' ? false : true,
+  },
 }
 
 module.exports = nextConfig

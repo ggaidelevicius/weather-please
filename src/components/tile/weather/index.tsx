@@ -13,6 +13,7 @@ import {
   Thunderstorm,
 } from '@/assets/images'
 import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
+import Image from 'next/image'
 import type { FC } from 'react'
 import styles from './styles.module.css'
 import type { BasicWeatherProps, WeatherDetailProps } from './types'
@@ -88,7 +89,7 @@ export const BasicWeather: FC<BasicWeatherProps> = (props) => {
             {useMetric ? Math.round(max) : Math.round((max * 9 / 5) + 32)}
           </div>
           <span className='visuallyHidden'>
-            {`The maximum temperature will be ${useMetric ? Math.round(max) : Math.round((max * 9/5) + 32)} degrees ${useMetric ? 'celsius' : 'fahrenheit'}.`}
+            {`The maximum temperature will be ${useMetric ? Math.round(max) : Math.round((max * 9 / 5) + 32)} degrees ${useMetric ? 'celsius' : 'fahrenheit'}.`}
           </span>
           <div aria-hidden>
             {useMetric ? Math.round(min) : Math.round((min * 9 / 5) + 32)}
@@ -104,7 +105,7 @@ export const BasicWeather: FC<BasicWeatherProps> = (props) => {
           {`The expected type of weather is ${descriptionMap[description as keyof typeof descriptionMap]}.`}
         </span>
       </div>
-      <img src={iconMap[description as keyof typeof iconMap].src} alt='' className={styles.image} />
+      <Image src={iconMap[description as keyof typeof iconMap]} alt='' className={styles.image} placeholder='blur' width={56} height={56} />
     </div>
   )
 }

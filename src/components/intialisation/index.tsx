@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { Button, Modal, Text, TextInput, Title } from '@mantine/core'
+import Image from 'next/image'
 import type { FC } from 'react'
+import Favicon from '../../../public/favicon.png'
 import type { InitialisationProps } from './types'
 
 const Initialisation: FC<InitialisationProps> = (props) => {
@@ -29,7 +31,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
       trapFocus={false}
     >
       <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '2rem', justifyContent: 'center' }}>
-        <img src='/favicon.png' alt='Weather Please logo' style={{ height: '4rem', width: '4rem' }} />
+        <Image src={Favicon} alt='Weather Please logo' style={{ height: '4rem', width: '4rem' }} placeholder='blur' />
         <Title order={1}>Weather <span style={{ color: '#ea5e57' }}>Please</span></Title>
       </div>
       <Text sx={{ fontSize: '1.05rem' }}>
