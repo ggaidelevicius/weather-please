@@ -2,7 +2,7 @@ let config = {
   reactStrictMode: true,
 }
 
-if (process.env.NEXT_PUBLIC !== 'true') {
+if (process.env.NEXT_PUBLIC_DEMO !== 'true') {
   config = {
     reactStrictMode: true,
     output: 'export',
