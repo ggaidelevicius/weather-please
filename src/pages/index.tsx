@@ -416,7 +416,7 @@ const WeatherPlease: FC = () => {
   })
   )
 
-  const determineGridColumns: DetermineGridColumns = (daysToRetrieve: string): number => {
+  const determineGridColumns: DetermineGridColumns = (daysToRetrieve) => {
     const value = parseInt(daysToRetrieve)
 
     switch (value) {
