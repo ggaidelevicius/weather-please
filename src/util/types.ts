@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-vars */
+import type { ReactElement } from 'react'
+
 /**
  * Configuration properties for the weather application.
  *
@@ -96,3 +98,30 @@ export type MergeObjects = (
   sourceObj: Record<keyof any, any>
 ) => Record<keyof any, any>;
 
+/**
+ * Determines the number of grid columns based on the number of days of weather data to be retrieved.
+ *
+ * The number of grid columns represents how many columns of weather data can be displayed
+ * in a single row on the UI. The column count is determined by both the number of days
+ * specified and the constraints of the UI, aiming to ensure that the data is displayed
+ * in an aesthetically pleasing and legible manner.
+ *
+ * @param {string} daysToRetrieve - The number of days of weather data to be retrieved.
+ * @returns {number} The number of grid columns to display.
+ *
+ * @example
+ * determineGridColumns('5') // returns 5
+ * determineGridColumns('7') // returns 3
+ */
+export type DetermineGridColumns = (daysToRetrieve: string) => number
+
+/**
+ * Maps over futureWeatherData to create a list of motion-animated tiles.
+ *
+ * Each tile represents weather data for a particular day. Tiles are motion
+ * components with specific initial, animate, and exit states.
+ *
+ * The animation delay is influenced by the presence of data in the localStorage.
+ * If data exists, tiles are immediately animated without the baseline delay.
+ */
+export type TileComponent = ReactElement[] | []

@@ -5,6 +5,8 @@ import Initialisation from '@/components/intialisation'
 import Settings from '@/components/settings'
 import Tile from '@/components/tile'
 import type { TileProps } from '@/components/tile/types'
+import styles from '@/styles/styles.module.css'
+import type { CompareObjects, ConfigProps, DetermineGridColumns, HandleChange, HandleClick, MergeObjects, TileComponent } from '@/util/types'
 import { Loader } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
@@ -12,8 +14,6 @@ import * as Sentry from '@sentry/nextjs'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
-import styles from '@/styles/styles.module.css'
-import type { CompareObjects, ConfigProps, HandleChange, HandleClick, MergeObjects } from '@/util/types'
 
 const WeatherPlease: FC = () => {
   const [currentWeatherData, setCurrentWeatherData] = useState<CurrentWeatherProps>({
@@ -396,7 +396,7 @@ const WeatherPlease: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDate, config.periodicLocationUpdate])
 
-  const tiles = (futureWeatherData.map((day, i: number) => {
+  const tiles: TileComponent = (futureWeatherData.map((day, i: number) => {
     let delayBaseline = 0.75
     if (localStorage.data) {
       delayBaseline = 0
@@ -416,7 +416,7 @@ const WeatherPlease: FC = () => {
   })
   )
 
-  const determineGridColumns = (daysToRetrieve: string): number => {
+  const determineGridColumns: DetermineGridColumns = (daysToRetrieve: string): number => {
     const value = parseInt(daysToRetrieve)
 
     switch (value) {
