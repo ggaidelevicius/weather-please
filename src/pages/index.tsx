@@ -277,7 +277,7 @@ const WeatherPlease: FC = () => {
         setGeolocationError(true)
       }
       setTimeout(() => { setGeolocationError(true) }, 5e3)
-    } else {
+    } else { // todo: warning on exiting without saving changes
       if ((config.lat !== input.lat) || config.lon !== input.lon) {
         setChangedLocation(true)
       }
