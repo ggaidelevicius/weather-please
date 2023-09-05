@@ -12,8 +12,8 @@ const Tile: FC<TileProps> = (props) => {
   const days: Day[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const months: Month[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
-  const tileDay = days[new Date(day * 1000).getDay()]
-  const tileDate = `${new Date(day * 1000).getDate()} ${months[new Date(day * 1000).getMonth()]}`
+  const tileDay: string = days[new Date(day * 1000).getDay()]
+  const tileDate: string = `${new Date(day * 1000).getDate()} ${months[new Date(day * 1000).getMonth()]}`
 
   return (
     <Card

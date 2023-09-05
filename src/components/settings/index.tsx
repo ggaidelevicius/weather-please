@@ -48,7 +48,7 @@ const Settings: FC<SettingsProps> = (props) => {
     }
   }, [config.lat, config.lon, opened])
 
-  const generateLocation = (args: Partial<any>): string => {
+  const generateLocation = (args: Record<keyof any, any>): string => {
     let specificLocation = args?.village ?? args?.town ?? args?.suburb ?? args?.county ?? null
     if (specificLocation) {
       specificLocation = `${specificLocation}, `
