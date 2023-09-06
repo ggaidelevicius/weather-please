@@ -22,6 +22,68 @@ const Alert: FC<AlertProps> = (props) => {
   const [alerts, setAlerts] = useState<ReactElement[] | []>([])
 
   /**
+ * Monitors UV conditions and updates the alert list accordingly.
+ *
+ * If showUvAlerts is enabled and there are upcoming hours with extreme UV exposure, a UV alert
+ * is created to warn the user about the potentially harmful conditions. The alert provides
+ * information either about when the extreme UV exposure will begin or its expected duration,
+ * based on the current and forecasted UV conditions.
+ *
+ * The alert is dynamically generated based on the hoursOfExtremeUv array, where each entry
+ * indicates whether UV exposure will be extreme for the respective hour. If conditions do
+ * not require an alert, or if UV alerts are disabled, any existing UV alert is removed
+ * from the list.
+ */
+  useEffect(() => {
+    if (showUvAlerts) {
+      let uvAlert: ReactElement | null = null
+      if (hoursOfExtremeUv.includes(true)) {
+        const alertProps = {
+          className: styles.alert,
+          radius: 'md',
+          color: 'yellow',
+          styles: { message: { fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' } },
+          key: 'uvAlert',
+        }
+        const timeUntilExtremeUv = hoursOfExtremeUv.indexOf(true) + 1
+        if (timeUntilExtremeUv > 1) {
+          uvAlert = (
+            <MantineAlert {...alertProps} >
+              <IconAlertTriangle size='2rem' strokeWidth={1.5} aria-hidden />
+              Extreme UV starting in {timeUntilExtremeUv} hours
+            </MantineAlert>
+          )
+        } else {
+          const durationOfExtremeUv = hoursOfExtremeUv.indexOf(false)
+          uvAlert = (
+            <MantineAlert {...alertProps}>
+              <IconAlertTriangle size='2rem' strokeWidth={1.5} aria-hidden />
+              Extreme UV for the next {durationOfExtremeUv > 0 ? `${durationOfExtremeUv} hours` : durationOfExtremeUv < 0 ? '12 hours' : 'hour'}
+            </MantineAlert>
+          )
+        }
+        setAlerts((prev) => {
+          const prevUvAlertIndex = prev.findIndex(
+            (alert) => alert.key === 'uvAlert'
+          )
+
+          if (prevUvAlertIndex !== -1) {
+            const newAlerts = [...prev]
+            newAlerts[prevUvAlertIndex] = uvAlert as ReactElement
+            return newAlerts
+          } else {
+            return [...prev, uvAlert as ReactElement]
+          }
+        })
+      } else {
+        setAlerts((prev) => prev.filter(alert => alert.key !== 'uvAlert'))
+      }
+    } else {
+      setAlerts((prev) => prev.filter(alert => alert.key !== 'uvAlert'))
+    }
+  }, [hoursOfExtremeUv, showUvAlerts])
+
+  /**
    * Checks for significant precipitation and updates the alert list accordingly.
    *
    * If showPrecipitationAlerts is enabled and the total precipitation is beyond a certain
@@ -130,68 +192,6 @@ const Alert: FC<AlertProps> = (props) => {
       setAlerts((prev) => prev.filter(alert => alert.key !== 'windAlert'))
     }
   }, [hoursOfHighWind, showWindAlerts])
-
-  /**
-   * Monitors UV conditions and updates the alert list accordingly.
-   *
-   * If showUvAlerts is enabled and there are upcoming hours with extreme UV exposure, a UV alert
-   * is created to warn the user about the potentially harmful conditions. The alert provides
-   * information either about when the extreme UV exposure will begin or its expected duration,
-   * based on the current and forecasted UV conditions.
-   *
-   * The alert is dynamically generated based on the hoursOfExtremeUv array, where each entry
-   * indicates whether UV exposure will be extreme for the respective hour. If conditions do
-   * not require an alert, or if UV alerts are disabled, any existing UV alert is removed
-   * from the list.
-   */
-  useEffect(() => {
-    if (showUvAlerts) {
-      let uvAlert: ReactElement | null = null
-      if (hoursOfExtremeUv.includes(true)) {
-        const alertProps = {
-          className: styles.alert,
-          radius: 'md',
-          color: 'yellow',
-          styles: { message: { fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' } },
-          key: 'uvAlert',
-        }
-        const timeUntilExtremeUv = hoursOfExtremeUv.indexOf(true) + 1
-        if (timeUntilExtremeUv > 1) {
-          uvAlert = (
-            <MantineAlert {...alertProps} >
-              <IconAlertTriangle size='2rem' strokeWidth={1.5} aria-hidden />
-              Extreme UV starting in {timeUntilExtremeUv} hours
-            </MantineAlert>
-          )
-        } else {
-          const durationOfExtremeUv = hoursOfExtremeUv.indexOf(false)
-          uvAlert = (
-            <MantineAlert {...alertProps}>
-              <IconAlertTriangle size='2rem' strokeWidth={1.5} aria-hidden />
-              Extreme UV for the next {durationOfExtremeUv > 0 ? `${durationOfExtremeUv} hours` : durationOfExtremeUv < 0 ? '12 hours' : 'hour'}
-            </MantineAlert>
-          )
-        }
-        setAlerts((prev) => {
-          const prevUvAlertIndex = prev.findIndex(
-            (alert) => alert.key === 'uvAlert'
-          )
-
-          if (prevUvAlertIndex !== -1) {
-            const newAlerts = [...prev]
-            newAlerts[prevUvAlertIndex] = uvAlert as ReactElement
-            return newAlerts
-          } else {
-            return [...prev, uvAlert as ReactElement]
-          }
-        })
-      } else {
-        setAlerts((prev) => prev.filter(alert => alert.key !== 'uvAlert'))
-      }
-    } else {
-      setAlerts((prev) => prev.filter(alert => alert.key !== 'uvAlert'))
-    }
-  }, [hoursOfExtremeUv, showUvAlerts])
 
   /**
    * Monitors visibility conditions and manages the alert list accordingly.
