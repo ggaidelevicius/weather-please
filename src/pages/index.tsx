@@ -431,7 +431,7 @@ const WeatherPlease: FC = () => {
     }
     return (
       <motion.div
-        key={day.day}
+        key={`${day.day}-${completedFirstLoad}`}
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + delayBaseline } }}
         exit={{ scale: 0.95, opacity: 0 }}

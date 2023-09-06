@@ -257,7 +257,7 @@ const Alert: FC<AlertProps> = (props) => {
   const tiles = (alerts.map((alert, i: number) => (
     <motion.div
       initial={{ scale: 1, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 1.9 } }} // we can pass the number of days forecasted into here and use that as base delay
+      animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + 1.9 } }}
       exit={{ scale: 0.95, opacity: 0 }}
       className={styles.wrapper}
       key={`alert-${i}`}
