@@ -251,9 +251,9 @@ const Settings: FC<SettingsProps> = (props) => {
         <Text size='sm' color='lightblue' component='a' href='https://github.com/ggaidelevicius/weather-please/blob/main/PRIVACY.md' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
           🔒 Privacy policy
         </Text>
-        <Text size='sm' color='lightblue' component='a' href='https://www.buymeacoffee.com/ggaidelevicius' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
+        {/* <Text size='sm' color='lightblue' component='a' href='https://www.buymeacoffee.com/ggaidelevicius' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
           ☕ Buy me a coffee
-        </Text>
+        </Text> */}
       </Modal>
     </>
   )
