@@ -71,12 +71,12 @@ export type HandleChange = (k: HandleChangeKey, v: string | boolean) => void;
 export type HandleClick = (method: 'auto' | 'manual') => void;
 
 /**
- * Compares the shape of two objects to determine if they have the same set of keys.
+ * Recursively compares the shape of two objects to determine if they have the same set of keys at all levels.
  * Primarily used to compare the 'config' object in localStorage against 'initialState'.
  *
  * @param obj1 First object to be compared.
  * @param obj2 Second object to be compared.
- * @returns True if both objects have the same keys, otherwise false.
+ * @returns True if both objects have the same keys (including nested keys), otherwise false.
  */
 export type CompareObjects = (
   obj1: Record<keyof any, any>,
