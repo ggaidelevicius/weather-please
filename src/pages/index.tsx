@@ -52,6 +52,7 @@ const WeatherPlease: FC = () => {
   const [input, setInput] = useState<ConfigProps>(initialState)
   const [usingFreshData, setUsingFreshData] = useState<boolean>(false)
   const [changedLocation, setChangedLocation] = useState<boolean>(false)
+  const [completedFirstLoad, setCompletedFirstLoad] = useState<boolean>(false)
 
   /**
    * Initializes or closes the Sentry error reporting based on user permissions.
@@ -434,7 +435,7 @@ const WeatherPlease: FC = () => {
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + delayBaseline } }}
         exit={{ scale: 0.95, opacity: 0 }}
-        layout
+        layout={completedFirstLoad}
         style={{ background: 'none' }}
       >
         <Tile {...day} useMetric={config.useMetric} identifier={config.identifier} index={i} />
@@ -442,6 +443,20 @@ const WeatherPlease: FC = () => {
     )
   })
   )
+
+  /**
+   * Delays setting `completedFirstLoad` to mitigate layout shifts during initial render.
+   *
+   * The effect sets a delay of 1.9 seconds before marking the first load as complete. This
+   * ensures that weather tiles render smoothly without abrupt layout shifts due to
+   * alerts being mounted separately.
+   */
+  useEffect(() => {
+    setTimeout(() => {
+      setCompletedFirstLoad(true)
+    }, 1.9)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const determineGridColumns: DetermineGridColumns = (daysToRetrieve) => {
     const value = parseInt(daysToRetrieve)
