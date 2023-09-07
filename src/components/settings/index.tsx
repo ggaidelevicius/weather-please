@@ -75,8 +75,8 @@ const Settings: FC<SettingsProps> = (props) => {
   return (
     <>
       <ActionIcon
-        aria-label={<Trans>Open settings</Trans> as unknown as string}
-        title={<Trans>Open settings</Trans> as unknown as string}
+        aria-label='Open settings'
+        title='Open settings' // how do i pass translated values into here?
         variant='light'
         color='dark'
         onClick={open}
