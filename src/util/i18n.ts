@@ -8,7 +8,12 @@ export const locales: Record<string, string> = {
 }
 
 export const changeLocalisation = async (locale: keyof typeof locales) => {
-  const { messages } = await import(`../locales/${locale}/messages`)
-  i18n.load(locale, messages)
-  i18n.activate(locale)
+  try {
+    const { messages } = await import(`../locales/${locale}/messages`)
+    i18n.load(locale, messages)
+    i18n.activate(locale)
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn(e)
+  }
 }

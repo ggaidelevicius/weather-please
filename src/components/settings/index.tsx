@@ -1,3 +1,4 @@
+import { locales } from '@/util/i18n'
 import { Trans } from '@lingui/macro'
 import { ActionIcon, Button, Divider, Modal, NativeSelect, Skeleton, Switch, Text, TextInput, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
@@ -239,12 +240,10 @@ const Settings: FC<SettingsProps> = (props) => {
           label={<Trans>Language</Trans>}
           value={input.lang}
           onChange={(e) => { handleChange('lang', e.target.value) }}
-          data={[
-            { label: 'English', value: 'en' },
-            { label: 'हिंदी', value: 'hi' },
-            { label: 'Lietuvių', value: 'lt' },
-            { label: 'Tiếng Việt', value: 'vi' },
-          ]}
+          data={Object.keys(locales).map((key) => ({
+            label: locales[key],
+            value: key,
+          }))}
         />
         <Switch
           label={<Trans>Use metric number format</Trans>}
