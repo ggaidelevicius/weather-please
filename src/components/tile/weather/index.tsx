@@ -143,7 +143,7 @@ export const WeatherDetail: FC<WeatherDetailProps> = (props) => {
         </span>
         <span className='visuallyHidden'>
           <Trans>
-            The maximum UV index will be {Math.round(uv)}
+            The maximum UV index will be {Math.round(uv)}.
           </Trans>
         </span>
       </div>
@@ -164,12 +164,12 @@ export const WeatherDetail: FC<WeatherDetailProps> = (props) => {
         <span className='visuallyHidden'>
           {useMetric &&
             <Trans>
-              The maximum wind speed will be {Math.round(wind)} kilometers per hour
+              The maximum wind speed will be {Math.round(wind)} kilometers per hour.
             </Trans>
           }
           {!useMetric &&
             <Trans>
-              The maximum wind speed will be {Math.round(wind / 1.609344)} miles per hour
+              The maximum wind speed will be {Math.round(wind / 1.609344)} miles per hour.
             </Trans>
           }
         </span>
@@ -181,7 +181,7 @@ export const WeatherDetail: FC<WeatherDetailProps> = (props) => {
         </span>
         <span className='visuallyHidden'>
           <Trans>
-            There is a {Math.round(rain)}% chance of precipitation
+            There is a {Math.round(rain)}% chance of precipitation.
           </Trans>
         </span>
       </div>
