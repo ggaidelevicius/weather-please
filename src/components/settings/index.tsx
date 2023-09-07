@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { Trans } from '@lingui/macro'
 import { ActionIcon, Button, Divider, Modal, NativeSelect, Skeleton, Switch, Text, TextInput, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'

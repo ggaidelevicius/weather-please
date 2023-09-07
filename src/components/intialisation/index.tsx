@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { Trans } from '@lingui/macro'
 import { Button, Modal, NativeSelect, Text, TextInput, Title } from '@mantine/core'
 import Image from 'next/image'

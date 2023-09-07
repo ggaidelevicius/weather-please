@@ -35,5 +35,4 @@ export interface WeatherDetailProps {
   readonly wind: number;
   readonly rain: number;
   readonly useMetric: boolean;
-  readonly index: number;
 }

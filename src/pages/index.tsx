@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import Alert from '@/components/alert'
 import type { CurrentWeatherProps } from '@/components/alert/types'
 import Initialisation from '@/components/intialisation'
@@ -471,7 +470,7 @@ const WeatherPlease: FC = () => {
         layout={completedFirstLoad}
         style={{ background: 'none' }}
       >
-        <Tile {...day} useMetric={config.useMetric} identifier={config.identifier} index={i} />
+        <Tile {...day} useMetric={config.useMetric} identifier={config.identifier} />
       </motion.div>
     )
   })

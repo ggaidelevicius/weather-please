@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import {
   BrokenClouds,
   ClearSky,
@@ -91,20 +90,40 @@ export const BasicWeather: FC<BasicWeatherProps> = (props) => {
             {useMetric ? Math.round(max) : Math.round((max * 9 / 5) + 32)}
           </div>
           <span className='visuallyHidden'>
-            {`The maximum temperature will be ${useMetric ? Math.round(max) : Math.round((max * 9 / 5) + 32)} degrees ${useMetric ? 'celsius' : 'fahrenheit'}.`}
+            {useMetric &&
+              <Trans>
+                The maximum temperature will be {Math.round(max)} degrees celsius.
+              </Trans>
+            }
+            {!useMetric &&
+              <Trans>
+                The maximum temperature will be {Math.round((max * 9 / 5) + 32)} degrees fahrenheit.
+              </Trans>
+            }
           </span>
           <div aria-hidden>
             {useMetric ? Math.round(min) : Math.round((min * 9 / 5) + 32)}
           </div>
           <span className='visuallyHidden'>
-            {`The minimum temperature will be ${useMetric ? Math.round(min) : Math.round((min * 9 / 5) + 32)} degrees ${useMetric ? 'celsius' : 'fahrenheit'}.`}
+            {useMetric &&
+              <Trans>
+                The minimum temperature will be {Math.round(min)} degrees celsius.
+              </Trans>
+            }
+            {!useMetric &&
+              <Trans>
+                The minimum temperature will be {Math.round((min * 9 / 5) + 32)} degrees fahrenheit.
+              </Trans>
+            }
           </span>
         </div>
         <div aria-hidden>
           {descriptionMap[description as keyof typeof descriptionMap]}
         </div>
         <span className='visuallyHidden'>
-          {`The expected type of weather is ${descriptionMap[description as keyof typeof descriptionMap]}.`}
+          <Trans>
+            The expected type of weather is {descriptionMap[description as keyof typeof descriptionMap]}.
+          </Trans>
         </span>
       </div>
       <Image quality={100} priority src={iconMap[description as keyof typeof iconMap]} alt='' className={styles.image} width={56} height={56} />
@@ -113,26 +132,46 @@ export const BasicWeather: FC<BasicWeatherProps> = (props) => {
 }
 
 export const WeatherDetail: FC<WeatherDetailProps> = (props) => {
-  const { uv, wind, rain, useMetric, index } = props
+  const { uv, wind, rain, useMetric } = props
 
   return (
     <div className={styles.detailContainer}>
       <div className={styles.detail}>
         <IconUvIndex size={18} aria-hidden />
         <span aria-hidden>
-          {`${Math.round(uv)}`}
+          {Math.round(uv)}
         </span>
         <span className='visuallyHidden'>
-          {`${index === 0 ? 'Today\'s maximum UV index is' : 'The maximum UV index will be'} ${Math.round(uv)}`}
+          <Trans>
+            The maximum UV index will be {Math.round(uv)}
+          </Trans>
         </span>
       </div>
       <div className={styles.detail}>
         <IconWind size={18} aria-hidden />
         <span aria-hidden>
-          {`${useMetric ? Math.round(wind) : Math.round(wind / 1.609344)} ${useMetric ? 'km/h' : 'mph'}`}
+          {useMetric &&
+            <Trans>
+              {Math.round(wind)} km/h
+            </Trans>
+          }
+          {!useMetric &&
+            <Trans>
+              {Math.round(wind / 1.609344)} mph
+            </Trans>
+          }
         </span>
         <span className='visuallyHidden'>
-          {`${index === 0 ? 'Today\'s maximum wind speed is' : 'The maximum wind speed will be'} ${useMetric ? Math.round(wind) : Math.round(wind / 1.609344)} ${useMetric ? 'kilometers per hour' : 'miles per hour'}`}
+          {useMetric &&
+            <Trans>
+              The maximum wind speed will be {Math.round(wind)} kilometers per hour
+            </Trans>
+          }
+          {!useMetric &&
+            <Trans>
+              The maximum wind speed will be {Math.round(wind / 1.609344)} miles per hour
+            </Trans>
+          }
         </span>
       </div>
       <div className={styles.detail}>
@@ -141,7 +180,9 @@ export const WeatherDetail: FC<WeatherDetailProps> = (props) => {
           {`${Math.round(rain)}%`}
         </span>
         <span className='visuallyHidden'>
-          {`${index === 0 ? 'Today there is a' : 'There will be'} a ${Math.round(rain)}% chance of precipitation`}
+          <Trans>
+            There is a {Math.round(rain)}% chance of precipitation
+          </Trans>
         </span>
       </div>
     </div>
