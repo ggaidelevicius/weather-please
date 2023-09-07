@@ -29,27 +29,31 @@ msgstr "{0} of precipitation expected over the next {2}"
 msgid "{1} hours"
 msgstr "{1} hours"
 
-#: src/components/settings/index.tsx:291
+#: src/components/settings/index.tsx:305
+msgid "☕ Gift a coffee"
+msgstr "☕ Gift a coffee"
+
+#: src/components/settings/index.tsx:290
 msgid "🌟 Leave a review"
 msgstr "🌟 Leave a review"
 
-#: src/components/settings/index.tsx:296
+#: src/components/settings/index.tsx:295
 msgid "🐛 Report a bug"
 msgstr "🐛 Report a bug"
 
-#: src/components/settings/index.tsx:301
+#: src/components/settings/index.tsx:300
 msgid "🔒 Privacy policy"
 msgstr "🔒 Privacy policy"
 
-#: src/components/settings/index.tsx:197
+#: src/components/settings/index.tsx:198
 msgid "Alerts"
 msgstr "Alerts"
 
-#: src/components/settings/index.tsx:41
+#: src/components/settings/index.tsx:42
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "An error has occurred while fetching your location. Please check the console for more details."
 
-#: src/pages/index.tsx:417
+#: src/pages/index.tsx:414
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "An error has occurred while periodically updating location. Please check the console for more details."
 
@@ -61,7 +65,7 @@ msgstr "April"
 msgid "August"
 msgstr "August"
 
-#: src/components/settings/index.tsx:116
+#: src/components/settings/index.tsx:117
 msgid "Based on the provided information, your location is:"
 msgstr "Based on the provided information, your location is:"
 
@@ -69,11 +73,11 @@ msgstr "Based on the provided information, your location is:"
 msgid "clear sky"
 msgstr "clear sky"
 
-#: src/components/settings/index.tsx:194
+#: src/components/settings/index.tsx:195
 msgid "Date"
 msgstr "Date"
 
-#: src/components/settings/index.tsx:193
+#: src/components/settings/index.tsx:194
 msgid "Day"
 msgstr "Day"
 
@@ -139,7 +143,7 @@ msgstr "High wind for the next {durationOfHighWind} hours"
 
 #: src/components/alert/index.tsx:196
 msgid "High wind for the next 12 hours"
-msgstr ""
+msgstr "High wind for the next 12 hours"
 
 #: src/components/alert/index.tsx:201
 msgid "High wind for the next hour"
@@ -153,19 +157,19 @@ msgstr "High wind starting in {timeUntilHighWind} hours"
 msgid "hour"
 msgstr "hour"
 
-#: src/components/settings/index.tsx:189
+#: src/components/settings/index.tsx:190
 msgid "Identifier"
 msgstr "Identifier"
 
-#: src/components/settings/index.tsx:122
+#: src/components/settings/index.tsx:123
 msgid "If this is incorrect, please update the values below."
 msgstr "If this is incorrect, please update the values below."
 
-#: src/components/settings/index.tsx:278
-msgid "If you can help by providing translations, please reach out at <0>contact@weather-please.app</0>"
-msgstr "If you can help by providing translations, please reach out at <0>contact@weather-please.app</0>"
+#: src/components/settings/index.tsx:277
+msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
+msgstr "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 
-#: src/components/intialisation/index.tsx:48
+#: src/components/intialisation/index.tsx:49
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "If your browser prompts you for location permissions, please select \"allow\"."
 
@@ -173,13 +177,13 @@ msgstr "If your browser prompts you for location permissions, please select \"al
 msgid "in"
 msgstr "in"
 
-#: src/components/intialisation/index.tsx:94
-#: src/components/settings/index.tsx:132
+#: src/components/intialisation/index.tsx:93
+#: src/components/settings/index.tsx:133
 msgid "Invalid latitude value"
 msgstr "Invalid latitude value"
 
-#: src/components/intialisation/index.tsx:102
-#: src/components/settings/index.tsx:140
+#: src/components/intialisation/index.tsx:101
+#: src/components/settings/index.tsx:141
 msgid "Invalid longitude value"
 msgstr "Invalid longitude value"
 
@@ -195,14 +199,14 @@ msgstr "July"
 msgid "June"
 msgstr "June"
 
-#: src/components/intialisation/index.tsx:54
-#: src/components/intialisation/index.tsx:119
-#: src/components/settings/index.tsx:239
+#: src/components/intialisation/index.tsx:55
+#: src/components/intialisation/index.tsx:118
+#: src/components/settings/index.tsx:240
 msgid "Language"
 msgstr "Language"
 
-#: src/components/intialisation/index.tsx:90
-#: src/components/settings/index.tsx:128
+#: src/components/intialisation/index.tsx:89
+#: src/components/settings/index.tsx:129
 msgid "Latitude"
 msgstr "Latitude"
 
@@ -218,16 +222,16 @@ msgstr "light freezing drizzle"
 msgid "light freezing rain"
 msgstr "light freezing rain"
 
-#: src/components/settings/index.tsx:111
+#: src/components/settings/index.tsx:112
 msgid "Location"
 msgstr "Location"
 
-#: src/components/intialisation/index.tsx:98
-#: src/components/settings/index.tsx:136
+#: src/components/intialisation/index.tsx:97
+#: src/components/settings/index.tsx:137
 msgid "Longitude"
 msgstr "Longitude"
 
-#: src/components/intialisation/index.tsx:79
+#: src/components/intialisation/index.tsx:78
 msgid "Looks like we can't grab your location info automatically."
 msgstr "Looks like we can't grab your location info automatically."
 
@@ -260,7 +264,7 @@ msgstr "March"
 msgid "May"
 msgstr "May"
 
-#: src/components/settings/index.tsx:233
+#: src/components/settings/index.tsx:234
 msgid "Miscellaneous"
 msgstr "Miscellaneous"
 
@@ -288,11 +292,11 @@ msgstr "moderate snowfall"
 msgid "Monday"
 msgstr "Monday"
 
-#: src/components/settings/index.tsx:170
+#: src/components/settings/index.tsx:171
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
 msgstr "Note: This currently does not work well in Safari, and may be inaccurate"
 
-#: src/components/settings/index.tsx:163
+#: src/components/settings/index.tsx:164
 msgid "Note: This requires browser permissions"
 msgstr "Note: This requires browser permissions"
 
@@ -300,7 +304,7 @@ msgstr "Note: This requires browser permissions"
 msgid "November"
 msgstr "November"
 
-#: src/components/settings/index.tsx:182
+#: src/components/settings/index.tsx:183
 msgid "Number of days to forecast"
 msgstr "Number of days to forecast"
 
@@ -308,8 +312,8 @@ msgstr "Number of days to forecast"
 msgid "October"
 msgstr "October"
 
-#: src/components/settings/index.tsx:77
 #: src/components/settings/index.tsx:78
+#: src/components/settings/index.tsx:79
 msgid "Open settings"
 msgstr "Open settings"
 
@@ -321,11 +325,11 @@ msgstr "overcast"
 msgid "partly cloudy"
 msgstr "partly cloudy"
 
-#: src/components/settings/index.tsx:156
+#: src/components/settings/index.tsx:157
 msgid "Periodically update location automatically"
 msgstr "Periodically update location automatically"
 
-#: src/components/intialisation/index.tsx:84
+#: src/components/intialisation/index.tsx:83
 msgid "Please enter it manually below."
 msgstr "Please enter it manually below."
 
@@ -333,7 +337,7 @@ msgstr "Please enter it manually below."
 msgid "Saturday"
 msgstr "Saturday"
 
-#: src/components/settings/index.tsx:267
+#: src/components/settings/index.tsx:266
 msgid "Save"
 msgstr "Save"
 
@@ -341,36 +345,36 @@ msgstr "Save"
 msgid "September"
 msgstr "September"
 
-#: src/components/intialisation/index.tsx:70
-#: src/components/intialisation/index.tsx:135
+#: src/components/intialisation/index.tsx:69
+#: src/components/intialisation/index.tsx:132
 msgid "Set my location"
 msgstr "Set my location"
 
-#: src/components/settings/index.tsx:106
+#: src/components/settings/index.tsx:107
 msgid "Settings"
 msgstr "Settings"
 
-#: src/components/settings/index.tsx:256
+#: src/components/settings/index.tsx:255
 msgid "Share anonymised crash data and error logs"
 msgstr "Share anonymised crash data and error logs"
 
-#: src/components/settings/index.tsx:208
+#: src/components/settings/index.tsx:209
 msgid "Show extreme UV alerts"
 msgstr "Show extreme UV alerts"
 
-#: src/components/settings/index.tsx:213
+#: src/components/settings/index.tsx:214
 msgid "Show high precipitation alerts"
 msgstr "Show high precipitation alerts"
 
-#: src/components/settings/index.tsx:219
+#: src/components/settings/index.tsx:220
 msgid "Show high wind alerts"
 msgstr "Show high wind alerts"
 
-#: src/components/settings/index.tsx:225
+#: src/components/settings/index.tsx:226
 msgid "Show low visibility alerts"
 msgstr "Show low visibility alerts"
 
-#: src/components/settings/index.tsx:199
+#: src/components/settings/index.tsx:200
 msgid "Show weather alerts"
 msgstr "Show weather alerts"
 
@@ -450,11 +454,11 @@ msgstr "thunderstorm with slight hail"
 msgid "Thursday"
 msgstr "Thursday"
 
-#: src/components/settings/index.tsx:176
+#: src/components/settings/index.tsx:177
 msgid "Tiles"
 msgstr "Tiles"
 
-#: src/components/intialisation/index.tsx:38
+#: src/components/intialisation/index.tsx:39
 msgid "To get started, let's set your language and location."
 msgstr "To get started, let's set your language and location."
 
@@ -462,12 +466,12 @@ msgstr "To get started, let's set your language and location."
 msgid "Tuesday"
 msgstr "Tuesday"
 
-#: src/components/intialisation/index.tsx:113
-#: src/components/settings/index.tsx:151
+#: src/components/intialisation/index.tsx:112
+#: src/components/settings/index.tsx:152
 msgid "Unsure how to find these? Click here."
 msgstr "Unsure how to find these? Click here."
 
-#: src/components/settings/index.tsx:250
+#: src/components/settings/index.tsx:249
 msgid "Use metric number format"
 msgstr "Use metric number format"
 
@@ -475,11 +479,11 @@ msgstr "Use metric number format"
 msgid "violent rain showers"
 msgstr "violent rain showers"
 
-#: src/components/settings/index.tsx:273
+#: src/components/settings/index.tsx:272
 msgid "We'd love to bring Weather Please to more languages."
 msgstr "We'd love to bring Weather Please to more languages."
 
-#: src/pages/index.tsx:582
+#: src/pages/index.tsx:579
 msgid "weather data provided by open-meteo"
 msgstr "weather data provided by open-meteo"
 

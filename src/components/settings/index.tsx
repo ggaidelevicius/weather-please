@@ -275,7 +275,7 @@ const Settings: FC<SettingsProps> = (props) => {
         </Text>
         <Text size='sm' color='dimmed'>
           <Trans>
-            If you can help by providing translations, please reach out at <Text
+            If you have a translation request, please reach out at <Text
               component='a'
               href='mailto:contact@weather-please.app'
               color='lightblue'
@@ -301,11 +301,11 @@ const Settings: FC<SettingsProps> = (props) => {
             🔒 Privacy policy
           </Trans>
         </Text>
-        {/* <Text size='sm' color='lightblue' component='a' href='https://www.buymeacoffee.com/ggaidelevicius' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
+        <Text size='sm' color='lightblue' component='a' href='https://www.buymeacoffee.com/ggaidelevicius' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
           <Trans>
-          ☕ Gift a coffee
+            ☕ Gift a coffee
           </Trans>
-        </Text> */}
+        </Text>
       </Modal>
     </>
   )
