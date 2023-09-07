@@ -1,3 +1,5 @@
+import type { ReactElement } from 'react'
+
 /**
  * Represents the properties required for rendering a weather tile.
  *
@@ -38,14 +40,7 @@ export interface TileProps {
  * as the application scales or is internationalized, additional language
  * support or localized naming may be needed.
  */
-export type Day =
-  | 'Sunday'
-  | 'Monday'
-  | 'Tuesday'
-  | 'Wednesday'
-  | 'Thursday'
-  | 'Friday'
-  | 'Saturday';
+export type Day = ReactElement[];
 
 /**
  * Represents the months of the year in English.
@@ -54,16 +49,4 @@ export type Day =
  * days of the week, be aware that in the future, to accommodate more languages
  * or localized naming conventions, adaptations may be necessary.
  */
-  export type Month =
-  | 'January'
-  | 'February'
-  | 'March'
-  | 'April'
-  | 'May'
-  | 'June'
-  | 'July'
-  | 'August'
-  | 'September'
-  | 'October'
-  | 'November'
-  | 'December';
+  export type Month = any[];

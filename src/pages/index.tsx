@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import Alert from '@/components/alert'
 import type { CurrentWeatherProps } from '@/components/alert/types'
 import Initialisation from '@/components/intialisation'
@@ -7,6 +6,9 @@ import Tile from '@/components/tile'
 import type { TileProps } from '@/components/tile/types'
 import styles from '@/styles/styles.module.css'
 import type { CompareObjects, ConfigProps, DetermineGridColumns, HandleChange, HandleClick, MergeObjects, TileComponent } from '@/util/types'
+import { i18n } from '@lingui/core'
+import { Trans } from '@lingui/macro'
+import { I18nProvider } from '@lingui/react'
 import { Loader } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
@@ -14,6 +16,13 @@ import * as Sentry from '@sentry/nextjs'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
+import { messages } from '../locales/en/messages'
+import { changeLocalisation } from '../util/i18n'
+
+i18n.load({
+  'en': messages,
+})
+i18n.activate('en')
 
 const WeatherPlease: FC = () => {
   const [currentWeatherData, setCurrentWeatherData] = useState<CurrentWeatherProps>({
@@ -35,6 +44,7 @@ const WeatherPlease: FC = () => {
   const [geolocationError, setGeolocationError] = useState<boolean>(false)
   const [opened, { open, close }] = useDisclosure(false)
   const initialState: ConfigProps = {
+    lang: 'en',
     lat: '',
     lon: '',
     periodicLocationUpdate: false,
@@ -53,6 +63,23 @@ const WeatherPlease: FC = () => {
   const [usingFreshData, setUsingFreshData] = useState<boolean>(false)
   const [changedLocation, setChangedLocation] = useState<boolean>(false)
   const [completedFirstLoad, setCompletedFirstLoad] = useState<boolean>(false)
+
+  /**
+ * Synchronizes the active language with the language specified in the configuration.
+ *
+ * This effect listens for changes to `input.lang`. If `input.lang` is truthy, it will
+ * invoke the `i18n.activate` function with `input.lang` as its argument, changing the
+ * active language to the one specified in the configuration. This facilitates the dynamic
+ * switching of languages in Weather Please, allowing it to support internationalization.
+ *
+ * Input is used rather than config so users have instant feedback without first needing to
+ * understand what the text on the 'save' or 'set my location' buttons do.
+ */
+  useEffect(() => {
+    if (input.lang) {
+      changeLocalisation(input.lang)
+    }
+  }, [input.lang])
 
   /**
    * Initializes or closes the Sentry error reporting based on user permissions.
@@ -270,6 +297,7 @@ const WeatherPlease: FC = () => {
           ...prev,
           lat: pos.coords.latitude.toString(),
           lon: pos.coords.longitude.toString(),
+          lang: input.lang,
         }))
         setInput((prev) => ({
           ...prev,
@@ -293,6 +321,7 @@ const WeatherPlease: FC = () => {
           ...prev,
           lat: lat,
           lon: lon,
+          lang: input.lang,
         }))
         setInput((prev) => ({
           ...prev,
@@ -382,7 +411,7 @@ const WeatherPlease: FC = () => {
           console.warn(e)
           notifications.show({
             title: 'Error',
-            message: 'An error has occurred while periodically updating location. Please check the console for more details.',
+            message: <Trans>An error has occurred while periodically updating location. Please check the console for more details.</Trans>,
             color: 'red',
           })
         }
@@ -438,7 +467,7 @@ const WeatherPlease: FC = () => {
         layout={completedFirstLoad}
         style={{ background: 'none' }}
       >
-        <Tile {...day} useMetric={config.useMetric} identifier={config.identifier} index={i} />
+        <Tile {...day} useMetric={config.useMetric} identifier={config.identifier} />
       </motion.div>
     )
   })
@@ -486,7 +515,7 @@ const WeatherPlease: FC = () => {
   }
 
   return (
-    <>
+    <I18nProvider i18n={i18n}>
       <AnimatePresence>
         {futureWeatherData.length === 0 && config.lat && config.lon &&
           <motion.div
@@ -547,9 +576,9 @@ const WeatherPlease: FC = () => {
         className={styles.link}
         style={{ position: 'fixed', bottom: '1rem', left: '1rem', fontSize: '0.75rem', color: 'hsl(220deg 2.78% 57.65%)', lineHeight: 1, textDecoration: 'none' }}
       >
-        weather data provided by open-meteo
+        <Trans>weather data provided by open-meteo</Trans>
       </a>
-    </>
+    </I18nProvider>
   )
 }
 

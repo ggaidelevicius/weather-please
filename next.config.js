@@ -1,10 +1,30 @@
 let config = {
   reactStrictMode: true,
+  experimental: {
+    swcPlugins: [
+      [
+        '@lingui/swc-plugin',
+        {
+          // the same options as in .swcrc
+        },
+      ],
+    ],
+  },
 }
 
 if (process.env.NEXT_PUBLIC_DEMO !== 'true') {
   config = {
     reactStrictMode: true,
+    experimental: {
+      swcPlugins: [
+        [
+          '@lingui/swc-plugin',
+          {
+            // the same options as in .swcrc
+          },
+        ],
+      ],
+    },
     output: 'export',
     assetPrefix: '.',
     images: {
