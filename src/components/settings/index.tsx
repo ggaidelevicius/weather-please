@@ -102,13 +102,26 @@ const Settings: FC<SettingsProps> = (props) => {
           },
         }}
       >
-        <Title order={1}><Trans>Settings</Trans></Title>
-        <Title order={2} mt='md'><Trans>Location</Trans></Title>
+        <Title order={1}>
+          <Trans>
+            Settings
+          </Trans>
+        </Title>
+        <Title order={2} mt='md'>
+          <Trans>
+            Location
+          </Trans>
+        </Title>
         <Text mt='xs' sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Trans>Based on the provided information, your location is:</Trans>{(!location.country) && <Skeleton width={160} height={24.8} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {location.country && <strong>{generateLocation(location)}</strong>}
+          <Trans>
+            Based on the provided information, your location is:
+          </Trans>
+          {(!location.country) && <Skeleton width={160} height={24.8} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {location.country && <strong>{generateLocation(location)}</strong>}
         </Text>
         <Text mt='xs'>
-          <Trans>If this is incorrect, please update the values below.</Trans>
+          <Trans>
+            If this is incorrect, please update the values below.
+          </Trans>
         </Text>
         <TextInput
           mt='xs'
@@ -135,7 +148,9 @@ const Settings: FC<SettingsProps> = (props) => {
           color='lightblue'
           sx={{ '&:hover': { textDecoration: 'underline' } }}
         >
-          <Trans>Unsure how to find these? Click here.</Trans>
+          <Trans>
+            Unsure how to find these? Click here.
+          </Trans>
         </Text>
         <Switch
           label={<Trans>Periodically update location automatically</Trans>}
@@ -145,15 +160,23 @@ const Settings: FC<SettingsProps> = (props) => {
         />
         {!usingSafari &&
           <Text size='sm' color='dimmed'>
-            <Trans>Note: This requires browser permissions</Trans>
+            <Trans>
+              Note: This requires browser permissions
+            </Trans>
           </Text>
         }
         {usingSafari &&
           <Text size='sm' color='dimmed'>
-            <Trans>Note: This currently does not work well in Safari, and may be inaccurate</Trans>
+            <Trans>
+              Note: This currently does not work well in Safari, and may be inaccurate
+            </Trans>
           </Text>
         }
-        <Title order={2} mt='xl'><Trans>Tiles</Trans></Title>
+        <Title order={2} mt='xl'>
+          <Trans>
+            Tiles
+          </Trans>
+        </Title>
         <NativeSelect
           mt='xs'
           label={<Trans>Number of days to forecast</Trans>}
@@ -206,7 +229,11 @@ const Settings: FC<SettingsProps> = (props) => {
             />
           </>
         }
-        <Title order={2} mt='xl'><Trans>Miscellaneous</Trans></Title>
+        <Title order={2} mt='xl'>
+          <Trans>
+            Miscellaneous
+          </Trans>
+        </Title>
         <NativeSelect
           mt='xs'
           label={<Trans>Language</Trans>}
@@ -236,11 +263,15 @@ const Settings: FC<SettingsProps> = (props) => {
           fullWidth
           disabled={!(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/).test(input.lat) || !(/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(input.lon)}
         >
-          <Trans>Save</Trans>
+          <Trans>
+            Save
+          </Trans>
         </Button>
         <Divider sx={{ marginTop: '1.75rem', marginBottom: '1.5rem' }} />
         <Text size='sm'>
-          <Trans>We&apos;d love to bring Weather Please to more languages.</Trans>
+          <Trans>
+            We&apos;d love to bring Weather Please to more languages.
+          </Trans>
         </Text>
         <Text size='sm' color='dimmed'>
           <Trans>
@@ -256,16 +287,24 @@ const Settings: FC<SettingsProps> = (props) => {
         </Text>
         <Divider sx={{ marginTop: '0.875rem', marginBottom: '0.75rem' }} variant='dashed' />
         <Text size='sm' color='lightblue' component='a' href={reviewLink} sx={{ '&:hover': { textDecoration: 'underline' } }} target='_blank'>
-          <Trans>🌟 Leave a review</Trans>
+          <Trans>
+            🌟 Leave a review
+          </Trans>
         </Text>
         <Text size='sm' color='lightblue' component='a' href='https://github.com/ggaidelevicius/weather-please/issues' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
-          <Trans>🐛 Report a bug</Trans>
+          <Trans>
+            🐛 Report a bug
+          </Trans>
         </Text>
         <Text size='sm' color='lightblue' component='a' href='https://github.com/ggaidelevicius/weather-please/blob/main/PRIVACY.md' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
-          <Trans>🔒 Privacy policy</Trans>
+          <Trans>
+            🔒 Privacy policy
+          </Trans>
         </Text>
         {/* <Text size='sm' color='lightblue' component='a' href='https://www.buymeacoffee.com/ggaidelevicius' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
-          <Trans>☕ Gift me a coffee</Trans>
+          <Trans>
+          ☕ Gift a coffee
+          </Trans>
         </Text> */}
       </Modal>
     </>

@@ -35,7 +35,9 @@ const Initialisation: FC<InitialisationProps> = (props) => {
         <Title order={1}>Weather <span style={{ color: '#ea5e57' }}>Please</span></Title>
       </div>
       <Text sx={{ fontSize: '1.05rem' }}>
-        <Trans>To get started, let&apos;s set your language and location.</Trans>
+        <Trans>
+          To get started, let&apos;s set your language and location.
+        </Trans>
       </Text>
       {!geolocationError &&
         <>
@@ -43,7 +45,9 @@ const Initialisation: FC<InitialisationProps> = (props) => {
             color='dimmed'
             size='sm'
           >
-            <Trans>If your browser prompts you for location permissions, please select &quot;allow&quot;.</Trans>
+            <Trans>
+              If your browser prompts you for location permissions, please select &quot;allow&quot;.
+            </Trans>
           </Text>
           <NativeSelect
             mt='xs'
@@ -62,17 +66,23 @@ const Initialisation: FC<InitialisationProps> = (props) => {
             fullWidth
             loading={loading}
           >
-            <Trans>Set my location</Trans>
+            <Trans>
+              Set my location
+            </Trans>
           </Button>
         </>
       }
       {geolocationError &&
         <>
           <Text color='dimmed' size='sm'>
-            <Trans>Looks like we can&apos;t grab your location info automatically.</Trans>
+            <Trans>
+              Looks like we can&apos;t grab your location info automatically.
+            </Trans>
           </Text>
           <Text color='dimmed' size='sm'>
-            <Trans>Please enter it manually below.</Trans>
+            <Trans>
+              Please enter it manually below.
+            </Trans>
           </Text>
           <TextInput
             mt='md'
@@ -99,7 +109,9 @@ const Initialisation: FC<InitialisationProps> = (props) => {
             color='lightblue'
             sx={{ '&:hover': { textDecoration: 'underline' } }}
           >
-            <Trans>Unsure how to find these? Click here.</Trans>
+            <Trans>
+              Unsure how to find these? Click here.
+            </Trans>
           </Text>
           <NativeSelect
             mt='xs'
@@ -118,7 +130,9 @@ const Initialisation: FC<InitialisationProps> = (props) => {
             fullWidth
             disabled={!(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/).test(input.lat) || !(/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(input.lon)}
           >
-            <Trans>Set my location</Trans>
+            <Trans>
+              Set my location
+            </Trans>
           </Button>
         </>
       }

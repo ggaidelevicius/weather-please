@@ -51,7 +51,9 @@ const Alert: FC<AlertProps> = (props) => {
           uvAlert = (
             <MantineAlert {...alertProps} >
               <IconAlertTriangle size='2rem' strokeWidth={1.5} aria-hidden />
-              <Trans>Extreme UV starting in {timeUntilExtremeUv} hours</Trans>
+              <Trans>
+                Extreme UV starting in {timeUntilExtremeUv} hours
+              </Trans>
             </MantineAlert>
           )
         } else {
@@ -60,13 +62,19 @@ const Alert: FC<AlertProps> = (props) => {
             <MantineAlert {...alertProps}>
               <IconAlertTriangle size='2rem' strokeWidth={1.5} aria-hidden />
               {durationOfExtremeUv > 0 &&
-                <Trans>Extreme UV for the next {durationOfExtremeUv} hours</Trans>
+                <Trans>
+                  Extreme UV for the next {durationOfExtremeUv} hours
+                </Trans>
               }
               {durationOfExtremeUv < 0 &&
-                <Trans>Extreme UV for the next 12 hours</Trans>
+                <Trans>
+                  Extreme UV for the next 12 hours
+                </Trans>
               }
               {durationOfExtremeUv === 0 &&
-                <Trans>Extreme UV for the next hour</Trans>
+                <Trans>
+                  Extreme UV for the next hour
+                </Trans>
               }
             </MantineAlert>
           )
@@ -119,7 +127,7 @@ const Alert: FC<AlertProps> = (props) => {
             <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
             {useMetric ? precipitation.value.toFixed(2) : (precipitation.value / 25.4).toFixed(2)}<Trans>{useMetric ? <Trans>mm</Trans> : <Trans>in</Trans>} of precipitation expected over the next {duration.indexOf(false) === 1 ? <Trans>hour</Trans> : <Trans>{duration.indexOf(false)} hours</Trans>}</Trans>
           </MantineAlert>
-        )
+        ) // this should be refactored
         setAlerts((prev) => {
           const prevPrecipitationAlertIndex = prev.findIndex(
             (alert) => alert.key === 'precipitationAlert'
@@ -169,7 +177,9 @@ const Alert: FC<AlertProps> = (props) => {
           windAlert = (
             <MantineAlert {...alertProps} >
               <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
-              <Trans>High wind starting in {timeUntilHighWind} hours</Trans>
+              <Trans>
+                High wind starting in {timeUntilHighWind} hours
+              </Trans>
             </MantineAlert>
           )
         } else {
@@ -178,13 +188,19 @@ const Alert: FC<AlertProps> = (props) => {
             <MantineAlert {...alertProps}>
               <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
               {durationOfHighWind > 0 &&
-                <Trans>High wind for the next {durationOfHighWind} hours</Trans>
+                <Trans>
+                  High wind for the next {durationOfHighWind} hours
+                </Trans>
               }
               {durationOfHighWind < 0 &&
-                <Trans>High wind for the next 12 hours</Trans>
+                <Trans>
+                  High wind for the next 12 hours
+                </Trans>
               }
               {durationOfHighWind === 0 &&
-                <Trans>High wind for the next hour</Trans>
+                <Trans>
+                  High wind for the next hour
+                </Trans>
               }
             </MantineAlert>
           )
@@ -238,7 +254,9 @@ const Alert: FC<AlertProps> = (props) => {
           visibilityAlert = (
             <MantineAlert {...alertProps} >
               <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
-              <Trans>Low visibility starting in {timeUntilLowVisibility} hours</Trans>
+              <Trans>
+                Low visibility starting in {timeUntilLowVisibility} hours
+              </Trans>
             </MantineAlert>
           )
         } else {
@@ -247,13 +265,19 @@ const Alert: FC<AlertProps> = (props) => {
             <MantineAlert {...alertProps}>
               <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
               {durationOfLowVisibility > 0 &&
-                <Trans>Low visibility for the next {durationOfLowVisibility} hours</Trans>
+                <Trans>
+                  Low visibility for the next {durationOfLowVisibility} hours
+                </Trans>
               }
               {durationOfLowVisibility < 0 &&
-                <Trans>Low visibility for the next 12 hours</Trans>
+                <Trans>
+                  Low visibility for the next 12 hours
+                </Trans>
               }
               {durationOfLowVisibility === 0 &&
-                <Trans>Low visibility for the next hour</Trans>
+                <Trans>
+                  Low visibility for the next hour
+                </Trans>
               }
             </MantineAlert>
           )

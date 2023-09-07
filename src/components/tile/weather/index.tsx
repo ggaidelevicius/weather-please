@@ -11,13 +11,13 @@ import {
   Snow,
   Thunderstorm,
 } from '@/assets/images'
+import { Trans } from '@lingui/macro'
 import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
 import type { StaticImageData } from 'next/image'
 import Image from 'next/image'
 import type { FC, ReactElement } from 'react'
 import styles from './styles.module.css'
 import type { BasicWeatherProps, WeatherDetailProps } from './types'
-import { Trans } from '@lingui/macro'
 
 export const BasicWeather: FC<BasicWeatherProps> = (props) => {
   const { max, min, description, useMetric } = props
