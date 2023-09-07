@@ -7,7 +7,7 @@ export const locales: Record<string, string> = {
   vi: 'Tiếng Việt',
 }
 
-export const changeLocalisation = async (locale: keyof typeof locales) => {
+export const changeLocalisation = async (locale: keyof typeof locales): Promise<void> => {
   try {
     const { messages } = await import(`../locales/${locale}/messages`)
     i18n.load(locale, messages)
