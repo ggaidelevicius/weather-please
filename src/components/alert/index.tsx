@@ -194,7 +194,7 @@ const Alert: FC<AlertProps> = (props) => {
               }
               {durationOfHighWind < 0 &&
                 <Trans>
-                  High wind for the next 12 hours
+                  High wind for the next 24 hours
                 </Trans>
               }
               {durationOfHighWind === 0 &&
@@ -271,7 +271,7 @@ const Alert: FC<AlertProps> = (props) => {
               }
               {durationOfLowVisibility < 0 &&
                 <Trans>
-                  Low visibility for the next 12 hours
+                  Low visibility for the next 24 hours
                 </Trans>
               }
               {durationOfLowVisibility === 0 &&
