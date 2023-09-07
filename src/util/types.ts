@@ -4,6 +4,7 @@ import type { ReactElement } from 'react'
 /**
  * Configuration properties for the weather application.
  *
+ * @property {string} lang - Language of the application
  * @property {string} lat - Latitude of the location.
  * @property {string} lon - Longitude of the location.
  * @property {boolean} periodicLocationUpdate - Flag to determine if the application should periodically update the user's location.
@@ -18,6 +19,7 @@ import type { ReactElement } from 'react'
  * @property {boolean} shareCrashesAndErrors - Flag to determine if crash and error reports should be shared.
  */
 export interface ConfigProps {
+  lang: string;
   lat: string;
   lon: string;
   periodicLocationUpdate: boolean;
@@ -37,6 +39,7 @@ export interface ConfigProps {
  * These keys represent configurable settings and preferences for the application.
  */
 export type HandleChangeKey =
+  | 'lang'
   | 'lat'
   | 'lon'
   | 'periodicLocationUpdate'

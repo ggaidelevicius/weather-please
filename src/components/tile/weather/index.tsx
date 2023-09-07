@@ -15,41 +15,42 @@ import {
 import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
 import type { StaticImageData } from 'next/image'
 import Image from 'next/image'
-import type { FC } from 'react'
+import type { FC, ReactElement } from 'react'
 import styles from './styles.module.css'
 import type { BasicWeatherProps, WeatherDetailProps } from './types'
+import { Trans } from '@lingui/macro'
 
 export const BasicWeather: FC<BasicWeatherProps> = (props) => {
   const { max, min, description, useMetric } = props
-  const descriptionMap: Record<string, string> = {
-    '0': 'clear sky',
-    '1': 'mainly clear',
-    '2': 'partly cloudy',
-    '3': 'overcast',
-    '45': 'mainly clear', // though this should be fog, fog appears way too often and is not at all accurate
-    '48': 'depositing rime fog',
-    '51': 'light drizzle',
-    '53': 'moderate drizzle',
-    '55': 'dense drizzle',
-    '56': 'light freezing drizzle',
-    '57': 'dense freezing drizzle',
-    '61': 'slight rain',
-    '63': 'moderate rain',
-    '65': 'heavy rain',
-    '66': 'light freezing rain',
-    '67': 'heavy freezing rain',
-    '71': 'slight snow fall',
-    '73': 'moderate snow fall',
-    '75': 'heavy snow fall',
-    '77': 'snow grains',
-    '80': 'slight rain showers',
-    '81': 'moderate rain showers',
-    '82': 'violent rain showers',
-    '85': 'slight snow showers',
-    '86': 'heavy snow showers',
-    '95': 'thunderstorm',
-    '96': 'thunderstorm with slight hail',
-    '99': 'thunderstorm with heavy hail',
+  const descriptionMap: Record<string, ReactElement> = {
+    '0': <Trans>clear sky</Trans>,
+    '1': <Trans>mainly clear</Trans>,
+    '2': <Trans>partly cloudy</Trans>,
+    '3': <Trans>overcast</Trans>,
+    '45': <Trans>mainly clear</Trans>, // though this should be fog, fog appears way too often and is not at all accurate
+    '48': <Trans>depositing rime fog</Trans>,
+    '51': <Trans>light drizzle</Trans>,
+    '53': <Trans>moderate drizzle</Trans>,
+    '55': <Trans>dense drizzle</Trans>,
+    '56': <Trans>light freezing drizzle</Trans>,
+    '57': <Trans>dense freezing drizzle</Trans>,
+    '61': <Trans>slight rain</Trans>,
+    '63': <Trans>moderate rain</Trans>,
+    '65': <Trans>heavy rain</Trans>,
+    '66': <Trans>light freezing rain</Trans>,
+    '67': <Trans>heavy freezing rain</Trans>,
+    '71': <Trans>slight snowfall</Trans>,
+    '73': <Trans>moderate snowfall</Trans>,
+    '75': <Trans>heavy snowfall</Trans>,
+    '77': <Trans>snow grains</Trans>,
+    '80': <Trans>slight rain showers</Trans>,
+    '81': <Trans>moderate rain showers</Trans>,
+    '82': <Trans>violent rain showers</Trans>,
+    '85': <Trans>slight snow showers</Trans>,
+    '86': <Trans>heavy snow showers</Trans>,
+    '95': <Trans>thunderstorm</Trans>,
+    '96': <Trans>thunderstorm with slight hail</Trans>,
+    '99': <Trans>thunderstorm with heavy hail</Trans>,
   }
   const iconMap: Record<string, StaticImageData> = {
     '0': ClearSky,

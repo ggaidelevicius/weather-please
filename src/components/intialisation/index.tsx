@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, Modal, Text, TextInput, Title } from '@mantine/core'
+import { Trans } from '@lingui/macro'
+import { Button, Modal, NativeSelect, Text, TextInput, Title } from '@mantine/core'
 import Image from 'next/image'
 import type { FC } from 'react'
 import Favicon from '../../../public/favicon.png'
@@ -35,7 +36,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
         <Title order={1}>Weather <span style={{ color: '#ea5e57' }}>Please</span></Title>
       </div>
       <Text sx={{ fontSize: '1.05rem' }}>
-        To get started, let&apos;s set your location.
+        <Trans>To get started, let&apos;s set your language and location.</Trans>
       </Text>
       {!geolocationError &&
         <>
@@ -43,41 +44,52 @@ const Initialisation: FC<InitialisationProps> = (props) => {
             color='dimmed'
             size='sm'
           >
-            If your browser prompts you for location permissions, please select &quot;allow&quot;.
+            <Trans>If your browser prompts you for location permissions, please select &quot;allow&quot;.</Trans>
           </Text>
+          <NativeSelect
+            mt='xs'
+            label={<Trans>Language</Trans>}
+            value={input.lang}
+            onChange={(e) => { handleChange('lang', e.target.value) }}
+            data={[
+              { label: 'English', value: 'en' },
+              { label: 'Lietuvių', value: 'lt' },
+              { label: 'Tiếng Việt', value: 'vi' },
+            ]}
+          />
           <Button
             onClick={() => { handleClick('auto'); setLoading(true) }}
             mt='md'
             fullWidth
             loading={loading}
           >
-            Set my location
+            <Trans>Set my location</Trans>
           </Button>
         </>
       }
       {geolocationError &&
         <>
           <Text color='dimmed' size='sm'>
-            Looks like we can&apos;t grab your location info automatically.
+            <Trans>Looks like we can&apos;t grab your location info automatically.</Trans>
           </Text>
           <Text color='dimmed' size='sm'>
-            Please enter it manually below.
+            <Trans>Please enter it manually below.</Trans>
           </Text>
           <TextInput
             mt='md'
-            label='Latitude'
+            label={<Trans>Latitude</Trans>}
             withAsterisk
             value={input.lat}
             onChange={(e) => { handleChange('lat', e.target.value.trim()) }}
-            error={(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/).test(input.lat) || input.lat === '' ? undefined : 'Invalid latitude value'}
+            error={(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/).test(input.lat) || input.lat === '' ? undefined : <Trans>Invalid latitude value</Trans>}
           />
           <TextInput
             mt='xs'
-            label='Longitude'
+            label={<Trans>Longitude</Trans>}
             withAsterisk
             value={input.lon}
             onChange={(e) => { handleChange('lon', e.target.value.trim()) }}
-            error={(/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(input.lon) || input.lon === '' ? undefined : 'Invalid longitude value'}
+            error={(/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(input.lon) || input.lon === '' ? undefined : <Trans>Invalid longitude value</Trans>}
           />
           <Text
             component='a'
@@ -88,15 +100,26 @@ const Initialisation: FC<InitialisationProps> = (props) => {
             color='lightblue'
             sx={{ '&:hover': { textDecoration: 'underline' } }}
           >
-            Unsure how to find these? Click here.
+            <Trans>Unsure how to find these? Click here.</Trans>
           </Text>
+          <NativeSelect
+            mt='xs'
+            label={<Trans>Language</Trans>}
+            value={input.lang}
+            onChange={(e) => { handleChange('lang', e.target.value) }}
+            data={[
+              { label: 'English', value: 'en' },
+              { label: 'Lietuvių', value: 'lt' },
+              { label: 'Tiếng Việt', value: 'vi' },
+            ]}
+          />
           <Button
             onClick={() => { handleClick('manual') }}
             mt='md'
             fullWidth
             disabled={!(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/).test(input.lat) || !(/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(input.lon)}
           >
-            Set my location
+            <Trans>Set my location</Trans>
           </Button>
         </>
       }
