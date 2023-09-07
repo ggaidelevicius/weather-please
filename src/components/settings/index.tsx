@@ -215,7 +215,7 @@ const Settings: FC<SettingsProps> = (props) => {
           onChange={(e) => { handleChange('lang', e.target.value) }}
           data={[
             { label: 'English', value: 'en' },
-            { label: 'Lithuanian', value: 'lt' },
+            { label: 'Lietuvių', value: 'lt' },
             { label: 'Tiếng Việt', value: 'vi' },
           ]}
         />

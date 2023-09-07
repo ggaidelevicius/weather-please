@@ -301,6 +301,7 @@ const WeatherPlease: FC = () => {
           ...prev,
           lat: pos.coords.latitude.toString(),
           lon: pos.coords.longitude.toString(),
+          lang: input.lang,
         }))
         setInput((prev) => ({
           ...prev,
@@ -324,6 +325,7 @@ const WeatherPlease: FC = () => {
           ...prev,
           lat: lat,
           lon: lon,
+          lang: input.lang,
         }))
         setInput((prev) => ({
           ...prev,
