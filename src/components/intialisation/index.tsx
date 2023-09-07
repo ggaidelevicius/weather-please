@@ -56,6 +56,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
             onChange={(e) => { handleChange('lang', e.target.value) }}
             data={[
               { label: 'English', value: 'en' },
+              { label: 'हिंदी', value: 'hi' },
               { label: 'Lietuvių', value: 'lt' },
               { label: 'Tiếng Việt', value: 'vi' },
             ]}
@@ -120,6 +121,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
             onChange={(e) => { handleChange('lang', e.target.value) }}
             data={[
               { label: 'English', value: 'en' },
+              { label: 'हिंदी', value: 'hi' },
               { label: 'Lietuvių', value: 'lt' },
               { label: 'Tiếng Việt', value: 'vi' },
             ]}

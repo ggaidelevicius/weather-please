@@ -21,7 +21,7 @@
   "license": "SEE LICENSE IN LICENSE.md",
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm extract && pnpm compile && next build && node build",
+    "build": "pnpm compile && next build && node build",
     "start": "next start",
     "lint": "next lint",
     "release": "npx npm-check-updates -u && pnpm i && pnpm build && node release",

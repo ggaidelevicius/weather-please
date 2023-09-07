@@ -16,18 +16,12 @@ import * as Sentry from '@sentry/nextjs'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
-import { messages as enMessages } from '../locales/en/messages'
-import { messages as hiMessages } from '../locales/hi/messages'
-import { messages as ltMessages } from '../locales/lt/messages'
-import { messages as viMessages } from '../locales/vi/messages'
+import { messages } from '../locales/en/messages'
+import { changeLocalisation } from '../util/i18n'
 
 i18n.load({
-  'en': enMessages,
-  'lt': ltMessages,
-  'vi': viMessages,
-  'hi': hiMessages,
+  'en': messages,
 })
-
 i18n.activate('en')
 
 const WeatherPlease: FC = () => {
@@ -73,16 +67,19 @@ const WeatherPlease: FC = () => {
   /**
  * Synchronizes the active language with the language specified in the configuration.
  *
- * This effect listens for changes to `config.lang`. If `config.lang` is truthy, it will
- * invoke the `i18n.activate` function with `config.lang` as its argument, changing the
+ * This effect listens for changes to `input.lang`. If `input.lang` is truthy, it will
+ * invoke the `i18n.activate` function with `input.lang` as its argument, changing the
  * active language to the one specified in the configuration. This facilitates the dynamic
  * switching of languages in Weather Please, allowing it to support internationalization.
+ *
+ * Input is used rather than config so users have instant feedback without first needing to
+ * understand what the text on the 'save' or 'set my location' buttons do.
  */
   useEffect(() => {
-    if (config.lang || input.lang) {
-      i18n.activate(input?.lang ?? config.lang)
+    if (input.lang) {
+      changeLocalisation(input.lang)
     }
-  }, [config.lang, input.lang])
+  }, [input.lang])
 
   /**
    * Initializes or closes the Sentry error reporting based on user permissions.
