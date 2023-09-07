@@ -59,7 +59,15 @@ const Alert: FC<AlertProps> = (props) => {
           uvAlert = (
             <MantineAlert {...alertProps}>
               <IconAlertTriangle size='2rem' strokeWidth={1.5} aria-hidden />
-              <Trans>Extreme UV for the next {durationOfExtremeUv > 0 ? `${durationOfExtremeUv} hours` : durationOfExtremeUv < 0 ? '12 hours' : 'hour'}</Trans>
+              {durationOfExtremeUv > 0 &&
+                <Trans>Extreme UV for the next {durationOfExtremeUv} hours</Trans>
+              }
+              {durationOfExtremeUv < 0 &&
+                <Trans>Extreme UV for the next 12 hours</Trans>
+              }
+              {durationOfExtremeUv === 0 &&
+                <Trans>Extreme UV for the next hour</Trans>
+              }
             </MantineAlert>
           )
         }
@@ -109,7 +117,7 @@ const Alert: FC<AlertProps> = (props) => {
             key='precipitationAlert'
           >
             <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
-            <Trans>{useMetric ? precipitation.value.toFixed(2) : (precipitation.value / 25.4).toFixed(2)}{useMetric ? 'mm' : 'in'} of precipitation expected over the next {duration.indexOf(false) === 1 ? 'hour' : `${duration.indexOf(false)} hours`}</Trans>
+            {useMetric ? precipitation.value.toFixed(2) : (precipitation.value / 25.4).toFixed(2)}<Trans>{useMetric ? <Trans>mm</Trans> : <Trans>in</Trans>} of precipitation expected over the next {duration.indexOf(false) === 1 ? <Trans>hour</Trans> : <Trans>{duration.indexOf(false)} hours</Trans>}</Trans>
           </MantineAlert>
         )
         setAlerts((prev) => {
@@ -169,7 +177,15 @@ const Alert: FC<AlertProps> = (props) => {
           windAlert = (
             <MantineAlert {...alertProps}>
               <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
-              <Trans>High wind for the next {durationOfHighWind > 0 ? `${durationOfHighWind} hours` : durationOfHighWind < 0 ? '12 hours' : 'hour'}</Trans>
+              {durationOfHighWind > 0 &&
+                <Trans>High wind for the next {durationOfHighWind} hours</Trans>
+              }
+              {durationOfHighWind < 0 &&
+                <Trans>High wind for the next 12 hours</Trans>
+              }
+              {durationOfHighWind === 0 &&
+                <Trans>High wind for the next hour</Trans>
+              }
             </MantineAlert>
           )
         }
@@ -230,7 +246,15 @@ const Alert: FC<AlertProps> = (props) => {
           visibilityAlert = (
             <MantineAlert {...alertProps}>
               <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
-              <Trans>Low visibility for the next {durationOfLowVisibility > 0 ? `${durationOfLowVisibility} hours` : durationOfLowVisibility < 0 ? '12 hours' : 'hour'}</Trans>
+              {durationOfLowVisibility > 0 &&
+                <Trans>Low visibility for the next {durationOfLowVisibility} hours</Trans>
+              }
+              {durationOfLowVisibility < 0 &&
+                <Trans>Low visibility for the next 12 hours</Trans>
+              }
+              {durationOfLowVisibility === 0 &&
+                <Trans>Low visibility for the next hour</Trans>
+              }
             </MantineAlert>
           )
         }

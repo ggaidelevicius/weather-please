@@ -13,9 +13,13 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/alert/index.tsx:112
-msgid "{0}{1} of precipitation expected over the next {2}"
-msgstr "Per ateinančias {2} valandų numatomas {0}{1} kritulių kiekis"
+#: src/components/alert/index.tsx:120
+msgid "{0} of precipitation expected over the next {2}"
+msgstr "Per ateinančias {2} numatomas {0} kritulių kiekis"
+
+#: src/components/alert/index.tsx:120
+msgid "{1} hours"
+msgstr "{1} valandos"
 
 #: src/components/settings/index.tsx:260
 msgid "🌟 Leave a review"
@@ -81,9 +85,17 @@ msgstr "tiršta stingdanti šlapdriba"
 msgid "depositing rime fog"
 msgstr "nusėdęs rimo rūkas"
 
-#: src/components/alert/index.tsx:62
-msgid "Extreme UV for the next {0}"
-msgstr "Ekstremalus UV spinduliavimas sekančias {0}"
+#: src/components/alert/index.tsx:63
+msgid "Extreme UV for the next {durationOfExtremeUv} hours"
+msgstr "Ekstremalus UV per ateinančias {durationOfExtremeUv} valandas"
+
+#: src/components/alert/index.tsx:66
+msgid "Extreme UV for the next 12 hours"
+msgstr "Ekstremalus UV per ateinančias 12 valandų"
+
+#: src/components/alert/index.tsx:69
+msgid "Extreme UV for the next hour"
+msgstr "Ekstremalus UV kitai valandai"
 
 #: src/components/alert/index.tsx:54
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
@@ -113,13 +125,25 @@ msgstr "stiprus sniego lietus"
 msgid "heavy snowfall"
 msgstr "stiprus sniegas"
 
-#: src/components/alert/index.tsx:172
-msgid "High wind for the next {0}"
-msgstr "Stiprus vėjas ateinančias {0}"
+#: src/components/alert/index.tsx:181
+msgid "High wind for the next {durationOfHighWind} hours"
+msgstr "Stiprus vėjas ateinančias {durationOfHighWind} valandas"
 
-#: src/components/alert/index.tsx:164
+#: src/components/alert/index.tsx:184
+msgid "High wind for the next 12 hours"
+msgstr "Stiprus vėjas ateinančias 12 valandų"
+
+#: src/components/alert/index.tsx:187
+msgid "High wind for the next hour"
+msgstr "Stiprus vėjas kitą valandą"
+
+#: src/components/alert/index.tsx:172
 msgid "High wind starting in {timeUntilHighWind} hours"
 msgstr "Stiprus vėjas prasidės po {timeUntilHighWind} valandų"
+
+#: src/components/alert/index.tsx:120
+msgid "hour"
+msgstr "valandą"
 
 #: src/components/settings/index.tsx:167
 msgid "Identifier"
@@ -136,6 +160,10 @@ msgstr "Jei galite padėti teikdami vertimus, prašome kreiptis el. paštu <0>co
 #: src/components/intialisation/index.tsx:47
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Jei jūsų naršyklė prašo jūsų vietos leidimų, pasirinkite \"leisti\"."
+
+#: src/components/alert/index.tsx:120
+msgid "in"
+msgstr "col"
 
 #: src/components/intialisation/index.tsx:84
 #: src/components/settings/index.tsx:120
@@ -195,11 +223,19 @@ msgstr "Ilguma"
 msgid "Looks like we can't grab your location info automatically."
 msgstr "Panašu, kad negalime automatiškai nustatyti jūsų vietos informacijos."
 
-#: src/components/alert/index.tsx:233
-msgid "Low visibility for the next {0}"
-msgstr "Prastas matomumas ateinančias {0}"
+#: src/components/alert/index.tsx:250
+msgid "Low visibility for the next {durationOfLowVisibility} hours"
+msgstr "Prastas matomumas ateinančias {durationOfLowVisibility} valandas"
 
-#: src/components/alert/index.tsx:225
+#: src/components/alert/index.tsx:253
+msgid "Low visibility for the next 12 hours"
+msgstr "Prastas matomumas ateinančias 12 valandų"
+
+#: src/components/alert/index.tsx:256
+msgid "Low visibility for the next hour"
+msgstr "Prastas matomumas kitą valandą"
+
+#: src/components/alert/index.tsx:241
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "Prastas matomumas po {timeUntilLowVisibility} valandų"
 
@@ -219,6 +255,10 @@ msgstr "Gegužė"
 #: src/components/settings/index.tsx:210
 msgid "Miscellaneous"
 msgstr "Įvairūs"
+
+#: src/components/alert/index.tsx:120
+msgid "mm"
+msgstr "mm"
 
 #: src/components/tile/weather/index.tsx:33
 msgid "moderate drizzle"

@@ -13,9 +13,17 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/alert/index.tsx:120
+msgid "{0} of precipitation expected over the next {2}"
+msgstr ""
+
 #: src/components/alert/index.tsx:112
-msgid "{0}{1} of precipitation expected over the next {2}"
-msgstr "{0}{1} lượng mưa dự kiến trong {2} tiếp theo"
+#~ msgid "{0}{1} of precipitation expected over the next {2}"
+#~ msgstr "{0}{1} lượng mưa dự kiến trong {2} tiếp theo"
+
+#: src/components/alert/index.tsx:120
+msgid "{1} hours"
+msgstr ""
 
 #: src/components/settings/index.tsx:260
 msgid "🌟 Leave a review"
@@ -86,8 +94,20 @@ msgid "depositing rime fog"
 msgstr "sương muối đọng lại"
 
 #: src/components/alert/index.tsx:62
-msgid "Extreme UV for the next {0}"
-msgstr "UV cực mạnh trong {0} tiếp theo"
+#~ msgid "Extreme UV for the next {0}"
+#~ msgstr "UV cực mạnh trong {0} tiếp theo"
+
+#: src/components/alert/index.tsx:63
+msgid "Extreme UV for the next {durationOfExtremeUv} hours"
+msgstr ""
+
+#: src/components/alert/index.tsx:66
+msgid "Extreme UV for the next 12 hours"
+msgstr ""
+
+#: src/components/alert/index.tsx:69
+msgid "Extreme UV for the next hour"
+msgstr ""
 
 #: src/components/alert/index.tsx:54
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
@@ -118,12 +138,28 @@ msgid "heavy snowfall"
 msgstr "tuyết rơi nặng hạt"
 
 #: src/components/alert/index.tsx:172
-msgid "High wind for the next {0}"
-msgstr "Gió mạnh trong {0} tiếp theo"
+#~ msgid "High wind for the next {0}"
+#~ msgstr "Gió mạnh trong {0} tiếp theo"
 
-#: src/components/alert/index.tsx:164
+#: src/components/alert/index.tsx:181
+msgid "High wind for the next {durationOfHighWind} hours"
+msgstr ""
+
+#: src/components/alert/index.tsx:184
+msgid "High wind for the next 12 hours"
+msgstr ""
+
+#: src/components/alert/index.tsx:187
+msgid "High wind for the next hour"
+msgstr ""
+
+#: src/components/alert/index.tsx:172
 msgid "High wind starting in {timeUntilHighWind} hours"
 msgstr "Gió mạnh bắt đầu trong {timeUntilHighWind} giờ"
+
+#: src/components/alert/index.tsx:120
+msgid "hour"
+msgstr ""
 
 #: src/components/settings/index.tsx:167
 msgid "Identifier"
@@ -140,6 +176,10 @@ msgstr ""
 #: src/components/intialisation/index.tsx:47
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Nếu trình duyệt của bạn yêu cầu quyền vị trí, vui lòng chọn \"cho phép\"."
+
+#: src/components/alert/index.tsx:120
+msgid "in"
+msgstr ""
 
 #: src/components/intialisation/index.tsx:84
 #: src/components/settings/index.tsx:120
@@ -200,10 +240,22 @@ msgid "Looks like we can't grab your location info automatically."
 msgstr "Có vẻ như chúng tôi không thể lấy thông tin vị trí của bạn một cách tự động."
 
 #: src/components/alert/index.tsx:233
-msgid "Low visibility for the next {0}"
-msgstr "Tầm nhìn thấp trong {0} tiếp theo"
+#~ msgid "Low visibility for the next {0}"
+#~ msgstr "Tầm nhìn thấp trong {0} tiếp theo"
 
-#: src/components/alert/index.tsx:225
+#: src/components/alert/index.tsx:250
+msgid "Low visibility for the next {durationOfLowVisibility} hours"
+msgstr ""
+
+#: src/components/alert/index.tsx:253
+msgid "Low visibility for the next 12 hours"
+msgstr ""
+
+#: src/components/alert/index.tsx:256
+msgid "Low visibility for the next hour"
+msgstr ""
+
+#: src/components/alert/index.tsx:241
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "Tầm nhìn thấp bắt đầu trong {timeUntilLowVisibility} giờ"
 
@@ -222,6 +274,10 @@ msgstr "Tháng 5"
 
 #: src/components/settings/index.tsx:210
 msgid "Miscellaneous"
+msgstr ""
+
+#: src/components/alert/index.tsx:120
+msgid "mm"
 msgstr ""
 
 #: src/components/tile/weather/index.tsx:33
