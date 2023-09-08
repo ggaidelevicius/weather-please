@@ -22,23 +22,23 @@ Weather Please uses [Open Meteo](https://open-meteo.com/) as the source for all 
 
 ## Translations
 
-Weather Please is available in the following translations:
-- Bengali
-- German
+Weather Please is available in the following languages:
+- Bengali*
+- German*
 - English
-- Spanish
-- French
-- Hindi
-- Indonesian
-- Italian
-- Japanese
-- Korean
-- Lithuanian
-- Russian
-- Vietnamese
-- Chinese
+- Spanish*
+- French*
+- Hindi*
+- Indonesian*
+- Italian*
+- Japanese*
+- Korean*
+- Lithuanian*
+- Russian*
+- Vietnamese*
+- Chinese*
 
-Unless indicated otherwise, these translations have been provided by [ChatGPT](https://chat.openai.com/).
+Languages marked with * were translated with [ChatGPT](https://chat.openai.com/).
 
 If you would like to help by providing translations, please [reach out via email](mailto:contact@weather-please.app).
 
