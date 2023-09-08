@@ -40,7 +40,7 @@ Weather Please is available in the following languages:
 
 Languages marked with * were translated using [ChatGPT](https://chat.openai.com/) and have not had their quality independently verified.
 
-If you would like to help by providing translations, please [reach out via email](mailto:contact@weather-please.app).
+If you would like to help by providing or verifying translations, please [reach out via email](mailto:contact@weather-please.app).
 
 ## Development
 Weather Please is built using [Next.js](https://nextjs.org/). It uses the [Mantine component library](https://mantine.dev/), [Tabler Icons](https://tablericons.com/), and [Framer Motion](https://www.framer.com/motion/). [Sentry](https://sentry.io/) is used for error reporting.
