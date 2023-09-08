@@ -38,7 +38,7 @@ Weather Please is available in the following languages:
 - Vietnamese*
 - Chinese*
 
-Languages marked with * were translated using [ChatGPT](https://chat.openai.com/).
+Languages marked with * were translated using [ChatGPT](https://chat.openai.com/) and have not had their quality independently verified.
 
 If you would like to help by providing translations, please [reach out via email](mailto:contact@weather-please.app).
 
