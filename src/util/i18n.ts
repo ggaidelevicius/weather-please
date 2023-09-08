@@ -10,6 +10,7 @@ export const locales: Record<string, string> = {
   ja: '日本語', // japanese
   ko: '한국인', // korean
   lt: 'Lietuvių', // lithuanian
+  ru: 'русский', // russian
   vi: 'Tiếng Việt', // vietnamese
   zh: '中国人', // chinese
 }
