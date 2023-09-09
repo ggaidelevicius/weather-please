@@ -53,4 +53,4 @@ There are no environment variables to configure.
 If you encounter any issues, or have any suggestions, please [open a GitHub issue](https://github.com/ggaidelevicius/weather-please/issues).
 
 > [!NOTE]
-> Sometimes browser extension stores will list versions of the extension that are not current. This is due to what are often quite length review/approval processes.
+> Sometimes browser extension stores will list versions of the extension that are not current. This is due to lengthy review/approval processes.
