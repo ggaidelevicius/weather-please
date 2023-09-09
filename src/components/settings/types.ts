@@ -46,8 +46,8 @@ export interface SettingsProps {
 /**
  * Handles the outside click events by comparing the `config` and `input` objects.
  *
- * The function compares the JSON string representations of `config` and `input` 
- * to decide whether to open a modal or trigger a close function. The comparison 
+ * The function compares the JSON string representations of `config` and `input`
+ * to decide whether to open a modal or trigger a close function. The comparison
  * is done using JSON.stringify because JavaScript compares objects by reference,
  * not by structure.
  */

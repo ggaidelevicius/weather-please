@@ -75,7 +75,9 @@ const Settings: FC<SettingsProps> = (props) => {
 
   const handleOutsideClick: HandleOutsideClick = () => {
     if (JSON.stringify(config) !== JSON.stringify(input)) {
-      setOutsideClickModalOpened(true)
+      if (!outsideClickModalOpened) {
+        setOutsideClickModalOpened(true)
+      }
     } else {
       close()
     }

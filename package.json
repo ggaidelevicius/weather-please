@@ -1,6 +1,6 @@
 {
   "name": "weather-please",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Savor the elegance and grace of Weather Please as it integrates flawlessly into your browser. A symphony of design and performance awaits – where weather meets artistry in the most subtle, yet captivating, manner.",
   "private": true,
   "author": {
@@ -24,7 +24,7 @@
     "build": "pnpm compile && next build && node build",
     "start": "next start",
     "lint": "next lint",
-    "release": "npx npm-check-updates -u && pnpm i && pnpm build && node release",
+    "release": "pnpm build && node release",
     "extract": "lingui extract",
     "compile": "lingui compile"
   },
@@ -51,11 +51,11 @@
     "@lingui/cli": "^4.4.2",
     "@lingui/macro": "^4.4.2",
     "@lingui/swc-plugin": "^4.0.4",
-    "@types/node": "^20.5.9",
+    "@types/node": "^20.6.0",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "adm-zip": "^0.5.10",
-    "eslint": "^8.48.0",
+    "eslint": "^8.49.0",
     "eslint-config-next": "^13.4.19",
     "fs-extra": "^11.1.1",
     "glob": "^10.3.4",
