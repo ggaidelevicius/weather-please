@@ -19,9 +19,22 @@ try {
 const main = () => {
   const extensionPath = 'extension'
 
-  // Remove the 'extension' directory if it exists
+  fs.ensureDirSync(extensionPath)
   if (fs.existsSync(extensionPath)) {
-    fs.removeSync(extensionPath)
+
+    // Get a list of all files and directories in 'extensionPath'
+    const files = fs.readdirSync(extensionPath)
+
+    // Loop through all files and directories
+    for (const file of files) {
+
+      // Get the full path of the file/directory
+      const filePath = path.join(extensionPath, file)
+
+      // Remove the file/directory
+      fs.removeSync(filePath)
+
+    }
   }
 
   // Replace content in HTML and JS files
@@ -32,13 +45,11 @@ const main = () => {
     fs.writeFileSync(file, content, 'utf-8')
   }
 
-  // Create a new 'extension' directory
-  fs.mkdirSync(extensionPath)
-
   // Perform related operations
   fs.moveSync(path.join('out', 'index.html'), path.join(extensionPath, 'index.html'))
   fs.moveSync(path.join('out', 'favicon.png'), path.join(extensionPath, 'favicon.png'))
   fs.copySync(path.join('out', 'next'), path.join(extensionPath, 'next'))
+  fs.copySync(path.join('_locales'), path.join(extensionPath, '_locales'))
   fs.removeSync('out')
   fs.copySync('manifest.json', path.join(extensionPath, 'manifest.json'))
 
