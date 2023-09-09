@@ -20,6 +20,9 @@ Weather Please uses [Open Meteo](https://open-meteo.com/) as the source for all 
 
 [Try a live demo](https://weather-please.app/)
 
+> [!NOTE]
+> Sometimes browser extension stores will list versions of the extension that are not current. This is due to lengthy review/approval processes.
+
 ## Translations
 
 Weather Please is available in the following languages:
@@ -51,6 +54,3 @@ There are no environment variables to configure.
 
 ## Feedback
 If you encounter any issues, or have any suggestions, please [open a GitHub issue](https://github.com/ggaidelevicius/weather-please/issues).
-
-> [!NOTE]
-> Sometimes browser extension stores will list versions of the extension that are not current. This is due to lengthy review/approval processes.
