@@ -29,27 +29,27 @@ msgstr "পরের {2} এ {0} পর্যায়ে বর্ষণ প্
 msgid "{1} hours"
 msgstr "{1} ঘণ্টা"
 
-#: src/components/settings/index.tsx:315
+#: src/components/settings/index.tsx:324
 msgid "☕ Gift a coffee"
 msgstr "☕ একটি কফি উপহার দিন"
 
-#: src/components/settings/index.tsx:300
+#: src/components/settings/index.tsx:309
 msgid "🌟 Leave a review"
 msgstr "🌟 একটি পর্যালোচনা ছেড়ে দিন"
 
-#: src/components/settings/index.tsx:305
+#: src/components/settings/index.tsx:314
 msgid "🐛 Report a bug"
 msgstr "🐛 একটি বাগ প্রতিবেদন করুন"
 
-#: src/components/settings/index.tsx:310
+#: src/components/settings/index.tsx:319
 msgid "🔒 Privacy policy"
 msgstr "🔒 গোপনীয়তা নীতি"
 
-#: src/components/settings/index.tsx:198
+#: src/components/settings/index.tsx:207
 msgid "Alerts"
 msgstr "সতর্কীকরণ"
 
-#: src/components/settings/index.tsx:42
+#: src/components/settings/index.tsx:43
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "আপনার অবস্থান আনার সময় একটি ত্রুটি ঘটেছে। দয়া করে কনসোলে আরও বিস্তারিত জানার জন্য দেখুন।"
 
@@ -65,11 +65,11 @@ msgstr "এপ্রিল"
 msgid "August"
 msgstr "আগস্ট"
 
-#: src/components/settings/index.tsx:117
+#: src/components/settings/index.tsx:126
 msgid "Based on the provided information, your location is:"
 msgstr "প্রদত্ত তথ্যের উপর ভিত্তি করে, আপনার অবস্থান হলঃ"
 
-#: src/components/settings/index.tsx:277
+#: src/components/settings/index.tsx:286
 msgid "Cancel"
 msgstr "বাতিল"
 
@@ -77,11 +77,11 @@ msgstr "বাতিল"
 msgid "clear sky"
 msgstr "পরিষ্কার আকাশ"
 
-#: src/components/settings/index.tsx:195
+#: src/components/settings/index.tsx:204
 msgid "Date"
 msgstr "তারিখ"
 
-#: src/components/settings/index.tsx:194
+#: src/components/settings/index.tsx:203
 msgid "Day"
 msgstr "দিন"
 
@@ -100,6 +100,10 @@ msgstr "ঘন হিমায়িত ঝরঝর বৃষ্টি"
 #: src/components/tile/weather/index.tsx:30
 msgid "depositing rime fog"
 msgstr "রাইম কুয়াশা জমা"
+
+#: src/components/settings/index.tsx:378
+msgid "Don't save"
+msgstr "সংরক্ষণ করবেন না"
 
 #: src/components/alert/index.tsx:65
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
@@ -161,15 +165,15 @@ msgstr "{timeUntilHighWind} ঘণ্টা পরে উচ্চ বাতি 
 msgid "hour"
 msgstr "ঘণ্টা"
 
-#: src/components/settings/index.tsx:190
+#: src/components/settings/index.tsx:199
 msgid "Identifier"
 msgstr "পরিচয়ক"
 
-#: src/components/settings/index.tsx:123
+#: src/components/settings/index.tsx:132
 msgid "If this is incorrect, please update the values below."
 msgstr "এটি ভুল হলে, দয়া করে নিম্নের মানগুলি আপডেট করুন।"
 
-#: src/components/settings/index.tsx:287
+#: src/components/settings/index.tsx:296
 msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 msgstr "আপনার কাছে কোনও অনুবাদের অনুরোধ থাকলে, দয়া করে <0>contact@weather-please.app</0> এ যোগাযোগ করুন।"
 
@@ -182,12 +186,12 @@ msgid "in"
 msgstr "এ"
 
 #: src/components/intialisation/index.tsx:93
-#: src/components/settings/index.tsx:133
+#: src/components/settings/index.tsx:142
 msgid "Invalid latitude value"
 msgstr "অবৈধ অক্ষাংশের মান"
 
 #: src/components/intialisation/index.tsx:101
-#: src/components/settings/index.tsx:141
+#: src/components/settings/index.tsx:150
 msgid "Invalid longitude value"
 msgstr "অবৈধ দ্রাঘিমাংশের মান"
 
@@ -205,12 +209,12 @@ msgstr "জুন"
 
 #: src/components/intialisation/index.tsx:55
 #: src/components/intialisation/index.tsx:118
-#: src/components/settings/index.tsx:240
+#: src/components/settings/index.tsx:249
 msgid "Language"
 msgstr "ভাষা"
 
 #: src/components/intialisation/index.tsx:89
-#: src/components/settings/index.tsx:129
+#: src/components/settings/index.tsx:138
 msgid "Latitude"
 msgstr "অক্ষাংশ"
 
@@ -226,12 +230,12 @@ msgstr "হালকা হিমায়িত ঝরঝর বৃষ্টি
 msgid "light freezing rain"
 msgstr "হালকা হিমায়িত বৃষ্টি"
 
-#: src/components/settings/index.tsx:112
+#: src/components/settings/index.tsx:121
 msgid "Location"
 msgstr "অবস্থান"
 
 #: src/components/intialisation/index.tsx:97
-#: src/components/settings/index.tsx:137
+#: src/components/settings/index.tsx:146
 msgid "Longitude"
 msgstr "দ্রাঘিমাংশ"
 
@@ -268,7 +272,7 @@ msgstr "মার্চ"
 msgid "May"
 msgstr "মে"
 
-#: src/components/settings/index.tsx:234
+#: src/components/settings/index.tsx:243
 msgid "Miscellaneous"
 msgstr "বিবিধ"
 
@@ -296,11 +300,11 @@ msgstr "মধ্যম তুষারপাত"
 msgid "Monday"
 msgstr "সোমবার"
 
-#: src/components/settings/index.tsx:171
+#: src/components/settings/index.tsx:180
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
 msgstr "নোট: এটি বর্তমানে সাফারিতে ভাল কাজ করে না এবং অযথাভাবে হতে পারে"
 
-#: src/components/settings/index.tsx:164
+#: src/components/settings/index.tsx:173
 msgid "Note: This requires browser permissions"
 msgstr "নোট: এর জন্য ব্রাউজারের অনুমতি প্রয়োজন"
 
@@ -308,7 +312,7 @@ msgstr "নোট: এর জন্য ব্রাউজারের অনু�
 msgid "November"
 msgstr "নভেম্বর"
 
-#: src/components/settings/index.tsx:183
+#: src/components/settings/index.tsx:192
 msgid "Number of days to forecast"
 msgstr "পূর্বাভাস দেওয়ার দিনের সংখ্যা"
 
@@ -324,7 +328,7 @@ msgstr "মেঘাচ্ছন্ন"
 msgid "partly cloudy"
 msgstr "আংশিকভাবে মেঘলা"
 
-#: src/components/settings/index.tsx:157
+#: src/components/settings/index.tsx:166
 msgid "Periodically update location automatically"
 msgstr "পূর্বনির্ধারিত সময়ে স্থান স্বয়ংক্রিয়ভাবে আপডেট করুন"
 
@@ -336,7 +340,8 @@ msgstr "দয়া করে এটি নিচে ম্যানুয়�
 msgid "Saturday"
 msgstr "শনিবার"
 
-#: src/components/settings/index.tsx:266
+#: src/components/settings/index.tsx:275
+#: src/components/settings/index.tsx:367
 msgid "Save"
 msgstr "সংরক্ষণ করুন"
 
@@ -349,31 +354,31 @@ msgstr "সেপ্টেম্বর"
 msgid "Set my location"
 msgstr "আমার অবস্থান নির্ধারণ করুন"
 
-#: src/components/settings/index.tsx:107
+#: src/components/settings/index.tsx:116
 msgid "Settings"
 msgstr "সেটিংস"
 
-#: src/components/settings/index.tsx:255
+#: src/components/settings/index.tsx:264
 msgid "Share anonymised crash data and error logs"
 msgstr "বেনামে ক্র্যাশ ডাটা এবং ত্রুটি লগ ভাগ করুন"
 
-#: src/components/settings/index.tsx:209
+#: src/components/settings/index.tsx:218
 msgid "Show extreme UV alerts"
 msgstr "এক্সট্রিম ইউভি সতর্কবাণী দেখান"
 
-#: src/components/settings/index.tsx:214
+#: src/components/settings/index.tsx:223
 msgid "Show high precipitation alerts"
 msgstr "উচ্চ বৃষ্টির সতর্কবাণী দেখান"
 
-#: src/components/settings/index.tsx:220
+#: src/components/settings/index.tsx:229
 msgid "Show high wind alerts"
 msgstr "উচ্চ বায়ু সতর্কবাণী দেখান"
 
-#: src/components/settings/index.tsx:226
+#: src/components/settings/index.tsx:235
 msgid "Show low visibility alerts"
 msgstr "নিম্ন দৃশ্যতা সতর্কবাণী দেখান"
 
-#: src/components/settings/index.tsx:200
+#: src/components/settings/index.tsx:209
 msgid "Show weather alerts"
 msgstr "আবহাওয়া সতর্কবাণী দেখান"
 
@@ -453,7 +458,7 @@ msgstr "হালকা বরফের সাথে বজ্রপাত"
 msgid "Thursday"
 msgstr "বৃহস্পতিবার"
 
-#: src/components/settings/index.tsx:177
+#: src/components/settings/index.tsx:186
 msgid "Tiles"
 msgstr "টাইলস"
 
@@ -466,11 +471,11 @@ msgid "Tuesday"
 msgstr "মঙ্গলবার"
 
 #: src/components/intialisation/index.tsx:112
-#: src/components/settings/index.tsx:152
+#: src/components/settings/index.tsx:161
 msgid "Unsure how to find these? Click here."
 msgstr "এগুলি কীভাবে বের করবেন তা জানেন না? এখানে ক্লিক করুন।"
 
-#: src/components/settings/index.tsx:249
+#: src/components/settings/index.tsx:258
 msgid "Use metric number format"
 msgstr "মেট্রিক সংখ্যা বিন্যাস ব্যবহার করুন"
 
@@ -478,7 +483,7 @@ msgstr "মেট্রিক সংখ্যা বিন্যাস ব্য
 msgid "violent rain showers"
 msgstr "তীব্র বৃষ্টির ঝড়"
 
-#: src/components/settings/index.tsx:282
+#: src/components/settings/index.tsx:291
 msgid "We'd love to bring Weather Please to more languages."
 msgstr "আমরা আরও অনেক ভাষায় 'ওয়েদার প্লিজ' এনে আসতে চাই।"
 
@@ -489,3 +494,11 @@ msgstr "আবহাওয়া তথ্য প্রদান করে open-
 #: src/components/tile/index.tsx:13
 msgid "Wednesday"
 msgstr "বুধবার"
+
+#: src/components/settings/index.tsx:356
+msgid "You can't save because either your latitude or longitude are invalid."
+msgstr "আপনি সংরক্ষণ করতে পারবেন না কারণ আপনার অক্ষাংশ বা দ্রাঘিমা অবৈধ।"
+
+#: src/components/settings/index.tsx:350
+msgid "You have unsaved changes"
+msgstr "আপনার অসংরক্ষিত পরিবর্তন রয়েছে"
