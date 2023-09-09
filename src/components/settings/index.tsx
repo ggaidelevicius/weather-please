@@ -6,11 +6,12 @@ import { notifications } from '@mantine/notifications'
 import { IconSettings } from '@tabler/icons-react'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
-import type { Location, SettingsProps } from './types'
+import type { HandleOutsideClick, Location, SettingsProps } from './types'
 
 const Settings: FC<SettingsProps> = (props) => {
   const { input, handleChange, handleClick, config, setInput } = props
   const [opened, { open, close }] = useDisclosure(false)
+  const [outsideClickModalOpened, setOutsideClickModalOpened] = useState<boolean>(false)
   const [usingSafari, setUsingSafari] = useState<boolean>(false)
   const [reviewLink, setReviewLink] = useState('https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews')
   const [location, setLocation] = useState<Location>({
@@ -72,6 +73,14 @@ const Settings: FC<SettingsProps> = (props) => {
     }
   }, [])
 
+  const handleOutsideClick: HandleOutsideClick = () => {
+    if (JSON.stringify(config) !== JSON.stringify(input)) {
+      setOutsideClickModalOpened(true)
+    } else {
+      close()
+    }
+  }
+
   return (
     <>
       <ActionIcon
@@ -87,7 +96,7 @@ const Settings: FC<SettingsProps> = (props) => {
 
       <Modal
         opened={opened}
-        onClose={close} // instead of invoking this directly we should first check to see if there are unsaved changes
+        onClose={handleOutsideClick} // instead of invoking this directly we should first check to see if there are unsaved changes
         centered
         size='auto'
         padding='lg'
@@ -316,6 +325,60 @@ const Settings: FC<SettingsProps> = (props) => {
             ☕ Gift a coffee
           </Trans>
         </Text>
+      </Modal>
+
+      <Modal
+        opened={outsideClickModalOpened}
+        onClose={handleOutsideClick} // instead of invoking this directly we should first check to see if there are unsaved changes
+        centered
+        size='auto'
+        padding='lg'
+        radius='md'
+        withCloseButton={false}
+        sx={{
+          maxWidth: '70ch',
+        }}
+        styles={{
+          body: {
+            display: 'flex',
+            flexDirection: 'column',
+          },
+        }}
+        overlayProps={{ blur: 5 }}
+      >
+        <Title order={1}>
+          <Trans>
+            You have unsaved changes
+          </Trans>
+        </Title>
+        {(!(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/).test(input.lat) || !(/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(input.lon)) &&
+          <Text mt='md'>
+            <Trans>
+              You can&apos;t save because either your latitude or longitude are invalid.
+            </Trans>
+          </Text>
+        }
+        <Button
+          onClick={() => { handleClick('manual'); setOutsideClickModalOpened(false); close() }}
+          mt='md'
+          fullWidth
+          disabled={!(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/).test(input.lat) || !(/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(input.lon)}
+        >
+          <Trans>
+            Save
+          </Trans>
+        </Button>
+        <Button
+          onClick={() => { setInput(config); setOutsideClickModalOpened(false); close() }}
+          mt='xs'
+          fullWidth
+          color='red'
+          variant='light'
+        >
+          <Trans>
+            Don&apos;t save
+          </Trans>
+        </Button>
       </Modal>
     </>
   )
