@@ -557,6 +557,7 @@ const WeatherPlease: FC = () => {
         handleChange={handleChange}
         handleClick={handleClick}
         config={config}
+        setInput={setInput}
       />
 
       <Initialisation

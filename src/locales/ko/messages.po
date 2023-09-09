@@ -29,19 +29,19 @@ msgstr "다음 {2} 동안 예상 강수량 {0}"
 msgid "{1} hours"
 msgstr "{1} 시간"
 
-#: src/components/settings/index.tsx:305
+#: src/components/settings/index.tsx:315
 msgid "☕ Gift a coffee"
 msgstr "☕ 커피 선물하기"
 
-#: src/components/settings/index.tsx:290
+#: src/components/settings/index.tsx:300
 msgid "🌟 Leave a review"
 msgstr "🌟 리뷰 남기기"
 
-#: src/components/settings/index.tsx:295
+#: src/components/settings/index.tsx:305
 msgid "🐛 Report a bug"
 msgstr "🐛 버그 신고"
 
-#: src/components/settings/index.tsx:300
+#: src/components/settings/index.tsx:310
 msgid "🔒 Privacy policy"
 msgstr "🔒 개인정보 처리방침"
 
@@ -68,6 +68,10 @@ msgstr "8월"
 #: src/components/settings/index.tsx:117
 msgid "Based on the provided information, your location is:"
 msgstr "제공된 정보를 기반으로, 귀하의 위치는:"
+
+#: src/components/settings/index.tsx:277
+msgid "Cancel"
+msgstr "취소"
 
 #: src/components/tile/weather/index.tsx:25
 msgid "clear sky"
@@ -165,7 +169,7 @@ msgstr "식별자"
 msgid "If this is incorrect, please update the values below."
 msgstr "이게 틀린 정보라면, 아래의 값들을 업데이트 해주세요."
 
-#: src/components/settings/index.tsx:277
+#: src/components/settings/index.tsx:287
 msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 msgstr "번역 요청이 있으시다면, <0>contact@weather-please.app</0>으로 연락주세요."
 
@@ -479,11 +483,11 @@ msgstr "메트릭 숫자 형식 사용"
 msgid "violent rain showers"
 msgstr "강한 비소나기"
 
-#: src/components/settings/index.tsx:272
+#: src/components/settings/index.tsx:282
 msgid "We'd love to bring Weather Please to more languages."
 msgstr "Weather Please를 더 많은 언어로 제공하고 싶습니다."
 
-#: src/pages/index.tsx:579
+#: src/pages/index.tsx:580
 msgid "weather data provided by open-meteo"
 msgstr "날씨 데이터 제공: open-meteo"
 

@@ -10,11 +10,11 @@ export const locales: Record<string, string> = {
   id: 'Bahasa Indonesia', // indonesian
   it: 'Italiano', // italian
   ja: '日本語', // japanese
-  ko: '한국인', // korean
+  ko: '한국어', // korean
   lt: 'Lietuvių', // lithuanian
-  ru: 'русский', // russian
+  ru: 'Русский', // russian
   vi: 'Tiếng Việt', // vietnamese
-  zh: '中国人', // chinese
+  zh: '中文', // chinese
 }
 
 export const changeLocalisation = async (locale: keyof typeof locales): Promise<void> => {

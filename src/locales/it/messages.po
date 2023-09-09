@@ -29,19 +29,19 @@ msgstr "{0} di precipitazione prevista per le prossime {2}"
 msgid "{1} hours"
 msgstr "{1} ore"
 
-#: src/components/settings/index.tsx:305
+#: src/components/settings/index.tsx:315
 msgid "☕ Gift a coffee"
 msgstr "☕ Regala un caffè"
 
-#: src/components/settings/index.tsx:290
+#: src/components/settings/index.tsx:300
 msgid "🌟 Leave a review"
 msgstr "🌟 Lascia una recensione"
 
-#: src/components/settings/index.tsx:295
+#: src/components/settings/index.tsx:305
 msgid "🐛 Report a bug"
 msgstr "🐛 Segnala un bug"
 
-#: src/components/settings/index.tsx:300
+#: src/components/settings/index.tsx:310
 msgid "🔒 Privacy policy"
 msgstr "🔒 Politica sulla privacy"
 
@@ -68,6 +68,10 @@ msgstr "Agosto"
 #: src/components/settings/index.tsx:117
 msgid "Based on the provided information, your location is:"
 msgstr "Basandosi sulle informazioni fornite, la tua posizione è:"
+
+#: src/components/settings/index.tsx:277
+msgid "Cancel"
+msgstr "Annulla"
 
 #: src/components/tile/weather/index.tsx:25
 msgid "clear sky"
@@ -165,7 +169,7 @@ msgstr "Identificatore"
 msgid "If this is incorrect, please update the values below."
 msgstr "Se non è corretto, aggiorna i valori sottostanti."
 
-#: src/components/settings/index.tsx:277
+#: src/components/settings/index.tsx:287
 msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 msgstr "Se hai una richiesta di traduzione, contattaci a <0>contact@weather-please.app</0>"
 
@@ -479,11 +483,11 @@ msgstr "Usa il formato numerico metrico"
 msgid "violent rain showers"
 msgstr "piogge violente"
 
-#: src/components/settings/index.tsx:272
+#: src/components/settings/index.tsx:282
 msgid "We'd love to bring Weather Please to more languages."
 msgstr "Ci piacerebbe portare Weather Please in altre lingue."
 
-#: src/pages/index.tsx:579
+#: src/pages/index.tsx:580
 msgid "weather data provided by open-meteo"
 msgstr "dati meteorologici forniti da open-meteo"
 

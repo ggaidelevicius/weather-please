@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import type { Location, SettingsProps } from './types'
 
 const Settings: FC<SettingsProps> = (props) => {
-  const { input, handleChange, handleClick, config } = props
+  const { input, handleChange, handleClick, config, setInput } = props
   const [opened, { open, close }] = useDisclosure(false)
   const [usingSafari, setUsingSafari] = useState<boolean>(false)
   const [reviewLink, setReviewLink] = useState('https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews')
@@ -267,8 +267,18 @@ const Settings: FC<SettingsProps> = (props) => {
             Save
           </Trans>
         </Button>
-        <Divider sx={{ marginTop: '1.75rem', marginBottom: '1.5rem' }} />
-        <Text size='sm'>
+        <Button
+          onClick={() => { setInput(config); close() }}
+          mt='xs'
+          fullWidth
+          color='red'
+          variant='light'
+        >
+          <Trans>
+            Cancel
+          </Trans>
+        </Button>
+        <Text size='sm' mt='md'>
           <Trans>
             We&apos;d love to bring Weather Please to more languages.
           </Trans>

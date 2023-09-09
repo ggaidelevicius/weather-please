@@ -1,4 +1,5 @@
 import type { ConfigProps, HandleChange, HandleClick } from '@/util/types'
+import type { Dispatch, SetStateAction } from 'react'
 
 /**
  * Represents geographical location details.
@@ -39,4 +40,5 @@ export interface SettingsProps {
   readonly handleChange: HandleChange;
   readonly handleClick: HandleClick;
   readonly config: ConfigProps;
+  readonly setInput: Dispatch<SetStateAction<ConfigProps>>;
 }
