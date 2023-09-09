@@ -87,7 +87,7 @@ const Settings: FC<SettingsProps> = (props) => {
 
       <Modal
         opened={opened}
-        onClose={close}
+        onClose={close} // instead of invoking this directly we should first check to see if there are unsaved changes
         centered
         size='auto'
         padding='lg'
