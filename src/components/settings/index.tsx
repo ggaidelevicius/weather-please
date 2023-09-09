@@ -322,11 +322,13 @@ const Settings: FC<SettingsProps> = (props) => {
             🔒 Privacy policy
           </Trans>
         </Text>
-        <Text size='sm' color='lightblue' component='a' href='https://www.buymeacoffee.com/ggaidelevicius' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
-          <Trans>
-            ☕ Gift a coffee
-          </Trans>
-        </Text>
+        {!usingSafari &&
+          <Text size='sm' color='lightblue' component='a' href='https://www.buymeacoffee.com/ggaidelevicius' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
+            <Trans>
+              ☕ Gift a coffee
+            </Trans>
+          </Text>
+        }
       </Modal>
 
       <Modal
