@@ -355,7 +355,7 @@ const Settings: FC<SettingsProps> = (props) => {
             You have unsaved changes
           </Trans>
         </Title>
-        {(!(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/).test(input.lat) || !(/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(input.lon)) &&
+        {(!(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/).test(input.lat) || !(/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/).test(input.lon)) && // this should instead prompt the user to cancel this modal only, or alternatively put the inputs back in here
           <Text mt='md'>
             <Trans>
               You can&apos;t save because either your latitude or longitude are invalid.
