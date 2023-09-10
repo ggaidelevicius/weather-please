@@ -40,7 +40,7 @@ const Settings: FC<SettingsProps> = (props) => {
         console.warn(e)
         notifications.show({
           title: 'Error',
-          message: <Trans>An error has occurred while fetching your location. Please check the console for more details.</Trans>,
+          message: 'An error has occurred while fetching your location. Please check the console for more details.', // can't use translations here: "useLingui hook was used without I18nProvider."
           color: 'red',
         })
       }

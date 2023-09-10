@@ -276,7 +276,7 @@ const WeatherPlease: FC = () => {
         // why are these errors sometimes being shown + a console warning occurring despite data seemingly being fetched just fine?
         notifications.show({
           title: 'Error',
-          message: <Trans>An error has occurred while fetching weather data. Please check the console for more details.</Trans>,
+          message: 'An error has occurred while fetching weather data. Please check the console for more details.', // can't use translations here: "useLingui hook was used without I18nProvider."
           color: 'red',
         })
       }
@@ -448,7 +448,7 @@ const WeatherPlease: FC = () => {
           console.warn(e)
           notifications.show({
             title: 'Error',
-            message: <Trans>An error has occurred while periodically updating location. Please check the console for more details.</Trans>,
+            message: 'An error has occurred while periodically updating location. Please check the console for more details.', // can't use translations here: "useLingui hook was used without I18nProvider."
             color: 'red',
           })
         }
@@ -476,7 +476,7 @@ const WeatherPlease: FC = () => {
             console.warn(e)
             notifications.show({
               title: 'Error',
-              message: <Trans>An error has occurred while fetching location data. Please check the console for more details.</Trans>,
+              message: 'An error has occurred while fetching location data. Please check the console for more details.', // can't use translations here: "useLingui hook was used without I18nProvider."
               color: 'red',
             })
           }
