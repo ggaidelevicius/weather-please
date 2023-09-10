@@ -57,21 +57,21 @@ msgstr "🔒 隐私政策"
 msgid "Alerts"
 msgstr "警报"
 
-#: src/pages/index.tsx:479
-#~ msgid "An error has occurred while fetching location data. Please check the console for more details."
-#~ msgstr "获取位置数据时发生错误。请检查控制台以获取更多详情。"
+#: src/pages/index.tsx:478
+msgid "An error has occurred while fetching location data. Please check the console for more details."
+msgstr "获取位置数据时发生错误。请检查控制台以获取更多详情。"
 
-#: src/pages/index.tsx:279
-#~ msgid "An error has occurred while fetching weather data. Please check the console for more details."
-#~ msgstr "获取天气数据时发生错误。请检查控制台以获取更多详情。"
+#: src/pages/index.tsx:278
+msgid "An error has occurred while fetching weather data. Please check the console for more details."
+msgstr "获取天气数据时发生错误。请检查控制台以获取更多详情。"
 
 #: src/components/settings/index.tsx:43
-#~ msgid "An error has occurred while fetching your location. Please check the console for more details."
-#~ msgstr "在获取您的位置时发生错误。请检查控制台以获取更多详情。"
+msgid "An error has occurred while fetching your location. Please check the console for more details."
+msgstr "在获取您的位置时发生错误。请检查控制台以获取更多详情。"
 
-#: src/pages/index.tsx:451
-#~ msgid "An error has occurred while periodically updating location. Please check the console for more details."
-#~ msgstr "在定期更新位置时发生错误。请检查控制台以获取更多详情。"
+#: src/pages/index.tsx:450
+msgid "An error has occurred while periodically updating location. Please check the console for more details."
+msgstr "在定期更新位置时发生错误。请检查控制台以获取更多详情。"
 
 #: src/components/tile/index.tsx:14
 msgid "April"
@@ -120,6 +120,13 @@ msgstr "储存白霜雾"
 #: src/components/settings/index.tsx:382
 msgid "Don't save"
 msgstr "不保存"
+
+#: src/components/settings/index.tsx:42
+#: src/pages/index.tsx:277
+#: src/pages/index.tsx:449
+#: src/pages/index.tsx:477
+msgid "Error"
+msgstr "错误"
 
 #: src/components/alert/index.tsx:65
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
@@ -303,6 +310,10 @@ msgstr "中雪"
 #: src/components/tile/index.tsx:13
 msgid "Monday"
 msgstr "星期一"
+
+#: src/pages/_app.tsx:21
+#~ msgid "New tab"
+#~ msgstr "新标签"
 
 #: src/components/settings/index.tsx:182
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
@@ -491,7 +502,7 @@ msgstr "猛烈的阵雨"
 msgid "We'd love to bring Weather Please to more languages."
 msgstr "我们希望将“Weather Please”带到更多语言中。"
 
-#: src/pages/index.tsx:617
+#: src/pages/index.tsx:616
 msgid "weather data provided by open-meteo"
 msgstr "天气数据由open-meteo提供"
 

@@ -8,7 +8,6 @@ import styles from '@/styles/styles.module.css'
 import type { CompareObjects, ConfigProps, DetermineGridColumns, HandleChange, HandleClick, MergeObjects, TileComponent } from '@/util/types'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/macro'
-import { I18nProvider } from '@lingui/react'
 import { Loader } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
@@ -275,8 +274,8 @@ const WeatherPlease: FC = () => {
         // why can't i pass the value of state into message here?
         // why are these errors sometimes being shown + a console warning occurring despite data seemingly being fetched just fine?
         notifications.show({
-          title: 'Error',
-          message: 'An error has occurred while fetching weather data. Please check the console for more details.', // can't use translations here: "useLingui hook was used without I18nProvider."
+          title: <Trans>Error</Trans>,
+          message: <Trans>An error has occurred while fetching weather data. Please check the console for more details.</Trans>,
           color: 'red',
         })
       }
@@ -447,8 +446,8 @@ const WeatherPlease: FC = () => {
           // eslint-disable-next-line no-console
           console.warn(e)
           notifications.show({
-            title: 'Error',
-            message: 'An error has occurred while periodically updating location. Please check the console for more details.', // can't use translations here: "useLingui hook was used without I18nProvider."
+            title: <Trans>Error</Trans>,
+            message: <Trans>An error has occurred while periodically updating location. Please check the console for more details.</Trans>,
             color: 'red',
           })
         }
@@ -475,8 +474,8 @@ const WeatherPlease: FC = () => {
             // eslint-disable-next-line no-console
             console.warn(e)
             notifications.show({
-              title: 'Error',
-              message: 'An error has occurred while fetching location data. Please check the console for more details.', // can't use translations here: "useLingui hook was used without I18nProvider."
+              title: <Trans>Error</Trans>,
+              message: <Trans>An error has occurred while fetching location data. Please check the console for more details.</Trans>,
               color: 'red',
             })
           }
@@ -552,7 +551,7 @@ const WeatherPlease: FC = () => {
   }
 
   return (
-    <I18nProvider i18n={i18n}>
+    <>
       <AnimatePresence>
         {futureWeatherData.length === 0 && config.lat && config.lon &&
           <motion.div
@@ -616,7 +615,7 @@ const WeatherPlease: FC = () => {
       >
         <Trans>weather data provided by open-meteo</Trans>
       </a>
-    </I18nProvider>
+    </>
   )
 }
 

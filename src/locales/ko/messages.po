@@ -57,21 +57,21 @@ msgstr "🔒 개인정보 처리방침"
 msgid "Alerts"
 msgstr "알림"
 
-#: src/pages/index.tsx:479
-#~ msgid "An error has occurred while fetching location data. Please check the console for more details."
-#~ msgstr "위치 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
+#: src/pages/index.tsx:478
+msgid "An error has occurred while fetching location data. Please check the console for more details."
+msgstr "위치 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
 
-#: src/pages/index.tsx:279
-#~ msgid "An error has occurred while fetching weather data. Please check the console for more details."
-#~ msgstr "날씨 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
+#: src/pages/index.tsx:278
+msgid "An error has occurred while fetching weather data. Please check the console for more details."
+msgstr "날씨 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
 
 #: src/components/settings/index.tsx:43
-#~ msgid "An error has occurred while fetching your location. Please check the console for more details."
-#~ msgstr "위치를 가져오는 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
+msgid "An error has occurred while fetching your location. Please check the console for more details."
+msgstr "위치를 가져오는 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
 
-#: src/pages/index.tsx:451
-#~ msgid "An error has occurred while periodically updating location. Please check the console for more details."
-#~ msgstr "위치를 주기적으로 업데이트하는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
+#: src/pages/index.tsx:450
+msgid "An error has occurred while periodically updating location. Please check the console for more details."
+msgstr "위치를 주기적으로 업데이트하는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
 
 #: src/components/tile/index.tsx:14
 msgid "April"
@@ -120,6 +120,13 @@ msgstr "서리가 앉는 안개"
 #: src/components/settings/index.tsx:382
 msgid "Don't save"
 msgstr "저장하지 마세요"
+
+#: src/components/settings/index.tsx:42
+#: src/pages/index.tsx:277
+#: src/pages/index.tsx:449
+#: src/pages/index.tsx:477
+msgid "Error"
+msgstr "오류"
 
 #: src/components/alert/index.tsx:65
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
@@ -303,6 +310,10 @@ msgstr "중간 정도의 눈"
 #: src/components/tile/index.tsx:13
 msgid "Monday"
 msgstr "월요일"
+
+#: src/pages/_app.tsx:21
+#~ msgid "New tab"
+#~ msgstr "새 탭"
 
 #: src/components/settings/index.tsx:182
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
@@ -491,7 +502,7 @@ msgstr "강한 비소나기"
 msgid "We'd love to bring Weather Please to more languages."
 msgstr "Weather Please를 더 많은 언어로 제공하고 싶습니다."
 
-#: src/pages/index.tsx:617
+#: src/pages/index.tsx:616
 msgid "weather data provided by open-meteo"
 msgstr "날씨 데이터 제공: open-meteo"
 

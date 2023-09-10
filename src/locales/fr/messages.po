@@ -57,21 +57,21 @@ msgstr "🔒 Politique de confidentialité"
 msgid "Alerts"
 msgstr "Alertes"
 
-#: src/pages/index.tsx:479
-#~ msgid "An error has occurred while fetching location data. Please check the console for more details."
-#~ msgstr "Une erreur s'est produite lors de la récupération des données de localisation. Veuillez vérifier la console pour plus de détails."
+#: src/pages/index.tsx:478
+msgid "An error has occurred while fetching location data. Please check the console for more details."
+msgstr "Une erreur s'est produite lors de la récupération des données de localisation. Veuillez vérifier la console pour plus de détails."
 
-#: src/pages/index.tsx:279
-#~ msgid "An error has occurred while fetching weather data. Please check the console for more details."
-#~ msgstr "Une erreur s'est produite lors de la récupération des données météorologiques. Veuillez vérifier la console pour plus de détails."
+#: src/pages/index.tsx:278
+msgid "An error has occurred while fetching weather data. Please check the console for more details."
+msgstr "Une erreur s'est produite lors de la récupération des données météorologiques. Veuillez vérifier la console pour plus de détails."
 
 #: src/components/settings/index.tsx:43
-#~ msgid "An error has occurred while fetching your location. Please check the console for more details."
-#~ msgstr "Une erreur s'est produite lors de la récupération de votre localisation. Veuillez consulter la console pour plus de détails."
+msgid "An error has occurred while fetching your location. Please check the console for more details."
+msgstr "Une erreur s'est produite lors de la récupération de votre localisation. Veuillez consulter la console pour plus de détails."
 
-#: src/pages/index.tsx:451
-#~ msgid "An error has occurred while periodically updating location. Please check the console for more details."
-#~ msgstr "Une erreur s'est produite lors de la mise à jour périodique de l'emplacement. Veuillez consulter la console pour plus de détails."
+#: src/pages/index.tsx:450
+msgid "An error has occurred while periodically updating location. Please check the console for more details."
+msgstr "Une erreur s'est produite lors de la mise à jour périodique de l'emplacement. Veuillez consulter la console pour plus de détails."
 
 #: src/components/tile/index.tsx:14
 msgid "April"
@@ -120,6 +120,13 @@ msgstr "brouillard givrant déposant"
 #: src/components/settings/index.tsx:382
 msgid "Don't save"
 msgstr "Ne pas enregistrer"
+
+#: src/components/settings/index.tsx:42
+#: src/pages/index.tsx:277
+#: src/pages/index.tsx:449
+#: src/pages/index.tsx:477
+msgid "Error"
+msgstr "Erreur"
 
 #: src/components/alert/index.tsx:65
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
@@ -303,6 +310,10 @@ msgstr "chutes de neige modérées"
 #: src/components/tile/index.tsx:13
 msgid "Monday"
 msgstr "Lundi"
+
+#: src/pages/_app.tsx:21
+#~ msgid "New tab"
+#~ msgstr "Nouvel onglet"
 
 #: src/components/settings/index.tsx:182
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
@@ -491,7 +502,7 @@ msgstr "averses de pluie violentes"
 msgid "We'd love to bring Weather Please to more languages."
 msgstr "Nous aimerions proposer Weather Please dans davantage de langues."
 
-#: src/pages/index.tsx:617
+#: src/pages/index.tsx:616
 msgid "weather data provided by open-meteo"
 msgstr "données météorologiques fournies par open-meteo"
 

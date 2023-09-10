@@ -57,21 +57,21 @@ msgstr "🔒 Privatumo politika"
 msgid "Alerts"
 msgstr "Įspėjimai"
 
-#: src/pages/index.tsx:479
-#~ msgid "An error has occurred while fetching location data. Please check the console for more details."
-#~ msgstr "Gaunant vietos duomenis įvyko klaida. Išsamesnei informacijai patikrinkite konsolę."
+#: src/pages/index.tsx:478
+msgid "An error has occurred while fetching location data. Please check the console for more details."
+msgstr "Gaunant vietos duomenis įvyko klaida. Išsamesnei informacijai patikrinkite konsolę."
 
-#: src/pages/index.tsx:279
-#~ msgid "An error has occurred while fetching weather data. Please check the console for more details."
-#~ msgstr "Gaunant orų duomenis įvyko klaida. Išsamesnei informacijai patikrinkite konsolę."
+#: src/pages/index.tsx:278
+msgid "An error has occurred while fetching weather data. Please check the console for more details."
+msgstr "Gaunant orų duomenis įvyko klaida. Išsamesnei informacijai patikrinkite konsolę."
 
 #: src/components/settings/index.tsx:43
-#~ msgid "An error has occurred while fetching your location. Please check the console for more details."
-#~ msgstr "Gaunant jūsų vietą įvyko klaida. Daugiau informacijos ieškokite konsolėje."
+msgid "An error has occurred while fetching your location. Please check the console for more details."
+msgstr "Gaunant jūsų vietą įvyko klaida. Daugiau informacijos ieškokite konsolėje."
 
-#: src/pages/index.tsx:451
-#~ msgid "An error has occurred while periodically updating location. Please check the console for more details."
-#~ msgstr "Reguliariai atnaujinant vietą įvyko klaida. Norėdami gauti daugiau informacijos, patikrinkite konsolę."
+#: src/pages/index.tsx:450
+msgid "An error has occurred while periodically updating location. Please check the console for more details."
+msgstr "Reguliariai atnaujinant vietą įvyko klaida. Norėdami gauti daugiau informacijos, patikrinkite konsolę."
 
 #: src/components/tile/index.tsx:14
 msgid "April"
@@ -120,6 +120,13 @@ msgstr "nusėdęs rimo rūkas"
 #: src/components/settings/index.tsx:382
 msgid "Don't save"
 msgstr "Neišsaugoti"
+
+#: src/components/settings/index.tsx:42
+#: src/pages/index.tsx:277
+#: src/pages/index.tsx:449
+#: src/pages/index.tsx:477
+msgid "Error"
+msgstr "Klaida"
 
 #: src/components/alert/index.tsx:65
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
@@ -303,6 +310,10 @@ msgstr "vidutinis sniegas"
 #: src/components/tile/index.tsx:13
 msgid "Monday"
 msgstr "Pirmadienis"
+
+#: src/pages/_app.tsx:21
+#~ msgid "New tab"
+#~ msgstr "Nauja kortelė"
 
 #: src/components/settings/index.tsx:182
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
@@ -491,7 +502,7 @@ msgstr "smarkus lietus"
 msgid "We'd love to bring Weather Please to more languages."
 msgstr "Mes norėtume pateikti „Weather Please“ daugiau kalbų."
 
-#: src/pages/index.tsx:617
+#: src/pages/index.tsx:616
 msgid "weather data provided by open-meteo"
 msgstr "orų duomenis pateikė open-meteo"
 
