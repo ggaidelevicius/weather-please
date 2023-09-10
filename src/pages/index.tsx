@@ -211,6 +211,43 @@ const WeatherPlease: FC = () => {
           wind: res.daily.windspeed_10m_max[i],
           rain: res.daily.precipitation_probability_max[i],
         }))
+        // const chooseWeather = () => { // mock data generator
+        //   const weatherCodes = [
+        //     0, // Clear sky
+        //     1, 2, 3, // Mainly clear, partly cloudy, and overcast
+        //     45, 48, // Fog and depositing rime fog
+        //     51, 53, 55, // Drizzle: Light, moderate, and dense intensity
+        //     56, 57, // Freezing Drizzle: Light and dense intensity
+        //     61, 63, 65, // Rain: Slight, moderate, and heavy intensity
+        //     66, 67, // Freezing Rain: Light and heavy intensity
+        //     71, 73, 75, // Snow fall: Slight, moderate, and heavy intensity
+        //     77, // Snow grains
+        //     80, 81, 82, // Rain showers: Slight, moderate, and violent
+        //     85, 86, // Snow showers slight and heavy
+        //     95, // Thunderstorm: Slight or moderate
+        //     96, 99, // Thunderstorm with slight and heavy hail
+        //   ]
+        //   const randomIndex = Math.floor(Math.random() * weatherCodes.length)
+        //   return weatherCodes[randomIndex]
+        // }
+        // const futureData = []
+        // const numbers = () => {
+        //   const n1 = Math.random() * 40
+        //   const n2 = (Math.random() - 0.125) * 15
+        //   return [n1, n2].sort((a, b) => { return b - a })
+        // }
+        // for (let i = 0; i < 24; i++) {
+        //   const t = numbers()
+        //   futureData.push({
+        //     day: Math.random() * 100000000,
+        //     max: t[0],
+        //     min: t[1],
+        //     description: chooseWeather(),
+        //     uv: Math.random() * 14,
+        //     wind: Math.random() * 60,
+        //     rain: Math.random() * 100,
+        //   })
+        // }
         setFutureWeatherData(futureData)
         localStorage.data = JSON.stringify(futureData)
         const alerts = {
