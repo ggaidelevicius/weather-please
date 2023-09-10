@@ -125,9 +125,20 @@ const Alert: FC<AlertProps> = (props) => {
             key='precipitationAlert'
           >
             <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
-            {useMetric ? precipitation.value.toFixed(2) : (precipitation.value / 25.4).toFixed(2)}<Trans>{useMetric ? <Trans>mm</Trans> : <Trans>in</Trans>} of precipitation expected over the next {duration.indexOf(false) === 1 ? <Trans>hour</Trans> : <Trans>{duration.indexOf(false)} hours</Trans>}</Trans>
+            {useMetric && duration.indexOf(false) === 1 &&
+              <Trans>{precipitation.value.toFixed(2)}mm of precipitation expected over the next hour</Trans>
+            }
+            {useMetric && duration.indexOf(false) !== 1 &&
+              <Trans>{precipitation.value.toFixed(2)}mm of precipitation expected over the next {duration.indexOf(false)} hours</Trans>
+            }
+            {!useMetric && duration.indexOf(false) === 1 &&
+              <Trans>{(precipitation.value / 25.4).toFixed(2)}in of precipitation expected over the next hour</Trans>
+            }
+            {!useMetric && duration.indexOf(false) !== 1 &&
+              <Trans>{(precipitation.value / 25.4).toFixed(2)}in of precipitation expected over the next {duration.indexOf(false)} hours</Trans>
+            }
           </MantineAlert>
-        ) // this should be refactored
+        )
         setAlerts((prev) => {
           const prevPrecipitationAlertIndex = prev.findIndex(
             (alert) => alert.key === 'precipitationAlert'
