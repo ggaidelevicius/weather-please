@@ -57,11 +57,19 @@ msgstr "🔒 プライバシーポリシー"
 msgid "Alerts"
 msgstr "アラート"
 
+#: src/pages/index.tsx:479
+msgid "An error has occurred while fetching location data. Please check the console for more details."
+msgstr "位置データの取得中にエラーが発生しました。詳細はコンソールを確認してください。"
+
+#: src/pages/index.tsx:279
+msgid "An error has occurred while fetching weather data. Please check the console for more details."
+msgstr "気象データの取得中にエラーが発生しました。詳細はコンソールを確認してください。"
+
 #: src/components/settings/index.tsx:43
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "位置情報を取得中にエラーが発生しました。詳細はコンソールを確認してください。"
 
-#: src/pages/index.tsx:414
+#: src/pages/index.tsx:451
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "定期的な位置情報の更新中にエラーが発生しました。詳細はコンソールを確認してください。"
 
@@ -483,7 +491,7 @@ msgstr "激しいにわか雨"
 msgid "We'd love to bring Weather Please to more languages."
 msgstr "「Weather Please」をさらに多くの言語に提供したいと考えています。"
 
-#: src/pages/index.tsx:580
+#: src/pages/index.tsx:617
 msgid "weather data provided by open-meteo"
 msgstr "天気データはopen-meteoによって提供されています"
 

@@ -57,11 +57,19 @@ msgstr "🔒 개인정보 처리방침"
 msgid "Alerts"
 msgstr "알림"
 
+#: src/pages/index.tsx:479
+msgid "An error has occurred while fetching location data. Please check the console for more details."
+msgstr "위치 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
+
+#: src/pages/index.tsx:279
+msgid "An error has occurred while fetching weather data. Please check the console for more details."
+msgstr "날씨 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
+
 #: src/components/settings/index.tsx:43
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "위치를 가져오는 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
 
-#: src/pages/index.tsx:414
+#: src/pages/index.tsx:451
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "위치를 주기적으로 업데이트하는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
 
@@ -483,7 +491,7 @@ msgstr "강한 비소나기"
 msgid "We'd love to bring Weather Please to more languages."
 msgstr "Weather Please를 더 많은 언어로 제공하고 싶습니다."
 
-#: src/pages/index.tsx:580
+#: src/pages/index.tsx:617
 msgid "weather data provided by open-meteo"
 msgstr "날씨 데이터 제공: open-meteo"
 

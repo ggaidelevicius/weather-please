@@ -276,7 +276,7 @@ const WeatherPlease: FC = () => {
         // why are these errors sometimes being shown + a console warning occurring despite data seemingly being fetched just fine?
         notifications.show({
           title: 'Error',
-          message: 'An error has occurred while fetching weather data. Please check the console for more details.',
+          message: <Trans>An error has occurred while fetching weather data. Please check the console for more details.</Trans>,
           color: 'red',
         })
       }
@@ -476,7 +476,7 @@ const WeatherPlease: FC = () => {
             console.warn(e)
             notifications.show({
               title: 'Error',
-              message: 'An error has occurred while fetching location data. Please check the console for more details.',
+              message: <Trans>An error has occurred while fetching location data. Please check the console for more details.</Trans>,
               color: 'red',
             })
           }
