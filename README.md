@@ -21,7 +21,7 @@ Weather Please uses [Open Meteo](https://open-meteo.com/) as the source for all 
 [Try a live demo](https://weather-please.app/)
 
 > [!NOTE]
-> Sometimes browser extension stores will list versions of the extension that are not current. This is due to lengthy review/approval processes.
+> Sometimes browser extension stores will list old versions of the extension. This is due to lengthy review/approval processes.
 
 ## Translations
 
