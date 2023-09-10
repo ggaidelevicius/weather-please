@@ -223,9 +223,9 @@ const WeatherPlease: FC = () => {
             }, { value: 0, flag: false }),
             duration: res.hourly.precipitation.slice(currentHour, currentHour + 25).map((val: number) => val > 0),
           },
-          hoursOfExtremeUv: res.hourly.uv_index.slice(currentHour, currentHour + 13).map((val: number) => val >= 11),
-          hoursOfHighWind: res.hourly.windspeed_10m.slice(currentHour, currentHour + 25).map((val: number) => val >= 60),
-          hoursOfLowVisibility: res.hourly.visibility.slice(currentHour, currentHour + 25).map((val: number) => val <= 200),
+          hoursOfExtremeUv: res.hourly.uv_index.slice(currentHour, currentHour + 13).map((val: number) => val >= 0),
+          hoursOfHighWind: res.hourly.windspeed_10m.slice(currentHour, currentHour + 25).map((val: number) => val >= 0),
+          hoursOfLowVisibility: res.hourly.visibility.slice(currentHour, currentHour + 25).map((val: number) => val <= 2000000),
         }
         setCurrentWeatherData(alerts)
         localStorage.alerts = JSON.stringify(alerts)
