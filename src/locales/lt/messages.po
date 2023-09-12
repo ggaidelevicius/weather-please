@@ -21,55 +21,55 @@ msgstr "{0} km/val"
 msgid "{0} mph"
 msgstr "{0} mpv"
 
-#: src/components/alert/index.tsx:138
+#: src/components/alert/index.tsx:139
 msgid "{0}in of precipitation expected over the next {1} hours"
 msgstr "Kitų {1} valandų metu tikimasi {0} colių kritulių"
 
-#: src/components/alert/index.tsx:135
+#: src/components/alert/index.tsx:136
 msgid "{0}in of precipitation expected over the next hour"
 msgstr "Kitą valandą tikimasi {0} colių kritulių"
 
-#: src/components/alert/index.tsx:132
+#: src/components/alert/index.tsx:133
 msgid "{0}mm of precipitation expected over the next {1} hours"
 msgstr "Kitų {1} valandų metu tikimasi {0} mm kritulių"
 
-#: src/components/alert/index.tsx:129
+#: src/components/alert/index.tsx:130
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "Kitą valandą tikimasi {0} mm kritulių"
 
-#: src/components/settings/index.tsx:327
+#: src/components/settings/index.tsx:344
 msgid "☕ Gift a coffee"
 msgstr "☕ Padovanokite kavą"
 
-#: src/components/settings/index.tsx:311
+#: src/components/settings/index.tsx:328
 msgid "🌟 Leave a review"
 msgstr "🌟 Palikite atsiliepimą"
 
-#: src/components/settings/index.tsx:316
+#: src/components/settings/index.tsx:333
 msgid "🐛 Report a bug"
 msgstr "🐛 Pranešti apie klaidą"
 
-#: src/components/settings/index.tsx:321
+#: src/components/settings/index.tsx:338
 msgid "🔒 Privacy policy"
 msgstr "🔒 Privatumo politika"
 
-#: src/components/settings/index.tsx:209
+#: src/components/settings/index.tsx:226
 msgid "Alerts"
 msgstr "Įspėjimai"
 
-#: src/pages/index.tsx:478
+#: src/pages/index.tsx:505
 msgid "An error has occurred while fetching location data. Please check the console for more details."
 msgstr "Gaunant vietos duomenis įvyko klaida. Išsamesnei informacijai patikrinkite konsolę."
 
-#: src/pages/index.tsx:278
+#: src/pages/index.tsx:282
 msgid "An error has occurred while fetching weather data. Please check the console for more details."
 msgstr "Gaunant orų duomenis įvyko klaida. Išsamesnei informacijai patikrinkite konsolę."
 
-#: src/components/settings/index.tsx:43
+#: src/components/settings/index.tsx:60
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "Gaunant jūsų vietą įvyko klaida. Daugiau informacijos ieškokite konsolėje."
 
-#: src/pages/index.tsx:450
+#: src/pages/index.tsx:477
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "Reguliariai atnaujinant vietą įvyko klaida. Norėdami gauti daugiau informacijos, patikrinkite konsolę."
 
@@ -81,11 +81,11 @@ msgstr "Balandis"
 msgid "August"
 msgstr "Rugpjūtis"
 
-#: src/components/settings/index.tsx:128
+#: src/components/settings/index.tsx:145
 msgid "Based on the provided information, your location is:"
 msgstr "Remiantis pateikta informacija, jūsų vieta yra:"
 
-#: src/components/settings/index.tsx:288
+#: src/components/settings/index.tsx:305
 msgid "Cancel"
 msgstr "Atšaukti"
 
@@ -93,11 +93,11 @@ msgstr "Atšaukti"
 msgid "clear sky"
 msgstr "giedras dangus"
 
-#: src/components/settings/index.tsx:206
+#: src/components/settings/index.tsx:223
 msgid "Date"
 msgstr "Data"
 
-#: src/components/settings/index.tsx:205
+#: src/components/settings/index.tsx:222
 msgid "Day"
 msgstr "Diena"
 
@@ -117,30 +117,30 @@ msgstr "tiršta stingdanti šlapdriba"
 msgid "depositing rime fog"
 msgstr "nusėdęs rimo rūkas"
 
-#: src/components/settings/index.tsx:382
+#: src/components/settings/index.tsx:399
 msgid "Don't save"
 msgstr "Neišsaugoti"
 
-#: src/components/settings/index.tsx:42
-#: src/pages/index.tsx:277
-#: src/pages/index.tsx:449
-#: src/pages/index.tsx:477
+#: src/components/settings/index.tsx:59
+#: src/pages/index.tsx:281
+#: src/pages/index.tsx:476
+#: src/pages/index.tsx:504
 msgid "Error"
 msgstr "Klaida"
 
-#: src/components/alert/index.tsx:65
+#: src/components/alert/index.tsx:66
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
 msgstr "Ekstremalus UV per ateinančias {durationOfExtremeUv} valandas"
 
-#: src/components/alert/index.tsx:70
+#: src/components/alert/index.tsx:71
 msgid "Extreme UV for the next 12 hours"
 msgstr "Ekstremalus UV per ateinančias 12 valandų"
 
-#: src/components/alert/index.tsx:75
+#: src/components/alert/index.tsx:76
 msgid "Extreme UV for the next hour"
 msgstr "Ekstremalus UV kitai valandai"
 
-#: src/components/alert/index.tsx:54
+#: src/components/alert/index.tsx:55
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "Ekstremalus UV spinduliavimas prasideda po {timeUntilExtremeUv} valandų"
 
@@ -168,31 +168,47 @@ msgstr "stiprus sniego lietus"
 msgid "heavy snowfall"
 msgstr "stiprus sniegas"
 
-#: src/components/alert/index.tsx:202
+#: src/components/alert/index.tsx:203
 msgid "High wind for the next {durationOfHighWind} hours"
 msgstr "Stiprus vėjas ateinančias {durationOfHighWind} valandas"
 
-#: src/components/alert/index.tsx:207
+#: src/components/alert/index.tsx:208
 msgid "High wind for the next 24 hours"
 msgstr "Stiprus vėjas ateinančias 24 valandų"
 
-#: src/components/alert/index.tsx:212
+#: src/components/alert/index.tsx:213
 msgid "High wind for the next hour"
 msgstr "Stiprus vėjas kitą valandą"
 
-#: src/components/alert/index.tsx:191
+#: src/components/alert/index.tsx:280
+msgid "High wind gusts for the next {durationOfHighWind} hours"
+msgstr "Stiprūs vėjo gūsiai kitas {durationOfHighWind} valandas"
+
+#: src/components/alert/index.tsx:285
+msgid "High wind gusts for the next 24 hours"
+msgstr "Stiprūs vėjo gūsiai kitas 24 valandas"
+
+#: src/components/alert/index.tsx:290
+msgid "High wind gusts for the next hour"
+msgstr "Stiprūs vėjo gūsiai kitą valandą"
+
+#: src/components/alert/index.tsx:269
+msgid "High wind gusts starting in {timeUntilHighWind} hours"
+msgstr "Stiprūs vėjo gūsiai prasidės už {timeUntilHighWind} valandų"
+
+#: src/components/alert/index.tsx:192
 msgid "High wind starting in {timeUntilHighWind} hours"
 msgstr "Stiprus vėjas prasidės po {timeUntilHighWind} valandų"
 
-#: src/components/settings/index.tsx:201
+#: src/components/settings/index.tsx:218
 msgid "Identifier"
 msgstr "Identifikatorius"
 
-#: src/components/settings/index.tsx:134
+#: src/components/settings/index.tsx:151
 msgid "If this is incorrect, please update the values below."
 msgstr "Jei tai klaidinga, prašome atnaujinti žemiau esančias reikšmes."
 
-#: src/components/settings/index.tsx:298
+#: src/components/settings/index.tsx:315
 msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 msgstr "Jeigu turite vertimo užklausą, prašome kreiptis el. paštu <0>contact@weather-please.app</0>"
 
@@ -201,12 +217,12 @@ msgid "If your browser prompts you for location permissions, please select \"all
 msgstr "Jei jūsų naršyklė prašo jūsų vietos leidimų, pasirinkite \"leisti\"."
 
 #: src/components/intialisation/index.tsx:93
-#: src/components/settings/index.tsx:144
+#: src/components/settings/index.tsx:161
 msgid "Invalid latitude value"
 msgstr "Netinkama platumos reikšmė"
 
 #: src/components/intialisation/index.tsx:101
-#: src/components/settings/index.tsx:152
+#: src/components/settings/index.tsx:169
 msgid "Invalid longitude value"
 msgstr "Netinkama ilgumos reikšmė"
 
@@ -224,12 +240,12 @@ msgstr "Birželis"
 
 #: src/components/intialisation/index.tsx:55
 #: src/components/intialisation/index.tsx:118
-#: src/components/settings/index.tsx:251
+#: src/components/settings/index.tsx:268
 msgid "Language"
 msgstr "Kalba"
 
 #: src/components/intialisation/index.tsx:89
-#: src/components/settings/index.tsx:140
+#: src/components/settings/index.tsx:157
 msgid "Latitude"
 msgstr "Platuma"
 
@@ -245,12 +261,12 @@ msgstr "lengva šlapdriba"
 msgid "light freezing rain"
 msgstr "lengvas įšaldymas lietus"
 
-#: src/components/settings/index.tsx:123
+#: src/components/settings/index.tsx:140
 msgid "Location"
 msgstr "Vieta"
 
 #: src/components/intialisation/index.tsx:97
-#: src/components/settings/index.tsx:148
+#: src/components/settings/index.tsx:165
 msgid "Longitude"
 msgstr "Ilguma"
 
@@ -258,19 +274,19 @@ msgstr "Ilguma"
 msgid "Looks like we can't grab your location info automatically."
 msgstr "Panašu, kad negalime automatiškai nustatyti jūsų vietos informacijos."
 
-#: src/components/alert/index.tsx:279
+#: src/components/alert/index.tsx:357
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "Prastas matomumas ateinančias {durationOfLowVisibility} valandas"
 
-#: src/components/alert/index.tsx:284
+#: src/components/alert/index.tsx:362
 msgid "Low visibility for the next 24 hours"
 msgstr "Prastas matomumas ateinančias 24 valandų"
 
-#: src/components/alert/index.tsx:289
+#: src/components/alert/index.tsx:367
 msgid "Low visibility for the next hour"
 msgstr "Prastas matomumas kitą valandą"
 
-#: src/components/alert/index.tsx:268
+#: src/components/alert/index.tsx:346
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "Prastas matomumas po {timeUntilLowVisibility} valandų"
 
@@ -287,7 +303,7 @@ msgstr "Kovas"
 msgid "May"
 msgstr "Gegužė"
 
-#: src/components/settings/index.tsx:245
+#: src/components/settings/index.tsx:262
 msgid "Miscellaneous"
 msgstr "Įvairūs"
 
@@ -315,11 +331,11 @@ msgstr "Pirmadienis"
 #~ msgid "New tab"
 #~ msgstr "Nauja kortelė"
 
-#: src/components/settings/index.tsx:182
+#: src/components/settings/index.tsx:199
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
 msgstr "Pastaba: šiuo metu tai veikia ne visai gerai Safari naršyklėje ir gali būti netikslu"
 
-#: src/components/settings/index.tsx:175
+#: src/components/settings/index.tsx:192
 msgid "Note: This requires browser permissions"
 msgstr "Pastaba: Tam reikalingi naršyklės leidimai"
 
@@ -327,7 +343,7 @@ msgstr "Pastaba: Tam reikalingi naršyklės leidimai"
 msgid "November"
 msgstr "Lapkritis"
 
-#: src/components/settings/index.tsx:194
+#: src/components/settings/index.tsx:211
 msgid "Number of days to forecast"
 msgstr "Prognozuojamų dienų skaičius"
 
@@ -343,7 +359,7 @@ msgstr "apsiniaukę"
 msgid "partly cloudy"
 msgstr "debesuota"
 
-#: src/components/settings/index.tsx:168
+#: src/components/settings/index.tsx:185
 msgid "Periodically update location automatically"
 msgstr "Automatiškai periodiškai atnaujinti vietą"
 
@@ -355,8 +371,8 @@ msgstr "Įveskite jį rankiniu būdu žemiau."
 msgid "Saturday"
 msgstr "Šeštadienis"
 
-#: src/components/settings/index.tsx:277
-#: src/components/settings/index.tsx:371
+#: src/components/settings/index.tsx:294
+#: src/components/settings/index.tsx:388
 msgid "Save"
 msgstr "Išsaugoti"
 
@@ -369,31 +385,31 @@ msgstr "Rugsėjis"
 msgid "Set my location"
 msgstr "Nustatyti mano vietą"
 
-#: src/components/settings/index.tsx:118
+#: src/components/settings/index.tsx:135
 msgid "Settings"
 msgstr "Nustatymai"
 
-#: src/components/settings/index.tsx:266
+#: src/components/settings/index.tsx:283
 msgid "Share anonymised crash data and error logs"
 msgstr "Dalintis anonimizuotais strigties duomenimis ir klaidų žurnalais"
 
-#: src/components/settings/index.tsx:220
+#: src/components/settings/index.tsx:237
 msgid "Show extreme UV alerts"
 msgstr "Rodyti ekstremalių UV spinduliavimo įspėjimus"
 
-#: src/components/settings/index.tsx:225
+#: src/components/settings/index.tsx:242
 msgid "Show high precipitation alerts"
 msgstr "Rodyti didelio kritulio įspėjimus"
 
-#: src/components/settings/index.tsx:231
+#: src/components/settings/index.tsx:248
 msgid "Show high wind alerts"
 msgstr "Rodyti stipraus vėjo įspėjimus"
 
-#: src/components/settings/index.tsx:237
+#: src/components/settings/index.tsx:254
 msgid "Show low visibility alerts"
 msgstr "Rodyti prasto matomumo įspėjimus"
 
-#: src/components/settings/index.tsx:211
+#: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
 msgstr "Rodyti oro sąlygų įspėjimus"
 
@@ -473,7 +489,7 @@ msgstr "perkūnija su nedidele kruša"
 msgid "Thursday"
 msgstr "Ketvirtadienis"
 
-#: src/components/settings/index.tsx:188
+#: src/components/settings/index.tsx:205
 msgid "Tiles"
 msgstr "Plytelės"
 
@@ -486,11 +502,11 @@ msgid "Tuesday"
 msgstr "Antradienis"
 
 #: src/components/intialisation/index.tsx:112
-#: src/components/settings/index.tsx:163
+#: src/components/settings/index.tsx:180
 msgid "Unsure how to find these? Click here."
 msgstr "Nežinote, kaip juos rasti? Spustelėkite čia."
 
-#: src/components/settings/index.tsx:260
+#: src/components/settings/index.tsx:277
 msgid "Use metric number format"
 msgstr "Naudoti metrinį skaičių formatą"
 
@@ -498,11 +514,11 @@ msgstr "Naudoti metrinį skaičių formatą"
 msgid "violent rain showers"
 msgstr "smarkus lietus"
 
-#: src/components/settings/index.tsx:293
+#: src/components/settings/index.tsx:310
 msgid "We'd love to bring Weather Please to more languages."
 msgstr "Mes norėtume pateikti „Weather Please“ daugiau kalbų."
 
-#: src/pages/index.tsx:616
+#: src/pages/index.tsx:646
 msgid "weather data provided by open-meteo"
 msgstr "orų duomenis pateikė open-meteo"
 
@@ -510,10 +526,10 @@ msgstr "orų duomenis pateikė open-meteo"
 msgid "Wednesday"
 msgstr "Trečiadienis"
 
-#: src/components/settings/index.tsx:360
+#: src/components/settings/index.tsx:377
 msgid "You can't save because either your latitude or longitude are invalid."
 msgstr "Jūs negalite išsaugoti, nes jūsų platuma arba ilguma yra neteisinga."
 
-#: src/components/settings/index.tsx:354
+#: src/components/settings/index.tsx:371
 msgid "You have unsaved changes"
 msgstr "Jūs turite neišsaugotų pakeitimų"
