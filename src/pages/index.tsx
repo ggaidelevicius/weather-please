@@ -24,7 +24,7 @@ i18n.load({
 i18n.activate('en')
 
 const WeatherPlease: FC = () => {
-  const [currentWeatherData, setCurrentWeatherData] = useState<CurrentWeatherProps>({
+  const initialCurrentWeatherData = {
     totalPrecipitation: {
       precipitation: {
         value: 0,
@@ -35,7 +35,10 @@ const WeatherPlease: FC = () => {
     hoursOfExtremeUv: [false],
     hoursOfHighWind: [false],
     hoursOfLowVisibility: [false],
-  })
+    hoursOfHighWindGusts: [false],
+  }
+  const [currentWeatherData, setCurrentWeatherData] = useState<CurrentWeatherProps>(initialCurrentWeatherData)
+  const [localStorageCurrentWeatherData, setLocalStorageCurrentWeatherData] = useState<CurrentWeatherProps>(initialCurrentWeatherData)
   const [futureWeatherData, setFutureWeatherData] = useState<[] | TileProps[]>([])
   const [currentHour, setCurrentHour] = useState<number>(new Date().getHours())
   const [currentDate, setCurrentDate] = useState<number>(new Date().getDate())
@@ -199,7 +202,7 @@ const WeatherPlease: FC = () => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility&forecast_days=${config.daysToRetrieve}`)
+        const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=${config.daysToRetrieve}`)
         const res = await req.json()
         const futureData = res.daily.time.map((day: unknown, i: number) => ({
           day,
@@ -261,6 +264,7 @@ const WeatherPlease: FC = () => {
           },
           hoursOfExtremeUv: res.hourly.uv_index.slice(currentHour, currentHour + 13).map((val: number) => val >= 11),
           hoursOfHighWind: res.hourly.windspeed_10m.slice(currentHour, currentHour + 25).map((val: number) => val >= 60),
+          hoursOfHighWindGusts: res.hourly.windgusts_10m.slice(currentHour, currentHour + 25).map((val: number) => val >= 80),
           hoursOfLowVisibility: res.hourly.visibility.slice(currentHour, currentHour + 25).map((val: number) => val <= 200),
         }
         setCurrentWeatherData(alerts)
@@ -294,7 +298,7 @@ const WeatherPlease: FC = () => {
       const data = JSON.parse(localStorage.data)
       const alerts = JSON.parse(localStorage.alerts)
       setFutureWeatherData(data)
-      setCurrentWeatherData(alerts)
+      setLocalStorageCurrentWeatherData(alerts)
     } else {
       if (config.lat && config.lon) {
         fetchData()
@@ -311,6 +315,29 @@ const WeatherPlease: FC = () => {
       clearInterval(checkHour)
     }
   }, [currentHour, config.lat, config.lon, config.daysToRetrieve, config.useMetric, changedLocation])
+
+  /**
+ * This useEffect hook is designed to maintain data integrity in the face of updates to the weather alert types defined
+ * in the `CurrentWeatherProps` type. It is triggered whenever the `localStorageCurrentWeatherData` dependency changes.
+ *
+ * It performs a deep equality check between `localStorageCurrentWeatherData` and `currentWeatherData` using the
+ * `compareObjects` function. This step is crucial to avoid overwriting potentially new alert types present in
+ * `currentWeatherData` with outdated data from local storage. Overwriting it directly without this check could result in
+ * errors if new alert types added to the `CurrentWeatherProps` type are missing in the old local storage data.
+ *
+ * If a discrepancy is detected, it merges the local storage data with the current data using the `mergeObjects` function,
+ * ensuring that no new alert types are lost while also incorporating any relevant data stored locally.
+ *
+ * The merged data is then asserted to be of `CurrentWeatherProps` type and set as the new `currentWeatherData`, preserving
+ * the integrity of the data structure and preventing errors that would occur from missing properties.
+ */
+  useEffect(() => {
+    if (!compareObjects(localStorageCurrentWeatherData, currentWeatherData)) {
+      const mergedData = mergeObjects(localStorageCurrentWeatherData, currentWeatherData)
+      setCurrentWeatherData(mergedData as CurrentWeatherProps)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localStorageCurrentWeatherData])
 
   const handleChange: HandleChange = (k, v) => {
     setInput((prev) => {
@@ -496,7 +523,7 @@ const WeatherPlease: FC = () => {
     }
     return (
       <motion.div
-        key={`${day.day}-${completedFirstLoad}`}
+        key={day.day}
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1, transition: { type: 'spring', duration: 2, delay: (i * .075) + delayBaseline } }}
         exit={{ scale: 0.95, opacity: 0 }}
@@ -515,11 +542,14 @@ const WeatherPlease: FC = () => {
    * The effect sets a delay of 1.9 seconds before marking the first load as complete. This
    * ensures that weather tiles render smoothly without abrupt layout shifts due to
    * alerts being mounted separately.
+   *
+   * NOTE: This currently does not work as expected. Need to figure another solution to prevent
+   * layout shift - changing keys mounts new elements
    */
   useEffect(() => {
     setTimeout(() => {
       setCompletedFirstLoad(true)
-    }, 1.9)
+    }, 0) // 1900
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

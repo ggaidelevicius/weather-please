@@ -12,6 +12,7 @@ const Alert: FC<AlertProps> = (props) => {
     totalPrecipitation,
     hoursOfExtremeUv,
     hoursOfHighWind,
+    hoursOfHighWindGusts,
     hoursOfLowVisibility,
     useMetric,
     showUvAlerts,
@@ -236,6 +237,83 @@ const Alert: FC<AlertProps> = (props) => {
       setAlerts((prev) => prev.filter(alert => alert.key !== 'windAlert'))
     }
   }, [hoursOfHighWind, showWindAlerts])
+
+  /**
+ * Monitors wind conditions and updates the alert list accordingly.
+ *
+ * If showWindAlerts is enabled and there are upcoming hours of high wind gusts, a wind alert
+ * is created to notify the user about the situation. The alert provides details either
+ * about when high wind gust conditions will start or how long they will last, based on the
+ * current and forecasted conditions.
+ *
+ * The alert is dynamically generated based on the hoursOfHighWindGusts array, where each entry
+ * indicates whether the wind gusts will be high for the corresponding hour. If conditions do
+ * not warrant an alert, or if wind alerts are turned off, any existing wind gust alert is removed
+ * from the list.
+ */
+  useEffect(() => {
+    if (showWindAlerts) {
+      let windAlert: ReactElement | null = null
+      if (hoursOfHighWindGusts.includes(true)) {
+        const alertProps = {
+          className: styles.alert,
+          radius: 'md',
+          styles: { message: { fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' } },
+          key: 'gustAlert',
+        }
+        const timeUntilHighWind = hoursOfHighWindGusts.indexOf(true) + 1
+        if (timeUntilHighWind > 1) {
+          windAlert = (
+            <MantineAlert {...alertProps} >
+              <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
+              <Trans>
+                High wind gusts starting in {timeUntilHighWind} hours
+              </Trans>
+            </MantineAlert>
+          )
+        } else {
+          const durationOfHighWind = hoursOfHighWindGusts.indexOf(false)
+          windAlert = (
+            <MantineAlert {...alertProps}>
+              <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
+              {durationOfHighWind > 0 &&
+                <Trans>
+                  High wind gusts for the next {durationOfHighWind} hours
+                </Trans>
+              }
+              {durationOfHighWind < 0 &&
+                <Trans>
+                  High wind gusts for the next 24 hours
+                </Trans>
+              }
+              {durationOfHighWind === 0 &&
+                <Trans>
+                  High wind gusts for the next hour
+                </Trans>
+              }
+            </MantineAlert>
+          )
+        }
+        setAlerts((prev) => {
+          const prevWindAlertIndex = prev.findIndex(
+            (alert) => alert.key === 'gustAlert'
+          )
+
+          if (prevWindAlertIndex !== -1) {
+            const newAlerts = [...prev]
+            newAlerts[prevWindAlertIndex] = windAlert as ReactElement
+            return newAlerts
+          } else {
+            return [...prev, windAlert as ReactElement]
+          }
+        })
+      } else {
+        setAlerts((prev) => prev.filter(alert => alert.key !== 'gustAlert'))
+      }
+    } else {
+      setAlerts((prev) => prev.filter(alert => alert.key !== 'gustAlert'))
+    }
+  }, [hoursOfHighWindGusts, showWindAlerts])
 
   /**
    * Monitors visibility conditions and manages the alert list accordingly.
