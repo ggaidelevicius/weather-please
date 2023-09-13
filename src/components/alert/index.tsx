@@ -62,7 +62,7 @@ const Alert: FC<AlertProps> = (props) => {
           uvAlert = (
             <MantineAlert {...alertProps}>
               <IconAlertTriangle size='2rem' strokeWidth={1.5} aria-hidden />
-              {durationOfExtremeUv > 0 &&
+              {durationOfExtremeUv > 1 &&
                 <Trans>
                   Extreme UV for the next {durationOfExtremeUv} hours
                 </Trans>
@@ -72,7 +72,7 @@ const Alert: FC<AlertProps> = (props) => {
                   Extreme UV for the next 12 hours
                 </Trans>
               }
-              {durationOfExtremeUv === 0 &&
+              {durationOfExtremeUv === 1 &&
                 <Trans>
                   Extreme UV for the next hour
                 </Trans>
@@ -199,7 +199,7 @@ const Alert: FC<AlertProps> = (props) => {
           windAlert = (
             <MantineAlert {...alertProps}>
               <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
-              {durationOfHighWind > 0 &&
+              {durationOfHighWind > 1 &&
                 <Trans>
                   High wind for the next {durationOfHighWind} hours
                 </Trans>
@@ -209,7 +209,7 @@ const Alert: FC<AlertProps> = (props) => {
                   High wind for the next 24 hours
                 </Trans>
               }
-              {durationOfHighWind === 0 &&
+              {durationOfHighWind === 1 &&
                 <Trans>
                   High wind for the next hour
                 </Trans>
@@ -276,7 +276,7 @@ const Alert: FC<AlertProps> = (props) => {
           windAlert = (
             <MantineAlert {...alertProps}>
               <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
-              {durationOfHighWind > 0 &&
+              {durationOfHighWind > 1 &&
                 <Trans>
                   High wind gusts for the next {durationOfHighWind} hours
                 </Trans>
@@ -286,7 +286,7 @@ const Alert: FC<AlertProps> = (props) => {
                   High wind gusts for the next 24 hours
                 </Trans>
               }
-              {durationOfHighWind === 0 &&
+              {durationOfHighWind === 1 &&
                 <Trans>
                   High wind gusts for the next hour
                 </Trans>
@@ -338,7 +338,7 @@ const Alert: FC<AlertProps> = (props) => {
           styles: { message: { fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' } },
           key: 'visibilityAlert',
         }
-        const timeUntilLowVisibility = hoursOfLowVisibility.indexOf(true) + 1
+        const timeUntilLowVisibility = hoursOfLowVisibility.indexOf(true) + 1 // might not need to be doing +1
         if (timeUntilLowVisibility > 1) {
           visibilityAlert = (
             <MantineAlert {...alertProps} >
@@ -353,7 +353,7 @@ const Alert: FC<AlertProps> = (props) => {
           visibilityAlert = (
             <MantineAlert {...alertProps}>
               <IconInfoCircle size='2rem' strokeWidth={1.5} aria-hidden />
-              {durationOfLowVisibility > 0 &&
+              {durationOfLowVisibility > 1 &&
                 <Trans>
                   Low visibility for the next {durationOfLowVisibility} hours
                 </Trans>
@@ -363,7 +363,7 @@ const Alert: FC<AlertProps> = (props) => {
                   Low visibility for the next 24 hours
                 </Trans>
               }
-              {durationOfLowVisibility === 0 &&
+              {durationOfLowVisibility === 1 &&
                 <Trans>
                   Low visibility for the next hour
                 </Trans>
