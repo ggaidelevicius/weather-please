@@ -332,7 +332,7 @@ const WeatherPlease: FC = () => {
  * the integrity of the data structure and preventing errors that would occur from missing properties.
  */
   useEffect(() => {
-    if (!compareObjects(localStorageCurrentWeatherData, currentWeatherData)) {
+    if (!compareObjects(localStorageCurrentWeatherData, currentWeatherData)) { // this is running every load no matter what, but if it's not breaking anything (and still guards correctly), is it a problem?
       const mergedData = mergeObjects(localStorageCurrentWeatherData, currentWeatherData)
       setCurrentWeatherData(mergedData as CurrentWeatherProps)
     }
