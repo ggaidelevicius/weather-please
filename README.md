@@ -4,7 +4,7 @@ Weather Please is a new tab replacement extension that is suitable for any brows
 
 It displays maximum and minimum temperatures, a general prognosis, maximum UV index, maximum wind speed, and chance of precipitation for the current day, as well as up to 8 days into the future.
 
-It also displays weather alerts in the case of extreme UV, high precipitation, high wind, and low visibility. All alerts are fully toggleable on a per alert-type basis.
+It also displays weather alerts in the case of extreme UV, high precipitation, Strong wind, and low visibility. All alerts are fully toggleable on a per alert-type basis.
 
 Both metric and imperial number formats are supported.
 

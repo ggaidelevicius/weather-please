@@ -33,9 +33,9 @@ const WeatherPlease: FC = () => {
       duration: [false],
     },
     hoursOfExtremeUv: [false],
-    hoursOfHighWind: [false],
+    hoursOfStrongWind: [false],
     hoursOfLowVisibility: [false],
-    hoursOfHighWindGusts: [false],
+    hoursOfStrongWindGusts: [false],
   }
   const [currentWeatherData, setCurrentWeatherData] = useState<CurrentWeatherProps>(initialCurrentWeatherData)
   const [localStorageCurrentWeatherData, setLocalStorageCurrentWeatherData] = useState<CurrentWeatherProps>(initialCurrentWeatherData)
@@ -263,8 +263,8 @@ const WeatherPlease: FC = () => {
             duration: res.hourly.precipitation.slice(currentHour, currentHour + 25).map((val: number) => val > 0),
           },
           hoursOfExtremeUv: res.hourly.uv_index.slice(currentHour, currentHour + 13).map((val: number) => val >= 11),
-          hoursOfHighWind: res.hourly.windspeed_10m.slice(currentHour, currentHour + 25).map((val: number) => val >= 60),
-          hoursOfHighWindGusts: res.hourly.windgusts_10m.slice(currentHour, currentHour + 25).map((val: number) => val >= 80),
+          hoursOfStrongWind: res.hourly.windspeed_10m.slice(currentHour, currentHour + 25).map((val: number) => val >= 60),
+          hoursOfStrongWindGusts: res.hourly.windgusts_10m.slice(currentHour, currentHour + 25).map((val: number) => val >= 80),
           hoursOfLowVisibility: res.hourly.visibility.slice(currentHour, currentHour + 25).map((val: number) => val <= 200),
         }
         setCurrentWeatherData(alerts)
@@ -336,7 +336,7 @@ const WeatherPlease: FC = () => {
       const mergedData = mergeObjects(localStorageCurrentWeatherData, currentWeatherData)
       setCurrentWeatherData(mergedData as CurrentWeatherProps)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorageCurrentWeatherData])
 
   const handleChange: HandleChange = (k, v) => {

@@ -168,38 +168,6 @@ msgstr "심한 눈보라"
 msgid "heavy snowfall"
 msgstr "많은 눈"
 
-#: src/components/alert/index.tsx:203
-msgid "High wind for the next {durationOfHighWind} hours"
-msgstr "다음 {durationOfHighWind}시간 동안 강한 바람"
-
-#: src/components/alert/index.tsx:208
-msgid "High wind for the next 24 hours"
-msgstr "다음 24시간 동안 강한 바람"
-
-#: src/components/alert/index.tsx:213
-msgid "High wind for the next hour"
-msgstr "다음 1시간 동안 강한 바람"
-
-#: src/components/alert/index.tsx:280
-msgid "High wind gusts for the next {durationOfHighWind} hours"
-msgstr "다음 {durationOfHighWind}시간 동안 강한 바람이 예상됩니다"
-
-#: src/components/alert/index.tsx:285
-msgid "High wind gusts for the next 24 hours"
-msgstr "다음 24시간 동안 강한 바람이 예상됩니다"
-
-#: src/components/alert/index.tsx:290
-msgid "High wind gusts for the next hour"
-msgstr "다음 1시간 동안 강한 바람이 예상됩니다"
-
-#: src/components/alert/index.tsx:269
-msgid "High wind gusts starting in {timeUntilHighWind} hours"
-msgstr "{timeUntilHighWind}시간 후 강한 바람이 시작됩니다"
-
-#: src/components/alert/index.tsx:192
-msgid "High wind starting in {timeUntilHighWind} hours"
-msgstr "{timeUntilHighWind}시간 후에 강한 바람이 시작됩니다"
-
 #: src/components/settings/index.tsx:218
 msgid "Identifier"
 msgstr "식별자"
@@ -401,13 +369,13 @@ msgstr "극한의 UV 경보 표시"
 msgid "Show high precipitation alerts"
 msgstr "강수량이 많은 경보 표시"
 
-#: src/components/settings/index.tsx:248
-msgid "Show high wind alerts"
-msgstr "강풍 경보 표시"
-
 #: src/components/settings/index.tsx:254
 msgid "Show low visibility alerts"
 msgstr "저시력 경보 표시"
+
+#: src/components/settings/index.tsx:248
+msgid "Show strong wind alerts"
+msgstr "강풍 경보 보이기"
 
 #: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
@@ -432,6 +400,38 @@ msgstr "약한 눈내림"
 #: src/components/tile/weather/index.tsx:44
 msgid "snow grains"
 msgstr "눈 과립"
+
+#: src/components/alert/index.tsx:203
+msgid "Strong wind for the next {durationOfStrongWind} hours"
+msgstr "다음 {durationOfStrongWind} 시간 동안 강풍"
+
+#: src/components/alert/index.tsx:208
+msgid "Strong wind for the next 24 hours"
+msgstr "다음 24 시간 동안 강풍"
+
+#: src/components/alert/index.tsx:213
+msgid "Strong wind for the next hour"
+msgstr "다음 1 시간 동안 강풍"
+
+#: src/components/alert/index.tsx:280
+msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+msgstr "다음 {durationOfStrongWind} 시간 동안 강한 바람"
+
+#: src/components/alert/index.tsx:285
+msgid "Strong wind gusts for the next 24 hours"
+msgstr "다음 24 시간 동안 강한 바람"
+
+#: src/components/alert/index.tsx:290
+msgid "Strong wind gusts for the next hour"
+msgstr "다음 1 시간 동안 강한 바람"
+
+#: src/components/alert/index.tsx:269
+msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind} 시간 후 강한 바람이 시작됩니다"
+
+#: src/components/alert/index.tsx:192
+msgid "Strong wind starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind} 시간 후 강풍이 시작됩니다"
 
 #: src/components/tile/index.tsx:13
 msgid "Sunday"

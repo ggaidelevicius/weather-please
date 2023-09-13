@@ -245,7 +245,7 @@ const Settings: FC<SettingsProps> = (props) => {
               onChange={(e) => { handleChange('showPrecipitationAlerts', e.target.checked) }}
             />
             <Switch
-              label={<Trans>Show high wind alerts</Trans>}
+              label={<Trans>Show strong wind alerts</Trans>}
               mt='md'
               checked={input.showWindAlerts}
               onChange={(e) => { handleChange('showWindAlerts', e.target.checked) }}

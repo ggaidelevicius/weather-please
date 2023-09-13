@@ -6,16 +6,16 @@
  *
  * @property {TotalPrecipitation} totalPrecipitation - Details about the total expected precipitation.
  * @property {boolean[]} hoursOfExtremeUv - Array indicating hours with extreme UV levels.
- * @property {boolean[]} hoursOfHighWind - Array indicating hours with high wind conditions.
- * @property {boolean[]} hoursOfHighWindGusts - Array indicating hours with high wind gust conditions.
+ * @property {boolean[]} hoursOfStrongWind - Array indicating hours with strong wind conditions.
+ * @property {boolean[]} hoursOfStrongWindGusts - Array indicating hours with strong wind gust conditions.
  * @property {boolean[]} hoursOfLowVisibility - Array indicating hours with low visibility conditions.
  */
 export interface CurrentWeatherProps {
   readonly totalPrecipitation: TotalPrecipitation;
   readonly hoursOfExtremeUv: boolean[];
-  readonly hoursOfHighWind: boolean[];
+  readonly hoursOfStrongWind: boolean[];
   readonly hoursOfLowVisibility: boolean[];
-  readonly hoursOfHighWindGusts: boolean[];
+  readonly hoursOfStrongWindGusts: boolean[];
 }
 
 /**

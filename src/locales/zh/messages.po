@@ -168,38 +168,6 @@ msgstr "大雪暴"
 msgid "heavy snowfall"
 msgstr "大雪"
 
-#: src/components/alert/index.tsx:203
-msgid "High wind for the next {durationOfHighWind} hours"
-msgstr "接下来 {durationOfHighWind} 小时内将有大风"
-
-#: src/components/alert/index.tsx:208
-msgid "High wind for the next 24 hours"
-msgstr "接下来24小时将有大风"
-
-#: src/components/alert/index.tsx:213
-msgid "High wind for the next hour"
-msgstr "接下来一小时将有大风"
-
-#: src/components/alert/index.tsx:280
-msgid "High wind gusts for the next {durationOfHighWind} hours"
-msgstr "未来{durationOfHighWind}小时将有强风"
-
-#: src/components/alert/index.tsx:285
-msgid "High wind gusts for the next 24 hours"
-msgstr "未来24小时将有强风"
-
-#: src/components/alert/index.tsx:290
-msgid "High wind gusts for the next hour"
-msgstr "未来一小时将有强风"
-
-#: src/components/alert/index.tsx:269
-msgid "High wind gusts starting in {timeUntilHighWind} hours"
-msgstr "{timeUntilHighWind}小时后将开始有强风"
-
-#: src/components/alert/index.tsx:192
-msgid "High wind starting in {timeUntilHighWind} hours"
-msgstr "大风将于 {timeUntilHighWind} 小时后开始"
-
 #: src/components/settings/index.tsx:218
 msgid "Identifier"
 msgstr "标识符"
@@ -401,13 +369,13 @@ msgstr "显示极端紫外线警报"
 msgid "Show high precipitation alerts"
 msgstr "显示高降水量警报"
 
-#: src/components/settings/index.tsx:248
-msgid "Show high wind alerts"
-msgstr "显示大风警报"
-
 #: src/components/settings/index.tsx:254
 msgid "Show low visibility alerts"
 msgstr "显示低能见度警报"
+
+#: src/components/settings/index.tsx:248
+msgid "Show strong wind alerts"
+msgstr "显示强风警报"
 
 #: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
@@ -432,6 +400,38 @@ msgstr "小雪"
 #: src/components/tile/weather/index.tsx:44
 msgid "snow grains"
 msgstr "雪粒"
+
+#: src/components/alert/index.tsx:203
+msgid "Strong wind for the next {durationOfStrongWind} hours"
+msgstr "未来{durationOfStrongWind}小时有强风"
+
+#: src/components/alert/index.tsx:208
+msgid "Strong wind for the next 24 hours"
+msgstr "未来24小时有强风"
+
+#: src/components/alert/index.tsx:213
+msgid "Strong wind for the next hour"
+msgstr "未来一小时有强风"
+
+#: src/components/alert/index.tsx:280
+msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+msgstr "未来{durationOfStrongWind}小时有强风暴"
+
+#: src/components/alert/index.tsx:285
+msgid "Strong wind gusts for the next 24 hours"
+msgstr "未来24小时有强风暴"
+
+#: src/components/alert/index.tsx:290
+msgid "Strong wind gusts for the next hour"
+msgstr "未来一小时有强风暴"
+
+#: src/components/alert/index.tsx:269
+msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind}小时后开始有强风暴"
+
+#: src/components/alert/index.tsx:192
+msgid "Strong wind starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind}小时后开始有强风"
 
 #: src/components/tile/index.tsx:13
 msgid "Sunday"

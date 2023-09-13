@@ -168,38 +168,6 @@ msgstr "cơn tuyết rơi nặng hạt"
 msgid "heavy snowfall"
 msgstr "tuyết rơi nặng hạt"
 
-#: src/components/alert/index.tsx:203
-msgid "High wind for the next {durationOfHighWind} hours"
-msgstr "Gió mạnh trong {durationOfHighWind} giờ tới"
-
-#: src/components/alert/index.tsx:208
-msgid "High wind for the next 24 hours"
-msgstr "Gió mạnh trong 24 giờ tới"
-
-#: src/components/alert/index.tsx:213
-msgid "High wind for the next hour"
-msgstr "Gió mạnh trong 1 giờ tới"
-
-#: src/components/alert/index.tsx:280
-msgid "High wind gusts for the next {durationOfHighWind} hours"
-msgstr "Cơn gió mạnh trong {durationOfHighWind} giờ tới"
-
-#: src/components/alert/index.tsx:285
-msgid "High wind gusts for the next 24 hours"
-msgstr "Cơn gió mạnh trong 24 giờ tới"
-
-#: src/components/alert/index.tsx:290
-msgid "High wind gusts for the next hour"
-msgstr "Cơn gió mạnh trong 1 giờ tới"
-
-#: src/components/alert/index.tsx:269
-msgid "High wind gusts starting in {timeUntilHighWind} hours"
-msgstr "Cơn gió mạnh bắt đầu sau {timeUntilHighWind} giờ"
-
-#: src/components/alert/index.tsx:192
-msgid "High wind starting in {timeUntilHighWind} hours"
-msgstr "Gió mạnh bắt đầu trong {timeUntilHighWind} giờ"
-
 #: src/components/settings/index.tsx:218
 msgid "Identifier"
 msgstr "Định danh"
@@ -401,13 +369,13 @@ msgstr "Hiển thị cảnh báo UV cực độ"
 msgid "Show high precipitation alerts"
 msgstr "Hiển thị cảnh báo lượng mưa lớn"
 
-#: src/components/settings/index.tsx:248
-msgid "Show high wind alerts"
-msgstr "Hiển thị cảnh báo gió lớn"
-
 #: src/components/settings/index.tsx:254
 msgid "Show low visibility alerts"
 msgstr "Hiển thị cảnh báo tầm nhìn thấp"
+
+#: src/components/settings/index.tsx:248
+msgid "Show strong wind alerts"
+msgstr "Hiển thị cảnh báo gió mạnh"
 
 #: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
@@ -432,6 +400,38 @@ msgstr "tuyết rơi nhỏ"
 #: src/components/tile/weather/index.tsx:44
 msgid "snow grains"
 msgstr "hạt tuyết"
+
+#: src/components/alert/index.tsx:203
+msgid "Strong wind for the next {durationOfStrongWind} hours"
+msgstr "Gió mạnh trong {durationOfStrongWind} giờ tới"
+
+#: src/components/alert/index.tsx:208
+msgid "Strong wind for the next 24 hours"
+msgstr "Gió mạnh trong 24 giờ tới"
+
+#: src/components/alert/index.tsx:213
+msgid "Strong wind for the next hour"
+msgstr "Gió mạnh trong 1 giờ tới"
+
+#: src/components/alert/index.tsx:280
+msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+msgstr "Cơn gió mạnh trong {durationOfStrongWind} giờ tới"
+
+#: src/components/alert/index.tsx:285
+msgid "Strong wind gusts for the next 24 hours"
+msgstr "Cơn gió mạnh trong 24 giờ tới"
+
+#: src/components/alert/index.tsx:290
+msgid "Strong wind gusts for the next hour"
+msgstr "Cơn gió mạnh trong 1 giờ tới"
+
+#: src/components/alert/index.tsx:269
+msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+msgstr "Cơn gió mạnh bắt đầu sau {timeUntilStrongWind} giờ"
+
+#: src/components/alert/index.tsx:192
+msgid "Strong wind starting in {timeUntilStrongWind} hours"
+msgstr "Gió mạnh bắt đầu sau {timeUntilStrongWind} giờ"
 
 #: src/components/tile/index.tsx:13
 msgid "Sunday"

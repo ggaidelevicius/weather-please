@@ -168,38 +168,6 @@ msgstr "сильные снегопады"
 msgid "heavy snowfall"
 msgstr "сильный снегопад"
 
-#: src/components/alert/index.tsx:203
-msgid "High wind for the next {durationOfHighWind} hours"
-msgstr "Сильный ветер в течение следующих {durationOfHighWind} часа(ов)"
-
-#: src/components/alert/index.tsx:208
-msgid "High wind for the next 24 hours"
-msgstr "Сильный ветер в течение следующих 24 часов"
-
-#: src/components/alert/index.tsx:213
-msgid "High wind for the next hour"
-msgstr "Сильный ветер в течение следующего часа"
-
-#: src/components/alert/index.tsx:280
-msgid "High wind gusts for the next {durationOfHighWind} hours"
-msgstr "Сильные порывы ветра в течение следующих {durationOfHighWind} часов"
-
-#: src/components/alert/index.tsx:285
-msgid "High wind gusts for the next 24 hours"
-msgstr "Сильные порывы ветра в течение следующих 24 часов"
-
-#: src/components/alert/index.tsx:290
-msgid "High wind gusts for the next hour"
-msgstr "Сильные порывы ветра в течение следующего часа"
-
-#: src/components/alert/index.tsx:269
-msgid "High wind gusts starting in {timeUntilHighWind} hours"
-msgstr "Сильные порывы ветра начнутся через {timeUntilHighWind} часов"
-
-#: src/components/alert/index.tsx:192
-msgid "High wind starting in {timeUntilHighWind} hours"
-msgstr "Сильный ветер начнется через {timeUntilHighWind} часа(ов)"
-
 #: src/components/settings/index.tsx:218
 msgid "Identifier"
 msgstr "Идентификатор"
@@ -401,13 +369,13 @@ msgstr "Показывать предупреждения об экстрема�
 msgid "Show high precipitation alerts"
 msgstr "Показывать предупреждения о больших осадках"
 
-#: src/components/settings/index.tsx:248
-msgid "Show high wind alerts"
-msgstr "Показывать предупреждения о сильном ветре"
-
 #: src/components/settings/index.tsx:254
 msgid "Show low visibility alerts"
 msgstr "Показывать предупреждения о низкой видимости"
+
+#: src/components/settings/index.tsx:248
+msgid "Show strong wind alerts"
+msgstr "Показать предупреждения о сильном ветре"
 
 #: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
@@ -432,6 +400,38 @@ msgstr "небольшой снегопад"
 #: src/components/tile/weather/index.tsx:44
 msgid "snow grains"
 msgstr "зерна снега"
+
+#: src/components/alert/index.tsx:203
+msgid "Strong wind for the next {durationOfStrongWind} hours"
+msgstr "Сильный ветер в течение следующих {durationOfStrongWind} часов"
+
+#: src/components/alert/index.tsx:208
+msgid "Strong wind for the next 24 hours"
+msgstr "Сильный ветер в течение следующих 24 часов"
+
+#: src/components/alert/index.tsx:213
+msgid "Strong wind for the next hour"
+msgstr "Сильный ветер в течение следующего часа"
+
+#: src/components/alert/index.tsx:280
+msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+msgstr "Сильные порывы ветра в течение следующих {durationOfStrongWind} часов"
+
+#: src/components/alert/index.tsx:285
+msgid "Strong wind gusts for the next 24 hours"
+msgstr "Сильные порывы ветра в течение следующих 24 часов"
+
+#: src/components/alert/index.tsx:290
+msgid "Strong wind gusts for the next hour"
+msgstr "Сильные порывы ветра в течение следующего часа"
+
+#: src/components/alert/index.tsx:269
+msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+msgstr "Сильные порывы ветра начнутся через {timeUntilStrongWind} часов"
+
+#: src/components/alert/index.tsx:192
+msgid "Strong wind starting in {timeUntilStrongWind} hours"
+msgstr "Сильный ветер начнется через {timeUntilStrongWind} часов"
 
 #: src/components/tile/index.tsx:13
 msgid "Sunday"

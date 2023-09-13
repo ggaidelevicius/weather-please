@@ -168,38 +168,6 @@ msgstr "ভারী তুষারঝড়"
 msgid "heavy snowfall"
 msgstr "ভারী তুষারপাত"
 
-#: src/components/alert/index.tsx:203
-msgid "High wind for the next {durationOfHighWind} hours"
-msgstr "পরের {durationOfHighWind} ঘণ্টা ধরে উচ্চ বাতি"
-
-#: src/components/alert/index.tsx:208
-msgid "High wind for the next 24 hours"
-msgstr "পরের 24 ঘণ্টা ধরে উচ্চ বাতি"
-
-#: src/components/alert/index.tsx:213
-msgid "High wind for the next hour"
-msgstr "পরের এক ঘণ্টা ধরে উচ্চ বাতি"
-
-#: src/components/alert/index.tsx:280
-msgid "High wind gusts for the next {durationOfHighWind} hours"
-msgstr "পরের {durationOfHighWind} ঘণ্টা ধরে উচ্চ বাতির ঝড়"
-
-#: src/components/alert/index.tsx:285
-msgid "High wind gusts for the next 24 hours"
-msgstr "পরের 24 ঘণ্টা ধরে উচ্চ বাতির ঝড়"
-
-#: src/components/alert/index.tsx:290
-msgid "High wind gusts for the next hour"
-msgstr "পরের এক ঘণ্টা ধরে উচ্চ বাতির ঝড়"
-
-#: src/components/alert/index.tsx:269
-msgid "High wind gusts starting in {timeUntilHighWind} hours"
-msgstr "{timeUntilHighWind} ঘণ্টা পর শুরু হবে উচ্চ বাতির ঝড়"
-
-#: src/components/alert/index.tsx:192
-msgid "High wind starting in {timeUntilHighWind} hours"
-msgstr "{timeUntilHighWind} ঘণ্টা পরে উচ্চ বাতি শুরু হবে"
-
 #: src/components/settings/index.tsx:218
 msgid "Identifier"
 msgstr "পরিচয়ক"
@@ -401,13 +369,13 @@ msgstr "এক্সট্রিম ইউভি সতর্কবাণী দ
 msgid "Show high precipitation alerts"
 msgstr "উচ্চ বৃষ্টির সতর্কবাণী দেখান"
 
-#: src/components/settings/index.tsx:248
-msgid "Show high wind alerts"
-msgstr "উচ্চ বায়ু সতর্কবাণী দেখান"
-
 #: src/components/settings/index.tsx:254
 msgid "Show low visibility alerts"
 msgstr "নিম্ন দৃশ্যতা সতর্কবাণী দেখান"
+
+#: src/components/settings/index.tsx:248
+msgid "Show strong wind alerts"
+msgstr "শক্তিশালী বায়ু সতর্কবার্তা দেখান"
 
 #: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
@@ -432,6 +400,38 @@ msgstr "হালকা তুষারপাত"
 #: src/components/tile/weather/index.tsx:44
 msgid "snow grains"
 msgstr "তুষার কণা"
+
+#: src/components/alert/index.tsx:203
+msgid "Strong wind for the next {durationOfStrongWind} hours"
+msgstr "পরের {durationOfStrongWind} ঘণ্টা ধরে শক্তিশালী বাতাস"
+
+#: src/components/alert/index.tsx:208
+msgid "Strong wind for the next 24 hours"
+msgstr "পরের 24 ঘণ্টা ধরে শক্তিশালী বাতাস"
+
+#: src/components/alert/index.tsx:213
+msgid "Strong wind for the next hour"
+msgstr "পরের এক ঘণ্টা ধরে শক্তিশালী বাতাস"
+
+#: src/components/alert/index.tsx:280
+msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+msgstr "পরের {durationOfStrongWind} ঘণ্টা ধরে শক্তিশালী বাতাসের ঝড়"
+
+#: src/components/alert/index.tsx:285
+msgid "Strong wind gusts for the next 24 hours"
+msgstr "পরের 24 ঘণ্টা ধরে শক্তিশালী বাতাসের ঝড়"
+
+#: src/components/alert/index.tsx:290
+msgid "Strong wind gusts for the next hour"
+msgstr "পরের এক ঘণ্টা ধরে শক্তিশালী বাতাসের ঝড়"
+
+#: src/components/alert/index.tsx:269
+msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind} ঘণ্টা পর শক্তিশালী বাতাসের ঝড় শুরু হবে"
+
+#: src/components/alert/index.tsx:192
+msgid "Strong wind starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind} ঘণ্টা পর শক্তিশালী বাতাস শুরু হবে"
 
 #: src/components/tile/index.tsx:13
 msgid "Sunday"

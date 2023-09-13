@@ -168,38 +168,6 @@ msgstr "starker Schneeschauer"
 msgid "heavy snowfall"
 msgstr "starker Schneefall"
 
-#: src/components/alert/index.tsx:203
-msgid "High wind for the next {durationOfHighWind} hours"
-msgstr "Starker Wind für die nächsten {durationOfHighWind} Stunden"
-
-#: src/components/alert/index.tsx:208
-msgid "High wind for the next 24 hours"
-msgstr "Starker Wind für die nächsten 24 Stunden"
-
-#: src/components/alert/index.tsx:213
-msgid "High wind for the next hour"
-msgstr "Starker Wind für die nächste Stunde"
-
-#: src/components/alert/index.tsx:280
-msgid "High wind gusts for the next {durationOfHighWind} hours"
-msgstr "Starke Windböen für die nächsten {durationOfHighWind} Stunden"
-
-#: src/components/alert/index.tsx:285
-msgid "High wind gusts for the next 24 hours"
-msgstr "Starke Windböen für die nächsten 24 Stunden"
-
-#: src/components/alert/index.tsx:290
-msgid "High wind gusts for the next hour"
-msgstr "Starke Windböen für die nächste Stunde"
-
-#: src/components/alert/index.tsx:269
-msgid "High wind gusts starting in {timeUntilHighWind} hours"
-msgstr "Starke Windböen beginnen in {timeUntilHighWind} Stunden"
-
-#: src/components/alert/index.tsx:192
-msgid "High wind starting in {timeUntilHighWind} hours"
-msgstr "Starker Wind beginnt in {timeUntilHighWind} Stunden"
-
 #: src/components/settings/index.tsx:218
 msgid "Identifier"
 msgstr "Identifikator"
@@ -401,13 +369,13 @@ msgstr "Extreme UV-Warnungen anzeigen"
 msgid "Show high precipitation alerts"
 msgstr "Warnungen vor hohem Niederschlag anzeigen"
 
-#: src/components/settings/index.tsx:248
-msgid "Show high wind alerts"
-msgstr "Warnungen vor hohen Windgeschwindigkeiten anzeigen"
-
 #: src/components/settings/index.tsx:254
 msgid "Show low visibility alerts"
 msgstr "Warnungen vor geringer Sichtweite anzeigen"
+
+#: src/components/settings/index.tsx:248
+msgid "Show strong wind alerts"
+msgstr "Starke Windwarnungen anzeigen"
 
 #: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
@@ -432,6 +400,38 @@ msgstr "leichter Schneefall"
 #: src/components/tile/weather/index.tsx:44
 msgid "snow grains"
 msgstr "Schneegriesel"
+
+#: src/components/alert/index.tsx:203
+msgid "Strong wind for the next {durationOfStrongWind} hours"
+msgstr "Starker Wind für die nächsten {durationOfStrongWind} Stunden"
+
+#: src/components/alert/index.tsx:208
+msgid "Strong wind for the next 24 hours"
+msgstr "Starker Wind für die nächsten 24 Stunden"
+
+#: src/components/alert/index.tsx:213
+msgid "Strong wind for the next hour"
+msgstr "Starker Wind für die nächste Stunde"
+
+#: src/components/alert/index.tsx:280
+msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+msgstr "Starke Windböen für die nächsten {durationOfStrongWind} Stunden"
+
+#: src/components/alert/index.tsx:285
+msgid "Strong wind gusts for the next 24 hours"
+msgstr "Starke Windböen für die nächsten 24 Stunden"
+
+#: src/components/alert/index.tsx:290
+msgid "Strong wind gusts for the next hour"
+msgstr "Starke Windböen für die nächste Stunde"
+
+#: src/components/alert/index.tsx:269
+msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+msgstr "Starke Windböen beginnen in {timeUntilStrongWind} Stunden"
+
+#: src/components/alert/index.tsx:192
+msgid "Strong wind starting in {timeUntilStrongWind} hours"
+msgstr "Starker Wind beginnt in {timeUntilStrongWind} Stunden"
 
 #: src/components/tile/index.tsx:13
 msgid "Sunday"

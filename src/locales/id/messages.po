@@ -168,38 +168,6 @@ msgstr "hujan salju lebat"
 msgid "heavy snowfall"
 msgstr "salju lebat"
 
-#: src/components/alert/index.tsx:203
-msgid "High wind for the next {durationOfHighWind} hours"
-msgstr "Angin kencang untuk {durationOfHighWind} jam kedepan"
-
-#: src/components/alert/index.tsx:208
-msgid "High wind for the next 24 hours"
-msgstr "Angin kencang untuk 24 jam kedepan"
-
-#: src/components/alert/index.tsx:213
-msgid "High wind for the next hour"
-msgstr "Angin kencang untuk jam kedepan"
-
-#: src/components/alert/index.tsx:280
-msgid "High wind gusts for the next {durationOfHighWind} hours"
-msgstr "Hembusan angin kencang untuk {durationOfHighWind} jam mendatang"
-
-#: src/components/alert/index.tsx:285
-msgid "High wind gusts for the next 24 hours"
-msgstr "Hembusan angin kencang untuk 24 jam mendatang"
-
-#: src/components/alert/index.tsx:290
-msgid "High wind gusts for the next hour"
-msgstr "Hembusan angin kencang untuk satu jam mendatang"
-
-#: src/components/alert/index.tsx:269
-msgid "High wind gusts starting in {timeUntilHighWind} hours"
-msgstr "Hembusan angin kencang dimulai dalam {timeUntilHighWind} jam"
-
-#: src/components/alert/index.tsx:192
-msgid "High wind starting in {timeUntilHighWind} hours"
-msgstr "Angin kencang dimulai dalam {timeUntilHighWind} jam"
-
 #: src/components/settings/index.tsx:218
 msgid "Identifier"
 msgstr "Pengenal"
@@ -401,13 +369,13 @@ msgstr "Tampilkan peringatan UV ekstrem"
 msgid "Show high precipitation alerts"
 msgstr "Tampilkan peringatan presipitasi tinggi"
 
-#: src/components/settings/index.tsx:248
-msgid "Show high wind alerts"
-msgstr "Tampilkan peringatan angin kencang"
-
 #: src/components/settings/index.tsx:254
 msgid "Show low visibility alerts"
 msgstr "Tampilkan peringatan visibilitas rendah"
+
+#: src/components/settings/index.tsx:248
+msgid "Show strong wind alerts"
+msgstr "Tampilkan peringatan angin kencang"
 
 #: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
@@ -432,6 +400,38 @@ msgstr "salju ringan"
 #: src/components/tile/weather/index.tsx:44
 msgid "snow grains"
 msgstr "butiran salju"
+
+#: src/components/alert/index.tsx:203
+msgid "Strong wind for the next {durationOfStrongWind} hours"
+msgstr "Angin kencang untuk {durationOfStrongWind} jam ke depan"
+
+#: src/components/alert/index.tsx:208
+msgid "Strong wind for the next 24 hours"
+msgstr "Angin kencang untuk 24 jam ke depan"
+
+#: src/components/alert/index.tsx:213
+msgid "Strong wind for the next hour"
+msgstr "Angin kencang untuk 1 jam ke depan"
+
+#: src/components/alert/index.tsx:280
+msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+msgstr "Hembusan angin kencang untuk {durationOfStrongWind} jam ke depan"
+
+#: src/components/alert/index.tsx:285
+msgid "Strong wind gusts for the next 24 hours"
+msgstr "Hembusan angin kencang untuk 24 jam ke depan"
+
+#: src/components/alert/index.tsx:290
+msgid "Strong wind gusts for the next hour"
+msgstr "Hembusan angin kencang untuk 1 jam ke depan"
+
+#: src/components/alert/index.tsx:269
+msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+msgstr "Hembusan angin kencang dimulai dalam {timeUntilStrongWind} jam"
+
+#: src/components/alert/index.tsx:192
+msgid "Strong wind starting in {timeUntilStrongWind} hours"
+msgstr "Angin kencang dimulai dalam {timeUntilStrongWind} jam"
 
 #: src/components/tile/index.tsx:13
 msgid "Sunday"

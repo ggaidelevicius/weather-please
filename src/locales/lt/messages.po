@@ -168,38 +168,6 @@ msgstr "stiprus sniego lietus"
 msgid "heavy snowfall"
 msgstr "stiprus sniegas"
 
-#: src/components/alert/index.tsx:203
-msgid "High wind for the next {durationOfHighWind} hours"
-msgstr "Stiprus vėjas ateinančias {durationOfHighWind} valandas"
-
-#: src/components/alert/index.tsx:208
-msgid "High wind for the next 24 hours"
-msgstr "Stiprus vėjas ateinančias 24 valandų"
-
-#: src/components/alert/index.tsx:213
-msgid "High wind for the next hour"
-msgstr "Stiprus vėjas kitą valandą"
-
-#: src/components/alert/index.tsx:280
-msgid "High wind gusts for the next {durationOfHighWind} hours"
-msgstr "Stiprūs vėjo gūsiai kitas {durationOfHighWind} valandas"
-
-#: src/components/alert/index.tsx:285
-msgid "High wind gusts for the next 24 hours"
-msgstr "Stiprūs vėjo gūsiai kitas 24 valandas"
-
-#: src/components/alert/index.tsx:290
-msgid "High wind gusts for the next hour"
-msgstr "Stiprūs vėjo gūsiai kitą valandą"
-
-#: src/components/alert/index.tsx:269
-msgid "High wind gusts starting in {timeUntilHighWind} hours"
-msgstr "Stiprūs vėjo gūsiai prasidės už {timeUntilHighWind} valandų"
-
-#: src/components/alert/index.tsx:192
-msgid "High wind starting in {timeUntilHighWind} hours"
-msgstr "Stiprus vėjas prasidės po {timeUntilHighWind} valandų"
-
 #: src/components/settings/index.tsx:218
 msgid "Identifier"
 msgstr "Identifikatorius"
@@ -401,13 +369,13 @@ msgstr "Rodyti ekstremalių UV spinduliavimo įspėjimus"
 msgid "Show high precipitation alerts"
 msgstr "Rodyti didelio kritulio įspėjimus"
 
-#: src/components/settings/index.tsx:248
-msgid "Show high wind alerts"
-msgstr "Rodyti stipraus vėjo įspėjimus"
-
 #: src/components/settings/index.tsx:254
 msgid "Show low visibility alerts"
 msgstr "Rodyti prasto matomumo įspėjimus"
+
+#: src/components/settings/index.tsx:248
+msgid "Show strong wind alerts"
+msgstr "Rodyti stipraus vėjo įspėjimus"
 
 #: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
@@ -432,6 +400,38 @@ msgstr "nedidelis sniegas"
 #: src/components/tile/weather/index.tsx:44
 msgid "snow grains"
 msgstr "sniego grūdeliai"
+
+#: src/components/alert/index.tsx:203
+msgid "Strong wind for the next {durationOfStrongWind} hours"
+msgstr "Stiprus vėjas kitas {durationOfStrongWind} valandas"
+
+#: src/components/alert/index.tsx:208
+msgid "Strong wind for the next 24 hours"
+msgstr "Stiprus vėjas kitas 24 valandas"
+
+#: src/components/alert/index.tsx:213
+msgid "Strong wind for the next hour"
+msgstr "Stiprus vėjas kitą valandą"
+
+#: src/components/alert/index.tsx:280
+msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+msgstr "Stiprūs vėjo gūsiai kitas {durationOfStrongWind} valandas"
+
+#: src/components/alert/index.tsx:285
+msgid "Strong wind gusts for the next 24 hours"
+msgstr "Stiprūs vėjo gūsiai kitas 24 valandas"
+
+#: src/components/alert/index.tsx:290
+msgid "Strong wind gusts for the next hour"
+msgstr "Stiprūs vėjo gūsiai kitą valandą"
+
+#: src/components/alert/index.tsx:269
+msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+msgstr "Stiprūs vėjo gūsiai prasidės už {timeUntilStrongWind} valandų"
+
+#: src/components/alert/index.tsx:192
+msgid "Strong wind starting in {timeUntilStrongWind} hours"
+msgstr "Stiprus vėjas prasidės už {timeUntilStrongWind} valandų"
 
 #: src/components/tile/index.tsx:13
 msgid "Sunday"

@@ -168,38 +168,6 @@ msgstr "भारी हिमवर्षा"
 msgid "heavy snowfall"
 msgstr "भारी हिमपात"
 
-#: src/components/alert/index.tsx:203
-msgid "High wind for the next {durationOfHighWind} hours"
-msgstr "अगले {durationOfHighWind} घंटों के लिए तेज़ हवा"
-
-#: src/components/alert/index.tsx:208
-msgid "High wind for the next 24 hours"
-msgstr "अगले 24 घंटों के लिए तेज़ हवा"
-
-#: src/components/alert/index.tsx:213
-msgid "High wind for the next hour"
-msgstr "अगले घंटे के लिए तेज़ हवा"
-
-#: src/components/alert/index.tsx:280
-msgid "High wind gusts for the next {durationOfHighWind} hours"
-msgstr "अगले {durationOfHighWind} घंटे के लिए तेज़ हवा के झोंके"
-
-#: src/components/alert/index.tsx:285
-msgid "High wind gusts for the next 24 hours"
-msgstr "अगले 24 घंटे के लिए तेज़ हवा के झोंके"
-
-#: src/components/alert/index.tsx:290
-msgid "High wind gusts for the next hour"
-msgstr "अगले एक घंटे के लिए तेज़ हवा के झोंके"
-
-#: src/components/alert/index.tsx:269
-msgid "High wind gusts starting in {timeUntilHighWind} hours"
-msgstr "{timeUntilHighWind} घंटे में शुरू हो रहे तेज़ हवा के झोंके"
-
-#: src/components/alert/index.tsx:192
-msgid "High wind starting in {timeUntilHighWind} hours"
-msgstr "{timeUntilHighWind} घंटों में तेज़ हवा शुरू होगी"
-
 #: src/components/settings/index.tsx:218
 msgid "Identifier"
 msgstr "पहचानकर्ता"
@@ -401,13 +369,13 @@ msgstr "अत्यधिक UV चेतावनियाँ दिखाए�
 msgid "Show high precipitation alerts"
 msgstr "उच्च वर्षा चेतावनियाँ दिखाएं"
 
-#: src/components/settings/index.tsx:248
-msgid "Show high wind alerts"
-msgstr "उच्च वायु चेतावनियाँ दिखाएं"
-
 #: src/components/settings/index.tsx:254
 msgid "Show low visibility alerts"
 msgstr "निम्न दृश्यता चेतावनियाँ दिखाएं"
+
+#: src/components/settings/index.tsx:248
+msgid "Show strong wind alerts"
+msgstr "मजबूत हवा की चेतावनियाँ दिखाएं"
 
 #: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
@@ -432,6 +400,38 @@ msgstr "हल्की हिमपात"
 #: src/components/tile/weather/index.tsx:44
 msgid "snow grains"
 msgstr "हिमकण"
+
+#: src/components/alert/index.tsx:203
+msgid "Strong wind for the next {durationOfStrongWind} hours"
+msgstr "अगले {durationOfStrongWind} घंटों तक मजबूत हवा"
+
+#: src/components/alert/index.tsx:208
+msgid "Strong wind for the next 24 hours"
+msgstr "अगले 24 घंटों तक मजबूत हवा"
+
+#: src/components/alert/index.tsx:213
+msgid "Strong wind for the next hour"
+msgstr "अगले एक घंटे तक मजबूत हवा"
+
+#: src/components/alert/index.tsx:280
+msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+msgstr "अगले {durationOfStrongWind} घंटों तक मजबूत हवा के झोंके"
+
+#: src/components/alert/index.tsx:285
+msgid "Strong wind gusts for the next 24 hours"
+msgstr "अगले 24 घंटों तक मजबूत हवा के झोंके"
+
+#: src/components/alert/index.tsx:290
+msgid "Strong wind gusts for the next hour"
+msgstr "अगले एक घंटे तक मजबूत हवा के झोंके"
+
+#: src/components/alert/index.tsx:269
+msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind} घंटों में मजबूत हवा के झोंके शुरू होंगे"
+
+#: src/components/alert/index.tsx:192
+msgid "Strong wind starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind} घंटों में मजबूत हवा शुरू होगी"
 
 #: src/components/tile/index.tsx:13
 msgid "Sunday"

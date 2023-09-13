@@ -168,38 +168,6 @@ msgstr "激しい雪降り"
 msgid "heavy snowfall"
 msgstr "大雪"
 
-#: src/components/alert/index.tsx:203
-msgid "High wind for the next {durationOfHighWind} hours"
-msgstr "次の{durationOfHighWind}時間の強風"
-
-#: src/components/alert/index.tsx:208
-msgid "High wind for the next 24 hours"
-msgstr "次の24時間の強風"
-
-#: src/components/alert/index.tsx:213
-msgid "High wind for the next hour"
-msgstr "次の1時間の強風"
-
-#: src/components/alert/index.tsx:280
-msgid "High wind gusts for the next {durationOfHighWind} hours"
-msgstr "次の{durationOfHighWind}時間の強風警報"
-
-#: src/components/alert/index.tsx:285
-msgid "High wind gusts for the next 24 hours"
-msgstr "次の24時間の強風警報"
-
-#: src/components/alert/index.tsx:290
-msgid "High wind gusts for the next hour"
-msgstr "次の1時間の強風警報"
-
-#: src/components/alert/index.tsx:269
-msgid "High wind gusts starting in {timeUntilHighWind} hours"
-msgstr "{timeUntilHighWind}時間後に強風警報が始まります"
-
-#: src/components/alert/index.tsx:192
-msgid "High wind starting in {timeUntilHighWind} hours"
-msgstr "{timeUntilHighWind}時間後から強風が始まります"
-
 #: src/components/settings/index.tsx:218
 msgid "Identifier"
 msgstr "識別子"
@@ -401,13 +369,13 @@ msgstr "極端なUVアラートを表示"
 msgid "Show high precipitation alerts"
 msgstr "高降水量アラートを表示"
 
-#: src/components/settings/index.tsx:248
-msgid "Show high wind alerts"
-msgstr "強風アラートを表示"
-
 #: src/components/settings/index.tsx:254
 msgid "Show low visibility alerts"
 msgstr "低視認性アラートを表示"
+
+#: src/components/settings/index.tsx:248
+msgid "Show strong wind alerts"
+msgstr "強風警報を表示する"
 
 #: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
@@ -432,6 +400,38 @@ msgstr "小雪"
 #: src/components/tile/weather/index.tsx:44
 msgid "snow grains"
 msgstr "粉雪"
+
+#: src/components/alert/index.tsx:203
+msgid "Strong wind for the next {durationOfStrongWind} hours"
+msgstr "次の{durationOfStrongWind}時間の強風"
+
+#: src/components/alert/index.tsx:208
+msgid "Strong wind for the next 24 hours"
+msgstr "次の24時間の強風"
+
+#: src/components/alert/index.tsx:213
+msgid "Strong wind for the next hour"
+msgstr "次の1時間の強風"
+
+#: src/components/alert/index.tsx:280
+msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+msgstr "次の{durationOfStrongWind}時間の強い風の突風"
+
+#: src/components/alert/index.tsx:285
+msgid "Strong wind gusts for the next 24 hours"
+msgstr "次の24時間の強い風の突風"
+
+#: src/components/alert/index.tsx:290
+msgid "Strong wind gusts for the next hour"
+msgstr "次の1時間の強い風の突風"
+
+#: src/components/alert/index.tsx:269
+msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind}時間後に強い風の突風が始まります"
+
+#: src/components/alert/index.tsx:192
+msgid "Strong wind starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind}時間後に強風が始まります"
 
 #: src/components/tile/index.tsx:13
 msgid "Sunday"
