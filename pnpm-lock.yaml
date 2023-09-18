@@ -62,11 +62,11 @@ devDependencies:
     specifier: ^4.4.2
     version: 4.4.2(typescript@5.2.2)
   '@lingui/macro':
-    specifier: ^4.4.2
-    version: 4.4.2(@lingui/react@4.4.2)(babel-plugin-macros@3.1.0)(typescript@5.2.2)
+    specifier: ^4.5.0
+    version: 4.5.0(@lingui/react@4.4.2)(babel-plugin-macros@3.1.0)(typescript@5.2.2)
   '@lingui/swc-plugin':
     specifier: ^4.0.4
-    version: 4.0.4(@lingui/macro@4.4.2)(next@13.4.19)
+    version: 4.0.4(@lingui/macro@4.5.0)(next@13.4.19)
   '@types/node':
     specifier: ^20.6.0
     version: 20.6.0
@@ -828,6 +828,20 @@ packages:
       - typescript
     dev: true
 
+  /@lingui/conf@4.5.0(typescript@5.2.2):
+    resolution: {integrity: sha512-OBm4RQQtbpvmuazLWVpvpaOpt/xvu1PBv8WUX8QoW1vsROe/3P5BpRHRYFyMeZz5mhORJgis9lQtDTq145Ruug==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      '@babel/runtime': 7.22.10
+      chalk: 4.1.2
+      cosmiconfig: 8.3.4(typescript@5.2.2)
+      jest-validate: 29.6.3
+      jiti: 1.19.3
+      lodash.get: 4.4.2
+    transitivePeerDependencies:
+      - typescript
+    dev: true
+
   /@lingui/core@4.4.2:
     resolution: {integrity: sha512-CAWgvw69SV6cTfBQ0yNmD3GNTqAoIrn7JmenXcSlzcmuYJ5XG/mO8KbMTQw6PWwhVLykWSm68OsRzN/NQ4Agrg==}
     engines: {node: '>=16.0.0'}
@@ -835,6 +849,15 @@ packages:
       '@babel/runtime': 7.22.10
       '@lingui/message-utils': 4.4.2
       unraw: 2.0.1
+
+  /@lingui/core@4.5.0:
+    resolution: {integrity: sha512-8zTuIXJo5Qvjato7LWE6Q4RHiO4LjTBVOoRlqfOGYDp8VZ9w9P7Z7IJgxI7UP5Z1wiuEvnMdVF9I1C4acqXGlQ==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      '@babel/runtime': 7.22.10
+      '@lingui/message-utils': 4.5.0
+      unraw: 3.0.0
+    dev: true
 
   /@lingui/format-po@4.4.2(typescript@5.2.2):
     resolution: {integrity: sha512-4OJb+GKHQFexcgwPEM6Xkx6wYdujKtqYndXWlhjFV2qNN5SMmxa4GlODAzJxrcCh+mMwut6OszQvAggR0DYtXw==}
@@ -848,8 +871,8 @@ packages:
       - typescript
     dev: true
 
-  /@lingui/macro@4.4.2(@lingui/react@4.4.2)(babel-plugin-macros@3.1.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-6EzUeFSJh5A7iU6RgtvQjAp29CzOhVY3nB8DAtYy0FEWc/Vlo+FqNJiC4W0gIEYH/mJ3ob30Gnhp8PeNccSFqw==}
+  /@lingui/macro@4.5.0(@lingui/react@4.4.2)(babel-plugin-macros@3.1.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-6qha9YXuNnta4HCR+g6J6UPaAuAFlM1duqgznh4X7hHSsFG+m6oX7/srAMfU41Z8lbDmgXc3raqHLXFSdUNbYQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@lingui/react': ^4.0.0
@@ -857,9 +880,9 @@ packages:
     dependencies:
       '@babel/runtime': 7.22.10
       '@babel/types': 7.22.15
-      '@lingui/conf': 4.4.2(typescript@5.2.2)
-      '@lingui/core': 4.4.2
-      '@lingui/message-utils': 4.4.2
+      '@lingui/conf': 4.5.0(typescript@5.2.2)
+      '@lingui/core': 4.5.0
+      '@lingui/message-utils': 4.5.0
       '@lingui/react': 4.4.2(react@18.2.0)
       babel-plugin-macros: 3.1.0
     transitivePeerDependencies:
@@ -872,6 +895,13 @@ packages:
     dependencies:
       '@messageformat/parser': 5.1.0
 
+  /@lingui/message-utils@4.5.0:
+    resolution: {integrity: sha512-iRqh2wvNtzJO3NStB77nEXEfeI53aVVjzD7/mBrEm/P0lC7sqPHk0WBQCfzE0N9xm6a+XHmHu3J+x2nnQ2OjcA==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      '@messageformat/parser': 5.1.0
+    dev: true
+
   /@lingui/react@4.4.2(react@18.2.0):
     resolution: {integrity: sha512-CBt6jzd+uOVJ5mZcKNXptaaaUqruy5YGMGszVaV3MTRadBbi4Vn07n0/gyfA/RDyFI95LLF2g4OY4uxf8Xb1hA==}
     engines: {node: '>=16.0.0'}
@@ -882,7 +912,7 @@ packages:
       '@lingui/core': 4.4.2
       react: 18.2.0
 
-  /@lingui/swc-plugin@4.0.4(@lingui/macro@4.4.2)(next@13.4.19):
+  /@lingui/swc-plugin@4.0.4(@lingui/macro@4.5.0)(next@13.4.19):
     resolution: {integrity: sha512-xRnR96Mqi6zwGlVfGJMfoM8QykBbUz/sSnwmcFL9BZ8Y9YBZxzLAVf4t1BbiIQsAs+pMYu/HfujTBD4y/r1ucA==}
     peerDependencies:
       '@lingui/macro': '4'
@@ -894,7 +924,7 @@ packages:
       next:
         optional: true
     dependencies:
-      '@lingui/macro': 4.4.2(@lingui/react@4.4.2)(babel-plugin-macros@3.1.0)(typescript@5.2.2)
+      '@lingui/macro': 4.5.0(@lingui/react@4.4.2)(babel-plugin-macros@3.1.0)(typescript@5.2.2)
       next: 13.4.19(@babel/core@7.22.15)(babel-plugin-macros@3.1.0)(react-dom@18.2.0)(react@18.2.0)
     dev: true
 
@@ -4677,6 +4707,10 @@ packages:
 
   /unraw@2.0.1:
     resolution: {integrity: sha512-tdOvLfRzHolwYcHS6HIX860MkK9LQ4+oLuNwFYL7bpgTEO64PZrcQxkisgwJYCfF8sKiWLwwu1c83DvMkbefIQ==}
+
+  /unraw@3.0.0:
+    resolution: {integrity: sha512-08/DA66UF65OlpUDIQtbJyrqTR0jTAlJ+jsnkQ4jxR7+K5g5YG1APZKQSMCE1vqqmD+2pv6+IdEjmopFatacvg==}
+    dev: true
 
   /update-browserslist-db@1.0.11(browserslist@4.21.10):
     resolution: {integrity: sha512-dCwEFf0/oT85M1fHBg4F0jtLwJrutGoHSQXCh7u4o2t1drG+c0a9Flnqww6XUKSfQMPpJBRjU8d4RXB09qtvaA==}
