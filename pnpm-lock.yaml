@@ -59,8 +59,8 @@ dependencies:
 
 devDependencies:
   '@lingui/cli':
-    specifier: ^4.4.2
-    version: 4.4.2(typescript@5.2.2)
+    specifier: ^4.5.0
+    version: 4.5.0(typescript@5.2.2)
   '@lingui/macro':
     specifier: ^4.4.2
     version: 4.4.2(@lingui/react@4.4.2)(babel-plugin-macros@3.1.0)(typescript@5.2.2)
@@ -283,15 +283,6 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
-
-  /@babel/types@7.22.10:
-    resolution: {integrity: sha512-obaoigiLrlDZ7TUQln/8m4mSqIW2QFeOrCQc9r+xsaHGNoplVNYlRVpsfE8Vj35GEm2ZH4ZhrNYogs/3fj85kg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-string-parser': 7.22.5
-      '@babel/helper-validator-identifier': 7.22.15
-      to-fast-properties: 2.0.0
-    dev: true
 
   /@babel/types@7.22.15:
     resolution: {integrity: sha512-X+NLXr0N8XXmN5ZsaQdm9U2SSC3UbIYq/doL++sueHOTisgZHoKaQtZxGuV2cUPQHMfjKEfg/g6oy7Hm6SKFtA==}
@@ -770,13 +761,13 @@ packages:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  /@lingui/babel-plugin-extract-messages@4.4.2:
-    resolution: {integrity: sha512-h4HQCUqmQF+EuK6beTPR5His44yXPZ61WUK5j0rA0yMgmVSMM9fXXJSANnSPIMt+xjcn12erV4uLKiyzchh8yw==}
+  /@lingui/babel-plugin-extract-messages@4.5.0:
+    resolution: {integrity: sha512-jZq3Gbi691jsHyQ4+OPnGgIqZt5eKEGnmI75akYlZpwTPxF7n+hiuKlQS+YB3xfKvcvlAED76ZAMCcwYG5fNrQ==}
     engines: {node: '>=16.0.0'}
     dev: true
 
-  /@lingui/cli@4.4.2(typescript@5.2.2):
-    resolution: {integrity: sha512-4CQ6JlGNHd7rFaxwh6GeA0vvvcMZlPUcCTEbXZ89a4OYDNclsQ3ck8mpbpwMbIfsbyviRyfje83jvwRQL9vF3Q==}
+  /@lingui/cli@4.5.0(typescript@5.2.2):
+    resolution: {integrity: sha512-MzhxNUNd+YYEmK79TwmneUow5BuLwpOlrUrZq9EyIAWUM4N6kkCVkZ8VIMYCL4TXGQ4kBQjstgDpkF8wdFRtNg==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     dependencies:
@@ -784,12 +775,12 @@ packages:
       '@babel/generator': 7.22.15
       '@babel/parser': 7.22.16
       '@babel/runtime': 7.22.10
-      '@babel/types': 7.22.10
-      '@lingui/babel-plugin-extract-messages': 4.4.2
-      '@lingui/conf': 4.4.2(typescript@5.2.2)
-      '@lingui/core': 4.4.2
-      '@lingui/format-po': 4.4.2(typescript@5.2.2)
-      '@lingui/message-utils': 4.4.2
+      '@babel/types': 7.22.15
+      '@lingui/babel-plugin-extract-messages': 4.5.0
+      '@lingui/conf': 4.5.0(typescript@5.2.2)
+      '@lingui/core': 4.5.0
+      '@lingui/format-po': 4.5.0(typescript@5.2.2)
+      '@lingui/message-utils': 4.5.0
       babel-plugin-macros: 3.1.0
       chalk: 4.1.2
       chokidar: 3.5.1
@@ -828,6 +819,20 @@ packages:
       - typescript
     dev: true
 
+  /@lingui/conf@4.5.0(typescript@5.2.2):
+    resolution: {integrity: sha512-OBm4RQQtbpvmuazLWVpvpaOpt/xvu1PBv8WUX8QoW1vsROe/3P5BpRHRYFyMeZz5mhORJgis9lQtDTq145Ruug==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      '@babel/runtime': 7.22.10
+      chalk: 4.1.2
+      cosmiconfig: 8.3.4(typescript@5.2.2)
+      jest-validate: 29.6.3
+      jiti: 1.19.3
+      lodash.get: 4.4.2
+    transitivePeerDependencies:
+      - typescript
+    dev: true
+
   /@lingui/core@4.4.2:
     resolution: {integrity: sha512-CAWgvw69SV6cTfBQ0yNmD3GNTqAoIrn7JmenXcSlzcmuYJ5XG/mO8KbMTQw6PWwhVLykWSm68OsRzN/NQ4Agrg==}
     engines: {node: '>=16.0.0'}
@@ -836,12 +841,21 @@ packages:
       '@lingui/message-utils': 4.4.2
       unraw: 2.0.1
 
-  /@lingui/format-po@4.4.2(typescript@5.2.2):
-    resolution: {integrity: sha512-4OJb+GKHQFexcgwPEM6Xkx6wYdujKtqYndXWlhjFV2qNN5SMmxa4GlODAzJxrcCh+mMwut6OszQvAggR0DYtXw==}
+  /@lingui/core@4.5.0:
+    resolution: {integrity: sha512-8zTuIXJo5Qvjato7LWE6Q4RHiO4LjTBVOoRlqfOGYDp8VZ9w9P7Z7IJgxI7UP5Z1wiuEvnMdVF9I1C4acqXGlQ==}
     engines: {node: '>=16.0.0'}
     dependencies:
-      '@lingui/conf': 4.4.2(typescript@5.2.2)
-      '@lingui/message-utils': 4.4.2
+      '@babel/runtime': 7.22.10
+      '@lingui/message-utils': 4.5.0
+      unraw: 3.0.0
+    dev: true
+
+  /@lingui/format-po@4.5.0(typescript@5.2.2):
+    resolution: {integrity: sha512-xQNzZ4RCQfh6TjzjUsyHz3B0R9FJuzhBit9R37NyMn6mL3kBTCUExpPczknm8gWZjtfFO4T8EH5eJhhC5vgJYg==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      '@lingui/conf': 4.5.0(typescript@5.2.2)
+      '@lingui/message-utils': 4.5.0
       date-fns: 2.30.0
       pofile: 1.1.4
     transitivePeerDependencies:
@@ -871,6 +885,13 @@ packages:
     engines: {node: '>=16.0.0'}
     dependencies:
       '@messageformat/parser': 5.1.0
+
+  /@lingui/message-utils@4.5.0:
+    resolution: {integrity: sha512-iRqh2wvNtzJO3NStB77nEXEfeI53aVVjzD7/mBrEm/P0lC7sqPHk0WBQCfzE0N9xm6a+XHmHu3J+x2nnQ2OjcA==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      '@messageformat/parser': 5.1.0
+    dev: true
 
   /@lingui/react@4.4.2(react@18.2.0):
     resolution: {integrity: sha512-CBt6jzd+uOVJ5mZcKNXptaaaUqruy5YGMGszVaV3MTRadBbi4Vn07n0/gyfA/RDyFI95LLF2g4OY4uxf8Xb1hA==}
@@ -4677,6 +4698,10 @@ packages:
 
   /unraw@2.0.1:
     resolution: {integrity: sha512-tdOvLfRzHolwYcHS6HIX860MkK9LQ4+oLuNwFYL7bpgTEO64PZrcQxkisgwJYCfF8sKiWLwwu1c83DvMkbefIQ==}
+
+  /unraw@3.0.0:
+    resolution: {integrity: sha512-08/DA66UF65OlpUDIQtbJyrqTR0jTAlJ+jsnkQ4jxR7+K5g5YG1APZKQSMCE1vqqmD+2pv6+IdEjmopFatacvg==}
+    dev: true
 
   /update-browserslist-db@1.0.11(browserslist@4.21.10):
     resolution: {integrity: sha512-dCwEFf0/oT85M1fHBg4F0jtLwJrutGoHSQXCh7u4o2t1drG+c0a9Flnqww6XUKSfQMPpJBRjU8d4RXB09qtvaA==}
