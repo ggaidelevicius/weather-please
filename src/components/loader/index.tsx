@@ -81,3 +81,5 @@ export const RingLoader: MantineLoaderComponent = forwardRef(({ style, ...others
     </g>
   </svg>
 ))
+
+RingLoader.displayName = 'RingLoader'
