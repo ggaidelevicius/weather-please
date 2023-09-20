@@ -106,11 +106,11 @@ const Settings: FC<SettingsProps> = (props) => {
         aria-label='Open settings'
         title='Open settings' // how do i pass translated values into here?
         variant='light'
-        color='dark'
+        color='gray'
         onClick={open}
         style={{ position: 'fixed', bottom: '1rem', right: '1rem' }}
       >
-        <IconSettings aria-hidden />
+        <IconSettings aria-hidden style={{ width: '70%', height: '70%' }} />
       </ActionIcon>
 
       <Modal
@@ -121,7 +121,7 @@ const Settings: FC<SettingsProps> = (props) => {
         padding='lg'
         radius='md'
         withCloseButton={false}
-        sx={{
+        style={{
           maxWidth: '70ch',
         }}
         styles={{
@@ -141,11 +141,11 @@ const Settings: FC<SettingsProps> = (props) => {
             Location
           </Trans>
         </Title>
-        <Text mt='xs' sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Text mt='xs' style={{ display: 'flex', flexDirection: 'column' }}>
           <Trans>
             Based on the provided information, your location is:
           </Trans>
-          {(!location.country) && <Skeleton width={160} height={24.8} sx={{ display: 'inline-block' }} aria-label='currently loading' />} {location.country && <strong>{generateLocation(location)}</strong>}
+          {(!location.country) && <Skeleton width={160} height={24.8} style={{ display: 'inline-block' }} aria-label='currently loading' />} {location.country && <strong>{generateLocation(location)}</strong>}
         </Text>
         <Text mt='xs'>
           <Trans>
@@ -174,8 +174,8 @@ const Settings: FC<SettingsProps> = (props) => {
           target='_blank'
           rel='noopener noreferrer'
           size='sm'
-          color='lightblue'
-          sx={{ '&:hover': { textDecoration: 'underline' } }}
+          c='lightblue'
+          className='link'
         >
           <Trans>
             Unsure how to find these? Click here.
@@ -188,14 +188,14 @@ const Settings: FC<SettingsProps> = (props) => {
           onChange={(e) => { handleChange('periodicLocationUpdate', e.target.checked) }}
         />
         {!usingSafari &&
-          <Text size='sm' color='dimmed'>
+          <Text size='sm' c='dimmed'>
             <Trans>
               Note: This requires browser permissions
             </Trans>
           </Text>
         }
         {usingSafari &&
-          <Text size='sm' color='dimmed'>
+          <Text size='sm' c='dimmed'>
             <Trans>
               Note: This currently does not work well in Safari, and may be inaccurate
             </Trans>
@@ -311,36 +311,36 @@ const Settings: FC<SettingsProps> = (props) => {
             We&apos;d love to bring Weather Please to more languages.
           </Trans>
         </Text>
-        <Text size='sm' color='dimmed'>
+        <Text size='sm' c='dimmed'>
           <Trans>
             If you have a translation request, please reach out at <Text
               component='a'
               href='mailto:contact@weather-please.app'
-              color='lightblue'
-              sx={{ '&:hover': { textDecoration: 'underline' } }}
+              c='lightblue'
+              className='link'
             >
               contact@weather-please.app
             </Text>
           </Trans>
         </Text>
-        <Divider sx={{ marginTop: '0.875rem', marginBottom: '0.75rem' }} variant='dashed' />
-        <Text size='sm' color='lightblue' component='a' href={reviewLink} sx={{ '&:hover': { textDecoration: 'underline' } }} target='_blank'>
+        <Divider style={{ marginTop: '0.875rem', marginBottom: '0.75rem' }} variant='dashed' />
+        <Text size='sm' c='lightblue' component='a' href={reviewLink} className='link' target='_blank'>
           <Trans>
             🌟 Leave a review
           </Trans>
         </Text>
-        <Text size='sm' color='lightblue' component='a' href='https://github.com/ggaidelevicius/weather-please/issues' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
+        <Text size='sm' c='lightblue' component='a' href='https://github.com/ggaidelevicius/weather-please/issues' style={{ marginTop: '0.2rem' }} className='link' target='_blank'>
           <Trans>
             🐛 Report a bug
           </Trans>
         </Text>
-        <Text size='sm' color='lightblue' component='a' href={privacyPolicyMap[input.lang]} sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
+        <Text size='sm' c='lightblue' component='a' href={privacyPolicyMap[input.lang]} style={{ marginTop: '0.2rem' }} className='link' target='_blank'>
           <Trans>
             🔒 Privacy policy
           </Trans>
         </Text>
         {!usingSafari &&
-          <Text size='sm' color='lightblue' component='a' href='https://www.buymeacoffee.com/ggaidelevicius' sx={{ marginTop: '0.2rem', '&:hover': { textDecoration: 'underline' } }} target='_blank'>
+          <Text size='sm' c='lightblue' component='a' href='https://www.buymeacoffee.com/ggaidelevicius' style={{ marginTop: '0.2rem' }} className='link' target='_blank'>
             <Trans>
               ☕ Gift a coffee
             </Trans>
@@ -356,7 +356,7 @@ const Settings: FC<SettingsProps> = (props) => {
         padding='lg'
         radius='md'
         withCloseButton={false}
-        sx={{
+        style={{
           maxWidth: '70ch',
         }}
         styles={{
