@@ -590,7 +590,7 @@ const WeatherPlease: FC = () => {
             exit={{ scale: 0.95, opacity: 0 }}
             style={{ position: 'absolute', width: '100%', margin: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none' }}
           >
-            <Loader size={80} />
+            <Loader type='ring' size={80} />
           </motion.div>
         }
       </AnimatePresence>

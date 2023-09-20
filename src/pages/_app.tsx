@@ -15,7 +15,6 @@ const theme = createTheme({
     Loader: Loader.extend({
       defaultProps: {
         loaders: { ...Loader.defaultLoaders, ring: RingLoader },
-        type: 'ring',
       },
     }),
   },
