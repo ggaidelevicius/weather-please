@@ -1,7 +1,7 @@
 import '@/styles/styles.css'
 import { i18n } from '@lingui/core'
 import { I18nProvider } from '@lingui/react'
-import { Loader, MantineProvider, createTheme } from '@mantine/core'
+import { MantineProvider, createTheme } from '@mantine/core'
 import '@mantine/core/styles.css'
 import { Notifications } from '@mantine/notifications'
 import { Analytics } from '@vercel/analytics/react'
