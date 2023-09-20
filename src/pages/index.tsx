@@ -1,6 +1,7 @@
 import Alert from '@/components/alert'
 import type { CurrentWeatherProps } from '@/components/alert/types'
 import Initialisation from '@/components/intialisation'
+import { RingLoader } from '@/components/loader'
 import Settings from '@/components/settings'
 import Tile from '@/components/tile'
 import type { TileProps } from '@/components/tile/types'
@@ -590,7 +591,7 @@ const WeatherPlease: FC = () => {
             exit={{ scale: 0.95, opacity: 0 }}
             style={{ position: 'absolute', width: '100%', margin: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none' }}
           >
-            <Loader type='ring' size={80} />
+            <Loader loaders={{ ring: RingLoader }} type='ring' size={80} />
           </motion.div>
         }
       </AnimatePresence>

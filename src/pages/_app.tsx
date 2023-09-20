@@ -1,4 +1,3 @@
-import { RingLoader } from '@/components/loader'
 import '@/styles/styles.css'
 import { i18n } from '@lingui/core'
 import { I18nProvider } from '@lingui/react'
@@ -10,16 +9,7 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import type { FC } from 'react'
 
-const theme = createTheme({
-  components: {
-    Loader: Loader.extend({
-      defaultProps: {
-        loaders: { ...Loader.defaultLoaders, ring: RingLoader },
-      },
-    }),
-  },
-
-})
+const theme = createTheme({})
 
 const App: FC<AppProps> = (props) => {
   const { Component, pageProps } = props
