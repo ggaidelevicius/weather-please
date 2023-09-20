@@ -35,7 +35,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
         <Image priority quality={100} src={Favicon} alt='Weather Please logo' style={{ height: '4rem', width: '4rem' }} />
         <Title order={1}>Weather <span style={{ color: '#ea5e57' }}>Please</span></Title>
       </div>
-      <Text sx={{ fontSize: '1.05rem' }}>
+      <Text style={{ fontSize: '1.05rem' }}>
         <Trans>
           To get started, let&apos;s set your language and location.
         </Trans>
@@ -43,7 +43,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
       {!geolocationError &&
         <>
           <Text
-            color='dimmed'
+            c='dimmed'
             size='sm'
           >
             <Trans>
@@ -74,12 +74,12 @@ const Initialisation: FC<InitialisationProps> = (props) => {
       }
       {geolocationError &&
         <>
-          <Text color='dimmed' size='sm'>
+          <Text c='dimmed' size='sm'>
             <Trans>
               Looks like we can&apos;t grab your location info automatically.
             </Trans>
           </Text>
-          <Text color='dimmed' size='sm'>
+          <Text c='dimmed' size='sm'>
             <Trans>
               Please enter it manually below.
             </Trans>
@@ -106,8 +106,8 @@ const Initialisation: FC<InitialisationProps> = (props) => {
             target='_blank'
             rel='noopener noreferrer'
             size='sm'
-            color='lightblue'
-            sx={{ '&:hover': { textDecoration: 'underline' } }}
+            c='lightblue'
+            className='link'
           >
             <Trans>
               Unsure how to find these? Click here.
