@@ -21,23 +21,6 @@ const Settings: FC<SettingsProps> = (props) => {
     village: '',
   })
 
-  const privacyPolicyMap: Record<keyof typeof locales, string> = {
-    bn: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/bn/PRIVACY.md',
-    de: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/de/PRIVACY.md',
-    en: 'https://github.com/ggaidelevicius/weather-please/blob/main/PRIVACY.md',
-    es: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/es/PRIVACY.md',
-    fr: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/fr/PRIVACY.md',
-    hi: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/hi/PRIVACY.md',
-    id: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/id/PRIVACY.md',
-    it: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/it/PRIVACY.md',
-    ja: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/ja/PRIVACY.md',
-    ko: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/ko/PRIVACY.md',
-    lt: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/lt/PRIVACY.md',
-    ru: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/ru/PRIVACY.md',
-    vi: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/vi/PRIVACY.md',
-    zh: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/zh_CN/PRIVACY.md',
-  }
-
   useEffect(() => {
     const reverseGeocode = async (): Promise<void> => {
       try {
@@ -66,16 +49,6 @@ const Settings: FC<SettingsProps> = (props) => {
       reverseGeocode()
     }
   }, [config.lat, config.lon, opened])
-
-  const generateLocation = (args: Record<keyof any, any>): string => {
-    let specificLocation = args?.village ?? args?.town ?? args?.suburb ?? args?.county ?? null
-    if (specificLocation) {
-      specificLocation = `${specificLocation}, `
-    }
-    const broadLocation = args?.state ?? args.country
-
-    return specificLocation ? `${specificLocation}${broadLocation}` : broadLocation
-  }
 
   useEffect(() => {
     const userAgent = navigator.userAgent.toLowerCase()
@@ -403,6 +376,33 @@ const Settings: FC<SettingsProps> = (props) => {
       </Modal>
     </>
   )
+}
+
+const privacyPolicyMap: Record<keyof typeof locales, string> = {
+  bn: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/bn/PRIVACY.md',
+  de: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/de/PRIVACY.md',
+  en: 'https://github.com/ggaidelevicius/weather-please/blob/main/PRIVACY.md',
+  es: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/es/PRIVACY.md',
+  fr: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/fr/PRIVACY.md',
+  hi: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/hi/PRIVACY.md',
+  id: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/id/PRIVACY.md',
+  it: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/it/PRIVACY.md',
+  ja: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/ja/PRIVACY.md',
+  ko: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/ko/PRIVACY.md',
+  lt: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/lt/PRIVACY.md',
+  ru: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/ru/PRIVACY.md',
+  vi: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/vi/PRIVACY.md',
+  zh: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/zh_CN/PRIVACY.md',
+}
+
+const generateLocation = (args: Record<keyof any, any>): string => {
+  let specificLocation = args?.village ?? args?.town ?? args?.suburb ?? args?.county ?? null
+  if (specificLocation) {
+    specificLocation = `${specificLocation}, `
+  }
+  const broadLocation = args?.state ?? args.country
+
+  return specificLocation ? `${specificLocation}${broadLocation}` : broadLocation
 }
 
 export default Settings

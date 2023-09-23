@@ -110,52 +110,6 @@ const WeatherPlease: FC = () => {
     }
   }, [config.shareCrashesAndErrors])
 
-  const compareObjects: CompareObjects = (obj1, obj2) => {
-    const keys1 = Object.keys(obj1)
-    const keys2 = Object.keys(obj2)
-
-    if (keys1.length !== keys2.length) {
-      return false
-    }
-
-    for (const key of keys1) {
-      if (!keys2.includes(key)) {
-        return false
-      }
-
-      const val1 = obj1[key]
-      const val2 = obj2[key]
-
-      // Check if both values are objects (but not arrays or null)
-      if (
-        val1 && typeof val1 === 'object' &&
-        !Array.isArray(val1) &&
-        val2 && typeof val2 === 'object' &&
-        !Array.isArray(val2)
-      ) {
-        if (!compareObjects(val1, val2)) {
-          return false
-        }
-      } else if (val1 !== val2) {
-        return false
-      }
-    }
-
-    return true
-  }
-
-  const mergeObjects: MergeObjects = (targetObj, sourceObj) => {
-    const mergedObject = { ...targetObj }
-
-    Object.keys(sourceObj).forEach(key => {
-      if (!mergedObject.hasOwnProperty(key)) {
-        mergedObject[key] = sourceObj[key]
-      }
-    })
-
-    return mergedObject as ConfigProps
-  }
-
   /**
   * On component mount, this effect hook checks the localStorage for a saved "config".
   *
@@ -648,6 +602,52 @@ const WeatherPlease: FC = () => {
       </a>
     </>
   )
+}
+
+const compareObjects: CompareObjects = (obj1, obj2) => {
+  const keys1 = Object.keys(obj1)
+  const keys2 = Object.keys(obj2)
+
+  if (keys1.length !== keys2.length) {
+    return false
+  }
+
+  for (const key of keys1) {
+    if (!keys2.includes(key)) {
+      return false
+    }
+
+    const val1 = obj1[key]
+    const val2 = obj2[key]
+
+    // Check if both values are objects (but not arrays or null)
+    if (
+      val1 && typeof val1 === 'object' &&
+      !Array.isArray(val1) &&
+      val2 && typeof val2 === 'object' &&
+      !Array.isArray(val2)
+    ) {
+      if (!compareObjects(val1, val2)) {
+        return false
+      }
+    } else if (val1 !== val2) {
+      return false
+    }
+  }
+
+  return true
+}
+
+const mergeObjects: MergeObjects = (targetObj, sourceObj) => {
+  const mergedObject = { ...targetObj }
+
+  Object.keys(sourceObj).forEach(key => {
+    if (!mergedObject.hasOwnProperty(key)) {
+      mergedObject[key] = sourceObj[key]
+    }
+  })
+
+  return mergedObject as ConfigProps
 }
 
 export default WeatherPlease
