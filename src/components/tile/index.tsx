@@ -27,10 +27,20 @@ const Tile: FC<TileProps> = (props) => {
         order={2}
         className={styles.title}
       >
-        <span className={classnames(styles.day, hovering ? styles.dayHover : undefined)}>
+        <span
+          className={classnames({
+            [styles.day]: true,
+            [styles.dayHover]: hovering,
+          })}
+        >
           {identifier === 'day' ? tileDay : tileDate}
         </span>
-        <span className={classnames(styles.date, hovering ? styles.dateHover : undefined)}>
+        <span
+          className={classnames({
+            [styles.date]: true,
+            [styles.dateHover]: hovering,
+          })}
+        >
           {identifier === 'day' ? tileDate : tileDay}
         </span>
       </Title>
