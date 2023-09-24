@@ -17,6 +17,8 @@ import type { ReactElement } from 'react'
  * @property {string} daysToRetrieve - Number of days for which to retrieve weather data.
  * @property {('day' | 'date')} identifier - Determines if the day of the week or the date should be displayed.
  * @property {boolean} shareCrashesAndErrors - Flag to determine if crash and error reports should be shared.
+ * @property {number} installed - The unix time that the extension was first installed.
+ * @property {boolean} displayedReviewPrompt - Flag to determine if review prompt has been shown before
  */
 export interface ConfigProps {
 	lang: string
@@ -32,6 +34,8 @@ export interface ConfigProps {
 	daysToRetrieve: string
 	identifier: 'day' | 'date'
 	shareCrashesAndErrors: boolean
+	installed: number
+	displayedReviewPrompt: boolean
 }
 
 /**

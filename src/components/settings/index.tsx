@@ -20,14 +20,18 @@ import { useEffect, useState } from 'react'
 import type { HandleOutsideClick, Location, SettingsProps } from './types'
 
 const Settings: FC<SettingsProps> = (props) => {
-	const { input, handleChange, handleClick, config, setInput } = props
+	const {
+		input,
+		handleChange,
+		handleClick,
+		config,
+		setInput,
+		usingSafari,
+		reviewLink,
+	} = props
 	const [opened, { open, close }] = useDisclosure(false)
 	const [outsideClickModalOpened, setOutsideClickModalOpened] =
 		useState<boolean>(false)
-	const [usingSafari, setUsingSafari] = useState<boolean>(false)
-	const [reviewLink, setReviewLink] = useState(
-		'https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
-	)
 	const [location, setLocation] = useState<Location>({
 		country: '',
 		town: '',
@@ -72,26 +76,6 @@ const Settings: FC<SettingsProps> = (props) => {
 			reverseGeocode()
 		}
 	}, [config.lat, config.lon, opened])
-
-	useEffect(() => {
-		const userAgent = navigator.userAgent.toLowerCase()
-
-		if (
-			userAgent.indexOf('safari') !== -1 &&
-			userAgent.indexOf('chrome') === -1
-		) {
-			setUsingSafari(true)
-			setReviewLink('https://apps.apple.com/au/app/weather-please/id6462968576')
-		} else if (userAgent.includes('firefox/')) {
-			setReviewLink(
-				'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/',
-			)
-		} else if (userAgent.includes('edg/')) {
-			setReviewLink(
-				'https://microsoftedge.microsoft.com/addons/detail/weather-please/genbleeffmekfnbkfpgdkdpggamcgflo',
-			)
-		}
-	}, [])
 
 	const handleOutsideClick: HandleOutsideClick = () => {
 		if (JSON.stringify(config) !== JSON.stringify(input)) {

@@ -37,39 +37,40 @@ msgstr "পরের {1} ঘণ্টায় {0}মিমি বৃষ্ট�
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "পরের 1 ঘণ্টায় {0}মিমি বৃষ্টিপাতের প্রত্যাশা"
 
-#: src/components/settings/index.tsx:418
+#: src/components/settings/index.tsx:394
 msgid "☕ Gift a coffee"
 msgstr "☕ একটি কফি উপহার দিন"
 
-#: src/components/settings/index.tsx:384
+#: src/components/settings/index.tsx:360
+#: src/pages/index.tsx:670
 msgid "🌟 Leave a review"
 msgstr "🌟 একটি পর্যালোচনা ছেড়ে দিন"
 
-#: src/components/settings/index.tsx:395
+#: src/components/settings/index.tsx:371
 msgid "🐛 Report a bug"
 msgstr "🐛 একটি বাগ প্রতিবেদন করুন"
 
-#: src/components/settings/index.tsx:406
+#: src/components/settings/index.tsx:382
 msgid "🔒 Privacy policy"
 msgstr "🔒 গোপনীয়তা নীতি"
 
-#: src/components/settings/index.tsx:249
+#: src/components/settings/index.tsx:225
 msgid "Alerts"
 msgstr "সতর্কীকরণ"
 
-#: src/pages/index.tsx:542
+#: src/pages/index.tsx:548
 msgid "An error has occurred while fetching location data. Please check the console for more details."
 msgstr "অবস্থানের ডাটা আনতে সময়ে একটি ত্রুটি ঘটেছে। দয়া করে কনসোলে দেখুন আরও বিস্তারিত জানার জন্য।"
 
-#: src/pages/index.tsx:268
+#: src/pages/index.tsx:274
 msgid "An error has occurred while fetching weather data. Please check the console for more details."
 msgstr "আবহাওয়া ডাটা আনতে সময়ে একটি ত্রুটি ঘটেছে। দয়া করে কনসোলে দেখুন আরও বিস্তারিত জানার জন্য।"
 
-#: src/components/settings/index.tsx:62
+#: src/components/settings/index.tsx:58
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "আপনার অবস্থান আনার সময় একটি ত্রুটি ঘটেছে। দয়া করে কনসোলে আরও বিস্তারিত জানার জন্য দেখুন।"
 
-#: src/pages/index.tsx:509
+#: src/pages/index.tsx:515
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "নির্ধারিত সময়ে অবস্থান আপডেট করার সময় একটি ত্রুটি ঘটেছে। দয়া করে কনসোলে আরও বিস্তারিত জানার জন্য দেখুন।"
 
@@ -81,11 +82,11 @@ msgstr "এপ্রিল"
 msgid "August"
 msgstr "আগস্ট"
 
-#: src/components/settings/index.tsx:144
+#: src/components/settings/index.tsx:120
 msgid "Based on the provided information, your location is:"
 msgstr "প্রদত্ত তথ্যের উপর ভিত্তি করে, আপনার অবস্থান হলঃ"
 
-#: src/components/settings/index.tsx:352
+#: src/components/settings/index.tsx:328
 msgid "Cancel"
 msgstr "বাতিল"
 
@@ -93,11 +94,11 @@ msgstr "বাতিল"
 msgid "clear sky"
 msgstr "পরিষ্কার আকাশ"
 
-#: src/components/settings/index.tsx:243
+#: src/components/settings/index.tsx:219
 msgid "Date"
 msgstr "তারিখ"
 
-#: src/components/settings/index.tsx:241
+#: src/components/settings/index.tsx:217
 msgid "Day"
 msgstr "দিন"
 
@@ -117,14 +118,14 @@ msgstr "ঘন হিমায়িত ঝরঝর বৃষ্টি"
 msgid "depositing rime fog"
 msgstr "রাইম কুয়াশা জমা"
 
-#: src/components/settings/index.tsx:484
+#: src/components/settings/index.tsx:460
 msgid "Don't save"
 msgstr "সংরক্ষণ করবেন না"
 
-#: src/components/settings/index.tsx:60
-#: src/pages/index.tsx:266
-#: src/pages/index.tsx:507
-#: src/pages/index.tsx:540
+#: src/components/settings/index.tsx:56
+#: src/pages/index.tsx:272
+#: src/pages/index.tsx:513
+#: src/pages/index.tsx:546
 msgid "Error"
 msgstr "ত্রুটি"
 
@@ -168,19 +169,19 @@ msgstr "ভারী তুষারঝড়"
 msgid "heavy snowfall"
 msgstr "ভারী তুষারপাত"
 
-#: src/components/settings/index.tsx:355
+#: src/components/settings/index.tsx:331
 msgid "I'd love to bring Weather Please to more languages."
 msgstr "আমি প্রিয়ভাবে Weather Please কে আরও বেশি ভাষায় আনতে চাই।"
 
-#: src/components/settings/index.tsx:235
+#: src/components/settings/index.tsx:211
 msgid "Identifier"
 msgstr "পরিচয়ক"
 
-#: src/components/settings/index.tsx:156
+#: src/components/settings/index.tsx:132
 msgid "If this is incorrect, please update the values below."
 msgstr "এটি ভুল হলে, দয়া করে নিম্নের মানগুলি আপডেট করুন।"
 
-#: src/components/settings/index.tsx:360
+#: src/components/settings/index.tsx:336
 msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 msgstr "আপনার কাছে কোনও অনুবাদের অনুরোধ থাকলে, দয়া করে <0>contact@weather-please.app</0> এ যোগাযোগ করুন।"
 
@@ -189,12 +190,12 @@ msgid "If your browser prompts you for location permissions, please select \"all
 msgstr "আপনার ব্রাউজার অবস্থানের অনুমতি চাইলে, দয়া করে \"অনুমতি দিন\" নির্বাচন করুন।"
 
 #: src/components/intialisation/index.tsx:120
-#: src/components/settings/index.tsx:169
+#: src/components/settings/index.tsx:145
 msgid "Invalid latitude value"
 msgstr "অবৈধ অক্ষাংশের মান"
 
 #: src/components/intialisation/index.tsx:136
-#: src/components/settings/index.tsx:185
+#: src/components/settings/index.tsx:161
 msgid "Invalid longitude value"
 msgstr "অবৈধ দ্রাঘিমাংশের মান"
 
@@ -212,12 +213,12 @@ msgstr "জুন"
 
 #: src/components/intialisation/index.tsx:76
 #: src/components/intialisation/index.tsx:153
-#: src/components/settings/index.tsx:300
+#: src/components/settings/index.tsx:276
 msgid "Language"
 msgstr "ভাষা"
 
 #: src/components/intialisation/index.tsx:111
-#: src/components/settings/index.tsx:160
+#: src/components/settings/index.tsx:136
 msgid "Latitude"
 msgstr "অক্ষাংশ"
 
@@ -233,12 +234,12 @@ msgstr "হালকা হিমায়িত ঝরঝর বৃষ্টি
 msgid "light freezing rain"
 msgstr "হালকা হিমায়িত বৃষ্টি"
 
-#: src/components/settings/index.tsx:141
+#: src/components/settings/index.tsx:117
 msgid "Location"
 msgstr "অবস্থান"
 
 #: src/components/intialisation/index.tsx:126
-#: src/components/settings/index.tsx:175
+#: src/components/settings/index.tsx:151
 msgid "Longitude"
 msgstr "দ্রাঘিমাংশ"
 
@@ -275,7 +276,7 @@ msgstr "মার্চ"
 msgid "May"
 msgstr "মে"
 
-#: src/components/settings/index.tsx:296
+#: src/components/settings/index.tsx:272
 msgid "Miscellaneous"
 msgstr "বিবিধ"
 
@@ -299,15 +300,19 @@ msgstr "মধ্যম তুষারপাত"
 msgid "Monday"
 msgstr "সোমবার"
 
+#: src/pages/index.tsx:684
+msgid "Never show this again"
+msgstr "এটি আবার দেখাবেন না"
+
 #: src/pages/_app.tsx:21
 #~ msgid "New tab"
 #~ msgstr "নতুন ট্যাব"
 
-#: src/components/settings/index.tsx:215
+#: src/components/settings/index.tsx:191
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
 msgstr "নোট: এটি বর্তমানে সাফারিতে ভাল কাজ করে না এবং অযথাভাবে হতে পারে"
 
-#: src/components/settings/index.tsx:210
+#: src/components/settings/index.tsx:186
 msgid "Note: This requires browser permissions"
 msgstr "নোট: এর জন্য ব্রাউজারের অনুমতি প্রয়োজন"
 
@@ -315,7 +320,7 @@ msgstr "নোট: এর জন্য ব্রাউজারের অনু�
 msgid "November"
 msgstr "নভেম্বর"
 
-#: src/components/settings/index.tsx:226
+#: src/components/settings/index.tsx:202
 msgid "Number of days to forecast"
 msgstr "পূর্বাভাস দেওয়ার দিনের সংখ্যা"
 
@@ -331,7 +336,7 @@ msgstr "মেঘাচ্ছন্ন"
 msgid "partly cloudy"
 msgstr "আংশিকভাবে মেঘলা"
 
-#: src/components/settings/index.tsx:201
+#: src/components/settings/index.tsx:177
 msgid "Periodically update location automatically"
 msgstr "পূর্বনির্ধারিত সময়ে স্থান স্বয়ংক্রিয়ভাবে আপডেট করুন"
 
@@ -343,8 +348,8 @@ msgstr "দয়া করে এটি নিচে ম্যানুয়�
 msgid "Saturday"
 msgstr "শনিবার"
 
-#: src/components/settings/index.tsx:340
-#: src/components/settings/index.tsx:471
+#: src/components/settings/index.tsx:316
+#: src/components/settings/index.tsx:447
 msgid "Save"
 msgstr "সংরক্ষণ করুন"
 
@@ -357,31 +362,31 @@ msgstr "সেপ্টেম্বর"
 msgid "Set my location"
 msgstr "আমার অবস্থান নির্ধারণ করুন"
 
-#: src/components/settings/index.tsx:138
+#: src/components/settings/index.tsx:114
 msgid "Settings"
 msgstr "সেটিংস"
 
-#: src/components/settings/index.tsx:319
+#: src/components/settings/index.tsx:295
 msgid "Share anonymised crash data and error logs"
 msgstr "বেনামে ক্র্যাশ ডাটা এবং ত্রুটি লগ ভাগ করুন"
 
-#: src/components/settings/index.tsx:263
+#: src/components/settings/index.tsx:239
 msgid "Show extreme UV alerts"
 msgstr "এক্সট্রিম ইউভি সতর্কবাণী দেখান"
 
-#: src/components/settings/index.tsx:270
+#: src/components/settings/index.tsx:246
 msgid "Show high precipitation alerts"
 msgstr "উচ্চ বৃষ্টির সতর্কবাণী দেখান"
 
-#: src/components/settings/index.tsx:286
+#: src/components/settings/index.tsx:262
 msgid "Show low visibility alerts"
 msgstr "নিম্ন দৃশ্যতা সতর্কবাণী দেখান"
 
-#: src/components/settings/index.tsx:278
+#: src/components/settings/index.tsx:254
 msgid "Show strong wind alerts"
 msgstr "শক্তিশালী বায়ু সতর্কবার্তা দেখান"
 
-#: src/components/settings/index.tsx:252
+#: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
 msgstr "আবহাওয়া সতর্কবাণী দেখান"
 
@@ -493,7 +498,7 @@ msgstr "হালকা বরফের সাথে বজ্রপাত"
 msgid "Thursday"
 msgstr "বৃহস্পতিবার"
 
-#: src/components/settings/index.tsx:222
+#: src/components/settings/index.tsx:198
 msgid "Tiles"
 msgstr "টাইলস"
 
@@ -506,11 +511,11 @@ msgid "Tuesday"
 msgstr "মঙ্গলবার"
 
 #: src/components/intialisation/index.tsx:149
-#: src/components/settings/index.tsx:198
+#: src/components/settings/index.tsx:174
 msgid "Unsure how to find these? Click here."
 msgstr "এগুলি কীভাবে বের করবেন তা জানেন না? এখানে ক্লিক করুন।"
 
-#: src/components/settings/index.tsx:311
+#: src/components/settings/index.tsx:287
 msgid "Use metric number format"
 msgstr "মেট্রিক সংখ্যা বিন্যাস ব্যবহার করুন"
 
@@ -522,7 +527,7 @@ msgstr "তীব্র বৃষ্টির ঝড়"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "আমরা আরও অনেক ভাষায় 'ওয়েদার প্লিজ' এনে আসতে চাই।"
 
-#: src/pages/index.tsx:716
+#: src/pages/index.tsx:799
 msgid "weather data provided by open-meteo"
 msgstr "আবহাওয়া তথ্য প্রদান করে open-meteo"
 
@@ -530,10 +535,18 @@ msgstr "আবহাওয়া তথ্য প্রদান করে open-
 msgid "Wednesday"
 msgstr "বুধবার"
 
-#: src/components/settings/index.tsx:450
+#: src/pages/index.tsx:667
+msgid "Would you like to leave a review?"
+msgstr "আপনি কি একটি পর্যালোচনা ছেড়তে চান?"
+
+#: src/components/settings/index.tsx:426
 msgid "You can't save because either your latitude or longitude are invalid."
 msgstr "আপনি সংরক্ষণ করতে পারবেন না কারণ আপনার অক্ষাংশ বা দ্রাঘিমা অবৈধ।"
 
-#: src/components/settings/index.tsx:443
+#: src/components/settings/index.tsx:419
 msgid "You have unsaved changes"
 msgstr "আপনার অসংরক্ষিত পরিবর্তন রয়েছে"
+
+#: src/pages/index.tsx:663
+msgid "You've been using Weather Please for a while"
+msgstr "আপনি একটি সময়ের জন্য Weather Please ব্যবহার করেছেন"
