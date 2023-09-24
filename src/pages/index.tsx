@@ -655,7 +655,7 @@ const WeatherPlease: FC = () => {
 	useEffect(() => {
 		setTimeout(() => {
 			if (
-				new Date().getTime() - config.installed >= 24 &&
+				new Date().getTime() - config.installed >= 2419200000 &&
 				localStorage.config &&
 				!JSON.parse(localStorage.config).displayedReviewPrompt
 			) {
