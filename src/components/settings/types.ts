@@ -16,12 +16,12 @@ import type { Dispatch, SetStateAction } from 'react'
  * @property {string} [county] - A division within a country, smaller than a state but larger than a city.
  */
 export interface Location {
-  suburb?: string;
-  town?: string;
-  village?: string;
-  country?: string;
-  state?: string;
-  county?: string;
+	suburb?: string
+	town?: string
+	village?: string
+	country?: string
+	state?: string
+	county?: string
 }
 
 /**
@@ -36,11 +36,11 @@ export interface Location {
  * @property {ConfigProps} config - The current configuration settings.
  */
 export interface SettingsProps {
-  readonly input: ConfigProps;
-  readonly handleChange: HandleChange;
-  readonly handleClick: HandleClick;
-  readonly config: ConfigProps;
-  readonly setInput: Dispatch<SetStateAction<ConfigProps>>;
+	readonly input: ConfigProps
+	readonly handleChange: HandleChange
+	readonly handleClick: HandleClick
+	readonly config: ConfigProps
+	readonly setInput: Dispatch<SetStateAction<ConfigProps>>
 }
 
 /**

@@ -17,6 +17,7 @@ Nếu bạn muốn tham gia tính năng này, bạn có thể làm như vậy tr
 ## 3. Sử dụng dữ liệu bên thứ ba
 
 Để lấy thông tin thời tiết theo địa phương, người dùng có thể chọn cung cấp thông tin IP của họ hoặc vĩ độ/kinh độ cho các dịch vụ bên thứ ba. Các dịch vụ bên thứ ba này hoạt động theo chính sách bảo mật riêng của họ, và "Weather Please" không kiểm soát việc thu thập và sử dụng dữ liệu của họ. Bạn có thể truy cập chính sách bảo mật của các dịch vụ bên thứ ba tại đây:
+
 - [https://wiki.osmfoundation.org/wiki/Privacy_Policy](https://wiki.osmfoundation.org/wiki/Privacy_Policy)
 - [https://open-meteo.com/en/terms](https://open-meteo.com/en/terms)
 - [https://ip-api.com/docs/legal](https://ip-api.com/docs/legal)
@@ -28,8 +29,6 @@ Ngoài dữ liệu sụp đổ ẩn danh và báo cáo lỗi mà bạn có thể
 ## 5. Lựa chọn của bạn
 
 Bạn có quyền lựa chọn việc sử dụng tiện ích mở rộng trình duyệt của chúng tôi, cung cấp IP hoặc dữ liệu định vị cho các dịch vụ thời tiết bên thứ ba, và chọn gửi cho chúng tôi dữ liệu sụp đổ ẩn danh và báo cáo lỗi. Nếu bạn không đồng ý với những điều khoản này, bạn nên ngưng sử dụng tiện ích mở rộng trình duyệt "Weather Please".
-
-
 
 ## 6. Thay đổi chính sách bảo mật này
 

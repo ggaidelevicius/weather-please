@@ -20,17 +20,17 @@ import type { ReactElement } from 'react'
  * @property {'day' | 'date'} identifier - Specifies whether to represent the day using a weekday name (e.g., "Monday") or a specific date.
  */
 export interface TileProps {
-  readonly day: number;
-  readonly max: number;
-  readonly min: number;
-  readonly description: string;
-  readonly icon: string;
-  readonly wind: number;
-  readonly rain: number;
-  readonly uv: number;
-  readonly useMetric: boolean;
-  readonly index: number;
-  readonly identifier: 'day' | 'date';
+	readonly day: number
+	readonly max: number
+	readonly min: number
+	readonly description: string
+	readonly icon: string
+	readonly wind: number
+	readonly rain: number
+	readonly uv: number
+	readonly useMetric: boolean
+	readonly index: number
+	readonly identifier: 'day' | 'date'
 }
 
 /**
@@ -40,7 +40,7 @@ export interface TileProps {
  * as the application scales or is internationalized, additional language
  * support or localized naming may be needed.
  */
-export type Day = ReactElement[];
+export type Day = ReactElement[]
 
 /**
  * Represents the months of the year in English.
@@ -49,4 +49,4 @@ export type Day = ReactElement[];
  * days of the week, be aware that in the future, to accommodate more languages
  * or localized naming conventions, adaptations may be necessary.
  */
-  export type Month = any[];
+export type Month = any[]

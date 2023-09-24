@@ -11,11 +11,11 @@
  * @property {boolean} useMetric - A flag to determine if metrics (e.g., Celsius) or imperial (e.g., Fahrenheit) units should be used.
  */
 export interface BasicWeatherProps {
-  readonly max: number;
-  readonly min: number;
-  readonly description: string;
-  readonly icon: string;
-  readonly useMetric: boolean;
+	readonly max: number
+	readonly min: number
+	readonly description: string
+	readonly icon: string
+	readonly useMetric: boolean
 }
 
 /**
@@ -31,8 +31,8 @@ export interface BasicWeatherProps {
  * @property {number} index - The index or position of the tile in a list or grid.
  */
 export interface WeatherDetailProps {
-  readonly uv: number;
-  readonly wind: number;
-  readonly rain: number;
-  readonly useMetric: boolean;
+	readonly uv: number
+	readonly wind: number
+	readonly rain: number
+	readonly useMetric: boolean
 }

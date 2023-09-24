@@ -1,16 +1,16 @@
 .wrapper {
-  background: none;
+	background: none;
 }
 
 @media (max-width: 1150px) {
-  .wrapper {
-    grid-column: 1 !important;
-  }
+	.wrapper {
+		grid-column: 1 !important;
+	}
 }
 
 .alert {
-  display: flex;
-  gap: 2rem;
-  font-size: 1rem;
-  justify-content: center;
+	display: flex;
+	gap: 2rem;
+	font-size: 1rem;
+	justify-content: center;
 }

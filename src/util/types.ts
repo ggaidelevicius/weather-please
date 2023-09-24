@@ -19,19 +19,19 @@ import type { ReactElement } from 'react'
  * @property {boolean} shareCrashesAndErrors - Flag to determine if crash and error reports should be shared.
  */
 export interface ConfigProps {
-  lang: string;
-  lat: string;
-  lon: string;
-  periodicLocationUpdate: boolean;
-  useMetric: boolean;
-  showAlerts: boolean;
-  showUvAlerts: boolean;
-  showWindAlerts: boolean;
-  showVisibilityAlerts: boolean;
-  showPrecipitationAlerts: boolean;
-  daysToRetrieve: string;
-  identifier: 'day' | 'date';
-  shareCrashesAndErrors: boolean;
+	lang: string
+	lat: string
+	lon: string
+	periodicLocationUpdate: boolean
+	useMetric: boolean
+	showAlerts: boolean
+	showUvAlerts: boolean
+	showWindAlerts: boolean
+	showVisibilityAlerts: boolean
+	showPrecipitationAlerts: boolean
+	daysToRetrieve: string
+	identifier: 'day' | 'date'
+	shareCrashesAndErrors: boolean
 }
 
 /**
@@ -39,19 +39,19 @@ export interface ConfigProps {
  * These keys represent configurable settings and preferences for the application.
  */
 export type HandleChangeKey =
-  | 'lang'
-  | 'lat'
-  | 'lon'
-  | 'periodicLocationUpdate'
-  | 'showAlerts'
-  | 'showUvAlerts'
-  | 'showPrecipitationAlerts'
-  | 'showWindAlerts'
-  | 'showVisibilityAlerts'
-  | 'useMetric'
-  | 'daysToRetrieve'
-  | 'identifier'
-  | 'shareCrashesAndErrors';
+	| 'lang'
+	| 'lat'
+	| 'lon'
+	| 'periodicLocationUpdate'
+	| 'showAlerts'
+	| 'showUvAlerts'
+	| 'showPrecipitationAlerts'
+	| 'showWindAlerts'
+	| 'showVisibilityAlerts'
+	| 'useMetric'
+	| 'daysToRetrieve'
+	| 'identifier'
+	| 'shareCrashesAndErrors'
 
 /**
  * Manages updates to the "input" state.
@@ -60,7 +60,7 @@ export type HandleChangeKey =
  * while the provided attribute (key-value pair) will either be added or, if the key already exists,
  * its value will be overwritten with the new one.
  */
-export type HandleChange = (k: HandleChangeKey, v: string | boolean) => void;
+export type HandleChange = (k: HandleChangeKey, v: string | boolean) => void
 
 /**
  * Manages the "saved" button click action during initialization.
@@ -71,7 +71,7 @@ export type HandleChange = (k: HandleChangeKey, v: string | boolean) => void;
  *
  * @param method Specifies whether the location should be fetched automatically ('auto') or manually ('manual').
  */
-export type HandleClick = (method: 'auto' | 'manual') => void;
+export type HandleClick = (method: 'auto' | 'manual') => void
 
 /**
  * Recursively compares the shape of two objects to determine if they have the same set of keys at all levels.
@@ -82,9 +82,9 @@ export type HandleClick = (method: 'auto' | 'manual') => void;
  * @returns True if both objects have the same keys (including nested keys), otherwise false.
  */
 export type CompareObjects = (
-  obj1: Record<keyof any, any>,
-  obj2: Record<keyof any, any>
-) => boolean;
+	obj1: Record<keyof any, any>,
+	obj2: Record<keyof any, any>,
+) => boolean
 
 /**
  * Merges two objects together.
@@ -97,9 +97,9 @@ export type CompareObjects = (
  * @returns A new object resulting from the merge of the two input objects.
  */
 export type MergeObjects = (
-  targetObj: Record<keyof any, any>,
-  sourceObj: Record<keyof any, any>
-) => Record<keyof any, any>;
+	targetObj: Record<keyof any, any>,
+	sourceObj: Record<keyof any, any>,
+) => Record<keyof any, any>
 
 /**
  * Determines the number of grid columns based on the number of days of weather data to be retrieved.

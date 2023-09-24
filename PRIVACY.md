@@ -17,6 +17,7 @@ If you wish to opt-in to this feature, you can do so in the extension settings. 
 ## 3. Third-party Data Use
 
 To retrieve localized weather information, users may choose to provide either their IP information or their latitude/longitude to third-party services. These third-party services operate under their own privacy policies, and "Weather Please" does not have control over their data collection and usage practices. You can access third-party service privacy policies here:
+
 - https://wiki.osmfoundation.org/wiki/Privacy_Policy
 - https://open-meteo.com/en/terms
 - https://ip-api.com/docs/legal

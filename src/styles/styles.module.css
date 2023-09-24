@@ -1,18 +1,18 @@
 .main {
-  display: grid;
-  gap: 1.25rem;
-  padding: 1.25rem;
-  background: none;
-  overflow: hidden;
+	display: grid;
+	gap: 1.25rem;
+	padding: 1.25rem;
+	background: none;
+	overflow: hidden;
 }
 
 .link:hover {
-  text-decoration: underline !important;
+	text-decoration: underline !important;
 }
 
 @media (max-width: 1150px) {
-  .main {
-    grid-template-columns: repeat(1, 1fr) !important;
-    width: 100%;
-  }
+	.main {
+		grid-template-columns: repeat(1, 1fr) !important;
+		width: 100%;
+	}
 }

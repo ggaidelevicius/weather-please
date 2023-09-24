@@ -17,6 +17,7 @@ Wenn Sie sich für diese Funktion entscheiden möchten, können Sie dies in den 
 ## 3. Nutzung von Daten durch Dritte
 
 Um lokalisierte Wetterinformationen abzurufen, können Benutzer sich dafür entscheiden, entweder ihre IP-Informationen oder ihre geografischen Koordinaten an Dienste Dritter weiterzugeben. Diese Drittanbieter arbeiten unter ihren eigenen Datenschutzrichtlinien, und "Weather Please" hat keine Kontrolle über deren Datensammlungs- und Nutzungspraktiken. Sie können auf die Datenschutzrichtlinien der Drittanbieter hier zugreifen:
+
 - [OSM Foundation Datenschutzrichtlinie](https://wiki.osmfoundation.org/wiki/Privacy_Policy)
 - [Open-Meteo Nutzungsbedingungen](https://open-meteo.com/en/terms)
 - [IP-API Rechtliche Hinweise](https://ip-api.com/docs/legal)

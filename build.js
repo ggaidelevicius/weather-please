@@ -10,54 +10,57 @@ const sourcePath = 'out/_next'
 const destinationPath = 'out/next'
 
 try {
-  execSync(`${moveCommand} ${sourcePath} ${destinationPath}`)
-  console.log('Moved _next directory to next.')
+	execSync(`${moveCommand} ${sourcePath} ${destinationPath}`)
+	console.log('Moved _next directory to next.')
 } catch (error) {
-  console.error('Move operation failed:', error)
+	console.error('Move operation failed:', error)
 }
 
 const main = () => {
-  const extensionPath = 'extension'
+	const extensionPath = 'extension'
 
-  fs.ensureDirSync(extensionPath)
-  if (fs.existsSync(extensionPath)) {
+	fs.ensureDirSync(extensionPath)
+	if (fs.existsSync(extensionPath)) {
+		// Get a list of all files and directories in 'extensionPath'
+		const files = fs.readdirSync(extensionPath)
 
-    // Get a list of all files and directories in 'extensionPath'
-    const files = fs.readdirSync(extensionPath)
+		// Loop through all files and directories
+		for (const file of files) {
+			// Get the full path of the file/directory
+			const filePath = path.join(extensionPath, file)
 
-    // Loop through all files and directories
-    for (const file of files) {
+			// Remove the file/directory
+			fs.removeSync(filePath)
+		}
+	}
 
-      // Get the full path of the file/directory
-      const filePath = path.join(extensionPath, file)
+	// Replace content in HTML and JS files
+	const files = glob.sync('out/**/*.{html,js}', { nodir: true })
+	for (const file of files) {
+		let content = fs.readFileSync(file, 'utf-8')
+		content = content.replace(/\/_next\//g, '/next/')
+		fs.writeFileSync(file, content, 'utf-8')
+	}
 
-      // Remove the file/directory
-      fs.removeSync(filePath)
+	// Perform related operations
+	fs.moveSync(
+		path.join('out', 'index.html'),
+		path.join(extensionPath, 'index.html'),
+	)
+	fs.moveSync(
+		path.join('out', 'favicon.png'),
+		path.join(extensionPath, 'favicon.png'),
+	)
+	fs.copySync(path.join('out', 'next'), path.join(extensionPath, 'next'))
+	fs.copySync(path.join('_locales'), path.join(extensionPath, '_locales'))
+	fs.removeSync('out')
+	fs.copySync('manifest.json', path.join(extensionPath, 'manifest.json'))
 
-    }
-  }
-
-  // Replace content in HTML and JS files
-  const files = glob.sync('out/**/*.{html,js}', { nodir: true })
-  for (const file of files) {
-    let content = fs.readFileSync(file, 'utf-8')
-    content = content.replace(/\/_next\//g, '/next/')
-    fs.writeFileSync(file, content, 'utf-8')
-  }
-
-  // Perform related operations
-  fs.moveSync(path.join('out', 'index.html'), path.join(extensionPath, 'index.html'))
-  fs.moveSync(path.join('out', 'favicon.png'), path.join(extensionPath, 'favicon.png'))
-  fs.copySync(path.join('out', 'next'), path.join(extensionPath, 'next'))
-  fs.copySync(path.join('_locales'), path.join(extensionPath, '_locales'))
-  fs.removeSync('out')
-  fs.copySync('manifest.json', path.join(extensionPath, 'manifest.json'))
-
-  console.log('Processing completed.')
+	console.log('Processing completed.')
 }
 
 try {
-  main()
+	main()
 } catch (error) {
-  console.error('An error occurred:', error)
+	console.error('An error occurred:', error)
 }

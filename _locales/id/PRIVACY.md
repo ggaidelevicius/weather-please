@@ -17,6 +17,7 @@ Jika Anda ingin memilih fitur ini, Anda dapat melakukannya di pengaturan ekstens
 ## 3. Penggunaan Data oleh Pihak Ketiga
 
 Untuk mengambil informasi cuaca terlokalisir, pengguna dapat memilih untuk memberikan informasi IP mereka atau lintang / bujur mereka kepada layanan pihak ketiga. Layanan pihak ketiga ini beroperasi di bawah kebijakan privasi mereka sendiri, dan "Weather Please" tidak memiliki kontrol atas praktek pengumpulan dan penggunaan data mereka. Anda dapat mengakses kebijakan privasi layanan pihak ketiga di sini:
+
 - [Kebijakan Privasi OSM Foundation](https://wiki.osmfoundation.org/wiki/Privacy_Policy)
 - [Ketentuan Open-Meteo](https://open-meteo.com/en/terms)
 - [Dokumentasi Hukum IP-API](https://ip-api.com/docs/legal)

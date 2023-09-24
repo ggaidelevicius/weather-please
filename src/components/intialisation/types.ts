@@ -17,12 +17,12 @@ import type { Dispatch, SetStateAction } from 'react'
  * @property {() => void} close - Function to close or end the initialization process.
  */
 export interface InitialisationProps {
-  readonly opened: boolean;
-  readonly geolocationError: boolean;
-  readonly handleClick: HandleClick;
-  readonly setLoading: Dispatch<SetStateAction<boolean>>;
-  readonly loading: boolean;
-  readonly input: ConfigProps;
-  readonly handleChange: HandleChange;
-  readonly close: () => void;
+	readonly opened: boolean
+	readonly geolocationError: boolean
+	readonly handleClick: HandleClick
+	readonly setLoading: Dispatch<SetStateAction<boolean>>
+	readonly loading: boolean
+	readonly input: ConfigProps
+	readonly handleChange: HandleChange
+	readonly close: () => void
 }

@@ -17,6 +17,7 @@ Norėdami sutikti su šia funkcija, galite tai padaryti plėtinio nustatymuose. 
 ## 3. Trečiųjų šalių duomenų naudojimas
 
 Norėdami gauti vietos oro informaciją, vartotojai gali pasirinkti pateikti savo IP informaciją arba platuma/ilguma trečiųjų šalių paslaugoms. Šios trečiųjų šalių paslaugos veikia pagal savo privatumo politikas, ir „Weather Please“ nekontroliuoja jų duomenų rinkimo ir naudojimo praktikos. Galite pasiekti trečiųjų šalių paslaugų privatumo politikas čia:
+
 - [https://wiki.osmfoundation.org/wiki/Privacy_Policy](https://wiki.osmfoundation.org/wiki/Privacy_Policy)
 - [https://open-meteo.com/en/terms](https://open-meteo.com/en/terms)
 - [https://ip-api.com/docs/legal](https://ip-api.com/docs/legal)

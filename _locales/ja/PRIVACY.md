@@ -17,6 +17,7 @@ _最終更新日: 2023年8月29日_
 ## 3. 第三者によるデータの利用
 
 ローカライズされた天気情報を取得するために、ユーザーはIP情報や緯度/経度を第三者のサービスに提供することを選択することがあります。これらの第三者サービスは、それぞれのプライバシーポリシーに基づいて運営されており、「Weather Please」はデータ収集と使用方法を制御することはできません。以下から第三者サービスのプライバシーポリシーにアクセスできます：
+
 - [OSM Foundationのプライバシーポリシー](https://wiki.osmfoundation.org/wiki/Privacy_Policy)
 - [Open-Meteoの利用規約](https://open-meteo.com/en/terms)
 - [IP-APIの法的文書](https://ip-api.com/docs/legal)

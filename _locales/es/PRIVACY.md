@@ -17,6 +17,7 @@ Si desea optar por esta función, puede hacerlo en la configuración de la exten
 ## 3. Uso de datos de terceros
 
 Para obtener información meteorológica localizada, los usuarios pueden elegir proporcionar su información IP o su latitud/longitud a servicios de terceros. Estos servicios de terceros operan bajo sus propias políticas de privacidad, y "Weather Please" no tiene control sobre sus prácticas de recolección y uso de datos. Puede acceder a las políticas de privacidad de los servicios de terceros aquí:
+
 - [Política de Privacidad OSM Foundation](https://wiki.osmfoundation.org/wiki/Privacy_Policy)
 - [Términos de Open-Meteo](https://open-meteo.com/en/terms)
 - [Aspectos legales de IP-API](https://ip-api.com/docs/legal)

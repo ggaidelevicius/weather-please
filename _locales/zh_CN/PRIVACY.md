@@ -17,6 +17,7 @@ _最后更新：2023年8月29日_
 ## 3. 第三方数据使用
 
 为了检索本地化的天气信息，用户可以选择向第三方服务提供其IP信息或纬度/经度。这些第三方服务根据自己的隐私政策运行，而“Weather Please”不能控制他们的数据收集和使用实践。您可以在这里访问第三方服务的隐私政策：
+
 - [https://wiki.osmfoundation.org/wiki/Privacy_Policy](https://wiki.osmfoundation.org/wiki/Privacy_Policy)
 - [https://open-meteo.com/en/terms](https://open-meteo.com/en/terms)
 - [https://ip-api.com/docs/legal](https://ip-api.com/docs/legal)

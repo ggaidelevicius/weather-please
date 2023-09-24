@@ -17,6 +17,7 @@ Se desideri aderire a questa funzione, puoi farlo nelle impostazioni dell'estens
 ## 3. Utilizzo dei Dati da Parte di Terzi
 
 Per recuperare informazioni meteorologiche localizzate, gli utenti possono scegliere di fornire le loro informazioni IP o le loro coordinate latitudine/longitudine a servizi di terze parti. Questi servizi di terze parti operano secondo le loro proprie politiche sulla privacy, e "Weather Please" non ha controllo sulle loro pratiche di raccolta e utilizzo dei dati. Puoi accedere alle politiche sulla privacy dei servizi di terze parti qui:
+
 - [Politica sulla privacy di OSM Foundation](https://wiki.osmfoundation.org/wiki/Privacy_Policy)
 - [Termini di Open-Meteo](https://open-meteo.com/en/terms)
 - [Documenti legali di IP-API](https://ip-api.com/docs/legal)

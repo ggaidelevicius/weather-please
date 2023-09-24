@@ -11,15 +11,15 @@ import Snow from './snow.png'
 import Thunderstorm from './thunderstorm.png'
 
 export {
-  BrokenClouds,
-  ClearSky,
-  FewClouds,
-  LightDrizzle,
-  LightRain,
-  Mist,
-  OvercastClouds,
-  ShowerDrizzle,
-  ShowerRain,
-  Snow,
-  Thunderstorm,
+	BrokenClouds,
+	ClearSky,
+	FewClouds,
+	LightDrizzle,
+	LightRain,
+	Mist,
+	OvercastClouds,
+	ShowerDrizzle,
+	ShowerRain,
+	Snow,
+	Thunderstorm,
 }

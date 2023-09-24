@@ -11,11 +11,11 @@
  * @property {boolean[]} hoursOfLowVisibility - Array indicating hours with low visibility conditions.
  */
 export interface CurrentWeatherProps {
-  readonly totalPrecipitation: TotalPrecipitation;
-  readonly hoursOfExtremeUv: boolean[];
-  readonly hoursOfStrongWind: boolean[];
-  readonly hoursOfLowVisibility: boolean[];
-  readonly hoursOfStrongWindGusts: boolean[];
+	readonly totalPrecipitation: TotalPrecipitation
+	readonly hoursOfExtremeUv: boolean[]
+	readonly hoursOfStrongWind: boolean[]
+	readonly hoursOfLowVisibility: boolean[]
+	readonly hoursOfStrongWindGusts: boolean[]
 }
 
 /**
@@ -32,12 +32,12 @@ export interface CurrentWeatherProps {
  * @property {number} width - Width of the alert UI component.
  */
 export interface AlertProps extends CurrentWeatherProps {
-  readonly useMetric: boolean;
-  readonly showUvAlerts: boolean;
-  readonly showWindAlerts: boolean;
-  readonly showVisibilityAlerts: boolean;
-  readonly showPrecipitationAlerts: boolean;
-  readonly width: number;
+	readonly useMetric: boolean
+	readonly showUvAlerts: boolean
+	readonly showWindAlerts: boolean
+	readonly showVisibilityAlerts: boolean
+	readonly showPrecipitationAlerts: boolean
+	readonly width: number
 }
 
 /**
@@ -52,9 +52,9 @@ export interface AlertProps extends CurrentWeatherProps {
  * @property {boolean[]} duration - Array indicating hours in which precipitation is expected.
  */
 interface TotalPrecipitation {
-  readonly precipitation: {
-    readonly value: number;
-    readonly flag: boolean;
-  };
-  readonly duration: boolean[];
+	readonly precipitation: {
+		readonly value: number
+		readonly flag: boolean
+	}
+	readonly duration: boolean[]
 }

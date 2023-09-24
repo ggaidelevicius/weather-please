@@ -17,6 +17,7 @@ _최종 수정일: 2023년 8월 29일_
 ## 3. 제3자 데이터 사용
 
 사용자가 위치 기반의 날씨 정보를 검색하려면 IP 정보 또는 위도/경도를 제3자 서비스에 제공할 수 있습니다. 이러한 제3자 서비스는 자체 개인정보취급방침에 따라 운영되며, "Weather Please"는 그들의 데이터 수집 및 사용 방법을 제어할 수 없습니다. 여기에서 제3자 서비스의 개인정보취급방침을 확인할 수 있습니다:
+
 - [https://wiki.osmfoundation.org/wiki/Privacy_Policy](https://wiki.osmfoundation.org/wiki/Privacy_Policy)
 - [https://open-meteo.com/en/terms](https://open-meteo.com/en/terms)
 - [https://ip-api.com/docs/legal](https://ip-api.com/docs/legal)
