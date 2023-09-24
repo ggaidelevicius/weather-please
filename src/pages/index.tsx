@@ -655,7 +655,8 @@ const WeatherPlease: FC = () => {
 	useEffect(() => {
 		setTimeout(() => {
 			if (
-				new Date().getTime() - config.installed >= 2419200000 &&
+				new Date().getTime() - config.installed >= 24 &&
+				localStorage.config &&
 				!JSON.parse(localStorage.config).displayedReviewPrompt
 			) {
 				notifications.show({
@@ -672,6 +673,13 @@ const WeatherPlease: FC = () => {
 								component="a"
 								href={reviewLink}
 								style={{ marginTop: '0.5rem' }}
+								onClick={() => {
+									notifications.hide('review')
+									setConfig((prev) => ({
+										...prev,
+										displayedReviewPrompt: true,
+									}))
+								}}
 							>
 								<Trans>🌟 Leave a review</Trans>
 							</Button>
