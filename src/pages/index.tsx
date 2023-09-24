@@ -17,7 +17,7 @@ import type {
 } from '@/util/types'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/macro'
-import { Loader } from '@mantine/core'
+import { Button, Loader } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import * as Sentry from '@sentry/nextjs'
@@ -72,12 +72,18 @@ const WeatherPlease: FC = () => {
 		daysToRetrieve: '3',
 		identifier: 'day',
 		shareCrashesAndErrors: false,
+		installed: new Date().getTime(),
+		displayedReviewPrompt: false,
 	}
 	const [config, setConfig] = useState<ConfigProps>(initialState)
 	const [input, setInput] = useState<ConfigProps>(initialState)
 	const [usingFreshData, setUsingFreshData] = useState<boolean>(false)
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
 	const [completedFirstLoad, setCompletedFirstLoad] = useState<boolean>(false)
+	const [reviewLink, setReviewLink] = useState(
+		'https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
+	)
+	const [usingSafari, setUsingSafari] = useState<boolean>(false)
 
 	/**
 	 * Synchronizes the active language with the language specified in the configuration.
@@ -632,6 +638,95 @@ const WeatherPlease: FC = () => {
 		}
 	}
 
+	/**
+	 * A React `useEffect` hook that triggers a review prompt notification after a delay.
+	 *
+	 * After a delay of 1 second, the hook checks if:
+	 * 1. The time difference between the current date and the installation date
+	 *    (from `config.installed`) exceeds 28 days (2419200000 milliseconds).
+	 * 2. The review prompt has not yet been displayed based on the value from `localStorage`.
+	 *
+	 * If both conditions are met, a notification is shown to the user, prompting them to leave a review.
+	 *
+	 * The notification contains two main actions:
+	 * 1. A button to leave a review.
+	 * 2. A button to dismiss the prompt and ensure it's never shown again.
+	 */
+	useEffect(() => {
+		setTimeout(() => {
+			if (
+				new Date().getTime() - config.installed >= 2419200000 &&
+				localStorage.config &&
+				!JSON.parse(localStorage.config).displayedReviewPrompt
+			) {
+				notifications.show({
+					id: 'review',
+					title: (
+						<Trans>You&apos;ve been using Weather Please for a while</Trans>
+					),
+					message: (
+						<div style={{ display: 'flex', flexDirection: 'column' }}>
+							<p style={{ margin: '0.2rem 0' }}>
+								<Trans>Would you like to leave a review?</Trans>
+							</p>
+							<Button
+								component="a"
+								href={reviewLink}
+								style={{ marginTop: '0.5rem' }}
+								onClick={() => {
+									notifications.hide('review')
+									setConfig((prev) => ({
+										...prev,
+										displayedReviewPrompt: true,
+									}))
+								}}
+							>
+								<Trans>🌟 Leave a review</Trans>
+							</Button>
+							<Button
+								style={{ marginTop: '0.5rem' }}
+								variant="light"
+								color="red"
+								onClick={() => {
+									notifications.hide('review')
+									setConfig((prev) => ({
+										...prev,
+										displayedReviewPrompt: true,
+									}))
+								}}
+							>
+								<Trans>Never show this again</Trans>
+							</Button>
+						</div>
+					),
+					autoClose: false,
+					withCloseButton: false,
+				})
+			}
+		}, 1e3)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
+	useEffect(() => {
+		const userAgent = navigator.userAgent.toLowerCase()
+
+		if (
+			userAgent.indexOf('safari') !== -1 &&
+			userAgent.indexOf('chrome') === -1
+		) {
+			setUsingSafari(true)
+			setReviewLink('https://apps.apple.com/au/app/weather-please/id6462968576')
+		} else if (userAgent.includes('firefox/')) {
+			setReviewLink(
+				'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/',
+			)
+		} else if (userAgent.includes('edg/')) {
+			setReviewLink(
+				'https://microsoftedge.microsoft.com/addons/detail/weather-please/genbleeffmekfnbkfpgdkdpggamcgflo',
+			)
+		}
+	}, [])
+
 	return (
 		<>
 			<AnimatePresence>
@@ -686,6 +781,8 @@ const WeatherPlease: FC = () => {
 				handleClick={handleClick}
 				config={config}
 				setInput={setInput}
+				usingSafari={usingSafari}
+				reviewLink={reviewLink}
 			/>
 
 			<Initialisation

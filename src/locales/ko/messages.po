@@ -37,39 +37,40 @@ msgstr "다음 {1}시간 동안 강수량 {0}밀리미터 예상"
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "다음 1시간 동안 강수량 {0}밀리미터 예상"
 
-#: src/components/settings/index.tsx:418
+#: src/components/settings/index.tsx:394
 msgid "☕ Gift a coffee"
 msgstr "☕ 커피 선물하기"
 
-#: src/components/settings/index.tsx:384
+#: src/components/settings/index.tsx:360
+#: src/pages/index.tsx:670
 msgid "🌟 Leave a review"
 msgstr "🌟 리뷰 남기기"
 
-#: src/components/settings/index.tsx:395
+#: src/components/settings/index.tsx:371
 msgid "🐛 Report a bug"
 msgstr "🐛 버그 신고"
 
-#: src/components/settings/index.tsx:406
+#: src/components/settings/index.tsx:382
 msgid "🔒 Privacy policy"
 msgstr "🔒 개인정보 처리방침"
 
-#: src/components/settings/index.tsx:249
+#: src/components/settings/index.tsx:225
 msgid "Alerts"
 msgstr "알림"
 
-#: src/pages/index.tsx:542
+#: src/pages/index.tsx:548
 msgid "An error has occurred while fetching location data. Please check the console for more details."
 msgstr "위치 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
 
-#: src/pages/index.tsx:268
+#: src/pages/index.tsx:274
 msgid "An error has occurred while fetching weather data. Please check the console for more details."
 msgstr "날씨 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
 
-#: src/components/settings/index.tsx:62
+#: src/components/settings/index.tsx:58
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "위치를 가져오는 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
 
-#: src/pages/index.tsx:509
+#: src/pages/index.tsx:515
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "위치를 주기적으로 업데이트하는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
 
@@ -81,11 +82,11 @@ msgstr "4월"
 msgid "August"
 msgstr "8월"
 
-#: src/components/settings/index.tsx:144
+#: src/components/settings/index.tsx:120
 msgid "Based on the provided information, your location is:"
 msgstr "제공된 정보를 기반으로, 귀하의 위치는:"
 
-#: src/components/settings/index.tsx:352
+#: src/components/settings/index.tsx:328
 msgid "Cancel"
 msgstr "취소"
 
@@ -93,11 +94,11 @@ msgstr "취소"
 msgid "clear sky"
 msgstr "맑은 하늘"
 
-#: src/components/settings/index.tsx:243
+#: src/components/settings/index.tsx:219
 msgid "Date"
 msgstr "날짜"
 
-#: src/components/settings/index.tsx:241
+#: src/components/settings/index.tsx:217
 msgid "Day"
 msgstr "날"
 
@@ -117,14 +118,14 @@ msgstr "짙은 얼음 이슬비"
 msgid "depositing rime fog"
 msgstr "서리가 앉는 안개"
 
-#: src/components/settings/index.tsx:484
+#: src/components/settings/index.tsx:460
 msgid "Don't save"
 msgstr "저장하지 마세요"
 
-#: src/components/settings/index.tsx:60
-#: src/pages/index.tsx:266
-#: src/pages/index.tsx:507
-#: src/pages/index.tsx:540
+#: src/components/settings/index.tsx:56
+#: src/pages/index.tsx:272
+#: src/pages/index.tsx:513
+#: src/pages/index.tsx:546
 msgid "Error"
 msgstr "오류"
 
@@ -168,19 +169,19 @@ msgstr "심한 눈보라"
 msgid "heavy snowfall"
 msgstr "많은 눈"
 
-#: src/components/settings/index.tsx:355
+#: src/components/settings/index.tsx:331
 msgid "I'd love to bring Weather Please to more languages."
 msgstr "저는 Weather Please를 더 많은 언어로 가져오고 싶어요."
 
-#: src/components/settings/index.tsx:235
+#: src/components/settings/index.tsx:211
 msgid "Identifier"
 msgstr "식별자"
 
-#: src/components/settings/index.tsx:156
+#: src/components/settings/index.tsx:132
 msgid "If this is incorrect, please update the values below."
 msgstr "이게 틀린 정보라면, 아래의 값들을 업데이트 해주세요."
 
-#: src/components/settings/index.tsx:360
+#: src/components/settings/index.tsx:336
 msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 msgstr "번역 요청이 있으시다면, <0>contact@weather-please.app</0>으로 연락주세요."
 
@@ -189,12 +190,12 @@ msgid "If your browser prompts you for location permissions, please select \"all
 msgstr "브라우저가 위치 권한을 요청하면, \"허용\"을 선택해주세요."
 
 #: src/components/intialisation/index.tsx:120
-#: src/components/settings/index.tsx:169
+#: src/components/settings/index.tsx:145
 msgid "Invalid latitude value"
 msgstr "잘못된 위도 값"
 
 #: src/components/intialisation/index.tsx:136
-#: src/components/settings/index.tsx:185
+#: src/components/settings/index.tsx:161
 msgid "Invalid longitude value"
 msgstr "잘못된 경도 값"
 
@@ -212,12 +213,12 @@ msgstr "6월"
 
 #: src/components/intialisation/index.tsx:76
 #: src/components/intialisation/index.tsx:153
-#: src/components/settings/index.tsx:300
+#: src/components/settings/index.tsx:276
 msgid "Language"
 msgstr "언어"
 
 #: src/components/intialisation/index.tsx:111
-#: src/components/settings/index.tsx:160
+#: src/components/settings/index.tsx:136
 msgid "Latitude"
 msgstr "위도"
 
@@ -233,12 +234,12 @@ msgstr "가벼운 얼어붙는 이슬비"
 msgid "light freezing rain"
 msgstr "가벼운 얼어붙는 비"
 
-#: src/components/settings/index.tsx:141
+#: src/components/settings/index.tsx:117
 msgid "Location"
 msgstr "위치"
 
 #: src/components/intialisation/index.tsx:126
-#: src/components/settings/index.tsx:175
+#: src/components/settings/index.tsx:151
 msgid "Longitude"
 msgstr "경도"
 
@@ -275,7 +276,7 @@ msgstr "3월"
 msgid "May"
 msgstr "5월"
 
-#: src/components/settings/index.tsx:296
+#: src/components/settings/index.tsx:272
 msgid "Miscellaneous"
 msgstr "기타"
 
@@ -299,15 +300,19 @@ msgstr "중간 정도의 눈"
 msgid "Monday"
 msgstr "월요일"
 
+#: src/pages/index.tsx:684
+msgid "Never show this again"
+msgstr "다시 보지 않기"
+
 #: src/pages/_app.tsx:21
 #~ msgid "New tab"
 #~ msgstr "새 탭"
 
-#: src/components/settings/index.tsx:215
+#: src/components/settings/index.tsx:191
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
 msgstr "주의: 이 기능은 현재 사파리에서 잘 작동하지 않으며, 부정확할 수 있습니다"
 
-#: src/components/settings/index.tsx:210
+#: src/components/settings/index.tsx:186
 msgid "Note: This requires browser permissions"
 msgstr "주의: 이 기능은 브라우저 권한이 필요합니다"
 
@@ -315,7 +320,7 @@ msgstr "주의: 이 기능은 브라우저 권한이 필요합니다"
 msgid "November"
 msgstr "11월"
 
-#: src/components/settings/index.tsx:226
+#: src/components/settings/index.tsx:202
 msgid "Number of days to forecast"
 msgstr "예보 할 일수"
 
@@ -331,7 +336,7 @@ msgstr "흐림"
 msgid "partly cloudy"
 msgstr "구름이 조금"
 
-#: src/components/settings/index.tsx:201
+#: src/components/settings/index.tsx:177
 msgid "Periodically update location automatically"
 msgstr "주기적으로 위치 자동 업데이트"
 
@@ -343,8 +348,8 @@ msgstr "아래에 수동으로 입력해주세요."
 msgid "Saturday"
 msgstr "토요일"
 
-#: src/components/settings/index.tsx:340
-#: src/components/settings/index.tsx:471
+#: src/components/settings/index.tsx:316
+#: src/components/settings/index.tsx:447
 msgid "Save"
 msgstr "저장"
 
@@ -357,31 +362,31 @@ msgstr "9월"
 msgid "Set my location"
 msgstr "내 위치 설정"
 
-#: src/components/settings/index.tsx:138
+#: src/components/settings/index.tsx:114
 msgid "Settings"
 msgstr "설정"
 
-#: src/components/settings/index.tsx:319
+#: src/components/settings/index.tsx:295
 msgid "Share anonymised crash data and error logs"
 msgstr "익명화된 충돌 데이터 및 오류 로그 공유"
 
-#: src/components/settings/index.tsx:263
+#: src/components/settings/index.tsx:239
 msgid "Show extreme UV alerts"
 msgstr "극한의 UV 경보 표시"
 
-#: src/components/settings/index.tsx:270
+#: src/components/settings/index.tsx:246
 msgid "Show high precipitation alerts"
 msgstr "강수량이 많은 경보 표시"
 
-#: src/components/settings/index.tsx:286
+#: src/components/settings/index.tsx:262
 msgid "Show low visibility alerts"
 msgstr "저시력 경보 표시"
 
-#: src/components/settings/index.tsx:278
+#: src/components/settings/index.tsx:254
 msgid "Show strong wind alerts"
 msgstr "강풍 경보 보이기"
 
-#: src/components/settings/index.tsx:252
+#: src/components/settings/index.tsx:228
 msgid "Show weather alerts"
 msgstr "날씨 경보 표시"
 
@@ -493,7 +498,7 @@ msgstr "약한 우박을 동반한 천둥번개"
 msgid "Thursday"
 msgstr "목요일"
 
-#: src/components/settings/index.tsx:222
+#: src/components/settings/index.tsx:198
 msgid "Tiles"
 msgstr "타일"
 
@@ -506,11 +511,11 @@ msgid "Tuesday"
 msgstr "화요일"
 
 #: src/components/intialisation/index.tsx:149
-#: src/components/settings/index.tsx:198
+#: src/components/settings/index.tsx:174
 msgid "Unsure how to find these? Click here."
 msgstr "이것을 어떻게 찾을 수 있는지 모르겠나요? 여기를 클릭하세요."
 
-#: src/components/settings/index.tsx:311
+#: src/components/settings/index.tsx:287
 msgid "Use metric number format"
 msgstr "메트릭 숫자 형식 사용"
 
@@ -522,7 +527,7 @@ msgstr "강한 비소나기"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Weather Please를 더 많은 언어로 제공하고 싶습니다."
 
-#: src/pages/index.tsx:716
+#: src/pages/index.tsx:799
 msgid "weather data provided by open-meteo"
 msgstr "날씨 데이터 제공: open-meteo"
 
@@ -530,10 +535,18 @@ msgstr "날씨 데이터 제공: open-meteo"
 msgid "Wednesday"
 msgstr "수요일"
 
-#: src/components/settings/index.tsx:450
+#: src/pages/index.tsx:667
+msgid "Would you like to leave a review?"
+msgstr "리뷰를 남기시겠습니까?"
+
+#: src/components/settings/index.tsx:426
 msgid "You can't save because either your latitude or longitude are invalid."
 msgstr "위도 또는 경도가 유효하지 않기 때문에 저장할 수 없습니다."
 
-#: src/components/settings/index.tsx:443
+#: src/components/settings/index.tsx:419
 msgid "You have unsaved changes"
 msgstr "저장하지 않은 변경 사항이 있습니다"
+
+#: src/pages/index.tsx:663
+msgid "You've been using Weather Please for a while"
+msgstr "당신은 Weather Please를 잠시동안 사용해왔습니다"
