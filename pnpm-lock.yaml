@@ -24,20 +24,20 @@ dependencies:
     specifier: ^4.0.4
     version: 4.0.4(@lingui/macro@4.5.0)(next@13.5.3)
   '@mantine/core':
-    specifier: ^7.0.2
-    version: 7.0.2(@mantine/hooks@7.0.2)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^7.1.0
+    version: 7.1.0(@mantine/hooks@7.1.0)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
   '@mantine/hooks':
-    specifier: ^7.0.2
-    version: 7.0.2(react@18.2.0)
+    specifier: ^7.1.0
+    version: 7.1.0(react@18.2.0)
   '@mantine/notifications':
-    specifier: ^7.0.2
-    version: 7.0.2(@mantine/core@7.0.2)(@mantine/hooks@7.0.2)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^7.1.0
+    version: 7.1.0(@mantine/core@7.1.0)(@mantine/hooks@7.1.0)(react-dom@18.2.0)(react@18.2.0)
   '@sentry/nextjs':
     specifier: ^7.72.0
     version: 7.72.0(next@13.5.3)(react@18.2.0)
   '@tabler/icons-react':
-    specifier: ^2.35.0
-    version: 2.35.0(react@18.2.0)
+    specifier: ^2.36.0
+    version: 2.36.0(react@18.2.0)
   '@vercel/analytics':
     specifier: ^1.0.2
     version: 1.0.2
@@ -74,8 +74,8 @@ devDependencies:
     specifier: ^4.5.0
     version: 4.5.0(typescript@5.2.2)
   '@types/node':
-    specifier: ^20.7.0
-    version: 20.7.0
+    specifier: ^20.7.1
+    version: 20.7.1
   '@types/react':
     specifier: ^18.2.23
     version: 18.2.23
@@ -742,7 +742,7 @@ packages:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 20.7.0
+      '@types/node': 20.7.1
       '@types/yargs': 17.0.24
       chalk: 4.1.2
 
@@ -899,15 +899,15 @@ packages:
       next: 13.5.3(@babel/core@7.22.15)(babel-plugin-macros@3.1.0)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
-  /@mantine/core@7.0.2(@mantine/hooks@7.0.2)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-aJodq48NE4FAgpzimPtT0Izr/dqhXkBwCDOYxgTTe+LpNwTzEJqBfZeysB2B3Aobr7MaEWPvvyUi3Uu9qL5y0g==}
+  /@mantine/core@7.1.0(@mantine/hooks@7.1.0)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-DNexnix5Lz7na8bfXCNVDsCsorxMzF1we3mtU33B0mLyiLkH47BhpgKNxvf5OjEK5SUJ0Bi7r5m91Tm7pmAB7w==}
     peerDependencies:
-      '@mantine/hooks': 7.0.2
+      '@mantine/hooks': 7.1.0
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
       '@floating-ui/react': 0.24.8(react-dom@18.2.0)(react@18.2.0)
-      '@mantine/hooks': 7.0.2(react@18.2.0)
+      '@mantine/hooks': 7.1.0(react@18.2.0)
       clsx: 2.0.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -919,32 +919,32 @@ packages:
       - '@types/react'
     dev: false
 
-  /@mantine/hooks@7.0.2(react@18.2.0):
-    resolution: {integrity: sha512-Zs0h7O9yI4Lhcebp/eXN+jfFSBS4jNuKRN5msj54decKcnA9ZxjkUpUqAwCNU0Re+cx6RFSBmB8eOA/+5sw+nA==}
+  /@mantine/hooks@7.1.0(react@18.2.0):
+    resolution: {integrity: sha512-XW8qYNoS81bIWmdI7yZV8BmBkTtr0//3fyBJ2dcKRSKWY5HVNPkLDXPQk9/E4bpQIRmufDGQ6pLmUfY+0VjO3g==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
       react: 18.2.0
     dev: false
 
-  /@mantine/notifications@7.0.2(@mantine/core@7.0.2)(@mantine/hooks@7.0.2)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-cTRO/uF3PgW4hUEQkQ57bl4r/+BnA4HN52NXF6auMWxIIhrS5x2t98ra215rqMTNAfedeAEMGARMwBtlGj6MqQ==}
+  /@mantine/notifications@7.1.0(@mantine/core@7.1.0)(@mantine/hooks@7.1.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-ck6w/vugFSsmgSO41yOqYYcvfBTSxMvKJOvJJf+uWYXP+5OPP5aEzE5jJVJE2dS792bF3npGhBwVhRg56n/pAA==}
     peerDependencies:
-      '@mantine/core': 7.0.2
-      '@mantine/hooks': 7.0.2
+      '@mantine/core': 7.1.0
+      '@mantine/hooks': 7.1.0
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
-      '@mantine/core': 7.0.2(@mantine/hooks@7.0.2)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
-      '@mantine/hooks': 7.0.2(react@18.2.0)
-      '@mantine/store': 7.0.2(react@18.2.0)
+      '@mantine/core': 7.1.0(@mantine/hooks@7.1.0)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks': 7.1.0(react@18.2.0)
+      '@mantine/store': 7.1.0(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
-  /@mantine/store@7.0.2(react@18.2.0):
-    resolution: {integrity: sha512-0OAca3r/IQ6c7Pb6YvmL+5hyCo31vA3SfZKTwb1KquX4SjFfjpdhPuTR/tzjmxqwIw4zkzXH/7ckNZ/AHHwm8A==}
+  /@mantine/store@7.1.0(react@18.2.0):
+    resolution: {integrity: sha512-WmU1jxsHWex5gcoAoB6C/vyVbDiWp6k6iroXHRWIqzd7vQ9SiLzXNygLTlilwW4HwkkJZGUsskSbwzFo+oqiSw==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
@@ -1280,18 +1280,18 @@ packages:
       tslib: 2.6.1
     dev: false
 
-  /@tabler/icons-react@2.35.0(react@18.2.0):
-    resolution: {integrity: sha512-jK2zgtMF2+LSjtbjYsfer+ryz72TwyJqv3MsmCfEpQwP37u01xvmTlVhJ+ox3bV+trsgjojsldVDuB05JuXLaw==}
+  /@tabler/icons-react@2.36.0(react@18.2.0):
+    resolution: {integrity: sha512-IyJISQOuageoi+TbnkzUyC2tVjW/ABnMy4GFL+WpUVxawxQF1Hx2Lusbp53eHMwVhHnTI5lHPdOlB7OwANX8Tg==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@tabler/icons': 2.35.0
+      '@tabler/icons': 2.36.0
       prop-types: 15.8.1
       react: 18.2.0
     dev: false
 
-  /@tabler/icons@2.35.0:
-    resolution: {integrity: sha512-qW/itKdmFvfGw6mAQ+cZy+2MYTXb0XdGAVhO3obYLJEfsSPMwQRO0S9ckFk1xMQX/Tj7REC3TEmWUBWNi3/o3g==}
+  /@tabler/icons@2.36.0:
+    resolution: {integrity: sha512-pgUAALzzr3sDQ1m0s240LrwVxeUgkFuP6oZnwd1zTB5V7sgvgVUt0Uf0/qYwUQkoqt0oDgGQngXriCCp7AOvrg==}
     dev: false
 
   /@types/estree@1.0.1:
@@ -1315,8 +1315,8 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
-  /@types/node@20.7.0:
-    resolution: {integrity: sha512-zI22/pJW2wUZOVyguFaUL1HABdmSVxpXrzIqkjsHmyUjNhPoWM1CKfvVuXfetHhIok4RY573cqS0mZ1SJEnoTg==}
+  /@types/node@20.7.1:
+    resolution: {integrity: sha512-LT+OIXpp2kj4E2S/p91BMe+VgGX2+lfO+XTpfXhh+bCk2LkQtHZSub8ewFBMGP5ClysPjTDFa4sMI8Q3n4T0wg==}
 
   /@types/parse-json@4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
