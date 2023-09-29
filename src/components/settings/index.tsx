@@ -33,22 +33,22 @@ const Settings: FC<SettingsProps> = (props) => {
 	const [outsideClickModalOpened, setOutsideClickModalOpened] =
 		useState<boolean>(false)
 	const [location, setLocation] = useState<Location>({
-		suburb: '',
-		cityDistrict: '',
-		borough: '',
-		village: '',
-		town: '',
-		city: '',
-		municipality: '',
-		district: '',
-		stateDistrict: '',
-		county: '',
-		state: '',
-		territory: '',
-		subdivision: '',
-		region: '',
-		country: '',
-		continent: '',
+		suburb: null,
+		cityDistrict: null,
+		borough: null,
+		village: null,
+		town: null,
+		city: null,
+		municipality: null,
+		district: null,
+		stateDistrict: null,
+		county: null,
+		state: null,
+		territory: null,
+		subdivision: null,
+		region: null,
+		country: null,
+		continent: null,
 	})
 
 	useEffect(() => {
@@ -528,7 +528,7 @@ const privacyPolicyMap: Record<keyof typeof locales, string> = {
 	zh: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/zh_CN/PRIVACY.md',
 }
 
-const generateLocation = (args: Record<keyof any, any>): string => {
+const generateLocation = (args: Location): string => {
 	let specificLocation =
 		args?.suburb ??
 		args?.cityDistrict ??
@@ -537,7 +537,7 @@ const generateLocation = (args: Record<keyof any, any>): string => {
 		args?.town ??
 		args?.city ??
 		args?.municipality ??
-		args?.args?.district ??
+		args?.district ??
 		args?.stateDistrict ??
 		args?.county ??
 		null

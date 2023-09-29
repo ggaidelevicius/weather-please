@@ -8,40 +8,40 @@ import type { Dispatch, SetStateAction } from 'react'
  * smaller divisions like suburb and village up to broader ones like state and continent. Not all properties
  * may be available for every location, so they are marked as optional.
  *
- * @property {string} [suburb] - The specific suburb within a town or city.
- * @property {string} [cityDistrict] - A division within a larger city, often for administrative purposes.
- * @property {string} [borough] - A division within some cities, especially in larger metropolitan areas.
- * @property {string} [village] - A smaller settlement or rural locality.
- * @property {string} [town] - The town or urban locality.
- * @property {string} [city] - A large and permanent human settlement.
- * @property {string} [municipality] - An administrative division in certain countries.
- * @property {string} [district] - An area of a town or country.
- * @property {string} [stateDistrict] - A division within a state, often for administrative purposes.
- * @property {string} [county] - A division within a country, smaller than a state but larger than a city.
- * @property {string} [state] - The state, province, or similar sub-national division.
- * @property {string} [territory] - An area of land under the jurisdiction of a ruler or state.
- * @property {string} [subdivision] - A division of a larger area.
- * @property {string} [region] - A large area of land, possibly comprising several countries or states.
- * @property {string} [country] - The nation or sovereign state.
- * @property {string} [continent] - The world's main continuous expanses of land.
+ * @property {string | null} [suburb] - The specific suburb within a town or city.
+ * @property {string | null} [cityDistrict] - A division within a larger city, often for administrative purposes.
+ * @property {string | null} [borough] - A division within some cities, especially in larger metropolitan areas.
+ * @property {string | null} [village] - A smaller settlement or rural locality.
+ * @property {string | null} [town] - The town or urban locality.
+ * @property {string | null} [city] - A large and permanent human settlement.
+ * @property {string | null} [municipality] - An administrative division in certain countries.
+ * @property {string | null} [district] - An area of a town or country.
+ * @property {string | null} [stateDistrict] - A division within a state, often for administrative purposes.
+ * @property {string | null} [county] - A division within a country, smaller than a state but larger than a city.
+ * @property {string | null} [state] - The state, province, or similar sub-national division.
+ * @property {string | null} [territory] - An area of land under the jurisdiction of a ruler or state.
+ * @property {string | null} [subdivision] - A division of a larger area.
+ * @property {string | null} [region] - A large area of land, possibly comprising several countries or states.
+ * @property {string | null} [country] - The nation or sovereign state.
+ * @property {string | null} [continent] - The world's main continuous expanses of land.
  */
 export interface Location {
-	suburb?: string
-	cityDistrict?: string
-	borough?: string
-	village?: string
-	town?: string
-	city?: string
-	municipality?: string
-	district?: string
-	stateDistrict?: string
-	county?: string
-	state?: string
-	territory?: string
-	subdivision?: string
-	region?: string
-	country?: string
-	continent?: string
+	suburb?: string | null
+	cityDistrict?: string | null
+	borough?: string | null
+	village?: string | null
+	town?: string | null
+	city?: string | null
+	municipality?: string | null
+	district?: string | null
+	stateDistrict?: string | null
+	county?: string | null
+	state?: string | null
+	territory?: string | null
+	subdivision?: string | null
+	region?: string | null
+	country?: string | null
+	continent?: string | null
 }
 
 /**
