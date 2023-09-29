@@ -5,23 +5,43 @@ import type { Dispatch, SetStateAction } from 'react'
  * Represents geographical location details.
  *
  * The interface is designed to capture various levels of granularity in a location's description, from
- * smaller divisions like suburb and village up to broader ones like state and country. Not all properties
+ * smaller divisions like suburb and village up to broader ones like state and continent. Not all properties
  * may be available for every location, so they are marked as optional.
  *
  * @property {string} [suburb] - The specific suburb within a town or city.
- * @property {string} [town] - The town or urban locality.
+ * @property {string} [cityDistrict] - A division within a larger city, often for administrative purposes.
+ * @property {string} [borough] - A division within some cities, especially in larger metropolitan areas.
  * @property {string} [village] - A smaller settlement or rural locality.
- * @property {string} [country] - The nation or sovereign state.
- * @property {string} [state] - The state, province, or similar sub-national division.
+ * @property {string} [town] - The town or urban locality.
+ * @property {string} [city] - A large and permanent human settlement.
+ * @property {string} [municipality] - An administrative division in certain countries.
+ * @property {string} [district] - An area of a town or country.
+ * @property {string} [stateDistrict] - A division within a state, often for administrative purposes.
  * @property {string} [county] - A division within a country, smaller than a state but larger than a city.
+ * @property {string} [state] - The state, province, or similar sub-national division.
+ * @property {string} [territory] - An area of land under the jurisdiction of a ruler or state.
+ * @property {string} [subdivision] - A division of a larger area.
+ * @property {string} [region] - A large area of land, possibly comprising several countries or states.
+ * @property {string} [country] - The nation or sovereign state.
+ * @property {string} [continent] - The world's main continuous expanses of land.
  */
 export interface Location {
 	suburb?: string
-	town?: string
+	cityDistrict?: string
+	borough?: string
 	village?: string
-	country?: string
-	state?: string
+	town?: string
+	city?: string
+	municipality?: string
+	district?: string
+	stateDistrict?: string
 	county?: string
+	state?: string
+	territory?: string
+	subdivision?: string
+	region?: string
+	country?: string
+	continent?: string
 }
 
 /**

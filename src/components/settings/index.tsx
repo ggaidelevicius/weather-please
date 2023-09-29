@@ -33,10 +33,22 @@ const Settings: FC<SettingsProps> = (props) => {
 	const [outsideClickModalOpened, setOutsideClickModalOpened] =
 		useState<boolean>(false)
 	const [location, setLocation] = useState<Location>({
-		country: '',
-		town: '',
 		suburb: '',
+		cityDistrict: '',
+		borough: '',
 		village: '',
+		town: '',
+		city: '',
+		municipality: '',
+		district: '',
+		stateDistrict: '',
+		county: '',
+		state: '',
+		territory: '',
+		subdivision: '',
+		region: '',
+		country: '',
+		continent: '',
 	})
 
 	useEffect(() => {
@@ -47,15 +59,42 @@ const Settings: FC<SettingsProps> = (props) => {
 				)
 				const res = await req.json()
 				const {
-					address: { country, suburb, town, village, state, county },
+					address: {
+						suburb,
+						city_district,
+						borough,
+						village,
+						town,
+						city,
+						municipality,
+						district,
+						state_district,
+						county,
+						state,
+						territory,
+						subdivision,
+						region,
+						country,
+						continent,
+					},
 				} = res
 				setLocation({
-					country: country,
 					suburb: suburb,
-					town: town,
+					cityDistrict: city_district,
+					borough: borough,
 					village: village,
-					state: state,
+					town: town,
+					city: city,
+					municipality: municipality,
+					district: district,
+					stateDistrict: state_district,
 					county: county,
+					state: state,
+					territory: territory,
+					subdivision: subdivision,
+					region: region,
+					country: country,
+					continent: continent,
 				})
 			} catch (e) {
 				// eslint-disable-next-line no-console
@@ -491,11 +530,28 @@ const privacyPolicyMap: Record<keyof typeof locales, string> = {
 
 const generateLocation = (args: Record<keyof any, any>): string => {
 	let specificLocation =
-		args?.village ?? args?.town ?? args?.suburb ?? args?.county ?? null
+		args?.suburb ??
+		args?.cityDistrict ??
+		args?.borough ??
+		args?.village ??
+		args?.town ??
+		args?.city ??
+		args?.municipality ??
+		args?.args?.district ??
+		args?.stateDistrict ??
+		args?.county ??
+		null
 	if (specificLocation) {
 		specificLocation = `${specificLocation}, `
 	}
-	const broadLocation = args?.state ?? args.country
+	const broadLocation =
+		args?.state ??
+		args?.territory ??
+		args?.subdivision ??
+		args?.region ??
+		args?.country ??
+		args?.continent ??
+		'Unknown'
 
 	return specificLocation
 		? `${specificLocation}${broadLocation}`
