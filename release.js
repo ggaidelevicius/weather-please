@@ -200,7 +200,8 @@ const packageSource = () => {
 		if (
 			fs.statSync(fullPath).isFile() &&
 			fullPath.slice(-4) !== '.zip' &&
-			fullPath !== './.sentryclirc'
+			fullPath !== './.sentryclirc' &&
+			fullPath !== './.env.local'
 		) {
 			zip.addLocalFile(fullPath)
 		}
