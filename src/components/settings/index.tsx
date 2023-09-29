@@ -410,7 +410,29 @@ const Settings: FC<SettingsProps> = (props) => {
 					size="sm"
 					c="lightblue"
 					component="a"
-					href="https://github.com/ggaidelevicius/weather-please/issues"
+					href={`https://weather-please.app/feedback?type=feedback&locale=${input.lang}`}
+					style={{ marginTop: '0.2rem' }}
+					className="link"
+					target="_blank"
+				>
+					<Trans>✍️ Submit feedback</Trans>
+				</Text>
+				<Text
+					size="sm"
+					c="lightblue"
+					component="a"
+					href={`https://weather-please.app/feedback?type=feature&locale=${input.lang}`}
+					style={{ marginTop: '0.2rem' }}
+					className="link"
+					target="_blank"
+				>
+					<Trans>💡 Request a feature</Trans>
+				</Text>
+				<Text
+					size="sm"
+					c="lightblue"
+					component="a"
+					href={`https://weather-please.app/feedback?type=bug&locale=${input.lang}`}
 					style={{ marginTop: '0.2rem' }}
 					className="link"
 					target="_blank"

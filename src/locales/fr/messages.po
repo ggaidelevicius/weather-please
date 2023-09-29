@@ -37,24 +37,32 @@ msgstr "{0} mm de précipitations attendues au cours des {1} prochaines heures"
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "{0} mm de précipitations attendues au cours de la prochaine heure"
 
-#: src/components/settings/index.tsx:394
+#: src/components/settings/index.tsx:463
 msgid "☕ Gift a coffee"
 msgstr "☕ Offrir un café"
 
-#: src/components/settings/index.tsx:360
-#: src/pages/index.tsx:670
+#: src/components/settings/index.tsx:418
+msgid "✍️ Submit feedback"
+msgstr "✍️ Soumettre des commentaires"
+
+#: src/components/settings/index.tsx:407
+#: src/pages/index.tsx:684
 msgid "🌟 Leave a review"
 msgstr "🌟 Laisser un avis"
 
-#: src/components/settings/index.tsx:371
+#: src/components/settings/index.tsx:440
 msgid "🐛 Report a bug"
 msgstr "🐛 Signaler un bug"
 
-#: src/components/settings/index.tsx:382
+#: src/components/settings/index.tsx:429
+msgid "💡 Request a feature"
+msgstr "💡 Demander une fonctionnalité"
+
+#: src/components/settings/index.tsx:451
 msgid "🔒 Privacy policy"
 msgstr "🔒 Politique de confidentialité"
 
-#: src/components/settings/index.tsx:225
+#: src/components/settings/index.tsx:272
 msgid "Alerts"
 msgstr "Alertes"
 
@@ -66,7 +74,7 @@ msgstr "Une erreur s'est produite lors de la récupération des données de loca
 msgid "An error has occurred while fetching weather data. Please check the console for more details."
 msgstr "Une erreur s'est produite lors de la récupération des données météorologiques. Veuillez vérifier la console pour plus de détails."
 
-#: src/components/settings/index.tsx:58
+#: src/components/settings/index.tsx:105
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "Une erreur s'est produite lors de la récupération de votre localisation. Veuillez consulter la console pour plus de détails."
 
@@ -82,11 +90,15 @@ msgstr "Avril"
 msgid "August"
 msgstr "Août"
 
-#: src/components/settings/index.tsx:120
+#: src/components/settings/index.tsx:167
 msgid "Based on the provided information, your location is:"
 msgstr "Sur base des informations fournies, votre localisation est :"
 
-#: src/components/settings/index.tsx:328
+#: src/pages/feedback/index.tsx:140
+msgid "Bug report"
+msgstr "Rapport de bug"
+
+#: src/components/settings/index.tsx:375
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -94,11 +106,11 @@ msgstr "Annuler"
 msgid "clear sky"
 msgstr "ciel clair"
 
-#: src/components/settings/index.tsx:219
+#: src/components/settings/index.tsx:266
 msgid "Date"
 msgstr "Date"
 
-#: src/components/settings/index.tsx:217
+#: src/components/settings/index.tsx:264
 msgid "Day"
 msgstr "Jour"
 
@@ -118,16 +130,24 @@ msgstr "bruine givrante dense"
 msgid "depositing rime fog"
 msgstr "brouillard givrant déposant"
 
-#: src/components/settings/index.tsx:460
+#: src/components/settings/index.tsx:529
 msgid "Don't save"
 msgstr "Ne pas enregistrer"
 
-#: src/components/settings/index.tsx:56
+#: src/pages/feedback/index.tsx:159
+msgid "Email (optional)"
+msgstr "Email (optionnel)"
+
+#: src/components/settings/index.tsx:103
 #: src/pages/index.tsx:272
 #: src/pages/index.tsx:513
 #: src/pages/index.tsx:546
 msgid "Error"
 msgstr "Erreur"
+
+#: src/pages/feedback/index.tsx:209
+msgid "Error submitting feedback. Try again later."
+msgstr "Erreur lors de l'envoi des commentaires. Réessayez plus tard."
 
 #: src/components/alert/index.tsx:71
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
@@ -145,9 +165,21 @@ msgstr "UV extrêmes pour la prochaine heure"
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "UV extrêmes débutant dans {timeUntilExtremeUv} heures"
 
+#: src/pages/feedback/index.tsx:125
+msgid "Feature request"
+msgstr "Demande de fonctionnalité"
+
 #: src/components/tile/index.tsx:69
 msgid "February"
 msgstr "Février"
+
+#: src/pages/feedback/index.tsx:110
+msgid "Feedback"
+msgstr "Retour d'information"
+
+#: src/pages/feedback/index.tsx:192
+msgid "Feedback successfully submitted"
+msgstr "Retour d'information envoyé avec succès"
 
 #: src/components/tile/index.tsx:64
 msgid "Friday"
@@ -169,19 +201,19 @@ msgstr "fortes averses de neige"
 msgid "heavy snowfall"
 msgstr "fortes chutes de neige"
 
-#: src/components/settings/index.tsx:331
+#: src/components/settings/index.tsx:378
 msgid "I'd love to bring Weather Please to more languages."
 msgstr "J'aimerais apporter Weather Please à d'autres langues."
 
-#: src/components/settings/index.tsx:211
+#: src/components/settings/index.tsx:258
 msgid "Identifier"
 msgstr "Identificateur"
 
-#: src/components/settings/index.tsx:132
+#: src/components/settings/index.tsx:179
 msgid "If this is incorrect, please update the values below."
 msgstr "Si cela est incorrect, veuillez mettre à jour les valeurs ci-dessous."
 
-#: src/components/settings/index.tsx:336
+#: src/components/settings/index.tsx:383
 msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 msgstr "Si vous avez une demande de traduction, veuillez nous contacter à <0>contact@weather-please.app</0>"
 
@@ -190,12 +222,12 @@ msgid "If your browser prompts you for location permissions, please select \"all
 msgstr "Si votre navigateur vous demande l'autorisation d'accéder à votre localisation, veuillez sélectionner \"autoriser\"."
 
 #: src/components/intialisation/index.tsx:120
-#: src/components/settings/index.tsx:145
+#: src/components/settings/index.tsx:192
 msgid "Invalid latitude value"
 msgstr "Valeur de latitude invalide"
 
 #: src/components/intialisation/index.tsx:136
-#: src/components/settings/index.tsx:161
+#: src/components/settings/index.tsx:208
 msgid "Invalid longitude value"
 msgstr "Valeur de longitude invalide"
 
@@ -213,12 +245,12 @@ msgstr "Juin"
 
 #: src/components/intialisation/index.tsx:76
 #: src/components/intialisation/index.tsx:153
-#: src/components/settings/index.tsx:276
+#: src/components/settings/index.tsx:323
 msgid "Language"
 msgstr "Langue"
 
 #: src/components/intialisation/index.tsx:111
-#: src/components/settings/index.tsx:136
+#: src/components/settings/index.tsx:183
 msgid "Latitude"
 msgstr "Latitude"
 
@@ -234,12 +266,12 @@ msgstr "bruine givrante légère"
 msgid "light freezing rain"
 msgstr "pluie verglaçante légère"
 
-#: src/components/settings/index.tsx:117
+#: src/components/settings/index.tsx:164
 msgid "Location"
 msgstr "Localisation"
 
 #: src/components/intialisation/index.tsx:126
-#: src/components/settings/index.tsx:151
+#: src/components/settings/index.tsx:198
 msgid "Longitude"
 msgstr "Longitude"
 
@@ -276,7 +308,11 @@ msgstr "Mars"
 msgid "May"
 msgstr "Mai"
 
-#: src/components/settings/index.tsx:272
+#: src/pages/feedback/index.tsx:148
+msgid "Message"
+msgstr "Message"
+
+#: src/components/settings/index.tsx:319
 msgid "Miscellaneous"
 msgstr "Divers"
 
@@ -300,7 +336,7 @@ msgstr "chutes de neige modérées"
 msgid "Monday"
 msgstr "Lundi"
 
-#: src/pages/index.tsx:684
+#: src/pages/index.tsx:698
 msgid "Never show this again"
 msgstr "Ne plus jamais afficher ceci"
 
@@ -308,11 +344,11 @@ msgstr "Ne plus jamais afficher ceci"
 #~ msgid "New tab"
 #~ msgstr "Nouvel onglet"
 
-#: src/components/settings/index.tsx:191
+#: src/components/settings/index.tsx:238
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
 msgstr "Remarque : cela ne fonctionne actuellement pas bien sur Safari et peut être inexact"
 
-#: src/components/settings/index.tsx:186
+#: src/components/settings/index.tsx:233
 msgid "Note: This requires browser permissions"
 msgstr "Remarque : cela nécessite des autorisations de navigateur"
 
@@ -320,7 +356,7 @@ msgstr "Remarque : cela nécessite des autorisations de navigateur"
 msgid "November"
 msgstr "Novembre"
 
-#: src/components/settings/index.tsx:202
+#: src/components/settings/index.tsx:249
 msgid "Number of days to forecast"
 msgstr "Nombre de jours à prévoir"
 
@@ -336,7 +372,7 @@ msgstr "couvert"
 msgid "partly cloudy"
 msgstr "partiellement nuageux"
 
-#: src/components/settings/index.tsx:177
+#: src/components/settings/index.tsx:224
 msgid "Periodically update location automatically"
 msgstr "Mettre à jour périodiquement la localisation automatiquement"
 
@@ -348,8 +384,8 @@ msgstr "Veuillez l'entrer manuellement ci-dessous."
 msgid "Saturday"
 msgstr "Samedi"
 
-#: src/components/settings/index.tsx:316
-#: src/components/settings/index.tsx:447
+#: src/components/settings/index.tsx:363
+#: src/components/settings/index.tsx:516
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -362,31 +398,31 @@ msgstr "Septembre"
 msgid "Set my location"
 msgstr "Définir ma localisation"
 
-#: src/components/settings/index.tsx:114
+#: src/components/settings/index.tsx:161
 msgid "Settings"
 msgstr "Paramètres"
 
-#: src/components/settings/index.tsx:295
+#: src/components/settings/index.tsx:342
 msgid "Share anonymised crash data and error logs"
 msgstr "Partager les données anonymisées de crash et les journaux d'erreurs"
 
-#: src/components/settings/index.tsx:239
+#: src/components/settings/index.tsx:286
 msgid "Show extreme UV alerts"
 msgstr "Afficher les alertes UV extrêmes"
 
-#: src/components/settings/index.tsx:246
+#: src/components/settings/index.tsx:293
 msgid "Show high precipitation alerts"
 msgstr "Afficher les alertes de fortes précipitations"
 
-#: src/components/settings/index.tsx:262
+#: src/components/settings/index.tsx:309
 msgid "Show low visibility alerts"
 msgstr "Afficher les alertes de faible visibilité"
 
-#: src/components/settings/index.tsx:254
+#: src/components/settings/index.tsx:301
 msgid "Show strong wind alerts"
 msgstr "Afficher les alertes de vent fort"
 
-#: src/components/settings/index.tsx:228
+#: src/components/settings/index.tsx:275
 msgid "Show weather alerts"
 msgstr "Afficher les alertes météorologiques"
 
@@ -441,6 +477,10 @@ msgstr "Rafales de vent fort commençant dans {timeUntilStrongWind} heures"
 #: src/components/alert/index.tsx:227
 msgid "Strong wind starting in {timeUntilStrongWind} hours"
 msgstr "Vent fort commençant dans {timeUntilStrongWind} heures"
+
+#: src/pages/feedback/index.tsx:174
+msgid "Submit"
+msgstr "Soumettre"
 
 #: src/components/tile/index.tsx:59
 msgid "Sunday"
@@ -498,7 +538,7 @@ msgstr "orage avec de légères grêles"
 msgid "Thursday"
 msgstr "Jeudi"
 
-#: src/components/settings/index.tsx:198
+#: src/components/settings/index.tsx:245
 msgid "Tiles"
 msgstr "Tuiles"
 
@@ -511,11 +551,11 @@ msgid "Tuesday"
 msgstr "Mardi"
 
 #: src/components/intialisation/index.tsx:149
-#: src/components/settings/index.tsx:174
+#: src/components/settings/index.tsx:221
 msgid "Unsure how to find these? Click here."
 msgstr "Vous ne savez pas comment les trouver ? Cliquez ici."
 
-#: src/components/settings/index.tsx:287
+#: src/components/settings/index.tsx:334
 msgid "Use metric number format"
 msgstr "Utiliser le format numérique métrique"
 
@@ -527,7 +567,7 @@ msgstr "averses de pluie violentes"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Nous aimerions proposer Weather Please dans davantage de langues."
 
-#: src/pages/index.tsx:799
+#: src/pages/index.tsx:813
 msgid "weather data provided by open-meteo"
 msgstr "données météorologiques fournies par open-meteo"
 
@@ -535,18 +575,18 @@ msgstr "données météorologiques fournies par open-meteo"
 msgid "Wednesday"
 msgstr "Mercredi"
 
-#: src/pages/index.tsx:667
+#: src/pages/index.tsx:670
 msgid "Would you like to leave a review?"
 msgstr "Souhaitez-vous laisser un avis?"
 
-#: src/components/settings/index.tsx:426
+#: src/components/settings/index.tsx:495
 msgid "You can't save because either your latitude or longitude are invalid."
 msgstr "Vous ne pouvez pas enregistrer car votre latitude ou longitude sont invalides."
 
-#: src/components/settings/index.tsx:419
+#: src/components/settings/index.tsx:488
 msgid "You have unsaved changes"
 msgstr "Vous avez des modifications non enregistrées"
 
-#: src/pages/index.tsx:663
+#: src/pages/index.tsx:665
 msgid "You've been using Weather Please for a while"
 msgstr "Vous utilisez Weather Please depuis un moment"
