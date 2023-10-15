@@ -300,10 +300,8 @@ const WeatherPlease: FC = () => {
 			const alerts = JSON.parse(localStorage.alerts)
 			setFutureWeatherData(data)
 			setLocalStorageCurrentWeatherData(alerts)
-		} else {
-			if (config.lat && config.lon) {
-				fetchData()
-			}
+		} else if (config.lat && config.lon) {
+			fetchData()
 		}
 
 		const checkHour = setInterval(() => {
@@ -426,7 +424,6 @@ const WeatherPlease: FC = () => {
 				setGeolocationError(true)
 			}, 5e3)
 		} else {
-			// todo: warning on exiting without saving changes
 			if (config.lat !== input.lat || config.lon !== input.lon) {
 				setChangedLocation(true)
 			}
@@ -489,7 +486,7 @@ const WeatherPlease: FC = () => {
 			const userAgent = navigator.userAgent.toLowerCase()
 
 			if (
-				!(userAgent.indexOf('safari') !== -1) &&
+				userAgent.indexOf('safari') === -1 &&
 				userAgent.indexOf('chrome') === -1
 			) {
 				try {

@@ -80,10 +80,10 @@ const Feedback = () => {
 	if (process.env.NEXT_PUBLIC_DEMO === 'true') {
 		return (
 			<>
-			<Head>
-				<title>Weather Please Feedback</title>
-				<meta name="robots" content="noindex" />
-			</Head>
+				<Head>
+					<title>Weather Please Feedback</title>
+					<meta name="robots" content="noindex" />
+				</Head>
 				<main>
 					<AnimatePresence>
 						{pageLoaded && (
