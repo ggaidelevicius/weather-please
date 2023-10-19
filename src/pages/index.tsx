@@ -146,8 +146,10 @@ const WeatherPlease: FC = () => {
 			if (objectShapesMatch) {
 				setConfig(storedData)
 				setInput(storedData)
-				if (new Date().getTime() - storedData.installed >= 2419200000 &&
-					!storedData.displayedReviewPrompt) {
+				if (
+					new Date().getTime() - storedData.installed >= 2419200000 &&
+					!storedData.displayedReviewPrompt
+				) {
 					setTimeout(() => {
 						displayReviewPrompt()
 					}, 1e3)
@@ -156,8 +158,10 @@ const WeatherPlease: FC = () => {
 				const mergedObject = mergeObjects(storedData, config) // should we be comparing against initialState here instead?
 				setConfig(mergedObject as ConfigProps)
 				setInput(mergedObject as ConfigProps) // we lose the generic capability of the function here
-				if (new Date().getTime() - mergedObject.installed >= 2419200000 &&
-					!mergedObject.displayedReviewPrompt) {
+				if (
+					new Date().getTime() - mergedObject.installed >= 2419200000 &&
+					!mergedObject.displayedReviewPrompt
+				) {
 					setTimeout(() => {
 						displayReviewPrompt()
 					}, 1e3)
@@ -297,15 +301,15 @@ const WeatherPlease: FC = () => {
 			localStorage.data &&
 			localStorage.lastUpdated &&
 			new Date().getFullYear() ===
-			parseInt(localStorage.lastUpdated.split('-')[0]) &&
+				parseInt(localStorage.lastUpdated.split('-')[0]) &&
 			new Date().getMonth() ===
-			parseInt(localStorage.lastUpdated.split('-')[1]) &&
+				parseInt(localStorage.lastUpdated.split('-')[1]) &&
 			new Date().getDate() ===
-			parseInt(localStorage.lastUpdated.split('-')[2]) &&
+				parseInt(localStorage.lastUpdated.split('-')[2]) &&
 			new Date().getHours() ===
-			parseInt(localStorage.lastUpdated.split('-')[3]) &&
+				parseInt(localStorage.lastUpdated.split('-')[3]) &&
 			JSON.parse(localStorage.data).length ===
-			parseInt(config.daysToRetrieve) &&
+				parseInt(config.daysToRetrieve) &&
 			!changedLocation
 		) {
 			const data = JSON.parse(localStorage.data)
@@ -664,9 +668,7 @@ const WeatherPlease: FC = () => {
 	const displayReviewPrompt = () => {
 		notifications.show({
 			id: 'review',
-			title: (
-				<Trans>You&apos;ve been using Weather Please for a while</Trans>
-			),
+			title: <Trans>You&apos;ve been using Weather Please for a while</Trans>,
 			message: (
 				<div style={{ display: 'flex', flexDirection: 'column' }}>
 					<p style={{ margin: '0.2rem 0' }}>
