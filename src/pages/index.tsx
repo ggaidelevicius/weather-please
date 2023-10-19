@@ -149,7 +149,7 @@ const WeatherPlease: FC = () => {
 				if (new Date().getTime() - storedData.installed >= 2419200000 &&
 					!storedData.displayedReviewPrompt) {
 					setTimeout(() => {
-						displayReviewPrompt(reviewLink)
+						displayReviewPrompt()
 					}, 1e3)
 				}
 			} else {
@@ -159,7 +159,7 @@ const WeatherPlease: FC = () => {
 				if (new Date().getTime() - mergedObject.installed >= 2419200000 &&
 					!mergedObject.displayedReviewPrompt) {
 					setTimeout(() => {
-						displayReviewPrompt(reviewLink)
+						displayReviewPrompt()
 					}, 1e3)
 				}
 			}
