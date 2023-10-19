@@ -661,7 +661,7 @@ const WeatherPlease: FC = () => {
 	 * 1. A button to leave a review.
 	 * 2. A button to dismiss the prompt and ensure it's never shown again.
 	 */
-	const displayReviewPrompt = (href: string) => {
+	const displayReviewPrompt = () => {
 		notifications.show({
 			id: 'review',
 			title: (
@@ -674,7 +674,7 @@ const WeatherPlease: FC = () => {
 					</p>
 					<Button
 						component="a"
-						href={href}
+						href={getUserAgent()}
 						style={{ marginTop: '0.5rem' }}
 						onClick={() => {
 							notifications.hide('review')
@@ -707,7 +707,7 @@ const WeatherPlease: FC = () => {
 		})
 	}
 
-	useEffect(() => {
+	const getUserAgent = () => {
 		const userAgent = navigator.userAgent.toLowerCase()
 
 		if (
@@ -716,15 +716,22 @@ const WeatherPlease: FC = () => {
 		) {
 			setUsingSafari(true)
 			setReviewLink('https://apps.apple.com/au/app/weather-please/id6462968576')
+			return 'https://apps.apple.com/au/app/weather-please/id6462968576'
 		} else if (userAgent.includes('firefox/')) {
 			setReviewLink(
 				'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/',
 			)
+			return 'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/'
 		} else if (userAgent.includes('edg/')) {
 			setReviewLink(
 				'https://microsoftedge.microsoft.com/addons/detail/weather-please/genbleeffmekfnbkfpgdkdpggamcgflo',
 			)
+			return 'https://microsoftedge.microsoft.com/addons/detail/weather-please/genbleeffmekfnbkfpgdkdpggamcgflo'
 		}
+	}
+
+	useEffect(() => {
+		getUserAgent()
 	}, [])
 
 	return (
