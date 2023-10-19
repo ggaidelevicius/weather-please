@@ -149,7 +149,7 @@ const WeatherPlease: FC = () => {
 				if (new Date().getTime() - storedData.installed >= 2419200000 &&
 					!storedData.displayedReviewPrompt) {
 					setTimeout(() => {
-						displayReviewPrompt()
+						displayReviewPrompt(reviewLink)
 					}, 1e3)
 				}
 			} else {
@@ -159,7 +159,7 @@ const WeatherPlease: FC = () => {
 				if (new Date().getTime() - mergedObject.installed >= 2419200000 &&
 					!mergedObject.displayedReviewPrompt) {
 					setTimeout(() => {
-						displayReviewPrompt()
+						displayReviewPrompt(reviewLink)
 					}, 1e3)
 				}
 			}
@@ -661,7 +661,7 @@ const WeatherPlease: FC = () => {
 	 * 1. A button to leave a review.
 	 * 2. A button to dismiss the prompt and ensure it's never shown again.
 	 */
-	const displayReviewPrompt = () => {
+	const displayReviewPrompt = (href: string) => {
 		notifications.show({
 			id: 'review',
 			title: (
@@ -674,7 +674,7 @@ const WeatherPlease: FC = () => {
 					</p>
 					<Button
 						component="a"
-						href={reviewLink}
+						href={href}
 						style={{ marginTop: '0.5rem' }}
 						onClick={() => {
 							notifications.hide('review')
