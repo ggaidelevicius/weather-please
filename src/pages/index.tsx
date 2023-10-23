@@ -676,7 +676,7 @@ const WeatherPlease: FC = () => {
 					</p>
 					<Button
 						component="a"
-						href={getUserAgent()}
+						href={getUserAgent() ?? 'https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews'} // can't pass computed value in here, need to figure out alternative asap
 						style={{ marginTop: '0.5rem' }}
 						onClick={() => {
 							notifications.hide('review')
