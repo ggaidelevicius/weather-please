@@ -9,6 +9,7 @@
 	transition: 0.25s ease-out;
 	display: flex;
 	transform-origin: left center;
+	will-change: transform;
 }
 
 .day {
