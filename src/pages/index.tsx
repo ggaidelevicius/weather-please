@@ -724,11 +724,6 @@ const WeatherPlease: FC = () => {
 				'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/',
 			)
 			return 'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/'
-		} else if (userAgent.includes('edg/')) {
-			setReviewLink(
-				'https://microsoftedge.microsoft.com/addons/detail/weather-please/genbleeffmekfnbkfpgdkdpggamcgflo',
-			)
-			return 'https://microsoftedge.microsoft.com/addons/detail/weather-please/genbleeffmekfnbkfpgdkdpggamcgflo'
 		}
 	}
 
