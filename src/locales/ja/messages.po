@@ -46,7 +46,7 @@ msgid "✍️ Submit feedback"
 msgstr "✍️ フィードバックを送信"
 
 #: src/components/settings/index.tsx:407
-#: src/pages/index.tsx:684
+#: src/pages/index.tsx:692
 msgid "🌟 Leave a review"
 msgstr "🌟 レビューを残す"
 
@@ -62,15 +62,19 @@ msgstr "💡 機能をリクエスト"
 msgid "🔒 Privacy policy"
 msgstr "🔒 プライバシーポリシー"
 
+#: src/pages/feedback/index.tsx:244
+msgid "Additional details (optional)"
+msgstr "追加の詳細（任意）"
+
 #: src/components/settings/index.tsx:272
 msgid "Alerts"
 msgstr "アラート"
 
-#: src/pages/index.tsx:548
+#: src/pages/index.tsx:561
 msgid "An error has occurred while fetching location data. Please check the console for more details."
 msgstr "位置データの取得中にエラーが発生しました。詳細はコンソールを確認してください。"
 
-#: src/pages/index.tsx:274
+#: src/pages/index.tsx:290
 msgid "An error has occurred while fetching weather data. Please check the console for more details."
 msgstr "気象データの取得中にエラーが発生しました。詳細はコンソールを確認してください。"
 
@@ -78,7 +82,7 @@ msgstr "気象データの取得中にエラーが発生しました。詳細は
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "位置情報を取得中にエラーが発生しました。詳細はコンソールを確認してください。"
 
-#: src/pages/index.tsx:515
+#: src/pages/index.tsx:528
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "定期的な位置情報の更新中にエラーが発生しました。詳細はコンソールを確認してください。"
 
@@ -94,7 +98,7 @@ msgstr "8月"
 msgid "Based on the provided information, your location is:"
 msgstr "提供された情報に基づいて、あなたの位置は以下の通りです："
 
-#: src/pages/feedback/index.tsx:140
+#: src/pages/feedback/index.tsx:320
 msgid "Bug report"
 msgstr "バグ報告"
 
@@ -102,9 +106,29 @@ msgstr "バグ報告"
 msgid "Cancel"
 msgstr "キャンセル"
 
+#: src/pages/feedback/index.tsx:162
+msgid "Causes browser crashes or errors"
+msgstr "ブラウザのクラッシュやエラーを引き起こす"
+
+#: src/pages/feedback/index.tsx:207
+msgid "Changed needs"
+msgstr "変更されたニーズ"
+
 #: src/components/tile/weather/index.tsx:132
 msgid "clear sky"
 msgstr "晴れ"
+
+#: src/pages/feedback/index.tsx:196
+msgid "Concerned about privacy"
+msgstr "プライバシーに関する懸念"
+
+#: src/pages/feedback/index.tsx:202
+msgid "Concerned about security"
+msgstr "セキュリティに関する懸念"
+
+#: src/pages/feedback/index.tsx:224
+msgid "Consumes too much memory or CPU"
+msgstr "多くのメモリまたはCPUを消費する"
 
 #: src/components/settings/index.tsx:266
 msgid "Date"
@@ -130,22 +154,27 @@ msgstr "濃い凍結霧雨"
 msgid "depositing rime fog"
 msgstr "着氷霧"
 
+#: src/pages/feedback/index.tsx:176
+msgid "Difficult to use or understand"
+msgstr "使用または理解が難しい"
+
 #: src/components/settings/index.tsx:529
 msgid "Don't save"
 msgstr "保存しない"
 
-#: src/pages/feedback/index.tsx:159
+#: src/pages/feedback/index.tsx:254
+#: src/pages/feedback/index.tsx:339
 msgid "Email (optional)"
 msgstr "メール（任意）"
 
 #: src/components/settings/index.tsx:103
-#: src/pages/index.tsx:272
-#: src/pages/index.tsx:513
-#: src/pages/index.tsx:546
+#: src/pages/index.tsx:288
+#: src/pages/index.tsx:526
+#: src/pages/index.tsx:559
 msgid "Error"
 msgstr "エラー"
 
-#: src/pages/feedback/index.tsx:209
+#: src/pages/feedback/index.tsx:391
 msgid "Error submitting feedback. Try again later."
 msgstr "フィードバックの送信エラー。後でもう一度試してください。"
 
@@ -165,21 +194,29 @@ msgstr "次の1時間の極端なUV"
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "{timeUntilExtremeUv}時間後から極端なUVが始まります"
 
-#: src/pages/feedback/index.tsx:125
+#: src/pages/feedback/index.tsx:305
 msgid "Feature request"
 msgstr "機能リクエスト"
+
+#: src/pages/feedback/index.tsx:188
+msgid "Features don't work as expected"
+msgstr "機能が期待通りに動作しない"
 
 #: src/components/tile/index.tsx:69
 msgid "February"
 msgstr "2月"
 
-#: src/pages/feedback/index.tsx:110
+#: src/pages/feedback/index.tsx:290
 msgid "Feedback"
 msgstr "フィードバック"
 
-#: src/pages/feedback/index.tsx:192
+#: src/pages/feedback/index.tsx:374
 msgid "Feedback successfully submitted"
 msgstr "フィードバックが正常に送信されました"
+
+#: src/pages/feedback/index.tsx:216
+msgid "Found a better alternative"
+msgstr "より良い代替案を見つけた"
 
 #: src/components/tile/index.tsx:64
 msgid "Friday"
@@ -200,6 +237,10 @@ msgstr "激しい雪降り"
 #: src/components/tile/weather/index.tsx:150
 msgid "heavy snowfall"
 msgstr "大雪"
+
+#: src/pages/feedback/index.tsx:147
+msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
+msgstr "Weather Pleaseをアンインストールした理由について、フィードバックを提供していただけるとありがたいです。これにより、Weather Pleaseをより良い製品にすることができます。"
 
 #: src/components/settings/index.tsx:378
 msgid "I'd love to bring Weather Please to more languages."
@@ -231,6 +272,10 @@ msgstr "無効な緯度の値"
 msgid "Invalid longitude value"
 msgstr "無効な経度の値"
 
+#: src/pages/feedback/index.tsx:238
+msgid "Issues after a recent update"
+msgstr "最近のアップデート後の問題"
+
 #: src/components/tile/index.tsx:68
 msgid "January"
 msgstr "1月"
@@ -243,9 +288,14 @@ msgstr "7月"
 msgid "June"
 msgstr "6月"
 
+#: src/pages/feedback/index.tsx:182
+msgid "Lacks features I need"
+msgstr "必要な機能が不足している"
+
 #: src/components/intialisation/index.tsx:76
 #: src/components/intialisation/index.tsx:153
 #: src/components/settings/index.tsx:323
+#: src/pages/feedback/index.tsx:135
 msgid "Language"
 msgstr "言語"
 
@@ -308,7 +358,7 @@ msgstr "3月"
 msgid "May"
 msgstr "5月"
 
-#: src/pages/feedback/index.tsx:148
+#: src/pages/feedback/index.tsx:328
 msgid "Message"
 msgstr "メッセージ"
 
@@ -336,13 +386,21 @@ msgstr "適度な降雪"
 msgid "Monday"
 msgstr "月曜日"
 
-#: src/pages/index.tsx:698
+#: src/pages/index.tsx:706
 msgid "Never show this again"
 msgstr "再度表示しない"
 
 #: src/pages/_app.tsx:21
 #~ msgid "New tab"
 #~ msgstr "新しいタブ"
+
+#: src/pages/feedback/index.tsx:210
+msgid "No longer need the functionality"
+msgstr "もはやその機能は必要ない"
+
+#: src/pages/feedback/index.tsx:170
+msgid "Not available in my language"
+msgstr "私の言語では利用できません"
 
 #: src/components/settings/index.tsx:238
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
@@ -372,6 +430,10 @@ msgstr "曇り"
 msgid "partly cloudy"
 msgstr "一部曇り"
 
+#: src/pages/feedback/index.tsx:153
+msgid "Performance issues"
+msgstr "パフォーマンスの問題"
+
 #: src/components/settings/index.tsx:224
 msgid "Periodically update location automatically"
 msgstr "定期的に位置情報を自動更新"
@@ -379,6 +441,10 @@ msgstr "定期的に位置情報を自動更新"
 #: src/components/intialisation/index.tsx:107
 msgid "Please enter it manually below."
 msgstr "以下に手動で入力してください。"
+
+#: src/pages/feedback/index.tsx:221
+msgid "Resource usage"
+msgstr "リソースの使用"
 
 #: src/components/tile/index.tsx:65
 msgid "Saturday"
@@ -388,6 +454,10 @@ msgstr "土曜日"
 #: src/components/settings/index.tsx:516
 msgid "Save"
 msgstr "保存"
+
+#: src/pages/feedback/index.tsx:193
+msgid "Security and privacy concerns"
+msgstr "セキュリティとプライバシーの懸念"
 
 #: src/components/tile/index.tsx:76
 msgid "September"
@@ -442,6 +512,10 @@ msgstr "小雪のにわか雪"
 msgid "slight snowfall"
 msgstr "小雪"
 
+#: src/pages/feedback/index.tsx:156
+msgid "Slows down my browser"
+msgstr "ブラウザを遅くする"
+
 #: src/components/tile/weather/index.tsx:151
 msgid "snow grains"
 msgstr "粉雪"
@@ -478,7 +552,8 @@ msgstr "{timeUntilStrongWind}時間後に強い風の突風が始まります"
 msgid "Strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}時間後に強風が始まります"
 
-#: src/pages/feedback/index.tsx:174
+#: src/pages/feedback/index.tsx:269
+#: src/pages/feedback/index.tsx:354
 msgid "Submit"
 msgstr "提出"
 
@@ -546,14 +621,30 @@ msgstr "タイル"
 msgid "To get started, let's set your language and location."
 msgstr "始めるには、言語と場所を設定しましょう。"
 
+#: src/pages/feedback/index.tsx:230
+msgid "Too much battery usage"
+msgstr "過度のバッテリー使用"
+
 #: src/components/tile/index.tsx:61
 msgid "Tuesday"
 msgstr "火曜日"
+
+#: src/pages/feedback/index.tsx:145
+msgid "Uninstall feedback"
+msgstr "アンインストールに関するフィードバック"
 
 #: src/components/intialisation/index.tsx:149
 #: src/components/settings/index.tsx:221
 msgid "Unsure how to find these? Click here."
 msgstr "これらをどのように見つけるかわかりませんか？ここをクリック。"
+
+#: src/pages/feedback/index.tsx:235
+msgid "Update or change related"
+msgstr "アップデートまたは変更に関連する"
+
+#: src/pages/feedback/index.tsx:167
+msgid "Usability and functionality"
+msgstr "使用性と機能性"
 
 #: src/components/settings/index.tsx:334
 msgid "Use metric number format"
@@ -567,7 +658,7 @@ msgstr "激しいにわか雨"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "「Weather Please」をさらに多くの言語に提供したいと考えています。"
 
-#: src/pages/index.tsx:813
+#: src/pages/index.tsx:820
 msgid "weather data provided by open-meteo"
 msgstr "天気データはopen-meteoによって提供されています"
 
@@ -575,7 +666,7 @@ msgstr "天気データはopen-meteoによって提供されています"
 msgid "Wednesday"
 msgstr "水曜日"
 
-#: src/pages/index.tsx:670
+#: src/pages/index.tsx:675
 msgid "Would you like to leave a review?"
 msgstr "レビューを残してもよろしいですか？"
 
@@ -587,6 +678,6 @@ msgstr "緯度または経度が無効であるため、保存できません。
 msgid "You have unsaved changes"
 msgstr "未保存の変更があります"
 
-#: src/pages/index.tsx:665
+#: src/pages/index.tsx:671
 msgid "You've been using Weather Please for a while"
 msgstr "あなたはしばらく「Weather Please」を使用してきました"

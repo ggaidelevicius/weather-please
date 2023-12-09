@@ -8,7 +8,10 @@
 	"chrome_url_overrides": {
 		"newtab": "index.html"
 	},
-	"permissions": ["geolocation"],
+	"permissions": ["geolocation", "storage"],
+	"background": {
+		"service_worker": "background.js"
+	},
 	"icons": {
 		"128": "favicon.png"
 	}

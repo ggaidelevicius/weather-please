@@ -46,7 +46,7 @@ msgid "✍️ Submit feedback"
 msgstr "✍️ Kirim masukan"
 
 #: src/components/settings/index.tsx:407
-#: src/pages/index.tsx:684
+#: src/pages/index.tsx:692
 msgid "🌟 Leave a review"
 msgstr "🌟 Tinggalkan ulasan"
 
@@ -62,15 +62,19 @@ msgstr "💡 Minta fitur"
 msgid "🔒 Privacy policy"
 msgstr "🔒 Kebijakan privasi"
 
+#: src/pages/feedback/index.tsx:244
+msgid "Additional details (optional)"
+msgstr "Detail tambahan (opsional)"
+
 #: src/components/settings/index.tsx:272
 msgid "Alerts"
 msgstr "Peringatan"
 
-#: src/pages/index.tsx:548
+#: src/pages/index.tsx:561
 msgid "An error has occurred while fetching location data. Please check the console for more details."
 msgstr "Terjadi kesalahan saat mengambil data lokasi. Silakan periksa konsol untuk detail lebih lanjut."
 
-#: src/pages/index.tsx:274
+#: src/pages/index.tsx:290
 msgid "An error has occurred while fetching weather data. Please check the console for more details."
 msgstr "Terjadi kesalahan saat mengambil data cuaca. Silakan periksa konsol untuk detail lebih lanjut"
 
@@ -78,7 +82,7 @@ msgstr "Terjadi kesalahan saat mengambil data cuaca. Silakan periksa konsol untu
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "Terjadi kesalahan saat mengambil lokasi Anda. Silakan periksa konsol untuk detail lebih lanjut."
 
-#: src/pages/index.tsx:515
+#: src/pages/index.tsx:528
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "Terjadi kesalahan saat memperbarui lokasi secara berkala. Silakan periksa konsol untuk detail lebih lanjut."
 
@@ -94,7 +98,7 @@ msgstr "Agustus"
 msgid "Based on the provided information, your location is:"
 msgstr "Berdasarkan informasi yang diberikan, lokasi Anda adalah:"
 
-#: src/pages/feedback/index.tsx:140
+#: src/pages/feedback/index.tsx:320
 msgid "Bug report"
 msgstr "Laporan bug"
 
@@ -102,9 +106,29 @@ msgstr "Laporan bug"
 msgid "Cancel"
 msgstr "Batal"
 
+#: src/pages/feedback/index.tsx:162
+msgid "Causes browser crashes or errors"
+msgstr "Menyebabkan browser crash atau error"
+
+#: src/pages/feedback/index.tsx:207
+msgid "Changed needs"
+msgstr "Kebutuhan berubah"
+
 #: src/components/tile/weather/index.tsx:132
 msgid "clear sky"
 msgstr "langit cerah"
+
+#: src/pages/feedback/index.tsx:196
+msgid "Concerned about privacy"
+msgstr "Khawatir tentang privasi"
+
+#: src/pages/feedback/index.tsx:202
+msgid "Concerned about security"
+msgstr "Khawatir tentang keamanan"
+
+#: src/pages/feedback/index.tsx:224
+msgid "Consumes too much memory or CPU"
+msgstr "Menggunakan terlalu banyak memori atau CPU"
 
 #: src/components/settings/index.tsx:266
 msgid "Date"
@@ -130,22 +154,27 @@ msgstr "gerimis beku pekat"
 msgid "depositing rime fog"
 msgstr "kabut membeku"
 
+#: src/pages/feedback/index.tsx:176
+msgid "Difficult to use or understand"
+msgstr "Sulit untuk digunakan atau dipahami"
+
 #: src/components/settings/index.tsx:529
 msgid "Don't save"
 msgstr "Jangan simpan"
 
-#: src/pages/feedback/index.tsx:159
+#: src/pages/feedback/index.tsx:254
+#: src/pages/feedback/index.tsx:339
 msgid "Email (optional)"
 msgstr "Email (opsional)"
 
 #: src/components/settings/index.tsx:103
-#: src/pages/index.tsx:272
-#: src/pages/index.tsx:513
-#: src/pages/index.tsx:546
+#: src/pages/index.tsx:288
+#: src/pages/index.tsx:526
+#: src/pages/index.tsx:559
 msgid "Error"
 msgstr "Kesalahan"
 
-#: src/pages/feedback/index.tsx:209
+#: src/pages/feedback/index.tsx:391
 msgid "Error submitting feedback. Try again later."
 msgstr "Kesalahan mengirimkan masukan. Coba lagi nanti."
 
@@ -165,21 +194,29 @@ msgstr "UV ekstrem untuk jam kedepan"
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "UV ekstrem dimulai dalam {timeUntilExtremeUv} jam"
 
-#: src/pages/feedback/index.tsx:125
+#: src/pages/feedback/index.tsx:305
 msgid "Feature request"
 msgstr "Permintaan fitur"
+
+#: src/pages/feedback/index.tsx:188
+msgid "Features don't work as expected"
+msgstr "Fitur tidak bekerja sesuai harapan"
 
 #: src/components/tile/index.tsx:69
 msgid "February"
 msgstr "Februari"
 
-#: src/pages/feedback/index.tsx:110
+#: src/pages/feedback/index.tsx:290
 msgid "Feedback"
 msgstr "Masukan"
 
-#: src/pages/feedback/index.tsx:192
+#: src/pages/feedback/index.tsx:374
 msgid "Feedback successfully submitted"
 msgstr "Masukan berhasil dikirim"
+
+#: src/pages/feedback/index.tsx:216
+msgid "Found a better alternative"
+msgstr "Menemukan alternatif yang lebih baik"
 
 #: src/components/tile/index.tsx:64
 msgid "Friday"
@@ -200,6 +237,10 @@ msgstr "hujan salju lebat"
 #: src/components/tile/weather/index.tsx:150
 msgid "heavy snowfall"
 msgstr "salju lebat"
+
+#: src/pages/feedback/index.tsx:147
+msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
+msgstr "Saya akan menghargai jika Anda dapat memberikan umpan balik tentang mengapa Anda telah menghapus Weather Please. Hal ini memungkinkan saya untuk membuat Weather Please menjadi produk yang lebih baik."
 
 #: src/components/settings/index.tsx:378
 msgid "I'd love to bring Weather Please to more languages."
@@ -231,6 +272,10 @@ msgstr "Nilai lintang tidak valid"
 msgid "Invalid longitude value"
 msgstr "Nilai bujur tidak valid"
 
+#: src/pages/feedback/index.tsx:238
+msgid "Issues after a recent update"
+msgstr "Masalah setelah pembaruan terbaru"
+
 #: src/components/tile/index.tsx:68
 msgid "January"
 msgstr "Januari"
@@ -243,9 +288,14 @@ msgstr "Juli"
 msgid "June"
 msgstr "Juni"
 
+#: src/pages/feedback/index.tsx:182
+msgid "Lacks features I need"
+msgstr "Kekurangan fitur yang saya butuhkan"
+
 #: src/components/intialisation/index.tsx:76
 #: src/components/intialisation/index.tsx:153
 #: src/components/settings/index.tsx:323
+#: src/pages/feedback/index.tsx:135
 msgid "Language"
 msgstr "Bahasa"
 
@@ -308,7 +358,7 @@ msgstr "Maret"
 msgid "May"
 msgstr "Mei"
 
-#: src/pages/feedback/index.tsx:148
+#: src/pages/feedback/index.tsx:328
 msgid "Message"
 msgstr "Pesan"
 
@@ -336,13 +386,21 @@ msgstr "salju lebat sedang"
 msgid "Monday"
 msgstr "Senin"
 
-#: src/pages/index.tsx:698
+#: src/pages/index.tsx:706
 msgid "Never show this again"
 msgstr "Jangan tampilkan ini lagi"
 
 #: src/pages/_app.tsx:21
 #~ msgid "New tab"
 #~ msgstr "Tab baru"
+
+#: src/pages/feedback/index.tsx:210
+msgid "No longer need the functionality"
+msgstr "Tidak lagi membutuhkan fungsionalitasnya"
+
+#: src/pages/feedback/index.tsx:170
+msgid "Not available in my language"
+msgstr "Tidak tersedia dalam bahasa saya"
 
 #: src/components/settings/index.tsx:238
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
@@ -372,6 +430,10 @@ msgstr "berawan"
 msgid "partly cloudy"
 msgstr "sebagian berawan"
 
+#: src/pages/feedback/index.tsx:153
+msgid "Performance issues"
+msgstr "Masalah kinerja"
+
 #: src/components/settings/index.tsx:224
 msgid "Periodically update location automatically"
 msgstr "Secara berkala perbarui lokasi secara otomatis"
@@ -379,6 +441,10 @@ msgstr "Secara berkala perbarui lokasi secara otomatis"
 #: src/components/intialisation/index.tsx:107
 msgid "Please enter it manually below."
 msgstr "Silakan masukkan secara manual di bawah ini."
+
+#: src/pages/feedback/index.tsx:221
+msgid "Resource usage"
+msgstr "Penggunaan sumber daya"
 
 #: src/components/tile/index.tsx:65
 msgid "Saturday"
@@ -388,6 +454,10 @@ msgstr "Sabtu"
 #: src/components/settings/index.tsx:516
 msgid "Save"
 msgstr "Simpan"
+
+#: src/pages/feedback/index.tsx:193
+msgid "Security and privacy concerns"
+msgstr "Kekhawatiran tentang keamanan dan privasi"
 
 #: src/components/tile/index.tsx:76
 msgid "September"
@@ -442,6 +512,10 @@ msgstr "hujan salju ringan"
 msgid "slight snowfall"
 msgstr "salju ringan"
 
+#: src/pages/feedback/index.tsx:156
+msgid "Slows down my browser"
+msgstr "Memperlambat browser saya"
+
 #: src/components/tile/weather/index.tsx:151
 msgid "snow grains"
 msgstr "butiran salju"
@@ -478,7 +552,8 @@ msgstr "Hembusan angin kencang dimulai dalam {timeUntilStrongWind} jam"
 msgid "Strong wind starting in {timeUntilStrongWind} hours"
 msgstr "Angin kencang dimulai dalam {timeUntilStrongWind} jam"
 
-#: src/pages/feedback/index.tsx:174
+#: src/pages/feedback/index.tsx:269
+#: src/pages/feedback/index.tsx:354
 msgid "Submit"
 msgstr "Kirim"
 
@@ -546,14 +621,30 @@ msgstr "Ubin"
 msgid "To get started, let's set your language and location."
 msgstr "Untuk memulai, mari atur bahasa dan lokasi Anda."
 
+#: src/pages/feedback/index.tsx:230
+msgid "Too much battery usage"
+msgstr "Penggunaan baterai terlalu banyak"
+
 #: src/components/tile/index.tsx:61
 msgid "Tuesday"
 msgstr "Selasa"
+
+#: src/pages/feedback/index.tsx:145
+msgid "Uninstall feedback"
+msgstr "Umpan balik penghapusan"
 
 #: src/components/intialisation/index.tsx:149
 #: src/components/settings/index.tsx:221
 msgid "Unsure how to find these? Click here."
 msgstr "Tidak yakin bagaimana cara menemukannya? Klik di sini."
+
+#: src/pages/feedback/index.tsx:235
+msgid "Update or change related"
+msgstr "Terkait pembaruan atau perubahan"
+
+#: src/pages/feedback/index.tsx:167
+msgid "Usability and functionality"
+msgstr "Kegunaan dan fungsionalitas"
 
 #: src/components/settings/index.tsx:334
 msgid "Use metric number format"
@@ -567,7 +658,7 @@ msgstr "hujan deras"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Kami ingin membawa Weather Please ke lebih banyak bahasa."
 
-#: src/pages/index.tsx:813
+#: src/pages/index.tsx:820
 msgid "weather data provided by open-meteo"
 msgstr "data cuaca disediakan oleh open-meteo"
 
@@ -575,7 +666,7 @@ msgstr "data cuaca disediakan oleh open-meteo"
 msgid "Wednesday"
 msgstr "Rabu"
 
-#: src/pages/index.tsx:670
+#: src/pages/index.tsx:675
 msgid "Would you like to leave a review?"
 msgstr "Apakah Anda ingin meninggalkan ulasan?"
 
@@ -587,6 +678,6 @@ msgstr "Anda tidak dapat menyimpan karena garis lintang atau garis bujur Anda ti
 msgid "You have unsaved changes"
 msgstr "Anda memiliki perubahan yang belum disimpan"
 
-#: src/pages/index.tsx:665
+#: src/pages/index.tsx:671
 msgid "You've been using Weather Please for a while"
 msgstr "Anda telah menggunakan Weather Please untuk beberapa waktu"

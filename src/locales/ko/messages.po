@@ -46,7 +46,7 @@ msgid "✍️ Submit feedback"
 msgstr "✍️ 피드백 제출"
 
 #: src/components/settings/index.tsx:407
-#: src/pages/index.tsx:684
+#: src/pages/index.tsx:692
 msgid "🌟 Leave a review"
 msgstr "🌟 리뷰 남기기"
 
@@ -62,15 +62,19 @@ msgstr "💡 기능 요청"
 msgid "🔒 Privacy policy"
 msgstr "🔒 개인정보 처리방침"
 
+#: src/pages/feedback/index.tsx:244
+msgid "Additional details (optional)"
+msgstr "추가 세부 사항 (선택 사항)"
+
 #: src/components/settings/index.tsx:272
 msgid "Alerts"
 msgstr "알림"
 
-#: src/pages/index.tsx:548
+#: src/pages/index.tsx:561
 msgid "An error has occurred while fetching location data. Please check the console for more details."
 msgstr "위치 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
 
-#: src/pages/index.tsx:274
+#: src/pages/index.tsx:290
 msgid "An error has occurred while fetching weather data. Please check the console for more details."
 msgstr "날씨 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
 
@@ -78,7 +82,7 @@ msgstr "날씨 데이터를 가져오는 동안 오류가 발생했습니다. �
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "위치를 가져오는 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
 
-#: src/pages/index.tsx:515
+#: src/pages/index.tsx:528
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "위치를 주기적으로 업데이트하는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
 
@@ -94,7 +98,7 @@ msgstr "8월"
 msgid "Based on the provided information, your location is:"
 msgstr "제공된 정보를 기반으로, 귀하의 위치는:"
 
-#: src/pages/feedback/index.tsx:140
+#: src/pages/feedback/index.tsx:320
 msgid "Bug report"
 msgstr "버그 보고"
 
@@ -102,9 +106,29 @@ msgstr "버그 보고"
 msgid "Cancel"
 msgstr "취소"
 
+#: src/pages/feedback/index.tsx:162
+msgid "Causes browser crashes or errors"
+msgstr "브라우저 충돌이나 오류를 일으킴"
+
+#: src/pages/feedback/index.tsx:207
+msgid "Changed needs"
+msgstr "변경된 요구 사항"
+
 #: src/components/tile/weather/index.tsx:132
 msgid "clear sky"
 msgstr "맑은 하늘"
+
+#: src/pages/feedback/index.tsx:196
+msgid "Concerned about privacy"
+msgstr "개인 정보 보호에 대한 우려"
+
+#: src/pages/feedback/index.tsx:202
+msgid "Concerned about security"
+msgstr "보안에 대한 우려"
+
+#: src/pages/feedback/index.tsx:224
+msgid "Consumes too much memory or CPU"
+msgstr "너무 많은 메모리나 CPU를 소비함"
 
 #: src/components/settings/index.tsx:266
 msgid "Date"
@@ -130,22 +154,27 @@ msgstr "짙은 얼음 이슬비"
 msgid "depositing rime fog"
 msgstr "서리가 앉는 안개"
 
+#: src/pages/feedback/index.tsx:176
+msgid "Difficult to use or understand"
+msgstr "사용하기 어렵거나 이해하기 어려움"
+
 #: src/components/settings/index.tsx:529
 msgid "Don't save"
 msgstr "저장하지 마세요"
 
-#: src/pages/feedback/index.tsx:159
+#: src/pages/feedback/index.tsx:254
+#: src/pages/feedback/index.tsx:339
 msgid "Email (optional)"
 msgstr "이메일 (선택사항)"
 
 #: src/components/settings/index.tsx:103
-#: src/pages/index.tsx:272
-#: src/pages/index.tsx:513
-#: src/pages/index.tsx:546
+#: src/pages/index.tsx:288
+#: src/pages/index.tsx:526
+#: src/pages/index.tsx:559
 msgid "Error"
 msgstr "오류"
 
-#: src/pages/feedback/index.tsx:209
+#: src/pages/feedback/index.tsx:391
 msgid "Error submitting feedback. Try again later."
 msgstr "피드백 제출 오류. 나중에 다시 시도하세요."
 
@@ -165,21 +194,29 @@ msgstr "다음 1시간 동안 극심한 자외선"
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "{timeUntilExtremeUv}시간 후에 극심한 자외선이 시작됩니다"
 
-#: src/pages/feedback/index.tsx:125
+#: src/pages/feedback/index.tsx:305
 msgid "Feature request"
 msgstr "기능 요청"
+
+#: src/pages/feedback/index.tsx:188
+msgid "Features don't work as expected"
+msgstr "기능이 예상대로 작동하지 않음"
 
 #: src/components/tile/index.tsx:69
 msgid "February"
 msgstr "2월"
 
-#: src/pages/feedback/index.tsx:110
+#: src/pages/feedback/index.tsx:290
 msgid "Feedback"
 msgstr "피드백"
 
-#: src/pages/feedback/index.tsx:192
+#: src/pages/feedback/index.tsx:374
 msgid "Feedback successfully submitted"
 msgstr "피드백이 성공적으로 제출되었습니다"
+
+#: src/pages/feedback/index.tsx:216
+msgid "Found a better alternative"
+msgstr "더 나은 대안을 찾음"
 
 #: src/components/tile/index.tsx:64
 msgid "Friday"
@@ -200,6 +237,10 @@ msgstr "심한 눈보라"
 #: src/components/tile/weather/index.tsx:150
 msgid "heavy snowfall"
 msgstr "많은 눈"
+
+#: src/pages/feedback/index.tsx:147
+msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
+msgstr "Weather Please를 제거한 이유에 대한 피드백을 주시면 감사하겠습니다. 이를 통해 Weather Please를 더 나은 제품으로 만들 수 있습니다."
 
 #: src/components/settings/index.tsx:378
 msgid "I'd love to bring Weather Please to more languages."
@@ -231,6 +272,10 @@ msgstr "잘못된 위도 값"
 msgid "Invalid longitude value"
 msgstr "잘못된 경도 값"
 
+#: src/pages/feedback/index.tsx:238
+msgid "Issues after a recent update"
+msgstr "최근 업데이트 이후 문제 발생"
+
 #: src/components/tile/index.tsx:68
 msgid "January"
 msgstr "1월"
@@ -243,9 +288,14 @@ msgstr "7월"
 msgid "June"
 msgstr "6월"
 
+#: src/pages/feedback/index.tsx:182
+msgid "Lacks features I need"
+msgstr "필요한 기능이 부족함"
+
 #: src/components/intialisation/index.tsx:76
 #: src/components/intialisation/index.tsx:153
 #: src/components/settings/index.tsx:323
+#: src/pages/feedback/index.tsx:135
 msgid "Language"
 msgstr "언어"
 
@@ -308,7 +358,7 @@ msgstr "3월"
 msgid "May"
 msgstr "5월"
 
-#: src/pages/feedback/index.tsx:148
+#: src/pages/feedback/index.tsx:328
 msgid "Message"
 msgstr "메시지"
 
@@ -336,13 +386,21 @@ msgstr "중간 정도의 눈"
 msgid "Monday"
 msgstr "월요일"
 
-#: src/pages/index.tsx:698
+#: src/pages/index.tsx:706
 msgid "Never show this again"
 msgstr "다시 보지 않기"
 
 #: src/pages/_app.tsx:21
 #~ msgid "New tab"
 #~ msgstr "새 탭"
+
+#: src/pages/feedback/index.tsx:210
+msgid "No longer need the functionality"
+msgstr "더 이상 그 기능이 필요하지 않음"
+
+#: src/pages/feedback/index.tsx:170
+msgid "Not available in my language"
+msgstr "내 언어로는 사용할 수 없음"
 
 #: src/components/settings/index.tsx:238
 msgid "Note: This currently does not work well in Safari, and may be inaccurate"
@@ -372,6 +430,10 @@ msgstr "흐림"
 msgid "partly cloudy"
 msgstr "구름이 조금"
 
+#: src/pages/feedback/index.tsx:153
+msgid "Performance issues"
+msgstr "성능 문제"
+
 #: src/components/settings/index.tsx:224
 msgid "Periodically update location automatically"
 msgstr "주기적으로 위치 자동 업데이트"
@@ -379,6 +441,10 @@ msgstr "주기적으로 위치 자동 업데이트"
 #: src/components/intialisation/index.tsx:107
 msgid "Please enter it manually below."
 msgstr "아래에 수동으로 입력해주세요."
+
+#: src/pages/feedback/index.tsx:221
+msgid "Resource usage"
+msgstr "리소스 사용"
 
 #: src/components/tile/index.tsx:65
 msgid "Saturday"
@@ -388,6 +454,10 @@ msgstr "토요일"
 #: src/components/settings/index.tsx:516
 msgid "Save"
 msgstr "저장"
+
+#: src/pages/feedback/index.tsx:193
+msgid "Security and privacy concerns"
+msgstr "보안 및 프라이버시 우려"
 
 #: src/components/tile/index.tsx:76
 msgid "September"
@@ -442,6 +512,10 @@ msgstr "약한 눈 소나기"
 msgid "slight snowfall"
 msgstr "약한 눈내림"
 
+#: src/pages/feedback/index.tsx:156
+msgid "Slows down my browser"
+msgstr "내 브라우저를 느리게 함"
+
 #: src/components/tile/weather/index.tsx:151
 msgid "snow grains"
 msgstr "눈 과립"
@@ -478,7 +552,8 @@ msgstr "{timeUntilStrongWind} 시간 후 강한 바람이 시작됩니다"
 msgid "Strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind} 시간 후 강풍이 시작됩니다"
 
-#: src/pages/feedback/index.tsx:174
+#: src/pages/feedback/index.tsx:269
+#: src/pages/feedback/index.tsx:354
 msgid "Submit"
 msgstr "제출"
 
@@ -546,14 +621,30 @@ msgstr "타일"
 msgid "To get started, let's set your language and location."
 msgstr "시작하려면 언어와 위치를 설정해주세요."
 
+#: src/pages/feedback/index.tsx:230
+msgid "Too much battery usage"
+msgstr "배터리 사용량이 너무 많음"
+
 #: src/components/tile/index.tsx:61
 msgid "Tuesday"
 msgstr "화요일"
+
+#: src/pages/feedback/index.tsx:145
+msgid "Uninstall feedback"
+msgstr "제거에 대한 피드백"
 
 #: src/components/intialisation/index.tsx:149
 #: src/components/settings/index.tsx:221
 msgid "Unsure how to find these? Click here."
 msgstr "이것을 어떻게 찾을 수 있는지 모르겠나요? 여기를 클릭하세요."
+
+#: src/pages/feedback/index.tsx:235
+msgid "Update or change related"
+msgstr "업데이트 또는 변경 관련"
+
+#: src/pages/feedback/index.tsx:167
+msgid "Usability and functionality"
+msgstr "사용 용이성 및 기능성"
 
 #: src/components/settings/index.tsx:334
 msgid "Use metric number format"
@@ -567,7 +658,7 @@ msgstr "강한 비소나기"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Weather Please를 더 많은 언어로 제공하고 싶습니다."
 
-#: src/pages/index.tsx:813
+#: src/pages/index.tsx:820
 msgid "weather data provided by open-meteo"
 msgstr "날씨 데이터 제공: open-meteo"
 
@@ -575,7 +666,7 @@ msgstr "날씨 데이터 제공: open-meteo"
 msgid "Wednesday"
 msgstr "수요일"
 
-#: src/pages/index.tsx:670
+#: src/pages/index.tsx:675
 msgid "Would you like to leave a review?"
 msgstr "리뷰를 남기시겠습니까?"
 
@@ -587,6 +678,6 @@ msgstr "위도 또는 경도가 유효하지 않기 때문에 저장할 수 없�
 msgid "You have unsaved changes"
 msgstr "저장하지 않은 변경 사항이 있습니다"
 
-#: src/pages/index.tsx:665
+#: src/pages/index.tsx:671
 msgid "You've been using Weather Please for a while"
 msgstr "당신은 Weather Please를 잠시동안 사용해왔습니다"

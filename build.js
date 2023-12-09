@@ -54,6 +54,7 @@ const main = () => {
 	fs.copySync(path.join('out', 'next'), path.join(extensionPath, 'next'))
 	fs.copySync(path.join('_locales'), path.join(extensionPath, '_locales'))
 	fs.removeSync('out')
+	fs.copySync('background.js', path.join(extensionPath, 'background.js'))
 	fs.copySync('manifest.json', path.join(extensionPath, 'manifest.json'))
 
 	console.log('Processing completed.')

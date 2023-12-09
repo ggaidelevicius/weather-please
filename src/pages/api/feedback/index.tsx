@@ -12,7 +12,8 @@ const Handler: NextApiHandler = async (req, res) => {
 		return res.status(400).json({ code: 400, message: 'Invalid JSON' })
 	}
 
-	const { feedbackType, message, email, created, locale } = parsedBody
+	const { feedbackType, message, email, created, locale, installed, reasons } =
+		parsedBody
 
 	if (!feedbackType || !message || !created || !locale) {
 		return res.status(400).json({ code: 400, message: 'Missing parameters' })
@@ -31,6 +32,12 @@ const Handler: NextApiHandler = async (req, res) => {
 			},
 			created: {
 				integerValue: created,
+			},
+			installed: {
+				integerValue: installed,
+			},
+			reasons: {
+				stringValue: JSON.stringify(reasons),
 			},
 		},
 	}
