@@ -32,7 +32,7 @@ i18n.load({
 })
 i18n.activate('en')
 
-const WeatherPlease: FC = () => {
+const WeatherPlease: FC<{}> = () => {
 	const initialCurrentWeatherData = {
 		totalPrecipitation: {
 			precipitation: {
@@ -676,7 +676,10 @@ const WeatherPlease: FC = () => {
 					</p>
 					<Button
 						component="a"
-						href={getUserAgent() ?? 'https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews'} // can't pass computed value in here, need to figure out alternative asap
+						href={
+							getUserAgent() ??
+							'https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews'
+						} // can't pass computed value in here, need to figure out alternative asap
 						style={{ marginTop: '0.5rem' }}
 						onClick={() => {
 							notifications.hide('review')
