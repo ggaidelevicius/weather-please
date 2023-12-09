@@ -37,7 +37,7 @@ const Handler: NextApiHandler = async (req, res) => {
 				integerValue: installed,
 			},
 			reasons: {
-				stringValue: JSON.stringify(reasons),
+				mapValue: JSON.stringify(reasons),
 			},
 		},
 	}
