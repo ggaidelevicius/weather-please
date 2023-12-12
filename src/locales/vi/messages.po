@@ -62,9 +62,13 @@ msgstr "💡 Yêu cầu tính năng"
 msgid "🔒 Privacy policy"
 msgstr "🔒 Chính sách bảo mật"
 
+#: src/pages/feedback/index.tsx:319
+msgid "Additional details"
+msgstr "Thông tin chi tiết thêm"
+
 #: src/pages/feedback/index.tsx:244
-msgid "Additional details (optional)"
-msgstr "Thông tin chi tiết thêm (tùy chọn)"
+#~ msgid "Additional details (optional)"
+#~ msgstr "Thông tin chi tiết thêm (tùy chọn)"
 
 #: src/components/settings/index.tsx:272
 msgid "Alerts"
@@ -98,7 +102,7 @@ msgstr "Tháng 8"
 msgid "Based on the provided information, your location is:"
 msgstr "Dựa trên thông tin đã cung cấp, vị trí của bạn là:"
 
-#: src/pages/feedback/index.tsx:320
+#: src/pages/feedback/index.tsx:396
 msgid "Bug report"
 msgstr "Báo cáo lỗi"
 
@@ -106,11 +110,11 @@ msgstr "Báo cáo lỗi"
 msgid "Cancel"
 msgstr "Hủy bỏ"
 
-#: src/pages/feedback/index.tsx:162
+#: src/pages/feedback/index.tsx:175
 msgid "Causes browser crashes or errors"
 msgstr "Gây sự cố hoặc lỗi trình duyệt"
 
-#: src/pages/feedback/index.tsx:207
+#: src/pages/feedback/index.tsx:257
 msgid "Changed needs"
 msgstr "Nhu cầu đã thay đổi"
 
@@ -118,15 +122,15 @@ msgstr "Nhu cầu đã thay đổi"
 msgid "clear sky"
 msgstr "bầu trời quang đãng"
 
-#: src/pages/feedback/index.tsx:196
+#: src/pages/feedback/index.tsx:236
 msgid "Concerned about privacy"
 msgstr "Lo ngại về quyền riêng tư"
 
-#: src/pages/feedback/index.tsx:202
+#: src/pages/feedback/index.tsx:247
 msgid "Concerned about security"
 msgstr "Lo ngại về an ninh"
 
-#: src/pages/feedback/index.tsx:224
+#: src/pages/feedback/index.tsx:281
 msgid "Consumes too much memory or CPU"
 msgstr "Tiêu thụ quá nhiều bộ nhớ hoặc CPU"
 
@@ -154,7 +158,7 @@ msgstr "mưa phùn đóng băng dày đặc"
 msgid "depositing rime fog"
 msgstr "sương muối đọng lại"
 
-#: src/pages/feedback/index.tsx:176
+#: src/pages/feedback/index.tsx:199
 msgid "Difficult to use or understand"
 msgstr "Khó sử dụng hoặc hiểu"
 
@@ -162,8 +166,8 @@ msgstr "Khó sử dụng hoặc hiểu"
 msgid "Don't save"
 msgstr "Không lưu"
 
-#: src/pages/feedback/index.tsx:254
-#: src/pages/feedback/index.tsx:339
+#: src/pages/feedback/index.tsx:330
+#: src/pages/feedback/index.tsx:415
 msgid "Email (optional)"
 msgstr "Email (tùy chọn)"
 
@@ -174,7 +178,7 @@ msgstr "Email (tùy chọn)"
 msgid "Error"
 msgstr "Lỗi"
 
-#: src/pages/feedback/index.tsx:391
+#: src/pages/feedback/index.tsx:467
 msgid "Error submitting feedback. Try again later."
 msgstr "Lỗi khi gửi phản hồi. Thử lại sau."
 
@@ -194,11 +198,11 @@ msgstr "UV cực mạnh trong 1 giờ tới"
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "UV cực mạnh bắt đầu trong {timeUntilExtremeUv} giờ"
 
-#: src/pages/feedback/index.tsx:305
+#: src/pages/feedback/index.tsx:381
 msgid "Feature request"
 msgstr "Yêu cầu tính năng"
 
-#: src/pages/feedback/index.tsx:188
+#: src/pages/feedback/index.tsx:219
 msgid "Features don't work as expected"
 msgstr "Tính năng không hoạt động như mong đợi"
 
@@ -206,15 +210,15 @@ msgstr "Tính năng không hoạt động như mong đợi"
 msgid "February"
 msgstr "Tháng 2"
 
-#: src/pages/feedback/index.tsx:290
+#: src/pages/feedback/index.tsx:366
 msgid "Feedback"
 msgstr "Phản hồi"
 
-#: src/pages/feedback/index.tsx:374
+#: src/pages/feedback/index.tsx:450
 msgid "Feedback successfully submitted"
 msgstr "Gửi phản hồi thành công"
 
-#: src/pages/feedback/index.tsx:216
+#: src/pages/feedback/index.tsx:268
 msgid "Found a better alternative"
 msgstr "Tìm thấy một lựa chọn tốt hơn"
 
@@ -238,7 +242,7 @@ msgstr "cơn tuyết rơi nặng hạt"
 msgid "heavy snowfall"
 msgstr "tuyết rơi nặng hạt"
 
-#: src/pages/feedback/index.tsx:147
+#: src/pages/feedback/index.tsx:152
 msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
 msgstr "Tôi sẽ trân trọng nếu bạn có thể cung cấp phản hồi về lý do bạn đã gỡ cài đặt Weather Please. Điều này giúp tôi cải thiện Weather Please thành sản phẩm tốt hơn."
 
@@ -272,7 +276,7 @@ msgstr "Giá trị vĩ độ không hợp lệ"
 msgid "Invalid longitude value"
 msgstr "Giá trị kinh độ không hợp lệ"
 
-#: src/pages/feedback/index.tsx:238
+#: src/pages/feedback/index.tsx:308
 msgid "Issues after a recent update"
 msgstr "Vấn đề sau khi cập nhật gần đây"
 
@@ -288,14 +292,14 @@ msgstr "Tháng 7"
 msgid "June"
 msgstr "Tháng 6"
 
-#: src/pages/feedback/index.tsx:182
+#: src/pages/feedback/index.tsx:210
 msgid "Lacks features I need"
 msgstr "Thiếu các tính năng tôi cần"
 
 #: src/components/intialisation/index.tsx:76
 #: src/components/intialisation/index.tsx:153
 #: src/components/settings/index.tsx:323
-#: src/pages/feedback/index.tsx:135
+#: src/pages/feedback/index.tsx:138
 msgid "Language"
 msgstr "Ngôn ngữ"
 
@@ -358,7 +362,7 @@ msgstr "Tháng 3"
 msgid "May"
 msgstr "Tháng 5"
 
-#: src/pages/feedback/index.tsx:328
+#: src/pages/feedback/index.tsx:404
 msgid "Message"
 msgstr "Tin nhắn"
 
@@ -394,11 +398,11 @@ msgstr "Không hiển thị lại lần nữa"
 #~ msgid "New tab"
 #~ msgstr "Tab mới"
 
-#: src/pages/feedback/index.tsx:210
+#: src/pages/feedback/index.tsx:260
 msgid "No longer need the functionality"
 msgstr "Không còn cần tính năng nữa"
 
-#: src/pages/feedback/index.tsx:170
+#: src/pages/feedback/index.tsx:188
 msgid "Not available in my language"
 msgstr "Không có sẵn trong ngôn ngữ của tôi"
 
@@ -430,7 +434,7 @@ msgstr "trời âm u"
 msgid "partly cloudy"
 msgstr "trời có mây"
 
-#: src/pages/feedback/index.tsx:153
+#: src/pages/feedback/index.tsx:160
 msgid "Performance issues"
 msgstr "Vấn đề về hiệu suất"
 
@@ -442,7 +446,7 @@ msgstr "Tự động cập nhật vị trí định kỳ"
 msgid "Please enter it manually below."
 msgstr "Vui lòng nhập thủ công ở bên dưới."
 
-#: src/pages/feedback/index.tsx:221
+#: src/pages/feedback/index.tsx:278
 msgid "Resource usage"
 msgstr "Sử dụng tài nguyên"
 
@@ -455,7 +459,7 @@ msgstr "Thứ Bảy"
 msgid "Save"
 msgstr "Lưu"
 
-#: src/pages/feedback/index.tsx:193
+#: src/pages/feedback/index.tsx:232
 msgid "Security and privacy concerns"
 msgstr "Mối quan tâm về an ninh và quyền riêng tư"
 
@@ -512,7 +516,7 @@ msgstr "cơn tuyết nhỏ"
 msgid "slight snowfall"
 msgstr "tuyết rơi nhỏ"
 
-#: src/pages/feedback/index.tsx:156
+#: src/pages/feedback/index.tsx:164
 msgid "Slows down my browser"
 msgstr "Làm chậm trình duyệt của tôi"
 
@@ -552,8 +556,8 @@ msgstr "Cơn gió mạnh bắt đầu sau {timeUntilStrongWind} giờ"
 msgid "Strong wind starting in {timeUntilStrongWind} hours"
 msgstr "Gió mạnh bắt đầu sau {timeUntilStrongWind} giờ"
 
-#: src/pages/feedback/index.tsx:269
-#: src/pages/feedback/index.tsx:354
+#: src/pages/feedback/index.tsx:345
+#: src/pages/feedback/index.tsx:430
 msgid "Submit"
 msgstr "Gửi"
 
@@ -621,7 +625,7 @@ msgstr "Gạch"
 msgid "To get started, let's set your language and location."
 msgstr "Để bắt đầu, hãy đặt ngôn ngữ và vị trí của bạn."
 
-#: src/pages/feedback/index.tsx:230
+#: src/pages/feedback/index.tsx:292
 msgid "Too much battery usage"
 msgstr "Sử dụng quá nhiều pin"
 
@@ -629,7 +633,7 @@ msgstr "Sử dụng quá nhiều pin"
 msgid "Tuesday"
 msgstr "Thứ Ba"
 
-#: src/pages/feedback/index.tsx:145
+#: src/pages/feedback/index.tsx:149
 msgid "Uninstall feedback"
 msgstr "Phản hồi về việc gỡ cài đặt"
 
@@ -638,11 +642,11 @@ msgstr "Phản hồi về việc gỡ cài đặt"
 msgid "Unsure how to find these? Click here."
 msgstr "Không chắc cách tìm những điều này? Nhấp vào đây."
 
-#: src/pages/feedback/index.tsx:235
+#: src/pages/feedback/index.tsx:304
 msgid "Update or change related"
 msgstr "Liên quan đến cập nhật hoặc thay đổi"
 
-#: src/pages/feedback/index.tsx:167
+#: src/pages/feedback/index.tsx:184
 msgid "Usability and functionality"
 msgstr "Khả năng sử dụng và chức năng"
 

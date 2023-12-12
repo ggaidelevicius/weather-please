@@ -62,9 +62,13 @@ msgstr "💡 एक सुविधा का अनुरोध करें"
 msgid "🔒 Privacy policy"
 msgstr "🔒 गोपनीयता नीति"
 
+#: src/pages/feedback/index.tsx:319
+msgid "Additional details"
+msgstr "अतिरिक्त विवरण"
+
 #: src/pages/feedback/index.tsx:244
-msgid "Additional details (optional)"
-msgstr "अतिरिक्त विवरण (वैकल्पिक)"
+#~ msgid "Additional details (optional)"
+#~ msgstr "अतिरिक्त विवरण (वैकल्पिक)"
 
 #: src/components/settings/index.tsx:272
 msgid "Alerts"
@@ -98,7 +102,7 @@ msgstr "अगस्त"
 msgid "Based on the provided information, your location is:"
 msgstr "प्रदान की गई जानकारी के आधार पर, आपका स्थान है:"
 
-#: src/pages/feedback/index.tsx:320
+#: src/pages/feedback/index.tsx:396
 msgid "Bug report"
 msgstr "बग रिपोर्ट"
 
@@ -106,11 +110,11 @@ msgstr "बग रिपोर्ट"
 msgid "Cancel"
 msgstr "रद्द करें"
 
-#: src/pages/feedback/index.tsx:162
+#: src/pages/feedback/index.tsx:175
 msgid "Causes browser crashes or errors"
 msgstr "ब्राउज़र क्रैश या त्रुटियों का कारण"
 
-#: src/pages/feedback/index.tsx:207
+#: src/pages/feedback/index.tsx:257
 msgid "Changed needs"
 msgstr "बदली हुई आवश्यकताएँ"
 
@@ -118,15 +122,15 @@ msgstr "बदली हुई आवश्यकताएँ"
 msgid "clear sky"
 msgstr "साफ़ आकाश"
 
-#: src/pages/feedback/index.tsx:196
+#: src/pages/feedback/index.tsx:236
 msgid "Concerned about privacy"
 msgstr "गोपनीयता की चिंता"
 
-#: src/pages/feedback/index.tsx:202
+#: src/pages/feedback/index.tsx:247
 msgid "Concerned about security"
 msgstr "सुरक्षा की चिंता"
 
-#: src/pages/feedback/index.tsx:224
+#: src/pages/feedback/index.tsx:281
 msgid "Consumes too much memory or CPU"
 msgstr "बहुत अधिक मेमोरी या CPU का उपयोग"
 
@@ -154,7 +158,7 @@ msgstr "घनी हिमबंदी बूंदाबंदी"
 msgid "depositing rime fog"
 msgstr "राइम कोहरा जमा हो रहा है"
 
-#: src/pages/feedback/index.tsx:176
+#: src/pages/feedback/index.tsx:199
 msgid "Difficult to use or understand"
 msgstr "उपयोग करना या समझना कठिन"
 
@@ -162,8 +166,8 @@ msgstr "उपयोग करना या समझना कठिन"
 msgid "Don't save"
 msgstr "सेव न करें"
 
-#: src/pages/feedback/index.tsx:254
-#: src/pages/feedback/index.tsx:339
+#: src/pages/feedback/index.tsx:330
+#: src/pages/feedback/index.tsx:415
 msgid "Email (optional)"
 msgstr "ईमेल (वैकल्पिक)"
 
@@ -174,7 +178,7 @@ msgstr "ईमेल (वैकल्पिक)"
 msgid "Error"
 msgstr "त्रुटि"
 
-#: src/pages/feedback/index.tsx:391
+#: src/pages/feedback/index.tsx:467
 msgid "Error submitting feedback. Try again later."
 msgstr "प्रतिसाद सबमिट करते समय त्रुटि। बाद में पुनः प्रयास करें।"
 
@@ -194,11 +198,11 @@ msgstr "अगले घंटे के लिए अत्यधिक यू�
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "{timeUntilExtremeUv} घंटों में अत्यधिक यूवी शुरू होगी"
 
-#: src/pages/feedback/index.tsx:305
+#: src/pages/feedback/index.tsx:381
 msgid "Feature request"
 msgstr "सुविधा अनुरोध"
 
-#: src/pages/feedback/index.tsx:188
+#: src/pages/feedback/index.tsx:219
 msgid "Features don't work as expected"
 msgstr "सुविधाएँ अपेक्षित रूप से काम नहीं करतीं"
 
@@ -206,15 +210,15 @@ msgstr "सुविधाएँ अपेक्षित रूप से क�
 msgid "February"
 msgstr "फ़रवरी"
 
-#: src/pages/feedback/index.tsx:290
+#: src/pages/feedback/index.tsx:366
 msgid "Feedback"
 msgstr "प्रतिक्रिया"
 
-#: src/pages/feedback/index.tsx:374
+#: src/pages/feedback/index.tsx:450
 msgid "Feedback successfully submitted"
 msgstr "प्रतिसाद सफलतापूर्वक सबमिट किया गया"
 
-#: src/pages/feedback/index.tsx:216
+#: src/pages/feedback/index.tsx:268
 msgid "Found a better alternative"
 msgstr "बेहतर विकल्प मिला"
 
@@ -238,7 +242,7 @@ msgstr "भारी हिमवर्षा"
 msgid "heavy snowfall"
 msgstr "भारी हिमपात"
 
-#: src/pages/feedback/index.tsx:147
+#: src/pages/feedback/index.tsx:152
 msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
 msgstr "अगर आप बता सकें कि आपने Weather Please क्यों अनइंस्टॉल किया, तो मैं आभारी रहूंगा। इससे मुझे Weather Please को एक बेहतर उत्पाद बनाने में मदद मिलेगी।"
 
@@ -272,7 +276,7 @@ msgstr "अमान्य अक्षांश मान"
 msgid "Invalid longitude value"
 msgstr "अमान्य देशांतर मान"
 
-#: src/pages/feedback/index.tsx:238
+#: src/pages/feedback/index.tsx:308
 msgid "Issues after a recent update"
 msgstr "हाल के अपडेट के बाद समस्याएं"
 
@@ -288,14 +292,14 @@ msgstr "जुलाई"
 msgid "June"
 msgstr "जून"
 
-#: src/pages/feedback/index.tsx:182
+#: src/pages/feedback/index.tsx:210
 msgid "Lacks features I need"
 msgstr "मुझे जरूरत की सुविधाएँ नहीं हैं"
 
 #: src/components/intialisation/index.tsx:76
 #: src/components/intialisation/index.tsx:153
 #: src/components/settings/index.tsx:323
-#: src/pages/feedback/index.tsx:135
+#: src/pages/feedback/index.tsx:138
 msgid "Language"
 msgstr "भाषा"
 
@@ -358,7 +362,7 @@ msgstr "मार्च"
 msgid "May"
 msgstr "मई"
 
-#: src/pages/feedback/index.tsx:328
+#: src/pages/feedback/index.tsx:404
 msgid "Message"
 msgstr "संदेश"
 
@@ -394,11 +398,11 @@ msgstr "इसे फिर से न दिखाएं"
 #~ msgid "New tab"
 #~ msgstr "नया टैब"
 
-#: src/pages/feedback/index.tsx:210
+#: src/pages/feedback/index.tsx:260
 msgid "No longer need the functionality"
 msgstr "अब फ़ंक्शनैलिटी की आवश्यकता नहीं है"
 
-#: src/pages/feedback/index.tsx:170
+#: src/pages/feedback/index.tsx:188
 msgid "Not available in my language"
 msgstr "मेरी भाषा में उपलब्ध नहीं"
 
@@ -430,7 +434,7 @@ msgstr "धूमिल"
 msgid "partly cloudy"
 msgstr "आंशिक रूप से बादल"
 
-#: src/pages/feedback/index.tsx:153
+#: src/pages/feedback/index.tsx:160
 msgid "Performance issues"
 msgstr "प्रदर्शन समस्याएं"
 
@@ -442,7 +446,7 @@ msgstr "स्थान को स्वचालित रूप से आव�
 msgid "Please enter it manually below."
 msgstr "कृपया इसे नीचे स्वयं दर्ज करें।"
 
-#: src/pages/feedback/index.tsx:221
+#: src/pages/feedback/index.tsx:278
 msgid "Resource usage"
 msgstr "संसाधन का उपयोग"
 
@@ -455,7 +459,7 @@ msgstr "शनिवार"
 msgid "Save"
 msgstr "सेव"
 
-#: src/pages/feedback/index.tsx:193
+#: src/pages/feedback/index.tsx:232
 msgid "Security and privacy concerns"
 msgstr "सुरक्षा और गोपनीयता की चिंताएं"
 
@@ -512,7 +516,7 @@ msgstr "हल्की हिमबारिश"
 msgid "slight snowfall"
 msgstr "हल्की हिमपात"
 
-#: src/pages/feedback/index.tsx:156
+#: src/pages/feedback/index.tsx:164
 msgid "Slows down my browser"
 msgstr "मेरे ब्राउज़र को धीमा कर देता है"
 
@@ -552,8 +556,8 @@ msgstr "{timeUntilStrongWind} घंटों में मजबूत हव�
 msgid "Strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind} घंटों में मजबूत हवा शुरू होगी"
 
-#: src/pages/feedback/index.tsx:269
-#: src/pages/feedback/index.tsx:354
+#: src/pages/feedback/index.tsx:345
+#: src/pages/feedback/index.tsx:430
 msgid "Submit"
 msgstr "सबमिट करें"
 
@@ -621,7 +625,7 @@ msgstr "टाइल्स"
 msgid "To get started, let's set your language and location."
 msgstr "शुरू करने के लिए, आइए आपकी भाषा और स्थान निर्धारित करें।"
 
-#: src/pages/feedback/index.tsx:230
+#: src/pages/feedback/index.tsx:292
 msgid "Too much battery usage"
 msgstr "बहुत अधिक बैटरी का उपयोग"
 
@@ -629,7 +633,7 @@ msgstr "बहुत अधिक बैटरी का उपयोग"
 msgid "Tuesday"
 msgstr "मंगलवार"
 
-#: src/pages/feedback/index.tsx:145
+#: src/pages/feedback/index.tsx:149
 msgid "Uninstall feedback"
 msgstr "अनइंस्टॉल प्रतिक्रिया"
 
@@ -638,11 +642,11 @@ msgstr "अनइंस्टॉल प्रतिक्रिया"
 msgid "Unsure how to find these? Click here."
 msgstr "निश्चित नहीं कि कैसे ढूंढें? यहाँ क्लिक करें।"
 
-#: src/pages/feedback/index.tsx:235
+#: src/pages/feedback/index.tsx:304
 msgid "Update or change related"
 msgstr "अपडेट या परिवर्तन से संबंधित"
 
-#: src/pages/feedback/index.tsx:167
+#: src/pages/feedback/index.tsx:184
 msgid "Usability and functionality"
 msgstr "उपयोगिता और कार्यक्षमता"
 

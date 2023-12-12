@@ -62,9 +62,13 @@ msgstr "💡 Request a feature"
 msgid "🔒 Privacy policy"
 msgstr "🔒 Privacy policy"
 
+#: src/pages/feedback/index.tsx:319
+msgid "Additional details"
+msgstr "Additional details"
+
 #: src/pages/feedback/index.tsx:244
-msgid "Additional details (optional)"
-msgstr "Additional details (optional)"
+#~ msgid "Additional details (optional)"
+#~ msgstr "Additional details (optional)"
 
 #: src/components/settings/index.tsx:272
 msgid "Alerts"
@@ -98,7 +102,7 @@ msgstr "August"
 msgid "Based on the provided information, your location is:"
 msgstr "Based on the provided information, your location is:"
 
-#: src/pages/feedback/index.tsx:320
+#: src/pages/feedback/index.tsx:396
 msgid "Bug report"
 msgstr "Bug report"
 
@@ -106,11 +110,11 @@ msgstr "Bug report"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/pages/feedback/index.tsx:162
+#: src/pages/feedback/index.tsx:175
 msgid "Causes browser crashes or errors"
 msgstr "Causes browser crashes or errors"
 
-#: src/pages/feedback/index.tsx:207
+#: src/pages/feedback/index.tsx:257
 msgid "Changed needs"
 msgstr "Changed needs"
 
@@ -118,15 +122,15 @@ msgstr "Changed needs"
 msgid "clear sky"
 msgstr "clear sky"
 
-#: src/pages/feedback/index.tsx:196
+#: src/pages/feedback/index.tsx:236
 msgid "Concerned about privacy"
 msgstr "Concerned about privacy"
 
-#: src/pages/feedback/index.tsx:202
+#: src/pages/feedback/index.tsx:247
 msgid "Concerned about security"
 msgstr "Concerned about security"
 
-#: src/pages/feedback/index.tsx:224
+#: src/pages/feedback/index.tsx:281
 msgid "Consumes too much memory or CPU"
 msgstr "Consumes too much memory or CPU"
 
@@ -154,7 +158,7 @@ msgstr "dense freezing drizzle"
 msgid "depositing rime fog"
 msgstr "depositing rime fog"
 
-#: src/pages/feedback/index.tsx:176
+#: src/pages/feedback/index.tsx:199
 msgid "Difficult to use or understand"
 msgstr "Difficult to use or understand"
 
@@ -162,8 +166,8 @@ msgstr "Difficult to use or understand"
 msgid "Don't save"
 msgstr "Don't save"
 
-#: src/pages/feedback/index.tsx:254
-#: src/pages/feedback/index.tsx:339
+#: src/pages/feedback/index.tsx:330
+#: src/pages/feedback/index.tsx:415
 msgid "Email (optional)"
 msgstr "Email (optional)"
 
@@ -174,7 +178,7 @@ msgstr "Email (optional)"
 msgid "Error"
 msgstr "Error"
 
-#: src/pages/feedback/index.tsx:391
+#: src/pages/feedback/index.tsx:467
 msgid "Error submitting feedback. Try again later."
 msgstr "Error submitting feedback. Try again later."
 
@@ -194,11 +198,11 @@ msgstr "Extreme UV for the next hour"
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "Extreme UV starting in {timeUntilExtremeUv} hours"
 
-#: src/pages/feedback/index.tsx:305
+#: src/pages/feedback/index.tsx:381
 msgid "Feature request"
 msgstr "Feature request"
 
-#: src/pages/feedback/index.tsx:188
+#: src/pages/feedback/index.tsx:219
 msgid "Features don't work as expected"
 msgstr "Features don't work as expected"
 
@@ -206,15 +210,15 @@ msgstr "Features don't work as expected"
 msgid "February"
 msgstr "February"
 
-#: src/pages/feedback/index.tsx:290
+#: src/pages/feedback/index.tsx:366
 msgid "Feedback"
 msgstr "Feedback"
 
-#: src/pages/feedback/index.tsx:374
+#: src/pages/feedback/index.tsx:450
 msgid "Feedback successfully submitted"
 msgstr "Feedback successfully submitted"
 
-#: src/pages/feedback/index.tsx:216
+#: src/pages/feedback/index.tsx:268
 msgid "Found a better alternative"
 msgstr "Found a better alternative"
 
@@ -238,7 +242,7 @@ msgstr "heavy snow showers"
 msgid "heavy snowfall"
 msgstr "heavy snowfall"
 
-#: src/pages/feedback/index.tsx:147
+#: src/pages/feedback/index.tsx:152
 msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
 msgstr "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
 
@@ -272,7 +276,7 @@ msgstr "Invalid latitude value"
 msgid "Invalid longitude value"
 msgstr "Invalid longitude value"
 
-#: src/pages/feedback/index.tsx:238
+#: src/pages/feedback/index.tsx:308
 msgid "Issues after a recent update"
 msgstr "Issues after a recent update"
 
@@ -288,14 +292,14 @@ msgstr "July"
 msgid "June"
 msgstr "June"
 
-#: src/pages/feedback/index.tsx:182
+#: src/pages/feedback/index.tsx:210
 msgid "Lacks features I need"
 msgstr "Lacks features I need"
 
 #: src/components/intialisation/index.tsx:76
 #: src/components/intialisation/index.tsx:153
 #: src/components/settings/index.tsx:323
-#: src/pages/feedback/index.tsx:135
+#: src/pages/feedback/index.tsx:138
 msgid "Language"
 msgstr "Language"
 
@@ -358,7 +362,7 @@ msgstr "March"
 msgid "May"
 msgstr "May"
 
-#: src/pages/feedback/index.tsx:328
+#: src/pages/feedback/index.tsx:404
 msgid "Message"
 msgstr "Message"
 
@@ -394,11 +398,11 @@ msgstr "Never show this again"
 #~ msgid "New tab"
 #~ msgstr "New tab"
 
-#: src/pages/feedback/index.tsx:210
+#: src/pages/feedback/index.tsx:260
 msgid "No longer need the functionality"
 msgstr "No longer need the functionality"
 
-#: src/pages/feedback/index.tsx:170
+#: src/pages/feedback/index.tsx:188
 msgid "Not available in my language"
 msgstr "Not available in my language"
 
@@ -430,7 +434,7 @@ msgstr "overcast"
 msgid "partly cloudy"
 msgstr "partly cloudy"
 
-#: src/pages/feedback/index.tsx:153
+#: src/pages/feedback/index.tsx:160
 msgid "Performance issues"
 msgstr "Performance issues"
 
@@ -442,7 +446,7 @@ msgstr "Periodically update location automatically"
 msgid "Please enter it manually below."
 msgstr "Please enter it manually below."
 
-#: src/pages/feedback/index.tsx:221
+#: src/pages/feedback/index.tsx:278
 msgid "Resource usage"
 msgstr "Resource usage"
 
@@ -455,7 +459,7 @@ msgstr "Saturday"
 msgid "Save"
 msgstr "Save"
 
-#: src/pages/feedback/index.tsx:193
+#: src/pages/feedback/index.tsx:232
 msgid "Security and privacy concerns"
 msgstr "Security and privacy concerns"
 
@@ -512,7 +516,7 @@ msgstr "slight snow showers"
 msgid "slight snowfall"
 msgstr "slight snowfall"
 
-#: src/pages/feedback/index.tsx:156
+#: src/pages/feedback/index.tsx:164
 msgid "Slows down my browser"
 msgstr "Slows down my browser"
 
@@ -552,8 +556,8 @@ msgstr "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgid "Strong wind starting in {timeUntilStrongWind} hours"
 msgstr "Strong wind starting in {timeUntilStrongWind} hours"
 
-#: src/pages/feedback/index.tsx:269
-#: src/pages/feedback/index.tsx:354
+#: src/pages/feedback/index.tsx:345
+#: src/pages/feedback/index.tsx:430
 msgid "Submit"
 msgstr "Submit"
 
@@ -621,7 +625,7 @@ msgstr "Tiles"
 msgid "To get started, let's set your language and location."
 msgstr "To get started, let's set your language and location."
 
-#: src/pages/feedback/index.tsx:230
+#: src/pages/feedback/index.tsx:292
 msgid "Too much battery usage"
 msgstr "Too much battery usage"
 
@@ -629,7 +633,7 @@ msgstr "Too much battery usage"
 msgid "Tuesday"
 msgstr "Tuesday"
 
-#: src/pages/feedback/index.tsx:145
+#: src/pages/feedback/index.tsx:149
 msgid "Uninstall feedback"
 msgstr "Uninstall feedback"
 
@@ -638,11 +642,11 @@ msgstr "Uninstall feedback"
 msgid "Unsure how to find these? Click here."
 msgstr "Unsure how to find these? Click here."
 
-#: src/pages/feedback/index.tsx:235
+#: src/pages/feedback/index.tsx:304
 msgid "Update or change related"
 msgstr "Update or change related"
 
-#: src/pages/feedback/index.tsx:167
+#: src/pages/feedback/index.tsx:184
 msgid "Usability and functionality"
 msgstr "Usability and functionality"
 
