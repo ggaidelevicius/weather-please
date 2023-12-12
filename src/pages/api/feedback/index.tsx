@@ -15,7 +15,12 @@ const Handler: NextApiHandler = async (req, res) => {
 	const { feedbackType, message, email, created, locale, installed, reasons } =
 		parsedBody
 
-	if (!feedbackType || (feedbackType !== 'uninstall' && !message) || !created || !locale) {
+	if (
+		!feedbackType ||
+		(feedbackType !== 'uninstall' && !message) ||
+		!created ||
+		!locale
+	) {
 		return res.status(400).json({ code: 400, message: 'Missing parameters' })
 	}
 
