@@ -339,7 +339,7 @@ const Feedback = () => {
 										<Button
 											mt="lg"
 											fullWidth
-											disabled={completed || !textareaValue}
+											disabled={completed || textareaValue === ''}
 											onClick={handleClick}
 											loading={loading}
 										>
