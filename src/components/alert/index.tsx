@@ -118,6 +118,7 @@ const Alert: FC<AlertProps> = (props) => {
 		if (showPrecipitationAlerts) {
 			const { precipitation, duration } = totalPrecipitation
 			let precipitationAlert: ReactElement | null = null
+			console.log(duration)
 			if (
 				(useMetric && precipitation.value >= 15) ||
 				(!useMetric && precipitation.value / 25.4 >= 0.590551)
@@ -146,7 +147,7 @@ const Alert: FC<AlertProps> = (props) => {
 						{useMetric && duration.indexOf(false) !== 1 && (
 							<Trans>
 								{precipitation.value.toFixed(1)}mm of precipitation expected
-								over the next {duration.indexOf(false)} hours
+								over the next {duration.length - 1} hours
 							</Trans>
 						)}
 						{!useMetric && duration.indexOf(false) === 1 && (
@@ -158,7 +159,7 @@ const Alert: FC<AlertProps> = (props) => {
 						{!useMetric && duration.indexOf(false) !== 1 && (
 							<Trans>
 								{(precipitation.value / 25.4).toFixed(1)}in of precipitation
-								expected over the next {duration.indexOf(false)} hours
+								expected over the next {duration.length - 1} hours
 							</Trans>
 						)}
 					</MantineAlert>
