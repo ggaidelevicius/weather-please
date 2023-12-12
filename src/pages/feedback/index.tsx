@@ -404,6 +404,7 @@ const Feedback = () => {
 										<Textarea
 											label={<Trans>Message</Trans>}
 											withAsterisk
+											required
 											autosize
 											minRows={4}
 											value={textareaValue}
