@@ -160,6 +160,7 @@ const Feedback = () => {
 											legend={<Trans>Performance issues</Trans>}
 										>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={<Trans>Slows down my browser</Trans>}
 												checked={reasonsValue.slowsDownBrowser}
@@ -171,6 +172,7 @@ const Feedback = () => {
 												}}
 											/>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={<Trans>Causes browser crashes or errors</Trans>}
 												checked={reasonsValue.causesCrashes}
@@ -184,6 +186,7 @@ const Feedback = () => {
 											legend={<Trans>Usability and functionality</Trans>}
 										>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={<Trans>Not available in my language</Trans>}
 												checked={reasonsValue.missingLanguage}
@@ -195,6 +198,7 @@ const Feedback = () => {
 												}}
 											/>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={<Trans>Difficult to use or understand</Trans>}
 												checked={reasonsValue.difficultToUse}
@@ -206,6 +210,7 @@ const Feedback = () => {
 												}}
 											/>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={<Trans>Lacks features I need</Trans>}
 												checked={reasonsValue.lacksFeatures}
@@ -214,6 +219,7 @@ const Feedback = () => {
 												}}
 											/>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={
 													<Trans>Features don&apos;t work as expected</Trans>
@@ -232,6 +238,7 @@ const Feedback = () => {
 											legend={<Trans>Security and privacy concerns</Trans>}
 										>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={<Trans>Concerned about privacy</Trans>}
 												checked={reasonsValue.privacyConcerns}
@@ -243,6 +250,7 @@ const Feedback = () => {
 												}}
 											/>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={<Trans>Concerned about security</Trans>}
 												checked={reasonsValue.securityConcerns}
@@ -256,6 +264,7 @@ const Feedback = () => {
 										</Fieldset>
 										<Fieldset mt="xs" legend={<Trans>Changed needs</Trans>}>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={<Trans>No longer need the functionality</Trans>}
 												checked={reasonsValue.noLongerNeed}
@@ -264,6 +273,7 @@ const Feedback = () => {
 												}}
 											/>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={<Trans>Found a better alternative</Trans>}
 												checked={reasonsValue.foundBetterAlternative}
@@ -277,6 +287,7 @@ const Feedback = () => {
 										</Fieldset>
 										<Fieldset mt="xs" legend={<Trans>Resource usage</Trans>}>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={<Trans>Consumes too much memory or CPU</Trans>}
 												checked={reasonsValue.consumesTooMuchProcessingPower}
@@ -288,6 +299,7 @@ const Feedback = () => {
 												}}
 											/>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={<Trans>Too much battery usage</Trans>}
 												checked={reasonsValue.consumesTooMuchBattery}
@@ -304,6 +316,7 @@ const Feedback = () => {
 											legend={<Trans>Update or change related</Trans>}
 										>
 											<Checkbox
+												disabled={completed}
 												mt="xs"
 												label={<Trans>Issues after a recent update</Trans>}
 												checked={reasonsValue.issuesAfterRecentUpdate}
