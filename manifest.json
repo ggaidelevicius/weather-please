@@ -1,18 +1,21 @@
 {
-	"manifest_version": 3,
-	"name": "__MSG_appName__",
-	"version": "2.5.25",
-	"description": "__MSG_appDesc__",
-	"author": "Gus Gaidelevicius",
-	"default_locale": "en",
-	"chrome_url_overrides": {
-		"newtab": "index.html"
-	},
-	"permissions": ["geolocation", "storage"],
-	"background": {
-		"service_worker": "background.js"
-	},
-	"icons": {
-		"128": "favicon.png"
-	}
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "version": "2.5.26",
+  "description": "__MSG_appDesc__",
+  "author": "Gus Gaidelevicius",
+  "default_locale": "en",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": [
+    "geolocation",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "128": "favicon.png"
+  }
 }
