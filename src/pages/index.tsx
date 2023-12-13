@@ -185,9 +185,6 @@ const WeatherPlease: FC<{}> = () => {
 	 * - Otherwise, it fetches fresh weather data, saves it to the state and localStorage, and updates the time of the last update.
 	 *
 	 * - To ensure data freshness, every minute the hook checks if the hour has changed. If it has, the effect reruns to potentially fetch fresh data.
-	 *
-	 * TODO:
-	 * - "totalPrecipitation" logic needs refinement to ensure correct precipitation alerting under certain conditions.
 	 */
 	useEffect(() => {
 		const fetchData = async (): Promise<void> => {
@@ -249,17 +246,43 @@ const WeatherPlease: FC<{}> = () => {
 						precipitation: res.hourly.precipitation
 							.slice(currentHour, currentHour + 25)
 							.reduce(
-								(p: { value: number; flag: boolean }, c: number) => {
-									if (p.flag || c === 0) {
-										return { value: p.value, flag: true }
+								(
+									p: { value: number; flag: boolean; zeroCount: number },
+									c: number,
+								) => {
+									if (p.flag) {
+										return { ...p, flag: true }
 									}
-									return { value: p.value + c, flag: false }
+									if (c === 0) {
+										if (p.zeroCount === 3) {
+											return { ...p, flag: true }
+										}
+										return {
+											value: p.value,
+											flag: false,
+											zeroCount: p.zeroCount + 1,
+										}
+									}
+									return { value: p.value + c, flag: false, zeroCount: 0 }
 								},
-								{ value: 0, flag: false },
+								{ value: 0, flag: false, zeroCount: 0 },
 							),
-						duration: res.hourly.precipitation
-							.slice(currentHour, currentHour + 25)
-							.map((val: number) => val > 0),
+						duration: (() => {
+							let negativeCount = 0
+							return res.hourly.precipitation
+								.slice(currentHour, currentHour + 25)
+								.map((val: number) => {
+									if (negativeCount === 3) {
+										return false
+									}
+									if (val === 0) {
+										negativeCount++
+										return true
+									}
+									negativeCount = 0
+									return true
+								})
+						})(),
 					},
 					hoursOfExtremeUv: res.hourly.uv_index
 						.slice(currentHour, currentHour + 13)
