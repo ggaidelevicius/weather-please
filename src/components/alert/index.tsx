@@ -173,7 +173,7 @@ const Alert: FC<AlertProps> = (props) => {
 							)}
 						{!useMetric && duration.indexOf(false) === -1 && (
 							<Trans>
-								{precipitation.value.toFixed(1)}mm of precipitation expected
+								{precipitation.value.toFixed(1)}in of precipitation expected
 								over the next {duration.length - 1} hours
 							</Trans>
 						)}
