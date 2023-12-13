@@ -13,6 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/alert/index.tsx:162
+#: src/components/alert/index.tsx:168
+msgid "{0} inches of precipitation expected over the next {1} hours"
+msgstr "Dự kiến {0} inch lượng mưa trong {1} giờ tới"
+
+#: src/components/alert/index.tsx:154
+msgid "{0} inches of precipitation expected over the next hour"
+msgstr "Dự kiến {0} inch lượng mưa trong giờ tới"
+
 #: src/components/tile/weather/index.tsx:102
 msgid "{0} km/h"
 msgstr "{0} km/h"
@@ -22,20 +31,19 @@ msgid "{0} mph"
 msgstr "{0} mph"
 
 #: src/components/alert/index.tsx:169
-msgid "{0}in of precipitation expected over the next {1} hours"
-msgstr "Dự kiến sẽ có {0} inch lượng mưa trong {1} giờ tới"
+#~ msgid "{0}in of precipitation expected over the next {1} hours"
+#~ msgstr "Dự kiến sẽ có {0} inch lượng mưa trong {1} giờ tới"
 
 #: src/components/alert/index.tsx:161
-msgid "{0}in of precipitation expected over the next hour"
-msgstr "Dự kiến sẽ có {0} inch lượng mưa trong 1 giờ tớ"
+#~ msgid "{0}in of precipitation expected over the next hour"
+#~ msgstr "Dự kiến sẽ có {0} inch lượng mưa trong 1 giờ tớ"
 
-#: src/components/alert/index.tsx:149
-#: src/components/alert/index.tsx:155
-#: src/components/alert/index.tsx:175
+#: src/components/alert/index.tsx:142
+#: src/components/alert/index.tsx:148
 msgid "{0}mm of precipitation expected over the next {1} hours"
 msgstr "Dự kiến sẽ có {0} mm lượng mưa trong {1} giờ tới"
 
-#: src/components/alert/index.tsx:141
+#: src/components/alert/index.tsx:134
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "Dự kiến sẽ có {0} mm lượng mưa trong 1 giờ tới"
 
@@ -228,19 +236,19 @@ msgstr "Tìm thấy một lựa chọn tốt hơn"
 msgid "Friday"
 msgstr "Thứ Sáu"
 
-#: src/components/alert/index.tsx:252
+#: src/components/alert/index.tsx:245
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "Gió mạnh dự kiến trong {durationOfStrongWind} giờ tới"
 
-#: src/components/alert/index.tsx:257
+#: src/components/alert/index.tsx:250
 msgid "Generally strong wind for the next 24 hours"
 msgstr "Gió mạnh dự kiến trong 24 giờ tới"
 
-#: src/components/alert/index.tsx:260
+#: src/components/alert/index.tsx:253
 msgid "Generally strong wind for the next hour"
 msgstr "Gió mạnh dự kiến trong giờ tới"
 
-#: src/components/alert/index.tsx:243
+#: src/components/alert/index.tsx:236
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "Gió mạnh bắt đầu trong {timeUntilStrongWind} giờ nữa"
 
@@ -351,19 +359,19 @@ msgstr "Kinh độ"
 msgid "Looks like we can't grab your location info automatically."
 msgstr "Có vẻ như chúng tôi không thể lấy thông tin vị trí của bạn một cách tự động."
 
-#: src/components/alert/index.tsx:412
+#: src/components/alert/index.tsx:405
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "Tầm nhìn kém trong {durationOfLowVisibility} giờ tới"
 
-#: src/components/alert/index.tsx:417
+#: src/components/alert/index.tsx:410
 msgid "Low visibility for the next 24 hours"
 msgstr "Tầm nhìn kém trong 24 giờ tới"
 
-#: src/components/alert/index.tsx:420
+#: src/components/alert/index.tsx:413
 msgid "Low visibility for the next hour"
 msgstr "Tầm nhìn kém trong giờ tới"
 
-#: src/components/alert/index.tsx:401
+#: src/components/alert/index.tsx:394
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "Tầm nhìn thấp bắt đầu trong {timeUntilLowVisibility} giờ"
 
@@ -554,19 +562,19 @@ msgstr "hạt tuyết"
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "Gió mạnh trong 1 giờ tới"
 
-#: src/components/alert/index.tsx:332
+#: src/components/alert/index.tsx:325
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "Cơn gió mạnh trong {durationOfStrongWind} giờ tới"
 
-#: src/components/alert/index.tsx:337
+#: src/components/alert/index.tsx:330
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "Cơn gió mạnh trong 24 giờ tới"
 
-#: src/components/alert/index.tsx:340
+#: src/components/alert/index.tsx:333
 msgid "Strong wind gusts for the next hour"
 msgstr "Cơn gió mạnh trong 1 giờ tới"
 
-#: src/components/alert/index.tsx:321
+#: src/components/alert/index.tsx:314
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "Cơn gió mạnh bắt đầu sau {timeUntilStrongWind} giờ"
 

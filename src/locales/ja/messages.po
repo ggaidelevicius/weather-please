@@ -13,6 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/alert/index.tsx:162
+#: src/components/alert/index.tsx:168
+msgid "{0} inches of precipitation expected over the next {1} hours"
+msgstr "次の{1}時間で{0}インチの降水量が予想されます"
+
+#: src/components/alert/index.tsx:154
+msgid "{0} inches of precipitation expected over the next hour"
+msgstr "次の1時間で{0}インチの降水量が予想されます"
+
 #: src/components/tile/weather/index.tsx:102
 msgid "{0} km/h"
 msgstr "{0} キロメートル/時"
@@ -22,20 +31,19 @@ msgid "{0} mph"
 msgstr "{0} マイル/時"
 
 #: src/components/alert/index.tsx:169
-msgid "{0}in of precipitation expected over the next {1} hours"
-msgstr "次の{1}時間で{0}インチの降水量が予想されます"
+#~ msgid "{0}in of precipitation expected over the next {1} hours"
+#~ msgstr "次の{1}時間で{0}インチの降水量が予想されます"
 
 #: src/components/alert/index.tsx:161
-msgid "{0}in of precipitation expected over the next hour"
-msgstr "次の1時間で{0}インチの降水量が予想されます"
+#~ msgid "{0}in of precipitation expected over the next hour"
+#~ msgstr "次の1時間で{0}インチの降水量が予想されます"
 
-#: src/components/alert/index.tsx:149
-#: src/components/alert/index.tsx:155
-#: src/components/alert/index.tsx:175
+#: src/components/alert/index.tsx:142
+#: src/components/alert/index.tsx:148
 msgid "{0}mm of precipitation expected over the next {1} hours"
 msgstr "次の{1}時間で降水量{0}ミリが予想されます"
 
-#: src/components/alert/index.tsx:141
+#: src/components/alert/index.tsx:134
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "次の1時間で降水量{0}ミリが予想されます"
 
@@ -228,19 +236,19 @@ msgstr "より良い代替案を見つけた"
 msgid "Friday"
 msgstr "金曜日"
 
-#: src/components/alert/index.tsx:252
+#: src/components/alert/index.tsx:245
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "次の{durationOfStrongWind}時間は一般的に強風"
 
-#: src/components/alert/index.tsx:257
+#: src/components/alert/index.tsx:250
 msgid "Generally strong wind for the next 24 hours"
 msgstr "次の24時間は一般的に強風"
 
-#: src/components/alert/index.tsx:260
+#: src/components/alert/index.tsx:253
 msgid "Generally strong wind for the next hour"
 msgstr "次の1時間は一般的に強風"
 
-#: src/components/alert/index.tsx:243
+#: src/components/alert/index.tsx:236
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}時間後から一般的に強風が始まる"
 
@@ -351,19 +359,19 @@ msgstr "経度"
 msgid "Looks like we can't grab your location info automatically."
 msgstr "自動的にあなたの位置情報を取得できないようです。"
 
-#: src/components/alert/index.tsx:412
+#: src/components/alert/index.tsx:405
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "次の{durationOfLowVisibility}時間は視界が悪い"
 
-#: src/components/alert/index.tsx:417
+#: src/components/alert/index.tsx:410
 msgid "Low visibility for the next 24 hours"
 msgstr "次の24時間は視界が悪い"
 
-#: src/components/alert/index.tsx:420
+#: src/components/alert/index.tsx:413
 msgid "Low visibility for the next hour"
 msgstr "次の1時間は視界が悪い"
 
-#: src/components/alert/index.tsx:401
+#: src/components/alert/index.tsx:394
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "{timeUntilLowVisibility}時間後から視界が悪くなります"
 
@@ -554,19 +562,19 @@ msgstr "粉雪"
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "次の1時間の強風"
 
-#: src/components/alert/index.tsx:332
+#: src/components/alert/index.tsx:325
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "次の{durationOfStrongWind}時間の強い風の突風"
 
-#: src/components/alert/index.tsx:337
+#: src/components/alert/index.tsx:330
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "次の24時間の強い風の突風"
 
-#: src/components/alert/index.tsx:340
+#: src/components/alert/index.tsx:333
 msgid "Strong wind gusts for the next hour"
 msgstr "次の1時間の強い風の突風"
 
-#: src/components/alert/index.tsx:321
+#: src/components/alert/index.tsx:314
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}時間後に強い風の突風が始まります"
 

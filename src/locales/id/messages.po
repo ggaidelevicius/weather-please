@@ -13,6 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/alert/index.tsx:162
+#: src/components/alert/index.tsx:168
+msgid "{0} inches of precipitation expected over the next {1} hours"
+msgstr "{0} inci presipitasi diharapkan selama {1} jam ke depan"
+
+#: src/components/alert/index.tsx:154
+msgid "{0} inches of precipitation expected over the next hour"
+msgstr "{0} inci presipitasi diharapkan selama jam berikutnya"
+
 #: src/components/tile/weather/index.tsx:102
 msgid "{0} km/h"
 msgstr "{0} km/j"
@@ -22,20 +31,19 @@ msgid "{0} mph"
 msgstr "{0} mph"
 
 #: src/components/alert/index.tsx:169
-msgid "{0}in of precipitation expected over the next {1} hours"
-msgstr "Diperkirakan akan terjadi {0} inci presipitasi dalam {1} jam mendatang"
+#~ msgid "{0}in of precipitation expected over the next {1} hours"
+#~ msgstr "Diperkirakan akan terjadi {0} inci presipitasi dalam {1} jam mendatang"
 
 #: src/components/alert/index.tsx:161
-msgid "{0}in of precipitation expected over the next hour"
-msgstr "Diperkirakan akan terjadi {0} inci presipitasi dalam 1 jam mendatang"
+#~ msgid "{0}in of precipitation expected over the next hour"
+#~ msgstr "Diperkirakan akan terjadi {0} inci presipitasi dalam 1 jam mendatang"
 
-#: src/components/alert/index.tsx:149
-#: src/components/alert/index.tsx:155
-#: src/components/alert/index.tsx:175
+#: src/components/alert/index.tsx:142
+#: src/components/alert/index.tsx:148
 msgid "{0}mm of precipitation expected over the next {1} hours"
 msgstr "Diperkirakan akan terjadi {0} mm presipitasi dalam {1} jam mendatang"
 
-#: src/components/alert/index.tsx:141
+#: src/components/alert/index.tsx:134
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "Diperkirakan akan terjadi {0} mm presipitasi dalam 1 jam mendatang"
 
@@ -228,19 +236,19 @@ msgstr "Menemukan alternatif yang lebih baik"
 msgid "Friday"
 msgstr "Jumat"
 
-#: src/components/alert/index.tsx:252
+#: src/components/alert/index.tsx:245
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "Umumnya angin kencang selama {durationOfStrongWind} jam ke depan"
 
-#: src/components/alert/index.tsx:257
+#: src/components/alert/index.tsx:250
 msgid "Generally strong wind for the next 24 hours"
 msgstr "Umumnya angin kencang selama 24 jam ke depan"
 
-#: src/components/alert/index.tsx:260
+#: src/components/alert/index.tsx:253
 msgid "Generally strong wind for the next hour"
 msgstr "Umumnya angin kencang selama jam berikutnya"
 
-#: src/components/alert/index.tsx:243
+#: src/components/alert/index.tsx:236
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "Umumnya angin kencang mulai dalam {timeUntilStrongWind} jam"
 
@@ -351,19 +359,19 @@ msgstr "Bujur"
 msgid "Looks like we can't grab your location info automatically."
 msgstr "Sepertinya kami tidak dapat mengambil info lokasi Anda secara otomatis."
 
-#: src/components/alert/index.tsx:412
+#: src/components/alert/index.tsx:405
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "Visibilitas rendah untuk {durationOfLowVisibility} jam ke depan"
 
-#: src/components/alert/index.tsx:417
+#: src/components/alert/index.tsx:410
 msgid "Low visibility for the next 24 hours"
 msgstr "Visibilitas rendah untuk 24 jam ke depan"
 
-#: src/components/alert/index.tsx:420
+#: src/components/alert/index.tsx:413
 msgid "Low visibility for the next hour"
 msgstr "Visibilitas rendah untuk jam ke depan"
 
-#: src/components/alert/index.tsx:401
+#: src/components/alert/index.tsx:394
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "Visibilitas rendah dimulai dalam {timeUntilLowVisibility} jam"
 
@@ -554,19 +562,19 @@ msgstr "butiran salju"
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "Angin kencang untuk 1 jam ke depan"
 
-#: src/components/alert/index.tsx:332
+#: src/components/alert/index.tsx:325
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "Hembusan angin kencang untuk {durationOfStrongWind} jam ke depan"
 
-#: src/components/alert/index.tsx:337
+#: src/components/alert/index.tsx:330
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "Hembusan angin kencang untuk 24 jam ke depan"
 
-#: src/components/alert/index.tsx:340
+#: src/components/alert/index.tsx:333
 msgid "Strong wind gusts for the next hour"
 msgstr "Hembusan angin kencang untuk 1 jam ke depan"
 
-#: src/components/alert/index.tsx:321
+#: src/components/alert/index.tsx:314
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "Hembusan angin kencang dimulai dalam {timeUntilStrongWind} jam"
 

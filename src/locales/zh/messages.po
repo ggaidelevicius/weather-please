@@ -13,6 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/alert/index.tsx:162
+#: src/components/alert/index.tsx:168
+msgid "{0} inches of precipitation expected over the next {1} hours"
+msgstr "预计未来 {1} 小时内有 {0} 英寸降水"
+
+#: src/components/alert/index.tsx:154
+msgid "{0} inches of precipitation expected over the next hour"
+msgstr "预计下一个小时内有 {0} 英寸降水"
+
 #: src/components/tile/weather/index.tsx:102
 msgid "{0} km/h"
 msgstr "{0} 公里/小时"
@@ -22,20 +31,19 @@ msgid "{0} mph"
 msgstr "{0} 英里/小时"
 
 #: src/components/alert/index.tsx:169
-msgid "{0}in of precipitation expected over the next {1} hours"
-msgstr "未来{1}小时预计有{0}英寸的降水"
+#~ msgid "{0}in of precipitation expected over the next {1} hours"
+#~ msgstr "未来{1}小时预计有{0}英寸的降水"
 
 #: src/components/alert/index.tsx:161
-msgid "{0}in of precipitation expected over the next hour"
-msgstr "未来1小时预计有{0}英寸的降水"
+#~ msgid "{0}in of precipitation expected over the next hour"
+#~ msgstr "未来1小时预计有{0}英寸的降水"
 
-#: src/components/alert/index.tsx:149
-#: src/components/alert/index.tsx:155
-#: src/components/alert/index.tsx:175
+#: src/components/alert/index.tsx:142
+#: src/components/alert/index.tsx:148
 msgid "{0}mm of precipitation expected over the next {1} hours"
 msgstr "未来{1}小时预计有{0}毫米的降水"
 
-#: src/components/alert/index.tsx:141
+#: src/components/alert/index.tsx:134
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "未来1小时预计有{0}毫米的降水"
 
@@ -228,19 +236,19 @@ msgstr "找到了更好的替代方案"
 msgid "Friday"
 msgstr "星期五"
 
-#: src/components/alert/index.tsx:252
+#: src/components/alert/index.tsx:245
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "接下来{durationOfStrongWind}小时内通常有大风"
 
-#: src/components/alert/index.tsx:257
+#: src/components/alert/index.tsx:250
 msgid "Generally strong wind for the next 24 hours"
 msgstr "接下来24小时内通常有大风"
 
-#: src/components/alert/index.tsx:260
+#: src/components/alert/index.tsx:253
 msgid "Generally strong wind for the next hour"
 msgstr "下一个小时内通常有大风"
 
-#: src/components/alert/index.tsx:243
+#: src/components/alert/index.tsx:236
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}小时后开始通常有大风"
 
@@ -351,19 +359,19 @@ msgstr "经度"
 msgid "Looks like we can't grab your location info automatically."
 msgstr "看起来我们不能自动获取您的位置信息。"
 
-#: src/components/alert/index.tsx:412
+#: src/components/alert/index.tsx:405
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "接下来的{durationOfLowVisibility}小时内将有低能见度"
 
-#: src/components/alert/index.tsx:417
+#: src/components/alert/index.tsx:410
 msgid "Low visibility for the next 24 hours"
 msgstr "接下来的24小时内将有低能见度"
 
-#: src/components/alert/index.tsx:420
+#: src/components/alert/index.tsx:413
 msgid "Low visibility for the next hour"
 msgstr "接下来的一个小时内将有低能见度"
 
-#: src/components/alert/index.tsx:401
+#: src/components/alert/index.tsx:394
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "低能见度将于{timeUntilLowVisibility}小时后开始"
 
@@ -554,19 +562,19 @@ msgstr "雪粒"
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "未来一小时有强风"
 
-#: src/components/alert/index.tsx:332
+#: src/components/alert/index.tsx:325
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "未来{durationOfStrongWind}小时有强风暴"
 
-#: src/components/alert/index.tsx:337
+#: src/components/alert/index.tsx:330
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "未来24小时有强风暴"
 
-#: src/components/alert/index.tsx:340
+#: src/components/alert/index.tsx:333
 msgid "Strong wind gusts for the next hour"
 msgstr "未来一小时有强风暴"
 
-#: src/components/alert/index.tsx:321
+#: src/components/alert/index.tsx:314
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}小时后开始有强风暴"
 

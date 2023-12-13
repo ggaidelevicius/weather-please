@@ -110,18 +110,13 @@ const Alert: FC<AlertProps> = (props) => {
 	 * and added to the alerts list. If conditions do not warrant an alert, or if alerts for precipitation
 	 * are turned off, any existing precipitation alert is removed from the list.
 	 *
-	 * The threshold is 15mm for metric and approximately 0.59 inches for non-metric measurements.
-	 *
 	 * Note: Converting mm to inches uses the value 25.4 (1 inch is approximately 25.4mm).
 	 */
 	useEffect(() => {
 		if (showPrecipitationAlerts) {
 			const { precipitation, duration } = totalPrecipitation
 			let precipitationAlert: ReactElement | null = null
-			if (
-				(useMetric && precipitation.value >= 15) ||
-				(!useMetric && precipitation.value / 25.4 >= 0.590551)
-			) {
+			if (precipitation.value >= 15) {
 				precipitationAlert = (
 					<MantineAlert
 						className={styles.alert}
@@ -159,7 +154,7 @@ const Alert: FC<AlertProps> = (props) => {
 						)}
 						{!useMetric && duration.indexOf(false) === 1 && (
 							<Trans>
-								{(precipitation.value / 25.4).toFixed(1)}in of precipitation
+								{(precipitation.value / 25.4).toFixed(1)} inches of precipitation
 								expected over the next hour
 							</Trans>
 						)}
@@ -167,13 +162,13 @@ const Alert: FC<AlertProps> = (props) => {
 							duration.indexOf(false) !== 1 &&
 							duration.indexOf(false) !== -1 && (
 								<Trans>
-									{(precipitation.value / 25.4).toFixed(1)}in of precipitation
+									{(precipitation.value / 25.4).toFixed(1)} inches of precipitation
 									expected over the next {duration.indexOf(false)} hours
 								</Trans>
 							)}
 						{!useMetric && duration.indexOf(false) === -1 && (
 							<Trans>
-								{precipitation.value.toFixed(1)}in of precipitation expected
+								{(precipitation.value / 25.4).toFixed(1)} inches of precipitation expected
 								over the next {duration.length - 1} hours
 							</Trans>
 						)}

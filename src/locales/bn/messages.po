@@ -13,6 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/alert/index.tsx:162
+#: src/components/alert/index.tsx:168
+msgid "{0} inches of precipitation expected over the next {1} hours"
+msgstr "{0} ইঞ্চি বৃষ্টিপাত প্রত্যাশিত আগামী {1} ঘণ্টায়"
+
+#: src/components/alert/index.tsx:154
+msgid "{0} inches of precipitation expected over the next hour"
+msgstr "{0} ইঞ্চি বৃষ্টিপাত প্রত্যাশিত আগামী ঘণ্টায়"
+
 #: src/components/tile/weather/index.tsx:102
 msgid "{0} km/h"
 msgstr "{0} কিমি/ঘণ্টা"
@@ -22,20 +31,19 @@ msgid "{0} mph"
 msgstr "{0} মাইল/ঘণ্টা"
 
 #: src/components/alert/index.tsx:169
-msgid "{0}in of precipitation expected over the next {1} hours"
-msgstr "{0}ইঞ্চি বৃষ্টিপাত পরের {1} ঘণ্টায় প্রত্যাশিত"
+#~ msgid "{0}in of precipitation expected over the next {1} hours"
+#~ msgstr "{0}ইঞ্চি বৃষ্টিপাত পরের {1} ঘণ্টায় প্রত্যাশিত"
 
 #: src/components/alert/index.tsx:161
-msgid "{0}in of precipitation expected over the next hour"
-msgstr "{0}ইঞ্চি বৃষ্টিপাত পরের 1 ঘণ্টায় প্রত্যাশিত"
+#~ msgid "{0}in of precipitation expected over the next hour"
+#~ msgstr "{0}ইঞ্চি বৃষ্টিপাত পরের 1 ঘণ্টায় প্রত্যাশিত"
 
-#: src/components/alert/index.tsx:149
-#: src/components/alert/index.tsx:155
-#: src/components/alert/index.tsx:175
+#: src/components/alert/index.tsx:142
+#: src/components/alert/index.tsx:148
 msgid "{0}mm of precipitation expected over the next {1} hours"
 msgstr "পরের {1} ঘণ্টায় {0}মিমি বৃষ্টিপাতের প্রত্যাশা"
 
-#: src/components/alert/index.tsx:141
+#: src/components/alert/index.tsx:134
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "পরের 1 ঘণ্টায় {0}মিমি বৃষ্টিপাতের প্রত্যাশা"
 
@@ -228,19 +236,19 @@ msgstr "আরও ভাল বিকল্প পেয়েছি"
 msgid "Friday"
 msgstr "শুক্রবার"
 
-#: src/components/alert/index.tsx:252
+#: src/components/alert/index.tsx:245
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "আগামী {durationOfStrongWind} ঘণ্টা ধরে সাধারণত প্রবল বাতাস"
 
-#: src/components/alert/index.tsx:257
+#: src/components/alert/index.tsx:250
 msgid "Generally strong wind for the next 24 hours"
 msgstr "আগামী ২৪ ঘণ্টা ধরে সাধারণত প্রবল বাতাস"
 
-#: src/components/alert/index.tsx:260
+#: src/components/alert/index.tsx:253
 msgid "Generally strong wind for the next hour"
 msgstr "আগামী এক ঘণ্টা ধরে সাধারণত প্রবল বাতাস"
 
-#: src/components/alert/index.tsx:243
+#: src/components/alert/index.tsx:236
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind} ঘণ্টা পর থেকে সাধারণত প্রবল বাতাস শুরু হবে"
 
@@ -351,19 +359,19 @@ msgstr "দ্রাঘিমাংশ"
 msgid "Looks like we can't grab your location info automatically."
 msgstr "মনে হচ্ছে আমরা আপনার অবস্থানের তথ্য স্বয়ংক্রিয়ভাবে পেতে পারছি না।"
 
-#: src/components/alert/index.tsx:412
+#: src/components/alert/index.tsx:405
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "পরের {durationOfLowVisibility} ঘণ্টা ধরে কম দৃশ্যতা"
 
-#: src/components/alert/index.tsx:417
+#: src/components/alert/index.tsx:410
 msgid "Low visibility for the next 24 hours"
 msgstr "পরের 24 ঘণ্টা ধরে কম দৃশ্যতা"
 
-#: src/components/alert/index.tsx:420
+#: src/components/alert/index.tsx:413
 msgid "Low visibility for the next hour"
 msgstr "পরের এক ঘণ্টা ধরে কম দৃশ্যতা"
 
-#: src/components/alert/index.tsx:401
+#: src/components/alert/index.tsx:394
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "{timeUntilLowVisibility} ঘণ্টা পরে কম দৃশ্যতা শুরু হবে"
 
@@ -554,19 +562,19 @@ msgstr "তুষার কণা"
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "পরের এক ঘণ্টা ধরে শক্তিশালী বাতাস"
 
-#: src/components/alert/index.tsx:332
+#: src/components/alert/index.tsx:325
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "পরের {durationOfStrongWind} ঘণ্টা ধরে শক্তিশালী বাতাসের ঝড়"
 
-#: src/components/alert/index.tsx:337
+#: src/components/alert/index.tsx:330
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "পরের 24 ঘণ্টা ধরে শক্তিশালী বাতাসের ঝড়"
 
-#: src/components/alert/index.tsx:340
+#: src/components/alert/index.tsx:333
 msgid "Strong wind gusts for the next hour"
 msgstr "পরের এক ঘণ্টা ধরে শক্তিশালী বাতাসের ঝড়"
 
-#: src/components/alert/index.tsx:321
+#: src/components/alert/index.tsx:314
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind} ঘণ্টা পর শক্তিশালী বাতাসের ঝড় শুরু হবে"
 

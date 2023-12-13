@@ -13,6 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/alert/index.tsx:162
+#: src/components/alert/index.tsx:168
+msgid "{0} inches of precipitation expected over the next {1} hours"
+msgstr "अगले {1} घंटों में {0} इंच वर्षा की उम्मीद"
+
+#: src/components/alert/index.tsx:154
+msgid "{0} inches of precipitation expected over the next hour"
+msgstr "अगले घंटे में {0} इंच वर्षा की उम्मीद"
+
 #: src/components/tile/weather/index.tsx:102
 msgid "{0} km/h"
 msgstr "{0} किमी/घंटा"
@@ -22,20 +31,19 @@ msgid "{0} mph"
 msgstr "{0} मील प्रति घंटा"
 
 #: src/components/alert/index.tsx:169
-msgid "{0}in of precipitation expected over the next {1} hours"
-msgstr "अगले {1} घंटों में {0} इंच वर्षा की संभावना है"
+#~ msgid "{0}in of precipitation expected over the next {1} hours"
+#~ msgstr "अगले {1} घंटों में {0} इंच वर्षा की संभावना है"
 
 #: src/components/alert/index.tsx:161
-msgid "{0}in of precipitation expected over the next hour"
-msgstr "अगले 1 घंटे में {0} इंच वर्षा की संभावना है"
+#~ msgid "{0}in of precipitation expected over the next hour"
+#~ msgstr "अगले 1 घंटे में {0} इंच वर्षा की संभावना है"
 
-#: src/components/alert/index.tsx:149
-#: src/components/alert/index.tsx:155
-#: src/components/alert/index.tsx:175
+#: src/components/alert/index.tsx:142
+#: src/components/alert/index.tsx:148
 msgid "{0}mm of precipitation expected over the next {1} hours"
 msgstr "अगले {1} घंटों में {0} मिमी वर्षा की संभावना है"
 
-#: src/components/alert/index.tsx:141
+#: src/components/alert/index.tsx:134
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "अगले 1 घंटे में {0} मिमी वर्षा की संभावना है"
 
@@ -228,19 +236,19 @@ msgstr "बेहतर विकल्प मिला"
 msgid "Friday"
 msgstr "शुक्रवार"
 
-#: src/components/alert/index.tsx:252
+#: src/components/alert/index.tsx:245
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "अगले {durationOfStrongWind} घंटों के लिए आम तौर पर तेज हवा"
 
-#: src/components/alert/index.tsx:257
+#: src/components/alert/index.tsx:250
 msgid "Generally strong wind for the next 24 hours"
 msgstr "अगले 24 घंटों के लिए आम तौर पर तेज हवा"
 
-#: src/components/alert/index.tsx:260
+#: src/components/alert/index.tsx:253
 msgid "Generally strong wind for the next hour"
 msgstr "अगले घंटे के लिए आम तौर पर तेज हवा"
 
-#: src/components/alert/index.tsx:243
+#: src/components/alert/index.tsx:236
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind} घंटों में शुरू होने वाली आम तौर पर तेज हवा"
 
@@ -351,19 +359,19 @@ msgstr "देशांतर"
 msgid "Looks like we can't grab your location info automatically."
 msgstr "लगता है हम आपकी स्थान जानकारी स्वचालित रूप से नहीं ले सकते।"
 
-#: src/components/alert/index.tsx:412
+#: src/components/alert/index.tsx:405
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "अगले {durationOfLowVisibility} घंटों के लिए कम दृश्यता"
 
-#: src/components/alert/index.tsx:417
+#: src/components/alert/index.tsx:410
 msgid "Low visibility for the next 24 hours"
 msgstr "अगले 24 घंटों के लिए कम दृश्यता"
 
-#: src/components/alert/index.tsx:420
+#: src/components/alert/index.tsx:413
 msgid "Low visibility for the next hour"
 msgstr "अगले घंटे के लिए कम दृश्यता"
 
-#: src/components/alert/index.tsx:401
+#: src/components/alert/index.tsx:394
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "{timeUntilLowVisibility} घंटों में कम दृश्यता शुरू होगी"
 
@@ -554,19 +562,19 @@ msgstr "हिमकण"
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "अगले एक घंटे तक मजबूत हवा"
 
-#: src/components/alert/index.tsx:332
+#: src/components/alert/index.tsx:325
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "अगले {durationOfStrongWind} घंटों तक मजबूत हवा के झोंके"
 
-#: src/components/alert/index.tsx:337
+#: src/components/alert/index.tsx:330
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "अगले 24 घंटों तक मजबूत हवा के झोंके"
 
-#: src/components/alert/index.tsx:340
+#: src/components/alert/index.tsx:333
 msgid "Strong wind gusts for the next hour"
 msgstr "अगले एक घंटे तक मजबूत हवा के झोंके"
 
-#: src/components/alert/index.tsx:321
+#: src/components/alert/index.tsx:314
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind} घंटों में मजबूत हवा के झोंके शुरू होंगे"
 

@@ -13,6 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/alert/index.tsx:162
+#: src/components/alert/index.tsx:168
+msgid "{0} inches of precipitation expected over the next {1} hours"
+msgstr "다음 {1}시간 동안 {0}인치의 강수량 예상"
+
+#: src/components/alert/index.tsx:154
+msgid "{0} inches of precipitation expected over the next hour"
+msgstr "다음 1시간 동안 {0}인치의 강수량 예상"
+
 #: src/components/tile/weather/index.tsx:102
 msgid "{0} km/h"
 msgstr "{0} km/h"
@@ -22,20 +31,19 @@ msgid "{0} mph"
 msgstr "{0} mph"
 
 #: src/components/alert/index.tsx:169
-msgid "{0}in of precipitation expected over the next {1} hours"
-msgstr "다음 {1}시간 동안 강수량 {0}인치 예상"
+#~ msgid "{0}in of precipitation expected over the next {1} hours"
+#~ msgstr "다음 {1}시간 동안 강수량 {0}인치 예상"
 
 #: src/components/alert/index.tsx:161
-msgid "{0}in of precipitation expected over the next hour"
-msgstr "다음 1시간 동안 강수량 {0}인치 예상"
+#~ msgid "{0}in of precipitation expected over the next hour"
+#~ msgstr "다음 1시간 동안 강수량 {0}인치 예상"
 
-#: src/components/alert/index.tsx:149
-#: src/components/alert/index.tsx:155
-#: src/components/alert/index.tsx:175
+#: src/components/alert/index.tsx:142
+#: src/components/alert/index.tsx:148
 msgid "{0}mm of precipitation expected over the next {1} hours"
 msgstr "다음 {1}시간 동안 강수량 {0}밀리미터 예상"
 
-#: src/components/alert/index.tsx:141
+#: src/components/alert/index.tsx:134
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "다음 1시간 동안 강수량 {0}밀리미터 예상"
 
@@ -228,19 +236,19 @@ msgstr "더 나은 대안을 찾음"
 msgid "Friday"
 msgstr "금요일"
 
-#: src/components/alert/index.tsx:252
+#: src/components/alert/index.tsx:245
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "다음 {durationOfStrongWind}시간 동안 일반적으로 강한 바람"
 
-#: src/components/alert/index.tsx:257
+#: src/components/alert/index.tsx:250
 msgid "Generally strong wind for the next 24 hours"
 msgstr "다음 24시간 동안 일반적으로 강한 바람"
 
-#: src/components/alert/index.tsx:260
+#: src/components/alert/index.tsx:253
 msgid "Generally strong wind for the next hour"
 msgstr "다음 1시간 동안 일반적으로 강한 바람"
 
-#: src/components/alert/index.tsx:243
+#: src/components/alert/index.tsx:236
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}시간 후부터 일반적으로 강한 바람 시작"
 
@@ -351,19 +359,19 @@ msgstr "경도"
 msgid "Looks like we can't grab your location info automatically."
 msgstr "자동으로 위치 정보를 가져올 수 없는 것 같습니다."
 
-#: src/components/alert/index.tsx:412
+#: src/components/alert/index.tsx:405
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "다음 {durationOfLowVisibility} 시간 동안 저시력"
 
-#: src/components/alert/index.tsx:417
+#: src/components/alert/index.tsx:410
 msgid "Low visibility for the next 24 hours"
 msgstr "다음 24시간 동안 저시력"
 
-#: src/components/alert/index.tsx:420
+#: src/components/alert/index.tsx:413
 msgid "Low visibility for the next hour"
 msgstr "다음 1시간 동안 저시력"
 
-#: src/components/alert/index.tsx:401
+#: src/components/alert/index.tsx:394
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "{timeUntilLowVisibility} 시간 후 저시력 시작"
 
@@ -554,19 +562,19 @@ msgstr "눈 과립"
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "다음 1 시간 동안 강풍"
 
-#: src/components/alert/index.tsx:332
+#: src/components/alert/index.tsx:325
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "다음 {durationOfStrongWind} 시간 동안 강한 바람"
 
-#: src/components/alert/index.tsx:337
+#: src/components/alert/index.tsx:330
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "다음 24 시간 동안 강한 바람"
 
-#: src/components/alert/index.tsx:340
+#: src/components/alert/index.tsx:333
 msgid "Strong wind gusts for the next hour"
 msgstr "다음 1 시간 동안 강한 바람"
 
-#: src/components/alert/index.tsx:321
+#: src/components/alert/index.tsx:314
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind} 시간 후 강한 바람이 시작됩니다"
 

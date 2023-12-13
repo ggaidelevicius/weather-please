@@ -13,6 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/alert/index.tsx:162
+#: src/components/alert/index.tsx:168
+msgid "{0} inches of precipitation expected over the next {1} hours"
+msgstr "{0} inches of precipitation expected over the next {1} hours"
+
+#: src/components/alert/index.tsx:154
+msgid "{0} inches of precipitation expected over the next hour"
+msgstr "{0} inches of precipitation expected over the next hour"
+
 #: src/components/tile/weather/index.tsx:102
 msgid "{0} km/h"
 msgstr "{0} km/h"
@@ -22,20 +31,19 @@ msgid "{0} mph"
 msgstr "{0} mph"
 
 #: src/components/alert/index.tsx:169
-msgid "{0}in of precipitation expected over the next {1} hours"
-msgstr "{0}in of precipitation expected over the next {1} hours"
+#~ msgid "{0}in of precipitation expected over the next {1} hours"
+#~ msgstr "{0}in of precipitation expected over the next {1} hours"
 
 #: src/components/alert/index.tsx:161
-msgid "{0}in of precipitation expected over the next hour"
-msgstr "{0}in of precipitation expected over the next hour"
+#~ msgid "{0}in of precipitation expected over the next hour"
+#~ msgstr "{0}in of precipitation expected over the next hour"
 
-#: src/components/alert/index.tsx:149
-#: src/components/alert/index.tsx:155
-#: src/components/alert/index.tsx:175
+#: src/components/alert/index.tsx:142
+#: src/components/alert/index.tsx:148
 msgid "{0}mm of precipitation expected over the next {1} hours"
 msgstr "{0}mm of precipitation expected over the next {1} hours"
 
-#: src/components/alert/index.tsx:141
+#: src/components/alert/index.tsx:134
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "{0}mm of precipitation expected over the next hour"
 
@@ -228,19 +236,19 @@ msgstr "Found a better alternative"
 msgid "Friday"
 msgstr "Friday"
 
-#: src/components/alert/index.tsx:252
+#: src/components/alert/index.tsx:245
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "Generally strong wind for the next {durationOfStrongWind} hours"
 
-#: src/components/alert/index.tsx:257
+#: src/components/alert/index.tsx:250
 msgid "Generally strong wind for the next 24 hours"
 msgstr "Generally strong wind for the next 24 hours"
 
-#: src/components/alert/index.tsx:260
+#: src/components/alert/index.tsx:253
 msgid "Generally strong wind for the next hour"
 msgstr "Generally strong wind for the next hour"
 
-#: src/components/alert/index.tsx:243
+#: src/components/alert/index.tsx:236
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "Generally strong wind starting in {timeUntilStrongWind} hours"
 
@@ -351,19 +359,19 @@ msgstr "Longitude"
 msgid "Looks like we can't grab your location info automatically."
 msgstr "Looks like we can't grab your location info automatically."
 
-#: src/components/alert/index.tsx:412
+#: src/components/alert/index.tsx:405
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "Low visibility for the next {durationOfLowVisibility} hours"
 
-#: src/components/alert/index.tsx:417
+#: src/components/alert/index.tsx:410
 msgid "Low visibility for the next 24 hours"
 msgstr "Low visibility for the next 24 hours"
 
-#: src/components/alert/index.tsx:420
+#: src/components/alert/index.tsx:413
 msgid "Low visibility for the next hour"
 msgstr "Low visibility for the next hour"
 
-#: src/components/alert/index.tsx:401
+#: src/components/alert/index.tsx:394
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "Low visibility starting in {timeUntilLowVisibility} hours"
 
@@ -554,19 +562,19 @@ msgstr "snow grains"
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "Strong wind for the next 12 hours"
 
-#: src/components/alert/index.tsx:332
+#: src/components/alert/index.tsx:325
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "Strong wind gusts for the next {durationOfStrongWind} hours"
 
-#: src/components/alert/index.tsx:337
+#: src/components/alert/index.tsx:330
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "Strong wind gusts for the next 24 hours"
 
-#: src/components/alert/index.tsx:340
+#: src/components/alert/index.tsx:333
 msgid "Strong wind gusts for the next hour"
 msgstr "Strong wind gusts for the next hour"
 
-#: src/components/alert/index.tsx:321
+#: src/components/alert/index.tsx:314
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "Strong wind gusts starting in {timeUntilStrongWind} hours"
 
