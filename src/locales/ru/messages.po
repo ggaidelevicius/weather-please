@@ -21,15 +21,17 @@ msgstr "{0} км/ч"
 msgid "{0} mph"
 msgstr "{0} миль/ч"
 
-#: src/components/alert/index.tsx:159
+#: src/components/alert/index.tsx:169
 msgid "{0}in of precipitation expected over the next {1} hours"
 msgstr "Ожидается {0} дюймов осадков в течение следующих {1} часов"
 
-#: src/components/alert/index.tsx:153
+#: src/components/alert/index.tsx:161
 msgid "{0}in of precipitation expected over the next hour"
 msgstr "Ожидается {0} дюймов осадков в течение следующего часа"
 
-#: src/components/alert/index.tsx:147
+#: src/components/alert/index.tsx:149
+#: src/components/alert/index.tsx:155
+#: src/components/alert/index.tsx:175
 msgid "{0}mm of precipitation expected over the next {1} hours"
 msgstr "Ожидается {0} мм осадков в течение следующих {1} часов"
 
@@ -46,7 +48,7 @@ msgid "✍️ Submit feedback"
 msgstr "✍️ Отправить отзыв"
 
 #: src/components/settings/index.tsx:407
-#: src/pages/index.tsx:692
+#: src/pages/index.tsx:715
 msgid "🌟 Leave a review"
 msgstr "🌟 Оставить отзыв"
 
@@ -62,7 +64,7 @@ msgstr "💡 Запросить функцию"
 msgid "🔒 Privacy policy"
 msgstr "🔒 Политика конфиденциальности"
 
-#: src/pages/feedback/index.tsx:319
+#: src/pages/feedback/index.tsx:332
 msgid "Additional details"
 msgstr "Дополнительные сведения"
 
@@ -74,11 +76,11 @@ msgstr "Дополнительные сведения"
 msgid "Alerts"
 msgstr "Оповещения"
 
-#: src/pages/index.tsx:561
+#: src/pages/index.tsx:584
 msgid "An error has occurred while fetching location data. Please check the console for more details."
 msgstr "Произошла ошибка при получении данных о местоположении. Пожалуйста, проверьте консоль для получения дополнительной информации."
 
-#: src/pages/index.tsx:290
+#: src/pages/index.tsx:313
 msgid "An error has occurred while fetching weather data. Please check the console for more details."
 msgstr "Произошла ошибка при получении метеоданных. Пожалуйста, проверьте консоль для получения дополнительной информации."
 
@@ -86,7 +88,7 @@ msgstr "Произошла ошибка при получении метеода
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "Произошла ошибка при получении вашего местоположения. Пожалуйста, проверьте консоль для получения дополнительной информации."
 
-#: src/pages/index.tsx:528
+#: src/pages/index.tsx:551
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "Произошла ошибка при периодическом обновлении местоположения. Пожалуйста, проверьте консоль для получения дополнительной информации."
 
@@ -102,7 +104,7 @@ msgstr "Август"
 msgid "Based on the provided information, your location is:"
 msgstr "Исходя из предоставленной информации, ваше местоположение:"
 
-#: src/pages/feedback/index.tsx:396
+#: src/pages/feedback/index.tsx:410
 msgid "Bug report"
 msgstr "Отчет об ошибке"
 
@@ -110,11 +112,11 @@ msgstr "Отчет об ошибке"
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/pages/feedback/index.tsx:175
+#: src/pages/feedback/index.tsx:177
 msgid "Causes browser crashes or errors"
 msgstr "Приводит к сбоям или ошибкам браузера"
 
-#: src/pages/feedback/index.tsx:257
+#: src/pages/feedback/index.tsx:265
 msgid "Changed needs"
 msgstr "Измененные потребности"
 
@@ -122,15 +124,15 @@ msgstr "Измененные потребности"
 msgid "clear sky"
 msgstr "ясное небо"
 
-#: src/pages/feedback/index.tsx:236
+#: src/pages/feedback/index.tsx:243
 msgid "Concerned about privacy"
 msgstr "Опасения по поводу конфиденциальности"
 
-#: src/pages/feedback/index.tsx:247
+#: src/pages/feedback/index.tsx:255
 msgid "Concerned about security"
 msgstr "Опасения по поводу безопасности"
 
-#: src/pages/feedback/index.tsx:281
+#: src/pages/feedback/index.tsx:292
 msgid "Consumes too much memory or CPU"
 msgstr "Потребляет слишком много памяти или ЦПУ"
 
@@ -158,7 +160,7 @@ msgstr "густая замораживающая морось"
 msgid "depositing rime fog"
 msgstr "осаждение инея в тумане"
 
-#: src/pages/feedback/index.tsx:199
+#: src/pages/feedback/index.tsx:203
 msgid "Difficult to use or understand"
 msgstr "Сложно использовать или понять"
 
@@ -166,19 +168,19 @@ msgstr "Сложно использовать или понять"
 msgid "Don't save"
 msgstr "Не сохранять"
 
-#: src/pages/feedback/index.tsx:330
-#: src/pages/feedback/index.tsx:415
+#: src/pages/feedback/index.tsx:344
+#: src/pages/feedback/index.tsx:430
 msgid "Email (optional)"
 msgstr "Электронная почта (необязательно)"
 
 #: src/components/settings/index.tsx:103
-#: src/pages/index.tsx:288
-#: src/pages/index.tsx:526
-#: src/pages/index.tsx:559
+#: src/pages/index.tsx:311
+#: src/pages/index.tsx:549
+#: src/pages/index.tsx:582
 msgid "Error"
 msgstr "Ошибка"
 
-#: src/pages/feedback/index.tsx:467
+#: src/pages/feedback/index.tsx:482
 msgid "Error submitting feedback. Try again later."
 msgstr "Ошибка при отправке отзыва. Попробуйте позже."
 
@@ -198,11 +200,11 @@ msgstr "Экстремальный УФ в течение следующего �
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "Экстремальный УФ начнется через {timeUntilExtremeUv} часа(ов)"
 
-#: src/pages/feedback/index.tsx:381
+#: src/pages/feedback/index.tsx:395
 msgid "Feature request"
 msgstr "Запрос на функцию"
 
-#: src/pages/feedback/index.tsx:219
+#: src/pages/feedback/index.tsx:225
 msgid "Features don't work as expected"
 msgstr "Функции не работают как ожидалось"
 
@@ -210,21 +212,37 @@ msgstr "Функции не работают как ожидалось"
 msgid "February"
 msgstr "Февраль"
 
-#: src/pages/feedback/index.tsx:366
+#: src/pages/feedback/index.tsx:380
 msgid "Feedback"
 msgstr "Обратная связь"
 
-#: src/pages/feedback/index.tsx:450
+#: src/pages/feedback/index.tsx:465
 msgid "Feedback successfully submitted"
 msgstr "Отзыв успешно отправлен"
 
-#: src/pages/feedback/index.tsx:268
+#: src/pages/feedback/index.tsx:278
 msgid "Found a better alternative"
 msgstr "Найдена лучшая альтернатива"
 
 #: src/components/tile/index.tsx:64
 msgid "Friday"
 msgstr "Пятница"
+
+#: src/components/alert/index.tsx:252
+msgid "Generally strong wind for the next {durationOfStrongWind} hours"
+msgstr "Обычно сильный ветер в течение следующих {durationOfStrongWind} часов"
+
+#: src/components/alert/index.tsx:257
+msgid "Generally strong wind for the next 24 hours"
+msgstr "Обычно сильный ветер в течение следующих 24 часов"
+
+#: src/components/alert/index.tsx:260
+msgid "Generally strong wind for the next hour"
+msgstr "Обычно сильный ветер в течение следующего часа"
+
+#: src/components/alert/index.tsx:243
+msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
+msgstr "Обычно сильный ветер начнется через {timeUntilStrongWind} часов"
 
 #: src/components/tile/weather/index.tsx:147
 msgid "heavy freezing rain"
@@ -276,7 +294,7 @@ msgstr "Неверное значение широты"
 msgid "Invalid longitude value"
 msgstr "Неверное значение долготы"
 
-#: src/pages/feedback/index.tsx:308
+#: src/pages/feedback/index.tsx:321
 msgid "Issues after a recent update"
 msgstr "Проблемы после недавнего обновления"
 
@@ -292,7 +310,7 @@ msgstr "Июль"
 msgid "June"
 msgstr "Июнь"
 
-#: src/pages/feedback/index.tsx:210
+#: src/pages/feedback/index.tsx:215
 msgid "Lacks features I need"
 msgstr "Не хватает необходимых мне функций"
 
@@ -333,19 +351,19 @@ msgstr "Долгота"
 msgid "Looks like we can't grab your location info automatically."
 msgstr "Похоже, мы не можем автоматически получить информацию о вашем местоположении."
 
-#: src/components/alert/index.tsx:396
+#: src/components/alert/index.tsx:412
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "Плохая видимость в течение следующих {durationOfLowVisibility} часа(ов)"
 
-#: src/components/alert/index.tsx:401
+#: src/components/alert/index.tsx:417
 msgid "Low visibility for the next 24 hours"
 msgstr "Плохая видимость в течение следующих 24 часов"
 
-#: src/components/alert/index.tsx:404
+#: src/components/alert/index.tsx:420
 msgid "Low visibility for the next hour"
 msgstr "Плохая видимость в течение следующего часа"
 
-#: src/components/alert/index.tsx:385
+#: src/components/alert/index.tsx:401
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "Плохая видимость начнется через {timeUntilLowVisibility} часа(ов)"
 
@@ -362,7 +380,7 @@ msgstr "Март"
 msgid "May"
 msgstr "Май"
 
-#: src/pages/feedback/index.tsx:404
+#: src/pages/feedback/index.tsx:418
 msgid "Message"
 msgstr "Сообщение"
 
@@ -390,7 +408,7 @@ msgstr "умеренный снегопад"
 msgid "Monday"
 msgstr "Понедельник"
 
-#: src/pages/index.tsx:706
+#: src/pages/index.tsx:729
 msgid "Never show this again"
 msgstr "Больше не показывать это"
 
@@ -398,11 +416,11 @@ msgstr "Больше не показывать это"
 #~ msgid "New tab"
 #~ msgstr "Новая вкладка"
 
-#: src/pages/feedback/index.tsx:260
+#: src/pages/feedback/index.tsx:269
 msgid "No longer need the functionality"
 msgstr "Больше не нужна эта функциональность"
 
-#: src/pages/feedback/index.tsx:188
+#: src/pages/feedback/index.tsx:191
 msgid "Not available in my language"
 msgstr "Не доступно на моем языке"
 
@@ -446,7 +464,7 @@ msgstr "Периодически обновлять местоположение
 msgid "Please enter it manually below."
 msgstr "Пожалуйста, введите его вручную ниже."
 
-#: src/pages/feedback/index.tsx:278
+#: src/pages/feedback/index.tsx:288
 msgid "Resource usage"
 msgstr "Использование ресурсов"
 
@@ -459,7 +477,7 @@ msgstr "Суббота"
 msgid "Save"
 msgstr "Сохранить"
 
-#: src/pages/feedback/index.tsx:232
+#: src/pages/feedback/index.tsx:238
 msgid "Security and privacy concerns"
 msgstr "Опасения по поводу безопасности и конфиденциальности"
 
@@ -516,7 +534,7 @@ msgstr "небольшие снегопады"
 msgid "slight snowfall"
 msgstr "небольшой снегопад"
 
-#: src/pages/feedback/index.tsx:164
+#: src/pages/feedback/index.tsx:165
 msgid "Slows down my browser"
 msgstr "Замедляет мой браузер"
 
@@ -525,39 +543,39 @@ msgid "snow grains"
 msgstr "зерна снега"
 
 #: src/components/alert/index.tsx:236
-msgid "Strong wind for the next {durationOfStrongWind} hours"
-msgstr "Сильный ветер в течение следующих {durationOfStrongWind} часов"
+#~ msgid "Strong wind for the next {durationOfStrongWind} hours"
+#~ msgstr "Сильный ветер в течение следующих {durationOfStrongWind} часов"
 
 #: src/components/alert/index.tsx:241
-msgid "Strong wind for the next 24 hours"
-msgstr "Сильный ветер в течение следующих 24 часов"
+#~ msgid "Strong wind for the next 24 hours"
+#~ msgstr "Сильный ветер в течение следующих 24 часов"
 
 #: src/components/alert/index.tsx:244
-msgid "Strong wind for the next hour"
-msgstr "Сильный ветер в течение следующего часа"
+#~ msgid "Strong wind for the next hour"
+#~ msgstr "Сильный ветер в течение следующего часа"
 
-#: src/components/alert/index.tsx:316
+#: src/components/alert/index.tsx:332
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "Сильные порывы ветра в течение следующих {durationOfStrongWind} часов"
 
-#: src/components/alert/index.tsx:321
+#: src/components/alert/index.tsx:337
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "Сильные порывы ветра в течение следующих 24 часов"
 
-#: src/components/alert/index.tsx:324
+#: src/components/alert/index.tsx:340
 msgid "Strong wind gusts for the next hour"
 msgstr "Сильные порывы ветра в течение следующего часа"
 
-#: src/components/alert/index.tsx:305
+#: src/components/alert/index.tsx:321
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "Сильные порывы ветра начнутся через {timeUntilStrongWind} часов"
 
 #: src/components/alert/index.tsx:227
-msgid "Strong wind starting in {timeUntilStrongWind} hours"
-msgstr "Сильный ветер начнется через {timeUntilStrongWind} часов"
+#~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
+#~ msgstr "Сильный ветер начнется через {timeUntilStrongWind} часов"
 
-#: src/pages/feedback/index.tsx:345
-#: src/pages/feedback/index.tsx:430
+#: src/pages/feedback/index.tsx:359
+#: src/pages/feedback/index.tsx:445
 msgid "Submit"
 msgstr "Отправить"
 
@@ -625,7 +643,7 @@ msgstr "Плитки"
 msgid "To get started, let's set your language and location."
 msgstr "Для начала давайте установим ваш язык и местоположение."
 
-#: src/pages/feedback/index.tsx:292
+#: src/pages/feedback/index.tsx:304
 msgid "Too much battery usage"
 msgstr "Чрезмерное использование батареи"
 
@@ -642,11 +660,11 @@ msgstr "Отзывы об удалении"
 msgid "Unsure how to find these? Click here."
 msgstr "Не знаете, как найти это? Кликните сюда."
 
-#: src/pages/feedback/index.tsx:304
+#: src/pages/feedback/index.tsx:316
 msgid "Update or change related"
 msgstr "Связано с обновлением или изменением"
 
-#: src/pages/feedback/index.tsx:184
+#: src/pages/feedback/index.tsx:186
 msgid "Usability and functionality"
 msgstr "Удобство использования и функциональность"
 
@@ -662,7 +680,7 @@ msgstr "жесткие дождевые ливни"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Нам бы хотелось предложить Weather Please на большем числе языков."
 
-#: src/pages/index.tsx:820
+#: src/pages/index.tsx:843
 msgid "weather data provided by open-meteo"
 msgstr "метеоданные предоставлены open-meteo"
 
@@ -670,7 +688,7 @@ msgstr "метеоданные предоставлены open-meteo"
 msgid "Wednesday"
 msgstr "Среда"
 
-#: src/pages/index.tsx:675
+#: src/pages/index.tsx:698
 msgid "Would you like to leave a review?"
 msgstr "Хотели бы вы оставить отзыв?"
 
@@ -682,6 +700,6 @@ msgstr "Вы не можете сохранить, потому что ваши 
 msgid "You have unsaved changes"
 msgstr "У вас есть несохраненные изменения"
 
-#: src/pages/index.tsx:671
+#: src/pages/index.tsx:694
 msgid "You've been using Weather Please for a while"
 msgstr "Вы используете Weather Please уже довольно долго"

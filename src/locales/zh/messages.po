@@ -21,15 +21,17 @@ msgstr "{0} 公里/小时"
 msgid "{0} mph"
 msgstr "{0} 英里/小时"
 
-#: src/components/alert/index.tsx:159
+#: src/components/alert/index.tsx:169
 msgid "{0}in of precipitation expected over the next {1} hours"
 msgstr "未来{1}小时预计有{0}英寸的降水"
 
-#: src/components/alert/index.tsx:153
+#: src/components/alert/index.tsx:161
 msgid "{0}in of precipitation expected over the next hour"
 msgstr "未来1小时预计有{0}英寸的降水"
 
-#: src/components/alert/index.tsx:147
+#: src/components/alert/index.tsx:149
+#: src/components/alert/index.tsx:155
+#: src/components/alert/index.tsx:175
 msgid "{0}mm of precipitation expected over the next {1} hours"
 msgstr "未来{1}小时预计有{0}毫米的降水"
 
@@ -46,7 +48,7 @@ msgid "✍️ Submit feedback"
 msgstr "✍️ 提交反馈"
 
 #: src/components/settings/index.tsx:407
-#: src/pages/index.tsx:692
+#: src/pages/index.tsx:715
 msgid "🌟 Leave a review"
 msgstr "🌟 留下评论"
 
@@ -62,7 +64,7 @@ msgstr "💡 请求功能"
 msgid "🔒 Privacy policy"
 msgstr "🔒 隐私政策"
 
-#: src/pages/feedback/index.tsx:319
+#: src/pages/feedback/index.tsx:332
 msgid "Additional details"
 msgstr "额外详细信息"
 
@@ -74,11 +76,11 @@ msgstr "额外详细信息"
 msgid "Alerts"
 msgstr "警报"
 
-#: src/pages/index.tsx:561
+#: src/pages/index.tsx:584
 msgid "An error has occurred while fetching location data. Please check the console for more details."
 msgstr "获取位置数据时发生错误。请检查控制台以获取更多详情。"
 
-#: src/pages/index.tsx:290
+#: src/pages/index.tsx:313
 msgid "An error has occurred while fetching weather data. Please check the console for more details."
 msgstr "获取天气数据时发生错误。请检查控制台以获取更多详情。"
 
@@ -86,7 +88,7 @@ msgstr "获取天气数据时发生错误。请检查控制台以获取更多详
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "在获取您的位置时发生错误。请检查控制台以获取更多详情。"
 
-#: src/pages/index.tsx:528
+#: src/pages/index.tsx:551
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "在定期更新位置时发生错误。请检查控制台以获取更多详情。"
 
@@ -102,7 +104,7 @@ msgstr "八月"
 msgid "Based on the provided information, your location is:"
 msgstr "根据提供的信息，您的位置是："
 
-#: src/pages/feedback/index.tsx:396
+#: src/pages/feedback/index.tsx:410
 msgid "Bug report"
 msgstr "错误报告"
 
@@ -110,11 +112,11 @@ msgstr "错误报告"
 msgid "Cancel"
 msgstr "取消"
 
-#: src/pages/feedback/index.tsx:175
+#: src/pages/feedback/index.tsx:177
 msgid "Causes browser crashes or errors"
 msgstr "导致浏览器崩溃或错误"
 
-#: src/pages/feedback/index.tsx:257
+#: src/pages/feedback/index.tsx:265
 msgid "Changed needs"
 msgstr "需求变化"
 
@@ -122,15 +124,15 @@ msgstr "需求变化"
 msgid "clear sky"
 msgstr "晴空"
 
-#: src/pages/feedback/index.tsx:236
+#: src/pages/feedback/index.tsx:243
 msgid "Concerned about privacy"
 msgstr "担心隐私问题"
 
-#: src/pages/feedback/index.tsx:247
+#: src/pages/feedback/index.tsx:255
 msgid "Concerned about security"
 msgstr "担心安全问题"
 
-#: src/pages/feedback/index.tsx:281
+#: src/pages/feedback/index.tsx:292
 msgid "Consumes too much memory or CPU"
 msgstr "消耗过多内存或CPU"
 
@@ -158,7 +160,7 @@ msgstr "冻雾霾"
 msgid "depositing rime fog"
 msgstr "储存白霜雾"
 
-#: src/pages/feedback/index.tsx:199
+#: src/pages/feedback/index.tsx:203
 msgid "Difficult to use or understand"
 msgstr "难以使用或理解"
 
@@ -166,19 +168,19 @@ msgstr "难以使用或理解"
 msgid "Don't save"
 msgstr "不保存"
 
-#: src/pages/feedback/index.tsx:330
-#: src/pages/feedback/index.tsx:415
+#: src/pages/feedback/index.tsx:344
+#: src/pages/feedback/index.tsx:430
 msgid "Email (optional)"
 msgstr "电子邮件（可选）"
 
 #: src/components/settings/index.tsx:103
-#: src/pages/index.tsx:288
-#: src/pages/index.tsx:526
-#: src/pages/index.tsx:559
+#: src/pages/index.tsx:311
+#: src/pages/index.tsx:549
+#: src/pages/index.tsx:582
 msgid "Error"
 msgstr "错误"
 
-#: src/pages/feedback/index.tsx:467
+#: src/pages/feedback/index.tsx:482
 msgid "Error submitting feedback. Try again later."
 msgstr "提交反馈时出错。请稍后再试。"
 
@@ -198,11 +200,11 @@ msgstr "接下来一小时的极端紫外线"
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "极端紫外线将于 {timeUntilExtremeUv} 小时后开始"
 
-#: src/pages/feedback/index.tsx:381
+#: src/pages/feedback/index.tsx:395
 msgid "Feature request"
 msgstr "功能请求"
 
-#: src/pages/feedback/index.tsx:219
+#: src/pages/feedback/index.tsx:225
 msgid "Features don't work as expected"
 msgstr "功能不如预期工作"
 
@@ -210,21 +212,37 @@ msgstr "功能不如预期工作"
 msgid "February"
 msgstr "二月"
 
-#: src/pages/feedback/index.tsx:366
+#: src/pages/feedback/index.tsx:380
 msgid "Feedback"
 msgstr "反馈"
 
-#: src/pages/feedback/index.tsx:450
+#: src/pages/feedback/index.tsx:465
 msgid "Feedback successfully submitted"
 msgstr "反馈成功提交"
 
-#: src/pages/feedback/index.tsx:268
+#: src/pages/feedback/index.tsx:278
 msgid "Found a better alternative"
 msgstr "找到了更好的替代方案"
 
 #: src/components/tile/index.tsx:64
 msgid "Friday"
 msgstr "星期五"
+
+#: src/components/alert/index.tsx:252
+msgid "Generally strong wind for the next {durationOfStrongWind} hours"
+msgstr "接下来{durationOfStrongWind}小时内通常有大风"
+
+#: src/components/alert/index.tsx:257
+msgid "Generally strong wind for the next 24 hours"
+msgstr "接下来24小时内通常有大风"
+
+#: src/components/alert/index.tsx:260
+msgid "Generally strong wind for the next hour"
+msgstr "下一个小时内通常有大风"
+
+#: src/components/alert/index.tsx:243
+msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind}小时后开始通常有大风"
 
 #: src/components/tile/weather/index.tsx:147
 msgid "heavy freezing rain"
@@ -276,7 +294,7 @@ msgstr "无效的纬度值"
 msgid "Invalid longitude value"
 msgstr "无效的经度值"
 
-#: src/pages/feedback/index.tsx:308
+#: src/pages/feedback/index.tsx:321
 msgid "Issues after a recent update"
 msgstr "最近更新后的问题"
 
@@ -292,7 +310,7 @@ msgstr "七月"
 msgid "June"
 msgstr "六月"
 
-#: src/pages/feedback/index.tsx:210
+#: src/pages/feedback/index.tsx:215
 msgid "Lacks features I need"
 msgstr "缺少我需要的功能"
 
@@ -333,19 +351,19 @@ msgstr "经度"
 msgid "Looks like we can't grab your location info automatically."
 msgstr "看起来我们不能自动获取您的位置信息。"
 
-#: src/components/alert/index.tsx:396
+#: src/components/alert/index.tsx:412
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "接下来的{durationOfLowVisibility}小时内将有低能见度"
 
-#: src/components/alert/index.tsx:401
+#: src/components/alert/index.tsx:417
 msgid "Low visibility for the next 24 hours"
 msgstr "接下来的24小时内将有低能见度"
 
-#: src/components/alert/index.tsx:404
+#: src/components/alert/index.tsx:420
 msgid "Low visibility for the next hour"
 msgstr "接下来的一个小时内将有低能见度"
 
-#: src/components/alert/index.tsx:385
+#: src/components/alert/index.tsx:401
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "低能见度将于{timeUntilLowVisibility}小时后开始"
 
@@ -362,7 +380,7 @@ msgstr "三月"
 msgid "May"
 msgstr "五月"
 
-#: src/pages/feedback/index.tsx:404
+#: src/pages/feedback/index.tsx:418
 msgid "Message"
 msgstr "信息"
 
@@ -390,7 +408,7 @@ msgstr "中雪"
 msgid "Monday"
 msgstr "星期一"
 
-#: src/pages/index.tsx:706
+#: src/pages/index.tsx:729
 msgid "Never show this again"
 msgstr "再也不显示这个"
 
@@ -398,11 +416,11 @@ msgstr "再也不显示这个"
 #~ msgid "New tab"
 #~ msgstr "新标签"
 
-#: src/pages/feedback/index.tsx:260
+#: src/pages/feedback/index.tsx:269
 msgid "No longer need the functionality"
 msgstr "不再需要该功能"
 
-#: src/pages/feedback/index.tsx:188
+#: src/pages/feedback/index.tsx:191
 msgid "Not available in my language"
 msgstr "我的语言中不可用"
 
@@ -446,7 +464,7 @@ msgstr "定期自动更新位置"
 msgid "Please enter it manually below."
 msgstr "请在下方手动输入。"
 
-#: src/pages/feedback/index.tsx:278
+#: src/pages/feedback/index.tsx:288
 msgid "Resource usage"
 msgstr "资源使用"
 
@@ -459,7 +477,7 @@ msgstr "星期六"
 msgid "Save"
 msgstr "保存"
 
-#: src/pages/feedback/index.tsx:232
+#: src/pages/feedback/index.tsx:238
 msgid "Security and privacy concerns"
 msgstr "安全和隐私问题"
 
@@ -516,7 +534,7 @@ msgstr "小阵雪"
 msgid "slight snowfall"
 msgstr "小雪"
 
-#: src/pages/feedback/index.tsx:164
+#: src/pages/feedback/index.tsx:165
 msgid "Slows down my browser"
 msgstr "使我的浏览器变慢"
 
@@ -525,39 +543,39 @@ msgid "snow grains"
 msgstr "雪粒"
 
 #: src/components/alert/index.tsx:236
-msgid "Strong wind for the next {durationOfStrongWind} hours"
-msgstr "未来{durationOfStrongWind}小时有强风"
+#~ msgid "Strong wind for the next {durationOfStrongWind} hours"
+#~ msgstr "未来{durationOfStrongWind}小时有强风"
 
 #: src/components/alert/index.tsx:241
-msgid "Strong wind for the next 24 hours"
-msgstr "未来24小时有强风"
+#~ msgid "Strong wind for the next 24 hours"
+#~ msgstr "未来24小时有强风"
 
 #: src/components/alert/index.tsx:244
-msgid "Strong wind for the next hour"
-msgstr "未来一小时有强风"
+#~ msgid "Strong wind for the next hour"
+#~ msgstr "未来一小时有强风"
 
-#: src/components/alert/index.tsx:316
+#: src/components/alert/index.tsx:332
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "未来{durationOfStrongWind}小时有强风暴"
 
-#: src/components/alert/index.tsx:321
+#: src/components/alert/index.tsx:337
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "未来24小时有强风暴"
 
-#: src/components/alert/index.tsx:324
+#: src/components/alert/index.tsx:340
 msgid "Strong wind gusts for the next hour"
 msgstr "未来一小时有强风暴"
 
-#: src/components/alert/index.tsx:305
+#: src/components/alert/index.tsx:321
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}小时后开始有强风暴"
 
 #: src/components/alert/index.tsx:227
-msgid "Strong wind starting in {timeUntilStrongWind} hours"
-msgstr "{timeUntilStrongWind}小时后开始有强风"
+#~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
+#~ msgstr "{timeUntilStrongWind}小时后开始有强风"
 
-#: src/pages/feedback/index.tsx:345
-#: src/pages/feedback/index.tsx:430
+#: src/pages/feedback/index.tsx:359
+#: src/pages/feedback/index.tsx:445
 msgid "Submit"
 msgstr "提交"
 
@@ -625,7 +643,7 @@ msgstr "瓷砖"
 msgid "To get started, let's set your language and location."
 msgstr "首先，让我们设置您的语言和位置。"
 
-#: src/pages/feedback/index.tsx:292
+#: src/pages/feedback/index.tsx:304
 msgid "Too much battery usage"
 msgstr "过多的电池使用"
 
@@ -642,11 +660,11 @@ msgstr "卸载反馈"
 msgid "Unsure how to find these? Click here."
 msgstr "不确定如何找到这些？点击这里。"
 
-#: src/pages/feedback/index.tsx:304
+#: src/pages/feedback/index.tsx:316
 msgid "Update or change related"
 msgstr "更新或更改相关"
 
-#: src/pages/feedback/index.tsx:184
+#: src/pages/feedback/index.tsx:186
 msgid "Usability and functionality"
 msgstr "可用性和功能性"
 
@@ -662,7 +680,7 @@ msgstr "猛烈的阵雨"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "我们希望将“Weather Please”带到更多语言中。"
 
-#: src/pages/index.tsx:820
+#: src/pages/index.tsx:843
 msgid "weather data provided by open-meteo"
 msgstr "天气数据由open-meteo提供"
 
@@ -670,7 +688,7 @@ msgstr "天气数据由open-meteo提供"
 msgid "Wednesday"
 msgstr "星期三"
 
-#: src/pages/index.tsx:675
+#: src/pages/index.tsx:698
 msgid "Would you like to leave a review?"
 msgstr "你想留下评论吗？"
 
@@ -682,6 +700,6 @@ msgstr "你无法保存，因为你的纬度或经度无效。"
 msgid "You have unsaved changes"
 msgstr "你有未保存的更改"
 
-#: src/pages/index.tsx:671
+#: src/pages/index.tsx:694
 msgid "You've been using Weather Please for a while"
 msgstr "您已经使用Weather Please有一段时间了"

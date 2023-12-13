@@ -240,7 +240,7 @@ const Alert: FC<AlertProps> = (props) => {
 					windAlert = (
 						<MantineAlert {...alertProps}>
 							<IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
-							<Trans>Strong wind starting in {timeUntilStrongWind} hours</Trans>
+							<Trans>Generally strong wind starting in {timeUntilStrongWind} hours</Trans>
 						</MantineAlert>
 					)
 				} else {
@@ -250,14 +250,14 @@ const Alert: FC<AlertProps> = (props) => {
 							<IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
 							{durationOfStrongWind > 1 && (
 								<Trans>
-									Strong wind for the next {durationOfStrongWind} hours
+									Generally strong wind for the next {durationOfStrongWind} hours
 								</Trans>
 							)}
 							{durationOfStrongWind < 0 && (
-								<Trans>Strong wind for the next 24 hours</Trans>
+								<Trans>Generally strong wind for the next 24 hours</Trans>
 							)}
 							{durationOfStrongWind === 1 && (
-								<Trans>Strong wind for the next hour</Trans>
+								<Trans>Generally strong wind for the next hour</Trans>
 							)}
 						</MantineAlert>
 					)
