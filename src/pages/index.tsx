@@ -98,9 +98,9 @@ const WeatherPlease: FC<{}> = () => {
 	 */
 	useEffect(() => {
 		if (input.lang) {
-			changeLocalisation(input.lang)
+			changeLocalisation(input.lang, config.shareCrashesAndErrors)
 		}
-	}, [input.lang])
+	}, [input.lang, config.shareCrashesAndErrors])
 
 	/**
 	 * Initializes or closes the Sentry error reporting based on user permissions.
@@ -304,7 +304,7 @@ const WeatherPlease: FC<{}> = () => {
 				setChangedLocation(false)
 			} catch (e: any) {
 				// eslint-disable-next-line no-console
-				console.warn(e)
+				console.error(e)
 				// why can't i pass the value of state into message here?
 				// why are these errors sometimes being shown + a console warning occurring despite data seemingly being fetched just fine?
 				notifications.show({
@@ -317,6 +317,9 @@ const WeatherPlease: FC<{}> = () => {
 					),
 					color: 'red',
 				})
+				if (config.shareCrashesAndErrors) {
+					Sentry.captureException(e)
+				}
 			}
 		}
 
@@ -359,6 +362,7 @@ const WeatherPlease: FC<{}> = () => {
 		config.daysToRetrieve,
 		config.useMetric,
 		changedLocation,
+		config.shareCrashesAndErrors,
 	])
 
 	/**
@@ -456,8 +460,11 @@ const WeatherPlease: FC<{}> = () => {
 				}))
 			} catch (e) {
 				// eslint-disable-next-line no-console
-				console.warn(e)
+				console.error(e)
 				setGeolocationError(true)
+				if (config.shareCrashesAndErrors) {
+					Sentry.captureException(e)
+				}
 			}
 			setTimeout(() => {
 				setGeolocationError(true)
@@ -544,7 +551,7 @@ const WeatherPlease: FC<{}> = () => {
 					})
 				} catch (e) {
 					// eslint-disable-next-line no-console
-					console.warn(e)
+					console.error(e)
 					notifications.show({
 						title: <Trans>Error</Trans>,
 						message: (
@@ -555,6 +562,9 @@ const WeatherPlease: FC<{}> = () => {
 						),
 						color: 'red',
 					})
+					if (config.shareCrashesAndErrors) {
+						Sentry.captureException(e)
+					}
 				}
 			} else {
 				const fetchSafariGeoData = async () => {
@@ -588,6 +598,9 @@ const WeatherPlease: FC<{}> = () => {
 							),
 							color: 'red',
 						})
+						if (config.shareCrashesAndErrors) {
+							Sentry.captureException(e)
+						}
 					}
 				}
 				fetchSafariGeoData()

@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import { NextApiHandler } from 'next'
 
 const Handler: NextApiHandler = async (req, res) => {
@@ -9,6 +10,7 @@ const Handler: NextApiHandler = async (req, res) => {
 	try {
 		parsedBody = JSON.parse(req.body)
 	} catch (e) {
+		Sentry.captureException(e)
 		return res.status(400).json({ code: 400, message: 'Invalid JSON' })
 	}
 
@@ -68,9 +70,10 @@ const Handler: NextApiHandler = async (req, res) => {
 		}
 
 		return res.status(200).json({ code: 200, message: 'Success' })
-	} catch (error) {
+	} catch (e) {
 		// eslint-disable-next-line no-console
-		console.error(error)
+		console.error(e)
+		Sentry.captureException(e)
 		return res.status(500).json({ code: 500, message: 'Internal Server Error' })
 	}
 }

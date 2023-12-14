@@ -1,4 +1,5 @@
 import { i18n } from '@lingui/core'
+import * as Sentry from '@sentry/nextjs'
 
 interface Locale {
 	[key: string]: {
@@ -82,6 +83,7 @@ export const locales: Locale = {
 
 export const changeLocalisation = async (
 	locale: Extract<keyof typeof locales, string>,
+	shareCrashesAndErrors: boolean,
 ): Promise<void> => {
 	try {
 		const { messages } = await import(`../locales/${locale}/messages`)
@@ -89,6 +91,9 @@ export const changeLocalisation = async (
 		i18n.activate(locale)
 	} catch (e) {
 		// eslint-disable-next-line no-console
-		console.warn(e)
+		console.error(`Failed to load messages: ${e}`)
+		if (shareCrashesAndErrors) {
+			Sentry.captureException(e)
+		}
 	}
 }

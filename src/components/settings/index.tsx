@@ -14,6 +14,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
+import * as Sentry from '@sentry/nextjs'
 import { IconSettings } from '@tabler/icons-react'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
@@ -98,7 +99,7 @@ const Settings: FC<SettingsProps> = (props) => {
 				})
 			} catch (e) {
 				// eslint-disable-next-line no-console
-				console.warn(e)
+				console.error(e)
 				notifications.show({
 					title: <Trans>Error</Trans>,
 					message: (
@@ -109,12 +110,15 @@ const Settings: FC<SettingsProps> = (props) => {
 					),
 					color: 'red',
 				})
+				if (config.shareCrashesAndErrors) {
+					Sentry.captureException(e)
+				}
 			}
 		}
 		if (config.lat && config.lon && opened) {
 			reverseGeocode()
 		}
-	}, [config.lat, config.lon, opened])
+	}, [config.lat, config.lon, opened, config.shareCrashesAndErrors])
 
 	const handleOutsideClick: HandleOutsideClick = () => {
 		if (JSON.stringify(config) !== JSON.stringify(input)) {

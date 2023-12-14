@@ -73,7 +73,7 @@ const Feedback = () => {
 	const [pageLoaded, setPageLoaded] = useState<boolean>(false)
 
 	useEffect(() => {
-		changeLocalisation(locale)
+		changeLocalisation(locale, true)
 		setFeedbackType(type)
 		setPageLoaded(true)
 	}, [locale, type])
@@ -137,7 +137,7 @@ const Feedback = () => {
 											mt="xs"
 											label={<Trans>Language</Trans>}
 											onChange={(e) => {
-												changeLocalisation(e.target.value)
+												changeLocalisation(e.target.value, true)
 											}}
 											defaultValue="en"
 											data={Object.keys(locales).map((key) => ({
