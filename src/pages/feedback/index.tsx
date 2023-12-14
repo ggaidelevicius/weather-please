@@ -141,7 +141,7 @@ const Feedback = () => {
 											}}
 											defaultValue="en"
 											data={Object.keys(locales).map((key) => ({
-												label: locales[key],
+												label: locales[key].label,
 												value: key,
 											}))}
 										/>

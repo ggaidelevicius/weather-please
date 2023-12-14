@@ -154,22 +154,23 @@ const Alert: FC<AlertProps> = (props) => {
 						)}
 						{!useMetric && duration.indexOf(false) === 1 && (
 							<Trans>
-								{(precipitation.value / 25.4).toFixed(1)} inches of precipitation
-								expected over the next hour
+								{(precipitation.value / 25.4).toFixed(1)} inches of
+								precipitation expected over the next hour
 							</Trans>
 						)}
 						{!useMetric &&
 							duration.indexOf(false) !== 1 &&
 							duration.indexOf(false) !== -1 && (
 								<Trans>
-									{(precipitation.value / 25.4).toFixed(1)} inches of precipitation
-									expected over the next {duration.indexOf(false)} hours
+									{(precipitation.value / 25.4).toFixed(1)} inches of
+									precipitation expected over the next {duration.indexOf(false)}{' '}
+									hours
 								</Trans>
 							)}
 						{!useMetric && duration.indexOf(false) === -1 && (
 							<Trans>
-								{(precipitation.value / 25.4).toFixed(1)} inches of precipitation expected
-								over the next {duration.length - 1} hours
+								{(precipitation.value / 25.4).toFixed(1)} inches of
+								precipitation expected over the next {duration.length - 1} hours
 							</Trans>
 						)}
 					</MantineAlert>
@@ -235,7 +236,9 @@ const Alert: FC<AlertProps> = (props) => {
 					windAlert = (
 						<MantineAlert {...alertProps}>
 							<IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
-							<Trans>Generally strong wind starting in {timeUntilStrongWind} hours</Trans>
+							<Trans>
+								Generally strong wind starting in {timeUntilStrongWind} hours
+							</Trans>
 						</MantineAlert>
 					)
 				} else {
@@ -245,7 +248,8 @@ const Alert: FC<AlertProps> = (props) => {
 							<IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
 							{durationOfStrongWind > 1 && (
 								<Trans>
-									Generally strong wind for the next {durationOfStrongWind} hours
+									Generally strong wind for the next {durationOfStrongWind}{' '}
+									hours
 								</Trans>
 							)}
 							{durationOfStrongWind < 0 && (

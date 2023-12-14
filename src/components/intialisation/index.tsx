@@ -79,7 +79,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 							handleChange('lang', e.target.value)
 						}}
 						data={Object.keys(locales).map((key) => ({
-							label: locales[key],
+							label: locales[key].label,
 							value: key,
 						}))}
 					/>
@@ -156,7 +156,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 							handleChange('lang', e.target.value)
 						}}
 						data={Object.keys(locales).map((key) => ({
-							label: locales[key],
+							label: locales[key].label,
 							value: key,
 						}))}
 					/>

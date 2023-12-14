@@ -326,7 +326,7 @@ const Settings: FC<SettingsProps> = (props) => {
 						handleChange('lang', e.target.value)
 					}}
 					data={Object.keys(locales).map((key) => ({
-						label: locales[key],
+						label: locales[key].label,
 						value: key,
 					}))}
 				/>
@@ -443,7 +443,7 @@ const Settings: FC<SettingsProps> = (props) => {
 					size="sm"
 					c="lightblue"
 					component="a"
-					href={privacyPolicyMap[input.lang]}
+					href={locales[input.lang].privacy}
 					style={{ marginTop: '0.2rem' }}
 					className="link"
 					target="_blank"
@@ -531,23 +531,6 @@ const Settings: FC<SettingsProps> = (props) => {
 			</Modal>
 		</>
 	)
-}
-
-const privacyPolicyMap: Record<keyof typeof locales, string> = {
-	bn: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/bn/PRIVACY.md',
-	de: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/de/PRIVACY.md',
-	en: 'https://github.com/ggaidelevicius/weather-please/blob/main/PRIVACY.md',
-	es: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/es/PRIVACY.md',
-	fr: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/fr/PRIVACY.md',
-	hi: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/hi/PRIVACY.md',
-	id: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/id/PRIVACY.md',
-	it: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/it/PRIVACY.md',
-	ja: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/ja/PRIVACY.md',
-	ko: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/ko/PRIVACY.md',
-	lt: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/lt/PRIVACY.md',
-	ru: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/ru/PRIVACY.md',
-	vi: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/vi/PRIVACY.md',
-	zh: 'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/zh_CN/PRIVACY.md',
 }
 
 const generateLocation = (args: Location): string => {
