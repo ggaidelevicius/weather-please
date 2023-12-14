@@ -632,7 +632,7 @@ const WeatherPlease: FC<{}> = () => {
 				}}
 				exit={{ scale: 0.95, opacity: 0 }}
 				layout={completedFirstLoad}
-				style={{ background: 'none' }}
+				style={{ background: 'none', willChange: 'transform, opacity' }}
 			>
 				<Tile
 					{...day}
