@@ -17,6 +17,7 @@ import {
 	Title,
 	rem,
 } from '@mantine/core'
+import * as Sentry from '@sentry/nextjs'
 import {
 	IconAlertCircleFilled,
 	IconAt,
@@ -36,6 +37,14 @@ i18n.load({
 i18n.activate('en')
 
 const Feedback = () => {
+	Sentry.init({
+		dsn: process.env?.NEXT_PUBLIC_SENTRY_DSN ?? '',
+		tracesSampleRate: 1,
+		debug: false,
+		replaysOnErrorSampleRate: 1.0,
+		replaysSessionSampleRate: 0,
+		beforeSend: (event) => event,
+	})
 	const router = useRouter()
 	const locale =
 		typeof router?.query?.locale === 'object'

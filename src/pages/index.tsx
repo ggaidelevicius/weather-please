@@ -113,7 +113,7 @@ const WeatherPlease: FC<{}> = () => {
 	useEffect(() => {
 		if (config.shareCrashesAndErrors) {
 			Sentry.init({
-				dsn: 'https://f3641aec69a23937c89259888e252f19@o4505788641771520.ingest.sentry.io/4505788646817792',
+				dsn: process.env?.NEXT_PUBLIC_SENTRY_DSN ?? '',
 				tracesSampleRate: 1,
 				debug: false,
 				replaysOnErrorSampleRate: 1.0,
@@ -327,15 +327,15 @@ const WeatherPlease: FC<{}> = () => {
 			localStorage.data &&
 			localStorage.lastUpdated &&
 			new Date().getFullYear() ===
-				parseInt(localStorage.lastUpdated.split('-')[0]) &&
+			parseInt(localStorage.lastUpdated.split('-')[0]) &&
 			new Date().getMonth() ===
-				parseInt(localStorage.lastUpdated.split('-')[1]) &&
+			parseInt(localStorage.lastUpdated.split('-')[1]) &&
 			new Date().getDate() ===
-				parseInt(localStorage.lastUpdated.split('-')[2]) &&
+			parseInt(localStorage.lastUpdated.split('-')[2]) &&
 			new Date().getHours() ===
-				parseInt(localStorage.lastUpdated.split('-')[3]) &&
+			parseInt(localStorage.lastUpdated.split('-')[3]) &&
 			JSON.parse(localStorage.data).length ===
-				parseInt(config.daysToRetrieve) &&
+			parseInt(config.daysToRetrieve) &&
 			!changedLocation
 		) {
 			const data = JSON.parse(localStorage.data)
