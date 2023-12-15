@@ -1,29 +1,32 @@
 import * as Sentry from '@sentry/nextjs'
-import { NextApiHandler } from 'next'
 
-const Handler: NextApiHandler = async (req, res) => {
-	if (req.method !== 'POST' || !req.body) {
-		return res.status(400).json({ code: 400, message: 'Bad request' })
-	}
+export const POST = async (request: Request) => {
+	let payload = null
 
-	let parsedBody
 	try {
-		parsedBody = JSON.parse(req.body)
+		payload = await request.json()
 	} catch (e) {
 		Sentry.captureException(e)
-		return res.status(400).json({ code: 400, message: 'Invalid JSON' })
+		return new Response('Bad Request', { status: 400 })
 	}
 
 	const { feedbackType, message, email, created, locale, installed, reasons } =
-		parsedBody
+		payload
 
 	if (
+		payload === null ||
+		payload === undefined ||
+		typeof payload !== 'object' ||
 		!feedbackType ||
-		(feedbackType !== 'uninstall' && !message) ||
+		typeof feedbackType !== 'string' ||
+		((!message || typeof message !== 'string') &&
+			feedbackType !== 'uninstall') ||
 		!created ||
-		!locale
+		typeof created !== 'number' ||
+		!locale ||
+		typeof locale !== 'string'
 	) {
-		return res.status(400).json({ code: 400, message: 'Missing parameters' })
+		return new Response('Invalid parameters', { status: 400 })
 	}
 
 	const data = {
@@ -64,18 +67,16 @@ const Handler: NextApiHandler = async (req, res) => {
 		const firestoreData = await firestoreResponse.json()
 
 		if (firestoreData.error) {
-			return res
-				.status(400)
-				.json({ code: 400, message: firestoreData.error.status })
+			return new Response(firestoreData?.error?.status ?? 'Firestore error', {
+				status: 400,
+			})
 		}
 
-		return res.status(200).json({ code: 200, message: 'Success' })
+		return new Response('OK', { status: 200 })
 	} catch (e) {
 		// eslint-disable-next-line no-console
 		console.error(e)
 		Sentry.captureException(e)
-		return res.status(500).json({ code: 500, message: 'Internal Server Error' })
+		return new Response('Internal Server Error', { status: 500 })
 	}
 }
-
-export default Handler
