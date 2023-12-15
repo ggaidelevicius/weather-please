@@ -103,7 +103,11 @@ const Feedback = () => {
 			method: 'POST',
 			body: JSON.stringify(data),
 		})
-			.then((res) => res.json())
+			.then((res) => {
+				console.log(res)
+				return res.json()
+			}
+			)
 			.then((data) => {
 				if (data.status === 200) setCompleted(true)
 				if (data.status === 400 || data.status === 500) setError(true)
