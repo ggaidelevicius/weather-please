@@ -6,8 +6,8 @@ export const POST = async (request: Request) => {
 	try {
 		payload = await request.json()
 	} catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e)
+		// eslint-disable-next-line no-console
+		console.error(e)
 		Sentry.captureException(e)
 		return Response.json({ message: 'Bad Request', status: 400 })
 	}
@@ -67,8 +67,8 @@ export const POST = async (request: Request) => {
 		).then((res) => res.json())
 
 		if (firestoreData.error) {
-      // eslint-disable-next-line no-console
-      console.error(firestoreData.error)
+			// eslint-disable-next-line no-console
+			console.error(firestoreData.error)
 			Sentry.captureException(firestoreData.error)
 			return Response.json({
 				message: firestoreData.error?.status ?? 'Firestore error',
