@@ -21,8 +21,8 @@ export const POST = async (request: Request) => {
 		typeof payload !== 'object' ||
 		!feedbackType ||
 		typeof feedbackType !== 'string' ||
-		((!message || typeof message !== 'string') &&
-			feedbackType !== 'uninstall') ||
+		!message ||
+		typeof message !== 'string' ||
 		!created ||
 		typeof created !== 'number' ||
 		!locale ||
