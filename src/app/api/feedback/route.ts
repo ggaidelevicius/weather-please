@@ -72,7 +72,7 @@ export const POST = async (request: Request) => {
 			})
 		}
 
-		return new Response('OK', { status: 200 })
+		return new Response('OK', { status: 200, statusText: 'OK' })
 	} catch (e) {
 		// eslint-disable-next-line no-console
 		console.error(e)

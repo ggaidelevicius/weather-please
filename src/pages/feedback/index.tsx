@@ -105,13 +105,10 @@ const Feedback = () => {
 		})
 			.then((res) => {
 				console.log(res)
-				return res.json()
+				if (res.status === 200) setCompleted(true)
+				if (res.status === 400 || res.status === 500) setError(true)
 			}
 			)
-			.then((data) => {
-				if (data.status === 200) setCompleted(true)
-				if (data.status === 400 || data.status === 500) setError(true)
-			})
 		setLoading(false)
 	}
 
