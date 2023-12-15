@@ -36,15 +36,15 @@ i18n.load({
 })
 i18n.activate('en')
 
+Sentry.init({
+	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN ?? '',
+	tracesSampleRate: 1,
+	debug: false,
+	replaysOnErrorSampleRate: 1.0,
+	replaysSessionSampleRate: 0,
+})
+
 const Feedback = () => {
-	Sentry.init({
-		dsn: process.env.NEXT_PUBLIC_SENTRY_DSN ?? '',
-		tracesSampleRate: 1,
-		debug: false,
-		replaysOnErrorSampleRate: 1.0,
-		replaysSessionSampleRate: 0,
-		beforeSend: (event) => event,
-	})
 	const router = useRouter()
 	const locale =
 		typeof router?.query?.locale === 'object'
