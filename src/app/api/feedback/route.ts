@@ -7,7 +7,7 @@ export const POST = async (request: Request) => {
 		payload = await request.json()
 	} catch (e) {
 		Sentry.captureException(e)
-		return new Response('Bad Request', { status: 400 })
+		return Response.json({ message: 'Bad Request', status: 400 })
 	}
 
 	const { feedbackType, message, email, created, locale, installed, reasons } =
@@ -26,7 +26,7 @@ export const POST = async (request: Request) => {
 		!locale ||
 		typeof locale !== 'string'
 	) {
-		return new Response('Invalid parameters', { status: 400 })
+		return Response.json({ message: 'Invalid parameters', status: 400 })
 	}
 
 	const data = {
@@ -67,16 +67,17 @@ export const POST = async (request: Request) => {
 		const firestoreData = await firestoreResponse.json()
 
 		if (firestoreData.error) {
-			return new Response(firestoreData?.error?.status ?? 'Firestore error', {
+			return Response.json({
+				message: firestoreData?.error?.status ?? 'Firestore error',
 				status: 400,
 			})
 		}
 
-		return new Response('OK', { status: 200, statusText: 'OK' })
+		return Response.json({ message: 'OK', status: 200 })
 	} catch (e) {
 		// eslint-disable-next-line no-console
 		console.error(e)
 		Sentry.captureException(e)
-		return new Response('Internal Server Error', { status: 500 })
+		return Response.json({ message: 'Internal Server Error', status: 500 })
 	}
 }
