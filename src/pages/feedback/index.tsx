@@ -107,8 +107,9 @@ const Feedback = () => {
 				console.log(res)
 				if (res.status === 200) setCompleted(true)
 				if (res.status === 400 || res.status === 500) setError(true)
+				return res.json()
 			}
-			)
+			).then((data) => console.log(data))
 		setLoading(false)
 	}
 
