@@ -1,10 +1,53 @@
 import * as Sentry from '@sentry/nextjs'
+import { z } from 'zod'
+
+const payloadSchema = z.object({
+	feedbackType: z.enum(['feedback', 'feature', 'bug', 'uninstall']),
+	message: z.string(),
+	email: z.string().email().or(z.string()),
+	created: z.number().int(),
+	locale: z.enum([
+		'bn',
+		'de',
+		'en',
+		'es',
+		'fr',
+		'hi',
+		'id',
+		'it',
+		'ja',
+		'ko',
+		'lt',
+		'ru',
+		'vi',
+		'zh',
+	]),
+	installed: z.number().int(),
+	reasons: z.object({
+		slowsDownBrowser: z.boolean(),
+		causesCrashes: z.boolean(),
+		missingLanguage: z.boolean(),
+		difficultToUse: z.boolean(),
+		lacksFeatures: z.boolean(),
+		featuresDontWork: z.boolean(),
+		privacyConcerns: z.boolean(),
+		securityConcerns: z.boolean(),
+		noLongerNeed: z.boolean(),
+		foundBetterAlternative: z.boolean(),
+		consumesTooMuchProcessingPower: z.boolean(),
+		consumesTooMuchBattery: z.boolean(),
+		issuesAfterRecentUpdate: z.boolean(),
+	}),
+})
+
+type Payload = z.infer<typeof payloadSchema>
 
 export const POST = async (request: Request) => {
 	let payload = null
 
 	try {
 		payload = await request.json()
+		payloadSchema.parse(payload)
 	} catch (e) {
 		// eslint-disable-next-line no-console
 		console.error(e)
@@ -12,24 +55,15 @@ export const POST = async (request: Request) => {
 		return Response.json({ message: 'Bad Request', status: 400 })
 	}
 
-	const { feedbackType, message, email, created, locale, installed, reasons } =
-		payload
-
-	if (
-		payload === null ||
-		payload === undefined ||
-		typeof payload !== 'object' ||
-		!feedbackType ||
-		typeof feedbackType !== 'string' ||
-		!message ||
-		typeof message !== 'string' ||
-		!created ||
-		typeof created !== 'number' ||
-		!locale ||
-		typeof locale !== 'string'
-	) {
-		return Response.json({ message: 'Invalid parameters', status: 400 })
-	}
+	const {
+		feedbackType,
+		message,
+		email,
+		created,
+		locale,
+		installed,
+		reasons,
+	}: Payload = payload
 
 	const data = {
 		fields: {
@@ -37,7 +71,7 @@ export const POST = async (request: Request) => {
 				stringValue: message,
 			},
 			email: {
-				stringValue: email ? email : '',
+				stringValue: email,
 			},
 			locale: {
 				stringValue: locale,
