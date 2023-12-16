@@ -106,7 +106,7 @@ export const POST = async (request: Request) => {
 			Sentry.captureException(firestoreData.error)
 			return Response.json({
 				message: firestoreData.error?.status ?? 'Firestore Error',
-				status: 400,
+				status: 500,
 			})
 		}
 
