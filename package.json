@@ -21,7 +21,7 @@
 	"license": "SEE LICENSE IN LICENSE.md",
 	"scripts": {
 		"dev": "next dev",
-		"build": "pnpm compile && next build && node build",
+		"build": "pnpm compile && cross-env NEXT_PUBLIC_BUILD_MODE=extension next build && node build",
 		"start": "next start",
 		"lint": "pnpm prettier . --write && next lint",
 		"release": "pnpm build && node release",
@@ -56,6 +56,7 @@
 		"@types/react": "^18.2.45",
 		"@types/react-dom": "^18.2.18",
 		"adm-zip": "^0.5.10",
+		"cross-env": "^7.0.3",
 		"eslint": "^8.56.0",
 		"eslint-config-next": "^14.0.4",
 		"eslint-config-prettier": "^9.1.0",

@@ -12,7 +12,7 @@ let config = {
 	},
 }
 
-if (process.env.NEXT_PUBLIC_DEMO !== 'true') {
+if (process.env.NEXT_PUBLIC_BUILD_MODE === 'extension') {
 	config = {
 		reactStrictMode: true,
 		experimental: {
