@@ -89,7 +89,7 @@ export const POST = async (request: Request) => {
 	}
 
 	try {
-		const firestoreData = await fetch(
+		const firestore = await fetch(
 			`https://firestore.googleapis.com/v1/projects/${process.env.FIRESTORE_PROJECT_ID}/databases/(default)/documents/${feedbackType}`,
 			{
 				method: 'POST',
@@ -100,12 +100,12 @@ export const POST = async (request: Request) => {
 			},
 		).then((res) => res.json())
 
-		if (firestoreData.error) {
+		if (firestore.error) {
 			// eslint-disable-next-line no-console
-			console.error(firestoreData.error)
-			Sentry.captureException(firestoreData.error)
+			console.error(firestore.error)
+			Sentry.captureException(firestore.error)
 			return Response.json({
-				message: firestoreData.error?.status ?? 'Firestore Error',
+				message: firestore.error?.status ?? 'Firestore Error',
 				status: 500,
 			})
 		}
