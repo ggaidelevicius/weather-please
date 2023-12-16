@@ -2,6 +2,7 @@ import { locales } from '@/util/i18n'
 import { Trans } from '@lingui/macro'
 import {
 	ActionIcon,
+	Alert,
 	Button,
 	Divider,
 	Modal,
@@ -15,9 +16,10 @@ import {
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import * as Sentry from '@sentry/nextjs'
-import { IconSettings } from '@tabler/icons-react'
+import { IconSettings, IconShieldCheckFilled } from '@tabler/icons-react'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
+import alertStyles from '../alert/styles.module.css'
 import type { HandleOutsideClick, Location, SettingsProps } from './types'
 
 const Settings: FC<SettingsProps> = (props) => {
@@ -245,6 +247,27 @@ const Settings: FC<SettingsProps> = (props) => {
 						</Trans>
 					</Text>
 				)}
+				<Alert
+					className={alertStyles.alert}
+					radius="md"
+					color="green"
+					styles={{
+						message: {
+							display: 'flex',
+							alignItems: 'center',
+							gap: '0.75rem',
+						},
+					}}
+					mt="md"
+				>
+					<IconShieldCheckFilled size={30} strokeWidth={1.5} aria-hidden />
+					<span style={{ width: 'calc(100% - 30px - 0.75rem)' }}>
+						<Trans>
+							Your location data is securely stored exclusively on your personal
+							device
+						</Trans>
+					</span>
+				</Alert>
 				<Title order={2} mt="xl">
 					<Trans>Tiles</Trans>
 				</Title>

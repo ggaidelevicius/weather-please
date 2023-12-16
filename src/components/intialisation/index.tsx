@@ -1,6 +1,7 @@
 import { locales } from '@/util/i18n'
 import { Trans } from '@lingui/macro'
 import {
+	Alert,
 	Button,
 	Modal,
 	NativeSelect,
@@ -8,9 +9,11 @@ import {
 	TextInput,
 	Title,
 } from '@mantine/core'
+import { IconShieldCheckFilled } from '@tabler/icons-react'
 import Image from 'next/image'
 import type { FC } from 'react'
 import Favicon from '../../../public/favicon.png'
+import alertStyles from '../alert/styles.module.css'
 import type { InitialisationProps } from './types'
 
 const Initialisation: FC<InitialisationProps> = (props) => {
@@ -83,6 +86,27 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 							value: key,
 						}))}
 					/>
+					<Alert
+						className={alertStyles.alert}
+						radius="md"
+						color="green"
+						styles={{
+							message: {
+								display: 'flex',
+								alignItems: 'center',
+								gap: '0.75rem',
+							},
+						}}
+						mt="md"
+					>
+						<IconShieldCheckFilled size={30} strokeWidth={1.5} aria-hidden />
+						<span style={{ width: 'calc(100% - 30px - 0.75rem)' }}>
+							<Trans>
+								Your location data is securely stored exclusively on your
+								personal device
+							</Trans>
+						</span>
+					</Alert>
 					<Button
 						onClick={() => {
 							handleClick('auto')
@@ -148,6 +172,27 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 					>
 						<Trans>Unsure how to find these? Click here.</Trans>
 					</Text>
+					<Alert
+						className={alertStyles.alert}
+						radius="md"
+						color="green"
+						styles={{
+							message: {
+								display: 'flex',
+								alignItems: 'center',
+								gap: '0.75rem',
+							},
+						}}
+						mt="md"
+					>
+						<IconShieldCheckFilled size={30} strokeWidth={1.5} aria-hidden />
+						<span style={{ width: 'calc(100% - 30px - 0.75rem)' }}>
+							<Trans>
+								Your location data is securely stored exclusively on your
+								personal device
+							</Trans>
+						</span>
+					</Alert>
 					<NativeSelect
 						mt="xs"
 						label={<Trans>Language</Trans>}
