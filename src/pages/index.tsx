@@ -81,7 +81,7 @@ const WeatherPlease: FC<{}> = () => {
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
 	const [completedFirstLoad, setCompletedFirstLoad] = useState<boolean>(false)
 	const [reviewLink, setReviewLink] = useState(
-		'https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
+		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
 	)
 	const [usingSafari, setUsingSafari] = useState<boolean>(false)
 
@@ -327,15 +327,15 @@ const WeatherPlease: FC<{}> = () => {
 			localStorage.data &&
 			localStorage.lastUpdated &&
 			new Date().getFullYear() ===
-				parseInt(localStorage.lastUpdated.split('-')[0]) &&
+			parseInt(localStorage.lastUpdated.split('-')[0]) &&
 			new Date().getMonth() ===
-				parseInt(localStorage.lastUpdated.split('-')[1]) &&
+			parseInt(localStorage.lastUpdated.split('-')[1]) &&
 			new Date().getDate() ===
-				parseInt(localStorage.lastUpdated.split('-')[2]) &&
+			parseInt(localStorage.lastUpdated.split('-')[2]) &&
 			new Date().getHours() ===
-				parseInt(localStorage.lastUpdated.split('-')[3]) &&
+			parseInt(localStorage.lastUpdated.split('-')[3]) &&
 			JSON.parse(localStorage.data).length ===
-				parseInt(config.daysToRetrieve) &&
+			parseInt(config.daysToRetrieve) &&
 			!changedLocation
 		) {
 			const data = JSON.parse(localStorage.data)
@@ -714,7 +714,7 @@ const WeatherPlease: FC<{}> = () => {
 						component="a"
 						href={
 							getUserAgent() ??
-							'https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews'
+							'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews'
 						} // can't pass computed value in here, need to figure out alternative asap
 						style={{ marginTop: '0.5rem' }}
 						onClick={() => {
