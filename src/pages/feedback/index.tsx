@@ -334,7 +334,7 @@ const Feedback = () => {
 										/>
 									</Fieldset>
 									<Textarea
-										label={<Trans>Additional details</Trans>}
+										label={<Trans>Details</Trans>}
 										required
 										withAsterisk
 										autosize
