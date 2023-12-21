@@ -37,19 +37,18 @@ const description =
 	'Leave some feedback, request a new feature, or report a bug.'
 
 export const metadata: Metadata = {
+	metadataBase: new URL(`https://${process.env.PUBLIC_URL}`),
 	title: title,
 	description: description,
 	openGraph: {
 		images: [
-			`https://${
-				process.env.PUBLIC_URL
-			}/api/og?title=Feedback&description=${encodeURIComponent(
+			`/api/og?title=Feedback&description=${encodeURIComponent(
 				description,
 			)}&token=${getToken('Feedback')}`,
 		],
 	},
 	alternates: {
-		canonical: `https://${process.env.PUBLIC_URL}/feedback`,
+		canonical: `/feedback`,
 	},
 }
 
