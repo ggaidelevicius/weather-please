@@ -380,7 +380,7 @@ const Page: FC<{
 							{feedbackType !== 'uninstall' && (
 								<>
 									<SegmentedControl
-										value={feedbackType}
+										value={feedbackType as string}
 										onChange={setFeedbackType}
 										disabled={completed}
 										data={[
