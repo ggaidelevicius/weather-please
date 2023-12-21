@@ -32,7 +32,7 @@ const theme = createTheme({
 	},
 })
 
-const title = 'Feedback - Weather Please'
+const title = 'Feedback'
 const description =
 	'Leave some feedback, request a new feature, or report a bug.'
 
