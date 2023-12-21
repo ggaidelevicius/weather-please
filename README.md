@@ -47,7 +47,7 @@ Weather Please is built using [Next.js](https://nextjs.org/). It uses the [Manti
 
 To run the development environment locally, first clone this repo and ensure that you have [Node.js](https://nodejs.org) >= 20.5.1 installed. Next, run `pnpm i`, and finally `pnpm dev`.
 
-There are no environment variables to configure.
+Environment variables should be configured as per the `.env.example` file.
 
 ## Feedback
 

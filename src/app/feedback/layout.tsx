@@ -4,7 +4,16 @@ import '@mantine/core/styles.css'
 import { Notifications } from '@mantine/notifications'
 import '@mantine/notifications/styles.css'
 import { Analytics } from '@vercel/analytics/react'
+import { Metadata } from 'next'
 import type { FC } from 'react'
+import { createHmac } from 'node:crypto'
+
+const getToken = (id: string): string => {
+	const hmac = createHmac('sha256', process.env.OG_KEY as string)
+	hmac.update(JSON.stringify({ title: id }))
+	const token = hmac.digest('hex')
+	return token
+}
 
 const theme = createTheme({
 	colors: {
@@ -22,6 +31,27 @@ const theme = createTheme({
 		],
 	},
 })
+
+const title = 'Feedback - Weather Please'
+const description =
+	'Leave some feedback, request a new feature, or report a bug.'
+
+export const metadata: Metadata = {
+	title: title,
+	description: description,
+	openGraph: {
+		images: [
+			`https://${
+				process.env.PUBLIC_URL
+			}/api/og?title=Feedback&description=${encodeURIComponent(
+				description,
+			)}&token=${getToken('Feedback')}`,
+		],
+	},
+	alternates: {
+		canonical: `https://${process.env.PUBLIC_URL}/feedback`,
+	},
+}
 
 const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
 	return (
