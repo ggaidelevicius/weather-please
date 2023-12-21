@@ -37,9 +37,8 @@ export const GET = async (request: Request) => {
 
   console.log(new URL('../../../../public/fonts/Roboto-Regular.ttf', import.meta.url))
 
-	const robotoRegular = await fetch(
-		new URL('../../../../public/fonts/Roboto-Regular.ttf', import.meta.url),
-	).then((res) => res.arrayBuffer())
+  const robotoRegular = await fetch('/fonts/Roboto-Regular.ttf').then(res => res.arrayBuffer())
+
 	const robotoBold = await fetch(
 		new URL('../../../../public/fonts/Roboto-Bold.ttf', import.meta.url),
 	).then((res) => res.arrayBuffer())
