@@ -1,6 +1,11 @@
+'use client'
+
+// import { type Metadata } from 'next'
+import { Notifications } from '@mantine/notifications'
+import { i18n } from '@lingui/core'
+import { I18nProvider } from '@lingui/react'
 import messages from '@/locales/en/messages'
 import { changeLocalisation, locales } from '@/util/i18n'
-import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/macro'
 import {
 	Box,
@@ -27,9 +32,8 @@ import {
 	IconMessageCircleQuestion,
 } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import Head from 'next/head'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { FC, useEffect, useState } from 'react'
 
 if (process.env.NEXT_PUBLIC_BUILD_MODE !== 'extension') {
 	i18n.load({
@@ -46,20 +50,18 @@ if (process.env.NEXT_PUBLIC_BUILD_MODE !== 'extension') {
 	})
 }
 
-const Feedback = () => {
-	const router = useRouter()
-	const locale =
-		typeof router?.query?.locale === 'object'
-			? router?.query?.locale[0]
-			: router?.query?.locale ?? 'en'
-	const type =
-		typeof router?.query?.type === 'object'
-			? router?.query?.type[0]
-			: router?.query?.type ?? 'feedback'
-	const installed =
-		typeof router?.query?.installed === 'object'
-			? router?.query?.installed[0]
-			: router?.query?.installed ?? 0
+// export const metadata: Metadata = {
+// 	title: 'Weather Please Feedback',
+// 	robots: {
+// 		index: false,
+// 	},
+// }
+
+const Page: FC<{}> = () => {
+	const searchParams = useSearchParams()
+	const locale = searchParams?.get('locale') ?? 'en'
+	const type = searchParams?.get('type') ?? 'feedback'
+	const installed = searchParams?.get('installed') ?? 0
 	const [feedbackType, setFeedbackType] = useState(type)
 	const [textareaValue, setTextareaValue] = useState<string>('')
 	const [emailValue, setEmailValue] = useState<string>('')
@@ -128,11 +130,12 @@ const Feedback = () => {
 	}
 
 	return (
-		<>
-			<Head>
-				<title>Weather Please Feedback</title>
-				<meta name="robots" content="noindex" />
-			</Head>
+		<I18nProvider i18n={i18n}>
+			<Notifications
+				position="top-right"
+				transitionDuration={1000}
+				notificationMaxHeight={10000}
+			/>
 			<main style={{ padding: '1rem' }}>
 				<AnimatePresence>
 					{pageLoaded && (
@@ -489,8 +492,8 @@ const Feedback = () => {
 					</Card>
 				)}
 			</main>
-		</>
+		</I18nProvider>
 	)
 }
 
-export default Feedback
+export default Page
