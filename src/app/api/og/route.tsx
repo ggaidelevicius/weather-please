@@ -35,11 +35,15 @@ export const GET = async (request: Request) => {
 		return new Response('Invalid token', { status: 401 })
 	}
 
+  console.log(new URL('../../../../public/fonts/Roboto-Regular.ttf', import.meta.url))
+  console.log(new URL('../../../../public/fonts/Roboto-Regular.ttf'))
+
+
 	const robotoRegular = await fetch(
-		new URL('../../../../assets/fonts/Roboto-Regular.ttf', import.meta.url),
+		new URL('../../../../public/fonts/Roboto-Regular.ttf', import.meta.url),
 	).then((res) => res.arrayBuffer())
 	const robotoBold = await fetch(
-		new URL('../../../../assets/fonts/Roboto-Bold.ttf', import.meta.url),
+		new URL('../../../../public/fonts/Roboto-Bold.ttf', import.meta.url),
 	).then((res) => res.arrayBuffer())
 	const favicon = await fetch(
 		new URL('../../../../public/favicon.png', import.meta.url),
