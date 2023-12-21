@@ -37,7 +37,7 @@ const description =
 	'Leave some feedback, request a new feature, or report a bug.'
 
 export const metadata: Metadata = {
-	metadataBase: new URL(`https://${process.env.PUBLIC_URL}`),
+	metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
 	title: title,
 	description: description,
 	openGraph: {
