@@ -37,12 +37,8 @@ export const GET = async (request: Request) => {
 
 
   const robotoRegular = await fetch(`https://${process.env.PUBLIC_URL}/fonts/Roboto-Regular.ttf`).then(res => res.arrayBuffer())
-	const robotoBold = await fetch(
-		new URL(`https://${process.env.PUBLIC_URL}/fonts/Roboto-Bold.ttf`, import.meta.url),
-	).then((res) => res.arrayBuffer())
-	const favicon = await fetch(
-		new URL(`https://${process.env.PUBLIC_URL}/favicon.png`, import.meta.url),
-	).then((res) => res.arrayBuffer())
+	const robotoBold = await fetch(`https://${process.env.PUBLIC_URL}/fonts/Roboto-Bold.ttf`).then((res) => res.arrayBuffer())
+	const favicon = await fetch(`https://${process.env.PUBLIC_URL}/favicon.png`).then((res) => res.arrayBuffer())
 
 	return new ImageResponse(
 		(
