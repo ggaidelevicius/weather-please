@@ -35,6 +35,8 @@ export const GET = async (request: Request) => {
 		return new Response('Invalid token', { status: 401 })
 	}
 
+  console.log(`https://${process.env.PUBLIC_URL}/fonts/Roboto-Regular.ttf`)
+  console.log(await fetch(`https://${process.env.PUBLIC_URL}/fonts/Roboto-Regular.ttf`).then(res => res.arrayBuffer()))
 
   const robotoRegular = await fetch(`https://${process.env.PUBLIC_URL}/fonts/Roboto-Regular.ttf`).then(res => res.arrayBuffer())
 	const robotoBold = await fetch(`https://${process.env.PUBLIC_URL}/fonts/Roboto-Bold.ttf`).then((res) => res.arrayBuffer())
