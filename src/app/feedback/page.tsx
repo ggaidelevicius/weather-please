@@ -33,7 +33,6 @@ import {
 } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { FC, useEffect, useState } from 'react'
-import Client from './client'
 
 if (process.env.NEXT_PUBLIC_BUILD_MODE !== 'extension') {
 	i18n.load({
