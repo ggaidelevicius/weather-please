@@ -1,3 +1,5 @@
+'use server'
+
 import { createHmac } from 'node:crypto'
 
 /**
