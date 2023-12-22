@@ -35,14 +35,8 @@ export const GET = async (request: Request) => {
     return new Response('Invalid token', { status: 401 })
   }
 
-  // console.log(`https://${process.env.VERCEL_URL}/fonts/Roboto-Regular.ttf`)
-  // console.log(await fetch(`https://${process.env.VERCEL_URL}/fonts/Roboto-Regular.ttf`).then(res => res.arrayBuffer()))
-  // console.log(await fetch(
-  //   new URL(`https://${process.env.VERCEL_URL}/fonts/Roboto-Regular.ttf`, import.meta.url),
-  // ).then((res) => res.arrayBuffer()))
-
-  // const robotoRegular = await fetch(`https://${process.env.VERCEL_URL}/fonts/Roboto-Regular.ttf`).then(res => res.arrayBuffer())
-  // const robotoBold = await fetch(`https://${process.env.VERCEL_URL}/fonts/Roboto-Bold.ttf`).then((res) => res.arrayBuffer())
+  const robotoRegular = await fetch(`https://${process.env.VERCEL_URL}/fonts/Roboto-Regular.ttf`).then(res => res.arrayBuffer())
+  const robotoBold = await fetch(`https://${process.env.VERCEL_URL}/fonts/Roboto-Bold.ttf`).then((res) => res.arrayBuffer())
   const favicon = await fetch(`https://${process.env.VERCEL_URL}/favicon.png`).then((res) => res.arrayBuffer())
 
   return new ImageResponse(
@@ -114,20 +108,20 @@ export const GET = async (request: Request) => {
     {
       width: 1200,
       height: 630,
-      // fonts: [
-      //   {
-      //     data: robotoRegular,
-      //     name: 'roboto',
-      //     style: 'normal',
-      //     weight: 400,
-      //   },
-      //   {
-      //     data: robotoBold,
-      //     name: 'roboto',
-      //     style: 'normal',
-      //     weight: 700,
-      //   },
-      // ],
+      fonts: [
+        {
+          data: robotoRegular,
+          name: 'roboto',
+          style: 'normal',
+          weight: 400,
+        },
+        {
+          data: robotoBold,
+          name: 'roboto',
+          style: 'normal',
+          weight: 700,
+        },
+      ],
     },
   )
 }
