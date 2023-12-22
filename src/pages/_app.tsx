@@ -1,5 +1,5 @@
 import '@/styles/styles.css'
-import { getToken } from '@/util/token'
+// import { getToken } from '@/util/token'
 import { i18n } from '@lingui/core'
 import { I18nProvider } from '@lingui/react'
 import { MantineProvider, createTheme } from '@mantine/core'
@@ -34,7 +34,7 @@ const App: FC<AppProps> = (props) => {
 	return (
 		<I18nProvider i18n={i18n}>
 			<Head>
-				{process.env.NEXT_PUBLIC_DEMO === 'true' &&
+				{/* {process.env.NEXT_PUBLIC_DEMO === 'true' &&
 					<>
 						<title>Weather Please</title>
 						<meta name='description' content='Weather Please is a minimal new tab page that provides an outlook on current and future weather data.' />
@@ -47,7 +47,7 @@ const App: FC<AppProps> = (props) => {
 						<meta name='twitter:description' content='Weather Please is a minimal new tab page that provides an outlook on current and future weather data.' />
 						<meta name='twitter:image' content={`https://weather-please.app/api/og?title=Weather%20Please&description=${encodeURIComponent('Weather Please is a minimal new tab page that provides an outlook on current and future weather data.')}&token=${getToken('Weather Please')}`} />
 					</>
-				}
+				} */}
 				{process.env.NEXT_PUBLIC_DEMO !== 'true' &&
 					<title>New tab</title>
 				}
