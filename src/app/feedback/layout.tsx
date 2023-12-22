@@ -8,7 +8,7 @@ import { Metadata } from 'next'
 import type { FC } from 'react'
 import { createHmac } from 'node:crypto'
 
-export const getToken = (id: string): string => {
+const getToken = (id: string): string => {
 	const hmac = createHmac('sha256', process.env.OG_KEY as string)
 	hmac.update(JSON.stringify({ title: id }))
 	const token = hmac.digest('hex')
