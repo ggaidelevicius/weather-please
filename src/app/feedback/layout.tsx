@@ -46,9 +46,10 @@ export const metadata: Metadata = {
 				description,
 			)}&token=${getToken('Feedback')}`,
 		],
+		url: '/feedback',
 	},
 	alternates: {
-		canonical: `/feedback`,
+		canonical: '/feedback',
 	},
 }
 
