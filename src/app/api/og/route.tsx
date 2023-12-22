@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { key, toHex } from '@/util/token'
+import { key, toHex } from '@/app/lib/token'
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'

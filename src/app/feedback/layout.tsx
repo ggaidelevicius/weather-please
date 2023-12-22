@@ -6,7 +6,7 @@ import '@mantine/notifications/styles.css'
 import { Analytics } from '@vercel/analytics/react'
 import { Metadata } from 'next'
 import type { FC } from 'react'
-import { getToken } from '@/util/token'
+import { getToken } from '@/app/lib/token'
 
 const theme = createTheme({
 	colors: {
