@@ -1,4 +1,5 @@
 import '@/styles/styles.css'
+import { getToken } from '@/util/token'
 import { i18n } from '@lingui/core'
 import { I18nProvider } from '@lingui/react'
 import { MantineProvider, createTheme } from '@mantine/core'
@@ -33,7 +34,23 @@ const App: FC<AppProps> = (props) => {
 	return (
 		<I18nProvider i18n={i18n}>
 			<Head>
-				<title>New tab</title>
+				{process.env.NEXT_PUBLIC_DEMO === 'true' &&
+					<>
+						<title>Weather Please</title>
+						<meta name='description' content='Weather Please is a minimal new tab page that provides an outlook on current and future weather data.' />
+						<link rel="canonical" href='https://weather-please.app' />
+						<meta property='og:title' content='Weather Please' />
+						<meta property='og:description' content='Weather Please is a minimal new tab page that provides an outlook on current and future weather data.' />
+						<meta property='og:image' content={`https://weather-please.app/api/og?title=Weather%20Please&description=${encodeURIComponent('Weather Please is a minimal new tab page that provides an outlook on current and future weather data.')}&token=${getToken('Weather Please')}`} />
+						<meta name='twitter:card' content='summary_large_image' />
+						<meta name='twitter:title' content='Weather Please' />
+						<meta name='twitter:description' content='Weather Please is a minimal new tab page that provides an outlook on current and future weather data.' />
+						<meta name='twitter:image' content={`https://weather-please.app/api/og?title=Weather%20Please&description=${encodeURIComponent('Weather Please is a minimal new tab page that provides an outlook on current and future weather data.')}&token=${getToken('Weather Please')}`} />
+					</>
+				}
+				{process.env.NEXT_PUBLIC_DEMO !== 'true' &&
+					<title>New tab</title>
+				}
 				<meta
 					name="viewport"
 					content="minimum-scale=1, initial-scale=1, width=device-width"

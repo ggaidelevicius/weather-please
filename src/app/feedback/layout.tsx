@@ -6,14 +6,7 @@ import '@mantine/notifications/styles.css'
 import { Analytics } from '@vercel/analytics/react'
 import { Metadata } from 'next'
 import type { FC } from 'react'
-import { createHmac } from 'node:crypto'
-
-const getToken = (id: string): string => {
-	const hmac = createHmac('sha256', process.env.OG_KEY as string)
-	hmac.update(JSON.stringify({ title: id }))
-	const token = hmac.digest('hex')
-	return token
-}
+import { getToken } from '@/util/token'
 
 const theme = createTheme({
 	colors: {
