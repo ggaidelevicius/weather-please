@@ -1,8 +1,37 @@
 /* eslint-disable @next/next/no-img-element */
-import { key, toHex } from '@/app/lib/token'
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
+
+/**
+ * `key` is a cryptographic key derived from the environmental variable `OG_KEY`.
+ * 
+ * This key is created using the Web Cryptography API. It takes the `OG_KEY` from
+ * the environment variables, encodes it using TextEncoder, and then generates a
+ * cryptographic key suitable for the HMAC algorithm with SHA-256 hash.
+ * This key can be used for cryptographic operations like signing.
+ */
+export const key = crypto.subtle.importKey(
+  'raw',
+  new TextEncoder().encode(process.env.OG_KEY),
+  { name: 'HMAC', hash: { name: 'SHA-256' } },
+  false,
+  ['sign'],
+)
+
+/**
+ * `toHex` converts an ArrayBuffer to a hexadecimal string.
+ * 
+ * This function takes an ArrayBuffer (typically from cryptographic operations)
+ * and converts it into a hexadecimal string. It does this by creating a Uint8Array
+ * from the ArrayBuffer, then mapping each byte to its hexadecimal representation,
+ * padding each byte to ensure two characters, and concatenating them into a single string.
+ */
+export const toHex = (arrayBuffer: ArrayBuffer) => {
+  return Array.prototype.map
+    .call(new Uint8Array(arrayBuffer), (n) => n.toString(16).padStart(2, '0'))
+    .join('')
+}
 
 export const GET = async (request: Request) => {
   const { searchParams } = new URL(request.url)
