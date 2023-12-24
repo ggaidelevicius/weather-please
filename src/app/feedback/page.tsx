@@ -349,16 +349,6 @@ const Page: FC<{
 										mt="lg"
 										disabled={completed}
 									/>
-									<TextInput
-										mt="sm"
-										label={<Trans>Email (optional)</Trans>}
-										value={emailValue}
-										onChange={(e) => setEmailValue(e.currentTarget.value)}
-										type="email"
-										leftSectionPointerEvents="none"
-										leftSection={<IconAt size={16} />}
-										disabled={completed}
-									/>
 									<Button
 										mt="lg"
 										fullWidth
