@@ -22,7 +22,7 @@ const payloadSchema = z.object({
 		'vi',
 		'zh',
 	]),
-	installed: z.number().int(),
+	installed: z.number().int().or(z.string()),
 	reasons: z.object({
 		slowsDownBrowser: z.boolean(),
 		causesCrashes: z.boolean(),
