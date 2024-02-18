@@ -108,15 +108,13 @@ const Feedback = () => {
 		await fetch('/api/feedback', {
 			method: 'POST',
 			body: JSON.stringify(data),
+		}).then((res) => {
+			if (res.status === 200) {
+				setCompleted(true)
+			} else {
+				setError(true)
+			}
 		})
-			.then((res) => res.json())
-			.then((data) => {
-				if (data.status === 200) {
-					setCompleted(true)
-				} else {
-					setError(true)
-				}
-			})
 		setLoading(false)
 	}
 

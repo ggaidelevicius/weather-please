@@ -52,7 +52,7 @@ export const POST = async (request: Request) => {
 		// eslint-disable-next-line no-console
 		console.error(e)
 		Sentry.captureException(e, await request.json())
-		return Response.json({ message: 'Bad Request', status: 400 })
+		return Response.json({ message: 'Bad Request' }, { status: 400 })
 	}
 
 	const {
@@ -104,17 +104,21 @@ export const POST = async (request: Request) => {
 			// eslint-disable-next-line no-console
 			console.error(firestore.error)
 			Sentry.captureException(firestore.error)
-			return Response.json({
-				message: firestore.error?.status ?? 'Firestore Error',
-				status: 500,
-			})
+			return Response.json(
+				{
+					message: firestore.error?.status ?? 'Firestore Error',
+				},
+				{
+					status: 500,
+				},
+			)
 		}
 
-		return Response.json({ message: 'OK', status: 200 })
+		return Response.json({ message: 'OK' }, { status: 200 })
 	} catch (e) {
 		// eslint-disable-next-line no-console
 		console.error(e)
 		Sentry.captureException(e)
-		return Response.json({ message: 'Internal Server Error', status: 500 })
+		return Response.json({ message: 'Internal Server Error' }, { status: 500 })
 	}
 }
