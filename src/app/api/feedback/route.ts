@@ -51,7 +51,7 @@ export const POST = async (request: Request) => {
 	} catch (e) {
 		// eslint-disable-next-line no-console
 		console.error(e)
-		Sentry.captureException(e)
+		Sentry.captureException(e, await request.json())
 		return Response.json({ message: 'Bad Request', status: 400 })
 	}
 
