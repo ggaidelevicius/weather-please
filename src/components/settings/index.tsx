@@ -194,7 +194,7 @@ const Settings: FC<SettingsProps> = (props) => {
 					}}
 					error={
 						/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat) ||
-						input.lat === '' ? undefined : (
+							input.lat === '' ? undefined : (
 							<Trans>Invalid latitude value</Trans>
 						)
 					}
@@ -401,26 +401,8 @@ const Settings: FC<SettingsProps> = (props) => {
 				>
 					<Trans>Cancel</Trans>
 				</Button>
-				<Text size="sm" mt="md">
-					<Trans>
-						I&apos;d love to bring Weather Please to more languages.
-					</Trans>
-				</Text>
-				<Text size="sm" c="dimmed">
-					<Trans>
-						If you have a translation request, please reach out at{' '}
-						<Text
-							component="a"
-							href="mailto:contact@weather-please.app"
-							c="lightblue"
-							className="link"
-						>
-							contact@weather-please.app
-						</Text>
-					</Trans>
-				</Text>
 				<Divider
-					style={{ marginTop: '0.875rem', marginBottom: '0.75rem' }}
+					style={{ marginTop: '1.25rem', marginBottom: '1.25rem' }}
 					variant="dashed"
 				/>
 				<Text
@@ -518,13 +500,13 @@ const Settings: FC<SettingsProps> = (props) => {
 					!/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(
 						input.lon,
 					)) && ( // this should instead prompt the user to cancel this modal only, or alternatively put the inputs back in here
-					<Text mt="md">
-						<Trans>
-							You can&apos;t save because either your latitude or longitude are
-							invalid.
-						</Trans>
-					</Text>
-				)}
+						<Text mt="md">
+							<Trans>
+								You can&apos;t save because either your latitude or longitude are
+								invalid.
+							</Trans>
+						</Text>
+					)}
 				<Button
 					onClick={() => {
 						handleClick('manual')
