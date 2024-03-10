@@ -104,7 +104,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 						<span style={{ width: 'calc(100% - 30px - 0.75rem)' }}>
 							<Trans>
 								Your location data is securely stored exclusively on your
-								personal device
+								personal device.
 							</Trans>
 						</span>
 					</Alert>
@@ -211,7 +211,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 						<span style={{ width: 'calc(100% - 30px - 0.75rem)' }}>
 							<Trans>
 								Your location data is securely stored exclusively on your
-								personal device
+								personal device.
 							</Trans>
 						</span>
 					</Alert>
