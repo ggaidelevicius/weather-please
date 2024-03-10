@@ -116,7 +116,7 @@ const WeatherPlease: FC<{}> = () => {
 				dsn: process.env.NEXT_PUBLIC_SENTRY_DSN ?? '',
 				tracesSampleRate: 1,
 				debug: false,
-				replaysOnErrorSampleRate: 0.25,
+				replaysOnErrorSampleRate: 0.1,
 				replaysSessionSampleRate: 0,
 				beforeSend: (event) => {
 					if (event.request) {
