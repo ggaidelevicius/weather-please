@@ -1,38 +1,40 @@
-# Datenschutzrichtlinie für die Browser-Erweiterung "Weather Please"
+# Datenschutzrichtlinie für die "Weather Please" Browsererweiterung
 
-_Zuletzt aktualisiert: 29. August 2023_
+_Zuletzt aktualisiert: 10. März 2024_
 
-Ihre Privatsphäre ist uns wichtig. Diese Datenschutzrichtlinie erläutert, welche persönlichen Daten die Browser-Erweiterung "Weather Please" möglicherweise erfasst und wie diese Daten verwendet werden.
+Ihre Privatsphäre ist uns wichtig. Diese Datenschutzrichtlinie beschreibt, welche persönlichen Daten die "Weather Please" Browsererweiterung erfassen kann und wie diese Daten verwendet werden.
 
-## 1. Informationen, die wir nicht erfassen
+## 1. Informationen, die wir nicht sammeln
 
-"Weather Please" erfasst, speichert oder überträgt **keine** Ihrer persönlichen Daten in Bezug auf Ihre Browser-Aktivitäten. Wir greifen nicht auf persönliche Daten wie IP-Adressen, Geolokalisierungsdaten oder Browserverläufe zu und geben diese auch nicht weiter.
+"Weather Please" sammelt, speichert oder übermittelt keine Ihrer persönlichen Daten im Zusammenhang mit Ihrer Browsing-Aktivität. Wir greifen nicht auf persönliche Daten wie IP-Adressen, Geolokationsdaten oder Browsing-Historie zu und behalten oder teilen diese nicht.
 
-## 2. Anonymisierte Absturzdaten und Fehlermeldungen
+## 2. Anonymisierte Crash-Daten und Fehlerberichte
 
-Um die Funktionalität und das Benutzererlebnis unserer Browser-Erweiterung zu verbessern, bieten wir den Benutzern die Möglichkeit, sich für den Versand von anonymisierten Absturzdaten und Fehlerberichten zu entscheiden. Diese Daten werden ausschließlich zum Identifizieren und Beheben von Bugs oder Problemen innerhalb der Erweiterung verwendet. Sie enthalten keine persönlichen Informationen und können nicht zu einzelnen Benutzern zurückverfolgt werden.
+Um die Funktionalität und Benutzererfahrung unserer Browsererweiterung zu verbessern, bieten wir Nutzern die Möglichkeit, sich für die Übermittlung anonymisierter Crash-Daten und Fehlerberichte zu entscheiden. Diese Daten werden ausschließlich zum Zweck der Identifizierung und Behebung von Fehlern oder Problemen innerhalb der Erweiterung verwendet. Sie enthalten keine persönlichen Informationen und können nicht auf einzelne Benutzer zurückverfolgt werden.
 
-Wenn Sie sich für diese Funktion entscheiden möchten, können Sie dies in den Einstellungen der Erweiterung tun. Sie haben jederzeit die volle Diskretion, diese Funktion zu aktivieren oder zu deaktivieren.
+Nutzer sind standardmäßig in die Übermittlung dieser Daten eingewilligt, können sich jedoch jederzeit über das Einstellungsmenü dafür oder dagegen entscheiden.
 
-## 3. Nutzung von Daten durch Dritte
+Die Geolokationsinformationen der Nutzer werden auf lediglich 1 Dezimalstelle reduziert, was einem ungefähren Radius von 11,1 Kilometern entspricht. Diese Maßnahme gewährleistet, dass die Daten nicht persönlich identifizierbar sind und die Privatsphäre der Nutzer geschützt bleibt.
 
-Um lokalisierte Wetterinformationen abzurufen, können Benutzer sich dafür entscheiden, entweder ihre IP-Informationen oder ihre geografischen Koordinaten an Dienste Dritter weiterzugeben. Diese Drittanbieter arbeiten unter ihren eigenen Datenschutzrichtlinien, und "Weather Please" hat keine Kontrolle über deren Datensammlungs- und Nutzungspraktiken. Sie können auf die Datenschutzrichtlinien der Drittanbieter hier zugreifen:
+## 3. Datenverwendung durch Dritte
 
-- [OSM Foundation Datenschutzrichtlinie](https://wiki.osmfoundation.org/wiki/Privacy_Policy)
-- [Open-Meteo Nutzungsbedingungen](https://open-meteo.com/en/terms)
-- [IP-API Rechtliche Hinweise](https://ip-api.com/docs/legal)
+Um lokalisierte Wetterinformationen abzurufen, können Nutzer wählen, entweder ihre IP-Informationen oder ihre Breiten- und Längengrade an Drittanbieterdienste zu übermitteln. Diese Drittanbieterdienste unterliegen ihren eigenen Datenschutzrichtlinien, und "Weather Please" hat keine Kontrolle über deren Datenerhebungs- und Nutzungspraktiken. Sie können auf die Datenschutzrichtlinien der Drittanbieter hier zugreifen:
+
+- https://wiki.osmfoundation.org/wiki/Privacy_Policy
+- https://open-meteo.com/de/terms
+- https://ip-api.com/docs/legal
 
 ## 4. Wie wir Ihre Informationen verwenden
 
-Abgesehen von den anonymisierten Absturzdaten und Fehlerberichten, die Sie uns freiwillig mitteilen können, erfassen wir keine anderen persönlichen Daten. Daher können und dürfen wir diese nicht auf irgendeine Weise nutzen oder teilen.
+Abgesehen von den anonymisierten Crash-Daten und Fehlerberichten, zu deren Übermittlung Sie sich entschieden haben, sammeln wir keine anderen persönlichen Daten. Daher können wir diese nicht auf irgendeine Weise nutzen oder teilen.
 
-## 5. Ihre Auswahlmöglichkeiten
+## 5. Ihre Wahlmöglichkeiten
 
-Sie haben die Möglichkeit, zu wählen, ob Sie unsere Browser-Erweiterung verwenden, ob Sie Ihre IP- oder Geolokalisierungsdaten an die Drittanbieter-Wetterdienste weitergeben und ob Sie uns anonymisierte Absturzdaten und Fehlerberichte senden möchten. Wenn Sie mit diesen Bedingungen nicht einverstanden sind, sollten Sie die Nutzung der Browser-Erweiterung "Weather Please" einstellen.
+Sie haben die Möglichkeit zu wählen, ob Sie unsere Browsererweiterung nutzen, Ihre IP- oder Geolokationsdaten an die Wetterdienste Dritter weitergeben und sich für die Übermittlung anonymisierter Crash-Daten und Fehlerberichte an uns entscheiden. Wenn Sie diesen Bedingungen nicht zustimmen, sollten Sie die Nutzung der "Weather Please" Browsererweiterung einstellen.
 
-## 6. Änderungen an dieser Datenschutzrichtlinie
+## 6. Änderungen dieser Datenschutzrichtlinie
 
-Wir können unsere Datenschutzrichtlinie von Zeit zu Zeit aktualisieren. Wir werden Sie über Änderungen informieren, indem wir die neue Datenschutzrichtlinie auf dieser Seite veröffentlichen. Diese Änderungen treten unmittelbar nach ihrer Veröffentlichung in Kraft.
+Wir können unsere Datenschutzrichtlinie von Zeit zu Zeit aktualisieren. Wir werden Sie über jegliche Änderungen informieren, indem wir die neue Datenschutzrichtlinie auf dieser Seite veröffentlichen. Diese Änderungen treten sofort nach ihrer Veröffentlichung in Kraft.
 
 ## 7. Kontaktieren Sie uns
 

@@ -47,28 +47,28 @@ msgstr "পরের {1} ঘণ্টায় {0}মিমি বৃষ্ট�
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "পরের 1 ঘণ্টায় {0}মিমি বৃষ্টিপাতের প্রত্যাশা"
 
-#: src/components/settings/index.tsx:490
+#: src/components/settings/index.tsx:472
 msgid "☕ Gift a coffee"
 msgstr "☕ একটি কফি উপহার দিন"
 
-#: src/components/settings/index.tsx:445
+#: src/components/settings/index.tsx:427
 msgid "✍️ Submit feedback"
 msgstr "✍️ প্রতিক্রিয়া জমা দিন"
 
-#: src/components/settings/index.tsx:434
-#: src/pages/index.tsx:728
+#: src/components/settings/index.tsx:416
+#: src/pages/index.tsx:775
 msgid "🌟 Leave a review"
 msgstr "🌟 একটি পর্যালোচনা ছেড়ে দিন"
 
-#: src/components/settings/index.tsx:467
+#: src/components/settings/index.tsx:449
 msgid "🐛 Report a bug"
 msgstr "🐛 একটি বাগ প্রতিবেদন করুন"
 
-#: src/components/settings/index.tsx:456
+#: src/components/settings/index.tsx:438
 msgid "💡 Request a feature"
 msgstr "💡 একটি বৈশিষ্ট্য অনুরোধ করুন"
 
-#: src/components/settings/index.tsx:478
+#: src/components/settings/index.tsx:460
 msgid "🔒 Privacy policy"
 msgstr "🔒 গোপনীয়তা নীতি"
 
@@ -84,11 +84,11 @@ msgstr "🔒 গোপনীয়তা নীতি"
 msgid "Alerts"
 msgstr "সতর্কীকরণ"
 
-#: src/pages/index.tsx:594
+#: src/pages/index.tsx:641
 msgid "An error has occurred while fetching location data. Please check the console for more details."
 msgstr "অবস্থানের ডাটা আনতে সময়ে একটি ত্রুটি ঘটেছে। দয়া করে কনসোলে দেখুন আরও বিস্তারিত জানার জন্য।"
 
-#: src/pages/index.tsx:313
+#: src/pages/index.tsx:360
 msgid "An error has occurred while fetching weather data. Please check the console for more details."
 msgstr "আবহাওয়া ডাটা আনতে সময়ে একটি ত্রুটি ঘটেছে। দয়া করে কনসোলে দেখুন আরও বিস্তারিত জানার জন্য।"
 
@@ -96,7 +96,7 @@ msgstr "আবহাওয়া ডাটা আনতে সময়ে এ�
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "আপনার অবস্থান আনার সময় একটি ত্রুটি ঘটেছে। দয়া করে কনসোলে আরও বিস্তারিত জানার জন্য দেখুন।"
 
-#: src/pages/index.tsx:558
+#: src/pages/index.tsx:605
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "নির্ধারিত সময়ে অবস্থান আপডেট করার সময় একটি ত্রুটি ঘটেছে। দয়া করে কনসোলে আরও বিস্তারিত জানার জন্য দেখুন।"
 
@@ -112,7 +112,7 @@ msgstr "আগস্ট"
 msgid "Based on the provided information, your location is:"
 msgstr "প্রদত্ত তথ্যের উপর ভিত্তি করে, আপনার অবস্থান হলঃ"
 
-#: src/pages/feedback/index.tsx:415
+#: src/pages/feedback/index.tsx:403
 msgid "Bug report"
 msgstr "বাগ প্রতিবেদন"
 
@@ -120,11 +120,11 @@ msgstr "বাগ প্রতিবেদন"
 msgid "Cancel"
 msgstr "বাতিল"
 
-#: src/pages/feedback/index.tsx:191
+#: src/pages/feedback/index.tsx:189
 msgid "Causes browser crashes or errors"
 msgstr "ব্রাউজারে ধ্বস নামায় অথবা ত্রুটি ঘটায়"
 
-#: src/pages/feedback/index.tsx:270
+#: src/pages/feedback/index.tsx:268
 msgid "Changed needs"
 msgstr "প্রয়োজনীয়তা পরিবর্তন হয়েছে"
 
@@ -132,15 +132,15 @@ msgstr "প্রয়োজনীয়তা পরিবর্তন হয�
 msgid "clear sky"
 msgstr "পরিষ্কার আকাশ"
 
-#: src/pages/feedback/index.tsx:251
+#: src/pages/feedback/index.tsx:249
 msgid "Concerned about privacy"
 msgstr "গোপনীয়তা নিয়ে উদ্বেগ"
 
-#: src/pages/feedback/index.tsx:260
+#: src/pages/feedback/index.tsx:258
 msgid "Concerned about security"
 msgstr "নিরাপত্তা নিয়ে উদ্বেগ"
 
-#: src/pages/feedback/index.tsx:297
+#: src/pages/feedback/index.tsx:295
 msgid "Consumes too much memory or CPU"
 msgstr "অত্যধিক মেমোরি অথবা CPU ব্যবহার করে"
 
@@ -168,31 +168,30 @@ msgstr "ঘন হিমায়িত ঝরঝর বৃষ্টি"
 msgid "depositing rime fog"
 msgstr "রাইম কুয়াশা জমা"
 
-#: src/pages/feedback/index.tsx:337
+#: src/pages/feedback/index.tsx:335
 msgid "Details"
 msgstr "বিস্তারিত"
 
-#: src/pages/feedback/index.tsx:214
+#: src/pages/feedback/index.tsx:212
 msgid "Difficult to use or understand"
 msgstr "ব্যবহার করা বা বোঝা কঠিন"
 
-#: src/components/settings/index.tsx:556
+#: src/components/settings/index.tsx:538
 msgid "Don't save"
 msgstr "সংরক্ষণ করবেন না"
 
-#: src/pages/feedback/index.tsx:349
-#: src/pages/feedback/index.tsx:435
+#: src/pages/feedback/index.tsx:423
 msgid "Email (optional)"
 msgstr "ইমেল (ঐচ্ছিক)"
 
 #: src/components/settings/index.tsx:106
-#: src/pages/index.tsx:311
-#: src/pages/index.tsx:556
-#: src/pages/index.tsx:592
+#: src/pages/index.tsx:358
+#: src/pages/index.tsx:603
+#: src/pages/index.tsx:639
 msgid "Error"
 msgstr "ত্রুটি"
 
-#: src/pages/feedback/index.tsx:487
+#: src/pages/feedback/index.tsx:475
 msgid "Error submitting feedback. Try again later."
 msgstr "প্রতিক্রিয়া জমা দেওয়ার সময় ত্রুটি। পরে আবার চেষ্টা করুন।"
 
@@ -212,11 +211,11 @@ msgstr "পরের এক ঘণ্টা ধরে আত্যধিক ই�
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "{timeUntilExtremeUv} ঘণ্টা পরে আত্যধিক ইউভি শুরু হবে"
 
-#: src/pages/feedback/index.tsx:400
+#: src/pages/feedback/index.tsx:388
 msgid "Feature request"
 msgstr "বৈশিষ্ট্য অনুরোধ"
 
-#: src/pages/feedback/index.tsx:233
+#: src/pages/feedback/index.tsx:231
 msgid "Features don't work as expected"
 msgstr "ফিচারগুলি প্রত্যাশিতভাবে কাজ করে না"
 
@@ -224,15 +223,15 @@ msgstr "ফিচারগুলি প্রত্যাশিতভাবে �
 msgid "February"
 msgstr "ফেব্রুয়ারি"
 
-#: src/pages/feedback/index.tsx:385
+#: src/pages/feedback/index.tsx:373
 msgid "Feedback"
 msgstr "প্রতিক্রিয়া"
 
-#: src/pages/feedback/index.tsx:470
+#: src/pages/feedback/index.tsx:458
 msgid "Feedback successfully submitted"
 msgstr "প্রতিক্রিয়া সফলভাবে জমা হয়েছে"
 
-#: src/pages/feedback/index.tsx:283
+#: src/pages/feedback/index.tsx:281
 msgid "Found a better alternative"
 msgstr "আরও ভাল বিকল্প পেয়েছি"
 
@@ -272,13 +271,13 @@ msgstr "ভারী তুষারঝড়"
 msgid "heavy snowfall"
 msgstr "ভারী তুষারপাত"
 
-#: src/pages/feedback/index.tsx:169
+#: src/pages/feedback/index.tsx:167
 msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
 msgstr "আপনি যদি 'Weather Please' আনইনস্টল করার কারণ সম্পর্কে কিছু প্রতিক্রিয়া দিতে পারেন, তাহলে আমি কৃতজ্ঞ থাকব। এটি 'Weather Please' কে আরও ভাল পণ্য করে তোলার জন্য আমাকে সাহায্য করে।"
 
 #: src/components/settings/index.tsx:405
-msgid "I'd love to bring Weather Please to more languages."
-msgstr "আমি প্রিয়ভাবে Weather Please কে আরও বেশি ভাষায় আনতে চাই।"
+#~ msgid "I'd love to bring Weather Please to more languages."
+#~ msgstr "আমি প্রিয়ভাবে Weather Please কে আরও বেশি ভাষায় আনতে চাই।"
 
 #: src/components/settings/index.tsx:285
 msgid "Identifier"
@@ -289,24 +288,24 @@ msgid "If this is incorrect, please update the values below."
 msgstr "এটি ভুল হলে, দয়া করে নিম্নের মানগুলি আপডেট করুন।"
 
 #: src/components/settings/index.tsx:410
-msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
-msgstr "আপনার কাছে কোনও অনুবাদের অনুরোধ থাকলে, দয়া করে <0>contact@weather-please.app</0> এ যোগাযোগ করুন।"
+#~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
+#~ msgstr "আপনার কাছে কোনও অনুবাদের অনুরোধ থাকলে, দয়া করে <0>contact@weather-please.app</0> এ যোগাযোগ করুন।"
 
 #: src/components/intialisation/index.tsx:72
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "আপনার ব্রাউজার অবস্থানের অনুমতি চাইলে, দয়া করে \"অনুমতি দিন\" নির্বাচন করুন।"
 
-#: src/components/intialisation/index.tsx:144
+#: src/components/intialisation/index.tsx:166
 #: src/components/settings/index.tsx:198
 msgid "Invalid latitude value"
 msgstr "অবৈধ অক্ষাংশের মান"
 
-#: src/components/intialisation/index.tsx:160
+#: src/components/intialisation/index.tsx:182
 #: src/components/settings/index.tsx:214
 msgid "Invalid longitude value"
 msgstr "অবৈধ দ্রাঘিমাংশের মান"
 
-#: src/pages/feedback/index.tsx:326
+#: src/pages/feedback/index.tsx:324
 msgid "Issues after a recent update"
 msgstr "সাম্প্রতিক আপডেটের পরে সমস্যা"
 
@@ -322,18 +321,18 @@ msgstr "জুলাই"
 msgid "June"
 msgstr "জুন"
 
-#: src/pages/feedback/index.tsx:223
+#: src/pages/feedback/index.tsx:221
 msgid "Lacks features I need"
 msgstr "আমার প্রয়োজনীয় ফিচারগুলি নেই"
 
 #: src/components/intialisation/index.tsx:79
-#: src/components/intialisation/index.tsx:198
+#: src/components/intialisation/index.tsx:220
 #: src/components/settings/index.tsx:350
-#: src/pages/feedback/index.tsx:155
+#: src/pages/feedback/index.tsx:153
 msgid "Language"
 msgstr "ভাষা"
 
-#: src/components/intialisation/index.tsx:135
+#: src/components/intialisation/index.tsx:157
 #: src/components/settings/index.tsx:189
 msgid "Latitude"
 msgstr "অক্ষাংশ"
@@ -354,12 +353,12 @@ msgstr "হালকা হিমায়িত বৃষ্টি"
 msgid "Location"
 msgstr "অবস্থান"
 
-#: src/components/intialisation/index.tsx:150
+#: src/components/intialisation/index.tsx:172
 #: src/components/settings/index.tsx:204
 msgid "Longitude"
 msgstr "দ্রাঘিমাংশ"
 
-#: src/components/intialisation/index.tsx:126
+#: src/components/intialisation/index.tsx:148
 msgid "Looks like we can't grab your location info automatically."
 msgstr "মনে হচ্ছে আমরা আপনার অবস্থানের তথ্য স্বয়ংক্রিয়ভাবে পেতে পারছি না।"
 
@@ -392,7 +391,7 @@ msgstr "মার্চ"
 msgid "May"
 msgstr "মে"
 
-#: src/pages/feedback/index.tsx:423
+#: src/pages/feedback/index.tsx:411
 msgid "Message"
 msgstr "বার্তা"
 
@@ -420,7 +419,7 @@ msgstr "মধ্যম তুষারপাত"
 msgid "Monday"
 msgstr "সোমবার"
 
-#: src/pages/index.tsx:742
+#: src/pages/index.tsx:789
 msgid "Never show this again"
 msgstr "এটি আবার দেখাবেন না"
 
@@ -428,11 +427,11 @@ msgstr "এটি আবার দেখাবেন না"
 #~ msgid "New tab"
 #~ msgstr "নতুন ট্যাব"
 
-#: src/pages/feedback/index.tsx:274
+#: src/pages/feedback/index.tsx:272
 msgid "No longer need the functionality"
 msgstr "আর ফাংশনালিটির প্রয়োজন নেই"
 
-#: src/pages/feedback/index.tsx:205
+#: src/pages/feedback/index.tsx:203
 msgid "Not available in my language"
 msgstr "আমার ভাষায় উপলব্ধ নয়"
 
@@ -464,7 +463,7 @@ msgstr "মেঘাচ্ছন্ন"
 msgid "partly cloudy"
 msgstr "আংশিকভাবে মেঘলা"
 
-#: src/pages/feedback/index.tsx:175
+#: src/pages/feedback/index.tsx:173
 msgid "Performance issues"
 msgstr "পারফরম্যান্স সমস্যা"
 
@@ -472,11 +471,11 @@ msgstr "পারফরম্যান্স সমস্যা"
 msgid "Periodically update location automatically"
 msgstr "পূর্বনির্ধারিত সময়ে স্থান স্বয়ংক্রিয়ভাবে আপডেট করুন"
 
-#: src/components/intialisation/index.tsx:131
+#: src/components/intialisation/index.tsx:153
 msgid "Please enter it manually below."
 msgstr "দয়া করে এটি নিচে ম্যানুয়ালি লিখুন।"
 
-#: src/pages/feedback/index.tsx:293
+#: src/pages/feedback/index.tsx:291
 msgid "Resource usage"
 msgstr "সম্পদ ব্যবহার"
 
@@ -485,11 +484,11 @@ msgid "Saturday"
 msgstr "শনিবার"
 
 #: src/components/settings/index.tsx:390
-#: src/components/settings/index.tsx:543
+#: src/components/settings/index.tsx:525
 msgid "Save"
 msgstr "সংরক্ষণ করুন"
 
-#: src/pages/feedback/index.tsx:246
+#: src/pages/feedback/index.tsx:244
 msgid "Security and privacy concerns"
 msgstr "নিরাপত্তা এবং গোপনীয়তা নিয়ে উদ্বেগ"
 
@@ -497,8 +496,8 @@ msgstr "নিরাপত্তা এবং গোপনীয়তা নি
 msgid "September"
 msgstr "সেপ্টেম্বর"
 
-#: src/components/intialisation/index.tsx:119
-#: src/components/intialisation/index.tsx:221
+#: src/components/intialisation/index.tsx:141
+#: src/components/intialisation/index.tsx:243
 msgid "Set my location"
 msgstr "আমার অবস্থান নির্ধারণ করুন"
 
@@ -546,7 +545,7 @@ msgstr "হালকা তুষারপাত"
 msgid "slight snowfall"
 msgstr "হালকা তুষারপাত"
 
-#: src/pages/feedback/index.tsx:179
+#: src/pages/feedback/index.tsx:177
 msgid "Slows down my browser"
 msgstr "আমার ব্রাউজারকে ধীর করে দেয়"
 
@@ -586,8 +585,8 @@ msgstr "{timeUntilStrongWind} ঘণ্টা পর শক্তিশালী
 #~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
 #~ msgstr "{timeUntilStrongWind} ঘণ্টা পর শক্তিশালী বাতাস শুরু হবে"
 
-#: src/pages/feedback/index.tsx:364
-#: src/pages/feedback/index.tsx:450
+#: src/pages/feedback/index.tsx:352
+#: src/pages/feedback/index.tsx:438
 msgid "Submit"
 msgstr "জমা দিন"
 
@@ -655,7 +654,7 @@ msgstr "টাইলস"
 msgid "To get started, let's set your language and location."
 msgstr "শুরু করার জন্য, চলুন আপনার ভাষা এবং অবস্থান নির্ধারণ করি।"
 
-#: src/pages/feedback/index.tsx:309
+#: src/pages/feedback/index.tsx:307
 msgid "Too much battery usage"
 msgstr "অত্যধিক ব্যাটারি ব্যবহার"
 
@@ -663,20 +662,20 @@ msgstr "অত্যধিক ব্যাটারি ব্যবহার"
 msgid "Tuesday"
 msgstr "মঙ্গলবার"
 
-#: src/pages/feedback/index.tsx:166
+#: src/pages/feedback/index.tsx:164
 msgid "Uninstall feedback"
 msgstr "আনইনস্টল প্রতিক্রিয়া"
 
-#: src/components/intialisation/index.tsx:173
+#: src/components/intialisation/index.tsx:195
 #: src/components/settings/index.tsx:227
 msgid "Unsure how to find these? Click here."
 msgstr "এগুলি কীভাবে বের করবেন তা জানেন না? এখানে ক্লিক করুন।"
 
-#: src/pages/feedback/index.tsx:321
+#: src/pages/feedback/index.tsx:319
 msgid "Update or change related"
 msgstr "আপডেট বা পরিবর্তন সম্পর্কিত"
 
-#: src/pages/feedback/index.tsx:200
+#: src/pages/feedback/index.tsx:198
 msgid "Usability and functionality"
 msgstr "ব্যবহার্যতা এবং কার্যকারিতা"
 
@@ -692,32 +691,36 @@ msgstr "তীব্র বৃষ্টির ঝড়"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "আমরা আরও অনেক ভাষায় 'ওয়েদার প্লিজ' এনে আসতে চাই।"
 
-#: src/pages/index.tsx:856
+#: src/pages/index.tsx:903
 msgid "weather data provided by open-meteo"
 msgstr "আবহাওয়া তথ্য প্রদান করে open-meteo"
+
+#: src/components/intialisation/index.tsx:127
+msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
+msgstr "Weather Please অজ্ঞাতমূলক ক্র্যাশ ডেটা এবং ত্রুটি লগ সংগ্রহ করে। আপনি যেকোনো সময় সেটিংস মেনু থেকে এই ব্যবস্থাপনা থেকে বেরিয়ে আসতে পারেন।"
 
 #: src/components/tile/index.tsx:62
 msgid "Wednesday"
 msgstr "বুধবার"
 
-#: src/pages/index.tsx:711
+#: src/pages/index.tsx:758
 msgid "Would you like to leave a review?"
 msgstr "আপনি কি একটি পর্যালোচনা ছেড়তে চান?"
 
-#: src/components/settings/index.tsx:522
+#: src/components/settings/index.tsx:504
 msgid "You can't save because either your latitude or longitude are invalid."
 msgstr "আপনি সংরক্ষণ করতে পারবেন না কারণ আপনার অক্ষাংশ বা দ্রাঘিমা অবৈধ।"
 
-#: src/components/settings/index.tsx:515
+#: src/components/settings/index.tsx:497
 msgid "You have unsaved changes"
 msgstr "আপনার অসংরক্ষিত পরিবর্তন রয়েছে"
 
-#: src/pages/index.tsx:707
+#: src/pages/index.tsx:754
 msgid "You've been using Weather Please for a while"
 msgstr "আপনি একটি সময়ের জন্য Weather Please ব্যবহার করেছেন"
 
-#: src/components/intialisation/index.tsx:104
-#: src/components/intialisation/index.tsx:190
+#: src/components/intialisation/index.tsx:105
+#: src/components/intialisation/index.tsx:212
 #: src/components/settings/index.tsx:265
-msgid "Your location data is securely stored exclusively on your personal device"
-msgstr "আপনার অবস্থানের তথ্য আপনার ব্যক্তিগত ডিভাইসে নিরাপদে এবং একচেটিয়াভাবে সংরক্ষিত আছে"
+msgid "Your location data is securely stored exclusively on your personal device."
+msgstr "আপনার অবস্থানের তথ্য আপনার ব্যক্তিগত ডিভাইসে নিরাপদে এবং একচেটিয়াভাবে সংরক্ষিত আছে।"
