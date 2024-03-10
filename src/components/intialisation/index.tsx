@@ -215,6 +215,27 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 							</Trans>
 						</span>
 					</Alert>
+					<Alert
+						className={alertStyles.alert}
+						radius="md"
+						color="blue"
+						styles={{
+							message: {
+								display: 'flex',
+								alignItems: 'center',
+								gap: '0.75rem',
+								justifyContent: 'flex-start',
+							},
+						}}
+						mt="md"
+					>
+						<IconInfoCircleFilled size={30} strokeWidth={1.5} aria-hidden />
+						<span style={{ width: 'calc(100% - 30px - 0.75rem)' }}>
+							<Trans>
+								Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu.
+							</Trans>
+						</span>
+					</Alert>
 					<NativeSelect
 						mt="xs"
 						label={<Trans>Language</Trans>}
