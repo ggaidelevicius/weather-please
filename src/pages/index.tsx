@@ -71,7 +71,7 @@ const WeatherPlease: FC<{}> = () => {
 		showPrecipitationAlerts: true,
 		daysToRetrieve: '3',
 		identifier: 'day',
-		shareCrashesAndErrors: false,
+		shareCrashesAndErrors: true,
 		installed: new Date().getTime(),
 		displayedReviewPrompt: false,
 	}
@@ -116,9 +116,56 @@ const WeatherPlease: FC<{}> = () => {
 				dsn: process.env.NEXT_PUBLIC_SENTRY_DSN ?? '',
 				tracesSampleRate: 1,
 				debug: false,
-				replaysOnErrorSampleRate: 0,
+				replaysOnErrorSampleRate: 0.25,
 				replaysSessionSampleRate: 0,
-				beforeSend: (event) => event,
+				beforeSend: (event) => {
+					if (event.request) {
+						if (event.request.url) {
+							const url = new URL(event.request.url)
+							const params = url.searchParams
+
+							if (params.has('lat')) {
+								const latValue = params.get('lat')
+								if (latValue !== null) {
+									const lat = parseFloat(latValue).toFixed(1)
+									params.set('lat', lat)
+									url.search = params.toString()
+									event.request.url = url.toString()
+								}
+							}
+
+							const lonValue = params.get('lon')
+							if (lonValue !== null) {
+								const lon = parseFloat(lonValue).toFixed(1)
+								params.set('lon', lon)
+								url.search = params.toString()
+								event.request.url = url.toString()
+							}
+						}
+
+						if (event.request.data) {
+							let data = event.request.data
+
+							if (typeof data === 'string') {
+								try {
+									data = JSON.parse(data)
+								} catch (e) {
+								}
+							}
+
+							if (data && typeof data === 'object') {
+								if ('lat' in data && 'lon' in data) {
+									data.lat = parseFloat(data.lat).toFixed(1)
+									data.lon = parseFloat(data.lon).toFixed(1)
+
+									event.request.data = JSON.stringify(data)
+								}
+							}
+						}
+					}
+
+					return event
+				},
 			})
 		} else {
 			Sentry.close()
@@ -327,15 +374,15 @@ const WeatherPlease: FC<{}> = () => {
 			localStorage.data &&
 			localStorage.lastUpdated &&
 			new Date().getFullYear() ===
-				parseInt(localStorage.lastUpdated.split('-')[0]) &&
+			parseInt(localStorage.lastUpdated.split('-')[0]) &&
 			new Date().getMonth() ===
-				parseInt(localStorage.lastUpdated.split('-')[1]) &&
+			parseInt(localStorage.lastUpdated.split('-')[1]) &&
 			new Date().getDate() ===
-				parseInt(localStorage.lastUpdated.split('-')[2]) &&
+			parseInt(localStorage.lastUpdated.split('-')[2]) &&
 			new Date().getHours() ===
-				parseInt(localStorage.lastUpdated.split('-')[3]) &&
+			parseInt(localStorage.lastUpdated.split('-')[3]) &&
 			JSON.parse(localStorage.data).length ===
-				parseInt(config.daysToRetrieve) &&
+			parseInt(config.daysToRetrieve) &&
 			!changedLocation
 		) {
 			const data = JSON.parse(localStorage.data)

@@ -47,28 +47,28 @@ msgstr "Kitų {1} valandų metu tikimasi {0} mm kritulių"
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "Kitą valandą tikimasi {0} mm kritulių"
 
-#: src/components/settings/index.tsx:490
+#: src/components/settings/index.tsx:472
 msgid "☕ Gift a coffee"
 msgstr "☕ Padovanokite kavą"
 
-#: src/components/settings/index.tsx:445
+#: src/components/settings/index.tsx:427
 msgid "✍️ Submit feedback"
 msgstr "✍️ Pateikti atsiliepimą"
 
-#: src/components/settings/index.tsx:434
-#: src/pages/index.tsx:728
+#: src/components/settings/index.tsx:416
+#: src/pages/index.tsx:775
 msgid "🌟 Leave a review"
 msgstr "🌟 Palikite atsiliepimą"
 
-#: src/components/settings/index.tsx:467
+#: src/components/settings/index.tsx:449
 msgid "🐛 Report a bug"
 msgstr "🐛 Pranešti apie klaidą"
 
-#: src/components/settings/index.tsx:456
+#: src/components/settings/index.tsx:438
 msgid "💡 Request a feature"
 msgstr "💡 Prašyti funkcijos"
 
-#: src/components/settings/index.tsx:478
+#: src/components/settings/index.tsx:460
 msgid "🔒 Privacy policy"
 msgstr "🔒 Privatumo politika"
 
@@ -84,11 +84,11 @@ msgstr "🔒 Privatumo politika"
 msgid "Alerts"
 msgstr "Įspėjimai"
 
-#: src/pages/index.tsx:594
+#: src/pages/index.tsx:641
 msgid "An error has occurred while fetching location data. Please check the console for more details."
 msgstr "Gaunant vietos duomenis įvyko klaida. Išsamesnei informacijai patikrinkite konsolę."
 
-#: src/pages/index.tsx:313
+#: src/pages/index.tsx:360
 msgid "An error has occurred while fetching weather data. Please check the console for more details."
 msgstr "Gaunant orų duomenis įvyko klaida. Išsamesnei informacijai patikrinkite konsolę."
 
@@ -96,7 +96,7 @@ msgstr "Gaunant orų duomenis įvyko klaida. Išsamesnei informacijai patikrinki
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "Gaunant jūsų vietą įvyko klaida. Daugiau informacijos ieškokite konsolėje."
 
-#: src/pages/index.tsx:558
+#: src/pages/index.tsx:605
 msgid "An error has occurred while periodically updating location. Please check the console for more details."
 msgstr "Reguliariai atnaujinant vietą įvyko klaida. Norėdami gauti daugiau informacijos, patikrinkite konsolę."
 
@@ -112,7 +112,7 @@ msgstr "Rugpjūtis"
 msgid "Based on the provided information, your location is:"
 msgstr "Remiantis pateikta informacija, jūsų vieta yra:"
 
-#: src/pages/feedback/index.tsx:415
+#: src/pages/feedback/index.tsx:403
 msgid "Bug report"
 msgstr "Klaidos ataskaita"
 
@@ -120,11 +120,11 @@ msgstr "Klaidos ataskaita"
 msgid "Cancel"
 msgstr "Atšaukti"
 
-#: src/pages/feedback/index.tsx:191
+#: src/pages/feedback/index.tsx:189
 msgid "Causes browser crashes or errors"
 msgstr "Sukelia naršyklės avarijas ar klaidas"
 
-#: src/pages/feedback/index.tsx:270
+#: src/pages/feedback/index.tsx:268
 msgid "Changed needs"
 msgstr "Pasikeitę poreikiai"
 
@@ -132,15 +132,15 @@ msgstr "Pasikeitę poreikiai"
 msgid "clear sky"
 msgstr "giedras dangus"
 
-#: src/pages/feedback/index.tsx:251
+#: src/pages/feedback/index.tsx:249
 msgid "Concerned about privacy"
 msgstr "Nerimaujama dėl privatumo"
 
-#: src/pages/feedback/index.tsx:260
+#: src/pages/feedback/index.tsx:258
 msgid "Concerned about security"
 msgstr "Nerimaujama dėl saugumo"
 
-#: src/pages/feedback/index.tsx:297
+#: src/pages/feedback/index.tsx:295
 msgid "Consumes too much memory or CPU"
 msgstr "Sunaudoja per daug atminties arba CPU"
 
@@ -168,31 +168,30 @@ msgstr "tiršta stingdanti šlapdriba"
 msgid "depositing rime fog"
 msgstr "nusėdęs rimo rūkas"
 
-#: src/pages/feedback/index.tsx:337
+#: src/pages/feedback/index.tsx:335
 msgid "Details"
 msgstr "Išsamiai"
 
-#: src/pages/feedback/index.tsx:214
+#: src/pages/feedback/index.tsx:212
 msgid "Difficult to use or understand"
 msgstr "Sunku naudotis ar suprasti"
 
-#: src/components/settings/index.tsx:556
+#: src/components/settings/index.tsx:538
 msgid "Don't save"
 msgstr "Neišsaugoti"
 
-#: src/pages/feedback/index.tsx:349
-#: src/pages/feedback/index.tsx:435
+#: src/pages/feedback/index.tsx:423
 msgid "Email (optional)"
 msgstr "El. paštas (nebūtinas)"
 
 #: src/components/settings/index.tsx:106
-#: src/pages/index.tsx:311
-#: src/pages/index.tsx:556
-#: src/pages/index.tsx:592
+#: src/pages/index.tsx:358
+#: src/pages/index.tsx:603
+#: src/pages/index.tsx:639
 msgid "Error"
 msgstr "Klaida"
 
-#: src/pages/feedback/index.tsx:487
+#: src/pages/feedback/index.tsx:475
 msgid "Error submitting feedback. Try again later."
 msgstr "Klaida pateikiant atsiliepimą. Bandykite vėliau."
 
@@ -212,11 +211,11 @@ msgstr "Ekstremalus UV kitai valandai"
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "Ekstremalus UV spinduliavimas prasideda po {timeUntilExtremeUv} valandų"
 
-#: src/pages/feedback/index.tsx:400
+#: src/pages/feedback/index.tsx:388
 msgid "Feature request"
 msgstr "Funkcijos užklausa"
 
-#: src/pages/feedback/index.tsx:233
+#: src/pages/feedback/index.tsx:231
 msgid "Features don't work as expected"
 msgstr "Funkcijos neveikia kaip tikėtasi"
 
@@ -224,15 +223,15 @@ msgstr "Funkcijos neveikia kaip tikėtasi"
 msgid "February"
 msgstr "Vasaris"
 
-#: src/pages/feedback/index.tsx:385
+#: src/pages/feedback/index.tsx:373
 msgid "Feedback"
 msgstr "Atsiliepimas"
 
-#: src/pages/feedback/index.tsx:470
+#: src/pages/feedback/index.tsx:458
 msgid "Feedback successfully submitted"
 msgstr "Atsiliepimas sėkmingai pateiktas"
 
-#: src/pages/feedback/index.tsx:283
+#: src/pages/feedback/index.tsx:281
 msgid "Found a better alternative"
 msgstr "Rasta geresnė alternatyva"
 
@@ -272,13 +271,13 @@ msgstr "stiprus sniego lietus"
 msgid "heavy snowfall"
 msgstr "stiprus sniegas"
 
-#: src/pages/feedback/index.tsx:169
+#: src/pages/feedback/index.tsx:167
 msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
 msgstr "Būčiau dėkingas, jei galėtumėte pateikti atsiliepimų, kodėl išinstaliavote Weather Please. Tai leidžia man padaryti Weather Please geresniu produktu."
 
 #: src/components/settings/index.tsx:405
-msgid "I'd love to bring Weather Please to more languages."
-msgstr "Norėčiau atnesti Weather Please į daugiau kalbų."
+#~ msgid "I'd love to bring Weather Please to more languages."
+#~ msgstr "Norėčiau atnesti Weather Please į daugiau kalbų."
 
 #: src/components/settings/index.tsx:285
 msgid "Identifier"
@@ -289,24 +288,24 @@ msgid "If this is incorrect, please update the values below."
 msgstr "Jei tai klaidinga, prašome atnaujinti žemiau esančias reikšmes."
 
 #: src/components/settings/index.tsx:410
-msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
-msgstr "Jeigu turite vertimo užklausą, prašome kreiptis el. paštu <0>contact@weather-please.app</0>"
+#~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
+#~ msgstr "Jeigu turite vertimo užklausą, prašome kreiptis el. paštu <0>contact@weather-please.app</0>"
 
 #: src/components/intialisation/index.tsx:72
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Jei jūsų naršyklė prašo jūsų vietos leidimų, pasirinkite \"leisti\"."
 
-#: src/components/intialisation/index.tsx:144
+#: src/components/intialisation/index.tsx:166
 #: src/components/settings/index.tsx:198
 msgid "Invalid latitude value"
 msgstr "Netinkama platumos reikšmė"
 
-#: src/components/intialisation/index.tsx:160
+#: src/components/intialisation/index.tsx:182
 #: src/components/settings/index.tsx:214
 msgid "Invalid longitude value"
 msgstr "Netinkama ilgumos reikšmė"
 
-#: src/pages/feedback/index.tsx:326
+#: src/pages/feedback/index.tsx:324
 msgid "Issues after a recent update"
 msgstr "Problemų po neseniai atliktos atnaujinimo"
 
@@ -322,18 +321,18 @@ msgstr "Liepa"
 msgid "June"
 msgstr "Birželis"
 
-#: src/pages/feedback/index.tsx:223
+#: src/pages/feedback/index.tsx:221
 msgid "Lacks features I need"
 msgstr "Trūksta man reikalingų funkcijų"
 
 #: src/components/intialisation/index.tsx:79
-#: src/components/intialisation/index.tsx:198
+#: src/components/intialisation/index.tsx:220
 #: src/components/settings/index.tsx:350
-#: src/pages/feedback/index.tsx:155
+#: src/pages/feedback/index.tsx:153
 msgid "Language"
 msgstr "Kalba"
 
-#: src/components/intialisation/index.tsx:135
+#: src/components/intialisation/index.tsx:157
 #: src/components/settings/index.tsx:189
 msgid "Latitude"
 msgstr "Platuma"
@@ -354,12 +353,12 @@ msgstr "lengvas įšaldymas lietus"
 msgid "Location"
 msgstr "Vieta"
 
-#: src/components/intialisation/index.tsx:150
+#: src/components/intialisation/index.tsx:172
 #: src/components/settings/index.tsx:204
 msgid "Longitude"
 msgstr "Ilguma"
 
-#: src/components/intialisation/index.tsx:126
+#: src/components/intialisation/index.tsx:148
 msgid "Looks like we can't grab your location info automatically."
 msgstr "Panašu, kad negalime automatiškai nustatyti jūsų vietos informacijos."
 
@@ -392,7 +391,7 @@ msgstr "Kovas"
 msgid "May"
 msgstr "Gegužė"
 
-#: src/pages/feedback/index.tsx:423
+#: src/pages/feedback/index.tsx:411
 msgid "Message"
 msgstr "Pranešimas"
 
@@ -420,7 +419,7 @@ msgstr "vidutinis sniegas"
 msgid "Monday"
 msgstr "Pirmadienis"
 
-#: src/pages/index.tsx:742
+#: src/pages/index.tsx:789
 msgid "Never show this again"
 msgstr "Daugiau niekada nerodyti"
 
@@ -428,11 +427,11 @@ msgstr "Daugiau niekada nerodyti"
 #~ msgid "New tab"
 #~ msgstr "Nauja kortelė"
 
-#: src/pages/feedback/index.tsx:274
+#: src/pages/feedback/index.tsx:272
 msgid "No longer need the functionality"
 msgstr "Daugiau nebereikia funkcionalumo"
 
-#: src/pages/feedback/index.tsx:205
+#: src/pages/feedback/index.tsx:203
 msgid "Not available in my language"
 msgstr "Mano kalba neprieinama"
 
@@ -464,7 +463,7 @@ msgstr "apsiniaukę"
 msgid "partly cloudy"
 msgstr "debesuota"
 
-#: src/pages/feedback/index.tsx:175
+#: src/pages/feedback/index.tsx:173
 msgid "Performance issues"
 msgstr "Veikimo problemos"
 
@@ -472,11 +471,11 @@ msgstr "Veikimo problemos"
 msgid "Periodically update location automatically"
 msgstr "Automatiškai periodiškai atnaujinti vietą"
 
-#: src/components/intialisation/index.tsx:131
+#: src/components/intialisation/index.tsx:153
 msgid "Please enter it manually below."
 msgstr "Įveskite jį rankiniu būdu žemiau."
 
-#: src/pages/feedback/index.tsx:293
+#: src/pages/feedback/index.tsx:291
 msgid "Resource usage"
 msgstr "Išteklių naudojimas"
 
@@ -485,11 +484,11 @@ msgid "Saturday"
 msgstr "Šeštadienis"
 
 #: src/components/settings/index.tsx:390
-#: src/components/settings/index.tsx:543
+#: src/components/settings/index.tsx:525
 msgid "Save"
 msgstr "Išsaugoti"
 
-#: src/pages/feedback/index.tsx:246
+#: src/pages/feedback/index.tsx:244
 msgid "Security and privacy concerns"
 msgstr "Saugumo ir privatumo problemos"
 
@@ -497,8 +496,8 @@ msgstr "Saugumo ir privatumo problemos"
 msgid "September"
 msgstr "Rugsėjis"
 
-#: src/components/intialisation/index.tsx:119
-#: src/components/intialisation/index.tsx:221
+#: src/components/intialisation/index.tsx:141
+#: src/components/intialisation/index.tsx:243
 msgid "Set my location"
 msgstr "Nustatyti mano vietą"
 
@@ -546,7 +545,7 @@ msgstr "silpni sniego smiltelėjimai"
 msgid "slight snowfall"
 msgstr "nedidelis sniegas"
 
-#: src/pages/feedback/index.tsx:179
+#: src/pages/feedback/index.tsx:177
 msgid "Slows down my browser"
 msgstr "Lėtina mano naršyklę"
 
@@ -586,8 +585,8 @@ msgstr "Stiprūs vėjo gūsiai prasidės už {timeUntilStrongWind} valandų"
 #~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
 #~ msgstr "Stiprus vėjas prasidės už {timeUntilStrongWind} valandų"
 
-#: src/pages/feedback/index.tsx:364
-#: src/pages/feedback/index.tsx:450
+#: src/pages/feedback/index.tsx:352
+#: src/pages/feedback/index.tsx:438
 msgid "Submit"
 msgstr "Pateikti"
 
@@ -655,7 +654,7 @@ msgstr "Plytelės"
 msgid "To get started, let's set your language and location."
 msgstr "Norėdami pradėti, nustatykite savo kalbą ir vietą."
 
-#: src/pages/feedback/index.tsx:309
+#: src/pages/feedback/index.tsx:307
 msgid "Too much battery usage"
 msgstr "Per didelis baterijos naudojimas"
 
@@ -663,20 +662,20 @@ msgstr "Per didelis baterijos naudojimas"
 msgid "Tuesday"
 msgstr "Antradienis"
 
-#: src/pages/feedback/index.tsx:166
+#: src/pages/feedback/index.tsx:164
 msgid "Uninstall feedback"
 msgstr "Atsiliepimai apie šalinimą"
 
-#: src/components/intialisation/index.tsx:173
+#: src/components/intialisation/index.tsx:195
 #: src/components/settings/index.tsx:227
 msgid "Unsure how to find these? Click here."
 msgstr "Nežinote, kaip juos rasti? Spustelėkite čia."
 
-#: src/pages/feedback/index.tsx:321
+#: src/pages/feedback/index.tsx:319
 msgid "Update or change related"
 msgstr "Susiję su atnaujinimu ar pakeitimu"
 
-#: src/pages/feedback/index.tsx:200
+#: src/pages/feedback/index.tsx:198
 msgid "Usability and functionality"
 msgstr "Naudojimo patogumas ir funkcionalumas"
 
@@ -692,32 +691,36 @@ msgstr "smarkus lietus"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Mes norėtume pateikti „Weather Please“ daugiau kalbų."
 
-#: src/pages/index.tsx:856
+#: src/pages/index.tsx:903
 msgid "weather data provided by open-meteo"
 msgstr "orų duomenis pateikė open-meteo"
+
+#: src/components/intialisation/index.tsx:127
+msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
+msgstr "Weather Please renka anoniminius avarijų duomenis ir klaidų žurnalus. Bet kada galite atsisakyti to per nustatymų meniu."
 
 #: src/components/tile/index.tsx:62
 msgid "Wednesday"
 msgstr "Trečiadienis"
 
-#: src/pages/index.tsx:711
+#: src/pages/index.tsx:758
 msgid "Would you like to leave a review?"
 msgstr "Norėtumėte palikti atsiliepimą?"
 
-#: src/components/settings/index.tsx:522
+#: src/components/settings/index.tsx:504
 msgid "You can't save because either your latitude or longitude are invalid."
 msgstr "Jūs negalite išsaugoti, nes jūsų platuma arba ilguma yra neteisinga."
 
-#: src/components/settings/index.tsx:515
+#: src/components/settings/index.tsx:497
 msgid "You have unsaved changes"
 msgstr "Jūs turite neišsaugotų pakeitimų"
 
-#: src/pages/index.tsx:707
+#: src/pages/index.tsx:754
 msgid "You've been using Weather Please for a while"
 msgstr "Jūs naudojatės „Weather Please“ jau kurį laiką"
 
-#: src/components/intialisation/index.tsx:104
-#: src/components/intialisation/index.tsx:190
+#: src/components/intialisation/index.tsx:105
+#: src/components/intialisation/index.tsx:212
 #: src/components/settings/index.tsx:265
 msgid "Your location data is securely stored exclusively on your personal device"
 msgstr "Jūsų vietos duomenys saugiai ir išskirtinai saugomi jūsų asmeniniame įrenginyje"

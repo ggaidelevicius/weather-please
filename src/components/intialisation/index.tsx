@@ -9,7 +9,7 @@ import {
 	TextInput,
 	Title,
 } from '@mantine/core'
-import { IconShieldCheckFilled } from '@tabler/icons-react'
+import { IconInfoCircleFilled, IconShieldCheckFilled } from '@tabler/icons-react'
 import Image from 'next/image'
 import type { FC } from 'react'
 import Favicon from '../../../public/favicon.png'
@@ -95,6 +95,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 								display: 'flex',
 								alignItems: 'center',
 								gap: '0.75rem',
+								justifyContent: 'flex-start',
 							},
 						}}
 						mt="md"
@@ -104,6 +105,27 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 							<Trans>
 								Your location data is securely stored exclusively on your
 								personal device
+							</Trans>
+						</span>
+					</Alert>
+					<Alert
+						className={alertStyles.alert}
+						radius="md"
+						color="blue"
+						styles={{
+							message: {
+								display: 'flex',
+								alignItems: 'center',
+								gap: '0.75rem',
+								justifyContent: 'flex-start',
+							},
+						}}
+						mt="md"
+					>
+						<IconInfoCircleFilled size={30} strokeWidth={1.5} aria-hidden />
+						<span style={{ width: 'calc(100% - 30px - 0.75rem)' }}>
+							<Trans>
+								Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu.
 							</Trans>
 						</span>
 					</Alert>
@@ -140,7 +162,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 						}}
 						error={
 							/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat) ||
-							input.lat === '' ? undefined : (
+								input.lat === '' ? undefined : (
 								<Trans>Invalid latitude value</Trans>
 							)
 						}
