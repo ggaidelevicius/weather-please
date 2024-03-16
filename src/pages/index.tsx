@@ -124,22 +124,23 @@ const WeatherPlease: FC<{}> = () => {
 							const url = new URL(event.request.url)
 							const params = url.searchParams
 
-							if (params.has('lat')) {
-								const latValue = params.get('lat')
+							if (params.has('latitude')) {
+								const latValue = params.get('latitude')
 								if (latValue !== null) {
 									const lat = parseFloat(latValue).toFixed(1)
-									params.set('lat', lat)
+									params.set('latitude', lat)
 									url.search = params.toString()
 									event.request.url = url.toString()
 								}
 							}
-
-							const lonValue = params.get('lon')
-							if (lonValue !== null) {
-								const lon = parseFloat(lonValue).toFixed(1)
-								params.set('lon', lon)
-								url.search = params.toString()
-								event.request.url = url.toString()
+							if (params.has('longitude')) {
+								const lonValue = params.get('longitude')
+								if (lonValue !== null) {
+									const lon = parseFloat(lonValue).toFixed(1)
+									params.set('longitude', lon)
+									url.search = params.toString()
+									event.request.url = url.toString()
+								}
 							}
 						}
 
@@ -154,9 +155,9 @@ const WeatherPlease: FC<{}> = () => {
 							}
 
 							if (data && typeof data === 'object') {
-								if ('lat' in data && 'lon' in data) {
-									data.lat = parseFloat(data.lat).toFixed(1)
-									data.lon = parseFloat(data.lon).toFixed(1)
+								if ('latitude' in data && 'longitude' in data) {
+									data.latitude = parseFloat(data.latitude).toFixed(1)
+									data.longitude = parseFloat(data.longitude).toFixed(1)
 
 									event.request.data = JSON.stringify(data)
 								}
