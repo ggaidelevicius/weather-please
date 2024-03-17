@@ -9,7 +9,10 @@ import {
 	TextInput,
 	Title,
 } from '@mantine/core'
-import { IconInfoCircleFilled, IconShieldCheckFilled } from '@tabler/icons-react'
+import {
+	IconInfoCircleFilled,
+	IconShieldCheckFilled,
+} from '@tabler/icons-react'
 import Image from 'next/image'
 import type { FC } from 'react'
 import Favicon from '../../../public/favicon.png'
@@ -125,7 +128,8 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 						<IconInfoCircleFilled size={30} strokeWidth={1.5} aria-hidden />
 						<span style={{ width: 'calc(100% - 30px - 0.75rem)' }}>
 							<Trans>
-								Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu.
+								Weather Please collects anonymised crash data and error logs.
+								You can opt out of this at any time via the settings menu.
 							</Trans>
 						</span>
 					</Alert>
@@ -162,7 +166,7 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 						}}
 						error={
 							/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat) ||
-								input.lat === '' ? undefined : (
+							input.lat === '' ? undefined : (
 								<Trans>Invalid latitude value</Trans>
 							)
 						}
@@ -232,7 +236,8 @@ const Initialisation: FC<InitialisationProps> = (props) => {
 						<IconInfoCircleFilled size={30} strokeWidth={1.5} aria-hidden />
 						<span style={{ width: 'calc(100% - 30px - 0.75rem)' }}>
 							<Trans>
-								Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu.
+								Weather Please collects anonymised crash data and error logs.
+								You can opt out of this at any time via the settings menu.
 							</Trans>
 						</span>
 					</Alert>

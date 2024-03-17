@@ -132,3 +132,55 @@ export type DetermineGridColumns = (daysToRetrieve: string) => number
  * If data exists, tiles are immediately animated without the baseline delay.
  */
 export type TileComponent = ReactElement[] | []
+
+export interface WeatherData {
+	latitude: number
+	longitude: number
+	generationtime_ms: number
+	utc_offset_seconds: number
+	timezone: string
+	timezone_abbreviation: string
+	elevation: number
+	hourly_units: HourlyUnits
+	hourly: HourlyData
+	daily_units: DailyUnits
+	daily: DailyData
+}
+
+interface HourlyUnits {
+	time: string
+	precipitation: string
+	uv_index: string
+	windspeed_10m: string
+	visibility: string
+	windgusts_10m: string
+}
+
+interface HourlyData {
+	time: number[]
+	precipitation: number[]
+	uv_index: number[]
+	windspeed_10m: number[]
+	visibility: number[]
+	windgusts_10m: number[]
+}
+
+interface DailyUnits {
+	time: string
+	weathercode: string
+	temperature_2m_max: string
+	temperature_2m_min: string
+	uv_index_max: string
+	precipitation_probability_max: string
+	windspeed_10m_max: string
+}
+
+interface DailyData {
+	time: number[]
+	weathercode: number[]
+	temperature_2m_max: number[]
+	temperature_2m_min: number[]
+	uv_index_max: number[]
+	precipitation_probability_max: number[]
+	windspeed_10m_max: number[]
+}

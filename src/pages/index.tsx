@@ -14,6 +14,7 @@ import type {
 	HandleClick,
 	MergeObjects,
 	TileComponent,
+	WeatherData,
 } from '@/util/types'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/macro'
@@ -21,11 +22,13 @@ import { Button, Loader } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import * as Sentry from '@sentry/nextjs'
+import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import { messages } from '../locales/en/messages'
 import { changeLocalisation } from '../util/i18n'
+import { queryClient } from './_app'
 
 i18n.load({
 	en: messages,
@@ -53,6 +56,7 @@ const WeatherPlease: FC<{}> = () => {
 	const [futureWeatherData, setFutureWeatherData] = useState<[] | TileProps[]>(
 		[],
 	)
+	const [usingCachedData, setUsingCachedData] = useState<boolean>(true)
 	const [currentHour, setCurrentHour] = useState<number>(new Date().getHours())
 	const [currentDate, setCurrentDate] = useState<number>(new Date().getDate())
 	const [loading, setLoading] = useState<boolean>(false)
@@ -84,6 +88,129 @@ const WeatherPlease: FC<{}> = () => {
 		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
 	)
 	const [usingSafari, setUsingSafari] = useState<boolean>(false)
+
+	const { error, data } = useQuery<WeatherData>({
+		queryKey: [
+			'weather',
+			config.lat,
+			config.lon,
+			config.daysToRetrieve,
+			usingCachedData,
+		],
+		queryFn: () =>
+			fetch(
+				`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=${config.daysToRetrieve}`,
+			).then((res) => res.json()),
+		enabled: Boolean(config.lat) && Boolean(config.lon) && !usingCachedData,
+	})
+
+	useEffect(() => {
+		if (data) {
+			const futureData = data.daily.time.map((day: number, i: number) => ({
+				day,
+				max: data.daily.temperature_2m_max[i],
+				min: data.daily.temperature_2m_min[i],
+				description: data.daily.weathercode[i],
+				uv: data.daily.uv_index_max[i],
+				wind: data.daily.windspeed_10m_max[i],
+				rain: data.daily.precipitation_probability_max[i],
+			}))
+			setFutureWeatherData(futureData as any)
+			localStorage.data = JSON.stringify(futureData)
+
+			const alerts = {
+				totalPrecipitation: {
+					precipitation: data.hourly.precipitation
+						.slice(currentHour, currentHour + 25)
+						.reduce(
+							(
+								p: { value: number; flag: boolean; zeroCount: number },
+								c: number,
+							) => {
+								if (p.flag) {
+									return { ...p, flag: true }
+								}
+								if (c === 0) {
+									if (p.zeroCount === 3) {
+										return { ...p, flag: true }
+									}
+									return {
+										value: p.value,
+										flag: false,
+										zeroCount: p.zeroCount + 1,
+									}
+								}
+								return { value: p.value + c, flag: false, zeroCount: 0 }
+							},
+							{ value: 0, flag: false, zeroCount: 0 },
+						),
+					duration: (() => {
+						let negativeCount = 0
+						return data.hourly.precipitation
+							.slice(currentHour, currentHour + 25)
+							.map((val: number) => {
+								if (negativeCount === 3) {
+									return false
+								}
+								if (val === 0) {
+									negativeCount++
+									return true
+								}
+								negativeCount = 0
+								return true
+							})
+					})(),
+				},
+				hoursOfExtremeUv: data.hourly.uv_index
+					.slice(currentHour, currentHour + 13)
+					.map((val: number) => val >= 11),
+				hoursOfStrongWind: data.hourly.windspeed_10m
+					.slice(currentHour, currentHour + 25)
+					.map((val: number) => val >= 60),
+				hoursOfStrongWindGusts: data.hourly.windgusts_10m
+					.slice(currentHour, currentHour + 25)
+					.map((val: number) => val >= 80),
+				hoursOfLowVisibility: data.hourly.visibility
+					.slice(currentHour, currentHour + 25)
+					.map((val: number) => val <= 200),
+			}
+			setCurrentWeatherData(alerts)
+			localStorage.alerts = JSON.stringify(alerts)
+
+			const now = new Date()
+			localStorage.lastUpdated = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`
+
+			if (changedLocation) {
+				setChangedLocation(false)
+			}
+
+			// eslint-disable-next-line no-console
+			console.log('done data')
+		} else if (error) {
+			// eslint-disable-next-line no-console
+			console.error(error)
+			notifications.show({
+				title: <Trans>Error</Trans>,
+				message: (
+					<Trans>
+						An error has occurred while fetching weather data. Please try again
+						later.
+					</Trans>
+				),
+				color: 'red',
+			})
+			if (config.shareCrashesAndErrors) {
+				Sentry.captureException(error)
+			}
+		}
+	}, [currentHour, data, error, config.shareCrashesAndErrors, changedLocation])
+
+	setInterval(() => {
+		if (new Date().getHours() !== currentHour) {
+			setCurrentHour(new Date().getHours())
+			queryClient.invalidateQueries({ queryKey: ['weather'] })
+		}
+	}, 6e4)
 
 	/**
 	 * Synchronizes the active language with the language specified in the configuration.
@@ -150,8 +277,7 @@ const WeatherPlease: FC<{}> = () => {
 							if (typeof data === 'string') {
 								try {
 									data = JSON.parse(data)
-								} catch (e) {
-								}
+								} catch (e) {}
 							}
 
 							if (data && typeof data === 'object') {
@@ -222,196 +348,46 @@ const WeatherPlease: FC<{}> = () => {
 	}, [])
 
 	/**
-	 * This effect hook manages fetching and updating weather data.
+	 * This effect hook is responsible for managing the weather data, deciding between using cached data or fetching new data.
 	 *
-	 * - Initially, it checks localStorage to determine if we can use cached weather data. For cached data to be used:
-	 *   - The current hour should match when the data was last updated.
-	 *   - The user location and data retrieval preferences in "config" shouldn't have changed since the last fetch.
+	 * Process overview:
+	 * - It first checks if there's cached weather data available in localStorage and verifies the timestamp of the last update.
+	 * - The criteria for using cached data include:
+	 *   - The date and hour of the last update match the current date and hour to ensure data is up-to-date by the hour.
+	 *   - The amount of data (days retrieved) in the cache matches the user's current preference.
+	 *   - The user's location has not changed since the last data fetch.
+	 * - If the cached data meets these criteria, the weather states are set using the cached data from localStorage.
+	 * - If the cached data does not meet the criteria or is absent, a flag is set to indicate that cached data is not being used, prompting a data refresh.
 	 *
-	 * - If the criteria for cached data are met, it sets the weather states using data from localStorage.
-	 *
-	 * - Otherwise, it fetches fresh weather data, saves it to the state and localStorage, and updates the time of the last update.
-	 *
-	 * - To ensure data freshness, every minute the hook checks if the hour has changed. If it has, the effect reruns to potentially fetch fresh data.
+	 * Important considerations:
+	 * - This effect depends on changes to the user's location (latitude and longitude), the number of days to retrieve, and whether the user's location has changed.
+	 * - The effect does not directly fetch new data but sets conditions for determining the data source (cached or fresh).
+	 * - It ensures that data used is timely and relevant, either by validating cached data against current criteria or signaling the need for new data fetching.
 	 */
 	useEffect(() => {
-		const fetchData = async (): Promise<void> => {
-			try {
-				const req = await fetch(
-					`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=${config.daysToRetrieve}`,
-				)
-				const res = await req.json()
-				const futureData = res.daily.time.map((day: unknown, i: number) => ({
-					day,
-					max: res.daily.temperature_2m_max[i],
-					min: res.daily.temperature_2m_min[i],
-					description: res.daily.weathercode[i],
-					uv: res.daily.uv_index_max[i],
-					wind: res.daily.windspeed_10m_max[i],
-					rain: res.daily.precipitation_probability_max[i],
-				}))
-				// const chooseWeather = () => { // mock data generator
-				//   const weatherCodes = [
-				//     0, // Clear sky
-				//     1, 2, 3, // Mainly clear, partly cloudy, and overcast
-				//     45, 48, // Fog and depositing rime fog
-				//     51, 53, 55, // Drizzle: Light, moderate, and dense intensity
-				//     56, 57, // Freezing Drizzle: Light and dense intensity
-				//     61, 63, 65, // Rain: Slight, moderate, and heavy intensity
-				//     66, 67, // Freezing Rain: Light and heavy intensity
-				//     71, 73, 75, // Snow fall: Slight, moderate, and heavy intensity
-				//     77, // Snow grains
-				//     80, 81, 82, // Rain showers: Slight, moderate, and violent
-				//     85, 86, // Snow showers slight and heavy
-				//     95, // Thunderstorm: Slight or moderate
-				//     96, 99, // Thunderstorm with slight and heavy hail
-				//   ]
-				//   const randomIndex = Math.floor(Math.random() * weatherCodes.length)
-				//   return weatherCodes[randomIndex]
-				// }
-				// const futureData = []
-				// const numbers = () => {
-				//   const n1 = Math.random() * 40
-				//   const n2 = (Math.random() - 0.125) * 15
-				//   return [n1, n2].sort((a, b) => { return b - a })
-				// }
-				// for (let i = 0; i < 24; i++) {
-				//   const t = numbers()
-				//   futureData.push({
-				//     day: Math.random() * 100000000,
-				//     max: t[0],
-				//     min: t[1],
-				//     description: chooseWeather(),
-				//     uv: Math.random() * 14,
-				//     wind: Math.random() * 60,
-				//     rain: Math.random() * 100,
-				//   })
-				// }
-				setFutureWeatherData(futureData)
-				localStorage.data = JSON.stringify(futureData)
-				const alerts = {
-					totalPrecipitation: {
-						precipitation: res.hourly.precipitation
-							.slice(currentHour, currentHour + 25)
-							.reduce(
-								(
-									p: { value: number; flag: boolean; zeroCount: number },
-									c: number,
-								) => {
-									if (p.flag) {
-										return { ...p, flag: true }
-									}
-									if (c === 0) {
-										if (p.zeroCount === 3) {
-											return { ...p, flag: true }
-										}
-										return {
-											value: p.value,
-											flag: false,
-											zeroCount: p.zeroCount + 1,
-										}
-									}
-									return { value: p.value + c, flag: false, zeroCount: 0 }
-								},
-								{ value: 0, flag: false, zeroCount: 0 },
-							),
-						duration: (() => {
-							let negativeCount = 0
-							return res.hourly.precipitation
-								.slice(currentHour, currentHour + 25)
-								.map((val: number) => {
-									if (negativeCount === 3) {
-										return false
-									}
-									if (val === 0) {
-										negativeCount++
-										return true
-									}
-									negativeCount = 0
-									return true
-								})
-						})(),
-					},
-					hoursOfExtremeUv: res.hourly.uv_index
-						.slice(currentHour, currentHour + 13)
-						.map((val: number) => val >= 11),
-					hoursOfStrongWind: res.hourly.windspeed_10m
-						.slice(currentHour, currentHour + 25)
-						.map((val: number) => val >= 60),
-					hoursOfStrongWindGusts: res.hourly.windgusts_10m
-						.slice(currentHour, currentHour + 25)
-						.map((val: number) => val >= 80),
-					hoursOfLowVisibility: res.hourly.visibility
-						.slice(currentHour, currentHour + 25)
-						.map((val: number) => val <= 200),
-				}
-				setCurrentWeatherData(alerts)
-				localStorage.alerts = JSON.stringify(alerts)
-				const now = new Date()
-				localStorage.lastUpdated = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`
-				setChangedLocation(false)
-			} catch (e: any) {
-				// eslint-disable-next-line no-console
-				console.error(e)
-				// why can't i pass the value of state into message here?
-				// why are these errors sometimes being shown + a console warning occurring despite data seemingly being fetched just fine?
-				notifications.show({
-					title: <Trans>Error</Trans>,
-					message: (
-						<Trans>
-							An error has occurred while fetching weather data. Please check
-							the console for more details.
-						</Trans>
-					),
-					color: 'red',
-				})
-				if (config.shareCrashesAndErrors) {
-					Sentry.captureException(e)
-				}
-			}
-		}
-
 		if (
 			localStorage.data &&
 			localStorage.lastUpdated &&
 			new Date().getFullYear() ===
-			parseInt(localStorage.lastUpdated.split('-')[0]) &&
+				parseInt(localStorage.lastUpdated.split('-')[0]) &&
 			new Date().getMonth() ===
-			parseInt(localStorage.lastUpdated.split('-')[1]) &&
+				parseInt(localStorage.lastUpdated.split('-')[1]) &&
 			new Date().getDate() ===
-			parseInt(localStorage.lastUpdated.split('-')[2]) &&
+				parseInt(localStorage.lastUpdated.split('-')[2]) &&
 			new Date().getHours() ===
-			parseInt(localStorage.lastUpdated.split('-')[3]) &&
+				parseInt(localStorage.lastUpdated.split('-')[3]) &&
 			JSON.parse(localStorage.data).length ===
-			parseInt(config.daysToRetrieve) &&
+				parseInt(config.daysToRetrieve) &&
 			!changedLocation
 		) {
 			const data = JSON.parse(localStorage.data)
 			const alerts = JSON.parse(localStorage.alerts)
 			setFutureWeatherData(data)
 			setLocalStorageCurrentWeatherData(alerts)
-		} else if (config.lat && config.lon) {
-			fetchData()
+		} else {
+			setUsingCachedData(false)
 		}
-
-		const checkHour = setInterval(() => {
-			if (new Date().getHours() !== currentHour) {
-				setCurrentHour(new Date().getHours())
-			}
-		}, 6e4)
-
-		return () => {
-			clearInterval(checkHour)
-		}
-	}, [
-		currentHour,
-		config.lat,
-		config.lon,
-		config.daysToRetrieve,
-		config.useMetric,
-		changedLocation,
-		config.shareCrashesAndErrors,
-	])
+	}, [config.lat, config.lon, config.daysToRetrieve, changedLocation])
 
 	/**
 	 * This useEffect hook is designed to maintain data integrity in the face of updates to the weather alert types defined

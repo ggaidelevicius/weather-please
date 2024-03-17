@@ -1,69 +1,70 @@
 {
-  "name": "weather-please",
-  "version": "2.5.34",
-  "description": "Savor the elegance and grace of Weather Please as it integrates flawlessly into your browser. A symphony of design and performance awaits – where weather meets artistry in the most subtle, yet captivating, manner.",
-  "private": true,
-  "author": {
-    "name": "Gus Gaidelevicius"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ggaidelevicius/weather-please.git"
-  },
-  "homepage": "https://github.com/ggaidelevicius/weather-please",
-  "bugs": {
-    "url": "https://github.com/ggaidelevicius/weather-please/issues"
-  },
-  "funding": {
-    "type": "individual",
-    "url": "https://www.buymeacoffee.com/ggaidelevicius"
-  },
-  "license": "SEE LICENSE IN LICENSE.md",
-  "scripts": {
-    "dev": "next dev",
-    "build": "pnpm compile && cross-env NEXT_PUBLIC_BUILD_MODE=extension next build && node build",
-    "start": "next start",
-    "lint": "pnpm prettier . --write && next lint",
-    "release": "pnpm build && node release",
-    "extract": "lingui extract",
-    "compile": "lingui compile",
-    "update": "npx npm-check-updates -u"
-  },
-  "dependencies": {
-    "@lingui/core": "^4.7.1",
-    "@lingui/macro": "^4.7.1",
-    "@lingui/react": "^4.7.1",
-    "@lingui/swc-plugin": "^4.0.6",
-    "@mantine/core": "^7.6.2",
-    "@mantine/hooks": "^7.6.2",
-    "@mantine/notifications": "^7.6.2",
-    "@sentry/nextjs": "^7.107.0",
-    "@tabler/icons-react": "^3.1.0",
-    "@vercel/analytics": "^1.2.2",
-    "classnames": "^2.5.1",
-    "framer-motion": "^11.0.14",
-    "next": "^14.1.3",
-    "postcss": "^8.4.35",
-    "postcss-preset-mantine": "^1.13.0",
-    "postcss-simple-vars": "^7.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sharp": "^0.33.2",
-    "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "@lingui/cli": "^4.7.1",
-    "@types/node": "^20.11.28",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "adm-zip": "^0.5.12",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "^14.1.3",
-    "eslint-config-prettier": "^9.1.0",
-    "fs-extra": "^11.2.0",
-    "glob": "^10.3.10",
-    "prettier": "^3.2.5",
-    "typescript": "^5.4.2"
-  }
+	"name": "weather-please",
+	"version": "2.5.34",
+	"description": "Savor the elegance and grace of Weather Please as it integrates flawlessly into your browser. A symphony of design and performance awaits – where weather meets artistry in the most subtle, yet captivating, manner.",
+	"private": true,
+	"author": {
+		"name": "Gus Gaidelevicius"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ggaidelevicius/weather-please.git"
+	},
+	"homepage": "https://github.com/ggaidelevicius/weather-please",
+	"bugs": {
+		"url": "https://github.com/ggaidelevicius/weather-please/issues"
+	},
+	"funding": {
+		"type": "individual",
+		"url": "https://www.buymeacoffee.com/ggaidelevicius"
+	},
+	"license": "SEE LICENSE IN LICENSE.md",
+	"scripts": {
+		"dev": "next dev",
+		"build": "pnpm compile && cross-env NEXT_PUBLIC_BUILD_MODE=extension next build && node build",
+		"start": "next start",
+		"lint": "pnpm prettier . --write && next lint",
+		"release": "pnpm build && node release",
+		"extract": "lingui extract",
+		"compile": "lingui compile",
+		"update": "npx npm-check-updates -u"
+	},
+	"dependencies": {
+		"@lingui/core": "^4.7.1",
+		"@lingui/macro": "^4.7.1",
+		"@lingui/react": "^4.7.1",
+		"@lingui/swc-plugin": "^4.0.6",
+		"@mantine/core": "^7.6.2",
+		"@mantine/hooks": "^7.6.2",
+		"@mantine/notifications": "^7.6.2",
+		"@sentry/nextjs": "^7.107.0",
+		"@tabler/icons-react": "^3.1.0",
+		"@tanstack/react-query": "^5.28.4",
+		"@vercel/analytics": "^1.2.2",
+		"classnames": "^2.5.1",
+		"framer-motion": "^11.0.14",
+		"next": "^14.1.3",
+		"postcss": "^8.4.35",
+		"postcss-preset-mantine": "^1.13.0",
+		"postcss-simple-vars": "^7.0.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"sharp": "^0.33.2",
+		"zod": "^3.22.4"
+	},
+	"devDependencies": {
+		"@lingui/cli": "^4.7.1",
+		"@types/node": "^20.11.28",
+		"@types/react": "^18.2.66",
+		"@types/react-dom": "^18.2.22",
+		"adm-zip": "^0.5.12",
+		"cross-env": "^7.0.3",
+		"eslint": "^8.57.0",
+		"eslint-config-next": "^14.1.3",
+		"eslint-config-prettier": "^9.1.0",
+		"fs-extra": "^11.2.0",
+		"glob": "^10.3.10",
+		"prettier": "^3.2.5",
+		"typescript": "^5.4.2"
+	}
 }
