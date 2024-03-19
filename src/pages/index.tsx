@@ -25,7 +25,7 @@ import * as Sentry from '@sentry/nextjs'
 import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { FC } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { messages } from '../locales/en/messages'
 import { changeLocalisation } from '../util/i18n'
 import { queryClient } from './_app'
@@ -57,7 +57,6 @@ const WeatherPlease: FC<{}> = () => {
 		[],
 	)
 	const [usingCachedData, setUsingCachedData] = useState<boolean>(true)
-	const [currentHour, setCurrentHour] = useState<number>(new Date().getHours())
 	const [currentDate, setCurrentDate] = useState<number>(new Date().getDate())
 	const [loading, setLoading] = useState<boolean>(false)
 	const [geolocationError, setGeolocationError] = useState<boolean>(false)
@@ -89,6 +88,8 @@ const WeatherPlease: FC<{}> = () => {
 	)
 	const [usingSafari, setUsingSafari] = useState<boolean>(false)
 
+	const lastHourRef = useRef(new Date().getHours())
+
 	const { error, data } = useQuery<WeatherData>({
 		queryKey: [
 			'weather',
@@ -106,7 +107,10 @@ const WeatherPlease: FC<{}> = () => {
 
 	useEffect(() => {
 		if (data) {
-			const futureData = data.daily.time.map((day: number, i: number) => ({
+			const now = new Date()
+			const currentHour = now.getHours()
+
+			const futureData = data.daily.time.map((day, i: number) => ({
 				day,
 				max: data.daily.temperature_2m_max[i],
 				min: data.daily.temperature_2m_min[i],
@@ -177,7 +181,6 @@ const WeatherPlease: FC<{}> = () => {
 			setCurrentWeatherData(alerts)
 			localStorage.alerts = JSON.stringify(alerts)
 
-			const now = new Date()
 			localStorage.lastUpdated = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`
 
 			if (changedLocation) {
@@ -203,14 +206,19 @@ const WeatherPlease: FC<{}> = () => {
 				Sentry.captureException(error)
 			}
 		}
-	}, [currentHour, data, error, config.shareCrashesAndErrors, changedLocation])
+	}, [data, error, config.shareCrashesAndErrors, changedLocation])
 
-	setInterval(() => {
-		if (new Date().getHours() !== currentHour) {
-			setCurrentHour(new Date().getHours())
-			queryClient.invalidateQueries({ queryKey: ['weather'] })
-		}
-	}, 6e4)
+	useEffect(() => {
+		const interval = setInterval(() => {
+			const currentHour = new Date().getHours()
+			if (currentHour !== lastHourRef.current) {
+				lastHourRef.current = currentHour
+				queryClient.invalidateQueries({ queryKey: ['weather'] })
+			}
+		}, 6e4)
+
+		return () => clearInterval(interval)
+	}, [])
 
 	/**
 	 * Synchronizes the active language with the language specified in the configuration.
@@ -243,7 +251,7 @@ const WeatherPlease: FC<{}> = () => {
 				dsn: process.env.NEXT_PUBLIC_SENTRY_DSN ?? '',
 				tracesSampleRate: 1,
 				debug: false,
-				replaysOnErrorSampleRate: 0.1,
+				replaysOnErrorSampleRate: 0,
 				replaysSessionSampleRate: 0,
 				beforeSend: (event) => {
 					if (event.request) {
@@ -277,7 +285,7 @@ const WeatherPlease: FC<{}> = () => {
 							if (typeof data === 'string') {
 								try {
 									data = JSON.parse(data)
-								} catch (e) {}
+								} catch (e) { }
 							}
 
 							if (data && typeof data === 'object') {
@@ -366,19 +374,10 @@ const WeatherPlease: FC<{}> = () => {
 	 */
 	useEffect(() => {
 		if (
-			localStorage.data &&
-			localStorage.lastUpdated &&
-			new Date().getFullYear() ===
-				parseInt(localStorage.lastUpdated.split('-')[0]) &&
-			new Date().getMonth() ===
-				parseInt(localStorage.lastUpdated.split('-')[1]) &&
-			new Date().getDate() ===
-				parseInt(localStorage.lastUpdated.split('-')[2]) &&
-			new Date().getHours() ===
-				parseInt(localStorage.lastUpdated.split('-')[3]) &&
-			JSON.parse(localStorage.data).length ===
-				parseInt(config.daysToRetrieve) &&
-			!changedLocation
+			isLocalStorageDataValid(
+				config.daysToRetrieve,
+				changedLocation,
+			)
 		) {
 			const data = JSON.parse(localStorage.data)
 			const alerts = JSON.parse(localStorage.alerts)
@@ -929,6 +928,25 @@ const mergeObjects: MergeObjects = (targetObj, sourceObj) => {
 	})
 
 	return mergedObject as ConfigProps
+}
+
+const isLocalStorageDataValid = (
+	daysToRetrieve: string,
+	changedLocation: boolean,
+) => {
+	const { data, lastUpdated } = localStorage
+	if (!data || !lastUpdated || changedLocation) return false
+
+	const [year, month, day, hour] = lastUpdated.split('-').map(Number)
+	const currentDate = new Date()
+	const isSameYear = currentDate.getFullYear() === year
+	const isSameMonth = currentDate.getMonth() === month
+	const isSameDay = currentDate.getDate() === day
+	const isSameHour = currentDate.getHours() === hour
+	const isSameLength =
+		JSON.parse(data).length === parseInt(daysToRetrieve)
+
+	return isSameYear && isSameMonth && isSameDay && isSameHour && isSameLength
 }
 
 export default WeatherPlease
