@@ -14,22 +14,20 @@ import {
 	IconShieldCheckFilled,
 } from '@tabler/icons-react'
 import Image from 'next/image'
-import type { FC } from 'react'
+import { useState, type FC } from 'react'
 import Favicon from '../../../public/favicon.png'
 import alertStyles from '../alert/styles.module.css'
 import type { InitialisationProps } from './types'
 
-const Initialisation: FC<InitialisationProps> = (props) => {
-	const {
-		opened,
-		geolocationError,
-		handleClick,
-		setLoading,
-		loading,
-		input,
-		handleChange,
-		close,
-	} = props
+const Initialisation: FC<InitialisationProps> = ({
+	opened,
+	geolocationError,
+	handleClick,
+	input,
+	handleChange,
+	close,
+}) => {
+	const [loading, setLoading] = useState<boolean>(false)
 
 	return (
 		<Modal

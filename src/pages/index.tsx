@@ -1,19 +1,14 @@
 import Alert from '@/components/alert'
-import type { CurrentWeatherProps } from '@/components/alert/types'
 import Initialisation from '@/components/intialisation'
 import { RingLoader } from '@/components/loader'
 import Settings from '@/components/settings'
 import Tile from '@/components/tile'
-import type { TileProps } from '@/components/tile/types'
 import styles from '@/styles/styles.module.css'
+import { mergeObjects } from '@/util/helpers'
 import type {
-	CompareObjects,
-	ConfigProps,
 	DetermineGridColumns,
 	HandleChange,
 	HandleClick,
-	MergeObjects,
-	TileComponent,
 	WeatherData,
 } from '@/util/types'
 import { i18n } from '@lingui/core'
@@ -26,8 +21,9 @@ import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect, useRef, useState } from 'react'
+import { z } from 'zod'
 import { messages } from '../locales/en/messages'
-import { changeLocalisation } from '../util/i18n'
+import { changeLocalisation, locales } from '../util/i18n'
 import { queryClient } from './_app'
 
 i18n.load({
@@ -35,33 +31,83 @@ i18n.load({
 })
 i18n.activate('en')
 
+const configSchema = z.object({
+	daysToRetrieve: z.string(),
+	displayedReviewPrompt: z.boolean(),
+	identifier: z.enum(['day', 'date']),
+	installed: z.number(),
+	lang: z.enum(Object.keys(locales).map((key) => key) as [string, ...string[]]),
+	lat: z.string().regex(/^(\+|-)?(?:90(?:\.0{1,6})?|[1-8]?\d(?:\.\d{1,6})?)$/),
+	lon: z
+		.string()
+		.regex(
+			/^(\+|-)?(?:180(?:\.0{1,6})?|((1[0-7]\d)|([1-9]?\d))(?:\.\d{1,6})?)$/,
+		),
+	periodicLocationUpdate: z.boolean(),
+	shareCrashesAndErrors: z.boolean(),
+	showAlerts: z.boolean(),
+	showPrecipitationAlerts: z.boolean(),
+	showUvAlerts: z.boolean(),
+	showVisibilityAlerts: z.boolean(),
+	showWindAlerts: z.boolean(),
+	useMetric: z.boolean(),
+})
+
+export type Config = z.infer<typeof configSchema>
+
+const dataSchema = z
+	.array(
+		z.object({
+			day: z.number(),
+			description: z.number(),
+			max: z.number(),
+			min: z.number(),
+			rain: z.number(),
+			uv: z.number(),
+			wind: z.number(),
+		}),
+	)
+	.min(1)
+	.max(9)
+
+type Data = z.infer<typeof dataSchema>
+
+const alertSchema = z.object({
+	hoursOfExtremeUv: z.array(z.boolean()).length(13),
+	hoursOfLowVisibility: z.array(z.boolean()).length(25),
+	hoursOfStrongWind: z.array(z.boolean()).length(25),
+	hoursOfStrongWindGusts: z.array(z.boolean()).length(25),
+	totalPrecipitation: z.object({
+		duration: z.array(z.boolean()).length(25),
+		precipitation: z.object({
+			flag: z.boolean(),
+			value: z.number(),
+			zeroCount: z.number(),
+		}),
+	}),
+})
+
+export type Alerts = z.infer<typeof alertSchema>
+
 const WeatherPlease: FC<{}> = () => {
-	const initialCurrentWeatherData = {
+	const [alertData, setAlertData] = useState<Alerts>({
 		totalPrecipitation: {
 			precipitation: {
 				value: 0,
 				flag: false,
+				zeroCount: 0,
 			},
-			duration: [false],
+			duration: Array(25).fill(false),
 		},
-		hoursOfExtremeUv: [false],
-		hoursOfStrongWind: [false],
-		hoursOfLowVisibility: [false],
-		hoursOfStrongWindGusts: [false],
-	}
-	const [currentWeatherData, setCurrentWeatherData] =
-		useState<CurrentWeatherProps>(initialCurrentWeatherData)
-	const [localStorageCurrentWeatherData, setLocalStorageCurrentWeatherData] =
-		useState<CurrentWeatherProps>(initialCurrentWeatherData)
-	const [futureWeatherData, setFutureWeatherData] = useState<[] | TileProps[]>(
-		[],
-	)
-	const [usingCachedData, setUsingCachedData] = useState<boolean>(true)
-	const [currentDate, setCurrentDate] = useState<number>(new Date().getDate())
-	const [loading, setLoading] = useState<boolean>(false)
+		hoursOfExtremeUv: Array(13).fill(false),
+		hoursOfStrongWind: Array(25).fill(false),
+		hoursOfLowVisibility: Array(25).fill(false),
+		hoursOfStrongWindGusts: Array(25).fill(false),
+	})
+	const [weatherData, setWeatherData] = useState<[] | Data>([])
 	const [geolocationError, setGeolocationError] = useState<boolean>(false)
 	const [opened, { open, close }] = useDisclosure(false)
-	const initialState: ConfigProps = {
+	const initialState: Config = {
 		lang: 'en',
 		lat: '',
 		lon: '',
@@ -78,8 +124,8 @@ const WeatherPlease: FC<{}> = () => {
 		installed: new Date().getTime(),
 		displayedReviewPrompt: false,
 	}
-	const [config, setConfig] = useState<ConfigProps>(initialState)
-	const [input, setInput] = useState<ConfigProps>(initialState)
+	const [config, setConfig] = useState<Config>(initialState)
+	const [input, setInput] = useState<Config>(initialState)
 	const [usingFreshData, setUsingFreshData] = useState<boolean>(false)
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
 	const [completedFirstLoad, setCompletedFirstLoad] = useState<boolean>(false)
@@ -88,7 +134,9 @@ const WeatherPlease: FC<{}> = () => {
 	)
 	const [usingSafari, setUsingSafari] = useState<boolean>(false)
 
+	const currentDateRef = useRef(new Date().getDate())
 	const lastHourRef = useRef(new Date().getHours())
+	const usingCachedData = useRef(true)
 
 	const { error, data } = useQuery<WeatherData>({
 		queryKey: [
@@ -96,13 +144,14 @@ const WeatherPlease: FC<{}> = () => {
 			config.lat,
 			config.lon,
 			config.daysToRetrieve,
-			usingCachedData,
+			usingCachedData.current,
 		],
 		queryFn: () =>
 			fetch(
 				`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=${config.daysToRetrieve}`,
 			).then((res) => res.json()),
-		enabled: Boolean(config.lat) && Boolean(config.lon) && !usingCachedData,
+		enabled:
+			Boolean(config.lat) && Boolean(config.lon) && !usingCachedData.current,
 	})
 
 	useEffect(() => {
@@ -119,7 +168,7 @@ const WeatherPlease: FC<{}> = () => {
 				wind: data.daily.windspeed_10m_max[i],
 				rain: data.daily.precipitation_probability_max[i],
 			}))
-			setFutureWeatherData(futureData as any)
+			setWeatherData(futureData as any)
 			localStorage.data = JSON.stringify(futureData)
 
 			const alerts = {
@@ -178,7 +227,7 @@ const WeatherPlease: FC<{}> = () => {
 					.slice(currentHour, currentHour + 25)
 					.map((val: number) => val <= 200),
 			}
-			setCurrentWeatherData(alerts)
+			setAlertData(alerts)
 			localStorage.alerts = JSON.stringify(alerts)
 
 			localStorage.lastUpdated = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`
@@ -285,7 +334,7 @@ const WeatherPlease: FC<{}> = () => {
 							if (typeof data === 'string') {
 								try {
 									data = JSON.parse(data)
-								} catch (e) { }
+								} catch (e) {}
 							}
 
 							if (data && typeof data === 'object') {
@@ -324,8 +373,8 @@ const WeatherPlease: FC<{}> = () => {
 			? JSON.parse(localStorage.config)
 			: null
 		if (storedData) {
-			const objectShapesMatch = compareObjects(storedData, config) // should we be comparing against initialState here instead?
-			if (objectShapesMatch) {
+			const objectShapesMatch = configSchema.safeParse(storedData)
+			if (objectShapesMatch.success) {
 				setConfig(storedData)
 				setInput(storedData)
 				if (
@@ -337,9 +386,9 @@ const WeatherPlease: FC<{}> = () => {
 					}, 1e3)
 				}
 			} else {
-				const mergedObject = mergeObjects(storedData, config) // should we be comparing against initialState here instead?
-				setConfig(mergedObject as ConfigProps)
-				setInput(mergedObject as ConfigProps) // we lose the generic capability of the function here
+				const mergedObject = mergeObjects(storedData, config)
+				setConfig(mergedObject as Config)
+				setInput(mergedObject as Config)
 				if (
 					new Date().getTime() - mergedObject.installed >= 2419200000 &&
 					!mergedObject.displayedReviewPrompt
@@ -373,47 +422,13 @@ const WeatherPlease: FC<{}> = () => {
 	 * - It ensures that data used is timely and relevant, either by validating cached data against current criteria or signaling the need for new data fetching.
 	 */
 	useEffect(() => {
-		if (
-			isLocalStorageDataValid(
-				config.daysToRetrieve,
-				changedLocation,
-			)
-		) {
-			const data = JSON.parse(localStorage.data)
-			const alerts = JSON.parse(localStorage.alerts)
-			setFutureWeatherData(data)
-			setLocalStorageCurrentWeatherData(alerts)
+		if (isLocalStorageDataValid(config.daysToRetrieve, changedLocation)) {
+			setWeatherData(JSON.parse(localStorage.data))
+			setAlertData(JSON.parse(localStorage.alerts))
 		} else {
-			setUsingCachedData(false)
+			usingCachedData.current = false
 		}
 	}, [config.lat, config.lon, config.daysToRetrieve, changedLocation])
-
-	/**
-	 * This useEffect hook is designed to maintain data integrity in the face of updates to the weather alert types defined
-	 * in the `CurrentWeatherProps` type. It is triggered whenever the `localStorageCurrentWeatherData` dependency changes.
-	 *
-	 * It performs a deep equality check between `localStorageCurrentWeatherData` and `currentWeatherData` using the
-	 * `compareObjects` function. This step is crucial to avoid overwriting potentially new alert types present in
-	 * `currentWeatherData` with outdated data from local storage. Overwriting it directly without this check could result in
-	 * errors if new alert types added to the `CurrentWeatherProps` type are missing in the old local storage data.
-	 *
-	 * If a discrepancy is detected, it merges the local storage data with the current data using the `mergeObjects` function,
-	 * ensuring that no new alert types are lost while also incorporating any relevant data stored locally.
-	 *
-	 * The merged data is then asserted to be of `CurrentWeatherProps` type and set as the new `currentWeatherData`, preserving
-	 * the integrity of the data structure and preventing errors that would occur from missing properties.
-	 */
-	useEffect(() => {
-		if (!compareObjects(localStorageCurrentWeatherData, currentWeatherData)) {
-			// this is running every load no matter what, but if it's not breaking anything (and still guards correctly), is it a problem?
-			const mergedData = mergeObjects(
-				localStorageCurrentWeatherData,
-				currentWeatherData,
-			)
-			setCurrentWeatherData(mergedData as CurrentWeatherProps)
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [localStorageCurrentWeatherData])
 
 	const handleChange: HandleChange = (k, v) => {
 		setInput((prev) => {
@@ -546,8 +561,8 @@ const WeatherPlease: FC<{}> = () => {
 	 */
 	useEffect(() => {
 		const checkDate = setInterval(() => {
-			if (new Date().getDate() !== currentDate) {
-				setCurrentDate(new Date().getDate())
+			if (new Date().getDate() !== currentDateRef.current) {
+				currentDateRef.current = new Date().getDate()
 			}
 		}, 6e4)
 
@@ -633,9 +648,9 @@ const WeatherPlease: FC<{}> = () => {
 			clearInterval(checkDate)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [currentDate, config.periodicLocationUpdate])
+	}, [currentDateRef, config.periodicLocationUpdate])
 
-	const tiles: TileComponent = futureWeatherData.map((day, i: number) => {
+	const tiles = weatherData.map((day, i: number) => {
 		let delayBaseline = 0.75
 		if (localStorage.data) {
 			delayBaseline = 0
@@ -796,7 +811,7 @@ const WeatherPlease: FC<{}> = () => {
 	return (
 		<>
 			<AnimatePresence>
-				{futureWeatherData.length === 0 && config.lat && config.lon && (
+				{weatherData.length === 0 && config.lat && config.lon && (
 					<motion.div
 						initial={{ scale: 1, opacity: 0 }}
 						animate={{ scale: 1, opacity: 1 }}
@@ -829,7 +844,7 @@ const WeatherPlease: FC<{}> = () => {
 					{tiles}
 					{config.showAlerts && (
 						<Alert
-							{...currentWeatherData}
+							{...alertData}
 							useMetric={config.useMetric}
 							showUvAlerts={config.showUvAlerts}
 							showWindAlerts={config.showWindAlerts}
@@ -854,8 +869,6 @@ const WeatherPlease: FC<{}> = () => {
 			<Initialisation
 				geolocationError={geolocationError}
 				handleClick={handleClick}
-				setLoading={setLoading}
-				loading={loading}
 				input={input}
 				handleChange={handleChange}
 				opened={opened}
@@ -882,59 +895,11 @@ const WeatherPlease: FC<{}> = () => {
 	)
 }
 
-const compareObjects: CompareObjects = (obj1, obj2) => {
-	const keys1 = Object.keys(obj1)
-	const keys2 = Object.keys(obj2)
-
-	if (keys1.length !== keys2.length) {
-		return false
-	}
-
-	for (const key of keys1) {
-		if (!keys2.includes(key)) {
-			return false
-		}
-
-		const val1 = obj1[key]
-		const val2 = obj2[key]
-
-		// Check if both values are objects (but not arrays or null)
-		if (
-			val1 &&
-			typeof val1 === 'object' &&
-			!Array.isArray(val1) &&
-			val2 &&
-			typeof val2 === 'object' &&
-			!Array.isArray(val2)
-		) {
-			if (!compareObjects(val1, val2)) {
-				return false
-			}
-		} else if (val1 !== val2) {
-			return false
-		}
-	}
-
-	return true
-}
-
-const mergeObjects: MergeObjects = (targetObj, sourceObj) => {
-	const mergedObject = { ...targetObj }
-
-	Object.keys(sourceObj).forEach((key) => {
-		if (!mergedObject.hasOwnProperty(key)) {
-			mergedObject[key] = sourceObj[key]
-		}
-	})
-
-	return mergedObject as ConfigProps
-}
-
 const isLocalStorageDataValid = (
 	daysToRetrieve: string,
 	changedLocation: boolean,
 ) => {
-	const { data, lastUpdated } = localStorage
+	const { data, lastUpdated, alerts } = localStorage
 	if (!data || !lastUpdated || changedLocation) return false
 
 	const [year, month, day, hour] = lastUpdated.split('-').map(Number)
@@ -943,10 +908,19 @@ const isLocalStorageDataValid = (
 	const isSameMonth = currentDate.getMonth() === month
 	const isSameDay = currentDate.getDate() === day
 	const isSameHour = currentDate.getHours() === hour
-	const isSameLength =
-		JSON.parse(data).length === parseInt(daysToRetrieve)
+	const isSameLength = JSON.parse(data).length === parseInt(daysToRetrieve)
+	const storedAlertsAreValid = alertSchema.safeParse(JSON.parse(alerts))
+	const storedDataIsValid = dataSchema.safeParse(JSON.parse(data))
 
-	return isSameYear && isSameMonth && isSameDay && isSameHour && isSameLength
+	return (
+		isSameYear &&
+		isSameMonth &&
+		isSameDay &&
+		isSameHour &&
+		isSameLength &&
+		storedAlertsAreValid.success &&
+		storedDataIsValid.success
+	)
 }
 
 export default WeatherPlease

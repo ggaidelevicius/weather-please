@@ -6,15 +6,13 @@
  *
  * @property {number} max - The maximum temperature expected for the day in degrees celsius.
  * @property {number} min - The minimum temperature expected for the day in degrees celsius.
- * @property {string} description - Weather condition as a numeric code. Follows WMO weather interpretation codes.
- * @property {string} icon - Weather condition as a numeric code. Follow WMO weather interpretation codes.
+ * @property {number} description - Weather condition as a numeric code. Follows WMO weather interpretation codes.
  * @property {boolean} useMetric - A flag to determine if metrics (e.g., Celsius) or imperial (e.g., Fahrenheit) units should be used.
  */
 export interface BasicWeatherProps {
 	readonly max: number
 	readonly min: number
-	readonly description: string
-	readonly icon: string
+	readonly description: number
 	readonly useMetric: boolean
 }
 
