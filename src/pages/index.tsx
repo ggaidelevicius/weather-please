@@ -133,10 +133,10 @@ const WeatherPlease: FC<{}> = () => {
 		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
 	)
 	const [usingSafari, setUsingSafari] = useState<boolean>(false)
+	const [usingCachedData, setUsingCachedData] = useState(true)
 
 	const currentDateRef = useRef(new Date().getDate())
 	const lastHourRef = useRef(new Date().getHours())
-	const usingCachedData = useRef(true)
 
 	const { error, data } = useQuery<WeatherData>({
 		queryKey: [
@@ -144,14 +144,13 @@ const WeatherPlease: FC<{}> = () => {
 			config.lat,
 			config.lon,
 			config.daysToRetrieve,
-			usingCachedData.current,
+			usingCachedData,
 		],
 		queryFn: () =>
 			fetch(
 				`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=${config.daysToRetrieve}`,
 			).then((res) => res.json()),
-		enabled:
-			Boolean(config.lat) && Boolean(config.lon) && !usingCachedData.current,
+		enabled: Boolean(config.lat) && Boolean(config.lon) && !usingCachedData,
 	})
 
 	useEffect(() => {
@@ -262,6 +261,7 @@ const WeatherPlease: FC<{}> = () => {
 			const currentHour = new Date().getHours()
 			if (currentHour !== lastHourRef.current) {
 				lastHourRef.current = currentHour
+				setUsingCachedData(false)
 				queryClient.invalidateQueries({ queryKey: ['weather'] })
 			}
 		}, 6e4)
@@ -426,7 +426,7 @@ const WeatherPlease: FC<{}> = () => {
 			setWeatherData(JSON.parse(localStorage.data))
 			setAlertData(JSON.parse(localStorage.alerts))
 		} else {
-			usingCachedData.current = false
+			setUsingCachedData(false)
 		}
 	}, [config.lat, config.lon, config.daysToRetrieve, changedLocation])
 
