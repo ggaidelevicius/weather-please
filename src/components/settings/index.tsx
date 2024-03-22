@@ -199,7 +199,7 @@ const Settings: FC<SettingsProps> = (props) => {
 					}}
 					error={
 						/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat) ||
-						input.lat === '' ? undefined : (
+							input.lat === '' ? undefined : (
 							<Trans>Invalid latitude value</Trans>
 						)
 					}
@@ -377,7 +377,7 @@ const Settings: FC<SettingsProps> = (props) => {
 							>
 								<IconInfoCircle
 									strokeWidth={1.5}
-									size={16}
+									size={20}
 									color="var(--mantine-primary-color-filled)"
 								/>
 							</Tooltip>
@@ -532,13 +532,13 @@ const Settings: FC<SettingsProps> = (props) => {
 					!/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(
 						input.lon,
 					)) && ( // this should instead prompt the user to cancel this modal only, or alternatively put the inputs back in here
-					<Text mt="md">
-						<Trans>
-							You can&apos;t save because either your latitude or longitude are
-							invalid.
-						</Trans>
-					</Text>
-				)}
+						<Text mt="md">
+							<Trans>
+								You can&apos;t save because either your latitude or longitude are
+								invalid.
+							</Trans>
+						</Text>
+					)}
 				<Button
 					onClick={() => {
 						handleClick('manual')
