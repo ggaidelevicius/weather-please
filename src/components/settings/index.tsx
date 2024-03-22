@@ -12,11 +12,16 @@ import {
 	Text,
 	TextInput,
 	Title,
+	Tooltip,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import * as Sentry from '@sentry/nextjs'
-import { IconSettings, IconShieldCheckFilled } from '@tabler/icons-react'
+import {
+	IconSettings,
+	IconShieldCheckFilled,
+	IconInfoCircle,
+} from '@tabler/icons-react'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import alertStyles from '../alert/styles.module.css'
@@ -356,6 +361,33 @@ const Settings: FC<SettingsProps> = (props) => {
 						label: locales[key].label,
 						value: key,
 					}))}
+				/>
+				<Switch
+					label={
+						<>
+							<Trans>Use keyboard shortcuts</Trans>
+							<Tooltip
+								label={
+									<Trans>
+										You can press numbers 1-9 to change how many weather tiles
+										are displayed.
+									</Trans>
+								}
+								withArrow
+							>
+								<IconInfoCircle
+									strokeWidth={1.5}
+									size={16}
+									color="var(--mantine-primary-color-filled)"
+								/>
+							</Tooltip>
+						</>
+					}
+					mt="md"
+					checked={input.useShortcuts}
+					onChange={(e) => {
+						handleChange('useShortcuts', e.target.checked)
+					}}
 				/>
 				<Switch
 					label={<Trans>Use metric number format</Trans>}

@@ -36,3 +36,9 @@ body,
 .mantine-Modal-content {
 	max-width: 70ch !important;
 }
+
+.mantine-Switch-label {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}

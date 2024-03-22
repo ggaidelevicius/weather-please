@@ -51,6 +51,7 @@ const configSchema = z.object({
 	showVisibilityAlerts: z.boolean(),
 	showWindAlerts: z.boolean(),
 	useMetric: z.boolean(),
+	useShortcuts: z.boolean(),
 })
 
 export type Config = z.infer<typeof configSchema>
@@ -123,6 +124,7 @@ const WeatherPlease: FC<{}> = () => {
 		shareCrashesAndErrors: true,
 		installed: new Date().getTime(),
 		displayedReviewPrompt: false,
+		useShortcuts: false,
 	}
 	const [config, setConfig] = useState<Config>(initialState)
 	const [input, setInput] = useState<Config>(initialState)
@@ -139,19 +141,39 @@ const WeatherPlease: FC<{}> = () => {
 	const lastHourRef = useRef(new Date().getHours())
 
 	const { error, data } = useQuery<WeatherData>({
-		queryKey: [
-			'weather',
-			config.lat,
-			config.lon,
-			config.daysToRetrieve,
-			usingCachedData,
-		],
+		queryKey: ['weather', config.lat, config.lon, usingCachedData],
 		queryFn: () =>
 			fetch(
-				`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=${config.daysToRetrieve}`,
+				`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=9`,
 			).then((res) => res.json()),
 		enabled: Boolean(config.lat) && Boolean(config.lon) && !usingCachedData,
 	})
+
+	useEffect(() => {
+		const keys = Array.from({ length: 10 }, (_, i) => (i + 1).toString())
+
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (!opened && config.useShortcuts) {
+				if (keys.includes(event.key)) {
+					setConfig((p) => ({
+						...p,
+						daysToRetrieve: event.key,
+					}))
+
+					setInput((p) => ({
+						...p,
+						daysToRetrieve: event.key,
+					}))
+				}
+			}
+		}
+
+		window.addEventListener('keydown', handleKeyDown)
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown)
+		}
+	}, [config.useShortcuts, opened])
 
 	useEffect(() => {
 		if (data) {
@@ -422,13 +444,13 @@ const WeatherPlease: FC<{}> = () => {
 	 * - It ensures that data used is timely and relevant, either by validating cached data against current criteria or signaling the need for new data fetching.
 	 */
 	useEffect(() => {
-		if (isLocalStorageDataValid(config.daysToRetrieve, changedLocation)) {
+		if (isLocalStorageDataValid(changedLocation)) {
 			setWeatherData(JSON.parse(localStorage.data))
 			setAlertData(JSON.parse(localStorage.alerts))
 		} else {
 			setUsingCachedData(false)
 		}
-	}, [config.lat, config.lon, config.daysToRetrieve, changedLocation])
+	}, [config.lat, config.lon, changedLocation])
 
 	const handleChange: HandleChange = (k, v) => {
 		setInput((prev) => {
@@ -650,36 +672,38 @@ const WeatherPlease: FC<{}> = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentDateRef, config.periodicLocationUpdate])
 
-	const tiles = weatherData.map((day, i: number) => {
-		let delayBaseline = 0.75
-		if (localStorage.data) {
-			delayBaseline = 0
-		}
-		return (
-			<motion.div
-				key={day.day}
-				initial={{ scale: 0.95, opacity: 0 }}
-				animate={{
-					scale: 1,
-					opacity: 1,
-					transition: {
-						type: 'spring',
-						duration: 2,
-						delay: i * 0.075 + delayBaseline,
-					},
-				}}
-				exit={{ scale: 0.95, opacity: 0 }}
-				layout={completedFirstLoad}
-				style={{ background: 'none', willChange: 'transform, opacity' }}
-			>
-				<Tile
-					{...day}
-					useMetric={config.useMetric}
-					identifier={config.identifier}
-				/>
-			</motion.div>
-		)
-	})
+	const tiles = weatherData
+		.slice(0, parseInt(config.daysToRetrieve))
+		.map((day, i: number) => {
+			let delayBaseline = 0.75
+			if (localStorage.data) {
+				delayBaseline = 0
+			}
+			return (
+				<motion.div
+					key={day.day}
+					initial={{ scale: 0.95, opacity: 0 }}
+					animate={{
+						scale: 1,
+						opacity: 1,
+						transition: {
+							type: 'spring',
+							duration: 2,
+							delay: i * 0.075 + delayBaseline,
+						},
+					}}
+					exit={{ scale: 0.95, opacity: 0 }}
+					layout={completedFirstLoad}
+					style={{ background: 'none', willChange: 'transform, opacity' }}
+				>
+					<Tile
+						{...day}
+						useMetric={config.useMetric}
+						identifier={config.identifier}
+					/>
+				</motion.div>
+			)
+		})
 
 	/**
 	 * Delays setting `completedFirstLoad` to mitigate layout shifts during initial render.
@@ -895,10 +919,7 @@ const WeatherPlease: FC<{}> = () => {
 	)
 }
 
-const isLocalStorageDataValid = (
-	daysToRetrieve: string,
-	changedLocation: boolean,
-) => {
+const isLocalStorageDataValid = (changedLocation: boolean) => {
 	const { data, lastUpdated, alerts } = localStorage
 	if (!data || !lastUpdated || changedLocation) return false
 
@@ -908,7 +929,6 @@ const isLocalStorageDataValid = (
 	const isSameMonth = currentDate.getMonth() === month
 	const isSameDay = currentDate.getDate() === day
 	const isSameHour = currentDate.getHours() === hour
-	const isSameLength = JSON.parse(data).length === parseInt(daysToRetrieve)
 	const storedAlertsAreValid = alertSchema.safeParse(JSON.parse(alerts))
 	const storedDataIsValid = dataSchema.safeParse(JSON.parse(data))
 
@@ -917,7 +937,6 @@ const isLocalStorageDataValid = (
 		isSameMonth &&
 		isSameDay &&
 		isSameHour &&
-		isSameLength &&
 		storedAlertsAreValid.success &&
 		storedDataIsValid.success
 	)

@@ -1,24 +1,5 @@
 /* eslint-disable no-unused-vars */
-import type { ReactElement } from 'react'
-
-/**
- * Defines the allowed keys for the "input" state.
- * These keys represent configurable settings and preferences for the application.
- */
-export type HandleChangeKey =
-	| 'lang'
-	| 'lat'
-	| 'lon'
-	| 'periodicLocationUpdate'
-	| 'showAlerts'
-	| 'showUvAlerts'
-	| 'showPrecipitationAlerts'
-	| 'showWindAlerts'
-	| 'showVisibilityAlerts'
-	| 'useMetric'
-	| 'daysToRetrieve'
-	| 'identifier'
-	| 'shareCrashesAndErrors'
+import type { Config } from '@/pages'
 
 /**
  * Manages updates to the "input" state.
@@ -27,7 +8,10 @@ export type HandleChangeKey =
  * while the provided attribute (key-value pair) will either be added or, if the key already exists,
  * its value will be overwritten with the new one.
  */
-export type HandleChange = (k: HandleChangeKey, v: string | boolean) => void
+export type HandleChange = (
+	key: keyof Config,
+	value: Config[keyof Config],
+) => void
 
 /**
  * Manages the "saved" button click action during initialization.
