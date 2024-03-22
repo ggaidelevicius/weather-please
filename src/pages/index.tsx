@@ -108,6 +108,7 @@ const WeatherPlease: FC<{}> = () => {
 	const [weatherData, setWeatherData] = useState<[] | Data>([])
 	const [geolocationError, setGeolocationError] = useState<boolean>(false)
 	const [opened, { open, close }] = useDisclosure(false)
+	const settingsOpened = useRef(false)
 	const initialState: Config = {
 		lang: 'en',
 		lat: '',
@@ -153,7 +154,7 @@ const WeatherPlease: FC<{}> = () => {
 		const keys = Array.from({ length: 10 }, (_, i) => (i + 1).toString())
 
 		const handleKeyDown = (event: KeyboardEvent) => {
-			if (!opened && config.useShortcuts) {
+			if (!opened && config.useShortcuts && !settingsOpened.current) {
 				if (keys.includes(event.key)) {
 					setConfig((p) => ({
 						...p,
@@ -888,6 +889,7 @@ const WeatherPlease: FC<{}> = () => {
 				setInput={setInput}
 				usingSafari={usingSafari}
 				reviewLink={reviewLink}
+				settingsOpened={settingsOpened}
 			/>
 
 			<Initialisation
