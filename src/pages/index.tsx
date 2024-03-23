@@ -190,7 +190,7 @@ const WeatherPlease: FC<{}> = () => {
 				wind: data.daily.windspeed_10m_max[i],
 				rain: data.daily.precipitation_probability_max[i],
 			}))
-			setWeatherData(futureData as any)
+			setWeatherData(futureData)
 			localStorage.data = JSON.stringify(futureData)
 
 			const alerts = {
