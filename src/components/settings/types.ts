@@ -1,5 +1,6 @@
-import type { ConfigProps, HandleChange, HandleClick } from '@/util/types'
+import type { HandleChange, HandleClick } from '@/util/types'
 import type { Dispatch, SetStateAction } from 'react'
+import type { Config } from '@/pages'
 
 /**
  * Represents geographical location details.
@@ -50,19 +51,20 @@ export interface Location {
  * This interface defines the necessary properties to manage the configuration settings
  * and handle changes and actions related to those settings.
  *
- * @property {ConfigProps} input - The current input values for configuration settings.
+ * @property {Config} input - The current input values for configuration settings.
  * @property {HandleChange} handleChange - Function to handle changes to the configuration settings.
  * @property {HandleClick} handleClick - Function to handle actions or button clicks related to the settings.
- * @property {ConfigProps} config - The current configuration settings.
+ * @property {Config} config - The current configuration settings.
  */
 export interface SettingsProps {
-	readonly input: ConfigProps
+	readonly input: Config
 	readonly handleChange: HandleChange
 	readonly handleClick: HandleClick
-	readonly config: ConfigProps
-	readonly setInput: Dispatch<SetStateAction<ConfigProps>>
+	readonly config: Config
+	readonly setInput: Dispatch<SetStateAction<Config>>
 	readonly usingSafari: boolean
 	readonly reviewLink: string
+	settingsOpened: { current: boolean }
 }
 
 /**

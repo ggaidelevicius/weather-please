@@ -1,5 +1,5 @@
-import type { ConfigProps, HandleChange, HandleClick } from '@/util/types'
-import type { Dispatch, SetStateAction } from 'react'
+import type { HandleChange, HandleClick } from '@/util/types'
+import type { Config } from '@/pages'
 
 /**
  * Props for the initialization component or process.
@@ -20,9 +20,7 @@ export interface InitialisationProps {
 	readonly opened: boolean
 	readonly geolocationError: boolean
 	readonly handleClick: HandleClick
-	readonly setLoading: Dispatch<SetStateAction<boolean>>
-	readonly loading: boolean
-	readonly input: ConfigProps
+	readonly input: Config
 	readonly handleChange: HandleChange
 	readonly close: () => void
 }

@@ -9,6 +9,7 @@ import { Analytics } from '@vercel/analytics/react'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import type { FC } from 'react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const theme = createTheme({
 	colors: {
@@ -24,6 +25,14 @@ const theme = createTheme({
 			'#141517',
 			'#101113',
 		],
+	},
+})
+
+export const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+		},
 	},
 })
 
@@ -46,7 +55,9 @@ const App: FC<AppProps> = (props) => {
 					transitionDuration={1000}
 					notificationMaxHeight={10000}
 				/>
-				<Component {...pageProps} />
+				<QueryClientProvider client={queryClient}>
+					<Component {...pageProps} />
+				</QueryClientProvider>
 				{process.env.NEXT_PUBLIC_DEMO === 'true' && <Analytics />}
 			</MantineProvider>
 		</I18nProvider>

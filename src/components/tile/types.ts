@@ -10,26 +10,22 @@ import type { ReactElement } from 'react'
  * @property {number} day - The day for which the weather data applies in the form of a unix timestamp.
  * @property {number} max - The maximum temperature expected for the day in degrees celsius.
  * @property {number} min - The minimum temperature expected for the day in degrees celsius.
- * @property {string} description - Weather condition as a numeric code. Follows WMO weather interpretation codes.
- * @property {string} icon - Weather condition as a numeric code. Follows WMO weather interpretation codes.
+ * @property {number} description - Weather condition as a numeric code. Follows WMO weather interpretation codes.
  * @property {number} wind - The wind speed for the day in kph.
  * @property {number} rain - The percentage chance of precipitation.
  * @property {number} uv - The UV index for the day.
  * @property {boolean} useMetric - A flag to determine if metrics (e.g., Celsius, km/h) or imperial (e.g., Fahrenheit, mph) units should be used.
- * @property {number} index - The index or position of the tile in a list or grid.
  * @property {'day' | 'date'} identifier - Specifies whether to represent the day using a weekday name (e.g., "Monday") or a specific date.
  */
 export interface TileProps {
 	readonly day: number
 	readonly max: number
 	readonly min: number
-	readonly description: string
-	readonly icon: string
+	readonly description: number
 	readonly wind: number
 	readonly rain: number
 	readonly uv: number
 	readonly useMetric: boolean
-	readonly index: number
 	readonly identifier: 'day' | 'date'
 }
 

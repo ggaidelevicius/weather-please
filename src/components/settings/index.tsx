@@ -12,11 +12,16 @@ import {
 	Text,
 	TextInput,
 	Title,
+	Tooltip,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import * as Sentry from '@sentry/nextjs'
-import { IconSettings, IconShieldCheckFilled } from '@tabler/icons-react'
+import {
+	IconSettings,
+	IconShieldCheckFilled,
+	IconInfoCircle,
+} from '@tabler/icons-react'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import alertStyles from '../alert/styles.module.css'
@@ -31,6 +36,7 @@ const Settings: FC<SettingsProps> = (props) => {
 		setInput,
 		usingSafari,
 		reviewLink,
+		settingsOpened,
 	} = props
 	const [opened, { open, close }] = useDisclosure(false)
 	const [outsideClickModalOpened, setOutsideClickModalOpened] =
@@ -129,6 +135,7 @@ const Settings: FC<SettingsProps> = (props) => {
 			}
 		} else {
 			close()
+			settingsOpened.current = false
 		}
 	}
 
@@ -139,7 +146,10 @@ const Settings: FC<SettingsProps> = (props) => {
 				title="Open settings" // how do i pass translated values into here?
 				variant="light"
 				color="gray"
-				onClick={open}
+				onClick={() => {
+					open()
+					settingsOpened.current = true
+				}}
 				style={{ position: 'fixed', bottom: '1rem', right: '1rem' }}
 			>
 				<IconSettings aria-hidden style={{ width: '70%', height: '70%' }} />
@@ -194,7 +204,7 @@ const Settings: FC<SettingsProps> = (props) => {
 					}}
 					error={
 						/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat) ||
-							input.lat === '' ? undefined : (
+						input.lat === '' ? undefined : (
 							<Trans>Invalid latitude value</Trans>
 						)
 					}
@@ -358,6 +368,33 @@ const Settings: FC<SettingsProps> = (props) => {
 					}))}
 				/>
 				<Switch
+					label={
+						<>
+							<Trans>Use keyboard shortcuts</Trans>
+							<Tooltip
+								label={
+									<Trans>
+										You can press numbers 1-9 to change how many weather tiles
+										are displayed.
+									</Trans>
+								}
+								withArrow
+							>
+								<IconInfoCircle
+									strokeWidth={1.5}
+									size={20}
+									color="var(--mantine-primary-color-filled)"
+								/>
+							</Tooltip>
+						</>
+					}
+					mt="md"
+					checked={input.useShortcuts}
+					onChange={(e) => {
+						handleChange('useShortcuts', e.target.checked)
+					}}
+				/>
+				<Switch
 					label={<Trans>Use metric number format</Trans>}
 					mt="md"
 					checked={input.useMetric}
@@ -377,6 +414,7 @@ const Settings: FC<SettingsProps> = (props) => {
 					onClick={() => {
 						handleClick('manual')
 						close()
+						settingsOpened.current = false
 					}}
 					mt="md"
 					fullWidth
@@ -393,6 +431,7 @@ const Settings: FC<SettingsProps> = (props) => {
 					onClick={() => {
 						setInput(config)
 						close()
+						settingsOpened.current = false
 					}}
 					mt="xs"
 					fullWidth
@@ -500,18 +539,19 @@ const Settings: FC<SettingsProps> = (props) => {
 					!/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(
 						input.lon,
 					)) && ( // this should instead prompt the user to cancel this modal only, or alternatively put the inputs back in here
-						<Text mt="md">
-							<Trans>
-								You can&apos;t save because either your latitude or longitude are
-								invalid.
-							</Trans>
-						</Text>
-					)}
+					<Text mt="md">
+						<Trans>
+							You can&apos;t save because either your latitude or longitude are
+							invalid.
+						</Trans>
+					</Text>
+				)}
 				<Button
 					onClick={() => {
 						handleClick('manual')
 						setOutsideClickModalOpened(false)
 						close()
+						settingsOpened.current = false
 					}}
 					mt="md"
 					fullWidth
@@ -529,6 +569,7 @@ const Settings: FC<SettingsProps> = (props) => {
 						setInput(config)
 						setOutsideClickModalOpened(false)
 						close()
+						settingsOpened.current = false
 					}}
 					mt="xs"
 					fullWidth
