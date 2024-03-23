@@ -258,8 +258,6 @@ const WeatherPlease: FC<{}> = () => {
 				setChangedLocation(false)
 			}
 
-			// eslint-disable-next-line no-console
-			console.log('done data')
 		} else if (error) {
 			// eslint-disable-next-line no-console
 			console.error(error)
