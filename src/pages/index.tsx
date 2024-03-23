@@ -355,7 +355,7 @@ const WeatherPlease: FC<{}> = () => {
 							if (typeof data === 'string') {
 								try {
 									data = JSON.parse(data)
-								} catch (e) {}
+								} catch (e) { }
 							}
 
 							if (data && typeof data === 'object') {
@@ -372,6 +372,8 @@ const WeatherPlease: FC<{}> = () => {
 					return event
 				},
 			})
+
+			Sentry.setTag('version', '2.5.35')
 		} else {
 			Sentry.close()
 		}
