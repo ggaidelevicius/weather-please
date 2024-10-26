@@ -55,8 +55,8 @@
 	"devDependencies": {
 		"@lingui/cli": "^4.13.0",
 		"@types/node": "^22.8.1",
-		"@types/react": "npm:types-react@19.0.0-alpha.3",
-		"@types/react-dom": "npm:types-react-dom@19.0.0-alpha.3",
+		"@types/react": "18.3.1",
+		"@types/react-dom": "18.3.1",
 		"adm-zip": "^0.5.16",
 		"cross-env": "^7.0.3",
 		"eslint": "^9.13.0",
@@ -67,11 +67,5 @@
 		"prettier": "^3.3.3",
 		"typescript": "^5.6.3"
 	},
-	"packageManager": "pnpm@9.12.2",
-	"pnpm": {
-		"overrides": {
-			"@types/react": "npm:types-react@19.0.0-alpha.3",
-			"@types/react-dom": "npm:types-react-dom@19.0.0-alpha.3"
-		}
-	}
+	"packageManager": "pnpm@9.12.2"
 }
