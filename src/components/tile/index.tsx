@@ -1,13 +1,13 @@
 import { Trans } from '@lingui/macro'
 import { Card, Title } from '@mantine/core'
 import classnames from 'classnames'
-import type { FC, ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { useState } from 'react'
 import styles from './styles.module.css'
 import type { Day, Month, TileProps } from './types'
 import { BasicWeather, WeatherDetail } from './weather'
 
-const Tile: FC<TileProps> = (props) => {
+const Tile = (props: TileProps) => {
 	const { day, identifier } = props
 	const [hovering, setHovering] = useState<boolean>(false)
 

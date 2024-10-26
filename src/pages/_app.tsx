@@ -8,7 +8,6 @@ import '@mantine/notifications/styles.css'
 import { Analytics } from '@vercel/analytics/react'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import type { FC } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const theme = createTheme({
@@ -36,7 +35,7 @@ export const queryClient = new QueryClient({
 	},
 })
 
-const App: FC<AppProps> = (props) => {
+const App = (props: AppProps) => {
 	const { Component, pageProps } = props
 
 	return (

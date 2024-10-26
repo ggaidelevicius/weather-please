@@ -22,12 +22,11 @@ import {
 	IconShieldCheckFilled,
 	IconInfoCircle,
 } from '@tabler/icons-react'
-import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import alertStyles from '../alert/styles.module.css'
 import type { HandleOutsideClick, Location, SettingsProps } from './types'
 
-const Settings: FC<SettingsProps> = (props) => {
+const Settings = (props: SettingsProps) => {
 	const {
 		input,
 		handleChange,

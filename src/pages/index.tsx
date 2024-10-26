@@ -19,7 +19,6 @@ import { notifications } from '@mantine/notifications'
 import * as Sentry from '@sentry/nextjs'
 import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
-import type { FC } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 import { messages } from '../locales/en/messages'
@@ -90,7 +89,7 @@ const alertSchema = z.object({
 
 export type Alerts = z.infer<typeof alertSchema>
 
-const WeatherPlease: FC<{}> = () => {
+const WeatherPlease = () => {
 	const [alertData, setAlertData] = useState<Alerts>({
 		totalPrecipitation: {
 			precipitation: {
