@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/nextjs'
+
 export const register = async () => {
 	if (process.env.NEXT_RUNTIME === 'edge') {
 		await import('./sentry.edge.config')
@@ -7,3 +9,5 @@ export const register = async () => {
 		await import('./sentry.server.config')
 	}
 }
+
+export const onRequestError = Sentry.captureRequestError
