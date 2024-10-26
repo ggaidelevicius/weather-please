@@ -19,20 +19,11 @@ if (process.env.NEXT_PUBLIC_BUILD_MODE === 'extension') {
 	})
 }
 
-const sentryWebpackPluginOptions = {
+module.exports = withSentryConfig(nextConfig, {
 	silent: true,
-	org: 'gus-gaidelevicius-39581d35a',
-	project: 'weather-please',
-}
-
-const sentryNextjsOptions = {
+	org: process.env.SENTRY_ORG,
+	project: process.env.SENTRY_PROJECT,
 	widenClientFileUpload: true,
 	hideSourceMaps: true,
 	disableLogger: true,
-}
-
-module.exports = withSentryConfig(
-	nextConfig,
-	sentryWebpackPluginOptions,
-	sentryNextjsOptions,
-)
+})
