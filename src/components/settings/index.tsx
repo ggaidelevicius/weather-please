@@ -176,6 +176,21 @@ const Settings: FC<SettingsProps> = (props) => {
 					<Trans>Settings</Trans>
 				</Title>
 				<Title order={2} mt="md">
+					<Trans>Language</Trans>
+				</Title>
+				<NativeSelect
+					mt="xs"
+					label={<Trans>Language</Trans>}
+					value={input.lang}
+					onChange={(e) => {
+						handleChange('lang', e.target.value)
+					}}
+					data={Object.keys(locales).map((key) => ({
+						label: locales[key].label,
+						value: key,
+					}))}
+				/>
+				<Title order={2} mt="xl">
 					<Trans>Location</Trans>
 				</Title>
 				<Text mt="xs" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -354,18 +369,6 @@ const Settings: FC<SettingsProps> = (props) => {
 				<Title order={2} mt="xl">
 					<Trans>Miscellaneous</Trans>
 				</Title>
-				<NativeSelect
-					mt="xs"
-					label={<Trans>Language</Trans>}
-					value={input.lang}
-					onChange={(e) => {
-						handleChange('lang', e.target.value)
-					}}
-					data={Object.keys(locales).map((key) => ({
-						label: locales[key].label,
-						value: key,
-					}))}
-				/>
 				<Switch
 					label={
 						<>
