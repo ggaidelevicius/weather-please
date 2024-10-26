@@ -1,7 +1,8 @@
-const { withSentryConfig } = require('@sentry/nextjs')
+import type { NextConfig } from 'next'
+import { withSentryConfig } from '@sentry/nextjs'
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
 	reactStrictMode: true,
 	experimental: {
 		swcPlugins: [['@lingui/swc-plugin', {}]],
