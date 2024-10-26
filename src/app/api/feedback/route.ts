@@ -4,7 +4,7 @@ import { z } from 'zod'
 const payloadSchema = z.object({
 	feedbackType: z.enum(['feedback', 'feature', 'bug', 'uninstall']),
 	message: z.string(),
-	email: z.string().email().or(z.string()),
+	email: z.union([z.string().email(), z.string()]),
 	created: z.number().int(),
 	locale: z.enum([
 		'bn',
@@ -22,7 +22,7 @@ const payloadSchema = z.object({
 		'vi',
 		'zh',
 	]),
-	installed: z.number().int().or(z.string()),
+	installed: z.union([z.number().int(), z.string()]),
 	reasons: z.object({
 		slowsDownBrowser: z.boolean(),
 		causesCrashes: z.boolean(),
@@ -46,12 +46,18 @@ export const POST = async (request: Request) => {
 	let payload = null
 
 	try {
-		payload = await request.json()
-		payloadSchema.parse(payload)
+		const json = await request.json()
+		const parseResult = payloadSchema.safeParse(json)
+		if (!parseResult.success) {
+			console.error(parseResult.error)
+			Sentry.captureException(parseResult.error, { extra: { payload: json } })
+			return Response.json({ message: 'Bad Request' }, { status: 400 })
+		}
+		payload = parseResult.data
 	} catch (e) {
 		// eslint-disable-next-line no-console
 		console.error(e)
-		Sentry.captureException(e, await request.json())
+		Sentry.captureException(e)
 		return Response.json({ message: 'Bad Request' }, { status: 400 })
 	}
 
@@ -89,7 +95,7 @@ export const POST = async (request: Request) => {
 	}
 
 	try {
-		const firestore = await fetch(
+		const firestoreResponse = await fetch(
 			`https://firestore.googleapis.com/v1/projects/${process.env.FIRESTORE_PROJECT_ID}/databases/(default)/documents/${feedbackType}`,
 			{
 				method: 'POST',
@@ -98,15 +104,18 @@ export const POST = async (request: Request) => {
 				},
 				body: JSON.stringify(data),
 			},
-		).then((res) => res.json())
+		)
 
-		if (firestore.error) {
+		if (!firestoreResponse.ok) {
+			const errorText = await firestoreResponse.text()
 			// eslint-disable-next-line no-console
-			console.error(firestore.error)
-			Sentry.captureException(firestore.error)
+			console.error(errorText)
+			Sentry.captureException(new Error('Firestore Error'), {
+				extra: { error: errorText },
+			})
 			return Response.json(
 				{
-					message: firestore.error?.status ?? 'Firestore Error',
+					message: 'Firestore Error',
 				},
 				{
 					status: 500,
