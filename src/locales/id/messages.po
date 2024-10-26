@@ -47,28 +47,28 @@ msgstr "Diperkirakan akan terjadi {0} mm presipitasi dalam {1} jam mendatang"
 msgid "{0}mm of precipitation expected over the next hour"
 msgstr "Diperkirakan akan terjadi {0} mm presipitasi dalam 1 jam mendatang"
 
-#: src/components/settings/index.tsx:508
+#: src/components/settings/index.tsx:499
 msgid "☕ Gift a coffee"
 msgstr "☕ Berikan secangkir kopi"
 
-#: src/components/settings/index.tsx:463
+#: src/components/settings/index.tsx:455
 msgid "✍️ Submit feedback"
 msgstr "✍️ Kirim masukan"
 
-#: src/components/settings/index.tsx:452
+#: src/components/settings/index.tsx:444
 #: src/pages/index.tsx:791
 msgid "🌟 Leave a review"
 msgstr "🌟 Tinggalkan ulasan"
 
-#: src/components/settings/index.tsx:485
+#: src/components/settings/index.tsx:477
 msgid "🐛 Report a bug"
 msgstr "🐛 Laporkan bug"
 
-#: src/components/settings/index.tsx:474
+#: src/components/settings/index.tsx:466
 msgid "💡 Request a feature"
 msgstr "💡 Minta fitur"
 
-#: src/components/settings/index.tsx:496
+#: src/components/settings/index.tsx:488
 msgid "🔒 Privacy policy"
 msgstr "🔒 Kebijakan privasi"
 
@@ -80,7 +80,7 @@ msgstr "🔒 Kebijakan privasi"
 #~ msgid "Additional details (optional)"
 #~ msgstr "Detail tambahan (opsional)"
 
-#: src/components/settings/index.tsx:306
+#: src/components/settings/index.tsx:310
 msgid "Alerts"
 msgstr "Peringatan"
 
@@ -92,11 +92,11 @@ msgstr "Terjadi kesalahan saat mengambil data lokasi. Silakan periksa konsol unt
 #~ msgid "An error has occurred while fetching weather data. Please check the console for more details."
 #~ msgstr "Terjadi kesalahan saat mengambil data cuaca. Silakan periksa konsol untuk detail lebih lanjut"
 
-#: src/pages/index.tsx:269
+#: src/pages/index.tsx:264
 msgid "An error has occurred while fetching weather data. Please try again later."
 msgstr "Terjadi kesalahan saat mengambil data cuaca. Silakan coba lagi nanti."
 
-#: src/components/settings/index.tsx:114
+#: src/components/settings/index.tsx:111
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "Terjadi kesalahan saat mengambil lokasi Anda. Silakan periksa konsol untuk detail lebih lanjut."
 
@@ -112,7 +112,7 @@ msgstr "April"
 msgid "August"
 msgstr "Agustus"
 
-#: src/components/settings/index.tsx:180
+#: src/components/settings/index.tsx:194
 msgid "Based on the provided information, your location is:"
 msgstr "Berdasarkan informasi yang diberikan, lokasi Anda adalah:"
 
@@ -120,7 +120,7 @@ msgstr "Berdasarkan informasi yang diberikan, lokasi Anda adalah:"
 msgid "Bug report"
 msgstr "Laporan bug"
 
-#: src/components/settings/index.tsx:438
+#: src/components/settings/index.tsx:430
 msgid "Cancel"
 msgstr "Batal"
 
@@ -148,11 +148,11 @@ msgstr "Khawatir tentang keamanan"
 msgid "Consumes too much memory or CPU"
 msgstr "Menggunakan terlalu banyak memori atau CPU"
 
-#: src/components/settings/index.tsx:300
+#: src/components/settings/index.tsx:304
 msgid "Date"
 msgstr "Tanggal"
 
-#: src/components/settings/index.tsx:298
+#: src/components/settings/index.tsx:302
 msgid "Day"
 msgstr "Hari"
 
@@ -180,7 +180,7 @@ msgstr "Detail"
 msgid "Difficult to use or understand"
 msgstr "Sulit untuk digunakan atau dipahami"
 
-#: src/components/settings/index.tsx:576
+#: src/components/settings/index.tsx:565
 msgid "Don't save"
 msgstr "Jangan simpan"
 
@@ -188,8 +188,8 @@ msgstr "Jangan simpan"
 msgid "Email (optional)"
 msgstr "Email (opsional)"
 
-#: src/components/settings/index.tsx:112
-#: src/pages/index.tsx:267
+#: src/components/settings/index.tsx:109
+#: src/pages/index.tsx:262
 #: src/pages/index.tsx:617
 #: src/pages/index.tsx:653
 msgid "Error"
@@ -283,11 +283,11 @@ msgstr "Saya akan menghargai jika Anda dapat memberikan umpan balik tentang meng
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "Saya ingin membawa Weather Please ke lebih banyak bahasa."
 
-#: src/components/settings/index.tsx:292
+#: src/components/settings/index.tsx:296
 msgid "Identifier"
 msgstr "Pengenal"
 
-#: src/components/settings/index.tsx:192
+#: src/components/settings/index.tsx:206
 msgid "If this is incorrect, please update the values below."
 msgstr "Jika ini salah, silakan perbarui nilai di bawah ini."
 
@@ -300,12 +300,12 @@ msgid "If your browser prompts you for location permissions, please select \"all
 msgstr "Jika browser Anda meminta izin lokasi, silakan pilih \"izinkan\"."
 
 #: src/components/intialisation/index.tsx:168
-#: src/components/settings/index.tsx:205
+#: src/components/settings/index.tsx:219
 msgid "Invalid latitude value"
 msgstr "Nilai lintang tidak valid"
 
 #: src/components/intialisation/index.tsx:184
-#: src/components/settings/index.tsx:221
+#: src/components/settings/index.tsx:235
 msgid "Invalid longitude value"
 msgstr "Nilai bujur tidak valid"
 
@@ -331,13 +331,14 @@ msgstr "Kekurangan fitur yang saya butuhkan"
 
 #: src/components/intialisation/index.tsx:80
 #: src/components/intialisation/index.tsx:244
-#: src/components/settings/index.tsx:357
+#: src/components/settings/index.tsx:176
+#: src/components/settings/index.tsx:180
 #: src/pages/feedback/index.tsx:153
 msgid "Language"
 msgstr "Bahasa"
 
 #: src/components/intialisation/index.tsx:159
-#: src/components/settings/index.tsx:196
+#: src/components/settings/index.tsx:210
 msgid "Latitude"
 msgstr "Lintang"
 
@@ -353,12 +354,12 @@ msgstr "gerimis beku ringan"
 msgid "light freezing rain"
 msgstr "hujan beku ringan"
 
-#: src/components/settings/index.tsx:177
+#: src/components/settings/index.tsx:191
 msgid "Location"
 msgstr "Lokasi"
 
 #: src/components/intialisation/index.tsx:174
-#: src/components/settings/index.tsx:211
+#: src/components/settings/index.tsx:225
 msgid "Longitude"
 msgstr "Bujur"
 
@@ -399,7 +400,7 @@ msgstr "Mei"
 msgid "Message"
 msgstr "Pesan"
 
-#: src/components/settings/index.tsx:353
+#: src/components/settings/index.tsx:357
 msgid "Miscellaneous"
 msgstr "Lain-lain"
 
@@ -439,11 +440,7 @@ msgstr "Tidak lagi membutuhkan fungsionalitasnya"
 msgid "Not available in my language"
 msgstr "Tidak tersedia dalam bahasa saya"
 
-#: src/components/settings/index.tsx:251
-msgid "Note: This currently does not work well in Safari, and may be inaccurate"
-msgstr "Catatan: Saat ini ini tidak berfungsi dengan baik di Safari, dan mungkin tidak akurat"
-
-#: src/components/settings/index.tsx:246
+#: src/components/settings/index.tsx:259
 msgid "Note: This requires browser permissions"
 msgstr "Catatan: Ini memerlukan izin peramban"
 
@@ -451,7 +448,7 @@ msgstr "Catatan: Ini memerlukan izin peramban"
 msgid "November"
 msgstr "November"
 
-#: src/components/settings/index.tsx:283
+#: src/components/settings/index.tsx:287
 msgid "Number of days to forecast"
 msgstr "Jumlah hari untuk ramalan"
 
@@ -471,7 +468,7 @@ msgstr "sebagian berawan"
 msgid "Performance issues"
 msgstr "Masalah kinerja"
 
-#: src/components/settings/index.tsx:237
+#: src/components/settings/index.tsx:251
 msgid "Periodically update location automatically"
 msgstr "Secara berkala perbarui lokasi secara otomatis"
 
@@ -487,8 +484,8 @@ msgstr "Penggunaan sumber daya"
 msgid "Saturday"
 msgstr "Sabtu"
 
-#: src/components/settings/index.tsx:425
-#: src/components/settings/index.tsx:562
+#: src/components/settings/index.tsx:417
+#: src/components/settings/index.tsx:551
 msgid "Save"
 msgstr "Simpan"
 
@@ -505,31 +502,31 @@ msgstr "September"
 msgid "Set my location"
 msgstr "Atur lokasi saya"
 
-#: src/components/settings/index.tsx:174
+#: src/components/settings/index.tsx:173
 msgid "Settings"
 msgstr "Pengaturan"
 
-#: src/components/settings/index.tsx:403
+#: src/components/settings/index.tsx:395
 msgid "Share anonymised crash data and error logs"
 msgstr "Bagikan data kecelakaan dan log kesalahan yang di-anonimkan"
 
-#: src/components/settings/index.tsx:320
+#: src/components/settings/index.tsx:324
 msgid "Show extreme UV alerts"
 msgstr "Tampilkan peringatan UV ekstrem"
 
-#: src/components/settings/index.tsx:327
+#: src/components/settings/index.tsx:331
 msgid "Show high precipitation alerts"
 msgstr "Tampilkan peringatan presipitasi tinggi"
 
-#: src/components/settings/index.tsx:343
+#: src/components/settings/index.tsx:347
 msgid "Show low visibility alerts"
 msgstr "Tampilkan peringatan visibilitas rendah"
 
-#: src/components/settings/index.tsx:335
+#: src/components/settings/index.tsx:339
 msgid "Show strong wind alerts"
 msgstr "Tampilkan peringatan angin kencang"
 
-#: src/components/settings/index.tsx:309
+#: src/components/settings/index.tsx:313
 msgid "Show weather alerts"
 msgstr "Tampilkan peringatan cuaca"
 
@@ -650,7 +647,7 @@ msgstr "badai petir dengan hujan es ringan"
 msgid "Thursday"
 msgstr "Kamis"
 
-#: src/components/settings/index.tsx:279
+#: src/components/settings/index.tsx:283
 msgid "Tiles"
 msgstr "Ubin"
 
@@ -671,7 +668,7 @@ msgid "Uninstall feedback"
 msgstr "Umpan balik penghapusan"
 
 #: src/components/intialisation/index.tsx:197
-#: src/components/settings/index.tsx:234
+#: src/components/settings/index.tsx:248
 msgid "Unsure how to find these? Click here."
 msgstr "Tidak yakin bagaimana cara menemukannya? Klik di sini."
 
@@ -683,11 +680,11 @@ msgstr "Terkait pembaruan atau perubahan"
 msgid "Usability and functionality"
 msgstr "Kegunaan dan fungsionalitas"
 
-#: src/components/settings/index.tsx:370
+#: src/components/settings/index.tsx:362
 msgid "Use keyboard shortcuts"
 msgstr "Gunakan pintasan keyboard"
 
-#: src/components/settings/index.tsx:395
+#: src/components/settings/index.tsx:387
 msgid "Use metric number format"
 msgstr "Gunakan format nomor metrik"
 
@@ -699,7 +696,7 @@ msgstr "hujan deras"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Kami ingin membawa Weather Please ke lebih banyak bahasa."
 
-#: src/pages/index.tsx:918
+#: src/pages/index.tsx:916
 msgid "weather data provided by open-meteo"
 msgstr "data cuaca disediakan oleh open-meteo"
 
@@ -716,15 +713,15 @@ msgstr "Rabu"
 msgid "Would you like to leave a review?"
 msgstr "Apakah Anda ingin meninggalkan ulasan?"
 
-#: src/components/settings/index.tsx:373
+#: src/components/settings/index.tsx:365
 msgid "You can press numbers 1-9 to change how many weather tiles are displayed."
 msgstr "Anda dapat menekan angka 1-9 untuk mengubah berapa banyak ubin cuaca yang ditampilkan."
 
-#: src/components/settings/index.tsx:540
+#: src/components/settings/index.tsx:529
 msgid "You can't save because either your latitude or longitude are invalid."
 msgstr "Anda tidak dapat menyimpan karena garis lintang atau garis bujur Anda tidak valid."
 
-#: src/components/settings/index.tsx:533
+#: src/components/settings/index.tsx:522
 msgid "You have unsaved changes"
 msgstr "Anda memiliki perubahan yang belum disimpan"
 
@@ -734,6 +731,6 @@ msgstr "Anda telah menggunakan Weather Please untuk beberapa waktu"
 
 #: src/components/intialisation/index.tsx:106
 #: src/components/intialisation/index.tsx:214
-#: src/components/settings/index.tsx:272
+#: src/components/settings/index.tsx:276
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Data lokasi Anda disimpan dengan aman secara eksklusif di perangkat pribadi Anda."

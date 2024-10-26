@@ -51,15 +51,15 @@ const Feedback = () => {
 	const locale =
 		typeof router?.query?.locale === 'object'
 			? router?.query?.locale[0]
-			: router?.query?.locale ?? 'en'
+			: (router?.query?.locale ?? 'en')
 	const type =
 		typeof router?.query?.type === 'object'
 			? router?.query?.type[0]
-			: router?.query?.type ?? 'feedback'
+			: (router?.query?.type ?? 'feedback')
 	const installed =
 		typeof router?.query?.installed === 'object'
 			? router?.query?.installed[0]
-			: router?.query?.installed ?? 0
+			: (router?.query?.installed ?? 0)
 	const [feedbackType, setFeedbackType] = useState(type)
 	const [textareaValue, setTextareaValue] = useState<string>('')
 	const [emailValue, setEmailValue] = useState<string>('')

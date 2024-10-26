@@ -8,19 +8,17 @@
  * @param sourceObj The secondary object whose values will be used if no conflict exists.
  * @returns A new object resulting from the merge of the two input objects.
  */
-type MergeObjects = (
-	// eslint-disable-next-line no-unused-vars
-	targetObj: Record<keyof any, any>,
-	// eslint-disable-next-line no-unused-vars
-	sourceObj: Record<keyof any, any>,
-) => Record<keyof any, any>
+export const mergeObjects = <T extends object, U extends object>(
+	targetObj: T,
+	sourceObj: U,
+): T & Omit<U, keyof T> => {
+	const mergedObject = { ...targetObj } as T & Omit<U, keyof T>
 
-export const mergeObjects: MergeObjects = (targetObj, sourceObj) => {
-	const mergedObject = { ...targetObj }
-
-	Object.keys(sourceObj).forEach((key) => {
-		if (!mergedObject.hasOwnProperty(key)) {
-			mergedObject[key] = sourceObj[key]
+	;(Object.keys(sourceObj) as Array<keyof U>).forEach((key) => {
+		if (!(key in targetObj)) {
+			// Type assertion is safe here because we're adding keys not present in T
+			//eslint-disable-next-line @typescript-eslint/no-explicit-any
+			;(mergedObject as any)[key] = sourceObj[key]
 		}
 	})
 

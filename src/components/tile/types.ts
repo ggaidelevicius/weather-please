@@ -45,4 +45,6 @@ export type Day = ReactElement[]
  * days of the week, be aware that in the future, to accommodate more languages
  * or localized naming conventions, adaptations may be necessary.
  */
+//eslint-disable-next-line
 export type Month = any[]
+// todo: replace any with something more appropriate

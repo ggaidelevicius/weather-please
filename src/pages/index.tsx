@@ -19,7 +19,6 @@ import { notifications } from '@mantine/notifications'
 import * as Sentry from '@sentry/nextjs'
 import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
-import type { FC } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 import { messages } from '../locales/en/messages'
@@ -90,7 +89,7 @@ const alertSchema = z.object({
 
 export type Alerts = z.infer<typeof alertSchema>
 
-const WeatherPlease: FC<{}> = () => {
+const WeatherPlease = () => {
 	const [alertData, setAlertData] = useState<Alerts>({
 		totalPrecipitation: {
 			precipitation: {
@@ -135,7 +134,6 @@ const WeatherPlease: FC<{}> = () => {
 	const [reviewLink, setReviewLink] = useState(
 		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
 	)
-	const [usingSafari, setUsingSafari] = useState<boolean>(false)
 	const [usingCachedData, setUsingCachedData] = useState(true)
 
 	const currentDateRef = useRef(new Date().getDate())
@@ -257,7 +255,6 @@ const WeatherPlease: FC<{}> = () => {
 			if (changedLocation) {
 				setChangedLocation(false)
 			}
-
 		} else if (error) {
 			// eslint-disable-next-line no-console
 			console.error(error)
@@ -355,7 +352,10 @@ const WeatherPlease: FC<{}> = () => {
 							if (typeof data === 'string') {
 								try {
 									data = JSON.parse(data)
-								} catch (e) { }
+								} catch (e) {
+									// eslint-disable-next-line no-console
+									console.error(e)
+								}
 							}
 
 							if (data && typeof data === 'object') {
@@ -818,7 +818,6 @@ const WeatherPlease: FC<{}> = () => {
 			userAgent.indexOf('safari') !== -1 &&
 			userAgent.indexOf('chrome') === -1
 		) {
-			setUsingSafari(true)
 			setReviewLink('https://apps.apple.com/au/app/weather-please/id6462968576')
 			return 'https://apps.apple.com/au/app/weather-please/id6462968576'
 		} else if (userAgent.includes('firefox/')) {
@@ -887,7 +886,6 @@ const WeatherPlease: FC<{}> = () => {
 				handleClick={handleClick}
 				config={config}
 				setInput={setInput}
-				usingSafari={usingSafari}
 				reviewLink={reviewLink}
 				settingsOpened={settingsOpened}
 			/>

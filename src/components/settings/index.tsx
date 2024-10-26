@@ -22,22 +22,19 @@ import {
 	IconShieldCheckFilled,
 	IconInfoCircle,
 } from '@tabler/icons-react'
-import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import alertStyles from '../alert/styles.module.css'
 import type { HandleOutsideClick, Location, SettingsProps } from './types'
 
-const Settings: FC<SettingsProps> = (props) => {
-	const {
-		input,
-		handleChange,
-		handleClick,
-		config,
-		setInput,
-		usingSafari,
-		reviewLink,
-		settingsOpened,
-	} = props
+const Settings = ({
+	input,
+	handleChange,
+	handleClick,
+	config,
+	setInput,
+	reviewLink,
+	settingsOpened,
+}: SettingsProps) => {
 	const [opened, { open, close }] = useDisclosure(false)
 	const [outsideClickModalOpened, setOutsideClickModalOpened] =
 		useState<boolean>(false)
@@ -154,7 +151,6 @@ const Settings: FC<SettingsProps> = (props) => {
 			>
 				<IconSettings aria-hidden style={{ width: '70%', height: '70%' }} />
 			</ActionIcon>
-
 			<Modal
 				opened={opened}
 				onClose={handleOutsideClick} // instead of invoking this directly we should first check to see if there are unsaved changes
@@ -177,6 +173,21 @@ const Settings: FC<SettingsProps> = (props) => {
 					<Trans>Settings</Trans>
 				</Title>
 				<Title order={2} mt="md">
+					<Trans>Language</Trans>
+				</Title>
+				<NativeSelect
+					mt="xs"
+					label={<Trans>Language</Trans>}
+					value={input.lang}
+					onChange={(e) => {
+						handleChange('lang', e.target.value)
+					}}
+					data={Object.keys(locales).map((key) => ({
+						label: locales[key].label,
+						value: key,
+					}))}
+				/>
+				<Title order={2} mt="xl">
 					<Trans>Location</Trans>
 				</Title>
 				<Text mt="xs" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -244,19 +255,9 @@ const Settings: FC<SettingsProps> = (props) => {
 						handleChange('periodicLocationUpdate', e.target.checked)
 					}}
 				/>
-				{!usingSafari && (
-					<Text size="sm" c="dimmed">
-						<Trans>Note: This requires browser permissions</Trans>
-					</Text>
-				)}
-				{usingSafari && (
-					<Text size="sm" c="dimmed">
-						<Trans>
-							Note: This currently does not work well in Safari, and may be
-							inaccurate
-						</Trans>
-					</Text>
-				)}
+				<Text size="sm" c="dimmed">
+					<Trans>Note: This requires browser permissions</Trans>
+				</Text>
 				<Alert
 					className={alertStyles.alert}
 					radius="md"
@@ -355,18 +356,6 @@ const Settings: FC<SettingsProps> = (props) => {
 				<Title order={2} mt="xl">
 					<Trans>Miscellaneous</Trans>
 				</Title>
-				<NativeSelect
-					mt="xs"
-					label={<Trans>Language</Trans>}
-					value={input.lang}
-					onChange={(e) => {
-						handleChange('lang', e.target.value)
-					}}
-					data={Object.keys(locales).map((key) => ({
-						label: locales[key].label,
-						value: key,
-					}))}
-				/>
 				<Switch
 					label={
 						<>
@@ -498,21 +487,18 @@ const Settings: FC<SettingsProps> = (props) => {
 				>
 					<Trans>🔒 Privacy policy</Trans>
 				</Text>
-				{!usingSafari && (
-					<Text
-						size="sm"
-						c="lightblue"
-						component="a"
-						href="https://www.buymeacoffee.com/ggaidelevicius"
-						style={{ marginTop: '0.2rem' }}
-						className="link"
-						target="_blank"
-					>
-						<Trans>☕ Gift a coffee</Trans>
-					</Text>
-				)}
+				<Text
+					size="sm"
+					c="lightblue"
+					component="a"
+					href="https://www.buymeacoffee.com/ggaidelevicius"
+					style={{ marginTop: '0.2rem' }}
+					className="link"
+					target="_blank"
+				>
+					<Trans>☕ Gift a coffee</Trans>
+				</Text>
 			</Modal>
-
 			<Modal
 				opened={outsideClickModalOpened}
 				onClose={handleOutsideClick} // instead of invoking this directly we should first check to see if there are unsaved changes

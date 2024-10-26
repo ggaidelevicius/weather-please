@@ -6,12 +6,6 @@ const AdmZip = require('adm-zip')
 const EXTENSION_DIR = 'extension'
 const MANIFEST_PATH = 'manifest.json'
 const PACKAGE_PATH = 'package.json'
-const PBXPROJ_PATH = path.join(
-	'platforms',
-	'apple',
-	'Weather Please.xcodeproj',
-	'project.pbxproj',
-)
 
 const args = process.argv.slice(2)
 const releaseType = args[0]
@@ -29,23 +23,6 @@ const bumpVersion = (currentVersion, releaseType) => {
 		default:
 			throw new Error('Invalid release type')
 	}
-}
-
-const updatePbxprojVersion = (newVersion) => {
-	let pbxContent = fs.readFileSync(PBXPROJ_PATH, 'utf-8')
-
-	pbxContent = pbxContent.replaceAll(
-		/CURRENT_PROJECT_VERSION = \d+\.\d+\.\d+/g,
-		`CURRENT_PROJECT_VERSION = ${newVersion}`,
-	)
-
-	pbxContent = pbxContent.replaceAll(
-		/MARKETING_VERSION = \d+\.\d+\.\d+/g,
-		`MARKETING_VERSION = ${newVersion}`,
-	)
-
-	fs.writeFileSync(PBXPROJ_PATH, pbxContent)
-	console.log(`Version in project.pbxproj updated to: ${newVersion}`)
 }
 
 const createZipWithContents = (zip, contentPath, zipName) => {
@@ -135,8 +112,6 @@ const processReleaseType = (releaseType) => {
 	console.log(
 		`Version in manifest.json and package.json updated to: ${newVersion}`,
 	)
-
-	updatePbxprojVersion(newVersion)
 
 	modifyManifest({ version: newVersion }, [])
 	processZipCreation(EXTENSION_DIR, newVersion, '')
