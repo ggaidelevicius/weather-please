@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next'
 import { withSentryConfig } from '@sentry/nextjs'
 
-/** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
 	reactStrictMode: true,
 	experimental: {
