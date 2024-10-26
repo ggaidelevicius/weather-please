@@ -257,7 +257,6 @@ const WeatherPlease: FC<{}> = () => {
 			if (changedLocation) {
 				setChangedLocation(false)
 			}
-
 		} else if (error) {
 			// eslint-disable-next-line no-console
 			console.error(error)
@@ -355,7 +354,9 @@ const WeatherPlease: FC<{}> = () => {
 							if (typeof data === 'string') {
 								try {
 									data = JSON.parse(data)
-								} catch (e) { }
+								} catch (e) {
+									console.error(e)
+								}
 							}
 
 							if (data && typeof data === 'object') {

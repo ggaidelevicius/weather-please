@@ -154,7 +154,6 @@ const Settings: FC<SettingsProps> = (props) => {
 			>
 				<IconSettings aria-hidden style={{ width: '70%', height: '70%' }} />
 			</ActionIcon>
-
 			<Modal
 				opened={opened}
 				onClose={handleOutsideClick} // instead of invoking this directly we should first check to see if there are unsaved changes
@@ -512,7 +511,6 @@ const Settings: FC<SettingsProps> = (props) => {
 					</Text>
 				)}
 			</Modal>
-
 			<Modal
 				opened={outsideClickModalOpened}
 				onClose={handleOutsideClick} // instead of invoking this directly we should first check to see if there are unsaved changes
