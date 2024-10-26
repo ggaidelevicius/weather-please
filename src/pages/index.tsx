@@ -354,6 +354,7 @@ const WeatherPlease = () => {
 								try {
 									data = JSON.parse(data)
 								} catch (e) {
+									// eslint-disable-next-line no-console
 									console.error(e)
 								}
 							}

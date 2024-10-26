@@ -1,70 +1,37 @@
-let config = {
+const { withSentryConfig } = require('@sentry/nextjs')
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
 	reactStrictMode: true,
 	experimental: {
-		swcPlugins: [
-			[
-				'@lingui/swc-plugin',
-				{
-					// the same options as in .swcrc
-				},
-			],
-		],
+		swcPlugins: [['@lingui/swc-plugin', {}]],
 	},
 }
 
 if (process.env.NEXT_PUBLIC_BUILD_MODE === 'extension') {
-	config = {
-		reactStrictMode: true,
-		experimental: {
-			swcPlugins: [
-				[
-					'@lingui/swc-plugin',
-					{
-						// the same options as in .swcrc
-					},
-				],
-			],
-		},
+	Object.assign(nextConfig, {
 		output: 'export',
 		assetPrefix: '.',
 		images: {
 			unoptimized: true,
 		},
-	}
+	})
 }
 
-/** @type {import('next').NextConfig} */
-const nextConfig = config
+const sentryWebpackPluginOptions = {
+	silent: true,
+	org: 'gus-gaidelevicius-39581d35a',
+	project: 'weather-please',
+}
 
-module.exports = nextConfig
-
-// Injected content via Sentry wizard below
-
-const { withSentryConfig } = require('@sentry/nextjs')
+const sentryNextjsOptions = {
+	widenClientFileUpload: true,
+	hideSourceMaps: true,
+	disableLogger: true,
+}
 
 module.exports = withSentryConfig(
-	module.exports,
-	{
-		// For all available options, see:
-		// https://github.com/getsentry/sentry-webpack-plugin#options
-
-		// Suppresses source map uploading logs during build
-		silent: true,
-
-		org: 'gus-gaidelevicius-39581d35a',
-		project: 'weather-please',
-	},
-	{
-		// For all available options, see:
-		// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-		// Upload a larger set of source maps for prettier stack traces (increases build time)
-		widenClientFileUpload: true,
-
-		// Hides source maps from generated client bundles
-		hideSourceMaps: true,
-
-		// Automatically tree-shake Sentry logger statements to reduce bundle size
-		disableLogger: true,
-	},
+	nextConfig,
+	sentryWebpackPluginOptions,
+	sentryNextjsOptions,
 )

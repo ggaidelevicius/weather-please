@@ -49,6 +49,7 @@ export const POST = async (request: Request) => {
 		const json = await request.json()
 		const parseResult = payloadSchema.safeParse(json)
 		if (!parseResult.success) {
+			// eslint-disable-next-line no-console
 			console.error(parseResult.error)
 			Sentry.captureException(parseResult.error, { extra: { payload: json } })
 			return Response.json({ message: 'Bad Request' }, { status: 400 })
