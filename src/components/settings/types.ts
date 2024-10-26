@@ -62,7 +62,6 @@ export interface SettingsProps {
 	readonly handleClick: HandleClick
 	readonly config: Config
 	readonly setInput: Dispatch<SetStateAction<Config>>
-	readonly usingSafari: boolean
 	readonly reviewLink: string
 	settingsOpened: { current: boolean }
 }

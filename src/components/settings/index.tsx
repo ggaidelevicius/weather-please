@@ -26,17 +26,15 @@ import { useEffect, useState } from 'react'
 import alertStyles from '../alert/styles.module.css'
 import type { HandleOutsideClick, Location, SettingsProps } from './types'
 
-const Settings = (props: SettingsProps) => {
-	const {
-		input,
-		handleChange,
-		handleClick,
-		config,
-		setInput,
-		usingSafari,
-		reviewLink,
-		settingsOpened,
-	} = props
+const Settings = ({
+	input,
+	handleChange,
+	handleClick,
+	config,
+	setInput,
+	reviewLink,
+	settingsOpened,
+}: SettingsProps) => {
 	const [opened, { open, close }] = useDisclosure(false)
 	const [outsideClickModalOpened, setOutsideClickModalOpened] =
 		useState<boolean>(false)
@@ -217,7 +215,7 @@ const Settings = (props: SettingsProps) => {
 					}}
 					error={
 						/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat) ||
-						input.lat === '' ? undefined : (
+							input.lat === '' ? undefined : (
 							<Trans>Invalid latitude value</Trans>
 						)
 					}
@@ -257,19 +255,9 @@ const Settings = (props: SettingsProps) => {
 						handleChange('periodicLocationUpdate', e.target.checked)
 					}}
 				/>
-				{!usingSafari && (
-					<Text size="sm" c="dimmed">
-						<Trans>Note: This requires browser permissions</Trans>
-					</Text>
-				)}
-				{usingSafari && (
-					<Text size="sm" c="dimmed">
-						<Trans>
-							Note: This currently does not work well in Safari, and may be
-							inaccurate
-						</Trans>
-					</Text>
-				)}
+				<Text size="sm" c="dimmed">
+					<Trans>Note: This requires browser permissions</Trans>
+				</Text>
 				<Alert
 					className={alertStyles.alert}
 					radius="md"
@@ -499,19 +487,17 @@ const Settings = (props: SettingsProps) => {
 				>
 					<Trans>🔒 Privacy policy</Trans>
 				</Text>
-				{!usingSafari && (
-					<Text
-						size="sm"
-						c="lightblue"
-						component="a"
-						href="https://www.buymeacoffee.com/ggaidelevicius"
-						style={{ marginTop: '0.2rem' }}
-						className="link"
-						target="_blank"
-					>
-						<Trans>☕ Gift a coffee</Trans>
-					</Text>
-				)}
+				<Text
+					size="sm"
+					c="lightblue"
+					component="a"
+					href="https://www.buymeacoffee.com/ggaidelevicius"
+					style={{ marginTop: '0.2rem' }}
+					className="link"
+					target="_blank"
+				>
+					<Trans>☕ Gift a coffee</Trans>
+				</Text>
 			</Modal>
 			<Modal
 				opened={outsideClickModalOpened}
@@ -539,13 +525,13 @@ const Settings = (props: SettingsProps) => {
 					!/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(
 						input.lon,
 					)) && ( // this should instead prompt the user to cancel this modal only, or alternatively put the inputs back in here
-					<Text mt="md">
-						<Trans>
-							You can&apos;t save because either your latitude or longitude are
-							invalid.
-						</Trans>
-					</Text>
-				)}
+						<Text mt="md">
+							<Trans>
+								You can&apos;t save because either your latitude or longitude are
+								invalid.
+							</Trans>
+						</Text>
+					)}
 				<Button
 					onClick={() => {
 						handleClick('manual')

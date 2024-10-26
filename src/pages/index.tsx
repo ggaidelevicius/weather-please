@@ -134,7 +134,6 @@ const WeatherPlease = () => {
 	const [reviewLink, setReviewLink] = useState(
 		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
 	)
-	const [usingSafari, setUsingSafari] = useState<boolean>(false)
 	const [usingCachedData, setUsingCachedData] = useState(true)
 
 	const currentDateRef = useRef(new Date().getDate())
@@ -819,7 +818,6 @@ const WeatherPlease = () => {
 			userAgent.indexOf('safari') !== -1 &&
 			userAgent.indexOf('chrome') === -1
 		) {
-			setUsingSafari(true)
 			setReviewLink('https://apps.apple.com/au/app/weather-please/id6462968576')
 			return 'https://apps.apple.com/au/app/weather-please/id6462968576'
 		} else if (userAgent.includes('firefox/')) {
@@ -888,7 +886,6 @@ const WeatherPlease = () => {
 				handleClick={handleClick}
 				config={config}
 				setInput={setInput}
-				usingSafari={usingSafari}
 				reviewLink={reviewLink}
 				settingsOpened={settingsOpened}
 			/>

@@ -17,7 +17,6 @@ export type HandleChange = (
  * Manages the "saved" button click action during initialization.
  *
  * - If browser geolocation permissions are granted, it attempts to fetch location using the browser API.
- * - For Safari browsers, due to their daily permission prompts, a third-party service is used for location retrieval.
  * - If automatic methods don't succeed, the user is prompted to manually enter their latitude and longitude.
  *
  * @param method Specifies whether the location should be fetched automatically ('auto') or manually ('manual').
