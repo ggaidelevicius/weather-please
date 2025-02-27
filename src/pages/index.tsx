@@ -919,6 +919,7 @@ const WeatherPlease = () => {
 		// </>
 		<>
 			<main>
+				<RingLoader />
 				<Card
 					max={24}
 					min={14}

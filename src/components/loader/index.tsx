@@ -1,13 +1,8 @@
 export const RingLoader = () => (
 	<svg
-		style={{
-			width: 'var(--loader-size)',
-			height: 'var(--loader-size)',
-			stroke: 'var(--loader-color)',
-		}}
 		viewBox="0 0 45 45"
 		xmlns="http://www.w3.org/2000/svg"
-		stroke="#fff"
+		className="h-[84px] w-[84px] stroke-blue-500"
 	>
 		<g
 			fill="none"
