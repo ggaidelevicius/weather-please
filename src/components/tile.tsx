@@ -146,11 +146,11 @@ export const Tile = ({
 				transition: {
 					type: 'spring',
 					duration: 2,
-					delay: index * 0.075 + delayBaseline,
+					delay: index * 0.1 + delayBaseline,
 				},
 			}}
 			exit={{ scale: 0.95, opacity: 0 }}
-			className="rounded-lg bg-dark-700 p-5 select-none"
+			className="rounded-lg bg-dark-700 p-5 will-change-auto select-none"
 		>
 			<span className="text-2xl font-bold text-white">
 				{displayedIdentifier}
