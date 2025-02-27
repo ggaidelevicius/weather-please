@@ -105,7 +105,7 @@ const months = [
 	<Trans key="december">December</Trans>,
 ]
 
-interface CardProps {
+interface TileProps {
 	day: number
 	max: number
 	min: number
@@ -119,7 +119,7 @@ interface CardProps {
 	delayBaseline: number
 }
 
-export const Card = ({
+export const Tile = ({
 	day,
 	max,
 	min,
@@ -131,7 +131,7 @@ export const Card = ({
 	identifier,
 	index,
 	delayBaseline,
-}: CardProps) => {
+}: TileProps) => {
 	const displayedIdentifier =
 		identifier === 'day'
 			? days[new Date(day * 1000).getDay()]
@@ -155,14 +155,52 @@ export const Card = ({
 			<span className="text-2xl font-bold text-white">
 				{displayedIdentifier}
 			</span>
-			<div className="mt-3 flex items-center justify-between gap-4">
+			<div className="mt-2.5 flex items-center justify-between gap-4">
 				<div className="flex flex-col">
 					<div className="flex items-baseline gap-2">
-						<span className="text-4xl text-dark-100">{Math.round(max)}</span>
-						<span className="text-xl text-dark-300">{Math.round(min)}</span>
+						<span className="text-3xl text-dark-100" aria-hidden>
+							{useMetric ? Math.round(max) : Math.round((max * 9) / 5 + 32)}
+						</span>
+						<span className="sr-only">
+							{useMetric && (
+								<Trans>
+									The maximum temperature will be {Math.round(max)} degrees
+									celsius.
+								</Trans>
+							)}
+							{!useMetric && (
+								<Trans>
+									The maximum temperature will be{' '}
+									{Math.round((max * 9) / 5 + 32)} degrees fahrenheit.
+								</Trans>
+							)}
+						</span>
+						<span className="text-lg text-dark-300" aria-hidden>
+							{useMetric ? Math.round(min) : Math.round((min * 9) / 5 + 32)}
+						</span>
+						<span className="sr-only">
+							{useMetric && (
+								<Trans>
+									The minimum temperature will be {Math.round(min)} degrees
+									celsius.
+								</Trans>
+							)}
+							{!useMetric && (
+								<Trans>
+									The minimum temperature will be{' '}
+									{Math.round((min * 9) / 5 + 32)} degrees fahrenheit.
+								</Trans>
+							)}
+						</span>
 					</div>
-					<span className="text-dark-100">
+					<span className="text-dark-100" aria-hidden>
 						{descriptionMap[description as keyof typeof descriptionMap]}
+					</span>
+					<span className="sr-only">
+						<Trans>
+							The expected type of weather is{' '}
+							{descriptionMap[description as keyof typeof descriptionMap]}.
+						</Trans>
 					</span>
 				</div>
 				<Image
@@ -175,10 +213,10 @@ export const Card = ({
 					className="h-[56px] w-[56px]"
 				/>
 			</div>
-			<div className="mt-5 flex flex-row justify-between gap-4">
+			<div className="mt-5 flex flex-row justify-between gap-3">
 				<div className="flex flex-row items-center gap-1.5">
 					<IconUvIndex size={18} className="text-dark-100" aria-hidden />
-					<span aria-hidden className="text-dark-100">
+					<span aria-hidden className="text-sm text-dark-100">
 						{Math.round(uv)}
 					</span>
 					<span className="sr-only">
@@ -187,7 +225,7 @@ export const Card = ({
 				</div>
 				<div className="flex flex-row items-center gap-1.5">
 					<IconWind size={18} className="text-dark-100" aria-hidden />
-					<span aria-hidden className="text-dark-100">
+					<span aria-hidden className="text-sm text-dark-100">
 						{useMetric && <Trans>{Math.round(wind)} km/h</Trans>}
 						{!useMetric && <Trans>{Math.round(wind / 1.609344)} mph</Trans>}
 					</span>
@@ -210,7 +248,7 @@ export const Card = ({
 					<IconCloudRain size={18} className="text-dark-100" aria-hidden />
 					<span
 						aria-hidden
-						className="text-dark-100"
+						className="text-sm text-dark-100"
 					>{`${Math.round(rain)}%`}</span>
 					<span className="sr-only">
 						<Trans>

@@ -1,22 +1,17 @@
+import { Initialisation } from '@/components/initialisation'
 import { RingLoader } from '@/components/loader'
-import styles from '@/styles/styles.module.css'
+import { Tile } from '@/components/tile'
 import { mergeObjects } from '@/util/helpers'
-import type {
-	DetermineGridColumns,
-	HandleChange,
-	WeatherData,
-} from '@/util/types'
+import type { HandleChange, WeatherData } from '@/util/types'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 import { messages } from '../locales/en/messages'
 import { changeLocalisation, locales } from '../util/i18n'
 import { queryClient } from './_app'
-import { Card } from '@/components/card'
-import { Initialisation } from '@/components/initialisation'
 
 i18n.load({
 	en: messages,
@@ -135,31 +130,31 @@ const App = () => {
 		enabled: Boolean(config.lat) && Boolean(config.lon) && !usingCachedData,
 	})
 
-	// useEffect(() => {
-	// 	const keys = Array.from({ length: 10 }, (_, i) => (i + 1).toString())
+	useEffect(() => {
+		const keys = Array.from({ length: 10 }, (_, i) => (i + 1).toString())
 
-	// 	const handleKeyDown = (event: KeyboardEvent) => {
-	// 		if (!opened && config.useShortcuts && !settingsOpened.current) {
-	// 			if (keys.includes(event.key)) {
-	// 				setConfig((p) => ({
-	// 					...p,
-	// 					daysToRetrieve: event.key,
-	// 				}))
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (config.useShortcuts) {
+				if (keys.includes(event.key)) {
+					setConfig((p) => ({
+						...p,
+						daysToRetrieve: event.key,
+					}))
 
-	// 				setInput((p) => ({
-	// 					...p,
-	// 					daysToRetrieve: event.key,
-	// 				}))
-	// 			}
-	// 		}
-	// 	}
+					setInput((p) => ({
+						...p,
+						daysToRetrieve: event.key,
+					}))
+				}
+			}
+		}
 
-	// 	window.addEventListener('keydown', handleKeyDown)
+		window.addEventListener('keydown', handleKeyDown)
 
-	// 	return () => {
-	// 		window.removeEventListener('keydown', handleKeyDown)
-	// 	}
-	// }, [config.useShortcuts, opened])
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown)
+		}
+	}, [config.useShortcuts])
 
 	useEffect(() => {
 		if (data) {
@@ -391,16 +386,6 @@ const App = () => {
 	}
 
 	/**
-	 * Closes the <Initialisation /> modal if it's opened and both "lat" and "lon" are configured in the "config".
-	 */
-	// useEffect(() => {
-	// 	if (opened && config.lat && config.lon) {
-	// 		close()
-	// 	}
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [opened, config.lat, config.lon])
-
-	/**
 	 * Commits the "config" to localStorage if "config.lat" and "config.lon" are valid latitude and longitude values, respectively.
 	 * Latitude: -90 to +90, Longitude: -180 to +180.
 	 */
@@ -523,8 +508,9 @@ const App = () => {
 				delayBaseline = 0
 			}
 			return (
-				<Card
+				<Tile
 					{...day}
+					key={day.day}
 					index={index}
 					delayBaseline={delayBaseline}
 					useMetric={config.useMetric}
@@ -635,27 +621,6 @@ const App = () => {
 	return (
 		// <>
 		// 	<AnimatePresence>
-		// 		{weatherData.length === 0 && config.lat && config.lon && (
-		// 			<motion.div
-		// 				initial={{ scale: 1, opacity: 0 }}
-		// 				animate={{ scale: 1, opacity: 1 }}
-		// 				exit={{ scale: 0.95, opacity: 0 }}
-		// 				style={{
-		// 					position: 'absolute',
-		// 					width: '100%',
-		// 					margin: 'auto',
-		// 					display: 'flex',
-		// 					alignItems: 'center',
-		// 					justifyContent: 'center',
-		// 					background: 'none',
-		// 				}}
-		// 			>
-		// 				{/* <Loader loaders={{ ring: RingLoader }} type="ring" size={80} /> */}
-		// 			</motion.div>
-		// 		)}
-		// 	</AnimatePresence>
-
-		// 	<AnimatePresence>
 		// 		<motion.main
 		// 			className={styles.main}
 		// 			style={{
@@ -688,36 +653,12 @@ const App = () => {
 		// 		reviewLink={reviewLink}
 		// 		settingsOpened={settingsOpened}
 		// 	/>
-
-		// 	<Initialisation
-		// 		geolocationError={geolocationError}
-		// 		handleClick={handleClick}
-		// 		input={input}
-		// 		handleChange={handleChange}
-		// 		opened={opened}
-		// 		close={close}
-		// 	/>
-
-		// 	<a
-		// 		href="https://open-meteo.com/"
-		// 		target="_blank"
-		// 		className={styles.link}
-		// 		style={{
-		// 			position: 'fixed',
-		// 			bottom: '1rem',
-		// 			left: '1rem',
-		// 			fontSize: '0.75rem',
-		// 			color: 'hsl(220deg 2.78% 57.65%)',
-		// 			lineHeight: 1,
-		// 			textDecoration: 'none',
-		// 		}}
-		// 	>
-		// 		<Trans>weather data provided by open-meteo</Trans>
-		// 	</a>
 		// </>
 		<>
-			<main className="grid grid-cols-3 gap-5 p-5">
-				<AnimatePresence>
+			<AnimatePresence>
+				<motion.main
+					className={`grid max-w-4xl ${weatherData.length === 0 ? 'grid-cols-1' : 'grid-cols-3'} gap-5 p-5`}
+				>
 					{!config?.lat || !config?.lon ? (
 						<Initialisation
 							handleClick={handleClick}
@@ -727,10 +668,10 @@ const App = () => {
 					) : weatherData.length === 0 ? (
 						<RingLoader />
 					) : (
-						<>{tiles}</>
+						tiles
 					)}
-				</AnimatePresence>
-			</main>
+				</motion.main>
+			</AnimatePresence>
 
 			<a
 				href="https://open-meteo.com/"
@@ -764,33 +705,6 @@ const isLocalStorageDataValid = (changedLocation: boolean) => {
 		storedAlertsAreValid.success &&
 		storedDataIsValid.success
 	)
-}
-
-const determineGridColumns: DetermineGridColumns = (daysToRetrieve) => {
-	const value = parseInt(daysToRetrieve)
-
-	switch (value) {
-		case 1:
-			return 1
-		case 2:
-			return 2
-		case 3:
-			return 3
-		case 4:
-			return 4
-		case 5:
-			return 5
-		case 6:
-			return 3
-		case 7:
-			return 3
-		case 8:
-			return 4
-		case 9:
-			return 3
-		default:
-			return 3
-	}
 }
 
 export default App
