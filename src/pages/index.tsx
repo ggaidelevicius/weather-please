@@ -90,7 +90,7 @@ const alertSchema = z.object({
 
 export type Alerts = z.infer<typeof alertSchema>
 
-const WeatherPlease = () => {
+const App = () => {
 	const [alertData, setAlertData] = useState<Alerts>({
 		totalPrecipitation: {
 			precipitation: {
@@ -698,7 +698,7 @@ const WeatherPlease = () => {
 					layout={completedFirstLoad}
 					style={{ background: 'none', willChange: 'transform, opacity' }}
 				>
-					<Tile
+					<Card
 						{...day}
 						useMetric={config.useMetric}
 						identifier={config.identifier}
@@ -919,18 +919,34 @@ const WeatherPlease = () => {
 		// </>
 		<>
 			<main>
-				<RingLoader />
-				<Card
-					max={24}
-					min={14}
-					day={500}
-					description={0}
-					wind={5}
-					rain={3}
-					uv={5}
-					useMetric
-					identifier="day"
+				<Initialisation
+					geolocationError={geolocationError}
+					handleClick={handleClick}
+					input={input}
+					handleChange={handleChange}
+					opened={true}
+					// close={close}
 				/>
+
+				<RingLoader />
+				{tiles}
+
+				<a
+					href="https://open-meteo.com/"
+					target="_blank"
+					className={styles.link}
+					style={{
+						position: 'fixed',
+						bottom: '1rem',
+						left: '1rem',
+						fontSize: '0.75rem',
+						color: 'hsl(220deg 2.78% 57.65%)',
+						lineHeight: 1,
+						textDecoration: 'none',
+					}}
+				>
+					<Trans>weather data provided by open-meteo</Trans>
+				</a>
 			</main>
 		</>
 	)
@@ -959,4 +975,4 @@ const isLocalStorageDataValid = (changedLocation: boolean) => {
 	)
 }
 
-export default WeatherPlease
+export default App

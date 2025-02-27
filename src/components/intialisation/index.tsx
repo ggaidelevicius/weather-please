@@ -18,6 +18,13 @@ import { useState } from 'react'
 import Favicon from '../../../public/favicon.png'
 import alertStyles from '../alert/styles.module.css'
 import type { InitialisationProps } from './types'
+import {
+	Description,
+	Dialog,
+	DialogBackdrop,
+	DialogPanel,
+	DialogTitle,
+} from '@headlessui/react'
 
 const Initialisation = ({
 	opened,
@@ -27,6 +34,8 @@ const Initialisation = ({
 	handleChange,
 	close,
 }: InitialisationProps) => {
+	const [isOpen, setIsOpen] = useState(false)
+
 	const [loading, setLoading] = useState<boolean>(false)
 
 	return (
@@ -269,7 +278,39 @@ const Initialisation = ({
 		// 		</>
 		// 	)}
 		// </Modal>
-		<></>
+		<Dialog
+			open={true}
+			onClose={() => setIsOpen(false)}
+			className="relative z-50"
+		>
+			<DialogBackdrop className="fixed inset-0 bg-black/60" />
+			<div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+				<DialogPanel className="max-w-lg space-y-4 rounded-xl border bg-dark-800 p-12">
+					<DialogTitle
+						as="div"
+						className="flex flex-row items-center justify-center gap-5"
+					>
+						<Image
+							priority
+							quality={100}
+							src={Favicon}
+							alt="Weather Please logo"
+							style={{ height: '4rem', width: '4rem' }}
+						/>
+						<h1 className="text-4xl font-bold text-white">
+							Weather <span className="text-[#ea5e57]">Please</span>
+						</h1>
+					</DialogTitle>
+					<Description className="mt-8 mb-1 font-semibold text-white">
+						To get started, let's set your language and location.
+					</Description>
+					<p className="text-sm text-dark-100">
+						If your browser prompts you for location permissions, please select
+						"allow".
+					</p>
+				</DialogPanel>
+			</div>
+		</Dialog>
 	)
 }
 
