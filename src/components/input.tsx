@@ -6,8 +6,6 @@ import type { ComponentPropsWithoutRef } from 'react'
 
 interface SelectProps {
 	label: string
-	value: string
-	onChange: (key: keyof Config, value: Config[keyof Config]) => void
 	options: { value: string; label: string }[]
 }
 
