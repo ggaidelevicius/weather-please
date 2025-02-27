@@ -214,7 +214,7 @@ export const Tile = ({
 				/>
 			</div>
 			<div className="mt-5 flex flex-row justify-between gap-3">
-				<div className="flex flex-row items-center gap-1.5">
+				<div className="flex flex-row items-center gap-1">
 					<IconUvIndex size={18} className="text-dark-100" aria-hidden />
 					<span aria-hidden className="text-sm text-dark-100">
 						{Math.round(uv)}
@@ -223,7 +223,7 @@ export const Tile = ({
 						<Trans>The maximum UV index will be {Math.round(uv)}.</Trans>
 					</span>
 				</div>
-				<div className="flex flex-row items-center gap-1.5">
+				<div className="flex flex-row items-center gap-1">
 					<IconWind size={18} className="text-dark-100" aria-hidden />
 					<span aria-hidden className="text-sm text-dark-100">
 						{useMetric && <Trans>{Math.round(wind)} km/h</Trans>}
@@ -244,7 +244,7 @@ export const Tile = ({
 						)}
 					</span>
 				</div>
-				<div className="flex flex-row items-center gap-1.5">
+				<div className="flex flex-row items-center gap-1">
 					<IconCloudRain size={18} className="text-dark-100" aria-hidden />
 					<span
 						aria-hidden
