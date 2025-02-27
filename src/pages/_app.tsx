@@ -14,7 +14,6 @@ export const queryClient = new QueryClient({
 	},
 })
 
-
 const App = (props: AppProps) => {
 	const { Component, pageProps } = props
 

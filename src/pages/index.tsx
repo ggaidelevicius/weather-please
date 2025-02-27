@@ -919,7 +919,17 @@ const WeatherPlease = () => {
 		// </>
 		<>
 			<main>
-				<Card max={24} min={14} day={500} description={0} wind={5} rain={3} uv={5} useMetric identifier='day' />
+				<Card
+					max={24}
+					min={14}
+					day={500}
+					description={0}
+					wind={5}
+					rain={3}
+					uv={5}
+					useMetric
+					identifier="day"
+				/>
 			</main>
 		</>
 	)
