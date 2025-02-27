@@ -16,5 +16,7 @@
 	"requirePragma": false,
 	"tabWidth": 2,
 	"useTabs": true,
-	"embeddedLanguageFormatting": "auto"
+	"embeddedLanguageFormatting": "auto",
+	"plugins": ["prettier-plugin-tailwindcss"],
+	"tailwindStylesheet": "./src/styles/tailwind.css"
 }

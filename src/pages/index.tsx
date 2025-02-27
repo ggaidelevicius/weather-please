@@ -13,9 +13,9 @@ import type {
 } from '@/util/types'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/macro'
-import { Button, Loader } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-import { notifications } from '@mantine/notifications'
+// import { Button, Loader } from '@mantine/core'
+// import { useDisclosure } from '@mantine/hooks'
+// import { notifications } from '@mantine/notifications'
 import * as Sentry from '@sentry/nextjs'
 import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -850,7 +850,7 @@ const WeatherPlease = () => {
 							background: 'none',
 						}}
 					>
-						<Loader loaders={{ ring: RingLoader }} type="ring" size={80} />
+						{/* <Loader loaders={{ ring: RingLoader }} type="ring" size={80} /> */}
 					</motion.div>
 				)}
 			</AnimatePresence>

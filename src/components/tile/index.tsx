@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { Card, Title } from '@mantine/core'
-import classnames from 'classnames'
+// import { Card, Title } from '@mantine/core'
+import { clsx } from 'clsx'
 import type { ReactElement } from 'react'
 import { useState } from 'react'
 import styles from './styles.module.css'

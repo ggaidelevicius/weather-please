@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "esnext",
+		"target": "ESNext",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"skipLibCheck": true,
@@ -14,14 +14,14 @@
 		"isolatedModules": true,
 		"jsx": "preserve",
 		"incremental": true,
-		"paths": {
-			"@/*": ["./src/*"]
-		},
 		"plugins": [
 			{
 				"name": "next"
 			}
-		]
+		],
+		"paths": {
+			"@/*": ["./src/*"]
+		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
 	"exclude": ["node_modules"]
