@@ -2,6 +2,7 @@ import type { Config } from '@/pages'
 import { Field, Select as HeadlessSelect, Label } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Trans } from '@lingui/macro'
+import type { ComponentPropsWithoutRef } from 'react'
 
 interface SelectProps {
 	label: string
@@ -10,7 +11,12 @@ interface SelectProps {
 	options: { value: string; label: string }[]
 }
 
-export const Select = ({ label, value, onChange, options }: SelectProps) => (
+export const Select = ({
+	label,
+	value,
+	onChange,
+	options,
+}: Readonly<ComponentPropsWithoutRef<'select'> & SelectProps>) => (
 	<Field>
 		<Label className="block text-sm font-medium text-white">
 			<Trans>{label}</Trans>
