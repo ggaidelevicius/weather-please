@@ -12,7 +12,7 @@ interface SelectProps {
 
 export const Select = ({ label, value, onChange, options }: SelectProps) => (
 	<Field>
-		<Label className="block text-sm font-medium text-dark-100">
+		<Label className="block text-sm font-medium text-white">
 			<Trans>{label}</Trans>
 		</Label>
 		<div className="relative mt-2">
