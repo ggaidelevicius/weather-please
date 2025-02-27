@@ -14,6 +14,7 @@ export const queryClient = new QueryClient({
 	},
 })
 
+
 const App = (props: AppProps) => {
 	const { Component, pageProps } = props
 
@@ -28,7 +29,7 @@ const App = (props: AppProps) => {
 				<link rel="icon" href="/favicon.png" />
 			</Head>
 			<QueryClientProvider client={queryClient}>
-				{/* <Component {...pageProps} /> */}
+				<Component {...pageProps} />
 			</QueryClientProvider>
 			{process.env.NEXT_PUBLIC_DEMO === 'true' && <Analytics />}
 		</I18nProvider>

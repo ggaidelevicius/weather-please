@@ -24,6 +24,7 @@ import { z } from 'zod'
 import { messages } from '../locales/en/messages'
 import { changeLocalisation, locales } from '../util/i18n'
 import { queryClient } from './_app'
+import Card from '@/components/card'
 
 i18n.load({
 	en: messages,
@@ -106,7 +107,7 @@ const WeatherPlease = () => {
 	})
 	const [weatherData, setWeatherData] = useState<[] | Data>([])
 	const [geolocationError, setGeolocationError] = useState<boolean>(false)
-	const [opened, { open, close }] = useDisclosure(false)
+	// const [opened, { open, close }] = useDisclosure(false)
 	const settingsOpened = useRef(false)
 	const initialState: Config = {
 		lang: 'en',
@@ -148,31 +149,31 @@ const WeatherPlease = () => {
 		enabled: Boolean(config.lat) && Boolean(config.lon) && !usingCachedData,
 	})
 
-	useEffect(() => {
-		const keys = Array.from({ length: 10 }, (_, i) => (i + 1).toString())
+	// useEffect(() => {
+	// 	const keys = Array.from({ length: 10 }, (_, i) => (i + 1).toString())
 
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (!opened && config.useShortcuts && !settingsOpened.current) {
-				if (keys.includes(event.key)) {
-					setConfig((p) => ({
-						...p,
-						daysToRetrieve: event.key,
-					}))
+	// 	const handleKeyDown = (event: KeyboardEvent) => {
+	// 		if (!opened && config.useShortcuts && !settingsOpened.current) {
+	// 			if (keys.includes(event.key)) {
+	// 				setConfig((p) => ({
+	// 					...p,
+	// 					daysToRetrieve: event.key,
+	// 				}))
 
-					setInput((p) => ({
-						...p,
-						daysToRetrieve: event.key,
-					}))
-				}
-			}
-		}
+	// 				setInput((p) => ({
+	// 					...p,
+	// 					daysToRetrieve: event.key,
+	// 				}))
+	// 			}
+	// 		}
+	// 	}
 
-		window.addEventListener('keydown', handleKeyDown)
+	// 	window.addEventListener('keydown', handleKeyDown)
 
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown)
-		}
-	}, [config.useShortcuts, opened])
+	// 	return () => {
+	// 		window.removeEventListener('keydown', handleKeyDown)
+	// 	}
+	// }, [config.useShortcuts, opened])
 
 	useEffect(() => {
 		if (data) {
@@ -258,16 +259,16 @@ const WeatherPlease = () => {
 		} else if (error) {
 			// eslint-disable-next-line no-console
 			console.error(error)
-			notifications.show({
-				title: <Trans>Error</Trans>,
-				message: (
-					<Trans>
-						An error has occurred while fetching weather data. Please try again
-						later.
-					</Trans>
-				),
-				color: 'red',
-			})
+			// notifications.show({
+			// 	title: <Trans>Error</Trans>,
+			// 	message: (
+			// 		<Trans>
+			// 			An error has occurred while fetching weather data. Please try again
+			// 			later.
+			// 		</Trans>
+			// 	),
+			// 	color: 'red',
+			// })
 			if (config.shareCrashesAndErrors) {
 				Sentry.captureException(error)
 			}
@@ -541,12 +542,12 @@ const WeatherPlease = () => {
 	/**
 	 * Closes the <Initialisation /> modal if it's opened and both "lat" and "lon" are configured in the "config".
 	 */
-	useEffect(() => {
-		if (opened && config.lat && config.lon) {
-			close()
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [opened, config.lat, config.lon])
+	// useEffect(() => {
+	// 	if (opened && config.lat && config.lon) {
+	// 		close()
+	// 	}
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [opened, config.lat, config.lon])
 
 	/**
 	 * Commits the "config" to localStorage if "config.lat" and "config.lon" are valid latitude and longitude values, respectively.
@@ -613,16 +614,16 @@ const WeatherPlease = () => {
 				} catch (e) {
 					// eslint-disable-next-line no-console
 					console.error(e)
-					notifications.show({
-						title: <Trans>Error</Trans>,
-						message: (
-							<Trans>
-								An error has occurred while periodically updating location.
-								Please check the console for more details.
-							</Trans>
-						),
-						color: 'red',
-					})
+					// notifications.show({
+					// 	title: <Trans>Error</Trans>,
+					// 	message: (
+					// 		<Trans>
+					// 			An error has occurred while periodically updating location.
+					// 			Please check the console for more details.
+					// 		</Trans>
+					// 	),
+					// 	color: 'red',
+					// })
 					if (config.shareCrashesAndErrors) {
 						Sentry.captureException(e)
 					}
@@ -649,16 +650,16 @@ const WeatherPlease = () => {
 					} catch (e) {
 						// eslint-disable-next-line no-console
 						console.warn(e)
-						notifications.show({
-							title: <Trans>Error</Trans>,
-							message: (
-								<Trans>
-									An error has occurred while fetching location data. Please
-									check the console for more details.
-								</Trans>
-							),
-							color: 'red',
-						})
+						// notifications.show({
+						// 	title: <Trans>Error</Trans>,
+						// 	message: (
+						// 		<Trans>
+						// 			An error has occurred while fetching location data. Please
+						// 			check the console for more details.
+						// 		</Trans>
+						// 	),
+						// 	color: 'red',
+						// })
 						if (config.shareCrashesAndErrors) {
 							Sentry.captureException(e)
 						}
@@ -765,50 +766,50 @@ const WeatherPlease = () => {
 	 * 2. A button to dismiss the prompt and ensure it's never shown again.
 	 */
 	const displayReviewPrompt = () => {
-		notifications.show({
-			id: 'review',
-			title: <Trans>You&apos;ve been using Weather Please for a while</Trans>,
-			message: (
-				<div style={{ display: 'flex', flexDirection: 'column' }}>
-					<p style={{ margin: '0.2rem 0' }}>
-						<Trans>Would you like to leave a review?</Trans>
-					</p>
-					<Button
-						component="a"
-						href={
-							getUserAgent() ??
-							'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews'
-						} // can't pass computed value in here, need to figure out alternative asap
-						style={{ marginTop: '0.5rem' }}
-						onClick={() => {
-							notifications.hide('review')
-							setConfig((prev) => ({
-								...prev,
-								displayedReviewPrompt: true,
-							}))
-						}}
-					>
-						<Trans>🌟 Leave a review</Trans>
-					</Button>
-					<Button
-						style={{ marginTop: '0.5rem' }}
-						variant="light"
-						color="red"
-						onClick={() => {
-							notifications.hide('review')
-							setConfig((prev) => ({
-								...prev,
-								displayedReviewPrompt: true,
-							}))
-						}}
-					>
-						<Trans>Never show this again</Trans>
-					</Button>
-				</div>
-			),
-			autoClose: false,
-			withCloseButton: false,
-		})
+		// notifications.show({
+		// 	id: 'review',
+		// 	title: <Trans>You&apos;ve been using Weather Please for a while</Trans>,
+		// 	message: (
+		// 		<div style={{ display: 'flex', flexDirection: 'column' }}>
+		// 			<p style={{ margin: '0.2rem 0' }}>
+		// 				<Trans>Would you like to leave a review?</Trans>
+		// 			</p>
+		// 			<Button
+		// 				component="a"
+		// 				href={
+		// 					getUserAgent() ??
+		// 					'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews'
+		// 				} // can't pass computed value in here, need to figure out alternative asap
+		// 				style={{ marginTop: '0.5rem' }}
+		// 				onClick={() => {
+		// 					notifications.hide('review')
+		// 					setConfig((prev) => ({
+		// 						...prev,
+		// 						displayedReviewPrompt: true,
+		// 					}))
+		// 				}}
+		// 			>
+		// 				<Trans>🌟 Leave a review</Trans>
+		// 			</Button>
+		// 			<Button
+		// 				style={{ marginTop: '0.5rem' }}
+		// 				variant="light"
+		// 				color="red"
+		// 				onClick={() => {
+		// 					notifications.hide('review')
+		// 					setConfig((prev) => ({
+		// 						...prev,
+		// 						displayedReviewPrompt: true,
+		// 					}))
+		// 				}}
+		// 			>
+		// 				<Trans>Never show this again</Trans>
+		// 			</Button>
+		// 		</div>
+		// 	),
+		// 	autoClose: false,
+		// 	withCloseButton: false,
+		// })
 	}
 
 	const getUserAgent = () => {
@@ -833,88 +834,93 @@ const WeatherPlease = () => {
 	}, [])
 
 	return (
+		// <>
+		// 	<AnimatePresence>
+		// 		{weatherData.length === 0 && config.lat && config.lon && (
+		// 			<motion.div
+		// 				initial={{ scale: 1, opacity: 0 }}
+		// 				animate={{ scale: 1, opacity: 1 }}
+		// 				exit={{ scale: 0.95, opacity: 0 }}
+		// 				style={{
+		// 					position: 'absolute',
+		// 					width: '100%',
+		// 					margin: 'auto',
+		// 					display: 'flex',
+		// 					alignItems: 'center',
+		// 					justifyContent: 'center',
+		// 					background: 'none',
+		// 				}}
+		// 			>
+		// 				{/* <Loader loaders={{ ring: RingLoader }} type="ring" size={80} /> */}
+		// 			</motion.div>
+		// 		)}
+		// 	</AnimatePresence>
+
+		// 	<AnimatePresence>
+		// 		<motion.main
+		// 			layout={usingFreshData}
+		// 			className={styles.main}
+		// 			style={{
+		// 				gridTemplateColumns: `repeat(${determineGridColumns(
+		// 					config.daysToRetrieve,
+		// 				)}, 1fr)`,
+		// 			}}
+		// 		>
+		// 			{tiles}
+		// 			{config.showAlerts && (
+		// 				<Alert
+		// 					{...alertData}
+		// 					useMetric={config.useMetric}
+		// 					showUvAlerts={config.showUvAlerts}
+		// 					showWindAlerts={config.showWindAlerts}
+		// 					showVisibilityAlerts={config.showVisibilityAlerts}
+		// 					showPrecipitationAlerts={config.showPrecipitationAlerts}
+		// 					width={determineGridColumns(config.daysToRetrieve)}
+		// 				/>
+		// 			)}
+		// 		</motion.main>
+		// 	</AnimatePresence>
+
+		// 	<Settings
+		// 		input={input}
+		// 		handleChange={handleChange}
+		// 		handleClick={handleClick}
+		// 		config={config}
+		// 		setInput={setInput}
+		// 		reviewLink={reviewLink}
+		// 		settingsOpened={settingsOpened}
+		// 	/>
+
+		// 	<Initialisation
+		// 		geolocationError={geolocationError}
+		// 		handleClick={handleClick}
+		// 		input={input}
+		// 		handleChange={handleChange}
+		// 		opened={opened}
+		// 		close={close}
+		// 	/>
+
+		// 	<a
+		// 		href="https://open-meteo.com/"
+		// 		target="_blank"
+		// 		className={styles.link}
+		// 		style={{
+		// 			position: 'fixed',
+		// 			bottom: '1rem',
+		// 			left: '1rem',
+		// 			fontSize: '0.75rem',
+		// 			color: 'hsl(220deg 2.78% 57.65%)',
+		// 			lineHeight: 1,
+		// 			textDecoration: 'none',
+		// 		}}
+		// 	>
+		// 		<Trans>weather data provided by open-meteo</Trans>
+		// 	</a>
+		// </>
 		<>
-			<AnimatePresence>
-				{weatherData.length === 0 && config.lat && config.lon && (
-					<motion.div
-						initial={{ scale: 1, opacity: 0 }}
-						animate={{ scale: 1, opacity: 1 }}
-						exit={{ scale: 0.95, opacity: 0 }}
-						style={{
-							position: 'absolute',
-							width: '100%',
-							margin: 'auto',
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							background: 'none',
-						}}
-					>
-						{/* <Loader loaders={{ ring: RingLoader }} type="ring" size={80} /> */}
-					</motion.div>
-				)}
-			</AnimatePresence>
-
-			<AnimatePresence>
-				<motion.main
-					layout={usingFreshData}
-					className={styles.main}
-					style={{
-						gridTemplateColumns: `repeat(${determineGridColumns(
-							config.daysToRetrieve,
-						)}, 1fr)`,
-					}}
-				>
-					{tiles}
-					{config.showAlerts && (
-						<Alert
-							{...alertData}
-							useMetric={config.useMetric}
-							showUvAlerts={config.showUvAlerts}
-							showWindAlerts={config.showWindAlerts}
-							showVisibilityAlerts={config.showVisibilityAlerts}
-							showPrecipitationAlerts={config.showPrecipitationAlerts}
-							width={determineGridColumns(config.daysToRetrieve)}
-						/>
-					)}
-				</motion.main>
-			</AnimatePresence>
-
-			<Settings
-				input={input}
-				handleChange={handleChange}
-				handleClick={handleClick}
-				config={config}
-				setInput={setInput}
-				reviewLink={reviewLink}
-				settingsOpened={settingsOpened}
-			/>
-
-			<Initialisation
-				geolocationError={geolocationError}
-				handleClick={handleClick}
-				input={input}
-				handleChange={handleChange}
-				opened={opened}
-				close={close}
-			/>
-
-			<a
-				href="https://open-meteo.com/"
-				target="_blank"
-				className={styles.link}
-				style={{
-					position: 'fixed',
-					bottom: '1rem',
-					left: '1rem',
-					fontSize: '0.75rem',
-					color: 'hsl(220deg 2.78% 57.65%)',
-					lineHeight: 1,
-					textDecoration: 'none',
-				}}
-			>
-				<Trans>weather data provided by open-meteo</Trans>
-			</a>
+			<main>
+				<Card max={24} min={14} day={500} description={0} wind={5} rain={3} uv={5} useMetric identifier='day' />
+			</main>
 		</>
 	)
 }
