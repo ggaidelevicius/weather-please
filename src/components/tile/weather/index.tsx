@@ -11,7 +11,7 @@ import {
 	Snow,
 	Thunderstorm,
 } from '@/assets/images'
-import { Trans } from '@lingui/macro'
+import { Trans } from '@lingui/react/macro'
 import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
 import type { StaticImageData } from 'next/image'
 import Image from 'next/image'

@@ -1,12 +1,14 @@
 import type { Config } from '@/pages'
 import { Field, Select as HeadlessSelect, Label } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { Trans } from '@lingui/macro'
-import type { ComponentPropsWithoutRef } from 'react'
+import { Trans } from '@lingui/react/macro'
+import type { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
 
 interface SelectProps {
 	label: string
+	value: string | number | readonly string[]
 	options: { value: string; label: string }[]
+	onChange: ChangeEventHandler<HTMLSelectElement>
 }
 
 export const Select = ({
@@ -14,7 +16,9 @@ export const Select = ({
 	value,
 	onChange,
 	options,
-}: Readonly<ComponentPropsWithoutRef<'select'> & SelectProps>) => (
+}: Readonly<
+	Omit<ComponentPropsWithoutRef<'select'>, 'onChange' | 'value'> & SelectProps
+>) => (
 	<Field>
 		<Label className="block text-sm font-medium text-white">
 			<Trans>{label}</Trans>

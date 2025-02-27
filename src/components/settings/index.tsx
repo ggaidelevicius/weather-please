@@ -1,5 +1,5 @@
 import { locales } from '@/util/i18n'
-import { Trans } from '@lingui/macro'
+import { Trans } from '@lingui/react/macro'
 // import {
 // 	ActionIcon,
 // 	Alert,
@@ -16,7 +16,6 @@ import { Trans } from '@lingui/macro'
 // } from '@mantine/core'
 // import { useDisclosure } from '@mantine/hooks'
 // import { notifications } from '@mantine/notifications'
-import * as Sentry from '@sentry/nextjs'
 import {
 	IconSettings,
 	IconShieldCheckFilled,
@@ -115,15 +114,12 @@ const Settings = ({
 					),
 					color: 'red',
 				})
-				if (config.shareCrashesAndErrors) {
-					Sentry.captureException(e)
-				}
 			}
 		}
 		if (config.lat && config.lon && opened) {
 			reverseGeocode()
 		}
-	}, [config.lat, config.lon, opened, config.shareCrashesAndErrors])
+	}, [config.lat, config.lon, opened])
 
 	const handleOutsideClick: HandleOutsideClick = () => {
 		if (JSON.stringify(config) !== JSON.stringify(input)) {
@@ -389,14 +385,6 @@ const Settings = ({
 		// 			checked={input.useMetric}
 		// 			onChange={(e) => {
 		// 				handleChange('useMetric', e.target.checked)
-		// 			}}
-		// 		/>
-		// 		<Switch
-		// 			label={<Trans>Share anonymised crash data and error logs</Trans>}
-		// 			mt="md"
-		// 			checked={input.shareCrashesAndErrors}
-		// 			onChange={(e) => {
-		// 				handleChange('shareCrashesAndErrors', e.target.checked)
 		// 			}}
 		// 		/>
 		// 		<Button

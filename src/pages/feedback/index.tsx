@@ -1,7 +1,7 @@
 import messages from '@/locales/en/messages'
 import { changeLocalisation, locales } from '@/util/i18n'
 import { i18n } from '@lingui/core'
-import { Trans } from '@lingui/macro'
+import { Trans } from '@lingui/react/macro'
 import {
 	Box,
 	Button,
@@ -17,7 +17,6 @@ import {
 	Title,
 	rem,
 } from '@mantine/core'
-import * as Sentry from '@sentry/nextjs'
 import {
 	IconAlertCircleFilled,
 	IconAt,
@@ -36,14 +35,6 @@ if (process.env.NEXT_PUBLIC_BUILD_MODE !== 'extension') {
 		en: messages,
 	})
 	i18n.activate('en')
-
-	Sentry.init({
-		dsn: process.env.NEXT_PUBLIC_SENTRY_DSN ?? '',
-		tracesSampleRate: 1,
-		debug: false,
-		replaysOnErrorSampleRate: 1.0,
-		replaysSessionSampleRate: 0,
-	})
 }
 
 const Feedback = () => {

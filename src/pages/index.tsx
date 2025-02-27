@@ -12,11 +12,10 @@ import type {
 	WeatherData,
 } from '@/util/types'
 import { i18n } from '@lingui/core'
-import { Trans } from '@lingui/macro'
+import { Trans } from '@lingui/react/macro'
 // import { Button, Loader } from '@mantine/core'
 // import { useDisclosure } from '@mantine/hooks'
 // import { notifications } from '@mantine/notifications'
-import * as Sentry from '@sentry/nextjs'
 import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
@@ -44,7 +43,6 @@ const configSchema = z.object({
 			/^(\+|-)?(?:180(?:\.0{1,6})?|((1[0-7]\d)|([1-9]?\d))(?:\.\d{1,6})?)$/,
 		),
 	periodicLocationUpdate: z.boolean(),
-	shareCrashesAndErrors: z.boolean(),
 	showAlerts: z.boolean(),
 	showPrecipitationAlerts: z.boolean(),
 	showUvAlerts: z.boolean(),
@@ -122,7 +120,6 @@ const App = () => {
 		showPrecipitationAlerts: true,
 		daysToRetrieve: '3',
 		identifier: 'day',
-		shareCrashesAndErrors: true,
 		installed: new Date().getTime(),
 		displayedReviewPrompt: false,
 		useShortcuts: false,
@@ -269,11 +266,8 @@ const App = () => {
 			// 	),
 			// 	color: 'red',
 			// })
-			if (config.shareCrashesAndErrors) {
-				Sentry.captureException(error)
-			}
 		}
-	}, [data, error, config.shareCrashesAndErrors, changedLocation])
+	}, [data, error, changedLocation])
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -301,87 +295,9 @@ const App = () => {
 	 */
 	useEffect(() => {
 		if (input.lang) {
-			changeLocalisation(input.lang, config.shareCrashesAndErrors)
+			changeLocalisation(input.lang)
 		}
-	}, [input.lang, config.shareCrashesAndErrors])
-
-	/**
-	 * Initializes or closes the Sentry error reporting based on user permissions.
-	 *
-	 * When the `config.shareCrashesAndErrors` value changes (either read from localStorage or
-	 * updated in the app), this effect hook checks its value. If the user has granted permission,
-	 * Sentry is initialized to capture and report crashes and errors. If the permission is not given,
-	 * Sentry is closed to stop any error reporting.
-	 */
-	useEffect(() => {
-		if (config.shareCrashesAndErrors) {
-			Sentry.init({
-				dsn: process.env.NEXT_PUBLIC_SENTRY_DSN ?? '',
-				tracesSampleRate: 1,
-				debug: false,
-				replaysOnErrorSampleRate: 0,
-				replaysSessionSampleRate: 0,
-				beforeSend: (event) => {
-					if (event.request) {
-						if (event.request.url) {
-							const url = new URL(event.request.url)
-							const params = url.searchParams
-
-							if (params.has('latitude')) {
-								const latValue = params.get('latitude')
-								if (latValue !== null) {
-									const lat = parseFloat(latValue).toFixed(1)
-									params.set('latitude', lat)
-									url.search = params.toString()
-									event.request.url = url.toString()
-								}
-							}
-							if (params.has('longitude')) {
-								const lonValue = params.get('longitude')
-								if (lonValue !== null) {
-									const lon = parseFloat(lonValue).toFixed(1)
-									params.set('longitude', lon)
-									url.search = params.toString()
-									event.request.url = url.toString()
-								}
-							}
-						}
-
-						if (event.request.data) {
-							let data = event.request.data
-
-							if (typeof data === 'string') {
-								try {
-									data = JSON.parse(data)
-								} catch (e) {
-									// eslint-disable-next-line no-console
-									console.error(e)
-								}
-							}
-
-							if (data && typeof data === 'object') {
-								if ('latitude' in data && 'longitude' in data) {
-									data.latitude = parseFloat(data.latitude).toFixed(1)
-									data.longitude = parseFloat(data.longitude).toFixed(1)
-
-									event.request.data = JSON.stringify(data)
-								}
-							}
-						}
-					}
-
-					return event
-				},
-			})
-
-			Sentry.setTag('version', '2.5.35')
-		} else {
-			Sentry.close()
-		}
-		return () => {
-			Sentry.close()
-		}
-	}, [config.shareCrashesAndErrors])
+	}, [input.lang])
 
 	/**
 	 * On component mount, this effect hook checks the localStorage for a saved "config".
@@ -524,9 +440,6 @@ const App = () => {
 				// eslint-disable-next-line no-console
 				console.error(e)
 				setGeolocationError(true)
-				if (config.shareCrashesAndErrors) {
-					Sentry.captureException(e)
-				}
 			}
 			setTimeout(() => {
 				setGeolocationError(true)
@@ -624,9 +537,6 @@ const App = () => {
 					// 	),
 					// 	color: 'red',
 					// })
-					if (config.shareCrashesAndErrors) {
-						Sentry.captureException(e)
-					}
 				}
 			} else {
 				const fetchSafariGeoData = async () => {
@@ -660,9 +570,6 @@ const App = () => {
 						// 	),
 						// 	color: 'red',
 						// })
-						if (config.shareCrashesAndErrors) {
-							Sentry.captureException(e)
-						}
 					}
 				}
 				fetchSafariGeoData()

@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { Trans } from '@lingui/react/macro'
 // import { Alert as MantineAlert } from '@mantine/core'
 import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
 import { motion } from 'framer-motion'

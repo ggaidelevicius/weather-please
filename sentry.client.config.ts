@@ -1,1 +1,1 @@
-// empty file for complete opt-out by default
+// no client-side error logging used
