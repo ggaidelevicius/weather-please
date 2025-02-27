@@ -15,17 +15,21 @@ msgstr ""
 
 #: src/components/alert/index.tsx:164
 #: src/components/alert/index.tsx:171
-msgid "{0} inches of precipitation expected over the next {1} hours"
-msgstr "다음 {1}시간 동안 {0}인치의 강수량 예상"
+#~ msgid "{0} inches of precipitation expected over the next {1} hours"
+#~ msgstr "다음 {1}시간 동안 {0}인치의 강수량 예상"
 
 #: src/components/alert/index.tsx:156
-msgid "{0} inches of precipitation expected over the next hour"
-msgstr "다음 1시간 동안 {0}인치의 강수량 예상"
+#~ msgid "{0} inches of precipitation expected over the next hour"
+#~ msgstr "다음 1시간 동안 {0}인치의 강수량 예상"
 
+#. placeholder {0}: Math.round(wind)
+#: src/components/card.tsx:173
 #: src/components/tile/weather/index.tsx:102
 msgid "{0} km/h"
 msgstr "{0} km/h"
 
+#. placeholder {0}: Math.round(wind / 1.609344)
+#: src/components/card.tsx:174
 #: src/components/tile/weather/index.tsx:103
 msgid "{0} mph"
 msgstr "{0} mph"
@@ -40,37 +44,41 @@ msgstr "{0} mph"
 
 #: src/components/alert/index.tsx:144
 #: src/components/alert/index.tsx:150
-msgid "{0}mm of precipitation expected over the next {1} hours"
-msgstr "다음 {1}시간 동안 강수량 {0}밀리미터 예상"
+#~ msgid "{0}mm of precipitation expected over the next {1} hours"
+#~ msgstr "다음 {1}시간 동안 강수량 {0}밀리미터 예상"
 
 #: src/components/alert/index.tsx:136
-msgid "{0}mm of precipitation expected over the next hour"
-msgstr "다음 1시간 동안 강수량 {0}밀리미터 예상"
+#~ msgid "{0}mm of precipitation expected over the next hour"
+#~ msgstr "다음 1시간 동안 강수량 {0}밀리미터 예상"
+
+#: src/components/input.tsx:16
+msgid "{label}"
+msgstr ""
 
 #: src/components/settings/index.tsx:499
-msgid "☕ Gift a coffee"
-msgstr "☕ 커피 선물하기"
+#~ msgid "☕ Gift a coffee"
+#~ msgstr "☕ 커피 선물하기"
 
 #: src/components/settings/index.tsx:455
-msgid "✍️ Submit feedback"
-msgstr "✍️ 피드백 제출"
+#~ msgid "✍️ Submit feedback"
+#~ msgstr "✍️ 피드백 제출"
 
 #: src/components/settings/index.tsx:444
 #: src/pages/index.tsx:791
-msgid "🌟 Leave a review"
-msgstr "🌟 리뷰 남기기"
+#~ msgid "🌟 Leave a review"
+#~ msgstr "🌟 리뷰 남기기"
 
 #: src/components/settings/index.tsx:477
-msgid "🐛 Report a bug"
-msgstr "🐛 버그 신고"
+#~ msgid "🐛 Report a bug"
+#~ msgstr "🐛 버그 신고"
 
 #: src/components/settings/index.tsx:466
-msgid "💡 Request a feature"
-msgstr "💡 기능 요청"
+#~ msgid "💡 Request a feature"
+#~ msgstr "💡 기능 요청"
 
 #: src/components/settings/index.tsx:488
-msgid "🔒 Privacy policy"
-msgstr "🔒 개인정보 처리방침"
+#~ msgid "🔒 Privacy policy"
+#~ msgstr "🔒 개인정보 처리방침"
 
 #: src/pages/feedback/index.tsx:337
 #~ msgid "Additional details"
@@ -81,48 +89,50 @@ msgstr "🔒 개인정보 처리방침"
 #~ msgstr "추가 세부 사항 (선택 사항)"
 
 #: src/components/settings/index.tsx:310
-msgid "Alerts"
-msgstr "알림"
+#~ msgid "Alerts"
+#~ msgstr "알림"
 
 #: src/pages/index.tsx:655
-msgid "An error has occurred while fetching location data. Please check the console for more details."
-msgstr "위치 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
+#~ msgid "An error has occurred while fetching location data. Please check the console for more details."
+#~ msgstr "위치 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
 
 #: src/pages/index.tsx:360
 #~ msgid "An error has occurred while fetching weather data. Please check the console for more details."
 #~ msgstr "날씨 데이터를 가져오는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하십시오."
 
 #: src/pages/index.tsx:264
-msgid "An error has occurred while fetching weather data. Please try again later."
-msgstr "날씨 데이터를 가져오는 동안 오류가 발생했습니다. 나중에 다시 시도해 주세요."
+#~ msgid "An error has occurred while fetching weather data. Please try again later."
+#~ msgstr "날씨 데이터를 가져오는 동안 오류가 발생했습니다. 나중에 다시 시도해 주세요."
 
 #: src/components/settings/index.tsx:111
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "위치를 가져오는 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
 
 #: src/pages/index.tsx:619
-msgid "An error has occurred while periodically updating location. Please check the console for more details."
-msgstr "위치를 주기적으로 업데이트하는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
+#~ msgid "An error has occurred while periodically updating location. Please check the console for more details."
+#~ msgstr "위치를 주기적으로 업데이트하는 동안 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."
 
+#: src/components/card.tsx:96
 #: src/components/tile/index.tsx:71
 msgid "April"
 msgstr "4월"
 
+#: src/components/card.tsx:100
 #: src/components/tile/index.tsx:75
 msgid "August"
 msgstr "8월"
 
 #: src/components/settings/index.tsx:194
-msgid "Based on the provided information, your location is:"
-msgstr "제공된 정보를 기반으로, 귀하의 위치는:"
+#~ msgid "Based on the provided information, your location is:"
+#~ msgstr "제공된 정보를 기반으로, 귀하의 위치는:"
 
 #: src/pages/feedback/index.tsx:403
 msgid "Bug report"
 msgstr "버그 보고"
 
 #: src/components/settings/index.tsx:430
-msgid "Cancel"
-msgstr "취소"
+#~ msgid "Cancel"
+#~ msgstr "취소"
 
 #: src/pages/feedback/index.tsx:189
 msgid "Causes browser crashes or errors"
@@ -132,6 +142,7 @@ msgstr "브라우저 충돌이나 오류를 일으킴"
 msgid "Changed needs"
 msgstr "변경된 요구 사항"
 
+#: src/components/card.tsx:52
 #: src/components/tile/weather/index.tsx:132
 msgid "clear sky"
 msgstr "맑은 하늘"
@@ -149,25 +160,29 @@ msgid "Consumes too much memory or CPU"
 msgstr "너무 많은 메모리나 CPU를 소비함"
 
 #: src/components/settings/index.tsx:304
-msgid "Date"
-msgstr "날짜"
+#~ msgid "Date"
+#~ msgstr "날짜"
 
 #: src/components/settings/index.tsx:302
-msgid "Day"
-msgstr "날"
+#~ msgid "Day"
+#~ msgstr "날"
 
+#: src/components/card.tsx:104
 #: src/components/tile/index.tsx:79
 msgid "December"
 msgstr "12월"
 
+#: src/components/card.tsx:60
 #: src/components/tile/weather/index.tsx:140
 msgid "dense drizzle"
 msgstr "짙은 이슬비"
 
+#: src/components/card.tsx:62
 #: src/components/tile/weather/index.tsx:142
 msgid "dense freezing drizzle"
 msgstr "짙은 얼음 이슬비"
 
+#: src/components/card.tsx:57
 #: src/components/tile/weather/index.tsx:137
 msgid "depositing rime fog"
 msgstr "서리가 앉는 안개"
@@ -181,17 +196,14 @@ msgid "Difficult to use or understand"
 msgstr "사용하기 어렵거나 이해하기 어려움"
 
 #: src/components/settings/index.tsx:565
-msgid "Don't save"
-msgstr "저장하지 마세요"
+#~ msgid "Don't save"
+#~ msgstr "저장하지 마세요"
 
 #: src/pages/feedback/index.tsx:423
 msgid "Email (optional)"
 msgstr "이메일 (선택사항)"
 
 #: src/components/settings/index.tsx:109
-#: src/pages/index.tsx:262
-#: src/pages/index.tsx:617
-#: src/pages/index.tsx:653
 msgid "Error"
 msgstr "오류"
 
@@ -200,20 +212,20 @@ msgid "Error submitting feedback. Try again later."
 msgstr "피드백 제출 오류. 나중에 다시 시도하세요."
 
 #: src/components/alert/index.tsx:71
-msgid "Extreme UV for the next {durationOfExtremeUv} hours"
-msgstr "다음 {durationOfExtremeUv}시간 동안 극심한 자외선"
+#~ msgid "Extreme UV for the next {durationOfExtremeUv} hours"
+#~ msgstr "다음 {durationOfExtremeUv}시간 동안 극심한 자외선"
 
 #: src/components/alert/index.tsx:76
-msgid "Extreme UV for the next 12 hours"
-msgstr "다음 12시간 동안 극심한 자외선"
+#~ msgid "Extreme UV for the next 12 hours"
+#~ msgstr "다음 12시간 동안 극심한 자외선"
 
 #: src/components/alert/index.tsx:79
-msgid "Extreme UV for the next hour"
-msgstr "다음 1시간 동안 극심한 자외선"
+#~ msgid "Extreme UV for the next hour"
+#~ msgstr "다음 1시간 동안 극심한 자외선"
 
 #: src/components/alert/index.tsx:62
-msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
-msgstr "{timeUntilExtremeUv}시간 후에 극심한 자외선이 시작됩니다"
+#~ msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
+#~ msgstr "{timeUntilExtremeUv}시간 후에 극심한 자외선이 시작됩니다"
 
 #: src/pages/feedback/index.tsx:388
 msgid "Feature request"
@@ -223,6 +235,7 @@ msgstr "기능 요청"
 msgid "Features don't work as expected"
 msgstr "기능이 예상대로 작동하지 않음"
 
+#: src/components/card.tsx:94
 #: src/components/tile/index.tsx:69
 msgid "February"
 msgstr "2월"
@@ -239,38 +252,43 @@ msgstr "피드백이 성공적으로 제출되었습니다"
 msgid "Found a better alternative"
 msgstr "더 나은 대안을 찾음"
 
+#: src/components/card.tsx:88
 #: src/components/tile/index.tsx:64
 msgid "Friday"
 msgstr "금요일"
 
 #: src/components/alert/index.tsx:250
-msgid "Generally strong wind for the next {durationOfStrongWind} hours"
-msgstr "다음 {durationOfStrongWind}시간 동안 일반적으로 강한 바람"
+#~ msgid "Generally strong wind for the next {durationOfStrongWind} hours"
+#~ msgstr "다음 {durationOfStrongWind}시간 동안 일반적으로 강한 바람"
 
 #: src/components/alert/index.tsx:256
-msgid "Generally strong wind for the next 24 hours"
-msgstr "다음 24시간 동안 일반적으로 강한 바람"
+#~ msgid "Generally strong wind for the next 24 hours"
+#~ msgstr "다음 24시간 동안 일반적으로 강한 바람"
 
 #: src/components/alert/index.tsx:259
-msgid "Generally strong wind for the next hour"
-msgstr "다음 1시간 동안 일반적으로 강한 바람"
+#~ msgid "Generally strong wind for the next hour"
+#~ msgstr "다음 1시간 동안 일반적으로 강한 바람"
 
 #: src/components/alert/index.tsx:239
-msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
-msgstr "{timeUntilStrongWind}시간 후부터 일반적으로 강한 바람 시작"
+#~ msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
+#~ msgstr "{timeUntilStrongWind}시간 후부터 일반적으로 강한 바람 시작"
 
+#: src/components/card.tsx:67
 #: src/components/tile/weather/index.tsx:147
 msgid "heavy freezing rain"
 msgstr "심한 얼음비"
 
+#: src/components/card.tsx:65
 #: src/components/tile/weather/index.tsx:145
 msgid "heavy rain"
 msgstr "호우"
 
+#: src/components/card.tsx:76
 #: src/components/tile/weather/index.tsx:156
 msgid "heavy snow showers"
 msgstr "심한 눈보라"
 
+#: src/components/card.tsx:70
 #: src/components/tile/weather/index.tsx:150
 msgid "heavy snowfall"
 msgstr "많은 눈"
@@ -284,43 +302,46 @@ msgstr "Weather Please를 제거한 이유에 대한 피드백을 주시면 감�
 #~ msgstr "저는 Weather Please를 더 많은 언어로 가져오고 싶어요."
 
 #: src/components/settings/index.tsx:296
-msgid "Identifier"
-msgstr "식별자"
+#~ msgid "Identifier"
+#~ msgstr "식별자"
 
 #: src/components/settings/index.tsx:206
-msgid "If this is incorrect, please update the values below."
-msgstr "이게 틀린 정보라면, 아래의 값들을 업데이트 해주세요."
+#~ msgid "If this is incorrect, please update the values below."
+#~ msgstr "이게 틀린 정보라면, 아래의 값들을 업데이트 해주세요."
 
 #: src/components/settings/index.tsx:410
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "번역 요청이 있으시다면, <0>contact@weather-please.app</0>으로 연락주세요."
 
-#: src/components/intialisation/index.tsx:73
+#: src/components/intialisation/index.tsx:302
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "브라우저가 위치 권한을 요청하면, \"허용\"을 선택해주세요."
 
 #: src/components/intialisation/index.tsx:168
 #: src/components/settings/index.tsx:219
-msgid "Invalid latitude value"
-msgstr "잘못된 위도 값"
+#~ msgid "Invalid latitude value"
+#~ msgstr "잘못된 위도 값"
 
 #: src/components/intialisation/index.tsx:184
 #: src/components/settings/index.tsx:235
-msgid "Invalid longitude value"
-msgstr "잘못된 경도 값"
+#~ msgid "Invalid longitude value"
+#~ msgstr "잘못된 경도 값"
 
 #: src/pages/feedback/index.tsx:324
 msgid "Issues after a recent update"
 msgstr "최근 업데이트 이후 문제 발생"
 
+#: src/components/card.tsx:93
 #: src/components/tile/index.tsx:68
 msgid "January"
 msgstr "1월"
 
+#: src/components/card.tsx:99
 #: src/components/tile/index.tsx:74
 msgid "July"
 msgstr "7월"
 
+#: src/components/card.tsx:98
 #: src/components/tile/index.tsx:73
 msgid "June"
 msgstr "6월"
@@ -329,69 +350,72 @@ msgstr "6월"
 msgid "Lacks features I need"
 msgstr "필요한 기능이 부족함"
 
-#: src/components/intialisation/index.tsx:80
-#: src/components/intialisation/index.tsx:244
-#: src/components/settings/index.tsx:176
-#: src/components/settings/index.tsx:180
 #: src/pages/feedback/index.tsx:153
-msgid "Language"
+msgid "{label}"
 msgstr "언어"
 
 #: src/components/intialisation/index.tsx:159
 #: src/components/settings/index.tsx:210
-msgid "Latitude"
-msgstr "위도"
+#~ msgid "Latitude"
+#~ msgstr "위도"
 
+#: src/components/card.tsx:58
 #: src/components/tile/weather/index.tsx:138
 msgid "light drizzle"
 msgstr "가벼운 이슬비"
 
+#: src/components/card.tsx:61
 #: src/components/tile/weather/index.tsx:141
 msgid "light freezing drizzle"
 msgstr "가벼운 얼어붙는 이슬비"
 
+#: src/components/card.tsx:66
 #: src/components/tile/weather/index.tsx:146
 msgid "light freezing rain"
 msgstr "가벼운 얼어붙는 비"
 
 #: src/components/settings/index.tsx:191
-msgid "Location"
-msgstr "위치"
+#~ msgid "Location"
+#~ msgstr "위치"
 
 #: src/components/intialisation/index.tsx:174
 #: src/components/settings/index.tsx:225
-msgid "Longitude"
-msgstr "경도"
+#~ msgid "Longitude"
+#~ msgstr "경도"
 
 #: src/components/intialisation/index.tsx:150
-msgid "Looks like we can't grab your location info automatically."
-msgstr "자동으로 위치 정보를 가져올 수 없는 것 같습니다."
+#~ msgid "Looks like we can't grab your location info automatically."
+#~ msgstr "자동으로 위치 정보를 가져올 수 없는 것 같습니다."
 
 #: src/components/alert/index.tsx:411
-msgid "Low visibility for the next {durationOfLowVisibility} hours"
-msgstr "다음 {durationOfLowVisibility} 시간 동안 저시력"
+#~ msgid "Low visibility for the next {durationOfLowVisibility} hours"
+#~ msgstr "다음 {durationOfLowVisibility} 시간 동안 저시력"
 
 #: src/components/alert/index.tsx:416
-msgid "Low visibility for the next 24 hours"
-msgstr "다음 24시간 동안 저시력"
+#~ msgid "Low visibility for the next 24 hours"
+#~ msgstr "다음 24시간 동안 저시력"
 
 #: src/components/alert/index.tsx:419
-msgid "Low visibility for the next hour"
-msgstr "다음 1시간 동안 저시력"
+#~ msgid "Low visibility for the next hour"
+#~ msgstr "다음 1시간 동안 저시력"
 
 #: src/components/alert/index.tsx:400
-msgid "Low visibility starting in {timeUntilLowVisibility} hours"
-msgstr "{timeUntilLowVisibility} 시간 후 저시력 시작"
+#~ msgid "Low visibility starting in {timeUntilLowVisibility} hours"
+#~ msgstr "{timeUntilLowVisibility} 시간 후 저시력 시작"
 
+#: src/components/card.tsx:53
+#: src/components/card.tsx:56
 #: src/components/tile/weather/index.tsx:133
 #: src/components/tile/weather/index.tsx:136
 msgid "mainly clear"
 msgstr "대체로 맑음"
 
+#: src/components/card.tsx:95
 #: src/components/tile/index.tsx:70
 msgid "March"
 msgstr "3월"
 
+#: src/components/card.tsx:97
 #: src/components/tile/index.tsx:72
 msgid "May"
 msgstr "5월"
@@ -401,32 +425,37 @@ msgid "Message"
 msgstr "메시지"
 
 #: src/components/settings/index.tsx:357
-msgid "Miscellaneous"
-msgstr "기타"
+#~ msgid "Miscellaneous"
+#~ msgstr "기타"
 
+#: src/components/card.tsx:59
 #: src/components/tile/weather/index.tsx:139
 msgid "moderate drizzle"
 msgstr "중간 정도의 이슬비"
 
+#: src/components/card.tsx:64
 #: src/components/tile/weather/index.tsx:144
 msgid "moderate rain"
 msgstr "중간 정도의 비"
 
+#: src/components/card.tsx:73
 #: src/components/tile/weather/index.tsx:153
 msgid "moderate rain showers"
 msgstr "중간 정도의 비 소나기"
 
+#: src/components/card.tsx:69
 #: src/components/tile/weather/index.tsx:149
 msgid "moderate snowfall"
 msgstr "중간 정도의 눈"
 
+#: src/components/card.tsx:84
 #: src/components/tile/index.tsx:60
 msgid "Monday"
 msgstr "월요일"
 
 #: src/pages/index.tsx:805
-msgid "Never show this again"
-msgstr "다시 보지 않기"
+#~ msgid "Never show this again"
+#~ msgstr "다시 보지 않기"
 
 #: src/pages/_app.tsx:21
 #~ msgid "New tab"
@@ -441,25 +470,29 @@ msgid "Not available in my language"
 msgstr "내 언어로는 사용할 수 없음"
 
 #: src/components/settings/index.tsx:259
-msgid "Note: This requires browser permissions"
-msgstr "주의: 이 기능은 브라우저 권한이 필요합니다"
+#~ msgid "Note: This requires browser permissions"
+#~ msgstr "주의: 이 기능은 브라우저 권한이 필요합니다"
 
+#: src/components/card.tsx:103
 #: src/components/tile/index.tsx:78
 msgid "November"
 msgstr "11월"
 
 #: src/components/settings/index.tsx:287
-msgid "Number of days to forecast"
-msgstr "예보 할 일수"
+#~ msgid "Number of days to forecast"
+#~ msgstr "예보 할 일수"
 
+#: src/components/card.tsx:102
 #: src/components/tile/index.tsx:77
 msgid "October"
 msgstr "10월"
 
+#: src/components/card.tsx:55
 #: src/components/tile/weather/index.tsx:135
 msgid "overcast"
 msgstr "흐림"
 
+#: src/components/card.tsx:54
 #: src/components/tile/weather/index.tsx:134
 msgid "partly cloudy"
 msgstr "구름이 조금"
@@ -469,79 +502,85 @@ msgid "Performance issues"
 msgstr "성능 문제"
 
 #: src/components/settings/index.tsx:251
-msgid "Periodically update location automatically"
-msgstr "주기적으로 위치 자동 업데이트"
+#~ msgid "Periodically update location automatically"
+#~ msgstr "주기적으로 위치 자동 업데이트"
 
 #: src/components/intialisation/index.tsx:155
-msgid "Please enter it manually below."
-msgstr "아래에 수동으로 입력해주세요."
+#~ msgid "Please enter it manually below."
+#~ msgstr "아래에 수동으로 입력해주세요."
 
 #: src/pages/feedback/index.tsx:291
 msgid "Resource usage"
 msgstr "리소스 사용"
 
+#: src/components/card.tsx:89
 #: src/components/tile/index.tsx:65
 msgid "Saturday"
 msgstr "토요일"
 
 #: src/components/settings/index.tsx:417
 #: src/components/settings/index.tsx:551
-msgid "Save"
-msgstr "저장"
+#~ msgid "Save"
+#~ msgstr "저장"
 
 #: src/pages/feedback/index.tsx:244
 msgid "Security and privacy concerns"
 msgstr "보안 및 프라이버시 우려"
 
+#: src/components/card.tsx:101
 #: src/components/tile/index.tsx:76
 msgid "September"
 msgstr "9월"
 
 #: src/components/intialisation/index.tsx:143
 #: src/components/intialisation/index.tsx:267
-msgid "Set my location"
-msgstr "내 위치 설정"
+#~ msgid "Set my location"
+#~ msgstr "내 위치 설정"
 
 #: src/components/settings/index.tsx:173
-msgid "Settings"
-msgstr "설정"
+#~ msgid "Settings"
+#~ msgstr "설정"
 
 #: src/components/settings/index.tsx:395
-msgid "Share anonymised crash data and error logs"
-msgstr "익명화된 충돌 데이터 및 오류 로그 공유"
+#~ msgid "Share anonymised crash data and error logs"
+#~ msgstr "익명화된 충돌 데이터 및 오류 로그 공유"
 
 #: src/components/settings/index.tsx:324
-msgid "Show extreme UV alerts"
-msgstr "극한의 UV 경보 표시"
+#~ msgid "Show extreme UV alerts"
+#~ msgstr "극한의 UV 경보 표시"
 
 #: src/components/settings/index.tsx:331
-msgid "Show high precipitation alerts"
-msgstr "강수량이 많은 경보 표시"
+#~ msgid "Show high precipitation alerts"
+#~ msgstr "강수량이 많은 경보 표시"
 
 #: src/components/settings/index.tsx:347
-msgid "Show low visibility alerts"
-msgstr "저시력 경보 표시"
+#~ msgid "Show low visibility alerts"
+#~ msgstr "저시력 경보 표시"
 
 #: src/components/settings/index.tsx:339
-msgid "Show strong wind alerts"
-msgstr "강풍 경보 보이기"
+#~ msgid "Show strong wind alerts"
+#~ msgstr "강풍 경보 보이기"
 
 #: src/components/settings/index.tsx:313
-msgid "Show weather alerts"
-msgstr "날씨 경보 표시"
+#~ msgid "Show weather alerts"
+#~ msgstr "날씨 경보 표시"
 
+#: src/components/card.tsx:63
 #: src/components/tile/weather/index.tsx:143
 msgid "slight rain"
 msgstr "약한 비"
 
+#: src/components/card.tsx:72
 #: src/components/tile/weather/index.tsx:152
 msgid "slight rain showers"
 msgstr "약한 비 소나기"
 
+#: src/components/card.tsx:75
 #: src/components/tile/weather/index.tsx:155
 msgid "slight snow showers"
 msgstr "약한 눈 소나기"
 
+#: src/components/card.tsx:68
 #: src/components/tile/weather/index.tsx:148
 msgid "slight snowfall"
 msgstr "약한 눈내림"
@@ -550,6 +589,7 @@ msgstr "약한 눈내림"
 msgid "Slows down my browser"
 msgstr "내 브라우저를 느리게 함"
 
+#: src/components/card.tsx:71
 #: src/components/tile/weather/index.tsx:151
 msgid "snow grains"
 msgstr "눈 과립"
@@ -567,20 +607,20 @@ msgstr "눈 과립"
 #~ msgstr "다음 1 시간 동안 강풍"
 
 #: src/components/alert/index.tsx:331
-msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
-msgstr "다음 {durationOfStrongWind} 시간 동안 강한 바람"
+#~ msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+#~ msgstr "다음 {durationOfStrongWind} 시간 동안 강한 바람"
 
 #: src/components/alert/index.tsx:336
-msgid "Strong wind gusts for the next 24 hours"
-msgstr "다음 24 시간 동안 강한 바람"
+#~ msgid "Strong wind gusts for the next 24 hours"
+#~ msgstr "다음 24 시간 동안 강한 바람"
 
 #: src/components/alert/index.tsx:339
-msgid "Strong wind gusts for the next hour"
-msgstr "다음 1 시간 동안 강한 바람"
+#~ msgid "Strong wind gusts for the next hour"
+#~ msgstr "다음 1 시간 동안 강한 바람"
 
 #: src/components/alert/index.tsx:320
-msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
-msgstr "{timeUntilStrongWind} 시간 후 강한 바람이 시작됩니다"
+#~ msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+#~ msgstr "{timeUntilStrongWind} 시간 후 강한 바람이 시작됩니다"
 
 #: src/components/alert/index.tsx:227
 #~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
@@ -591,67 +631,85 @@ msgstr "{timeUntilStrongWind} 시간 후 강한 바람이 시작됩니다"
 msgid "Submit"
 msgstr "제출"
 
+#: src/components/card.tsx:83
 #: src/components/tile/index.tsx:59
 msgid "Sunday"
 msgstr "일요일"
 
+#. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap]
 #: src/components/tile/weather/index.tsx:68
 msgid "The expected type of weather is {0}."
 msgstr "예상되는 날씨 유형은 {0}입니다."
 
+#. placeholder {0}: Math.round(max)
 #: src/components/tile/weather/index.tsx:34
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "최고 기온은 {0}도 섭씨가 될 것입니다."
 
+#. placeholder {0}: Math.round((max * 9) / 5 + 32)
 #: src/components/tile/weather/index.tsx:40
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "최고 기온은 {0}도 화씨가 될 것입니다."
 
+#. placeholder {0}: Math.round(uv)
+#: src/components/card.tsx:167
 #: src/components/tile/weather/index.tsx:96
 msgid "The maximum UV index will be {0}."
 msgstr "최대 UV 지수는 {0}이 될 것입니다."
 
+#. placeholder {0}: Math.round(wind)
+#: src/components/card.tsx:178
 #: src/components/tile/weather/index.tsx:107
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "최대 풍속은 {0}킬로미터/시간이 될 것입니다."
 
+#. placeholder {0}: Math.round(wind / 1.609344)
+#: src/components/card.tsx:184
 #: src/components/tile/weather/index.tsx:113
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "최대 풍속은 {0}마일/시간이 될 것입니다."
 
+#. placeholder {0}: Math.round(min)
 #: src/components/tile/weather/index.tsx:51
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "최저 기온은 {0}도 섭씨가 될 것입니다."
 
+#. placeholder {0}: Math.round((min * 9) / 5 + 32)
 #: src/components/tile/weather/index.tsx:57
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "최저 기온은 {0}도 화씨가 될 것입니다."
 
+#. placeholder {0}: Math.round(rain)
+#: src/components/card.tsx:198
 #: src/components/tile/weather/index.tsx:124
 msgid "There is a {0}% chance of precipitation."
 msgstr "강수 확률은 {0}%입니다."
 
+#: src/components/card.tsx:77
 #: src/components/tile/weather/index.tsx:157
 msgid "thunderstorm"
 msgstr "천둥번개"
 
+#: src/components/card.tsx:79
 #: src/components/tile/weather/index.tsx:159
 msgid "thunderstorm with heavy hail"
 msgstr "강한 우박을 동반한 천둥번개"
 
+#: src/components/card.tsx:78
 #: src/components/tile/weather/index.tsx:158
 msgid "thunderstorm with slight hail"
 msgstr "약한 우박을 동반한 천둥번개"
 
+#: src/components/card.tsx:87
 #: src/components/tile/index.tsx:63
 msgid "Thursday"
 msgstr "목요일"
 
 #: src/components/settings/index.tsx:283
-msgid "Tiles"
-msgstr "타일"
+#~ msgid "Tiles"
+#~ msgstr "타일"
 
-#: src/components/intialisation/index.tsx:66
+#: src/components/intialisation/index.tsx:297
 msgid "To get started, let's set your language and location."
 msgstr "시작하려면 언어와 위치를 설정해주세요."
 
@@ -659,6 +717,7 @@ msgstr "시작하려면 언어와 위치를 설정해주세요."
 msgid "Too much battery usage"
 msgstr "배터리 사용량이 너무 많음"
 
+#: src/components/card.tsx:85
 #: src/components/tile/index.tsx:61
 msgid "Tuesday"
 msgstr "화요일"
@@ -669,8 +728,8 @@ msgstr "제거에 대한 피드백"
 
 #: src/components/intialisation/index.tsx:197
 #: src/components/settings/index.tsx:248
-msgid "Unsure how to find these? Click here."
-msgstr "이것을 어떻게 찾을 수 있는지 모르겠나요? 여기를 클릭하세요."
+#~ msgid "Unsure how to find these? Click here."
+#~ msgstr "이것을 어떻게 찾을 수 있는지 모르겠나요? 여기를 클릭하세요."
 
 #: src/pages/feedback/index.tsx:319
 msgid "Update or change related"
@@ -681,13 +740,14 @@ msgid "Usability and functionality"
 msgstr "사용 용이성 및 기능성"
 
 #: src/components/settings/index.tsx:362
-msgid "Use keyboard shortcuts"
-msgstr "키보드 단축키 사용"
+#~ msgid "Use keyboard shortcuts"
+#~ msgstr "키보드 단축키 사용"
 
 #: src/components/settings/index.tsx:387
-msgid "Use metric number format"
-msgstr "메트릭 숫자 형식 사용"
+#~ msgid "Use metric number format"
+#~ msgstr "메트릭 숫자 형식 사용"
 
+#: src/components/card.tsx:74
 #: src/components/tile/weather/index.tsx:154
 msgid "violent rain showers"
 msgstr "강한 비소나기"
@@ -696,41 +756,42 @@ msgstr "강한 비소나기"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Weather Please를 더 많은 언어로 제공하고 싶습니다."
 
-#: src/pages/index.tsx:916
+#: src/pages/index.tsx:948
 msgid "weather data provided by open-meteo"
 msgstr "날씨 데이터 제공: open-meteo"
 
 #: src/components/intialisation/index.tsx:128
 #: src/components/intialisation/index.tsx:236
-msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
-msgstr "Weather Please는 익명의 충돌 데이터 및 오류 로그를 수집합니다. 설정 메뉴를 통해 언제든지 이를 선택 해제할 수 있습니다."
+#~ msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
+#~ msgstr "Weather Please는 익명의 충돌 데이터 및 오류 로그를 수집합니다. 설정 메뉴를 통해 언제든지 이를 선택 해제할 수 있습니다."
 
+#: src/components/card.tsx:86
 #: src/components/tile/index.tsx:62
 msgid "Wednesday"
 msgstr "수요일"
 
 #: src/pages/index.tsx:774
-msgid "Would you like to leave a review?"
-msgstr "리뷰를 남기시겠습니까?"
+#~ msgid "Would you like to leave a review?"
+#~ msgstr "리뷰를 남기시겠습니까?"
 
 #: src/components/settings/index.tsx:365
-msgid "You can press numbers 1-9 to change how many weather tiles are displayed."
-msgstr "1에서 9까지의 숫자를 눌러서 표시되는 날씨 타일의 개수를 변경할 수 있습니다."
+#~ msgid "You can press numbers 1-9 to change how many weather tiles are displayed."
+#~ msgstr "1에서 9까지의 숫자를 눌러서 표시되는 날씨 타일의 개수를 변경할 수 있습니다."
 
 #: src/components/settings/index.tsx:529
-msgid "You can't save because either your latitude or longitude are invalid."
-msgstr "위도 또는 경도가 유효하지 않기 때문에 저장할 수 없습니다."
+#~ msgid "You can't save because either your latitude or longitude are invalid."
+#~ msgstr "위도 또는 경도가 유효하지 않기 때문에 저장할 수 없습니다."
 
 #: src/components/settings/index.tsx:522
-msgid "You have unsaved changes"
-msgstr "저장하지 않은 변경 사항이 있습니다"
+#~ msgid "You have unsaved changes"
+#~ msgstr "저장하지 않은 변경 사항이 있습니다"
 
 #: src/pages/index.tsx:770
-msgid "You've been using Weather Please for a while"
-msgstr "당신은 Weather Please를 잠시동안 사용해왔습니다"
+#~ msgid "You've been using Weather Please for a while"
+#~ msgstr "당신은 Weather Please를 잠시동안 사용해왔습니다"
 
 #: src/components/intialisation/index.tsx:106
 #: src/components/intialisation/index.tsx:214
 #: src/components/settings/index.tsx:276
-msgid "Your location data is securely stored exclusively on your personal device."
-msgstr "귀하의 위치 데이터는 귀하의 개인 장치에만 안전하게 저장됩니다."
+#~ msgid "Your location data is securely stored exclusively on your personal device."
+#~ msgstr "귀하의 위치 데이터는 귀하의 개인 장치에만 안전하게 저장됩니다."

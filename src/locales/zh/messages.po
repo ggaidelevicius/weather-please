@@ -15,17 +15,21 @@ msgstr ""
 
 #: src/components/alert/index.tsx:164
 #: src/components/alert/index.tsx:171
-msgid "{0} inches of precipitation expected over the next {1} hours"
-msgstr "预计未来 {1} 小时内有 {0} 英寸降水"
+#~ msgid "{0} inches of precipitation expected over the next {1} hours"
+#~ msgstr "预计未来 {1} 小时内有 {0} 英寸降水"
 
 #: src/components/alert/index.tsx:156
-msgid "{0} inches of precipitation expected over the next hour"
-msgstr "预计下一个小时内有 {0} 英寸降水"
+#~ msgid "{0} inches of precipitation expected over the next hour"
+#~ msgstr "预计下一个小时内有 {0} 英寸降水"
 
+#. placeholder {0}: Math.round(wind)
+#: src/components/card.tsx:173
 #: src/components/tile/weather/index.tsx:102
 msgid "{0} km/h"
 msgstr "{0} 公里/小时"
 
+#. placeholder {0}: Math.round(wind / 1.609344)
+#: src/components/card.tsx:174
 #: src/components/tile/weather/index.tsx:103
 msgid "{0} mph"
 msgstr "{0} 英里/小时"
@@ -40,37 +44,41 @@ msgstr "{0} 英里/小时"
 
 #: src/components/alert/index.tsx:144
 #: src/components/alert/index.tsx:150
-msgid "{0}mm of precipitation expected over the next {1} hours"
-msgstr "未来{1}小时预计有{0}毫米的降水"
+#~ msgid "{0}mm of precipitation expected over the next {1} hours"
+#~ msgstr "未来{1}小时预计有{0}毫米的降水"
 
 #: src/components/alert/index.tsx:136
-msgid "{0}mm of precipitation expected over the next hour"
-msgstr "未来1小时预计有{0}毫米的降水"
+#~ msgid "{0}mm of precipitation expected over the next hour"
+#~ msgstr "未来1小时预计有{0}毫米的降水"
+
+#: src/components/input.tsx:16
+msgid "{label}"
+msgstr ""
 
 #: src/components/settings/index.tsx:499
-msgid "☕ Gift a coffee"
-msgstr "☕ 送一杯咖啡"
+#~ msgid "☕ Gift a coffee"
+#~ msgstr "☕ 送一杯咖啡"
 
 #: src/components/settings/index.tsx:455
-msgid "✍️ Submit feedback"
-msgstr "✍️ 提交反馈"
+#~ msgid "✍️ Submit feedback"
+#~ msgstr "✍️ 提交反馈"
 
 #: src/components/settings/index.tsx:444
 #: src/pages/index.tsx:791
-msgid "🌟 Leave a review"
-msgstr "🌟 留下评论"
+#~ msgid "🌟 Leave a review"
+#~ msgstr "🌟 留下评论"
 
 #: src/components/settings/index.tsx:477
-msgid "🐛 Report a bug"
-msgstr "🐛 报告错误"
+#~ msgid "🐛 Report a bug"
+#~ msgstr "🐛 报告错误"
 
 #: src/components/settings/index.tsx:466
-msgid "💡 Request a feature"
-msgstr "💡 请求功能"
+#~ msgid "💡 Request a feature"
+#~ msgstr "💡 请求功能"
 
 #: src/components/settings/index.tsx:488
-msgid "🔒 Privacy policy"
-msgstr "🔒 隐私政策"
+#~ msgid "🔒 Privacy policy"
+#~ msgstr "🔒 隐私政策"
 
 #: src/pages/feedback/index.tsx:337
 #~ msgid "Additional details"
@@ -81,48 +89,50 @@ msgstr "🔒 隐私政策"
 #~ msgstr "额外详细信息（可选）"
 
 #: src/components/settings/index.tsx:310
-msgid "Alerts"
-msgstr "警报"
+#~ msgid "Alerts"
+#~ msgstr "警报"
 
 #: src/pages/index.tsx:655
-msgid "An error has occurred while fetching location data. Please check the console for more details."
-msgstr "获取位置数据时发生错误。请检查控制台以获取更多详情。"
+#~ msgid "An error has occurred while fetching location data. Please check the console for more details."
+#~ msgstr "获取位置数据时发生错误。请检查控制台以获取更多详情。"
 
 #: src/pages/index.tsx:360
 #~ msgid "An error has occurred while fetching weather data. Please check the console for more details."
 #~ msgstr "获取天气数据时发生错误。请检查控制台以获取更多详情。"
 
 #: src/pages/index.tsx:264
-msgid "An error has occurred while fetching weather data. Please try again later."
-msgstr "获取天气数据时发生错误。请稍后再试。"
+#~ msgid "An error has occurred while fetching weather data. Please try again later."
+#~ msgstr "获取天气数据时发生错误。请稍后再试。"
 
 #: src/components/settings/index.tsx:111
 msgid "An error has occurred while fetching your location. Please check the console for more details."
 msgstr "在获取您的位置时发生错误。请检查控制台以获取更多详情。"
 
 #: src/pages/index.tsx:619
-msgid "An error has occurred while periodically updating location. Please check the console for more details."
-msgstr "在定期更新位置时发生错误。请检查控制台以获取更多详情。"
+#~ msgid "An error has occurred while periodically updating location. Please check the console for more details."
+#~ msgstr "在定期更新位置时发生错误。请检查控制台以获取更多详情。"
 
+#: src/components/card.tsx:96
 #: src/components/tile/index.tsx:71
 msgid "April"
 msgstr "四月"
 
+#: src/components/card.tsx:100
 #: src/components/tile/index.tsx:75
 msgid "August"
 msgstr "八月"
 
 #: src/components/settings/index.tsx:194
-msgid "Based on the provided information, your location is:"
-msgstr "根据提供的信息，您的位置是："
+#~ msgid "Based on the provided information, your location is:"
+#~ msgstr "根据提供的信息，您的位置是："
 
 #: src/pages/feedback/index.tsx:403
 msgid "Bug report"
 msgstr "错误报告"
 
 #: src/components/settings/index.tsx:430
-msgid "Cancel"
-msgstr "取消"
+#~ msgid "Cancel"
+#~ msgstr "取消"
 
 #: src/pages/feedback/index.tsx:189
 msgid "Causes browser crashes or errors"
@@ -132,6 +142,7 @@ msgstr "导致浏览器崩溃或错误"
 msgid "Changed needs"
 msgstr "需求变化"
 
+#: src/components/card.tsx:52
 #: src/components/tile/weather/index.tsx:132
 msgid "clear sky"
 msgstr "晴空"
@@ -149,25 +160,29 @@ msgid "Consumes too much memory or CPU"
 msgstr "消耗过多内存或CPU"
 
 #: src/components/settings/index.tsx:304
-msgid "Date"
-msgstr "日期"
+#~ msgid "Date"
+#~ msgstr "日期"
 
 #: src/components/settings/index.tsx:302
-msgid "Day"
-msgstr "日"
+#~ msgid "Day"
+#~ msgstr "日"
 
+#: src/components/card.tsx:104
 #: src/components/tile/index.tsx:79
 msgid "December"
 msgstr "十二月"
 
+#: src/components/card.tsx:60
 #: src/components/tile/weather/index.tsx:140
 msgid "dense drizzle"
 msgstr "大雾霾"
 
+#: src/components/card.tsx:62
 #: src/components/tile/weather/index.tsx:142
 msgid "dense freezing drizzle"
 msgstr "冻雾霾"
 
+#: src/components/card.tsx:57
 #: src/components/tile/weather/index.tsx:137
 msgid "depositing rime fog"
 msgstr "储存白霜雾"
@@ -181,17 +196,14 @@ msgid "Difficult to use or understand"
 msgstr "难以使用或理解"
 
 #: src/components/settings/index.tsx:565
-msgid "Don't save"
-msgstr "不保存"
+#~ msgid "Don't save"
+#~ msgstr "不保存"
 
 #: src/pages/feedback/index.tsx:423
 msgid "Email (optional)"
 msgstr "电子邮件（可选）"
 
 #: src/components/settings/index.tsx:109
-#: src/pages/index.tsx:262
-#: src/pages/index.tsx:617
-#: src/pages/index.tsx:653
 msgid "Error"
 msgstr "错误"
 
@@ -200,20 +212,20 @@ msgid "Error submitting feedback. Try again later."
 msgstr "提交反馈时出错。请稍后再试。"
 
 #: src/components/alert/index.tsx:71
-msgid "Extreme UV for the next {durationOfExtremeUv} hours"
-msgstr "接下来 {durationOfExtremeUv} 小时内的极端紫外线"
+#~ msgid "Extreme UV for the next {durationOfExtremeUv} hours"
+#~ msgstr "接下来 {durationOfExtremeUv} 小时内的极端紫外线"
 
 #: src/components/alert/index.tsx:76
-msgid "Extreme UV for the next 12 hours"
-msgstr "接下来12小时的极端紫外线"
+#~ msgid "Extreme UV for the next 12 hours"
+#~ msgstr "接下来12小时的极端紫外线"
 
 #: src/components/alert/index.tsx:79
-msgid "Extreme UV for the next hour"
-msgstr "接下来一小时的极端紫外线"
+#~ msgid "Extreme UV for the next hour"
+#~ msgstr "接下来一小时的极端紫外线"
 
 #: src/components/alert/index.tsx:62
-msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
-msgstr "极端紫外线将于 {timeUntilExtremeUv} 小时后开始"
+#~ msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
+#~ msgstr "极端紫外线将于 {timeUntilExtremeUv} 小时后开始"
 
 #: src/pages/feedback/index.tsx:388
 msgid "Feature request"
@@ -223,6 +235,7 @@ msgstr "功能请求"
 msgid "Features don't work as expected"
 msgstr "功能不如预期工作"
 
+#: src/components/card.tsx:94
 #: src/components/tile/index.tsx:69
 msgid "February"
 msgstr "二月"
@@ -239,38 +252,43 @@ msgstr "反馈成功提交"
 msgid "Found a better alternative"
 msgstr "找到了更好的替代方案"
 
+#: src/components/card.tsx:88
 #: src/components/tile/index.tsx:64
 msgid "Friday"
 msgstr "星期五"
 
 #: src/components/alert/index.tsx:250
-msgid "Generally strong wind for the next {durationOfStrongWind} hours"
-msgstr "接下来{durationOfStrongWind}小时内通常有大风"
+#~ msgid "Generally strong wind for the next {durationOfStrongWind} hours"
+#~ msgstr "接下来{durationOfStrongWind}小时内通常有大风"
 
 #: src/components/alert/index.tsx:256
-msgid "Generally strong wind for the next 24 hours"
-msgstr "接下来24小时内通常有大风"
+#~ msgid "Generally strong wind for the next 24 hours"
+#~ msgstr "接下来24小时内通常有大风"
 
 #: src/components/alert/index.tsx:259
-msgid "Generally strong wind for the next hour"
-msgstr "下一个小时内通常有大风"
+#~ msgid "Generally strong wind for the next hour"
+#~ msgstr "下一个小时内通常有大风"
 
 #: src/components/alert/index.tsx:239
-msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
-msgstr "{timeUntilStrongWind}小时后开始通常有大风"
+#~ msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
+#~ msgstr "{timeUntilStrongWind}小时后开始通常有大风"
 
+#: src/components/card.tsx:67
 #: src/components/tile/weather/index.tsx:147
 msgid "heavy freezing rain"
 msgstr "大冻雨"
 
+#: src/components/card.tsx:65
 #: src/components/tile/weather/index.tsx:145
 msgid "heavy rain"
 msgstr "大雨"
 
+#: src/components/card.tsx:76
 #: src/components/tile/weather/index.tsx:156
 msgid "heavy snow showers"
 msgstr "大雪暴"
 
+#: src/components/card.tsx:70
 #: src/components/tile/weather/index.tsx:150
 msgid "heavy snowfall"
 msgstr "大雪"
@@ -284,43 +302,46 @@ msgstr "如果您能提供一些关于为何卸载了Weather Please的反馈，�
 #~ msgstr "我希望能把Weather Please带到更多的语言中。"
 
 #: src/components/settings/index.tsx:296
-msgid "Identifier"
-msgstr "标识符"
+#~ msgid "Identifier"
+#~ msgstr "标识符"
 
 #: src/components/settings/index.tsx:206
-msgid "If this is incorrect, please update the values below."
-msgstr "如果这不正确，请更新下面的值。"
+#~ msgid "If this is incorrect, please update the values below."
+#~ msgstr "如果这不正确，请更新下面的值。"
 
 #: src/components/settings/index.tsx:410
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "如果您有翻译请求，请通过<0>contact@weather-please.app</0>与我们联系"
 
-#: src/components/intialisation/index.tsx:73
+#: src/components/intialisation/index.tsx:302
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "如果您的浏览器提示您允许地点权限，请选择“允许”。"
 
 #: src/components/intialisation/index.tsx:168
 #: src/components/settings/index.tsx:219
-msgid "Invalid latitude value"
-msgstr "无效的纬度值"
+#~ msgid "Invalid latitude value"
+#~ msgstr "无效的纬度值"
 
 #: src/components/intialisation/index.tsx:184
 #: src/components/settings/index.tsx:235
-msgid "Invalid longitude value"
-msgstr "无效的经度值"
+#~ msgid "Invalid longitude value"
+#~ msgstr "无效的经度值"
 
 #: src/pages/feedback/index.tsx:324
 msgid "Issues after a recent update"
 msgstr "最近更新后的问题"
 
+#: src/components/card.tsx:93
 #: src/components/tile/index.tsx:68
 msgid "January"
 msgstr "一月"
 
+#: src/components/card.tsx:99
 #: src/components/tile/index.tsx:74
 msgid "July"
 msgstr "七月"
 
+#: src/components/card.tsx:98
 #: src/components/tile/index.tsx:73
 msgid "June"
 msgstr "六月"
@@ -329,69 +350,72 @@ msgstr "六月"
 msgid "Lacks features I need"
 msgstr "缺少我需要的功能"
 
-#: src/components/intialisation/index.tsx:80
-#: src/components/intialisation/index.tsx:244
-#: src/components/settings/index.tsx:176
-#: src/components/settings/index.tsx:180
 #: src/pages/feedback/index.tsx:153
-msgid "Language"
+msgid "{label}"
 msgstr "语言"
 
 #: src/components/intialisation/index.tsx:159
 #: src/components/settings/index.tsx:210
-msgid "Latitude"
-msgstr "纬度"
+#~ msgid "Latitude"
+#~ msgstr "纬度"
 
+#: src/components/card.tsx:58
 #: src/components/tile/weather/index.tsx:138
 msgid "light drizzle"
 msgstr "小毛毛雨"
 
+#: src/components/card.tsx:61
 #: src/components/tile/weather/index.tsx:141
 msgid "light freezing drizzle"
 msgstr "小冻毛毛雨"
 
+#: src/components/card.tsx:66
 #: src/components/tile/weather/index.tsx:146
 msgid "light freezing rain"
 msgstr "小冻雨"
 
 #: src/components/settings/index.tsx:191
-msgid "Location"
-msgstr "位置"
+#~ msgid "Location"
+#~ msgstr "位置"
 
 #: src/components/intialisation/index.tsx:174
 #: src/components/settings/index.tsx:225
-msgid "Longitude"
-msgstr "经度"
+#~ msgid "Longitude"
+#~ msgstr "经度"
 
 #: src/components/intialisation/index.tsx:150
-msgid "Looks like we can't grab your location info automatically."
-msgstr "看起来我们不能自动获取您的位置信息。"
+#~ msgid "Looks like we can't grab your location info automatically."
+#~ msgstr "看起来我们不能自动获取您的位置信息。"
 
 #: src/components/alert/index.tsx:411
-msgid "Low visibility for the next {durationOfLowVisibility} hours"
-msgstr "接下来的{durationOfLowVisibility}小时内将有低能见度"
+#~ msgid "Low visibility for the next {durationOfLowVisibility} hours"
+#~ msgstr "接下来的{durationOfLowVisibility}小时内将有低能见度"
 
 #: src/components/alert/index.tsx:416
-msgid "Low visibility for the next 24 hours"
-msgstr "接下来的24小时内将有低能见度"
+#~ msgid "Low visibility for the next 24 hours"
+#~ msgstr "接下来的24小时内将有低能见度"
 
 #: src/components/alert/index.tsx:419
-msgid "Low visibility for the next hour"
-msgstr "接下来的一个小时内将有低能见度"
+#~ msgid "Low visibility for the next hour"
+#~ msgstr "接下来的一个小时内将有低能见度"
 
 #: src/components/alert/index.tsx:400
-msgid "Low visibility starting in {timeUntilLowVisibility} hours"
-msgstr "低能见度将于{timeUntilLowVisibility}小时后开始"
+#~ msgid "Low visibility starting in {timeUntilLowVisibility} hours"
+#~ msgstr "低能见度将于{timeUntilLowVisibility}小时后开始"
 
+#: src/components/card.tsx:53
+#: src/components/card.tsx:56
 #: src/components/tile/weather/index.tsx:133
 #: src/components/tile/weather/index.tsx:136
 msgid "mainly clear"
 msgstr "主要晴朗"
 
+#: src/components/card.tsx:95
 #: src/components/tile/index.tsx:70
 msgid "March"
 msgstr "三月"
 
+#: src/components/card.tsx:97
 #: src/components/tile/index.tsx:72
 msgid "May"
 msgstr "五月"
@@ -401,32 +425,37 @@ msgid "Message"
 msgstr "信息"
 
 #: src/components/settings/index.tsx:357
-msgid "Miscellaneous"
-msgstr "杂项"
+#~ msgid "Miscellaneous"
+#~ msgstr "杂项"
 
+#: src/components/card.tsx:59
 #: src/components/tile/weather/index.tsx:139
 msgid "moderate drizzle"
 msgstr "中度毛毛雨"
 
+#: src/components/card.tsx:64
 #: src/components/tile/weather/index.tsx:144
 msgid "moderate rain"
 msgstr "中雨"
 
+#: src/components/card.tsx:73
 #: src/components/tile/weather/index.tsx:153
 msgid "moderate rain showers"
 msgstr "中等雨阵"
 
+#: src/components/card.tsx:69
 #: src/components/tile/weather/index.tsx:149
 msgid "moderate snowfall"
 msgstr "中雪"
 
+#: src/components/card.tsx:84
 #: src/components/tile/index.tsx:60
 msgid "Monday"
 msgstr "星期一"
 
 #: src/pages/index.tsx:805
-msgid "Never show this again"
-msgstr "再也不显示这个"
+#~ msgid "Never show this again"
+#~ msgstr "再也不显示这个"
 
 #: src/pages/_app.tsx:21
 #~ msgid "New tab"
@@ -441,25 +470,29 @@ msgid "Not available in my language"
 msgstr "我的语言中不可用"
 
 #: src/components/settings/index.tsx:259
-msgid "Note: This requires browser permissions"
-msgstr "注意：这需要浏览器权限"
+#~ msgid "Note: This requires browser permissions"
+#~ msgstr "注意：这需要浏览器权限"
 
+#: src/components/card.tsx:103
 #: src/components/tile/index.tsx:78
 msgid "November"
 msgstr "十一月"
 
 #: src/components/settings/index.tsx:287
-msgid "Number of days to forecast"
-msgstr "预报天数"
+#~ msgid "Number of days to forecast"
+#~ msgstr "预报天数"
 
+#: src/components/card.tsx:102
 #: src/components/tile/index.tsx:77
 msgid "October"
 msgstr "十月"
 
+#: src/components/card.tsx:55
 #: src/components/tile/weather/index.tsx:135
 msgid "overcast"
 msgstr "阴天"
 
+#: src/components/card.tsx:54
 #: src/components/tile/weather/index.tsx:134
 msgid "partly cloudy"
 msgstr "多云"
@@ -469,79 +502,85 @@ msgid "Performance issues"
 msgstr "性能问题"
 
 #: src/components/settings/index.tsx:251
-msgid "Periodically update location automatically"
-msgstr "定期自动更新位置"
+#~ msgid "Periodically update location automatically"
+#~ msgstr "定期自动更新位置"
 
 #: src/components/intialisation/index.tsx:155
-msgid "Please enter it manually below."
-msgstr "请在下方手动输入。"
+#~ msgid "Please enter it manually below."
+#~ msgstr "请在下方手动输入。"
 
 #: src/pages/feedback/index.tsx:291
 msgid "Resource usage"
 msgstr "资源使用"
 
+#: src/components/card.tsx:89
 #: src/components/tile/index.tsx:65
 msgid "Saturday"
 msgstr "星期六"
 
 #: src/components/settings/index.tsx:417
 #: src/components/settings/index.tsx:551
-msgid "Save"
-msgstr "保存"
+#~ msgid "Save"
+#~ msgstr "保存"
 
 #: src/pages/feedback/index.tsx:244
 msgid "Security and privacy concerns"
 msgstr "安全和隐私问题"
 
+#: src/components/card.tsx:101
 #: src/components/tile/index.tsx:76
 msgid "September"
 msgstr "九月"
 
 #: src/components/intialisation/index.tsx:143
 #: src/components/intialisation/index.tsx:267
-msgid "Set my location"
-msgstr "设置我的位置"
+#~ msgid "Set my location"
+#~ msgstr "设置我的位置"
 
 #: src/components/settings/index.tsx:173
-msgid "Settings"
-msgstr "设置"
+#~ msgid "Settings"
+#~ msgstr "设置"
 
 #: src/components/settings/index.tsx:395
-msgid "Share anonymised crash data and error logs"
-msgstr "分享匿名的崩溃数据和错误日志"
+#~ msgid "Share anonymised crash data and error logs"
+#~ msgstr "分享匿名的崩溃数据和错误日志"
 
 #: src/components/settings/index.tsx:324
-msgid "Show extreme UV alerts"
-msgstr "显示极端紫外线警报"
+#~ msgid "Show extreme UV alerts"
+#~ msgstr "显示极端紫外线警报"
 
 #: src/components/settings/index.tsx:331
-msgid "Show high precipitation alerts"
-msgstr "显示高降水量警报"
+#~ msgid "Show high precipitation alerts"
+#~ msgstr "显示高降水量警报"
 
 #: src/components/settings/index.tsx:347
-msgid "Show low visibility alerts"
-msgstr "显示低能见度警报"
+#~ msgid "Show low visibility alerts"
+#~ msgstr "显示低能见度警报"
 
 #: src/components/settings/index.tsx:339
-msgid "Show strong wind alerts"
-msgstr "显示强风警报"
+#~ msgid "Show strong wind alerts"
+#~ msgstr "显示强风警报"
 
 #: src/components/settings/index.tsx:313
-msgid "Show weather alerts"
-msgstr "显示天气警报"
+#~ msgid "Show weather alerts"
+#~ msgstr "显示天气警报"
 
+#: src/components/card.tsx:63
 #: src/components/tile/weather/index.tsx:143
 msgid "slight rain"
 msgstr "小雨"
 
+#: src/components/card.tsx:72
 #: src/components/tile/weather/index.tsx:152
 msgid "slight rain showers"
 msgstr "小阵雨"
 
+#: src/components/card.tsx:75
 #: src/components/tile/weather/index.tsx:155
 msgid "slight snow showers"
 msgstr "小阵雪"
 
+#: src/components/card.tsx:68
 #: src/components/tile/weather/index.tsx:148
 msgid "slight snowfall"
 msgstr "小雪"
@@ -550,6 +589,7 @@ msgstr "小雪"
 msgid "Slows down my browser"
 msgstr "使我的浏览器变慢"
 
+#: src/components/card.tsx:71
 #: src/components/tile/weather/index.tsx:151
 msgid "snow grains"
 msgstr "雪粒"
@@ -567,20 +607,20 @@ msgstr "雪粒"
 #~ msgstr "未来一小时有强风"
 
 #: src/components/alert/index.tsx:331
-msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
-msgstr "未来{durationOfStrongWind}小时有强风暴"
+#~ msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+#~ msgstr "未来{durationOfStrongWind}小时有强风暴"
 
 #: src/components/alert/index.tsx:336
-msgid "Strong wind gusts for the next 24 hours"
-msgstr "未来24小时有强风暴"
+#~ msgid "Strong wind gusts for the next 24 hours"
+#~ msgstr "未来24小时有强风暴"
 
 #: src/components/alert/index.tsx:339
-msgid "Strong wind gusts for the next hour"
-msgstr "未来一小时有强风暴"
+#~ msgid "Strong wind gusts for the next hour"
+#~ msgstr "未来一小时有强风暴"
 
 #: src/components/alert/index.tsx:320
-msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
-msgstr "{timeUntilStrongWind}小时后开始有强风暴"
+#~ msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+#~ msgstr "{timeUntilStrongWind}小时后开始有强风暴"
 
 #: src/components/alert/index.tsx:227
 #~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
@@ -591,67 +631,85 @@ msgstr "{timeUntilStrongWind}小时后开始有强风暴"
 msgid "Submit"
 msgstr "提交"
 
+#: src/components/card.tsx:83
 #: src/components/tile/index.tsx:59
 msgid "Sunday"
 msgstr "星期天"
 
+#. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap]
 #: src/components/tile/weather/index.tsx:68
 msgid "The expected type of weather is {0}."
 msgstr "预期的天气类型是{0}。"
 
+#. placeholder {0}: Math.round(max)
 #: src/components/tile/weather/index.tsx:34
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "最高温度将为{0}摄氏度。"
 
+#. placeholder {0}: Math.round((max * 9) / 5 + 32)
 #: src/components/tile/weather/index.tsx:40
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "最高温度将为{0}华氏度。"
 
+#. placeholder {0}: Math.round(uv)
+#: src/components/card.tsx:167
 #: src/components/tile/weather/index.tsx:96
 msgid "The maximum UV index will be {0}."
 msgstr "最大紫外线指数将为{0}。"
 
+#. placeholder {0}: Math.round(wind)
+#: src/components/card.tsx:178
 #: src/components/tile/weather/index.tsx:107
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "最大风速将为每小时{0}公里。"
 
+#. placeholder {0}: Math.round(wind / 1.609344)
+#: src/components/card.tsx:184
 #: src/components/tile/weather/index.tsx:113
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "最大风速将为每小时{0}英里。"
 
+#. placeholder {0}: Math.round(min)
 #: src/components/tile/weather/index.tsx:51
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "最低温度将为{0}摄氏度。"
 
+#. placeholder {0}: Math.round((min * 9) / 5 + 32)
 #: src/components/tile/weather/index.tsx:57
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "最低温度将为{0}华氏度。"
 
+#. placeholder {0}: Math.round(rain)
+#: src/components/card.tsx:198
 #: src/components/tile/weather/index.tsx:124
 msgid "There is a {0}% chance of precipitation."
 msgstr "有{0}%的降水概率。"
 
+#: src/components/card.tsx:77
 #: src/components/tile/weather/index.tsx:157
 msgid "thunderstorm"
 msgstr "雷暴"
 
+#: src/components/card.tsx:79
 #: src/components/tile/weather/index.tsx:159
 msgid "thunderstorm with heavy hail"
 msgstr "有大冰雹的雷暴"
 
+#: src/components/card.tsx:78
 #: src/components/tile/weather/index.tsx:158
 msgid "thunderstorm with slight hail"
 msgstr "有小冰雹的雷暴"
 
+#: src/components/card.tsx:87
 #: src/components/tile/index.tsx:63
 msgid "Thursday"
 msgstr "星期四"
 
 #: src/components/settings/index.tsx:283
-msgid "Tiles"
-msgstr "瓷砖"
+#~ msgid "Tiles"
+#~ msgstr "瓷砖"
 
-#: src/components/intialisation/index.tsx:66
+#: src/components/intialisation/index.tsx:297
 msgid "To get started, let's set your language and location."
 msgstr "首先，让我们设置您的语言和位置。"
 
@@ -659,6 +717,7 @@ msgstr "首先，让我们设置您的语言和位置。"
 msgid "Too much battery usage"
 msgstr "过多的电池使用"
 
+#: src/components/card.tsx:85
 #: src/components/tile/index.tsx:61
 msgid "Tuesday"
 msgstr "星期二"
@@ -669,8 +728,8 @@ msgstr "卸载反馈"
 
 #: src/components/intialisation/index.tsx:197
 #: src/components/settings/index.tsx:248
-msgid "Unsure how to find these? Click here."
-msgstr "不确定如何找到这些？点击这里。"
+#~ msgid "Unsure how to find these? Click here."
+#~ msgstr "不确定如何找到这些？点击这里。"
 
 #: src/pages/feedback/index.tsx:319
 msgid "Update or change related"
@@ -681,13 +740,14 @@ msgid "Usability and functionality"
 msgstr "可用性和功能性"
 
 #: src/components/settings/index.tsx:362
-msgid "Use keyboard shortcuts"
-msgstr "使用键盘快捷键"
+#~ msgid "Use keyboard shortcuts"
+#~ msgstr "使用键盘快捷键"
 
 #: src/components/settings/index.tsx:387
-msgid "Use metric number format"
-msgstr "使用公制数字格式"
+#~ msgid "Use metric number format"
+#~ msgstr "使用公制数字格式"
 
+#: src/components/card.tsx:74
 #: src/components/tile/weather/index.tsx:154
 msgid "violent rain showers"
 msgstr "猛烈的阵雨"
@@ -696,41 +756,42 @@ msgstr "猛烈的阵雨"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "我们希望将“Weather Please”带到更多语言中。"
 
-#: src/pages/index.tsx:916
+#: src/pages/index.tsx:948
 msgid "weather data provided by open-meteo"
 msgstr "天气数据由open-meteo提供"
 
 #: src/components/intialisation/index.tsx:128
 #: src/components/intialisation/index.tsx:236
-msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
-msgstr "Weather Please 收集匿名崩溃数据和错误日志。您可以随时通过设置菜单选择退出。"
+#~ msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
+#~ msgstr "Weather Please 收集匿名崩溃数据和错误日志。您可以随时通过设置菜单选择退出。"
 
+#: src/components/card.tsx:86
 #: src/components/tile/index.tsx:62
 msgid "Wednesday"
 msgstr "星期三"
 
 #: src/pages/index.tsx:774
-msgid "Would you like to leave a review?"
-msgstr "你想留下评论吗？"
+#~ msgid "Would you like to leave a review?"
+#~ msgstr "你想留下评论吗？"
 
 #: src/components/settings/index.tsx:365
-msgid "You can press numbers 1-9 to change how many weather tiles are displayed."
-msgstr "您可以按数字1-9来更改显示的天气瓦片的数量。"
+#~ msgid "You can press numbers 1-9 to change how many weather tiles are displayed."
+#~ msgstr "您可以按数字1-9来更改显示的天气瓦片的数量。"
 
 #: src/components/settings/index.tsx:529
-msgid "You can't save because either your latitude or longitude are invalid."
-msgstr "你无法保存，因为你的纬度或经度无效。"
+#~ msgid "You can't save because either your latitude or longitude are invalid."
+#~ msgstr "你无法保存，因为你的纬度或经度无效。"
 
 #: src/components/settings/index.tsx:522
-msgid "You have unsaved changes"
-msgstr "你有未保存的更改"
+#~ msgid "You have unsaved changes"
+#~ msgstr "你有未保存的更改"
 
 #: src/pages/index.tsx:770
-msgid "You've been using Weather Please for a while"
-msgstr "您已经使用Weather Please有一段时间了"
+#~ msgid "You've been using Weather Please for a while"
+#~ msgstr "您已经使用Weather Please有一段时间了"
 
 #: src/components/intialisation/index.tsx:106
 #: src/components/intialisation/index.tsx:214
 #: src/components/settings/index.tsx:276
-msgid "Your location data is securely stored exclusively on your personal device."
-msgstr "您的位置数据安全地且仅在您的个人设备上存储。"
+#~ msgid "Your location data is securely stored exclusively on your personal device."
+#~ msgstr "您的位置数据安全地且仅在您的个人设备上存储。"

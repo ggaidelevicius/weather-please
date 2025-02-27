@@ -1,14 +1,5 @@
 import { locales } from '@/util/i18n'
 import { Trans } from '@lingui/macro'
-// import {
-// 	Alert,
-// 	Button,
-// 	Modal,
-// 	NativeSelect,
-// 	Text,
-// 	TextInput,
-// 	Title,
-// } from '@mantine/core'
 import {
 	IconInfoCircleFilled,
 	IconShieldCheckFilled,
@@ -25,6 +16,7 @@ import {
 	DialogPanel,
 	DialogTitle,
 } from '@headlessui/react'
+import { Select } from '../input'
 
 const Initialisation = ({
 	opened,
@@ -302,12 +294,27 @@ const Initialisation = ({
 						</h1>
 					</DialogTitle>
 					<Description className="mt-8 mb-1 font-semibold text-white">
-						To get started, let's set your language and location.
+						<Trans>
+							To get started, let&apos;s set your language and location.
+						</Trans>
 					</Description>
 					<p className="text-sm text-dark-100">
-						If your browser prompts you for location permissions, please select
-						"allow".
+						<Trans>
+							If your browser prompts you for location permissions, please
+							select &quot;allow&quot;.
+						</Trans>
 					</p>
+					<Select
+						label="Language"
+						value={input.lang}
+						onChange={(e) => {
+							handleChange('lang', e.target.value)
+						}}
+						options={Object.keys(locales).map((key) => ({
+							value: key,
+							label: locales[key].label,
+						}))}
+					/>
 				</DialogPanel>
 			</div>
 		</Dialog>
