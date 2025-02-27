@@ -1,29 +1,22 @@
-import Alert from '@/components/alert-old'
-import Initialisation from '@/components/intialisation'
 import { RingLoader } from '@/components/loader'
-import Settings from '@/components/settings'
-import Tile from '@/components/tile'
 import styles from '@/styles/styles.module.css'
 import { mergeObjects } from '@/util/helpers'
 import type {
 	DetermineGridColumns,
 	HandleChange,
-	HandleClick,
 	WeatherData,
 } from '@/util/types'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
-// import { Button, Loader } from '@mantine/core'
-// import { useDisclosure } from '@mantine/hooks'
-// import { notifications } from '@mantine/notifications'
 import { useQuery } from '@tanstack/react-query'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 import { messages } from '../locales/en/messages'
 import { changeLocalisation, locales } from '../util/i18n'
 import { queryClient } from './_app'
-import Card from '@/components/card'
+import { Card } from '@/components/card'
+import { Initialisation } from '@/components/initialisation'
 
 i18n.load({
 	en: messages,
@@ -104,14 +97,11 @@ const App = () => {
 		hoursOfStrongWindGusts: Array(25).fill(false),
 	})
 	const [weatherData, setWeatherData] = useState<[] | Data>([])
-	const [geolocationError, setGeolocationError] = useState<boolean>(false)
-	// const [opened, { open, close }] = useDisclosure(false)
-	const settingsOpened = useRef(false)
 	const initialState: Config = {
 		lang: 'en',
 		lat: '',
 		lon: '',
-		periodicLocationUpdate: false,
+		periodicLocationUpdate: true,
 		useMetric: true,
 		showAlerts: true,
 		showUvAlerts: true,
@@ -126,7 +116,6 @@ const App = () => {
 	}
 	const [config, setConfig] = useState<Config>(initialState)
 	const [input, setInput] = useState<Config>(initialState)
-	const [usingFreshData, setUsingFreshData] = useState<boolean>(false)
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
 	const [completedFirstLoad, setCompletedFirstLoad] = useState<boolean>(false)
 	const [reviewLink, setReviewLink] = useState(
@@ -339,7 +328,7 @@ const App = () => {
 				}
 			}
 		} else {
-			open()
+			// open()
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
@@ -379,77 +368,26 @@ const App = () => {
 		})
 	}
 
-	const handleClick: HandleClick = async (method) => {
-		const userAgent = navigator.userAgent.toLowerCase()
-
-		if (
-			method === 'auto' &&
-			!(
-				userAgent.indexOf('safari') !== -1 && userAgent.indexOf('chrome') === -1
-			)
-		) {
-			navigator.geolocation.getCurrentPosition((pos) => {
-				if (
-					config.lat !== pos.coords.latitude.toString() ||
-					config.lon !== pos.coords.longitude.toString()
-				) {
-					setChangedLocation(true)
-				}
-				setConfig((prev) => ({
-					...prev,
-					lat: pos.coords.latitude.toString(),
-					lon: pos.coords.longitude.toString(),
-					lang: input.lang,
-				}))
-				setInput((prev) => ({
-					...prev,
-					lat: pos.coords.latitude.toString(),
-					lon: pos.coords.longitude.toString(),
-				}))
-			})
-			setTimeout(() => {
-				setGeolocationError(true)
-			}, 5e3)
-		} else if (
-			method === 'auto' &&
-			userAgent.indexOf('safari') !== -1 &&
-			userAgent.indexOf('chrome') === -1
-		) {
-			try {
-				const req = await fetch('http://ip-api.com/json/', {
-					method: 'GET',
-					mode: 'cors',
-				})
-				const res = await req.json()
-				const { lat, lon } = res
-				if (config.lat !== lat || config.lon !== lon) {
-					setChangedLocation(true)
-				}
-				setConfig((prev) => ({
-					...prev,
-					lat: lat,
-					lon: lon,
-					lang: input.lang,
-				}))
-				setInput((prev) => ({
-					...prev,
-					lat: lat,
-					lon: lon,
-				}))
-			} catch (e) {
-				// eslint-disable-next-line no-console
-				console.error(e)
-				setGeolocationError(true)
-			}
-			setTimeout(() => {
-				setGeolocationError(true)
-			}, 5e3)
-		} else {
-			if (config.lat !== input.lat || config.lon !== input.lon) {
+	const handleClick = async () => {
+		navigator.geolocation.getCurrentPosition((pos) => {
+			if (
+				config.lat !== pos.coords.latitude.toString() ||
+				config.lon !== pos.coords.longitude.toString()
+			) {
 				setChangedLocation(true)
 			}
-			setConfig(input)
-		}
+			setConfig((prev) => ({
+				...prev,
+				lat: pos.coords.latitude.toString(),
+				lon: pos.coords.longitude.toString(),
+				lang: input.lang,
+			}))
+			setInput((prev) => ({
+				...prev,
+				lat: pos.coords.latitude.toString(),
+				lon: pos.coords.longitude.toString(),
+			}))
+		})
 	}
 
 	/**
@@ -465,7 +403,6 @@ const App = () => {
 	/**
 	 * Commits the "config" to localStorage if "config.lat" and "config.lon" are valid latitude and longitude values, respectively.
 	 * Latitude: -90 to +90, Longitude: -180 to +180.
-	 * If the geolocation has been updated, it sets "usingFreshData" to true, indicating the need to fetch fresh data.
 	 */
 	useEffect(() => {
 		if (
@@ -477,9 +414,6 @@ const App = () => {
 			)
 		) {
 			localStorage.config = JSON.stringify(config)
-			if (changedLocation) {
-				setUsingFreshData(true)
-			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [config])
@@ -583,34 +517,19 @@ const App = () => {
 
 	const tiles = weatherData
 		.slice(0, parseInt(config.daysToRetrieve))
-		.map((day, i: number) => {
+		.map((day, index: number) => {
 			let delayBaseline = 0.75
 			if (localStorage.data) {
 				delayBaseline = 0
 			}
 			return (
-				<motion.div
-					key={day.day}
-					initial={{ scale: 0.95, opacity: 0 }}
-					animate={{
-						scale: 1,
-						opacity: 1,
-						transition: {
-							type: 'spring',
-							duration: 2,
-							delay: i * 0.075 + delayBaseline,
-						},
-					}}
-					exit={{ scale: 0.95, opacity: 0 }}
-					layout={completedFirstLoad}
-					style={{ background: 'none', willChange: 'transform, opacity' }}
-				>
-					<Card
-						{...day}
-						useMetric={config.useMetric}
-						identifier={config.identifier}
-					/>
-				</motion.div>
+				<Card
+					{...day}
+					index={index}
+					delayBaseline={delayBaseline}
+					useMetric={config.useMetric}
+					identifier={config.identifier}
+				/>
 			)
 		})
 
@@ -630,33 +549,6 @@ const App = () => {
 		}, 0) // 1900
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-
-	const determineGridColumns: DetermineGridColumns = (daysToRetrieve) => {
-		const value = parseInt(daysToRetrieve)
-
-		switch (value) {
-			case 1:
-				return 1
-			case 2:
-				return 2
-			case 3:
-				return 3
-			case 4:
-				return 4
-			case 5:
-				return 5
-			case 6:
-				return 3
-			case 7:
-				return 3
-			case 8:
-				return 4
-			case 9:
-				return 3
-			default:
-				return 3
-		}
-	}
 
 	/**
 	 * A function that triggers a review prompt notification after a delay.
@@ -765,7 +657,6 @@ const App = () => {
 
 		// 	<AnimatePresence>
 		// 		<motion.main
-		// 			layout={usingFreshData}
 		// 			className={styles.main}
 		// 			style={{
 		// 				gridTemplateColumns: `repeat(${determineGridColumns(
@@ -825,36 +716,29 @@ const App = () => {
 		// 	</a>
 		// </>
 		<>
-			<main>
-				<Initialisation
-					geolocationError={geolocationError}
-					handleClick={handleClick}
-					input={input}
-					handleChange={handleChange}
-					opened={true}
-					// close={close}
-				/>
-
-				<RingLoader />
-				{tiles}
-
-				<a
-					href="https://open-meteo.com/"
-					target="_blank"
-					className={styles.link}
-					style={{
-						position: 'fixed',
-						bottom: '1rem',
-						left: '1rem',
-						fontSize: '0.75rem',
-						color: 'hsl(220deg 2.78% 57.65%)',
-						lineHeight: 1,
-						textDecoration: 'none',
-					}}
-				>
-					<Trans>weather data provided by open-meteo</Trans>
-				</a>
+			<main className="grid grid-cols-3 gap-5 p-5">
+				<AnimatePresence>
+					{!config?.lat || !config?.lon ? (
+						<Initialisation
+							handleClick={handleClick}
+							input={input}
+							handleChange={handleChange}
+						/>
+					) : weatherData.length === 0 ? (
+						<RingLoader />
+					) : (
+						<>{tiles}</>
+					)}
+				</AnimatePresence>
 			</main>
+
+			<a
+				href="https://open-meteo.com/"
+				target="_blank"
+				className="fixed bottom-4 left-4 text-xs text-dark-300 hover:underline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500"
+			>
+				<Trans>weather data provided by open-meteo</Trans>
+			</a>
 		</>
 	)
 }
@@ -880,6 +764,33 @@ const isLocalStorageDataValid = (changedLocation: boolean) => {
 		storedAlertsAreValid.success &&
 		storedDataIsValid.success
 	)
+}
+
+const determineGridColumns: DetermineGridColumns = (daysToRetrieve) => {
+	const value = parseInt(daysToRetrieve)
+
+	switch (value) {
+		case 1:
+			return 1
+		case 2:
+			return 2
+		case 3:
+			return 3
+		case 4:
+			return 4
+		case 5:
+			return 5
+		case 6:
+			return 3
+		case 7:
+			return 3
+		case 8:
+			return 4
+		case 9:
+			return 3
+		default:
+			return 3
+	}
 }
 
 export default App

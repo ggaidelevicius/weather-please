@@ -16,6 +16,7 @@ import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
 import type { StaticImageData } from 'next/image'
 import Image from 'next/image'
 import type { ReactElement } from 'react'
+import { motion } from 'framer-motion'
 
 const iconMap: Record<number, StaticImageData> = {
 	0: ClearSky,
@@ -114,9 +115,11 @@ interface CardProps {
 	uv: number
 	useMetric: boolean
 	identifier: 'day' | 'date'
+	index: number
+	delayBaseline: number
 }
 
-const Card = ({
+export const Card = ({
 	day,
 	max,
 	min,
@@ -126,6 +129,8 @@ const Card = ({
 	uv,
 	useMetric,
 	identifier,
+	index,
+	delayBaseline,
 }: CardProps) => {
 	const displayedIdentifier =
 		identifier === 'day'
@@ -133,15 +138,28 @@ const Card = ({
 			: `${new Date(day * 1000).getDate()} ${months[new Date(day * 1000).getMonth()]}`
 
 	return (
-		<div className="rounded-xl bg-dark-700 p-6 select-none">
+		<motion.div
+			initial={{ scale: 0.95, opacity: 0 }}
+			animate={{
+				scale: 1,
+				opacity: 1,
+				transition: {
+					type: 'spring',
+					duration: 2,
+					delay: index * 0.075 + delayBaseline,
+				},
+			}}
+			exit={{ scale: 0.95, opacity: 0 }}
+			className="rounded-lg bg-dark-700 p-5 select-none"
+		>
 			<span className="text-2xl font-bold text-white">
 				{displayedIdentifier}
 			</span>
-			<div className="mt-2 flex items-center justify-between gap-4">
+			<div className="mt-3 flex items-center justify-between gap-4">
 				<div className="flex flex-col">
 					<div className="flex items-baseline gap-2">
-						<span className="text-4xl text-dark-100">{max}</span>
-						<span className="text-xl text-dark-300">{min}</span>
+						<span className="text-4xl text-dark-100">{Math.round(max)}</span>
+						<span className="text-xl text-dark-300">{Math.round(min)}</span>
 					</div>
 					<span className="text-dark-100">
 						{descriptionMap[description as keyof typeof descriptionMap]}
@@ -157,7 +175,7 @@ const Card = ({
 					className="h-[56px] w-[56px]"
 				/>
 			</div>
-			<div className="mt-4 flex flex-row justify-between gap-4">
+			<div className="mt-5 flex flex-row justify-between gap-4">
 				<div className="flex flex-row items-center gap-1.5">
 					<IconUvIndex size={18} className="text-dark-100" aria-hidden />
 					<span aria-hidden className="text-dark-100">
@@ -201,8 +219,6 @@ const Card = ({
 					</span>
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	)
 }
-
-export default Card

@@ -68,5 +68,12 @@
 		"prettier-plugin-tailwindcss": "^0.6.11",
 		"typescript": "^5.7.3"
 	},
-	"packageManager": "pnpm@10.5.2"
+	"packageManager": "pnpm@10.5.2",
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"@sentry/cli",
+			"esbuild",
+			"sharp"
+		]
+	}
 }

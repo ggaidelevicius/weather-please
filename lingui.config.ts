@@ -1,5 +1,6 @@
-/** @type {import('@lingui/conf').LinguiConfig} */
-module.exports = {
+import type { LinguiConfig } from '@lingui/conf'
+
+const config: LinguiConfig = {
 	locales: [
 		'en',
 		'lt',
@@ -24,3 +25,5 @@ module.exports = {
 	],
 	format: 'po',
 }
+
+export default config

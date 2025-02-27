@@ -14,16 +14,6 @@ export type HandleChange = (
 ) => void
 
 /**
- * Manages the "saved" button click action during initialization.
- *
- * - If browser geolocation permissions are granted, it attempts to fetch location using the browser API.
- * - If automatic methods don't succeed, the user is prompted to manually enter their latitude and longitude.
- *
- * @param method Specifies whether the location should be fetched automatically ('auto') or manually ('manual').
- */
-export type HandleClick = (method: 'auto' | 'manual') => void
-
-/**
  * Determines the number of grid columns based on the number of days of weather data to be retrieved.
  *
  * The number of grid columns represents how many columns of weather data can be displayed
