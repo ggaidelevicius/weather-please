@@ -1,4 +1,4 @@
-import Alert from '@/components/alert'
+import Alert from '@/components/alert-old'
 import Initialisation from '@/components/intialisation'
 import { RingLoader } from '@/components/loader'
 import Settings from '@/components/settings'

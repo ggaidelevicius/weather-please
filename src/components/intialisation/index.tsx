@@ -17,6 +17,7 @@ import {
 	DialogTitle,
 } from '@headlessui/react'
 import { Select } from '../input'
+import Alert from '../alert'
 
 const Initialisation = ({
 	opened,
@@ -315,6 +316,12 @@ const Initialisation = ({
 							label: locales[key].label,
 						}))}
 					/>
+					<Alert icon={IconShieldCheckFilled}>
+						<Trans>
+							Your location data is securely stored exclusively on your personal
+							device.
+						</Trans>
+					</Alert>
 				</DialogPanel>
 			</div>
 		</Dialog>
