@@ -1,6 +1,6 @@
 import type { Config } from '@/pages'
-import { locales } from '@/util/i18n'
-import { HandleChange } from '@/util/types'
+import { locales } from '@/lib/i18n'
+import { HandleChange } from '@/lib/types'
 import {
 	Description,
 	Dialog,

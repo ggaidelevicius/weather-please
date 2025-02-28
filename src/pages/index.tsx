@@ -1,8 +1,8 @@
 import { Initialisation } from '@/components/initialisation'
 import { RingLoader } from '@/components/loader'
 import { Tile } from '@/components/tile'
-import { mergeObjects } from '@/util/helpers'
-import type { HandleChange, WeatherData } from '@/util/types'
+import { mergeObjects } from '@/lib/helpers'
+import type { HandleChange, WeatherData } from '@/lib/types'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
@@ -10,7 +10,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 import { messages } from '../locales/en/messages'
-import { changeLocalisation, locales } from '../util/i18n'
+import { changeLocalisation, locales } from '../lib/i18n'
 import { queryClient } from './_app'
 import { IconButton } from '@/components/button'
 import { IconSettings } from '@tabler/icons-react'
@@ -695,7 +695,9 @@ const App = () => {
 				// setInput={setInput}
 				// reviewLink={reviewLink}
 				// settingsOpened={settingsOpened}
-			/>
+			>
+				<Trans>Settings</Trans>
+			</IconButton>
 		</>
 	)
 }

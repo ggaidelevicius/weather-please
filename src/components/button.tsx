@@ -5,6 +5,7 @@ import type {
 	ComponentPropsWithoutRef,
 	ForwardRefExoticComponent,
 	MouseEventHandler,
+	ReactNode,
 	RefAttributes,
 } from 'react'
 
@@ -43,12 +44,14 @@ interface IconButtonProps {
 	icon: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>
 	onClick: MouseEventHandler<HTMLButtonElement>
 	className?: string
+	children: ReactNode
 }
 
 export const IconButton = ({
 	onClick,
 	className,
 	icon: Icon,
+	children,
 }: IconButtonProps) => {
 	return (
 		<HeadlessButton
@@ -59,6 +62,7 @@ export const IconButton = ({
 			)}
 		>
 			<Icon aria-hidden size={18} />
+			<span className="sr-only">{children}</span>
 		</HeadlessButton>
 	)
 }

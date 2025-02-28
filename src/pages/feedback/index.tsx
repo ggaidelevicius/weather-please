@@ -1,5 +1,5 @@
 import messages from '@/locales/en/messages'
-import { changeLocalisation, locales } from '@/util/i18n'
+import { changeLocalisation, locales } from '@/lib/i18n'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
 import {

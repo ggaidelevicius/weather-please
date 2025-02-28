@@ -1,21 +1,5 @@
-import { locales } from '@/util/i18n'
+import { locales } from '@/lib/i18n'
 import { Trans } from '@lingui/react/macro'
-// import {
-// 	ActionIcon,
-// 	Alert,
-// 	Button,
-// 	Divider,
-// 	Modal,
-// 	NativeSelect,
-// 	Skeleton,
-// 	Switch,
-// 	Text,
-// 	TextInput,
-// 	Title,
-// 	Tooltip,
-// } from '@mantine/core'
-// import { useDisclosure } from '@mantine/hooks'
-// import { notifications } from '@mantine/notifications'
 import {
 	IconSettings,
 	IconShieldCheckFilled,

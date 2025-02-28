@@ -1,4 +1,4 @@
-import type { HandleChange, HandleClick } from '@/util/types'
+import type { HandleChange, HandleClick } from '@/lib/types'
 import type { Dispatch, SetStateAction } from 'react'
 import type { Config } from '@/pages'
 
