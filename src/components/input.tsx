@@ -25,7 +25,7 @@ export const Select = ({
 		</Label>
 		<div className="relative mt-2">
 			<HeadlessSelect
-				className="block w-full appearance-none rounded-sm bg-dark-700 px-3 py-1.5 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm/6"
+				className="block w-full appearance-none rounded-sm bg-dark-700 px-3 py-1.5 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm/6"
 				aria-label={label}
 				value={value}
 				onChange={onChange}

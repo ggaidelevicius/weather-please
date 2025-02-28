@@ -12,6 +12,8 @@ import { z } from 'zod'
 import { messages } from '../locales/en/messages'
 import { changeLocalisation, locales } from '../util/i18n'
 import { queryClient } from './_app'
+import { IconButton } from '@/components/button'
+import { IconSettings } from '@tabler/icons-react'
 
 i18n.load({
 	en: messages,
@@ -657,7 +659,7 @@ const App = () => {
 		<>
 			<AnimatePresence>
 				<motion.main
-					className={`grid max-w-4xl ${weatherData.length === 0 ? 'grid-cols-1' : 'grid-cols-3'} gap-5 p-5`}
+					className={`relative grid max-w-4xl ${weatherData.length === 0 ? 'grid-cols-1' : 'grid-cols-3'} gap-5 p-5`}
 				>
 					{!config?.lat || !config?.lon ? (
 						<Initialisation
@@ -666,9 +668,11 @@ const App = () => {
 							handleChange={handleChange}
 						/>
 					) : weatherData.length === 0 ? (
-						<RingLoader />
+						<AnimatePresence>
+							<RingLoader />
+						</AnimatePresence>
 					) : (
-						tiles
+						<AnimatePresence>{tiles}</AnimatePresence>
 					)}
 				</motion.main>
 			</AnimatePresence>
@@ -680,6 +684,18 @@ const App = () => {
 			>
 				<Trans>weather data provided by open-meteo</Trans>
 			</a>
+
+			<IconButton
+				// input={input}
+				// handleChange={handleChange}
+				onClick={handleClick}
+				className="fixed right-4 bottom-4"
+				icon={IconSettings}
+				// config={config}
+				// setInput={setInput}
+				// reviewLink={reviewLink}
+				// settingsOpened={settingsOpened}
+			/>
 		</>
 	)
 }

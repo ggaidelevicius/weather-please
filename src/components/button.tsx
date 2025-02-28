@@ -1,5 +1,12 @@
-import type { ComponentPropsWithoutRef } from 'react'
 import { Button as HeadlessButton } from '@headlessui/react'
+import type { Icon, IconProps } from '@tabler/icons-react'
+import { clsx } from 'clsx'
+import type {
+	ComponentPropsWithoutRef,
+	ForwardRefExoticComponent,
+	MouseEventHandler,
+	RefAttributes,
+} from 'react'
 
 const defaultClasses =
 	'group relative bg-blue-600 hover:not-disabled:bg-blue-700 active:not-disabled:bg-blue-800 disabled:bg-blue-700 text-sm text-white font-medium p-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 select-none disabled:cursor-wait'
@@ -28,6 +35,30 @@ export const Button = ({
 			<span className="flex place-self-center transition group-data-[disabled]:translate-y-2 group-data-[disabled]:opacity-0">
 				{children}
 			</span>
+		</HeadlessButton>
+	)
+}
+
+interface IconButtonProps {
+	icon: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>
+	onClick: MouseEventHandler<HTMLButtonElement>
+	className?: string
+}
+
+export const IconButton = ({
+	onClick,
+	className,
+	icon: Icon,
+}: IconButtonProps) => {
+	return (
+		<HeadlessButton
+			onClick={onClick}
+			className={clsx(
+				'rounded-md bg-dark-100/10 p-2 text-white select-none hover:bg-dark-100/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:bg-dark-100/30',
+				className,
+			)}
+		>
+			<Icon aria-hidden size={18} />
 		</HeadlessButton>
 	)
 }

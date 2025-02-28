@@ -2,12 +2,12 @@ import { motion } from 'framer-motion'
 
 export const RingLoader = () => (
 	<motion.svg
-		initial={{ scale: 1, opacity: 0 }}
+		initial={{ scale: 0.95, opacity: 0 }}
 		animate={{ scale: 1, opacity: 1 }}
 		exit={{ scale: 0.95, opacity: 0 }}
 		viewBox="0 0 45 45"
 		xmlns="http://www.w3.org/2000/svg"
-		className="h-[84px] w-[84px] stroke-blue-500"
+		className="absolute inset-0 m-auto h-[84px] w-[84px] stroke-blue-500"
 	>
 		<g
 			fill="none"

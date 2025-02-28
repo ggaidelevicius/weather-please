@@ -213,7 +213,7 @@ export const Tile = ({
 					className="h-[56px] w-[56px]"
 				/>
 			</div>
-			<div className="mt-5 flex flex-row justify-between gap-3">
+			<div className="mt-4 flex flex-row justify-between gap-3">
 				<div className="flex flex-row items-center gap-1">
 					<IconUvIndex size={18} className="text-dark-100" aria-hidden />
 					<span aria-hidden className="text-sm text-dark-100">
