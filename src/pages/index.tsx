@@ -14,6 +14,7 @@ import { changeLocalisation, locales } from '../lib/i18n'
 import { queryClient } from './_app'
 import { IconButton } from '@/components/button'
 import { IconSettings } from '@tabler/icons-react'
+import { Settings } from '@/components/settings'
 
 i18n.load({
 	en: messages,
@@ -685,19 +686,7 @@ const App = () => {
 				<Trans>weather data provided by open-meteo</Trans>
 			</a>
 
-			<IconButton
-				// input={input}
-				// handleChange={handleChange}
-				onClick={handleClick}
-				className="fixed right-4 bottom-4"
-				icon={IconSettings}
-				// config={config}
-				// setInput={setInput}
-				// reviewLink={reviewLink}
-				// settingsOpened={settingsOpened}
-			>
-				<Trans>Settings</Trans>
-			</IconButton>
+			<Settings handleChange={handleChange} input={input} />
 		</>
 	)
 }
