@@ -1,9 +1,10 @@
 import type { Config } from '@/pages'
 import {
 	Field,
-	Select as HeadlessSelect,
-	Label,
 	Input as HeadlessInput,
+	Select as HeadlessSelect,
+	Switch as HeadlessSwitch,
+	Label,
 } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Trans } from '@lingui/react/macro'
@@ -73,6 +74,31 @@ export const Input = ({
 				value={value}
 				onChange={onChange}
 			/>
+		</Field>
+	)
+}
+
+interface SwitchProps {
+	label: string
+	checked: boolean
+	onChange: (e: boolean) => void
+}
+
+export const Switch = ({
+	label,
+	checked,
+	onChange
+}: SwitchProps) => {
+	return (
+		<Field>
+			<Label className="block text-sm font-medium text-white">{label}</Label>
+			<HeadlessSwitch
+				checked={checked}
+				onChange={onChange}
+				className="group inline-flex h-6 w-11 items-center rounded-full bg-dark-500 transition data-[checked]:bg-blue-600 mt-2"
+			>
+				<span className="size-4 translate-x-1 rounded-full bg-white transition group-data-[checked]:translate-x-6" />
+			</HeadlessSwitch>
 		</Field>
 	)
 }
