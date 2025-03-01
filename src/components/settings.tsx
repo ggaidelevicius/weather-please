@@ -67,12 +67,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						<DialogTitle as="h1" className="text-4xl font-bold text-white">
 							<Trans>Settings</Trans>
 						</DialogTitle>
-						{/* <Description className="mb-2 font-semibold text-white">
-              <Trans>
-                Customise your experience by setting your preferred language, location, tile, and alert options.
-              </Trans>
-            </Description> */}
-						<h2 className="mt-10 text-2xl font-medium text-white">
+						<h2 className="mt-8 text-2xl font-medium text-white">
 							<Trans>General</Trans>
 						</h2>
 						<Select
@@ -85,6 +80,13 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 								value: key,
 								label: locales[key].label,
 							}))}
+						/>
+						<Switch
+							label={
+								(<Trans>Use metric number format</Trans>) as unknown as string
+							}
+							checked={input.useMetric}
+							onChange={(e) => handleChange('useMetric', e)}
 						/>
 						<Switch
 							label={
@@ -128,9 +130,9 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							onChange={(e) => {
 								handleChange('daysToRetrieve', e.target.value)
 							}}
-							options={Array.from({ length: 10 }, (_, i) => ({
-								value: i.toString(),
-								label: i.toString(),
+							options={Array.from({ length: 9 }, (_, i) => ({
+								value: (i + 1).toString(),
+								label: (i + 1).toString(),
 							}))}
 						/>
 						<Select
@@ -149,13 +151,6 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									value: 'date',
 								},
 							]}
-						/>
-						<Switch
-							label={
-								(<Trans>Use metric number format</Trans>) as unknown as string
-							}
-							checked={input.useMetric}
-							onChange={(e) => handleChange('useMetric', e)}
 						/>
 						<Switch
 							label={(<Trans>Show weather alerts</Trans>) as unknown as string}

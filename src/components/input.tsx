@@ -8,10 +8,7 @@ import {
 } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Trans } from '@lingui/react/macro'
-import type {
-	ChangeEventHandler,
-	ComponentPropsWithoutRef,
-} from 'react'
+import type { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
 
 interface SelectProps {
 	label: string
@@ -98,7 +95,7 @@ export const Switch = ({ label, checked, onChange }: SwitchProps) => {
 			<HeadlessSwitch
 				checked={checked}
 				onChange={onChange}
-				className="group mt-2 inline-flex h-6 w-11 items-center rounded-full bg-dark-500 transition data-[checked]:bg-blue-600"
+				className="group mt-2 inline-flex h-6 w-11 items-center rounded-full bg-dark-500 transition select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-[checked]:bg-blue-600"
 			>
 				<span className="size-4 translate-x-1 rounded-full bg-white transition group-data-[checked]:translate-x-6" />
 			</HeadlessSwitch>
