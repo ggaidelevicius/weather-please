@@ -1,6 +1,6 @@
-import type { LinguiConfig } from '@lingui/conf'
+import { defineConfig } from '@lingui/cli'
 
-const config: LinguiConfig = {
+export default defineConfig({
 	locales: [
 		'en',
 		'lt',
@@ -24,6 +24,4 @@ const config: LinguiConfig = {
 		},
 	],
 	format: 'po',
-}
-
-export default config
+})
