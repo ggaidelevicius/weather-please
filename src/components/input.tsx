@@ -1,4 +1,3 @@
-import type { Config } from '@/pages'
 import {
 	Description,
 	Field,
@@ -12,7 +11,6 @@ import { Trans } from '@lingui/react/macro'
 import type {
 	ChangeEventHandler,
 	ComponentPropsWithoutRef,
-	ReactNode,
 } from 'react'
 
 interface SelectProps {

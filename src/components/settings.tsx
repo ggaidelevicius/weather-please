@@ -2,7 +2,6 @@ import { locales } from '@/lib/i18n'
 import type { HandleChange } from '@/lib/types'
 import type { Config } from '@/pages'
 import {
-	Description,
 	Dialog,
 	DialogBackdrop,
 	DialogPanel,
@@ -12,7 +11,7 @@ import { Trans } from '@lingui/react/macro'
 import { IconSettings, IconShieldCheckFilled } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 import { Alert } from './alert'
-import { Button, IconButton } from './button'
+import { IconButton } from './button'
 import { Input, Select, Switch } from './input'
 
 interface SettingsProps {
