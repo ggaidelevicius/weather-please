@@ -23,14 +23,12 @@ msgstr ""
 #~ msgstr "अगले घंटे में {0} इंच वर्षा की उम्मीद"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/card.tsx:173
-#: src/components/tile/weather/index.tsx:102
+#: src/components/tile.tsx:229
 msgid "{0} km/h"
 msgstr "{0} किमी/घंटा"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/card.tsx:174
-#: src/components/tile/weather/index.tsx:103
+#: src/components/tile.tsx:230
 msgid "{0} mph"
 msgstr "{0} मील प्रति घंटा"
 
@@ -51,34 +49,33 @@ msgstr "{0} मील प्रति घंटा"
 #~ msgid "{0}mm of precipitation expected over the next hour"
 #~ msgstr "अगले 1 घंटे में {0} मिमी वर्षा की संभावना है"
 
-#: src/components/input.tsx:16
-msgid "{label}"
-msgstr ""
+#: src/pages/feedback/index.tsx:153
+#~ msgid "{label}"
+#~ msgstr "भाषा"
 
-#: src/components/settings/index.tsx:499
-#~ msgid "☕ Gift a coffee"
-#~ msgstr "☕ कॉफ़ी का उपहार दें"
+#: src/components/settings.tsx:237
+msgid "☕ Gift a coffee"
+msgstr "☕ कॉफ़ी का उपहार दें"
 
-#: src/components/settings/index.tsx:455
-#~ msgid "✍️ Submit feedback"
-#~ msgstr "✍️ प्रतिसाद जमा करें"
+#: src/components/settings.tsx:209
+msgid "✍️ Submit feedback"
+msgstr "✍️ प्रतिसाद जमा करें"
 
-#: src/components/settings/index.tsx:444
-#: src/pages/index.tsx:791
-#~ msgid "🌟 Leave a review"
-#~ msgstr "🌟 समीक्षा छोड़ें"
+#: src/components/settings.tsx:202
+msgid "🌟 Leave a review"
+msgstr "🌟 समीक्षा छोड़ें"
 
-#: src/components/settings/index.tsx:477
-#~ msgid "🐛 Report a bug"
-#~ msgstr "🐛 एक बग रिपोर्ट करें"
+#: src/components/settings.tsx:223
+msgid "🐛 Report a bug"
+msgstr "🐛 एक बग रिपोर्ट करें"
 
-#: src/components/settings/index.tsx:466
-#~ msgid "💡 Request a feature"
-#~ msgstr "💡 एक सुविधा का अनुरोध करें"
+#: src/components/settings.tsx:216
+msgid "💡 Request a feature"
+msgstr "💡 एक सुविधा का अनुरोध करें"
 
-#: src/components/settings/index.tsx:488
-#~ msgid "🔒 Privacy policy"
-#~ msgstr "🔒 गोपनीयता नीति"
+#: src/components/settings.tsx:230
+msgid "🔒 Privacy policy"
+msgstr "🔒 गोपनीयता नीति"
 
 #: src/pages/feedback/index.tsx:337
 #~ msgid "Additional details"
@@ -105,20 +102,18 @@ msgstr ""
 #~ msgstr "मौसम डेटा लाते समय एक त्रुटि हुई है। कृपया बाद में पुनः प्रयास करें।"
 
 #: src/components/settings/index.tsx:111
-msgid "An error has occurred while fetching your location. Please check the console for more details."
-msgstr "आपका स्थान प्राप्त करते समय त्रुटि हुई है। कृपया अधिक जानकारी के लिए कंसोल देखें।"
+#~ msgid "An error has occurred while fetching your location. Please check the console for more details."
+#~ msgstr "आपका स्थान प्राप्त करते समय त्रुटि हुई है। कृपया अधिक जानकारी के लिए कंसोल देखें।"
 
 #: src/pages/index.tsx:619
 #~ msgid "An error has occurred while periodically updating location. Please check the console for more details."
 #~ msgstr "स्थान को समय-समय पर अपडेट करते समय त्रुटि हुई है। कृपया अधिक जानकारी के लिए कंसोल देखें।"
 
-#: src/components/card.tsx:96
-#: src/components/tile/index.tsx:71
+#: src/components/tile.tsx:97
 msgid "April"
 msgstr "अप्रैल"
 
-#: src/components/card.tsx:100
-#: src/components/tile/index.tsx:75
+#: src/components/tile.tsx:101
 msgid "August"
 msgstr "अगस्त"
 
@@ -127,89 +122,84 @@ msgstr "अगस्त"
 #~ msgstr "प्रदान की गई जानकारी के आधार पर, आपका स्थान है:"
 
 #: src/pages/feedback/index.tsx:403
-msgid "Bug report"
-msgstr "बग रिपोर्ट"
+#~ msgid "Bug report"
+#~ msgstr "बग रिपोर्ट"
 
 #: src/components/settings/index.tsx:430
 #~ msgid "Cancel"
 #~ msgstr "रद्द करें"
 
 #: src/pages/feedback/index.tsx:189
-msgid "Causes browser crashes or errors"
-msgstr "ब्राउज़र क्रैश या त्रुटियों का कारण"
+#~ msgid "Causes browser crashes or errors"
+#~ msgstr "ब्राउज़र क्रैश या त्रुटियों का कारण"
 
 #: src/pages/feedback/index.tsx:268
-msgid "Changed needs"
-msgstr "बदली हुई आवश्यकताएँ"
+#~ msgid "Changed needs"
+#~ msgstr "बदली हुई आवश्यकताएँ"
 
-#: src/components/card.tsx:52
-#: src/components/tile/weather/index.tsx:132
+#: src/components/tile.tsx:53
 msgid "clear sky"
 msgstr "साफ़ आकाश"
 
 #: src/pages/feedback/index.tsx:249
-msgid "Concerned about privacy"
-msgstr "गोपनीयता की चिंता"
+#~ msgid "Concerned about privacy"
+#~ msgstr "गोपनीयता की चिंता"
 
 #: src/pages/feedback/index.tsx:258
-msgid "Concerned about security"
-msgstr "सुरक्षा की चिंता"
+#~ msgid "Concerned about security"
+#~ msgstr "सुरक्षा की चिंता"
 
 #: src/pages/feedback/index.tsx:295
-msgid "Consumes too much memory or CPU"
-msgstr "बहुत अधिक मेमोरी या CPU का उपयोग"
+#~ msgid "Consumes too much memory or CPU"
+#~ msgstr "बहुत अधिक मेमोरी या CPU का उपयोग"
 
-#: src/components/settings/index.tsx:304
-#~ msgid "Date"
-#~ msgstr "तारीख़"
+#: src/components/settings.tsx:148
+msgid "Date"
+msgstr "तारीख़"
 
-#: src/components/settings/index.tsx:302
-#~ msgid "Day"
-#~ msgstr "दिन"
+#: src/components/settings.tsx:144
+msgid "Day"
+msgstr "दिन"
 
-#: src/components/card.tsx:104
-#: src/components/tile/index.tsx:79
+#: src/components/tile.tsx:105
 msgid "December"
 msgstr "दिसंबर"
 
-#: src/components/card.tsx:60
-#: src/components/tile/weather/index.tsx:140
+#: src/components/tile.tsx:61
 msgid "dense drizzle"
 msgstr "घनी बूंदाबंदी"
 
-#: src/components/card.tsx:62
-#: src/components/tile/weather/index.tsx:142
+#: src/components/tile.tsx:63
 msgid "dense freezing drizzle"
 msgstr "घनी हिमबंदी बूंदाबंदी"
 
-#: src/components/card.tsx:57
-#: src/components/tile/weather/index.tsx:137
+#: src/components/tile.tsx:58
 msgid "depositing rime fog"
 msgstr "राइम कोहरा जमा हो रहा है"
 
 #: src/pages/feedback/index.tsx:335
-msgid "Details"
-msgstr "विवरण"
+#~ msgid "Details"
+#~ msgstr "विवरण"
 
 #: src/pages/feedback/index.tsx:212
-msgid "Difficult to use or understand"
-msgstr "उपयोग करना या समझना कठिन"
+#~ msgid "Difficult to use or understand"
+#~ msgstr "उपयोग करना या समझना कठिन"
 
 #: src/components/settings/index.tsx:565
 #~ msgid "Don't save"
 #~ msgstr "सेव न करें"
 
 #: src/pages/feedback/index.tsx:423
-msgid "Email (optional)"
-msgstr "ईमेल (वैकल्पिक)"
+#~ msgid "Email (optional)"
+#~ msgstr "ईमेल (वैकल्पिक)"
 
 #: src/components/settings/index.tsx:109
-msgid "Error"
-msgstr "त्रुटि"
+#~ msgid "Error"
+#~ msgstr "त्रुटि"
 
 #: src/pages/feedback/index.tsx:475
-msgid "Error submitting feedback. Try again later."
-msgstr "प्रतिसाद सबमिट करते समय त्रुटि। बाद में पुनः प्रयास करें।"
+#~ msgid "Error submitting feedback. Try again later."
+#~ msgstr "प्रतिसाद सबमिट करते समय त्रुटि। बाद में पुनः प्रयास करें।"
 
 #: src/components/alert/index.tsx:71
 #~ msgid "Extreme UV for the next {durationOfExtremeUv} hours"
@@ -228,34 +218,40 @@ msgstr "प्रतिसाद सबमिट करते समय त्�
 #~ msgstr "{timeUntilExtremeUv} घंटों में अत्यधिक यूवी शुरू होगी"
 
 #: src/pages/feedback/index.tsx:388
-msgid "Feature request"
-msgstr "सुविधा अनुरोध"
+#~ msgid "Feature request"
+#~ msgstr "सुविधा अनुरोध"
 
 #: src/pages/feedback/index.tsx:231
-msgid "Features don't work as expected"
-msgstr "सुविधाएँ अपेक्षित रूप से काम नहीं करतीं"
+#~ msgid "Features don't work as expected"
+#~ msgstr "सुविधाएँ अपेक्षित रूप से काम नहीं करतीं"
 
-#: src/components/card.tsx:94
-#: src/components/tile/index.tsx:69
+#: src/components/tile.tsx:95
 msgid "February"
 msgstr "फ़रवरी"
 
 #: src/pages/feedback/index.tsx:373
-msgid "Feedback"
-msgstr "प्रतिक्रिया"
+#~ msgid "Feedback"
+#~ msgstr "प्रतिक्रिया"
+
+#: src/components/settings.tsx:195
+msgid "Feedback and support"
+msgstr ""
 
 #: src/pages/feedback/index.tsx:458
-msgid "Feedback successfully submitted"
-msgstr "प्रतिसाद सफलतापूर्वक सबमिट किया गया"
+#~ msgid "Feedback successfully submitted"
+#~ msgstr "प्रतिसाद सफलतापूर्वक सबमिट किया गया"
 
 #: src/pages/feedback/index.tsx:281
-msgid "Found a better alternative"
-msgstr "बेहतर विकल्प मिला"
+#~ msgid "Found a better alternative"
+#~ msgstr "बेहतर विकल्प मिला"
 
-#: src/components/card.tsx:88
-#: src/components/tile/index.tsx:64
+#: src/components/tile.tsx:89
 msgid "Friday"
 msgstr "शुक्रवार"
+
+#: src/components/settings.tsx:76
+msgid "General"
+msgstr ""
 
 #: src/components/alert/index.tsx:250
 #~ msgid "Generally strong wind for the next {durationOfStrongWind} hours"
@@ -273,37 +269,33 @@ msgstr "शुक्रवार"
 #~ msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 #~ msgstr "{timeUntilStrongWind} घंटों में शुरू होने वाली आम तौर पर तेज हवा"
 
-#: src/components/card.tsx:67
-#: src/components/tile/weather/index.tsx:147
+#: src/components/tile.tsx:68
 msgid "heavy freezing rain"
 msgstr "भारी हिमपात"
 
-#: src/components/card.tsx:65
-#: src/components/tile/weather/index.tsx:145
+#: src/components/tile.tsx:66
 msgid "heavy rain"
 msgstr "भारी वर्षा"
 
-#: src/components/card.tsx:76
-#: src/components/tile/weather/index.tsx:156
+#: src/components/tile.tsx:77
 msgid "heavy snow showers"
 msgstr "भारी हिमवर्षा"
 
-#: src/components/card.tsx:70
-#: src/components/tile/weather/index.tsx:150
+#: src/components/tile.tsx:71
 msgid "heavy snowfall"
 msgstr "भारी हिमपात"
 
 #: src/pages/feedback/index.tsx:167
-msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
-msgstr "अगर आप बता सकें कि आपने Weather Please क्यों अनइंस्टॉल किया, तो मैं आभारी रहूंगा। इससे मुझे Weather Please को एक बेहतर उत्पाद बनाने में मदद मिलेगी।"
+#~ msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
+#~ msgstr "अगर आप बता सकें कि आपने Weather Please क्यों अनइंस्टॉल किया, तो मैं आभारी रहूंगा। इससे मुझे Weather Please को एक बेहतर उत्पाद बनाने में मदद मिलेगी।"
 
 #: src/components/settings/index.tsx:405
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "मुझे Weather Please को और अधिक भाषाओं में लाना पसंद होगा।"
 
-#: src/components/settings/index.tsx:296
-#~ msgid "Identifier"
-#~ msgstr "पहचानकर्ता"
+#: src/components/settings.tsx:137
+msgid "Identifier"
+msgstr "पहचानकर्ता"
 
 #: src/components/settings/index.tsx:206
 #~ msgid "If this is incorrect, please update the values below."
@@ -313,7 +305,7 @@ msgstr "अगर आप बता सकें कि आपने Weather Plea
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "यदि आपके पास कोई अनुवाद अनुरोध है, कृपया हमें इस पर संपर्क करें <0>contact@weather-please.app</0>"
 
-#: src/components/intialisation/index.tsx:302
+#: src/components/initialisation.tsx:59
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "अगर आपका ब्राउज़र आपसे स्थान अनुमतियाँ मांगता है, तो कृपया \"अनुमति दें\" चुनें।"
 
@@ -327,50 +319,47 @@ msgstr "अगर आपका ब्राउज़र आपसे स्थ�
 #~ msgid "Invalid longitude value"
 #~ msgstr "अमान्य देशांतर मान"
 
-#: src/pages/feedback/index.tsx:324
-msgid "Issues after a recent update"
-msgstr "हाल के अपडेट के बाद समस्याएं"
+#: src/components/input.tsx:81
+msgid "Invalid value"
+msgstr ""
 
-#: src/components/card.tsx:93
-#: src/components/tile/index.tsx:68
+#: src/pages/feedback/index.tsx:324
+#~ msgid "Issues after a recent update"
+#~ msgstr "हाल के अपडेट के बाद समस्याएं"
+
+#: src/components/tile.tsx:94
 msgid "January"
 msgstr "जनवरी"
 
-#: src/components/card.tsx:99
-#: src/components/tile/index.tsx:74
+#: src/components/tile.tsx:100
 msgid "July"
 msgstr "जुलाई"
 
-#: src/components/card.tsx:98
-#: src/components/tile/index.tsx:73
+#: src/components/tile.tsx:99
 msgid "June"
 msgstr "जून"
 
 #: src/pages/feedback/index.tsx:221
-msgid "Lacks features I need"
-msgstr "मुझे जरूरत की सुविधाएँ नहीं हैं"
+#~ msgid "Lacks features I need"
+#~ msgstr "मुझे जरूरत की सुविधाएँ नहीं हैं"
 
-#: src/pages/feedback/index.tsx:153
-msgid "{label}"
-msgstr "भाषा"
+#: src/components/settings.tsx:79
+msgid "Language"
+msgstr ""
 
-#: src/components/intialisation/index.tsx:159
-#: src/components/settings/index.tsx:210
-#~ msgid "Latitude"
-#~ msgstr "अक्षांश"
+#: src/components/settings.tsx:106
+msgid "Latitude"
+msgstr "अक्षांश"
 
-#: src/components/card.tsx:58
-#: src/components/tile/weather/index.tsx:138
+#: src/components/tile.tsx:59
 msgid "light drizzle"
 msgstr "हल्की झीलन"
 
-#: src/components/card.tsx:61
-#: src/components/tile/weather/index.tsx:141
+#: src/components/tile.tsx:62
 msgid "light freezing drizzle"
 msgstr "हल्की हिमबंध झीलन"
 
-#: src/components/card.tsx:66
-#: src/components/tile/weather/index.tsx:146
+#: src/components/tile.tsx:67
 msgid "light freezing rain"
 msgstr "हल्की हिमबंध वर्षा"
 
@@ -378,10 +367,9 @@ msgstr "हल्की हिमबंध वर्षा"
 #~ msgid "Location"
 #~ msgstr "स्थान"
 
-#: src/components/intialisation/index.tsx:174
-#: src/components/settings/index.tsx:225
-#~ msgid "Longitude"
-#~ msgstr "देशांतर"
+#: src/components/settings.tsx:114
+msgid "Longitude"
+msgstr "देशांतर"
 
 #: src/components/intialisation/index.tsx:150
 #~ msgid "Looks like we can't grab your location info automatically."
@@ -403,53 +391,44 @@ msgstr "हल्की हिमबंध वर्षा"
 #~ msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 #~ msgstr "{timeUntilLowVisibility} घंटों में कम दृश्यता शुरू होगी"
 
-#: src/components/card.tsx:53
-#: src/components/card.tsx:56
-#: src/components/tile/weather/index.tsx:133
-#: src/components/tile/weather/index.tsx:136
+#: src/components/tile.tsx:54
+#: src/components/tile.tsx:57
 msgid "mainly clear"
 msgstr "मुख्य रूप से स्पष्ट"
 
-#: src/components/card.tsx:95
-#: src/components/tile/index.tsx:70
+#: src/components/tile.tsx:96
 msgid "March"
 msgstr "मार्च"
 
-#: src/components/card.tsx:97
-#: src/components/tile/index.tsx:72
+#: src/components/tile.tsx:98
 msgid "May"
 msgstr "मई"
 
 #: src/pages/feedback/index.tsx:411
-msgid "Message"
-msgstr "संदेश"
+#~ msgid "Message"
+#~ msgstr "संदेश"
 
 #: src/components/settings/index.tsx:357
 #~ msgid "Miscellaneous"
 #~ msgstr "विविध"
 
-#: src/components/card.tsx:59
-#: src/components/tile/weather/index.tsx:139
+#: src/components/tile.tsx:60
 msgid "moderate drizzle"
 msgstr "मध्यम झीलन"
 
-#: src/components/card.tsx:64
-#: src/components/tile/weather/index.tsx:144
+#: src/components/tile.tsx:65
 msgid "moderate rain"
 msgstr "मध्यम वर्षा"
 
-#: src/components/card.tsx:73
-#: src/components/tile/weather/index.tsx:153
+#: src/components/tile.tsx:74
 msgid "moderate rain showers"
 msgstr "मध्यम वर्षा की बौछारें"
 
-#: src/components/card.tsx:69
-#: src/components/tile/weather/index.tsx:149
+#: src/components/tile.tsx:70
 msgid "moderate snowfall"
 msgstr "मध्यम हिमपात"
 
-#: src/components/card.tsx:84
-#: src/components/tile/index.tsx:60
+#: src/components/tile.tsx:85
 msgid "Monday"
 msgstr "सोमवार"
 
@@ -462,44 +441,40 @@ msgstr "सोमवार"
 #~ msgstr "नया टैब"
 
 #: src/pages/feedback/index.tsx:272
-msgid "No longer need the functionality"
-msgstr "अब फ़ंक्शनैलिटी की आवश्यकता नहीं है"
+#~ msgid "No longer need the functionality"
+#~ msgstr "अब फ़ंक्शनैलिटी की आवश्यकता नहीं है"
 
 #: src/pages/feedback/index.tsx:203
-msgid "Not available in my language"
-msgstr "मेरी भाषा में उपलब्ध नहीं"
+#~ msgid "Not available in my language"
+#~ msgstr "मेरी भाषा में उपलब्ध नहीं"
 
 #: src/components/settings/index.tsx:259
 #~ msgid "Note: This requires browser permissions"
 #~ msgstr "नोट: इसे ब्राउज़र की अनुमतियाँ की आवश्यकता होती है"
 
-#: src/components/card.tsx:103
-#: src/components/tile/index.tsx:78
+#: src/components/tile.tsx:104
 msgid "November"
 msgstr "नवं"
 
-#: src/components/settings/index.tsx:287
-#~ msgid "Number of days to forecast"
-#~ msgstr "भविष्यवाणी के लिए दिनों की संख्या"
+#: src/components/settings.tsx:125
+msgid "Number of days to forecast"
+msgstr "भविष्यवाणी के लिए दिनों की संख्या"
 
-#: src/components/card.tsx:102
-#: src/components/tile/index.tsx:77
+#: src/components/tile.tsx:103
 msgid "October"
 msgstr "अक्टूबर"
 
-#: src/components/card.tsx:55
-#: src/components/tile/weather/index.tsx:135
+#: src/components/tile.tsx:56
 msgid "overcast"
 msgstr "धूमिल"
 
-#: src/components/card.tsx:54
-#: src/components/tile/weather/index.tsx:134
+#: src/components/tile.tsx:55
 msgid "partly cloudy"
 msgstr "आंशिक रूप से बादल"
 
 #: src/pages/feedback/index.tsx:173
-msgid "Performance issues"
-msgstr "प्रदर्शन समस्याएं"
+#~ msgid "Performance issues"
+#~ msgstr "प्रदर्शन समस्याएं"
 
 #: src/components/settings/index.tsx:251
 #~ msgid "Periodically update location automatically"
@@ -510,11 +485,10 @@ msgstr "प्रदर्शन समस्याएं"
 #~ msgstr "कृपया इसे नीचे स्वयं दर्ज करें।"
 
 #: src/pages/feedback/index.tsx:291
-msgid "Resource usage"
-msgstr "संसाधन का उपयोग"
+#~ msgid "Resource usage"
+#~ msgstr "संसाधन का उपयोग"
 
-#: src/components/card.tsx:89
-#: src/components/tile/index.tsx:65
+#: src/components/tile.tsx:90
 msgid "Saturday"
 msgstr "शनिवार"
 
@@ -524,11 +498,10 @@ msgstr "शनिवार"
 #~ msgstr "सेव"
 
 #: src/pages/feedback/index.tsx:244
-msgid "Security and privacy concerns"
-msgstr "सुरक्षा और गोपनीयता की चिंताएं"
+#~ msgid "Security and privacy concerns"
+#~ msgstr "सुरक्षा और गोपनीयता की चिंताएं"
 
-#: src/components/card.tsx:101
-#: src/components/tile/index.tsx:76
+#: src/components/tile.tsx:102
 msgid "September"
 msgstr "सितंबर"
 
@@ -537,60 +510,56 @@ msgstr "सितंबर"
 #~ msgid "Set my location"
 #~ msgstr "मेरा स्थान निर्धारित करें"
 
-#: src/components/settings/index.tsx:173
-#~ msgid "Settings"
-#~ msgstr "सेटिंग्स"
+#: src/components/settings.tsx:51
+#: src/components/settings.tsx:68
+msgid "Settings"
+msgstr "सेटिंग्स"
 
 #: src/components/settings/index.tsx:395
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "गुमनाम धड़ाका डाटा और त्रुटि लॉग साझा करें"
 
-#: src/components/settings/index.tsx:324
-#~ msgid "Show extreme UV alerts"
-#~ msgstr "अत्यधिक UV चेतावनियाँ दिखाएं"
+#: src/components/settings.tsx:169
+msgid "Show extreme UV alerts"
+msgstr "अत्यधिक UV चेतावनियाँ दिखाएं"
 
 #: src/components/settings/index.tsx:331
 #~ msgid "Show high precipitation alerts"
 #~ msgstr "उच्च वर्षा चेतावनियाँ दिखाएं"
 
-#: src/components/settings/index.tsx:347
-#~ msgid "Show low visibility alerts"
-#~ msgstr "निम्न दृश्यता चेतावनियाँ दिखाएं"
+#: src/components/settings.tsx:186
+msgid "Show low visibility alerts"
+msgstr "निम्न दृश्यता चेतावनियाँ दिखाएं"
 
-#: src/components/settings/index.tsx:339
-#~ msgid "Show strong wind alerts"
-#~ msgstr "मजबूत हवा की चेतावनियाँ दिखाएं"
+#: src/components/settings.tsx:177
+msgid "Show strong wind alerts"
+msgstr "मजबूत हवा की चेतावनियाँ दिखाएं"
 
-#: src/components/settings/index.tsx:313
-#~ msgid "Show weather alerts"
-#~ msgstr "मौसम चेतावनियाँ दिखाएं"
+#: src/components/settings.tsx:161
+msgid "Show weather alerts"
+msgstr "मौसम चेतावनियाँ दिखाएं"
 
-#: src/components/card.tsx:63
-#: src/components/tile/weather/index.tsx:143
+#: src/components/tile.tsx:64
 msgid "slight rain"
 msgstr "हल्की बारिश"
 
-#: src/components/card.tsx:72
-#: src/components/tile/weather/index.tsx:152
+#: src/components/tile.tsx:73
 msgid "slight rain showers"
 msgstr "हल्की वर्षा की बौछारें"
 
-#: src/components/card.tsx:75
-#: src/components/tile/weather/index.tsx:155
+#: src/components/tile.tsx:76
 msgid "slight snow showers"
 msgstr "हल्की हिमबारिश"
 
-#: src/components/card.tsx:68
-#: src/components/tile/weather/index.tsx:148
+#: src/components/tile.tsx:69
 msgid "slight snowfall"
 msgstr "हल्की हिमपात"
 
 #: src/pages/feedback/index.tsx:177
-msgid "Slows down my browser"
-msgstr "मेरे ब्राउज़र को धीमा कर देता है"
+#~ msgid "Slows down my browser"
+#~ msgstr "मेरे ब्राउज़र को धीमा कर देता है"
 
-#: src/components/card.tsx:71
-#: src/components/tile/weather/index.tsx:151
+#: src/components/tile.tsx:72
 msgid "snow grains"
 msgstr "हिमकण"
 
@@ -628,80 +597,71 @@ msgstr "हिमकण"
 
 #: src/pages/feedback/index.tsx:352
 #: src/pages/feedback/index.tsx:438
-msgid "Submit"
-msgstr "सबमिट करें"
+#~ msgid "Submit"
+#~ msgstr "सबमिट करें"
 
-#: src/components/card.tsx:83
-#: src/components/tile/index.tsx:59
+#: src/components/tile.tsx:84
 msgid "Sunday"
 msgstr "रविवार"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap]
-#: src/components/tile/weather/index.tsx:68
+#: src/components/tile.tsx:200
 msgid "The expected type of weather is {0}."
 msgstr "अपेक्षित मौसम की प्रकार {0} है।"
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile/weather/index.tsx:34
+#: src/components/tile.tsx:166
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "अधिकतम तापमान {0} डिग्री सेल्सियस होगा।"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile/weather/index.tsx:40
+#: src/components/tile.tsx:172
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "अधिकतम तापमान {0} डिग्री फारेनहाइट होगा।"
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/card.tsx:167
-#: src/components/tile/weather/index.tsx:96
+#: src/components/tile.tsx:223
 msgid "The maximum UV index will be {0}."
 msgstr "अधिकतम यूवी सूचकांक {0} होगा।"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/card.tsx:178
-#: src/components/tile/weather/index.tsx:107
+#: src/components/tile.tsx:234
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "अधिकतम वायु गति {0} किलोमीटर प्रति घंटा होगी।"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/card.tsx:184
-#: src/components/tile/weather/index.tsx:113
+#: src/components/tile.tsx:240
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "अधिकतम वायु गति {0} मील प्रति घंटा होगी।"
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile/weather/index.tsx:51
+#: src/components/tile.tsx:183
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "न्यूनतम तापमान {0} डिग्री सेल्सियस होगा।"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile/weather/index.tsx:57
+#: src/components/tile.tsx:189
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "न्यूनतम तापमान {0} डिग्री फारेनहाइट होगा।"
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/card.tsx:198
-#: src/components/tile/weather/index.tsx:124
+#: src/components/tile.tsx:254
 msgid "There is a {0}% chance of precipitation."
 msgstr "वर्षा की {0}% संभावना है।"
 
-#: src/components/card.tsx:77
-#: src/components/tile/weather/index.tsx:157
+#: src/components/tile.tsx:78
 msgid "thunderstorm"
 msgstr "आंधी तूफ़ान"
 
-#: src/components/card.tsx:79
-#: src/components/tile/weather/index.tsx:159
+#: src/components/tile.tsx:80
 msgid "thunderstorm with heavy hail"
 msgstr "भारी ओले वाली आंधी तूफ़ान"
 
-#: src/components/card.tsx:78
-#: src/components/tile/weather/index.tsx:158
+#: src/components/tile.tsx:79
 msgid "thunderstorm with slight hail"
 msgstr "हल्के ओले वाली आंधी तूफ़ान"
 
-#: src/components/card.tsx:87
-#: src/components/tile/index.tsx:63
+#: src/components/tile.tsx:88
 msgid "Thursday"
 msgstr "गुरुवार"
 
@@ -709,22 +669,21 @@ msgstr "गुरुवार"
 #~ msgid "Tiles"
 #~ msgstr "टाइल्स"
 
-#: src/components/intialisation/index.tsx:297
+#: src/components/initialisation.tsx:54
 msgid "To get started, let's set your language and location."
 msgstr "शुरू करने के लिए, आइए आपकी भाषा और स्थान निर्धारित करें।"
 
 #: src/pages/feedback/index.tsx:307
-msgid "Too much battery usage"
-msgstr "बहुत अधिक बैटरी का उपयोग"
+#~ msgid "Too much battery usage"
+#~ msgstr "बहुत अधिक बैटरी का उपयोग"
 
-#: src/components/card.tsx:85
-#: src/components/tile/index.tsx:61
+#: src/components/tile.tsx:86
 msgid "Tuesday"
 msgstr "मंगलवार"
 
 #: src/pages/feedback/index.tsx:164
-msgid "Uninstall feedback"
-msgstr "अनइंस्टॉल प्रतिक्रिया"
+#~ msgid "Uninstall feedback"
+#~ msgstr "अनइंस्टॉल प्रतिक्रिया"
 
 #: src/components/intialisation/index.tsx:197
 #: src/components/settings/index.tsx:248
@@ -732,23 +691,22 @@ msgstr "अनइंस्टॉल प्रतिक्रिया"
 #~ msgstr "निश्चित नहीं कि कैसे ढूंढें? यहाँ क्लिक करें।"
 
 #: src/pages/feedback/index.tsx:319
-msgid "Update or change related"
-msgstr "अपडेट या परिवर्तन से संबंधित"
+#~ msgid "Update or change related"
+#~ msgstr "अपडेट या परिवर्तन से संबंधित"
 
 #: src/pages/feedback/index.tsx:198
-msgid "Usability and functionality"
-msgstr "उपयोगिता और कार्यक्षमता"
+#~ msgid "Usability and functionality"
+#~ msgstr "उपयोगिता और कार्यक्षमता"
 
-#: src/components/settings/index.tsx:362
-#~ msgid "Use keyboard shortcuts"
-#~ msgstr "कीबोर्ड शॉर्टकट का उपयोग करें"
+#: src/components/settings.tsx:91
+msgid "Use keyboard shortcuts"
+msgstr "कीबोर्ड शॉर्टकट का उपयोग करें"
 
-#: src/components/settings/index.tsx:387
-#~ msgid "Use metric number format"
-#~ msgstr "मेट्रिक संख्या प्रारूप का उपयोग करें"
+#: src/components/settings.tsx:155
+msgid "Use metric number format"
+msgstr "मेट्रिक संख्या प्रारूप का उपयोग करें"
 
-#: src/components/card.tsx:74
-#: src/components/tile/weather/index.tsx:154
+#: src/components/tile.tsx:75
 msgid "violent rain showers"
 msgstr "हिंसक वर्षा की बौछारें"
 
@@ -756,7 +714,11 @@ msgstr "हिंसक वर्षा की बौछारें"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "हम चाहेंगे कि 'Weather Please' को और अधिक भाषाओं में लाया जाए।"
 
-#: src/pages/index.tsx:948
+#: src/components/settings.tsx:97
+msgid "Weather"
+msgstr ""
+
+#: src/pages/index.tsx:608
 msgid "weather data provided by open-meteo"
 msgstr "मौसम डाटा open-meteo द्वारा प्रदान किया गया"
 
@@ -765,8 +727,7 @@ msgstr "मौसम डाटा open-meteo द्वारा प्रदा�
 #~ msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
 #~ msgstr "Weather Please गुमनाम क्रैश डेटा और त्रुटि लॉग एकत्रित करता है। आप इसे किसी भी समय सेटिंग्स मेनू के माध्यम से ऑप्ट आउट कर सकते हैं।"
 
-#: src/components/card.tsx:86
-#: src/components/tile/index.tsx:62
+#: src/components/tile.tsx:87
 msgid "Wednesday"
 msgstr "बुधवार"
 
@@ -790,8 +751,7 @@ msgstr "बुधवार"
 #~ msgid "You've been using Weather Please for a while"
 #~ msgstr "आप कुछ समय से Weather Please का उपयोग कर रहे हैं"
 
-#: src/components/intialisation/index.tsx:106
-#: src/components/intialisation/index.tsx:214
-#: src/components/settings/index.tsx:276
-#~ msgid "Your location data is securely stored exclusively on your personal device."
-#~ msgstr "आपका स्थान डेटा आपके व्यक्तिगत उपकरण पर सुरक्षित रूप से और केवल संग्रहीत किया जाता है।"
+#: src/components/settings.tsx:100
+#: src/components/initialisation.tsx:76
+msgid "Your location data is securely stored exclusively on your personal device."
+msgstr "आपका स्थान डेटा आपके व्यक्तिगत उपकरण पर सुरक्षित रूप से और केवल संग्रहीत किया जाता है।"
