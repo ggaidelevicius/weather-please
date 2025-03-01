@@ -344,8 +344,7 @@ const App = () => {
 	useEffect(() => {
 		if (changedLocation) {
 			setUsingCachedData(false)
-		}
-		else if (isLocalStorageDataValid()) {
+		} else if (isLocalStorageDataValid()) {
 			setWeatherData(JSON.parse(localStorage.data))
 			setAlertData(JSON.parse(localStorage.alerts))
 		} else {
