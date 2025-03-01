@@ -122,6 +122,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 								input.lon,
 							)}
 						/>
+						<Switch
+							label={(<Trans>Periodically update location automatically</Trans>) as unknown as string}
+							checked={input.periodicLocationUpdate}
+							onChange={(e) => handleChange('periodicLocationUpdate', e)}
+						/>
 						<Select
 							label={
 								(<Trans>Number of days to forecast</Trans>) as unknown as string
