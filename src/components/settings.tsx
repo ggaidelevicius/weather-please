@@ -5,7 +5,7 @@ import {
 	DialogPanel,
 	DialogTitle,
 } from '@headlessui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, IconButton } from './button'
 import { IconSettings, IconShieldCheckFilled } from '@tabler/icons-react'
 import { Trans } from '@lingui/react/macro'
@@ -23,6 +23,17 @@ interface SettingsProps {
 
 export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 	const [isOpen, setIsOpen] = useState(false)
+	const [platformReviewLink, setPlatformReviewLink] = useState(
+		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
+	)
+
+	useEffect(() => {
+		if (navigator.userAgent.toLowerCase().includes('firefox/')) {
+			setPlatformReviewLink(
+				'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/',
+			)
+		}
+	}, [])
 
 	return (
 		<>
@@ -50,16 +61,24 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 					transition
 					className="fixed inset-0 bg-black/60 backdrop-blur-lg transition duration-300 data-[closed]:opacity-0"
 				/>
-				<div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+				<div className="fixed inset-0 flex w-screen items-center justify-center overflow-y-auto p-4">
 					<DialogPanel
 						transition
-						className="w-full max-w-lg space-y-4 rounded-xl bg-dark-800 p-12 transition duration-500 data-[closed]:scale-97 data-[closed]:opacity-0 data-[closed]:blur-xs"
+						className="w-full max-w-lg space-y-4 rounded-xl bg-dark-800 p-12 transition duration-400 data-[closed]:scale-97 data-[closed]:opacity-0 data-[closed]:blur-xs"
 					>
 						<DialogTitle as="h1" className="text-4xl font-bold text-white">
 							<Trans>Settings</Trans>
 						</DialogTitle>
+						{/* <Description className="mb-2 font-semibold text-white">
+              <Trans>
+                Customise your experience by setting your preferred language, location, tile, and alert options.
+              </Trans>
+            </Description> */}
+						<h2 className="mt-8 text-2xl font-medium text-white">
+							<Trans>General</Trans>
+						</h2>
 						<Select
-							label="Language"
+							label={(<Trans>Language</Trans>) as unknown as string}
 							value={input.lang}
 							onChange={(e) => {
 								handleChange('lang', e.target.value)
@@ -70,14 +89,14 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							}))}
 						/>
 						<Input
-							label="Latitude"
+							label={(<Trans>Latitude</Trans>) as unknown as string}
 							value={input.lat}
 							onChange={(e) => {
 								handleChange('lat', e.target.value)
 							}}
 						/>
 						<Input
-							label="Longitude"
+							label={(<Trans>Longitude</Trans>) as unknown as string}
 							value={input.lon}
 							onChange={(e) => {
 								handleChange('lon', e.target.value)
@@ -89,17 +108,81 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 								personal device.
 							</Trans>
 						</Alert>
-						{/* <Description className="mt-8 mb-1 font-semibold text-white">
-              <Trans>
-                To get started, let&apos;s set your language and location.
-              </Trans>
-            </Description>
-            <p className="text-sm text-dark-100">
-              <Trans>
-                If your browser prompts you for location permissions, please
-                select &quot;allow&quot;.
-              </Trans>
-            </p> */}
+						<h2 className="mt-8 text-2xl font-medium text-white">
+							<Trans>Weather</Trans>
+						</h2>
+						<Select
+							label={
+								(<Trans>Number of days to forecast</Trans>) as unknown as string
+							}
+							value={input.daysToRetrieve}
+							onChange={(e) => {
+								handleChange('daysToRetrieve', e.target.value)
+							}}
+							options={Array.from({ length: 10 }, (_, i) => ({
+								value: i.toString(),
+								label: i.toString(),
+							}))}
+						/>
+						<Select
+							label={(<Trans>Identifier</Trans>) as unknown as string}
+							value={input.identifier}
+							onChange={(e) => {
+								handleChange('identifier', e.target.value)
+							}}
+							options={[
+								{
+									label: (<Trans>Day</Trans>) as unknown as string,
+									value: 'day',
+								},
+								{
+									label: (<Trans>Date</Trans>) as unknown as string,
+									value: 'date',
+								},
+							]}
+						/>
+						<a
+							href={platformReviewLink}
+							target="_blank"
+							className="mb-2 flex text-sm text-blue-300 hover:underline"
+						>
+							<Trans>🌟 Leave a review</Trans>
+						</a>
+						<a
+							href={`https://weather-please.app/feedback?type=feedback&locale=${input.lang}`}
+							target="_blank"
+							className="mb-2 flex text-sm text-blue-300 hover:underline"
+						>
+							<Trans>✍️ Submit feedback</Trans>
+						</a>
+						<a
+							href={`https://weather-please.app/feedback?type=feature&locale=${input.lang}`}
+							target="_blank"
+							className="mb-2 flex text-sm text-blue-300 hover:underline"
+						>
+							<Trans>💡 Request a feature</Trans>
+						</a>
+						<a
+							href={`https://weather-please.app/feedback?type=bug&locale=${input.lang}`}
+							target="_blank"
+							className="mb-2 flex text-sm text-blue-300 hover:underline"
+						>
+							<Trans>🐛 Report a bug</Trans>
+						</a>
+						<a
+							href={locales[input.lang].privacy}
+							target="_blank"
+							className="mb-2 flex text-sm text-blue-300 hover:underline"
+						>
+							<Trans>🔒 Privacy policy</Trans>
+						</a>
+						<a
+							href="https://www.buymeacoffee.com/ggaidelevicius"
+							target="_blank"
+							className="mb-2 flex text-sm text-blue-300 hover:underline"
+						>
+							<Trans>☕ Gift a coffee</Trans>
+						</a>
 					</DialogPanel>
 				</div>
 			</Dialog>

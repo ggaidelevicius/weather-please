@@ -116,9 +116,6 @@ const App = () => {
 	const [input, setInput] = useState<Config>(initialState)
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
 	const [completedFirstLoad, setCompletedFirstLoad] = useState<boolean>(false)
-	const [reviewLink, setReviewLink] = useState(
-		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
-	)
 	const [usingCachedData, setUsingCachedData] = useState(true)
 
 	const currentDateRef = useRef(new Date().getDate())
@@ -599,27 +596,6 @@ const App = () => {
 		// 	withCloseButton: false,
 		// })
 	}
-
-	const getUserAgent = () => {
-		const userAgent = navigator.userAgent.toLowerCase()
-
-		if (
-			userAgent.indexOf('safari') !== -1 &&
-			userAgent.indexOf('chrome') === -1
-		) {
-			setReviewLink('https://apps.apple.com/au/app/weather-please/id6462968576')
-			return 'https://apps.apple.com/au/app/weather-please/id6462968576'
-		} else if (userAgent.includes('firefox/')) {
-			setReviewLink(
-				'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/',
-			)
-			return 'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/'
-		}
-	}
-
-	useEffect(() => {
-		getUserAgent()
-	}, [])
 
 	return (
 		// <>

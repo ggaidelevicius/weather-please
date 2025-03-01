@@ -7,7 +7,11 @@ import {
 } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Trans } from '@lingui/react/macro'
-import type { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
+import type {
+	ChangeEventHandler,
+	ComponentPropsWithoutRef,
+	ReactNode,
+} from 'react'
 
 interface SelectProps {
 	label: string
@@ -25,9 +29,7 @@ export const Select = ({
 	Omit<ComponentPropsWithoutRef<'select'>, 'onChange' | 'value'> & SelectProps
 >) => (
 	<Field>
-		<Label className="block text-sm font-medium text-white">
-			<Trans id={label}>{label}</Trans>
-		</Label>
+		<Label className="block text-sm font-medium text-white">{label}</Label>
 		<div className="relative mt-2">
 			<HeadlessSelect
 				className="block w-full appearance-none rounded-sm bg-dark-700 px-3 py-1.5 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm/6"
@@ -64,9 +66,7 @@ export const Input = ({
 >) => {
 	return (
 		<Field>
-			<Label className="block text-sm font-medium text-white">
-				<Trans id={label}>{label}</Trans>
-			</Label>
+			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessInput
 				className="mt-2 block w-full appearance-none rounded-sm bg-dark-700 px-3 py-1.5 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm/6"
 				aria-label={label}
