@@ -12,8 +12,6 @@ import { z } from 'zod'
 import { messages } from '../locales/en/messages'
 import { changeLocalisation, locales } from '../lib/i18n'
 import { queryClient } from './_app'
-import { IconButton } from '@/components/button'
-import { IconSettings } from '@tabler/icons-react'
 import { Settings } from '@/components/settings'
 
 i18n.load({
@@ -115,7 +113,6 @@ const App = () => {
 	const [config, setConfig] = useState<Config>(initialState)
 	const [input, setInput] = useState<Config>(initialState)
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
-	const [completedFirstLoad, setCompletedFirstLoad] = useState<boolean>(false)
 	const [usingCachedData, setUsingCachedData] = useState(true)
 
 	const currentDateRef = useRef(new Date().getDate())
@@ -131,10 +128,9 @@ const App = () => {
 	})
 
 	useEffect(() => {
-		const keys = Array.from({ length: 10 }, (_, i) => (i + 1).toString())
-
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (config.useShortcuts) {
+				const keys = Array.from({ length: 10 }, (_, i) => (i + 1).toString())
 				if (keys.includes(event.key)) {
 					setConfig((p) => ({
 						...p,
@@ -346,7 +342,10 @@ const App = () => {
 	 * - It ensures that data used is timely and relevant, either by validating cached data against current criteria or signaling the need for new data fetching.
 	 */
 	useEffect(() => {
-		if (isLocalStorageDataValid(changedLocation)) {
+		if (changedLocation) {
+			setUsingCachedData(false)
+		}
+		else if (isLocalStorageDataValid()) {
 			setWeatherData(JSON.parse(localStorage.data))
 			setAlertData(JSON.parse(localStorage.alerts))
 		} else {
@@ -520,23 +519,6 @@ const App = () => {
 		})
 
 	/**
-	 * Delays setting `completedFirstLoad` to mitigate layout shifts during initial render.
-	 *
-	 * The effect sets a delay of 1.9 seconds before marking the first load as complete. This
-	 * ensures that weather tiles render smoothly without abrupt layout shifts due to
-	 * alerts being mounted separately.
-	 *
-	 * NOTE: This currently does not work as expected. Need to figure another solution to prevent
-	 * layout shift - changing keys mounts new elements
-	 */
-	useEffect(() => {
-		setTimeout(() => {
-			setCompletedFirstLoad(true)
-		}, 0) // 1900
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
-
-	/**
 	 * A function that triggers a review prompt notification after a delay.
 	 *
 	 * When called, after a delay of 1 second, the function checks if:
@@ -598,41 +580,6 @@ const App = () => {
 	}
 
 	return (
-		// <>
-		// 	<AnimatePresence>
-		// 		<motion.main
-		// 			className={styles.main}
-		// 			style={{
-		// 				gridTemplateColumns: `repeat(${determineGridColumns(
-		// 					config.daysToRetrieve,
-		// 				)}, 1fr)`,
-		// 			}}
-		// 		>
-		// 			{tiles}
-		// 			{config.showAlerts && (
-		// 				<Alert
-		// 					{...alertData}
-		// 					useMetric={config.useMetric}
-		// 					showUvAlerts={config.showUvAlerts}
-		// 					showWindAlerts={config.showWindAlerts}
-		// 					showVisibilityAlerts={config.showVisibilityAlerts}
-		// 					showPrecipitationAlerts={config.showPrecipitationAlerts}
-		// 					width={determineGridColumns(config.daysToRetrieve)}
-		// 				/>
-		// 			)}
-		// 		</motion.main>
-		// 	</AnimatePresence>
-
-		// 	<Settings
-		// 		input={input}
-		// 		handleChange={handleChange}
-		// 		handleClick={handleClick}
-		// 		config={config}
-		// 		setInput={setInput}
-		// 		reviewLink={reviewLink}
-		// 		settingsOpened={settingsOpened}
-		// 	/>
-		// </>
 		<>
 			<AnimatePresence>
 				<motion.main
@@ -667,9 +614,9 @@ const App = () => {
 	)
 }
 
-const isLocalStorageDataValid = (changedLocation: boolean) => {
+const isLocalStorageDataValid = () => {
 	const { data, lastUpdated, alerts } = localStorage
-	if (!data || !lastUpdated || changedLocation) return false
+	if (!data || !lastUpdated) return false
 
 	const [year, month, day, hour] = lastUpdated.split('-').map(Number)
 	const currentDate = new Date()
