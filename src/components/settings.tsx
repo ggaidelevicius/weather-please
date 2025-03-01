@@ -94,6 +94,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							}
 							checked={input.useShortcuts}
 							onChange={(e) => handleChange('useShortcuts', e)}
+							description="You can press numbers 1-9 to change how many weather tiles are displayed."
 						/>
 						<h2 className="mt-14 text-2xl font-medium text-white">
 							<Trans>Weather</Trans>

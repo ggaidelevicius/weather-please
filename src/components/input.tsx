@@ -29,7 +29,7 @@ export const Select = ({
 		<Label className="block text-sm font-medium text-white">{label}</Label>
 		<div className="relative mt-2">
 			<HeadlessSelect
-				className="block w-full appearance-none rounded-sm bg-dark-700 px-3 py-1.5 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm/6"
+				className="block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm"
 				aria-label={label}
 				value={value}
 				onChange={onChange}
@@ -67,7 +67,7 @@ export const Input = ({
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessInput
-				className="mt-2 block w-full appearance-none rounded-sm bg-dark-700 px-3 py-1.5 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-[invalid]:outline-red-500 sm:text-sm/6"
+				className="mt-2 block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-[invalid]:outline-red-500 sm:text-sm"
 				aria-label={label}
 				value={value}
 				onChange={onChange}
@@ -86,19 +86,25 @@ interface SwitchProps {
 	label: string
 	checked: boolean
 	onChange: (e: boolean) => void
+	description?: string
 }
 
-export const Switch = ({ label, checked, onChange }: SwitchProps) => {
+export const Switch = ({ label, checked, onChange, description }: SwitchProps) => {
 	return (
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessSwitch
 				checked={checked}
 				onChange={onChange}
-				className="group mt-2 inline-flex h-6 w-11 items-center rounded-full bg-dark-500 transition select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-[checked]:bg-blue-600"
+				className="transition-[background-color] group mt-2 inline-flex h-6 w-11 items-center rounded-full bg-dark-500 select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-[checked]:bg-blue-600"
 			>
 				<span className="size-4 translate-x-1 rounded-full bg-white transition group-data-[checked]:translate-x-6" />
 			</HeadlessSwitch>
+			{description && (
+				<Description className="mt-1 text-sm text-dark-100">
+					{description}
+				</Description>
+			)}
 		</Field>
 	)
 }
