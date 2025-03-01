@@ -582,7 +582,7 @@ const App = () => {
 		<>
 			<AnimatePresence>
 				<motion.main
-					className={`relative grid max-w-4xl ${weatherData.length === 0 ? 'grid-cols-1' : 'grid-cols-3'} gap-5 p-5`}
+					className={`relative min-h-[84px] min-w-[84px] grid max-w-4xl ${weatherData.length === 0 ? 'grid-cols-1' : 'grid-cols-3'} gap-5 p-5`}
 				>
 					{!config?.lat || !config?.lon ? (
 						<Initialisation

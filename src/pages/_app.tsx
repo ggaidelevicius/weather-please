@@ -14,8 +14,7 @@ export const queryClient = new QueryClient({
 	},
 })
 
-const App = (props: AppProps) => {
-	const { Component, pageProps } = props
+const App = ({ Component, pageProps }: AppProps) => {
 
 	return (
 		<I18nProvider i18n={i18n}>
