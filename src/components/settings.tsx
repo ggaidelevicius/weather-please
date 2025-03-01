@@ -94,6 +94,15 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							checked={input.useShortcuts}
 							onChange={(e) => handleChange('useShortcuts', e)}
 						/>
+						<h2 className="mt-14 text-2xl font-medium text-white">
+							<Trans>Weather</Trans>
+						</h2>
+						<Alert icon={IconShieldCheckFilled}>
+							<Trans>
+								Your location data is securely stored exclusively on your
+								personal device.
+							</Trans>
+						</Alert>
 						<Input
 							label={(<Trans>Latitude</Trans>) as unknown as string}
 							value={input.lat}
@@ -112,15 +121,6 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 								input.lon,
 							)}
 						/>
-						<Alert icon={IconShieldCheckFilled}>
-							<Trans>
-								Your location data is securely stored exclusively on your
-								personal device.
-							</Trans>
-						</Alert>
-						<h2 className="mt-14 text-2xl font-medium text-white">
-							<Trans>Weather</Trans>
-						</h2>
 						<Select
 							label={
 								(<Trans>Number of days to forecast</Trans>) as unknown as string

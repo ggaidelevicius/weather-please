@@ -25,7 +25,7 @@ export const Alert = ({
 		<div
 			role="alert"
 			className={clsx(
-				'flex w-full flex-row items-center gap-4 rounded-lg bg-blue-500/20 p-4 text-white',
+				'flex w-full flex-row items-center gap-4 rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500 p-4 text-white',
 				className,
 			)}
 		>
