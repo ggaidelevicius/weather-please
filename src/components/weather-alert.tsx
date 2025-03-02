@@ -1,26 +1,33 @@
 import { Trans } from '@lingui/react/macro'
-// import { Alert as MantineAlert } from '@mantine/core'
 import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
 import { motion } from 'framer-motion'
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
-import styles from './styles.module.css'
-import type { AlertProps } from './types'
+import type { Alerts } from '@/pages'
+import { Alert } from './alert'
 
-const Alert = (props: AlertProps) => {
-	const {
-		totalPrecipitation,
-		hoursOfExtremeUv,
-		hoursOfStrongWind,
-		hoursOfStrongWindGusts,
-		hoursOfLowVisibility,
-		useMetric,
-		showUvAlerts,
-		showWindAlerts,
-		showVisibilityAlerts,
-		showPrecipitationAlerts,
-		width,
-	} = props
+interface AlertProps extends Alerts {
+	useMetric: boolean
+	showUvAlerts: boolean
+	showWindAlerts: boolean
+	showVisibilityAlerts: boolean
+	showPrecipitationAlerts: boolean
+	width: number
+}
+
+export const WeatherAlert = ({
+	totalPrecipitation,
+	hoursOfExtremeUv,
+	hoursOfStrongWind,
+	hoursOfStrongWindGusts,
+	hoursOfLowVisibility,
+	useMetric,
+	showUvAlerts,
+	showWindAlerts,
+	showVisibilityAlerts,
+	showPrecipitationAlerts,
+	width,
+}: Readonly<AlertProps>) => {
 	const [alerts, setAlerts] = useState<ReactElement[] | []>([])
 
 	/**
@@ -40,47 +47,29 @@ const Alert = (props: AlertProps) => {
 		if (showUvAlerts) {
 			let uvAlert: ReactElement | null = null
 			if (hoursOfExtremeUv.includes(true)) {
-				const alertProps = {
-					className: styles.alert,
-					radius: 'md',
-					color: 'yellow',
-					styles: {
-						message: {
-							fontSize: '1rem',
-							display: 'flex',
-							alignItems: 'center',
-							gap: '1rem',
-						},
-					},
-					key: 'uvAlert',
-				}
 				const timeUntilExtremeUv = hoursOfExtremeUv.indexOf(true) + 1
 				if (timeUntilExtremeUv > 1) {
 					uvAlert = (
-						// <MantineAlert {...alertProps}>
-						// 	<IconAlertTriangle size="2rem" strokeWidth={1.5} aria-hidden />
-						// 	<Trans>Extreme UV starting in {timeUntilExtremeUv} hours</Trans>
-						// </MantineAlert>
-						<></>
+						<Alert key="uvAlert" icon={IconAlertTriangle} variant="light-red">
+							<Trans>Extreme UV starting in {timeUntilExtremeUv} hours</Trans>
+						</Alert>
 					)
 				} else {
 					const durationOfExtremeUv = hoursOfExtremeUv.indexOf(false)
 					uvAlert = (
-						// <MantineAlert {...alertProps}>
-						// 	<IconAlertTriangle size="2rem" strokeWidth={1.5} aria-hidden />
-						// 	{durationOfExtremeUv > 1 && (
-						// 		<Trans>
-						// 			Extreme UV for the next {durationOfExtremeUv} hours
-						// 		</Trans>
-						// 	)}
-						// 	{durationOfExtremeUv < 0 && (
-						// 		<Trans>Extreme UV for the next 12 hours</Trans>
-						// 	)}
-						// 	{durationOfExtremeUv === 1 && (
-						// 		<Trans>Extreme UV for the next hour</Trans>
-						// 	)}
-						// </MantineAlert>
-						<></>
+						<Alert key="uvAlert" icon={IconAlertTriangle} variant="light-red">
+							{durationOfExtremeUv > 1 && (
+								<Trans>
+									Extreme UV for the next {durationOfExtremeUv} hours
+								</Trans>
+							)}
+							{durationOfExtremeUv < 0 && (
+								<Trans>Extreme UV for the next 12 hours</Trans>
+							)}
+							{durationOfExtremeUv === 1 && (
+								<Trans>Extreme UV for the next hour</Trans>
+							)}
+						</Alert>
 					)
 				}
 				setAlerts((prev) => {
@@ -120,63 +109,53 @@ const Alert = (props: AlertProps) => {
 			let precipitationAlert: ReactElement | null = null
 			if (precipitation.value >= 15) {
 				precipitationAlert = (
-					// <MantineAlert
-					// 	className={styles.alert}
-					// 	radius="md"
-					// 	styles={{
-					// 		message: {
-					// 			fontSize: '1rem',
-					// 			display: 'flex',
-					// 			alignItems: 'center',
-					// 			gap: '1rem',
-					// 		},
-					// 	}}
-					// 	key="precipitationAlert"
-					// >
-					// 	<IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
-					// 	{useMetric && duration.indexOf(false) === 1 && (
-					// 		<Trans>
-					// 			{precipitation.value.toFixed(1)}mm of precipitation expected
-					// 			over the next hour
-					// 		</Trans>
-					// 	)}
-					// 	{useMetric &&
-					// 		duration.indexOf(false) !== 1 &&
-					// 		duration.indexOf(false) !== -1 && (
-					// 			<Trans>
-					// 				{precipitation.value.toFixed(1)}mm of precipitation expected
-					// 				over the next {duration.indexOf(false)} hours
-					// 			</Trans>
-					// 		)}
-					// 	{useMetric && duration.indexOf(false) === -1 && (
-					// 		<Trans>
-					// 			{precipitation.value.toFixed(1)}mm of precipitation expected
-					// 			over the next {duration.length - 1} hours
-					// 		</Trans>
-					// 	)}
-					// 	{!useMetric && duration.indexOf(false) === 1 && (
-					// 		<Trans>
-					// 			{(precipitation.value / 25.4).toFixed(1)} inches of
-					// 			precipitation expected over the next hour
-					// 		</Trans>
-					// 	)}
-					// 	{!useMetric &&
-					// 		duration.indexOf(false) !== 1 &&
-					// 		duration.indexOf(false) !== -1 && (
-					// 			<Trans>
-					// 				{(precipitation.value / 25.4).toFixed(1)} inches of
-					// 				precipitation expected over the next {duration.indexOf(false)}{' '}
-					// 				hours
-					// 			</Trans>
-					// 		)}
-					// 	{!useMetric && duration.indexOf(false) === -1 && (
-					// 		<Trans>
-					// 			{(precipitation.value / 25.4).toFixed(1)} inches of
-					// 			precipitation expected over the next {duration.length - 1} hours
-					// 		</Trans>
-					// 	)}
-					// </MantineAlert>
-					<></>
+					<Alert
+						key="precipitationAlert"
+						icon={IconInfoCircle}
+						variant="light-blue"
+					>
+						{useMetric && duration.indexOf(false) === 1 && (
+							<Trans>
+								{precipitation.value.toFixed(1)}mm of precipitation expected
+								over the next hour
+							</Trans>
+						)}
+						{useMetric &&
+							duration.indexOf(false) !== 1 &&
+							duration.indexOf(false) !== -1 && (
+								<Trans>
+									{precipitation.value.toFixed(1)}mm of precipitation expected
+									over the next {duration.indexOf(false)} hours
+								</Trans>
+							)}
+						{useMetric && duration.indexOf(false) === -1 && (
+							<Trans>
+								{precipitation.value.toFixed(1)}mm of precipitation expected
+								over the next {duration.length - 1} hours
+							</Trans>
+						)}
+						{!useMetric && duration.indexOf(false) === 1 && (
+							<Trans>
+								{(precipitation.value / 25.4).toFixed(1)} inches of
+								precipitation expected over the next hour
+							</Trans>
+						)}
+						{!useMetric &&
+							duration.indexOf(false) !== 1 &&
+							duration.indexOf(false) !== -1 && (
+								<Trans>
+									{(precipitation.value / 25.4).toFixed(1)} inches of
+									precipitation expected over the next {duration.indexOf(false)}{' '}
+									hours
+								</Trans>
+							)}
+						{!useMetric && duration.indexOf(false) === -1 && (
+							<Trans>
+								{(precipitation.value / 25.4).toFixed(1)} inches of
+								precipitation expected over the next {duration.length - 1} hours
+							</Trans>
+						)}
+					</Alert>
 				)
 				setAlerts((prev) => {
 					const prevPrecipitationAlertIndex = prev.findIndex(
@@ -222,7 +201,6 @@ const Alert = (props: AlertProps) => {
 			let windAlert: ReactElement | null = null
 			if (hoursOfStrongWind.includes(true)) {
 				const alertProps = {
-					className: styles.alert,
 					radius: 'md',
 					styles: {
 						message: {
@@ -237,33 +215,29 @@ const Alert = (props: AlertProps) => {
 				const timeUntilStrongWind = hoursOfStrongWind.indexOf(true) + 1
 				if (timeUntilStrongWind > 1) {
 					windAlert = (
-						// <MantineAlert {...alertProps}>
-						// 	<IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
-						// 	<Trans>
-						// 		Generally strong wind starting in {timeUntilStrongWind} hours
-						// 	</Trans>
-						// </MantineAlert>
-						<></>
+						<Alert key="windAlert" icon={IconInfoCircle} variant="light-blue">
+							<Trans>
+								Generally strong wind starting in {timeUntilStrongWind} hours
+							</Trans>
+						</Alert>
 					)
 				} else {
 					const durationOfStrongWind = hoursOfStrongWind.indexOf(false)
 					windAlert = (
-						// <MantineAlert {...alertProps}>
-						// 	<IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
-						// 	{durationOfStrongWind > 1 && (
-						// 		<Trans>
-						// 			Generally strong wind for the next {durationOfStrongWind}{' '}
-						// 			hours
-						// 		</Trans>
-						// 	)}
-						// 	{durationOfStrongWind < 0 && (
-						// 		<Trans>Generally strong wind for the next 24 hours</Trans>
-						// 	)}
-						// 	{durationOfStrongWind === 1 && (
-						// 		<Trans>Generally strong wind for the next hour</Trans>
-						// 	)}
-						// </MantineAlert>
-						<></>
+						<Alert key="windAlert" icon={IconInfoCircle} variant="light-blue">
+							{durationOfStrongWind > 1 && (
+								<Trans>
+									Generally strong wind for the next {durationOfStrongWind}{' '}
+									hours
+								</Trans>
+							)}
+							{durationOfStrongWind < 0 && (
+								<Trans>Generally strong wind for the next 24 hours</Trans>
+							)}
+							{durationOfStrongWind === 1 && (
+								<Trans>Generally strong wind for the next hour</Trans>
+							)}
+						</Alert>
 					)
 				}
 				setAlerts((prev) => {
@@ -304,48 +278,31 @@ const Alert = (props: AlertProps) => {
 		if (showWindAlerts) {
 			let windAlert: ReactElement | null = null
 			if (hoursOfStrongWindGusts.includes(true)) {
-				const alertProps = {
-					className: styles.alert,
-					radius: 'md',
-					styles: {
-						message: {
-							fontSize: '1rem',
-							display: 'flex',
-							alignItems: 'center',
-							gap: '1rem',
-						},
-					},
-					key: 'gustAlert',
-				}
 				const timeUntilStrongWind = hoursOfStrongWindGusts.indexOf(true) + 1
 				if (timeUntilStrongWind > 1) {
 					windAlert = (
-						// <MantineAlert {...alertProps}>
-						// 	<IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
-						// 	<Trans>
-						// 		Strong wind gusts starting in {timeUntilStrongWind} hours
-						// 	</Trans>
-						// </MantineAlert>
-						<></>
+						<Alert key="gustAlert" icon={IconInfoCircle} variant="light-blue">
+							<Trans>
+								Strong wind gusts starting in {timeUntilStrongWind} hours
+							</Trans>
+						</Alert>
 					)
 				} else {
 					const durationOfStrongWind = hoursOfStrongWindGusts.indexOf(false)
 					windAlert = (
-						// <MantineAlert {...alertProps}>
-						// 	<IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
-						// 	{durationOfStrongWind > 1 && (
-						// 		<Trans>
-						// 			Strong wind gusts for the next {durationOfStrongWind} hours
-						// 		</Trans>
-						// 	)}
-						// 	{durationOfStrongWind < 0 && (
-						// 		<Trans>Strong wind gusts for the next 24 hours</Trans>
-						// 	)}
-						// 	{durationOfStrongWind === 1 && (
-						// 		<Trans>Strong wind gusts for the next hour</Trans>
-						// 	)}
-						// </MantineAlert>
-						<></>
+						<Alert key="gustAlert" icon={IconInfoCircle} variant="light-blue">
+							{durationOfStrongWind > 1 && (
+								<Trans>
+									Strong wind gusts for the next {durationOfStrongWind} hours
+								</Trans>
+							)}
+							{durationOfStrongWind < 0 && (
+								<Trans>Strong wind gusts for the next 24 hours</Trans>
+							)}
+							{durationOfStrongWind === 1 && (
+								<Trans>Strong wind gusts for the next hour</Trans>
+							)}
+						</Alert>
 					)
 				}
 				setAlerts((prev) => {
@@ -387,7 +344,6 @@ const Alert = (props: AlertProps) => {
 			let visibilityAlert: ReactElement | null = null
 			if (hoursOfLowVisibility.includes(true)) {
 				const alertProps = {
-					className: styles.alert,
 					radius: 'md',
 					styles: {
 						message: {
@@ -402,32 +358,36 @@ const Alert = (props: AlertProps) => {
 				const timeUntilLowVisibility = hoursOfLowVisibility.indexOf(true) + 1 // might not need to be doing +1
 				if (timeUntilLowVisibility > 1) {
 					visibilityAlert = (
-						// <MantineAlert {...alertProps}>
-						// 	<IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
-						// 	<Trans>
-						// 		Low visibility starting in {timeUntilLowVisibility} hours
-						// 	</Trans>
-						// </MantineAlert>
-						<></>
+						<Alert
+							key="visibilityAlert"
+							icon={IconInfoCircle}
+							variant="light-blue"
+						>
+							<Trans>
+								Low visibility starting in {timeUntilLowVisibility} hours
+							</Trans>
+						</Alert>
 					)
 				} else {
 					const durationOfLowVisibility = hoursOfLowVisibility.indexOf(false)
 					visibilityAlert = (
-						// <MantineAlert {...alertProps}>
-						// 	<IconInfoCircle size="2rem" strokeWidth={1.5} aria-hidden />
-						// 	{durationOfLowVisibility > 1 && (
-						// 		<Trans>
-						// 			Low visibility for the next {durationOfLowVisibility} hours
-						// 		</Trans>
-						// 	)}
-						// 	{durationOfLowVisibility < 0 && (
-						// 		<Trans>Low visibility for the next 24 hours</Trans>
-						// 	)}
-						// 	{durationOfLowVisibility === 1 && (
-						// 		<Trans>Low visibility for the next hour</Trans>
-						// 	)}
-						// </MantineAlert>
-						<></>
+						<Alert
+							key="visibilityAlert"
+							icon={IconInfoCircle}
+							variant="light-blue"
+						>
+							{durationOfLowVisibility > 1 && (
+								<Trans>
+									Low visibility for the next {durationOfLowVisibility} hours
+								</Trans>
+							)}
+							{durationOfLowVisibility < 0 && (
+								<Trans>Low visibility for the next 24 hours</Trans>
+							)}
+							{durationOfLowVisibility === 1 && (
+								<Trans>Low visibility for the next hour</Trans>
+							)}
+						</Alert>
 					)
 				}
 				setAlerts((prev) => {
@@ -456,25 +416,23 @@ const Alert = (props: AlertProps) => {
 		}
 	}, [hoursOfLowVisibility, showVisibilityAlerts])
 
-	const tiles = alerts.map((alert, i: number) => (
-		<motion.div
-			initial={{ scale: 1, opacity: 0 }}
+	return (
+		<motion.aside
+			initial={{ opacity: 0 }}
 			animate={{
 				scale: 1,
 				opacity: 1,
-				transition: { type: 'spring', duration: 2, delay: i * 0.075 + 1.9 },
+				transition: {
+					type: 'spring',
+					duration: 2,
+				},
 			}}
 			exit={{ scale: 0.95, opacity: 0 }}
-			className={styles.wrapper}
-			key={`alert-${i}`}
-			layout
-			style={{ gridColumn: `1/${width + 1}` }}
+			role="alert"
+			aria-live="assertive"
+			className="fixed top-0 left-0 flex w-full flex-col"
 		>
-			{alert}
-		</motion.div>
-	))
-
-	return <>{tiles}</>
+			{alerts}
+		</motion.aside>
+	)
 }
-
-export default Alert

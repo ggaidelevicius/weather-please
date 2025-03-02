@@ -13,6 +13,7 @@ import { messages } from '../locales/en/messages'
 import { changeLocalisation, locales } from '../lib/i18n'
 import { queryClient } from './_app'
 import { Settings } from '@/components/settings'
+import { WeatherAlert } from '@/components/weather-alert'
 
 i18n.load({
 	en: messages,
@@ -473,10 +474,21 @@ const App = () => {
 
 	return (
 		<>
+			{config.showAlerts && (
+				<AnimatePresence>
+					<WeatherAlert
+						{...alertData}
+						useMetric={config.useMetric}
+						showUvAlerts={config.showUvAlerts}
+						showWindAlerts={config.showWindAlerts}
+						showVisibilityAlerts={config.showVisibilityAlerts}
+						showPrecipitationAlerts={config.showPrecipitationAlerts}
+						width={3}
+					/>
+				</AnimatePresence>
+			)}
 			<AnimatePresence>
-				<motion.main
-					className={`relative grid min-h-[84px] max-w-4xl min-w-[84px] ${weatherData.length === 0 ? 'grid-cols-1' : 'grid-cols-3'} gap-5 p-5`}
-				>
+				<motion.main className="relative grid min-h-[84px] max-w-4xl min-w-[84px] grid-cols-3 gap-5 p-5">
 					<Initialisation
 						setInput={setInput}
 						input={input}
