@@ -150,7 +150,7 @@ export const Tile = ({
 				},
 			}}
 			exit={{ scale: 0.95, opacity: 0 }}
-			className="rounded-lg bg-dark-700 p-5 will-change-auto select-none"
+			className="rounded-lg bg-dark-700 p-5 will-change-[transform,opacity] select-none"
 		>
 			<span className="text-2xl font-bold text-white">
 				{displayedIdentifier}

@@ -76,7 +76,7 @@ export const Input = ({
 	validation,
 	name,
 	type,
-	required
+	required,
 }: Readonly<ControlledInputProps | UncontrolledInputProps>) => {
 	return (
 		<Field>
@@ -127,7 +127,7 @@ export const Textarea = ({
 	onChange,
 	validation,
 	name,
-	required
+	required,
 }: Readonly<ControlledTextareaProps | UncontrolledTextareaProps>) => {
 	return (
 		<Field>

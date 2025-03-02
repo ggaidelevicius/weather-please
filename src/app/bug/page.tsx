@@ -34,7 +34,7 @@ const Page = () => {
 						<h1 className="mb-8 text-4xl font-bold text-white">
 							<Trans>Report a bug</Trans>
 						</h1>
-						<Input label="Your email (optional)" name="email" type='email' />
+						<Input label="Your email (optional)" name="email" type="email" />
 						<Textarea label="Your message" name="message" required />
 						<div className="absolute top-auto left-[-10000px] h-px w-px overflow-hidden">
 							<label htmlFor={id} className="sr-only">
