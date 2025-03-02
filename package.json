@@ -35,7 +35,7 @@
 		"@lingui/macro": "^5.2.0",
 		"@lingui/react": "^5.2.0",
 		"@lingui/swc-plugin": "^5.4.0",
-		"@sentry/nextjs": "^9.2.0",
+		"@prisma/client": "^6.4.1",
 		"@tabler/icons-react": "^3.30.0",
 		"@tailwindcss/postcss": "^4.0.9",
 		"@tanstack/react-query": "^5.66.9",
@@ -44,6 +44,7 @@
 		"framer-motion": "^12.4.7",
 		"next": "15.2.0",
 		"postcss": "^8.5.3",
+		"prisma": "^6.4.1",
 		"react": "19.0.0",
 		"react-dom": "19.0.0",
 		"sharp": "^0.33.5",
@@ -71,8 +72,10 @@
 	"packageManager": "pnpm@10.5.2",
 	"pnpm": {
 		"onlyBuiltDependencies": [
-			"@sentry/cli",
+			"@prisma/client",
+			"@prisma/engines",
 			"esbuild",
+			"prisma",
 			"sharp"
 		]
 	}
