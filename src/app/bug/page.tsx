@@ -34,6 +34,8 @@ const ContactForm = () => {
 			.includes(locale)
 	) {
 		changeLocalisation(locale)
+	} else {
+		changeLocalisation('en')
 	}
 	const [state, formAction, pending] = useActionState(submitForm, initialState)
 	const id = useId()
