@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
 	},
 }
 
-if (process.env.NEXT_PUBLIC_BUILD_MODE === 'extension') {
+if (process.env.NEXT_PUBLIC_DEMO === 'false') {
 	Object.assign(nextConfig, {
 		output: 'export',
 		assetPrefix: '.',

@@ -7,8 +7,8 @@ import {
 	Textarea as HeadlessTextarea,
 	Label,
 } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Trans } from '@lingui/react/macro'
+import { IconChevronDown } from '@tabler/icons-react'
 import type { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
 
 interface SelectProps {
@@ -41,8 +41,8 @@ export const Select = ({
 					</option>
 				))}
 			</HeadlessSelect>
-			<ChevronDownIcon
-				className="group pointer-events-none absolute top-2.5 right-2.5 size-4 fill-white/60"
+			<IconChevronDown
+				className="group pointer-events-none absolute top-2.5 right-2.5 size-4 stroke-white/60"
 				aria-hidden="true"
 			/>
 		</div>
