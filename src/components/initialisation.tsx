@@ -22,12 +22,14 @@ interface InitialisationProps {
 	setInput: Dispatch<SetStateAction<Config>>
 	handleChange: HandleChange
 	input: Config
+	pending: boolean
 }
 
 export const Initialisation = ({
 	setInput,
 	handleChange,
 	input,
+	pending,
 }: Readonly<InitialisationProps>) => {
 	const [loading, setLoading] = useState<boolean>(false)
 	const handleClick = () => {
@@ -41,10 +43,17 @@ export const Initialisation = ({
 	}
 
 	return (
-		<Dialog open onClose={() => {}} className="relative z-50">
-			<DialogBackdrop className="fixed inset-0 bg-black/60" />
+		<Dialog open={pending} onClose={() => {}} className="relative z-50">
+			<DialogBackdrop
+				transition
+				className="fixed inset-0 bg-black/60 backdrop-blur-lg transition duration-300 will-change-[backdrop-filter,background-color] data-[closed]:opacity-0"
+			/>{' '}
 			<div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-				<DialogPanel className="max-w-lg space-y-4 rounded-xl border bg-dark-800 p-12">
+				<DialogPanel
+					transition
+					className="m-auto w-full max-w-lg space-y-4 rounded-xl bg-dark-800 p-12 transition duration-400 will-change-[transform,opacity,filter] data-[closed]:scale-97 data-[closed]:opacity-0 data-[closed]:blur-xs"
+				>
+					{' '}
 					<DialogTitle
 						as="div"
 						className="flex flex-row items-center justify-center gap-5"

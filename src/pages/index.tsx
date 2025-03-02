@@ -477,13 +477,13 @@ const App = () => {
 				<motion.main
 					className={`relative grid min-h-[84px] max-w-4xl min-w-[84px] ${weatherData.length === 0 ? 'grid-cols-1' : 'grid-cols-3'} gap-5 p-5`}
 				>
-					{!config?.lat || !config?.lon ? (
-						<Initialisation
-							setInput={setInput}
-							input={input}
-							handleChange={handleChange}
-						/>
-					) : weatherData.length === 0 ? (
+					<Initialisation
+						setInput={setInput}
+						input={input}
+						handleChange={handleChange}
+						pending={!config?.lat || !config?.lon}
+					/>
+					{weatherData.length === 0 ? (
 						<AnimatePresence>
 							<RingLoader />
 						</AnimatePresence>

@@ -13,11 +13,6 @@ import { Suspense, useActionState, useId } from 'react'
 import { Button } from '../../components/button'
 import { submitForm } from '../actions'
 
-i18n.load({
-	en: messages,
-})
-i18n.activate('en')
-
 const initialState = {
 	message: '',
 }
