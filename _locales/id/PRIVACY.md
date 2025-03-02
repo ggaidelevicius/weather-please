@@ -1,41 +1,35 @@
-# Kebijakan Privasi untuk Ekstensi Browser "Weather Please"
+# Kebijakan Privasi untuk Ekstensi Peramban "Weather Please"
 
-_Terakhir diperbarui: 10 Maret 2024_
+_Pembaruan terakhir: 2 Maret 2025_
 
-Privasi Anda sangat penting bagi kami. Kebijakan privasi ini menguraikan data pribadi apa saja yang mungkin dikumpulkan oleh ekstensi browser "Weather Please" dan bagaimana data tersebut digunakan.
+Privasi Anda penting bagi kami. Kebijakan ini menjelaskan data apa yang dapat dikumpulkan oleh ekstensi peramban "Weather Please" dan bagaimana data tersebut digunakan.
 
-## 1. Informasi yang Kami Tidak Kumpulkan
+## 1. Informasi yang Tidak Kami Kumpulkan
 
-"Weather Please" **tidak** mengumpulkan, menyimpan, atau mentransmisikan data pribadi Anda yang terkait dengan aktivitas browsing Anda. Kami tidak mengakses, menyimpan, atau membagikan data pribadi seperti alamat IP, data geolokasi, atau riwayat browsing.
+"Weather Please" **tidak** mengumpulkan, menyimpan, atau mengirimkan data pribadi terkait aktivitas penelusuran Anda. Kami tidak mengakses, menyimpan, atau membagikan alamat IP, riwayat penelusuran, atau informasi pribadi lainnya.
 
-## 2. Data Kecelakaan dan Laporan Kesalahan Anonim
+## 2. Data Geolokasi dan Layanan Pihak Ketiga
 
-Untuk meningkatkan fungsionalitas dan pengalaman pengguna dari ekstensi browser kami, pengguna secara default diikutsertakan dalam pengiriman data kecelakaan dan laporan kesalahan yang dianonimkan. Data ini hanya digunakan untuk tujuan mengidentifikasi dan memperbaiki bug atau masalah dalam ekstensi. Data tersebut tidak mengandung informasi pribadi apa pun dan tidak dapat ditelusuri kembali ke pengguna individu.
+Untuk mendapatkan informasi cuaca lokal, "Weather Please" memerlukan akses ke geolokasi perangkat Anda (lintang dan bujur). Saat menginstal, Anda akan diminta untuk memberikan izin akses lokasi. Jika Anda menolak, ekstensi tidak akan berfungsi.
 
-Informasi geolokasi yang dikumpulkan dalam laporan ini akan dikurangi menjadi hanya 1 desimal, yang mencakup radius sekitar 11,1 km, memastikan anonimitas data sambil tetap menyediakan informasi yang berguna untuk analisis masalah.
+Data lokasi Anda dikirim langsung ke layanan cuaca pihak ketiga untuk mengambil informasi cuaca. Layanan ini memiliki kebijakan privasi mereka sendiri, yang dapat Anda baca di sini:
 
-Jika Anda ingin memilih keluar dari pengumpulan ini, Anda dapat melakukannya kapan saja melalui menu pengaturan.
+- [Kebijakan Privasi Open-Meteo](https://open-meteo.com/en/terms)
 
-## 3. Penggunaan Data oleh Pihak Ketiga
+"Weather Please" tidak menyimpan atau mengirimkan data lokasi Anda di luar permintaan tersebut.
 
-Untuk mengambil informasi cuaca yang dilokalkan, pengguna dapat memilih untuk memberikan informasi IP mereka atau lintang/bujur ke layanan pihak ketiga. Layanan pihak ketiga ini beroperasi di bawah kebijakan privasi mereka sendiri, dan "Weather Please" tidak memiliki kontrol atas praktik pengumpulan dan penggunaan data mereka. Anda dapat mengakses kebijakan privasi layanan pihak ketiga di sini:
+## 3. Cara Kami Menggunakan Informasi Anda
 
-- https://wiki.osmfoundation.org/wiki/Privacy_Policy
-- https://open-meteo.com/en/terms
-- https://ip-api.com/docs/legal
+Kami tidak mengumpulkan, menyimpan, atau membagikan data pribadi. Geolokasi Anda hanya digunakan untuk mengambil data cuaca dari layanan pihak ketiga.
 
-## 4. Bagaimana Kami Menggunakan Informasi Anda
+## 4. Pilihan Anda
 
-Selain data kecelakaan dan laporan kesalahan anonim yang Anda setujui untuk berbagi dengan kami, kami tidak mengumpulkan data pribadi lainnya. Oleh karena itu, kami tidak dapat dan tidak akan menggunakan atau membagikan informasi tersebut dengan cara apa pun.
+Anda dapat memilih apakah akan mengizinkan akses lokasi atau tidak saat diminta. Jika tidak diizinkan, ekstensi tidak akan berfungsi. Dengan menggunakan "Weather Please", Anda menerima persyaratan ini.
 
-## 5. Pilihan Anda
+## 5. Perubahan pada Kebijakan Privasi Ini
 
-Anda memiliki kemampuan untuk memilih apakah akan menggunakan ekstensi browser kami, untuk memberikan data IP atau geolokasi Anda ke layanan cuaca pihak ketiga, dan untuk memilih mengirimkan data kecelakaan dan laporan kesalahan anonim kepada kami. Jika Anda tidak setuju dengan syarat ini, Anda harus berhenti menggunakan ekstensi browser "Weather Please".
+Kami dapat memperbarui kebijakan ini dari waktu ke waktu. Perubahan akan diposting di halaman ini dan berlaku segera setelah dipublikasikan.
 
-## 6. Perubahan pada Kebijakan Privasi Ini
+## 6. Hubungi Kami
 
-Kami dapat memperbarui Kebijakan Privasi kami dari waktu ke waktu. Kami akan memberitahu Anda tentang perubahan apa pun dengan memposting Kebijakan Privasi baru di halaman ini. Perubahan tersebut berlaku segera setelah diposting.
-
-## 7. Hubungi Kami
-
-Jika Anda memiliki pertanyaan atau saran tentang Kebijakan Privasi kami, jangan ragu untuk menghubungi kami di [contact@weather-please.app](mailto:contact@weather-please.app).
+Jika Anda memiliki pertanyaan atau saran, hubungi kami di [contact@weather-please.app](mailto:contact@weather-please.app).

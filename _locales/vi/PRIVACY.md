@@ -1,41 +1,35 @@
-# Chính Sách Bảo Mật cho Tiện Ích Trình Duỵt "Weather Please"
+# **Chính sách quyền riêng tư của tiện ích mở rộng trình duyệt "Weather Please"**
 
-_Cập nhật lần cuối: 10 Tháng Ba, 2024_
+_Cập nhật lần cuối: 2 tháng 3 năm 2025_
 
-Sự riêng tư của bạn là rất quan trọng đối với chúng tôi. Chính sách bảo mật này mô tả các dữ liệu cá nhân mà tiện ích trình duyệt "Weather Please" có thể thu thập và cách dữ liệu đó được sử dụng.
+Quyền riêng tư của bạn rất quan trọng đối với chúng tôi. Chính sách này mô tả dữ liệu mà tiện ích mở rộng trình duyệt "Weather Please" có thể thu thập và cách dữ liệu đó được sử dụng.
 
-## 1. Thông Tin Chúng Tôi Không Thu Thập
+## **1. Dữ liệu chúng tôi không thu thập**
 
-"Weather Please" **không** thu thập, lưu trữ hoặc truyền bất kỳ dữ liệu cá nhân nào liên quan đến hoạt động duyệt web của bạn. Chúng tôi không truy cập, lưu trữ hoặc chia sẻ dữ liệu cá nhân như địa chỉ IP, dữ liệu vị trí địa lý hoặc lịch sử duyệt web.
+"Weather Please" **không thu thập, lưu trữ hoặc truyền bất kỳ dữ liệu cá nhân nào liên quan đến hoạt động duyệt web của bạn**. Chúng tôi không truy cập, lưu trữ hoặc chia sẻ địa chỉ IP, lịch sử duyệt web hoặc bất kỳ thông tin nhận dạng cá nhân nào khác.
 
-## 2. Dữ Liệu Va Chương Trình Lỗi Ẩn Danh và Báo Lỗi
+## **2. Dữ liệu vị trí và dịch vụ bên thứ ba**
 
-Để cải thiện tính năng và trải nghiệm người dùng của tiện ích trình duyệt của chúng tôi, chúng tôi cung cấp cho người dùng tùy chọn tham gia gửi dữ liệu va chương trình lỗi ẩn danh. Dữ liệu này chỉ được sử dụng để xác định và sửa lỗi hoặc vấn đề trong tiện ích mở rộng. Nó không chứa bất kỳ thông tin cá nhân nào và không thể được truy tìm lại người dùng cá nhân.
+Để hiển thị thông tin thời tiết địa phương, "Weather Please" yêu cầu quyền truy cập vào vị trí thiết bị của bạn (vĩ độ và kinh độ). Khi cài đặt, bạn sẽ được nhắc cấp quyền truy cập vị trí. Nếu bạn từ chối, tiện ích mở rộng sẽ không hoạt động.
 
-Thông tin vị trí được thu thập trong các báo cáo này sẽ được giảm xuống chỉ còn 1 chữ số thập phân, bao gồm bán kính khoảng 11,1 km, đảm bảo sự ẩn danh của dữ liệu trong khi vẫn cung cấp thông tin hữu ích cho việc phân tích vấn đề.
+Dữ liệu vị trí của bạn được gửi trực tiếp đến các dịch vụ thời tiết bên thứ ba để lấy thông tin thời tiết. Các dịch vụ này có chính sách quyền riêng tư riêng của họ, bạn có thể tham khảo tại đây:
 
-Nếu bạn muốn bỏ chọn tính năng này, bạn có thể làm điều đó bất cứ lúc nào thông qua menu cài đặt.
+- [Chính sách quyền riêng tư của Open-Meteo](https://open-meteo.com/en/terms)
 
-## 3. Sử Dụng Dữ Liệu Bởi Bên Thứ Ba
+"Weather Please" **không lưu trữ hoặc truyền dữ liệu vị trí của bạn ngoài mục đích yêu cầu thông tin thời tiết từ các dịch vụ này**.
 
-Để lấy thông tin thời tiết địa phương, người dùng có thể chọn cung cấp thông tin IP hoặc tọa độ vĩ độ/dài độ cho các dịch vụ bên thứ ba. Các dịch vụ bên thứ ba này hoạt động dưới chính sách bảo mật của riêng họ, và "Weather Please" không kiểm soát các thói quen thu thập và sử dụng dữ liệu của họ. Bạn có thể truy cập vào các chính sách bảo mật của dịch vụ bên thứ ba tại đây:
+## **3. Cách chúng tôi sử dụng dữ liệu của bạn**
 
-- https://wiki.osmfoundation.org/wiki/Privacy_Policy
-- https://open-meteo.com/en/terms
-- https://ip-api.com/docs/legal
+Chúng tôi không thu thập, lưu trữ hoặc chia sẻ bất kỳ dữ liệu cá nhân nào. Dữ liệu vị trí của bạn **chỉ** được sử dụng để truy xuất thông tin thời tiết từ các dịch vụ bên thứ ba.
 
-## 4. Cách Chúng Tôi Sử Dụng Thông Tin Của Bạn
+## **4. Lựa chọn của bạn**
 
-Ngoài dữ liệu va chương trình lỗi ẩn danh mà bạn đã đồng ý chia sẻ với chúng tôi, chúng tôi không thu thập bất kỳ dữ liệu cá nhân nào khác. Do đó, chúng tôi không thể và sẽ không sử dụng hoặc chia sẻ nó bằng bất kỳ cách nào.
+Bạn có thể chọn cấp hoặc từ chối quyền truy cập vị trí khi được nhắc. Nếu không cấp quyền, tiện ích mở rộng sẽ không hoạt động. Bằng cách sử dụng "Weather Please", bạn đồng ý với yêu cầu này.
 
-## 5. Lựa Chọn Của Bạn
+## **5. Thay đổi đối với chính sách quyền riêng tư**
 
-Bạn có khả năng lựa chọn liệu có sử dụng tiện ích trình duyệt của chúng tôi, cung cấp thông tin IP hoặc vị trí địa lý của bạn cho các dịch vụ thời tiết bên thứ ba và có đồng ý gửi dữ liệu va chương trình lỗi ẩn danh cho chúng tôi hay không. Nếu bạn không đồng ý với các điều khoản này, bạn nên dừng việc sử dụng tiện ích trình duyệt "Weather Please".
+Chúng tôi có thể cập nhật chính sách này theo thời gian. Mọi thay đổi sẽ được đăng trên trang này và có hiệu lực ngay lập tức sau khi được công bố.
 
-## 6. Thay Đổi vào Chính Sách Bảo Mật Này
+## **6. Liên hệ với chúng tôi**
 
-Chúng tôi có thể cập nhật Chính Sách Bảo Mật của mình từ thời gian này sang thời gian khác. Chúng tôi sẽ thông báo cho bạn về bất kỳ thay đổi nào bằng cách đăng Chính Sách Bảo Mật mới trên trang này. Những thay đổi này có hiệu lực ngay lập tức sau khi được đăng.
-
-## 7. Liên Hệ Với Chúng Tôi
-
-Nếu bạn có bất kỳ câu hỏi hoặc đề xuất nào về Chính Sách Bảo Mật của chúng tôi, đừng ngần ngại liên hệ với chúng tôi qua địa chỉ email [contact@weather-please.app](mailto:contact@weather-please.app).
+Nếu bạn có bất kỳ câu hỏi hoặc đề xuất nào về chính sách quyền riêng tư, vui lòng liên hệ với chúng tôi tại [contact@weather-please.app](mailto:contact@weather-please.app).

@@ -25,7 +25,11 @@ const initialState = {
 const Page = () => {
 	const params = useSearchParams()
 	const locale = params?.get('locale') ?? 'en'
-	if (Object.keys(locales).map(key => key).includes(locale)) {
+	if (
+		Object.keys(locales)
+			.map((key) => key)
+			.includes(locale)
+	) {
 		changeLocalisation(locale)
 	}
 	const [state, formAction, pending] = useActionState(submitForm, initialState)
@@ -63,8 +67,11 @@ const Page = () => {
 						</Button>
 					</>
 				) : (
-					<h1 className="text-4xl font-bold justify-center text-white text-center flex items-end">
-						<Trans><IconCircleCheckFilled size={36} aria-hidden className="mr-2" />{state.message}</Trans>
+					<h1 className="flex items-end justify-center text-center text-4xl font-bold text-white">
+						<Trans>
+							<IconCircleCheckFilled size={36} aria-hidden className="mr-2" />
+							{state.message}
+						</Trans>
 					</h1>
 				)}
 			</Form>
