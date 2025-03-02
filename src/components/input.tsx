@@ -4,6 +4,7 @@ import {
 	Input as HeadlessInput,
 	Select as HeadlessSelect,
 	Switch as HeadlessSwitch,
+	Textarea as HeadlessTextarea,
 	Label,
 } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
@@ -51,18 +52,21 @@ export const Select = ({
 interface BaseInputProps {
 	label: string
 	validation?: boolean
+	required?: boolean
 }
 
 interface ControlledInputProps extends BaseInputProps {
 	value: string
 	onChange: ChangeEventHandler<HTMLInputElement>
 	name?: undefined
+	type?: undefined
 }
 
 interface UncontrolledInputProps extends BaseInputProps {
 	value?: undefined
 	onChange?: undefined
 	name: string
+	type?: 'email'
 }
 
 export const Input = ({
@@ -70,7 +74,9 @@ export const Input = ({
 	value,
 	onChange,
 	validation,
-	name
+	name,
+	type,
+	required
 }: Readonly<ControlledInputProps | UncontrolledInputProps>) => {
 	return (
 		<Field>
@@ -82,10 +88,65 @@ export const Input = ({
 				onChange={onChange}
 				invalid={validation === false}
 				name={name}
+				type={type}
+				required={required}
 			/>
 			{validation === false && (
 				<Description className="mt-2 text-sm text-red-400">
-					<Trans>Invalid value. Settings will not save until this is valid.</Trans>
+					<Trans>
+						Invalid value. Settings will not save until this is valid.
+					</Trans>
+				</Description>
+			)}
+		</Field>
+	)
+}
+
+interface BaseTextareaProps {
+	label: string
+	validation?: boolean
+}
+
+interface ControlledTextareaProps extends BaseTextareaProps {
+	value: string
+	onChange: ChangeEventHandler<HTMLTextAreaElement>
+	name?: undefined
+	required: undefined
+}
+
+interface UncontrolledTextareaProps extends BaseTextareaProps {
+	value?: undefined
+	onChange?: undefined
+	name: string
+	required?: boolean
+}
+
+export const Textarea = ({
+	label,
+	value,
+	onChange,
+	validation,
+	name,
+	required
+}: Readonly<ControlledTextareaProps | UncontrolledTextareaProps>) => {
+	return (
+		<Field>
+			<Label className="block text-sm font-medium text-white">{label}</Label>
+			<HeadlessTextarea
+				className="mt-2 block w-full resize-none appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-[invalid]:outline-red-500 sm:text-sm"
+				aria-label={label}
+				value={value}
+				onChange={onChange}
+				invalid={validation === false}
+				name={name}
+				rows={4}
+				required={required}
+			/>
+			{validation === false && (
+				<Description className="mt-2 text-sm text-red-400">
+					<Trans>
+						Invalid value. Settings will not save until this is valid.
+					</Trans>
 				</Description>
 			)}
 		</Field>

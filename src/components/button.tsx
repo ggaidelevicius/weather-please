@@ -8,11 +8,20 @@ import type {
 	RefAttributes,
 } from 'react'
 
-interface ButtonProps {
+interface BaseButtonProps {
 	children: ReactNode
-	onClick: MouseEventHandler<HTMLButtonElement>
 	fullWidth?: boolean
 	disabled?: boolean
+}
+
+interface ControlledButtonProps extends BaseButtonProps {
+	onClick: MouseEventHandler<HTMLButtonElement>
+	type: undefined
+}
+
+interface UncontrolledButtonProps extends BaseButtonProps {
+	onClick?: undefined
+	type: 'submit'
 }
 
 export const Button = ({
@@ -20,16 +29,18 @@ export const Button = ({
 	onClick,
 	fullWidth = false,
 	disabled = false,
-}: ButtonProps) => {
+	type,
+}: ControlledButtonProps | UncontrolledButtonProps) => {
 	return (
 		<HeadlessButton
 			onClick={onClick}
 			className={
 				fullWidth
 					? 'group relative w-full rounded-md bg-blue-600 p-2 text-center text-sm font-medium text-white select-none hover:not-disabled:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:not-disabled:bg-blue-800 disabled:cursor-wait disabled:bg-blue-700'
-					: 'group relative rounded-md bg-blue-600 p-2 text-sm font-medium text-white select-none hover:not-disabled:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:not-disabled:bg-blue-800 disabled:cursor-wait disabled:bg-blue-700'
+					: 'group relative place-self-start rounded-md bg-blue-600 p-2 text-sm font-medium text-white select-none hover:not-disabled:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:not-disabled:bg-blue-800 disabled:cursor-wait disabled:bg-blue-700'
 			}
 			disabled={disabled}
+			type={type}
 		>
 			{disabled && (
 				<span className="absolute inset-0 m-auto flex h-[20px] w-[20px] -translate-y-2 animate-spin rounded-[100%] border-3 border-t-white border-r-white border-b-transparent border-l-white opacity-0 transition group-data-[disabled]:translate-y-0 group-data-[disabled]:opacity-100"></span>

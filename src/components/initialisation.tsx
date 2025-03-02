@@ -41,7 +41,7 @@ export const Initialisation = ({
 	}
 
 	return (
-		<Dialog open onClose={() => { }} className="relative z-50">
+		<Dialog open onClose={() => {}} className="relative z-50">
 			<DialogBackdrop className="fixed inset-0 bg-black/60" />
 			<div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 				<DialogPanel className="max-w-lg space-y-4 rounded-xl border bg-dark-800 p-12">

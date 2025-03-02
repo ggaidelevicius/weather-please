@@ -56,15 +56,15 @@ export const submitForm = async (
 	}
 
 	const rawFormData = {
-		email: formData.get('email'),
+		email: formData.get('email') || undefined,
 		message: formData.get('message'),
-		locale: formData.get('locale')
+		locale: formData.get('locale'),
 	}
 
 	const result = formSchema.safeParse({
 		email: rawFormData.email,
 		message: rawFormData.message,
-		locale: rawFormData.locale
+		locale: rawFormData.locale,
 	})
 
 	if (!result.success) {
