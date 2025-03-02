@@ -1,6 +1,6 @@
-import type { Config } from '@/pages'
 import { locales } from '@/lib/i18n'
 import { HandleChange } from '@/lib/types'
+import type { Config } from '@/pages'
 import {
 	Description,
 	Dialog,
@@ -11,6 +11,7 @@ import {
 import { Trans } from '@lingui/react/macro'
 import { IconShieldCheckFilled } from '@tabler/icons-react'
 import Image from 'next/image'
+import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
 import Favicon from '../../public/favicon.png'
 import { Alert } from './alert'
@@ -18,20 +19,29 @@ import { Button } from './button'
 import { Select } from './input'
 
 interface InitialisationProps {
-	handleClick: () => void
+	setInput: Dispatch<SetStateAction<Config>>
 	handleChange: HandleChange
 	input: Config
 }
 
 export const Initialisation = ({
-	handleClick,
+	setInput,
 	handleChange,
 	input,
 }: Readonly<InitialisationProps>) => {
 	const [loading, setLoading] = useState<boolean>(false)
+	const handleClick = () => {
+		navigator.geolocation.getCurrentPosition((pos) => {
+			setInput((prev) => ({
+				...prev,
+				lat: pos.coords.latitude.toString(),
+				lon: pos.coords.longitude.toString(),
+			}))
+		})
+	}
 
 	return (
-		<Dialog open onClose={() => {}} className="relative z-50">
+		<Dialog open onClose={() => { }} className="relative z-50">
 			<DialogBackdrop className="fixed inset-0 bg-black/60" />
 			<div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 				<DialogPanel className="max-w-lg space-y-4 rounded-xl border bg-dark-800 p-12">

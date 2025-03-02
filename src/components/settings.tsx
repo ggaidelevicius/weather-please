@@ -216,21 +216,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							<Trans>🌟 Leave a review</Trans>
 						</a>
 						<a
-							href={`https://weather-please.app/feedback?type=feedback&locale=${input.lang}`}
-							target="_blank"
-							className="mb-2 flex text-sm text-blue-300 hover:underline"
-						>
-							<Trans>✍️ Submit feedback</Trans>
-						</a>
-						<a
-							href={`https://weather-please.app/feedback?type=feature&locale=${input.lang}`}
-							target="_blank"
-							className="mb-2 flex text-sm text-blue-300 hover:underline"
-						>
-							<Trans>💡 Request a feature</Trans>
-						</a>
-						<a
-							href={`https://weather-please.app/feedback?type=bug&locale=${input.lang}`}
+							href={`https://weather-please.app/bug?locale=${input.lang}`}
 							target="_blank"
 							className="mb-2 flex text-sm text-blue-300 hover:underline"
 						>

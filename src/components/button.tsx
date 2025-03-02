@@ -8,11 +8,6 @@ import type {
 	RefAttributes,
 } from 'react'
 
-const defaultClasses =
-	'group relative bg-blue-600 hover:not-disabled:bg-blue-700 active:not-disabled:bg-blue-800 disabled:bg-blue-700 text-sm text-white font-medium p-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 select-none disabled:cursor-wait'
-const fullWidthClasses =
-	'group relative bg-blue-600 hover:not-disabled:bg-blue-700 active:not-disabled:bg-blue-800 disabled:bg-blue-700 text-sm text-white font-medium p-2 rounded-md w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 select-none disabled:cursor-wait'
-
 interface ButtonProps {
 	children: ReactNode
 	onClick: MouseEventHandler<HTMLButtonElement>
@@ -29,7 +24,11 @@ export const Button = ({
 	return (
 		<HeadlessButton
 			onClick={onClick}
-			className={fullWidth ? fullWidthClasses : defaultClasses}
+			className={
+				fullWidth
+					? 'group relative w-full rounded-md bg-blue-600 p-2 text-center text-sm font-medium text-white select-none hover:not-disabled:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:not-disabled:bg-blue-800 disabled:cursor-wait disabled:bg-blue-700'
+					: 'group relative rounded-md bg-blue-600 p-2 text-sm font-medium text-white select-none hover:not-disabled:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:not-disabled:bg-blue-800 disabled:cursor-wait disabled:bg-blue-700'
+			}
 			disabled={disabled}
 		>
 			{disabled && (

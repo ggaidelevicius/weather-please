@@ -127,6 +127,7 @@ const App = () => {
 		enabled: Boolean(config.lat) && Boolean(config.lon) && !usingCachedData,
 	})
 
+	// good to go
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (config.useShortcuts) {
@@ -152,6 +153,7 @@ const App = () => {
 		}
 	}, [config.useShortcuts])
 
+	// good to go - still needs error display
 	useEffect(() => {
 		if (data) {
 			const now = new Date()
@@ -249,6 +251,7 @@ const App = () => {
 		}
 	}, [data, error, changedLocation])
 
+	// good to go
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const currentHour = new Date().getHours()
@@ -273,6 +276,7 @@ const App = () => {
 	 * Input is used rather than config so users have instant feedback without first needing to
 	 * understand what the text on the 'save' or 'set my location' buttons do.
 	 */
+	// good to go
 	useEffect(() => {
 		if (input.lang) {
 			changeLocalisation(input.lang)
@@ -288,6 +292,7 @@ const App = () => {
 	 *
 	 * - If "config" does not exist in localStorage, the <Initialisation /> modal is opened to prompt the user for initial configuration.
 	 */
+	// good to go
 	useEffect(() => {
 		const storedData = localStorage?.config
 			? JSON.parse(localStorage.config)
@@ -318,8 +323,6 @@ const App = () => {
 					}, 1e3)
 				}
 			}
-		} else {
-			// open()
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
@@ -361,45 +364,19 @@ const App = () => {
 		})
 	}
 
-	const handleClick = async () => {
-		navigator.geolocation.getCurrentPosition((pos) => {
-			if (
-				config.lat !== pos.coords.latitude.toString() ||
-				config.lon !== pos.coords.longitude.toString()
-			) {
-				setChangedLocation(true)
-			}
-			setConfig((prev) => ({
-				...prev,
-				lat: pos.coords.latitude.toString(),
-				lon: pos.coords.longitude.toString(),
-				lang: input.lang,
-			}))
-			setInput((prev) => ({
-				...prev,
-				lat: pos.coords.latitude.toString(),
-				lon: pos.coords.longitude.toString(),
-			}))
-		})
-	}
-
-	/**
-	 * Commits the "config" to localStorage if "config.lat" and "config.lon" are valid latitude and longitude values, respectively.
-	 * Latitude: -90 to +90, Longitude: -180 to +180.
-	 */
 	useEffect(() => {
 		if (
-			config.lat &&
-			config.lon &&
-			/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(config.lat) &&
+			input.lat &&
+			input.lon &&
+			/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat) &&
 			/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(
-				config.lon,
+				input.lon,
 			)
 		) {
-			localStorage.config = JSON.stringify(config)
+			localStorage.config = JSON.stringify(input)
+			setConfig(input)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [config])
+	}, [input])
 
 	/**
 	 * Periodically (every minute) checks if the current date has changed.
@@ -586,7 +563,7 @@ const App = () => {
 				>
 					{!config?.lat || !config?.lon ? (
 						<Initialisation
-							handleClick={handleClick}
+							setInput={setInput}
 							input={input}
 							handleChange={handleChange}
 						/>
