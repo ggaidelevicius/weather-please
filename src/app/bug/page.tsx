@@ -1,14 +1,17 @@
 'use client'
 
-import { submitForm } from '../actions'
-import { Button } from '../../components/button'
-import Form from 'next/form'
-import { useActionState, useId } from 'react'
 import { Input, Textarea } from '@/components/input'
-import { Trans } from '@lingui/react/macro'
-import { I18nProvider } from '@lingui/react'
-import { i18n } from '@lingui/core'
+import { changeLocalisation, locales } from '@/lib/i18n'
 import { messages } from '@/locales/en/messages'
+import { i18n } from '@lingui/core'
+import { I18nProvider } from '@lingui/react'
+import { Trans } from '@lingui/react/macro'
+import { IconCircleCheckFilled, IconMailFilled } from '@tabler/icons-react'
+import Form from 'next/form'
+import { useSearchParams } from 'next/navigation'
+import { useActionState, useId } from 'react'
+import { Button } from '../../components/button'
+import { submitForm } from '../actions'
 
 i18n.load({
 	en: messages,
@@ -20,6 +23,11 @@ const initialState = {
 }
 
 const Page = () => {
+	const params = useSearchParams()
+	const locale = params?.get('locale') ?? 'en'
+	if (Object.keys(locales).map(key => key).includes(locale)) {
+		changeLocalisation(locale)
+	}
 	const [state, formAction, pending] = useActionState(submitForm, initialState)
 	const id = useId()
 
@@ -48,14 +56,16 @@ const Page = () => {
 								tabIndex={-1}
 							/>
 						</div>
-						{/* <input type="hidden" name="locale" value={id} /> */}
+						<input type="hidden" name="locale" value={locale} />
 						<input type="hidden" name="validation" value={id} />
-						<Button type="submit" disabled={pending} fullWidth>
+						<Button icon={IconMailFilled} type="submit" disabled={pending}>
 							Submit
 						</Button>
 					</>
 				) : (
-					<p className="self-center text-sm/6 text-gray-300">{state.message}</p>
+					<h1 className="text-4xl font-bold justify-center text-white text-center flex items-end">
+						<Trans><IconCircleCheckFilled size={36} aria-hidden className="mr-2" />{state.message}</Trans>
+					</h1>
 				)}
 			</Form>
 		</I18nProvider>
