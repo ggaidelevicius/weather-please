@@ -1,9 +1,9 @@
+import type { Alerts } from '@/pages'
 import { Trans } from '@lingui/react/macro'
 import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
 import { motion } from 'framer-motion'
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
-import type { Alerts } from '@/pages'
 import { Alert } from './alert'
 
 interface AlertProps extends Alerts {
@@ -200,18 +200,6 @@ export const WeatherAlert = ({
 		if (showWindAlerts) {
 			let windAlert: ReactElement | null = null
 			if (hoursOfStrongWind.includes(true)) {
-				const alertProps = {
-					radius: 'md',
-					styles: {
-						message: {
-							fontSize: '1rem',
-							display: 'flex',
-							alignItems: 'center',
-							gap: '1rem',
-						},
-					},
-					key: 'windAlert',
-				}
 				const timeUntilStrongWind = hoursOfStrongWind.indexOf(true) + 1
 				if (timeUntilStrongWind > 1) {
 					windAlert = (
@@ -343,18 +331,6 @@ export const WeatherAlert = ({
 		if (showVisibilityAlerts) {
 			let visibilityAlert: ReactElement | null = null
 			if (hoursOfLowVisibility.includes(true)) {
-				const alertProps = {
-					radius: 'md',
-					styles: {
-						message: {
-							fontSize: '1rem',
-							display: 'flex',
-							alignItems: 'center',
-							gap: '1rem',
-						},
-					},
-					key: 'visibilityAlert',
-				}
 				const timeUntilLowVisibility = hoursOfLowVisibility.indexOf(true) + 1 // might not need to be doing +1
 				if (timeUntilLowVisibility > 1) {
 					visibilityAlert = (
