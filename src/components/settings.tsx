@@ -36,17 +36,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 	return (
 		<>
 			<IconButton
-				// input={input}
-				// handleChange={handleChange}
 				onClick={() => {
 					setIsOpen(true)
 				}}
 				className="fixed right-4 bottom-4"
 				icon={IconSettings}
-				// config={config}
-				// setInput={setInput}
-				// reviewLink={reviewLink}
-				// settingsOpened={settingsOpened}
 			>
 				<Trans>Settings</Trans>
 			</IconButton>

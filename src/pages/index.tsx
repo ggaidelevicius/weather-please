@@ -369,43 +369,31 @@ const App = () => {
 
 		if (config.periodicLocationUpdate) {
 			try {
-				// navigator.geolocation.getCurrentPosition((pos) => {
-				// 	if (
-				// 		config.lat !== pos.coords.latitude.toString() ||
-				// 		config.lon !== pos.coords.longitude.toString()
-				// 	) {
-				// 		setChangedLocation(true)
-				// 	}
-				// 	setInput((prev) => ({
-				// 		...prev,
-				// 		lat: pos.coords.latitude.toString(),
-				// 		lon: pos.coords.longitude.toString(),
-				// 	}))
-				// })
+				navigator.geolocation.getCurrentPosition((pos) => {
+					if (
+						config.lat !== pos.coords.latitude.toString() ||
+						config.lon !== pos.coords.longitude.toString()
+					) {
+						setChangedLocation(true)
+					}
+					setInput((prev) => ({
+						...prev,
+						lat: pos.coords.latitude.toString(),
+						lon: pos.coords.longitude.toString(),
+					}))
+				})
 			} catch (e) {
-				// eslint-disable-next-line no-console
 				console.error(e)
-				// notifications.show({
-				// 	title: <Trans>Error</Trans>,
-				// 	message: (
-				// 		<Trans>
-				// 			An error has occurred while periodically updating location.
-				// 			Please check the console for more details.
-				// 		</Trans>
-				// 	),
-				// 	color: 'red',
-				// })
 			}
 		}
 		return () => {
 			clearInterval(checkDate)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentDateRef, config.periodicLocationUpdate])
 
 	const tiles = weatherData
 		.slice(0, parseInt(config.daysToRetrieve))
-		.map((day, index: number) => {
+		.map((day, index) => {
 			let delayBaseline = 0.75
 			if (localStorage.data) {
 				delayBaseline = 0
