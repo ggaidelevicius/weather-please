@@ -16,7 +16,7 @@ interface BaseButtonProps {
 
 interface ControlledButtonProps extends BaseButtonProps {
 	onClick: MouseEventHandler<HTMLButtonElement>
-	type: undefined
+	type?: undefined
 }
 
 interface UncontrolledButtonProps extends BaseButtonProps {
