@@ -22,9 +22,14 @@ const initialState = {
 	message: '',
 }
 
-const Page = () => {
+const getLocale = () => {
 	const params = useSearchParams()
 	const locale = params?.get('locale') ?? 'en'
+	return locale
+}
+
+const Page = () => {
+	const locale = getLocale()
 	if (
 		Object.keys(locales)
 			.map((key) => key)
