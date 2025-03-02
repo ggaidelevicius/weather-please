@@ -75,7 +75,7 @@ export const Input = ({
 			/>
 			{validation === false && (
 				<Description className="mt-2 text-sm text-red-400">
-					<Trans>Invalid value</Trans>
+					<Trans>Invalid value. Settings will not save until this is valid.</Trans>
 				</Description>
 			)}
 		</Field>

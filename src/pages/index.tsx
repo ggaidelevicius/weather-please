@@ -359,7 +359,7 @@ const App = () => {
 		setInput((prev) => {
 			return {
 				...prev,
-				[k]: v,
+				[k]: typeof v === 'string' ? v.trim() : v,
 			}
 		})
 	}
