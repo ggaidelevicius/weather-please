@@ -483,7 +483,6 @@ const App = () => {
 						showWindAlerts={config.showWindAlerts}
 						showVisibilityAlerts={config.showVisibilityAlerts}
 						showPrecipitationAlerts={config.showPrecipitationAlerts}
-						width={3}
 					/>
 				</AnimatePresence>
 			)}
