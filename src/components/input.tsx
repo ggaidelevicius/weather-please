@@ -48,11 +48,21 @@ export const Select = ({
 	</Field>
 )
 
-interface InputProps {
+interface BaseInputProps {
 	label: string
+	validation?: boolean
+}
+
+interface ControlledInputProps extends BaseInputProps {
 	value: string
 	onChange: ChangeEventHandler<HTMLInputElement>
-	validation?: boolean
+	name?: undefined
+}
+
+interface UncontrolledInputProps extends BaseInputProps {
+	value?: undefined
+	onChange?: undefined
+	name: string
 }
 
 export const Input = ({
@@ -60,9 +70,8 @@ export const Input = ({
 	value,
 	onChange,
 	validation,
-}: Readonly<
-	Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'> & InputProps
->) => {
+	name
+}: Readonly<ControlledInputProps | UncontrolledInputProps>) => {
 	return (
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>
@@ -72,6 +81,7 @@ export const Input = ({
 				value={value}
 				onChange={onChange}
 				invalid={validation === false}
+				name={name}
 			/>
 			{validation === false && (
 				<Description className="mt-2 text-sm text-red-400">

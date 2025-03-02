@@ -4,6 +4,7 @@ import { submitForm } from '../actions'
 import { Button } from '../../components/button'
 import Form from 'next/form'
 import { useActionState, useId } from 'react'
+import { Input } from '@/components/input'
 
 const initialState = {
   message: '',
@@ -20,18 +21,7 @@ const Page = () => {
     >
       {state.message === '' ? (
         <>
-          <label htmlFor="email" className="sr-only">
-            Your email address
-          </label>
-          <input
-            required
-            type="email"
-            name="email"
-            id="email"
-            disabled={pending}
-            placeholder="Your email address"
-            className="peer w-full flex-auto border-b-1 border-white/15 bg-transparent px-4 py-2.5 text-[0.8125rem]/6 text-white placeholder:text-gray-500 focus:outline-hidden"
-          />
+        <Input label="Your email (optional)" name='email' />
           <label htmlFor="message" className="sr-only">
             Your message
           </label>
