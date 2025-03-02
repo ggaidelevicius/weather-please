@@ -7,22 +7,15 @@ interface AlertProps {
 	variant?: 'light-blue' | 'light-red'
 }
 
-const defaultClasses =
-	'flex w-full flex-row items-center gap-4 rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500 p-4 text-white'
-const lightBlueClasses =
-	'flex w-full flex-row items-center gap-4 w-full justify-center bg-blue-500/75 p-4 text-white font-medium'
-const lightRedClasses =
-	'flex w-full flex-row items-center gap-4 w-full justify-center bg-red-500/75 p-4 text-white font-medium'
-
 export const Alert = ({ children, icon: Icon, variant }: AlertProps) => {
 	return (
 		<div
 			className={
 				variant === 'light-blue'
-					? lightBlueClasses
+					? 'flex flex-row items-center justify-center gap-4 bg-blue-500/75 p-4 font-medium text-white'
 					: variant === 'light-red'
-						? lightRedClasses
-						: defaultClasses
+						? 'flex flex-row items-center justify-center gap-4 bg-red-500/75 p-4 font-medium text-white'
+						: 'flex w-full flex-row items-center gap-4 rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500 p-4 text-white'
 			}
 		>
 			<Icon size={30} strokeWidth={1.5} aria-hidden />
