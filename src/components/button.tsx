@@ -78,7 +78,7 @@ export const IconButton = ({
 		<HeadlessButton
 			onClick={onClick}
 			className={clsx(
-				'rounded-md bg-dark-100/10 p-2 text-white select-none hover:bg-dark-100/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:bg-dark-100/30',
+				'cursor-pointer rounded-md bg-dark-100/10 p-2 text-white select-none hover:bg-dark-100/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:bg-dark-100/30',
 				className,
 			)}
 		>
