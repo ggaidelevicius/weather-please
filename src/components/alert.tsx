@@ -19,7 +19,7 @@ export const Alert = ({ children, icon: Icon, variant }: AlertProps) => {
 			}
 		>
 			<Icon size={30} strokeWidth={1.5} aria-hidden />
-			<span className="max-w-[calc(100%-46px)] text-sm">{children}</span>
+			<span className={variant ? "max-w-[calc(100%-46px)]" : "max-w-[calc(100%-46px)] text-sm"}>{children}</span>
 		</div>
 	)
 }
