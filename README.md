@@ -8,7 +8,7 @@ It also displays weather alerts in the case of extreme UV, high precipitation, s
 
 Both metric and imperial number formats are supported.
 
-Weather Please uses [Open Meteo](https://open-meteo.com/) as the source for all weather data. At the time of writing, the Open Meteo platform is FOSS, and does not require the end-user to provide an API key.
+Weather Please uses [Open Meteo](https://open-meteo.com/) as the source for all weather data.
 
 [Get Weather Please for Google Chrome and other Chromium browsers (such as Edge)](https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn)
 
@@ -20,28 +20,24 @@ Weather Please uses [Open Meteo](https://open-meteo.com/) as the source for all 
 
 Weather Please is available in the following languages:
 
-- Bengali\*
-- German\*
+- Bengali
+- German
 - English
-- Spanish\*
-- French\*
-- Hindi\*
-- Indonesian\*
-- Italian\*
-- Japanese\*
-- Korean\*
-- Lithuanian\*
-- Russian\*
-- Vietnamese\*
-- Chinese\*
-
-Languages marked with \* were translated using [ChatGPT](https://chat.openai.com/) and have not had their quality independently verified.
-
-If you would like to help by providing or verifying translations, please [reach out via email](mailto:contact@weather-please.app).
+- Spanish
+- French
+- Hindi
+- Indonesian
+- Italian
+- Japanese
+- Korean
+- Lithuanian
+- Russian
+- Vietnamese
+- Chinese
 
 ## Development
 
-Weather Please is built using [Next.js](https://nextjs.org/). It uses [Tabler Icons](https://tablericons.com/), and [Framer Motion](https://www.framer.com/motion/). [Lingui](https://lingui.dev/) is used for translations.
+Weather Please is built using [Next.js](https://nextjs.org/). It uses [Tailwind CSS](https://tailwindcss.com/), [Tabler Icons](https://tablericons.com/), and [Framer Motion](https://www.framer.com/motion/). [Lingui](https://lingui.dev/) is used for translations.
 
 To run the development environment locally, first clone this repo and ensure that you have [Node.js](https://nodejs.org) >= 20.5.1 installed. Next, run `pnpm i`, and finally `pnpm dev`.
 
