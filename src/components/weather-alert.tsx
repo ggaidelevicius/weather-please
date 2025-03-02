@@ -12,7 +12,6 @@ interface AlertProps extends Alerts {
 	showWindAlerts: boolean
 	showVisibilityAlerts: boolean
 	showPrecipitationAlerts: boolean
-	width: number
 }
 
 export const WeatherAlert = ({
@@ -26,7 +25,6 @@ export const WeatherAlert = ({
 	showWindAlerts,
 	showVisibilityAlerts,
 	showPrecipitationAlerts,
-	width,
 }: Readonly<AlertProps>) => {
 	const [alerts, setAlerts] = useState<ReactElement[] | []>([])
 
