@@ -38,7 +38,6 @@ const configSchema = z.object({
 	showVisibilityAlerts: z.boolean(),
 	showWindAlerts: z.boolean(),
 	useMetric: z.boolean(),
-	useShortcuts: z.boolean(),
 })
 
 export type Config = z.infer<typeof configSchema>
@@ -97,7 +96,7 @@ const App = () => {
 		lang: 'en',
 		lat: '',
 		lon: '',
-		periodicLocationUpdate: true,
+		periodicLocationUpdate: false,
 		useMetric: true,
 		showAlerts: true,
 		showUvAlerts: true,
@@ -108,7 +107,6 @@ const App = () => {
 		identifier: 'day',
 		installed: new Date().getTime(),
 		displayedReviewPrompt: false,
-		useShortcuts: false,
 	}
 	const [config, setConfig] = useState<Config>(initialState)
 	const [input, setInput] = useState<Config>(initialState)
@@ -126,32 +124,6 @@ const App = () => {
 			).then((res) => res.json()),
 		enabled: Boolean(config.lat) && Boolean(config.lon) && !usingCachedData,
 	})
-
-	// good to go
-	useEffect(() => {
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (config.useShortcuts) {
-				const keys = Array.from({ length: 10 }, (_, i) => (i + 1).toString())
-				if (keys.includes(event.key)) {
-					setConfig((p) => ({
-						...p,
-						daysToRetrieve: event.key,
-					}))
-
-					setInput((p) => ({
-						...p,
-						daysToRetrieve: event.key,
-					}))
-				}
-			}
-		}
-
-		window.addEventListener('keydown', handleKeyDown)
-
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown)
-		}
-	}, [config.useShortcuts])
 
 	// good to go - still needs error display
 	useEffect(() => {
@@ -397,19 +369,19 @@ const App = () => {
 
 		if (config.periodicLocationUpdate) {
 			try {
-				navigator.geolocation.getCurrentPosition((pos) => {
-					if (
-						config.lat !== pos.coords.latitude.toString() ||
-						config.lon !== pos.coords.longitude.toString()
-					) {
-						setChangedLocation(true)
-					}
-					setInput((prev) => ({
-						...prev,
-						lat: pos.coords.latitude.toString(),
-						lon: pos.coords.longitude.toString(),
-					}))
-				})
+				// navigator.geolocation.getCurrentPosition((pos) => {
+				// 	if (
+				// 		config.lat !== pos.coords.latitude.toString() ||
+				// 		config.lon !== pos.coords.longitude.toString()
+				// 	) {
+				// 		setChangedLocation(true)
+				// 	}
+				// 	setInput((prev) => ({
+				// 		...prev,
+				// 		lat: pos.coords.latitude.toString(),
+				// 		lon: pos.coords.longitude.toString(),
+				// 	}))
+				// })
 			} catch (e) {
 				// eslint-disable-next-line no-console
 				console.error(e)

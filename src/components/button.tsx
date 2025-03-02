@@ -12,6 +12,7 @@ interface BaseButtonProps {
 	children: ReactNode
 	fullWidth?: boolean
 	disabled?: boolean
+	icon?: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>
 }
 
 interface ControlledButtonProps extends BaseButtonProps {
@@ -30,20 +31,28 @@ export const Button = ({
 	fullWidth = false,
 	disabled = false,
 	type,
+	icon: Icon,
 }: ControlledButtonProps | UncontrolledButtonProps) => {
 	return (
 		<HeadlessButton
 			onClick={onClick}
 			className={
 				fullWidth
-					? 'group relative w-full rounded-md bg-blue-600 p-2 text-center text-sm font-medium text-white select-none hover:not-disabled:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:not-disabled:bg-blue-800 disabled:cursor-wait disabled:bg-blue-700'
-					: 'group relative place-self-start rounded-md bg-blue-600 p-2 text-sm font-medium text-white select-none hover:not-disabled:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:not-disabled:bg-blue-800 disabled:cursor-wait disabled:bg-blue-700'
+					? 'group relative flex w-full cursor-pointer items-center rounded-md bg-white px-3 py-2 text-center text-sm font-medium text-dark-600 select-none hover:not-disabled:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-zinc-300 disabled:cursor-wait disabled:bg-zinc-100'
+					: 'group relative flex cursor-pointer items-center place-self-start rounded-md bg-white px-3 py-2 text-sm font-medium text-dark-600 select-none hover:not-disabled:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-zinc-300 disabled:cursor-wait disabled:bg-zinc-100'
 			}
 			disabled={disabled}
 			type={type}
 		>
 			{disabled && (
-				<span className="absolute inset-0 m-auto flex h-[20px] w-[20px] -translate-y-2 animate-spin rounded-[100%] border-3 border-t-white border-r-white border-b-transparent border-l-white opacity-0 transition group-data-[disabled]:translate-y-0 group-data-[disabled]:opacity-100"></span>
+				<span className="absolute inset-0 m-auto flex h-[20px] w-[20px] -translate-y-2 animate-spin rounded-[100%] border-3 border-t-dark-600 border-r-dark-600 border-b-transparent border-l-dark-600 opacity-0 transition group-data-[disabled]:translate-y-0 group-data-[disabled]:opacity-100"></span>
+			)}
+			{Icon && (
+				<Icon
+					aria-hidden
+					size={18}
+					className="mr-1.5 transition group-data-[disabled]:translate-y-2 group-data-[disabled]:opacity-0"
+				/>
 			)}
 			<span className="flex place-self-center transition group-data-[disabled]:translate-y-2 group-data-[disabled]:opacity-0">
 				{children}

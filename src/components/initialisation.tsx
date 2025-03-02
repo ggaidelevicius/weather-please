@@ -17,6 +17,7 @@ import Favicon from '../../public/favicon.png'
 import { Alert } from './alert'
 import { Button } from './button'
 import { Select } from './input'
+import { IconMapPinFilled } from '@tabler/icons-react'
 
 interface InitialisationProps {
 	setInput: Dispatch<SetStateAction<Config>>
@@ -89,12 +90,13 @@ export const Initialisation = ({
 						</Trans>
 					</Alert>
 					<Button
+						icon={IconMapPinFilled}
 						onClick={() => {
 							handleClick()
 							setLoading(true)
 						}}
 						disabled={loading}
-						fullWidth
+						// fullWidth
 					>
 						Set my location
 					</Button>
