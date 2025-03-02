@@ -2,7 +2,6 @@ import { Button as HeadlessButton } from '@headlessui/react'
 import type { Icon, IconProps } from '@tabler/icons-react'
 import { clsx } from 'clsx'
 import type {
-	ComponentPropsWithoutRef,
 	ForwardRefExoticComponent,
 	MouseEventHandler,
 	ReactNode,
@@ -15,7 +14,10 @@ const fullWidthClasses =
 	'group relative bg-blue-600 hover:not-disabled:bg-blue-700 active:not-disabled:bg-blue-800 disabled:bg-blue-700 text-sm text-white font-medium p-2 rounded-md w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 select-none disabled:cursor-wait'
 
 interface ButtonProps {
+	children: ReactNode
+	onClick: MouseEventHandler<HTMLButtonElement>
 	fullWidth?: boolean
+	disabled?: boolean
 }
 
 export const Button = ({
@@ -23,7 +25,7 @@ export const Button = ({
 	onClick,
 	fullWidth = false,
 	disabled = false,
-}: ComponentPropsWithoutRef<'button'> & ButtonProps) => {
+}: ButtonProps) => {
 	return (
 		<HeadlessButton
 			onClick={onClick}

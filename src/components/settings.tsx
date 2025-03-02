@@ -59,7 +59,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 					transition
 					className="fixed inset-0 bg-black/60 backdrop-blur-lg transition duration-300 data-[closed]:opacity-0"
 				/>
-				<div className="fixed inset-0 flex w-screen items-center justify-center overflow-y-auto p-4">
+				<div className="fixed inset-0 flex w-screen items-center justify-center overflow-y-auto p-8">
 					<DialogPanel
 						transition
 						className="m-auto w-full max-w-lg space-y-4 rounded-xl bg-dark-800 p-12 transition duration-400 data-[closed]:scale-97 data-[closed]:opacity-0 data-[closed]:blur-xs"
@@ -94,7 +94,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							}
 							checked={input.useShortcuts}
 							onChange={(e) => handleChange('useShortcuts', e)}
-							description="You can press numbers 1-9 to change how many weather tiles are displayed."
+							description="You can press numbers 1-9 on your keyboard to change how many weather tiles are displayed."
 						/>
 						<h2 className="mt-14 text-2xl font-medium text-white">
 							<Trans>Weather</Trans>
@@ -124,7 +124,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							)}
 						/>
 						<Switch
-							label={(<Trans>Periodically update location automatically</Trans>) as unknown as string}
+							label={
+								(
+									<Trans>Periodically update location automatically</Trans>
+								) as unknown as string
+							}
 							checked={input.periodicLocationUpdate}
 							onChange={(e) => handleChange('periodicLocationUpdate', e)}
 						/>
@@ -171,6 +175,15 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									}
 									checked={input.showUvAlerts}
 									onChange={(e) => handleChange('showUvAlerts', e)}
+								/>
+								<Switch
+									label={
+										(
+											<Trans>Show high precipitation alerts</Trans>
+										) as unknown as string
+									}
+									checked={input.showPrecipitationAlerts}
+									onChange={(e) => handleChange('showPrecipitationAlerts', e)}
 								/>
 								<Switch
 									label={

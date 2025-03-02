@@ -89,14 +89,19 @@ interface SwitchProps {
 	description?: string
 }
 
-export const Switch = ({ label, checked, onChange, description }: SwitchProps) => {
+export const Switch = ({
+	label,
+	checked,
+	onChange,
+	description,
+}: SwitchProps) => {
 	return (
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessSwitch
 				checked={checked}
 				onChange={onChange}
-				className="transition-[background-color] group mt-2 inline-flex h-6 w-11 items-center rounded-full bg-dark-500 select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-[checked]:bg-blue-600"
+				className="group mt-2 inline-flex h-6 w-11 items-center rounded-full bg-dark-500 transition-[background-color] select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-[checked]:bg-blue-600"
 			>
 				<span className="size-4 translate-x-1 rounded-full bg-white transition group-data-[checked]:translate-x-6" />
 			</HeadlessSwitch>
