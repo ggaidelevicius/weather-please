@@ -192,7 +192,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							</>
 						)}
 						<h2 className="mt-14 text-2xl font-medium text-white">
-							<Trans>Feedback and support</Trans>
+							<Trans>Feedback</Trans>
 						</h2>
 						<a
 							href={platformReviewLink}
@@ -209,18 +209,21 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							<Trans>🐛 Report a bug</Trans>
 						</a>
 						<a
-							href={locales[input.lang].privacy}
+							href="https://www.buymeacoffee.com/ggaidelevicius"
 							target="_blank"
 							className="mb-2 flex text-sm text-blue-300 hover:underline"
 						>
-							<Trans>🔒 Privacy policy</Trans>
+							<Trans>☕ Gift a coffee</Trans>
 						</a>
+						<h2 className="mt-14 text-2xl font-medium text-white">
+							<Trans>Legal</Trans>
+						</h2>
 						<a
-							href="https://www.buymeacoffee.com/ggaidelevicius"
+							href={locales[input.lang].privacy}
 							target="_blank"
 							className="flex text-sm text-blue-300 hover:underline"
 						>
-							<Trans>☕ Gift a coffee</Trans>
+							<Trans>🔒 Privacy policy</Trans>
 						</a>
 					</DialogPanel>
 				</div>
