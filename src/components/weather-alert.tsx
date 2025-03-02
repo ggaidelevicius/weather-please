@@ -390,23 +390,26 @@ export const WeatherAlert = ({
 		}
 	}, [hoursOfLowVisibility, showVisibilityAlerts])
 
-	return (
-		<motion.aside
-			initial={{ opacity: 0 }}
-			animate={{
-				scale: 1,
-				opacity: 1,
-				transition: {
-					type: 'spring',
-					duration: 2,
-				},
-			}}
-			exit={{ scale: 0.95, opacity: 0 }}
-			role="alert"
-			aria-live="assertive"
-			className="fixed top-0 left-0 flex w-full flex-col"
-		>
-			{alerts}
-		</motion.aside>
-	)
+	if (alerts.length > 0) {
+		return (
+			<motion.aside
+				initial={{ opacity: 0 }}
+				animate={{
+					scale: 1,
+					opacity: 1,
+					transition: {
+						type: 'spring',
+						duration: 2,
+					},
+				}}
+				exit={{ scale: 0.95, opacity: 0 }}
+				role="alert"
+				aria-live="assertive"
+				className="fixed top-0 left-0 flex w-full flex-col"
+			>
+				{alerts}
+			</motion.aside>
+		)
+	}
+	return <></>
 }
