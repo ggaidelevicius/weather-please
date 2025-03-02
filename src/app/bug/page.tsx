@@ -22,14 +22,17 @@ const initialState = {
 	message: '',
 }
 
-const getLocale = () => {
-	const params = useSearchParams()
-	const locale = params?.get('locale') ?? 'en'
-	return locale
+const Page = () => {
+	return (
+		<Suspense>
+			<ContactForm />
+		</Suspense>
+	)
 }
 
-const Page = () => {
-	const locale = getLocale()
+const ContactForm = () => {
+	const params = useSearchParams()
+	const locale = params?.get('locale') ?? 'en'
 	if (
 		Object.keys(locales)
 			.map((key) => key)
@@ -41,48 +44,46 @@ const Page = () => {
 	const id = useId()
 
 	return (
-		<Suspense>
-			<I18nProvider i18n={i18n}>
-				<Form
-					action={formAction}
-					className="flex w-full max-w-lg flex-col space-y-4 p-12"
-				>
-					{state.message === '' ? (
-						<>
-							<h1 className="mb-8 text-4xl font-bold text-white">
-								<Trans>Report a bug</Trans>
-							</h1>
-							<Input label="Your email (optional)" name="email" type="email" />
-							<Textarea label="Your message" name="message" required />
-							<div className="absolute top-auto left-[-10000px] h-px w-px overflow-hidden">
-								<label htmlFor={id} className="sr-only">
-									Do not fill this field if you are human
-								</label>
-								<input
-									type="text"
-									name={id}
-									id={id}
-									autoComplete="off"
-									tabIndex={-1}
-								/>
-							</div>
-							<input type="hidden" name="locale" value={locale} />
-							<input type="hidden" name="validation" value={id} />
-							<Button icon={IconMailFilled} type="submit" disabled={pending}>
-								Submit
-							</Button>
-						</>
-					) : (
-						<h1 className="flex items-end justify-center text-center text-4xl font-bold text-white">
-							<Trans>
-								<IconCircleCheckFilled size={36} aria-hidden className="mr-2" />
-								{state.message}
-							</Trans>
+		<I18nProvider i18n={i18n}>
+			<Form
+				action={formAction}
+				className="flex w-full max-w-lg flex-col space-y-4 p-12"
+			>
+				{state.message === '' ? (
+					<>
+						<h1 className="mb-8 text-4xl font-bold text-white">
+							<Trans>Report a bug</Trans>
 						</h1>
-					)}
-				</Form>
-			</I18nProvider>
-		</Suspense>
+						<Input label="Your email (optional)" name="email" type="email" />
+						<Textarea label="Your message" name="message" required />
+						<div className="absolute top-auto left-[-10000px] h-px w-px overflow-hidden">
+							<label htmlFor={id} className="sr-only">
+								Do not fill this field if you are human
+							</label>
+							<input
+								type="text"
+								name={id}
+								id={id}
+								autoComplete="off"
+								tabIndex={-1}
+							/>
+						</div>
+						<input type="hidden" name="locale" value={locale} />
+						<input type="hidden" name="validation" value={id} />
+						<Button icon={IconMailFilled} type="submit" disabled={pending}>
+							Submit
+						</Button>
+					</>
+				) : (
+					<h1 className="flex items-end justify-center text-center text-4xl font-bold text-white">
+						<Trans>
+							<IconCircleCheckFilled size={36} aria-hidden className="mr-2" />
+							{state.message}
+						</Trans>
+					</h1>
+				)}
+			</Form>
+		</I18nProvider>
 	)
 }
 
