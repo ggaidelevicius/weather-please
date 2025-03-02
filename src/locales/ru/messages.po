@@ -53,27 +53,32 @@ msgstr "{0} миль/ч"
 #~ msgid "{label}"
 #~ msgstr "Язык"
 
-#: src/components/settings.tsx:237
+#. placeholder {0}: state.message
+#: src/app/bug/page.tsx:71
+msgid "<0/>{0}"
+msgstr ""
+
+#: src/components/settings.tsx:216
 msgid "☕ Gift a coffee"
 msgstr "☕ Подарить кофе"
 
 #: src/components/settings.tsx:209
-msgid "✍️ Submit feedback"
-msgstr "✍️ Отправить отзыв"
+#~ msgid "✍️ Submit feedback"
+#~ msgstr "✍️ Отправить отзыв"
 
 #: src/components/settings.tsx:202
 msgid "🌟 Leave a review"
 msgstr "🌟 Оставить отзыв"
 
-#: src/components/settings.tsx:223
+#: src/components/settings.tsx:209
 msgid "🐛 Report a bug"
 msgstr "🐛 Сообщить об ошибке"
 
 #: src/components/settings.tsx:216
-msgid "💡 Request a feature"
-msgstr "💡 Запросить функцию"
+#~ msgid "💡 Request a feature"
+#~ msgstr "💡 Запросить функцию"
 
-#: src/components/settings.tsx:230
+#: src/components/settings.tsx:226
 msgid "🔒 Privacy policy"
 msgstr "🔒 Политика конфиденциальности"
 
@@ -153,11 +158,11 @@ msgstr "ясное небо"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "Потребляет слишком много памяти или ЦПУ"
 
-#: src/components/settings.tsx:148
+#: src/components/settings.tsx:146
 msgid "Date"
 msgstr "Дата"
 
-#: src/components/settings.tsx:144
+#: src/components/settings.tsx:142
 msgid "Day"
 msgstr "День"
 
@@ -229,13 +234,13 @@ msgstr "осаждение инея в тумане"
 msgid "February"
 msgstr "Февраль"
 
-#: src/pages/feedback/index.tsx:373
-#~ msgid "Feedback"
-#~ msgstr "Обратная связь"
+#: src/components/settings.tsx:195
+msgid "Feedback"
+msgstr "Обратная связь"
 
 #: src/components/settings.tsx:195
-msgid "Feedback and support"
-msgstr ""
+#~ msgid "Feedback and support"
+#~ msgstr ""
 
 #: src/pages/feedback/index.tsx:458
 #~ msgid "Feedback successfully submitted"
@@ -249,9 +254,9 @@ msgstr ""
 msgid "Friday"
 msgstr "Пятница"
 
-#: src/components/settings.tsx:76
+#: src/components/settings.tsx:65
 msgid "General"
-msgstr ""
+msgstr "Общие"
 
 #: src/components/alert/index.tsx:250
 #~ msgid "Generally strong wind for the next {durationOfStrongWind} hours"
@@ -293,7 +298,7 @@ msgstr "сильный снегопад"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "Мне бы хотелось привнести Weather Please на другие языки."
 
-#: src/components/settings.tsx:137
+#: src/components/settings.tsx:135
 msgid "Identifier"
 msgstr "Идентификатор"
 
@@ -305,7 +310,7 @@ msgstr "Идентификатор"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "Если у вас есть запрос на перевод, пожалуйста, обратитесь по адресу <0>contact@weather-please.app</0>"
 
-#: src/components/initialisation.tsx:59
+#: src/components/initialisation.tsx:69
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Если ваш браузер запрашивает разрешение на доступ к местоположению, выберите \"разрешить\"."
 
@@ -320,8 +325,13 @@ msgstr "Если ваш браузер запрашивает разрешени
 #~ msgstr "Неверное значение долготы"
 
 #: src/components/input.tsx:81
-msgid "Invalid value"
-msgstr ""
+#~ msgid "Invalid value"
+#~ msgstr ""
+
+#: src/components/input.tsx:96
+#: src/components/input.tsx:147
+msgid "Invalid value. Settings will not save until this is valid."
+msgstr "Недопустимое значение. Настройки не будут сохранены, пока оно не станет допустимым."
 
 #: src/pages/feedback/index.tsx:324
 #~ msgid "Issues after a recent update"
@@ -343,13 +353,17 @@ msgstr "Июнь"
 #~ msgid "Lacks features I need"
 #~ msgstr "Не хватает необходимых мне функций"
 
-#: src/components/settings.tsx:79
+#: src/components/settings.tsx:68
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
-#: src/components/settings.tsx:106
+#: src/components/settings.tsx:95
 msgid "Latitude"
 msgstr "Широта"
+
+#: src/components/settings.tsx:219
+msgid "Legal"
+msgstr "Юридический"
 
 #: src/components/tile.tsx:59
 msgid "light drizzle"
@@ -367,7 +381,7 @@ msgstr "легкий замораживающий дождь"
 #~ msgid "Location"
 #~ msgstr "Местоположение"
 
-#: src/components/settings.tsx:114
+#: src/components/settings.tsx:103
 msgid "Longitude"
 msgstr "Долгота"
 
@@ -456,7 +470,7 @@ msgstr "Понедельник"
 msgid "November"
 msgstr "Ноябрь"
 
-#: src/components/settings.tsx:125
+#: src/components/settings.tsx:123
 msgid "Number of days to forecast"
 msgstr "Количество дней для прогноза"
 
@@ -476,13 +490,17 @@ msgstr "частично облачно"
 #~ msgid "Performance issues"
 #~ msgstr "Проблемы с производительностью"
 
-#: src/components/settings/index.tsx:251
-#~ msgid "Periodically update location automatically"
-#~ msgstr "Периодически обновлять местоположение автоматически"
+#: src/components/settings.tsx:115
+msgid "Periodically update location automatically"
+msgstr "Периодически обновлять местоположение автоматически"
 
 #: src/components/intialisation/index.tsx:155
 #~ msgid "Please enter it manually below."
 #~ msgstr "Пожалуйста, введите его вручную ниже."
+
+#: src/app/bug/page.tsx:47
+msgid "Report a bug"
+msgstr "Сообщить об ошибке"
 
 #: src/pages/feedback/index.tsx:291
 #~ msgid "Resource usage"
@@ -510,8 +528,8 @@ msgstr "Сентябрь"
 #~ msgid "Set my location"
 #~ msgstr "Установить мое местоположение"
 
-#: src/components/settings.tsx:51
-#: src/components/settings.tsx:68
+#: src/components/settings.tsx:45
+#: src/components/settings.tsx:62
 msgid "Settings"
 msgstr "Настройки"
 
@@ -519,13 +537,13 @@ msgstr "Настройки"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "Делиться анонимизированными данными о сбоях и журналами ошибок"
 
-#: src/components/settings.tsx:169
+#: src/components/settings.tsx:160
 msgid "Show extreme UV alerts"
 msgstr "Показывать предупреждения об экстремальном УФ"
 
-#: src/components/settings/index.tsx:331
-#~ msgid "Show high precipitation alerts"
-#~ msgstr "Показывать предупреждения о больших осадках"
+#: src/components/settings.tsx:168
+msgid "Show high precipitation alerts"
+msgstr "Показывать предупреждения о больших осадках"
 
 #: src/components/settings.tsx:186
 msgid "Show low visibility alerts"
@@ -535,7 +553,7 @@ msgstr "Показывать предупреждения о низкой вид
 msgid "Show strong wind alerts"
 msgstr "Показать предупреждения о сильном ветре"
 
-#: src/components/settings.tsx:161
+#: src/components/settings.tsx:152
 msgid "Show weather alerts"
 msgstr "Показывать метеопредупреждения"
 
@@ -669,7 +687,7 @@ msgstr "Четверг"
 #~ msgid "Tiles"
 #~ msgstr "Плитки"
 
-#: src/components/initialisation.tsx:54
+#: src/components/initialisation.tsx:64
 msgid "To get started, let's set your language and location."
 msgstr "Для начала давайте установим ваш язык и местоположение."
 
@@ -699,10 +717,10 @@ msgstr "Вторник"
 #~ msgstr "Удобство использования и функциональность"
 
 #: src/components/settings.tsx:91
-msgid "Use keyboard shortcuts"
-msgstr "Используйте сочетания клавиш"
+#~ msgid "Use keyboard shortcuts"
+#~ msgstr "Используйте сочетания клавиш"
 
-#: src/components/settings.tsx:155
+#: src/components/settings.tsx:80
 msgid "Use metric number format"
 msgstr "Использовать метрический формат чисел"
 
@@ -714,11 +732,11 @@ msgstr "жесткие дождевые ливни"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Нам бы хотелось предложить Weather Please на большем числе языков."
 
-#: src/components/settings.tsx:97
+#: src/components/settings.tsx:86
 msgid "Weather"
-msgstr ""
+msgstr "Погода"
 
-#: src/pages/index.tsx:608
+#: src/pages/index.tsx:501
 msgid "weather data provided by open-meteo"
 msgstr "метеоданные предоставлены open-meteo"
 
@@ -751,7 +769,7 @@ msgstr "Среда"
 #~ msgid "You've been using Weather Please for a while"
 #~ msgstr "Вы используете Weather Please уже довольно долго"
 
-#: src/components/settings.tsx:100
-#: src/components/initialisation.tsx:76
+#: src/components/settings.tsx:89
+#: src/components/initialisation.tsx:86
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Ваши данные о местоположении надежно хранятся исключительно на вашем личном устройстве."

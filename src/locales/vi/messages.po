@@ -53,27 +53,32 @@ msgstr "{0} mph"
 #~ msgid "{label}"
 #~ msgstr "Ngôn ngữ"
 
-#: src/components/settings.tsx:237
+#. placeholder {0}: state.message
+#: src/app/bug/page.tsx:71
+msgid "<0/>{0}"
+msgstr ""
+
+#: src/components/settings.tsx:216
 msgid "☕ Gift a coffee"
 msgstr "☕ Tặng một cốc cà phê"
 
 #: src/components/settings.tsx:209
-msgid "✍️ Submit feedback"
-msgstr "✍️ Gửi phản hồi"
+#~ msgid "✍️ Submit feedback"
+#~ msgstr "✍️ Gửi phản hồi"
 
 #: src/components/settings.tsx:202
 msgid "🌟 Leave a review"
 msgstr "🌟 Để lại đánh giá"
 
-#: src/components/settings.tsx:223
+#: src/components/settings.tsx:209
 msgid "🐛 Report a bug"
 msgstr "🐛 Báo cáo lỗi"
 
 #: src/components/settings.tsx:216
-msgid "💡 Request a feature"
-msgstr "💡 Yêu cầu tính năng"
+#~ msgid "💡 Request a feature"
+#~ msgstr "💡 Yêu cầu tính năng"
 
-#: src/components/settings.tsx:230
+#: src/components/settings.tsx:226
 msgid "🔒 Privacy policy"
 msgstr "🔒 Chính sách bảo mật"
 
@@ -153,11 +158,11 @@ msgstr "bầu trời quang đãng"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "Tiêu thụ quá nhiều bộ nhớ hoặc CPU"
 
-#: src/components/settings.tsx:148
+#: src/components/settings.tsx:146
 msgid "Date"
 msgstr "Ngày (e.g. Tháng 1)"
 
-#: src/components/settings.tsx:144
+#: src/components/settings.tsx:142
 msgid "Day"
 msgstr "Ngày (e.g. Thứ Hai)"
 
@@ -229,13 +234,13 @@ msgstr "sương muối đọng lại"
 msgid "February"
 msgstr "Tháng 2"
 
-#: src/pages/feedback/index.tsx:373
-#~ msgid "Feedback"
-#~ msgstr "Phản hồi"
+#: src/components/settings.tsx:195
+msgid "Feedback"
+msgstr "Phản hồi"
 
 #: src/components/settings.tsx:195
-msgid "Feedback and support"
-msgstr ""
+#~ msgid "Feedback and support"
+#~ msgstr ""
 
 #: src/pages/feedback/index.tsx:458
 #~ msgid "Feedback successfully submitted"
@@ -249,9 +254,9 @@ msgstr ""
 msgid "Friday"
 msgstr "Thứ Sáu"
 
-#: src/components/settings.tsx:76
+#: src/components/settings.tsx:65
 msgid "General"
-msgstr ""
+msgstr "Chung"
 
 #: src/components/alert/index.tsx:250
 #~ msgid "Generally strong wind for the next {durationOfStrongWind} hours"
@@ -293,7 +298,7 @@ msgstr "tuyết rơi nặng hạt"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "Tôi muốn mang Weather Please đến nhiều ngôn ngữ khác."
 
-#: src/components/settings.tsx:137
+#: src/components/settings.tsx:135
 msgid "Identifier"
 msgstr "Định danh"
 
@@ -305,7 +310,7 @@ msgstr "Định danh"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "Nếu bạn có yêu cầu dịch, vui lòng liên hệ với chúng tôi tại <0>contact@weather-please.app</0>"
 
-#: src/components/initialisation.tsx:59
+#: src/components/initialisation.tsx:69
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Nếu trình duyệt của bạn yêu cầu quyền vị trí, vui lòng chọn \"cho phép\"."
 
@@ -320,8 +325,13 @@ msgstr "Nếu trình duyệt của bạn yêu cầu quyền vị trí, vui lòng
 #~ msgstr "Giá trị kinh độ không hợp lệ"
 
 #: src/components/input.tsx:81
-msgid "Invalid value"
-msgstr ""
+#~ msgid "Invalid value"
+#~ msgstr ""
+
+#: src/components/input.tsx:96
+#: src/components/input.tsx:147
+msgid "Invalid value. Settings will not save until this is valid."
+msgstr "Giá trị không hợp lệ. Cài đặt sẽ không được lưu cho đến khi giá trị này hợp lệ."
 
 #: src/pages/feedback/index.tsx:324
 #~ msgid "Issues after a recent update"
@@ -343,13 +353,17 @@ msgstr "Tháng 6"
 #~ msgid "Lacks features I need"
 #~ msgstr "Thiếu các tính năng tôi cần"
 
-#: src/components/settings.tsx:79
+#: src/components/settings.tsx:68
 msgid "Language"
-msgstr ""
+msgstr "Ngôn ngữ"
 
-#: src/components/settings.tsx:106
+#: src/components/settings.tsx:95
 msgid "Latitude"
 msgstr "Vĩ độ"
+
+#: src/components/settings.tsx:219
+msgid "Legal"
+msgstr "Pháp lý"
 
 #: src/components/tile.tsx:59
 msgid "light drizzle"
@@ -367,7 +381,7 @@ msgstr "mưa đóng băng nhẹ"
 #~ msgid "Location"
 #~ msgstr "Vị trí"
 
-#: src/components/settings.tsx:114
+#: src/components/settings.tsx:103
 msgid "Longitude"
 msgstr "Kinh độ"
 
@@ -456,7 +470,7 @@ msgstr "Thứ Hai"
 msgid "November"
 msgstr "Tháng Mười Một"
 
-#: src/components/settings.tsx:125
+#: src/components/settings.tsx:123
 msgid "Number of days to forecast"
 msgstr "Số ngày dự báo"
 
@@ -476,13 +490,17 @@ msgstr "trời có mây"
 #~ msgid "Performance issues"
 #~ msgstr "Vấn đề về hiệu suất"
 
-#: src/components/settings/index.tsx:251
-#~ msgid "Periodically update location automatically"
-#~ msgstr "Tự động cập nhật vị trí định kỳ"
+#: src/components/settings.tsx:115
+msgid "Periodically update location automatically"
+msgstr "Tự động cập nhật vị trí định kỳ"
 
 #: src/components/intialisation/index.tsx:155
 #~ msgid "Please enter it manually below."
 #~ msgstr "Vui lòng nhập thủ công ở bên dưới."
+
+#: src/app/bug/page.tsx:47
+msgid "Report a bug"
+msgstr "Báo cáo lỗi"
 
 #: src/pages/feedback/index.tsx:291
 #~ msgid "Resource usage"
@@ -510,8 +528,8 @@ msgstr "Tháng Chín"
 #~ msgid "Set my location"
 #~ msgstr "Đặt vị trí của tôi"
 
-#: src/components/settings.tsx:51
-#: src/components/settings.tsx:68
+#: src/components/settings.tsx:45
+#: src/components/settings.tsx:62
 msgid "Settings"
 msgstr "Cài đặt"
 
@@ -519,13 +537,13 @@ msgstr "Cài đặt"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "Chia sẻ dữ liệu sự cố ẩn danh và nhật ký lỗi"
 
-#: src/components/settings.tsx:169
+#: src/components/settings.tsx:160
 msgid "Show extreme UV alerts"
 msgstr "Hiển thị cảnh báo UV cực độ"
 
-#: src/components/settings/index.tsx:331
-#~ msgid "Show high precipitation alerts"
-#~ msgstr "Hiển thị cảnh báo lượng mưa lớn"
+#: src/components/settings.tsx:168
+msgid "Show high precipitation alerts"
+msgstr "Hiển thị cảnh báo lượng mưa lớn"
 
 #: src/components/settings.tsx:186
 msgid "Show low visibility alerts"
@@ -535,7 +553,7 @@ msgstr "Hiển thị cảnh báo tầm nhìn thấp"
 msgid "Show strong wind alerts"
 msgstr "Hiển thị cảnh báo gió mạnh"
 
-#: src/components/settings.tsx:161
+#: src/components/settings.tsx:152
 msgid "Show weather alerts"
 msgstr "Hiển thị cảnh báo thời tiết"
 
@@ -669,7 +687,7 @@ msgstr "Thứ Năm"
 #~ msgid "Tiles"
 #~ msgstr "Gạch"
 
-#: src/components/initialisation.tsx:54
+#: src/components/initialisation.tsx:64
 msgid "To get started, let's set your language and location."
 msgstr "Để bắt đầu, hãy đặt ngôn ngữ và vị trí của bạn."
 
@@ -699,10 +717,10 @@ msgstr "Thứ Ba"
 #~ msgstr "Khả năng sử dụng và chức năng"
 
 #: src/components/settings.tsx:91
-msgid "Use keyboard shortcuts"
-msgstr "Sử dụng phím tắt"
+#~ msgid "Use keyboard shortcuts"
+#~ msgstr "Sử dụng phím tắt"
 
-#: src/components/settings.tsx:155
+#: src/components/settings.tsx:80
 msgid "Use metric number format"
 msgstr "Sử dụng định dạng số mét"
 
@@ -714,11 +732,11 @@ msgstr "cơn mưa lớn"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Chúng tôi rất muốn mang Weather Please đến với nhiều ngôn ngữ khác."
 
-#: src/components/settings.tsx:97
+#: src/components/settings.tsx:86
 msgid "Weather"
-msgstr ""
+msgstr "Thời tiết"
 
-#: src/pages/index.tsx:608
+#: src/pages/index.tsx:501
 msgid "weather data provided by open-meteo"
 msgstr "dữ liệu thời tiết được cung cấp bởi open-meteo"
 
@@ -751,7 +769,7 @@ msgstr "Thứ Tư"
 #~ msgid "You've been using Weather Please for a while"
 #~ msgstr "Bạn đã sử dụng Weather Please trong một thời gian"
 
-#: src/components/settings.tsx:100
-#: src/components/initialisation.tsx:76
+#: src/components/settings.tsx:89
+#: src/components/initialisation.tsx:86
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Dữ liệu vị trí của bạn được lưu trữ an toàn và độc quyền trên thiết bị cá nhân của bạn."

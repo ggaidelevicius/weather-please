@@ -53,27 +53,32 @@ msgstr "{0} マイル/時"
 #~ msgid "{label}"
 #~ msgstr "言語"
 
-#: src/components/settings.tsx:237
+#. placeholder {0}: state.message
+#: src/app/bug/page.tsx:71
+msgid "<0/>{0}"
+msgstr ""
+
+#: src/components/settings.tsx:216
 msgid "☕ Gift a coffee"
 msgstr "☕ コーヒーを贈る"
 
 #: src/components/settings.tsx:209
-msgid "✍️ Submit feedback"
-msgstr "✍️ フィードバックを送信"
+#~ msgid "✍️ Submit feedback"
+#~ msgstr "✍️ フィードバックを送信"
 
 #: src/components/settings.tsx:202
 msgid "🌟 Leave a review"
 msgstr "🌟 レビューを残す"
 
-#: src/components/settings.tsx:223
+#: src/components/settings.tsx:209
 msgid "🐛 Report a bug"
 msgstr "🐛 バグを報告"
 
 #: src/components/settings.tsx:216
-msgid "💡 Request a feature"
-msgstr "💡 機能をリクエスト"
+#~ msgid "💡 Request a feature"
+#~ msgstr "💡 機能をリクエスト"
 
-#: src/components/settings.tsx:230
+#: src/components/settings.tsx:226
 msgid "🔒 Privacy policy"
 msgstr "🔒 プライバシーポリシー"
 
@@ -153,11 +158,11 @@ msgstr "晴れ"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "多くのメモリまたはCPUを消費する"
 
-#: src/components/settings.tsx:148
+#: src/components/settings.tsx:146
 msgid "Date"
 msgstr "日付"
 
-#: src/components/settings.tsx:144
+#: src/components/settings.tsx:142
 msgid "Day"
 msgstr "日"
 
@@ -229,13 +234,13 @@ msgstr "着氷霧"
 msgid "February"
 msgstr "2月"
 
-#: src/pages/feedback/index.tsx:373
-#~ msgid "Feedback"
-#~ msgstr "フィードバック"
+#: src/components/settings.tsx:195
+msgid "Feedback"
+msgstr "フィードバック"
 
 #: src/components/settings.tsx:195
-msgid "Feedback and support"
-msgstr ""
+#~ msgid "Feedback and support"
+#~ msgstr ""
 
 #: src/pages/feedback/index.tsx:458
 #~ msgid "Feedback successfully submitted"
@@ -249,9 +254,9 @@ msgstr ""
 msgid "Friday"
 msgstr "金曜日"
 
-#: src/components/settings.tsx:76
+#: src/components/settings.tsx:65
 msgid "General"
-msgstr ""
+msgstr "一般"
 
 #: src/components/alert/index.tsx:250
 #~ msgid "Generally strong wind for the next {durationOfStrongWind} hours"
@@ -293,7 +298,7 @@ msgstr "大雪"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "私はWeather Pleaseを他の言語に持って行きたいです。"
 
-#: src/components/settings.tsx:137
+#: src/components/settings.tsx:135
 msgid "Identifier"
 msgstr "識別子"
 
@@ -305,7 +310,7 @@ msgstr "識別子"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "翻訳のリクエストがある場合は、<0>contact@weather-please.app</0>までお問い合わせください"
 
-#: src/components/initialisation.tsx:59
+#: src/components/initialisation.tsx:69
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "ブラウザが位置情報の権限を求める場合は、「許可」を選択してください。"
 
@@ -320,8 +325,13 @@ msgstr "ブラウザが位置情報の権限を求める場合は、「許可」
 #~ msgstr "無効な経度の値"
 
 #: src/components/input.tsx:81
-msgid "Invalid value"
-msgstr ""
+#~ msgid "Invalid value"
+#~ msgstr ""
+
+#: src/components/input.tsx:96
+#: src/components/input.tsx:147
+msgid "Invalid value. Settings will not save until this is valid."
+msgstr "無効な値です。この値が有効になるまで設定は保存されません。"
 
 #: src/pages/feedback/index.tsx:324
 #~ msgid "Issues after a recent update"
@@ -343,13 +353,17 @@ msgstr "6月"
 #~ msgid "Lacks features I need"
 #~ msgstr "必要な機能が不足している"
 
-#: src/components/settings.tsx:79
+#: src/components/settings.tsx:68
 msgid "Language"
-msgstr ""
+msgstr "言語"
 
-#: src/components/settings.tsx:106
+#: src/components/settings.tsx:95
 msgid "Latitude"
 msgstr "緯度"
+
+#: src/components/settings.tsx:219
+msgid "Legal"
+msgstr "法的"
 
 #: src/components/tile.tsx:59
 msgid "light drizzle"
@@ -367,7 +381,7 @@ msgstr "軽い凍雨"
 #~ msgid "Location"
 #~ msgstr "位置"
 
-#: src/components/settings.tsx:114
+#: src/components/settings.tsx:103
 msgid "Longitude"
 msgstr "経度"
 
@@ -456,7 +470,7 @@ msgstr "月曜日"
 msgid "November"
 msgstr "11月"
 
-#: src/components/settings.tsx:125
+#: src/components/settings.tsx:123
 msgid "Number of days to forecast"
 msgstr "予報する日数"
 
@@ -476,13 +490,17 @@ msgstr "一部曇り"
 #~ msgid "Performance issues"
 #~ msgstr "パフォーマンスの問題"
 
-#: src/components/settings/index.tsx:251
-#~ msgid "Periodically update location automatically"
-#~ msgstr "定期的に位置情報を自動更新"
+#: src/components/settings.tsx:115
+msgid "Periodically update location automatically"
+msgstr "定期的に位置情報を自動更新"
 
 #: src/components/intialisation/index.tsx:155
 #~ msgid "Please enter it manually below."
 #~ msgstr "以下に手動で入力してください。"
+
+#: src/app/bug/page.tsx:47
+msgid "Report a bug"
+msgstr "バグを報告する"
 
 #: src/pages/feedback/index.tsx:291
 #~ msgid "Resource usage"
@@ -510,8 +528,8 @@ msgstr "9月"
 #~ msgid "Set my location"
 #~ msgstr "私の位置を設定"
 
-#: src/components/settings.tsx:51
-#: src/components/settings.tsx:68
+#: src/components/settings.tsx:45
+#: src/components/settings.tsx:62
 msgid "Settings"
 msgstr "設定"
 
@@ -519,13 +537,13 @@ msgstr "設定"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "匿名化されたクラッシュデータとエラーログを共有"
 
-#: src/components/settings.tsx:169
+#: src/components/settings.tsx:160
 msgid "Show extreme UV alerts"
 msgstr "極端なUVアラートを表示"
 
-#: src/components/settings/index.tsx:331
-#~ msgid "Show high precipitation alerts"
-#~ msgstr "高降水量アラートを表示"
+#: src/components/settings.tsx:168
+msgid "Show high precipitation alerts"
+msgstr "高降水量アラートを表示"
 
 #: src/components/settings.tsx:186
 msgid "Show low visibility alerts"
@@ -535,7 +553,7 @@ msgstr "低視認性アラートを表示"
 msgid "Show strong wind alerts"
 msgstr "強風警報を表示する"
 
-#: src/components/settings.tsx:161
+#: src/components/settings.tsx:152
 msgid "Show weather alerts"
 msgstr "天気警報を表示"
 
@@ -669,7 +687,7 @@ msgstr "木曜日"
 #~ msgid "Tiles"
 #~ msgstr "タイル"
 
-#: src/components/initialisation.tsx:54
+#: src/components/initialisation.tsx:64
 msgid "To get started, let's set your language and location."
 msgstr "始めるには、言語と場所を設定しましょう。"
 
@@ -699,10 +717,10 @@ msgstr "火曜日"
 #~ msgstr "使用性と機能性"
 
 #: src/components/settings.tsx:91
-msgid "Use keyboard shortcuts"
-msgstr "キーボードショートカットを使用する"
+#~ msgid "Use keyboard shortcuts"
+#~ msgstr "キーボードショートカットを使用する"
 
-#: src/components/settings.tsx:155
+#: src/components/settings.tsx:80
 msgid "Use metric number format"
 msgstr "メトリック数値フォーマットを使用する"
 
@@ -714,11 +732,11 @@ msgstr "激しいにわか雨"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "「Weather Please」をさらに多くの言語に提供したいと考えています。"
 
-#: src/components/settings.tsx:97
+#: src/components/settings.tsx:86
 msgid "Weather"
-msgstr ""
+msgstr "天気"
 
-#: src/pages/index.tsx:608
+#: src/pages/index.tsx:501
 msgid "weather data provided by open-meteo"
 msgstr "天気データはopen-meteoによって提供されています"
 
@@ -751,7 +769,7 @@ msgstr "水曜日"
 #~ msgid "You've been using Weather Please for a while"
 #~ msgstr "あなたはしばらく「Weather Please」を使用してきました"
 
-#: src/components/settings.tsx:100
-#: src/components/initialisation.tsx:76
+#: src/components/settings.tsx:89
+#: src/components/initialisation.tsx:86
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "あなたの位置データは、あなたの個人的なデバイス上で安全に専用的に保存されています。"

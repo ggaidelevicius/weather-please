@@ -17,7 +17,6 @@ import Favicon from '../../public/favicon.png'
 import { Alert } from './alert'
 import { Button } from './button'
 import { Select } from './input'
-import { IconMapPinFilled } from '@tabler/icons-react'
 
 interface InitialisationProps {
 	setInput: Dispatch<SetStateAction<Config>>
@@ -55,7 +54,7 @@ export const Initialisation = ({
 							quality={100}
 							src={Favicon}
 							alt="Weather Please logo"
-							style={{ height: '4rem', width: '4rem' }}
+							className="h-16 w-16 select-none"
 						/>
 						<h1 className="text-4xl font-bold text-white">
 							Weather <span className="text-[#ea5e57]">Please</span>
@@ -90,13 +89,11 @@ export const Initialisation = ({
 						</Trans>
 					</Alert>
 					<Button
-						icon={IconMapPinFilled}
 						onClick={() => {
 							handleClick()
 							setLoading(true)
 						}}
 						disabled={loading}
-						// fullWidth
 					>
 						Set my location
 					</Button>
