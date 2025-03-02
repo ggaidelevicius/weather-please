@@ -381,9 +381,7 @@ const App = () => {
 	/**
 	 * Periodically (every minute) checks if the current date has changed.
 	 * If it's a new day and the user has opted-in for periodic location updates,
-	 * the user's geolocation is checked:
-	 * - For non-Safari browsers, the built-in Geolocation API is utilized.
-	 * - For Safari, an external service (ip-api.com) is used to fetch geolocation data.
+	 * the user's geolocation is checked
 	 *
 	 * If the geolocation has changed from what's saved in "config", the "changedLocation" flag is set to true.
 	 *
@@ -398,75 +396,33 @@ const App = () => {
 		}, 6e4)
 
 		if (config.periodicLocationUpdate) {
-			const userAgent = navigator.userAgent.toLowerCase()
-
-			if (
-				userAgent.indexOf('safari') === -1 &&
-				userAgent.indexOf('chrome') === -1
-			) {
-				try {
-					navigator.geolocation.getCurrentPosition((pos) => {
-						if (
-							config.lat !== pos.coords.latitude.toString() ||
-							config.lon !== pos.coords.longitude.toString()
-						) {
-							setChangedLocation(true)
-						}
-						setConfig((prev) => ({
-							...prev,
-							lat: pos.coords.latitude.toString(),
-							lon: pos.coords.longitude.toString(),
-						}))
-					})
-				} catch (e) {
-					// eslint-disable-next-line no-console
-					console.error(e)
-					// notifications.show({
-					// 	title: <Trans>Error</Trans>,
-					// 	message: (
-					// 		<Trans>
-					// 			An error has occurred while periodically updating location.
-					// 			Please check the console for more details.
-					// 		</Trans>
-					// 	),
-					// 	color: 'red',
-					// })
-				}
-			} else {
-				const fetchSafariGeoData = async () => {
-					try {
-						const req = await fetch('http://ip-api.com/json/', {
-							method: 'GET',
-							mode: 'cors',
-						})
-						const res = await req.json()
-						const { latitude, longitude } = res
-						if (latitude && longitude) {
-							if (config.lat !== latitude || config.lon !== longitude) {
-								setChangedLocation(true)
-							}
-							setConfig((prev) => ({
-								...prev,
-								lat: latitude,
-								lon: longitude,
-							}))
-						}
-					} catch (e) {
-						// eslint-disable-next-line no-console
-						console.warn(e)
-						// notifications.show({
-						// 	title: <Trans>Error</Trans>,
-						// 	message: (
-						// 		<Trans>
-						// 			An error has occurred while fetching location data. Please
-						// 			check the console for more details.
-						// 		</Trans>
-						// 	),
-						// 	color: 'red',
-						// })
+			try {
+				navigator.geolocation.getCurrentPosition((pos) => {
+					if (
+						config.lat !== pos.coords.latitude.toString() ||
+						config.lon !== pos.coords.longitude.toString()
+					) {
+						setChangedLocation(true)
 					}
-				}
-				fetchSafariGeoData()
+					setInput((prev) => ({
+						...prev,
+						lat: pos.coords.latitude.toString(),
+						lon: pos.coords.longitude.toString(),
+					}))
+				})
+			} catch (e) {
+				// eslint-disable-next-line no-console
+				console.error(e)
+				// notifications.show({
+				// 	title: <Trans>Error</Trans>,
+				// 	message: (
+				// 		<Trans>
+				// 			An error has occurred while periodically updating location.
+				// 			Please check the console for more details.
+				// 		</Trans>
+				// 	),
+				// 	color: 'red',
+				// })
 			}
 		}
 		return () => {
