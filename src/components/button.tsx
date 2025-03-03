@@ -13,16 +13,25 @@ interface BaseButtonProps {
 	fullWidth?: boolean
 	disabled?: boolean
 	icon?: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>
+	secondary?: boolean
 }
 
 interface ControlledButtonProps extends BaseButtonProps {
 	onClick: MouseEventHandler<HTMLButtonElement>
 	type?: undefined
+	href?: undefined
 }
 
 interface UncontrolledButtonProps extends BaseButtonProps {
 	onClick?: undefined
 	type: 'submit'
+	href?: undefined
+}
+
+interface AnchorButtonProps extends BaseButtonProps {
+	href: string
+	onClick?: MouseEventHandler<HTMLButtonElement>
+	type?: undefined
 }
 
 export const Button = ({
@@ -32,20 +41,29 @@ export const Button = ({
 	disabled = false,
 	type,
 	icon: Icon,
-}: ControlledButtonProps | UncontrolledButtonProps) => {
+	href,
+	secondary
+}: ControlledButtonProps | UncontrolledButtonProps | AnchorButtonProps) => {
+	const primaryClasses = fullWidth
+		? "group relative flex w-full cursor-pointer items-center rounded-md bg-white px-3 py-2 text-center text-sm font-medium text-dark-600 select-none hover:not-disabled:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-zinc-300 disabled:cursor-wait disabled:bg-zinc-200"
+		: "group relative flex cursor-pointer items-center place-self-start rounded-md bg-white px-3 py-2 text-sm font-medium text-dark-600 select-none hover:not-disabled:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-zinc-300 disabled:cursor-wait disabled:bg-zinc-200"
+
+	const secondaryClasses = fullWidth
+		? "group relative flex w-full cursor-pointer items-center rounded-md bg-dark-800 px-3 py-2 text-center text-sm font-medium text-white select-none hover:not-disabled:bg-dark-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-dark-950 disabled:cursor-wait disabled:bg-dark-900"
+		: "group relative flex cursor-pointer items-center place-self-start rounded-md bg-dark-800 px-3 py-2 text-sm font-medium text-white select-none hover:not-disabled:bg-dark-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-dark-950 disabled:cursor-wait disabled:bg-dark-900"
+
 	return (
 		<HeadlessButton
+			as={href ? 'a' : 'button'}
+			href={href}
+			target={href ? '_blank' : undefined}
 			onClick={onClick}
-			className={
-				fullWidth
-					? 'group relative flex w-full cursor-pointer items-center rounded-md bg-white px-3 py-2 text-center text-sm font-medium text-dark-600 select-none hover:not-disabled:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-zinc-300 disabled:cursor-wait disabled:bg-zinc-200'
-					: 'group relative flex cursor-pointer items-center place-self-start rounded-md bg-white px-3 py-2 text-sm font-medium text-dark-600 select-none hover:not-disabled:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-zinc-300 disabled:cursor-wait disabled:bg-zinc-200'
-			}
+			className={secondary ? secondaryClasses : primaryClasses}
 			disabled={disabled}
 			type={type}
 		>
 			{disabled && (
-				<span className="absolute inset-0 m-auto flex h-[20px] w-[20px] -translate-y-2 animate-spin rounded-[100%] border-3 border-t-dark-600 border-r-dark-600 border-b-transparent border-l-dark-600 opacity-0 transition group-data-[disabled]:translate-y-0 group-data-[disabled]:opacity-100"></span>
+				<span className="absolute inset-0 m-auto flex h-[20px] w-[20px] -translate-y-2 animate-spin rounded-full border-3 border-t-dark-600 border-r-dark-600 border-b-transparent border-l-dark-600 opacity-0 transition group-data-[disabled]:translate-y-0 group-data-[disabled]:opacity-100"></span>
 			)}
 			{Icon && (
 				<Icon
@@ -60,6 +78,8 @@ export const Button = ({
 		</HeadlessButton>
 	)
 }
+
+
 
 interface IconButtonProps {
 	icon: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>

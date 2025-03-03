@@ -1,6 +1,10 @@
+import { Button } from '@/components/button'
 import { Initialisation } from '@/components/initialisation'
 import { RingLoader } from '@/components/loader'
+import { ReviewPrompt } from '@/components/review-prompt'
+import { Settings } from '@/components/settings'
 import { Tile } from '@/components/tile'
+import { WeatherAlert } from '@/components/weather-alert'
 import { mergeObjects } from '@/lib/helpers'
 import type { HandleChange, WeatherData } from '@/lib/types'
 import { i18n } from '@lingui/core'
@@ -9,11 +13,9 @@ import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
-import { messages } from '../locales/en/messages'
 import { changeLocalisation, locales } from '../lib/i18n'
+import { messages } from '../locales/en/messages'
 import { queryClient } from './_app'
-import { Settings } from '@/components/settings'
-import { WeatherAlert } from '@/components/weather-alert'
 
 i18n.load({
 	en: messages,
@@ -275,26 +277,10 @@ const App = () => {
 			if (objectShapesMatch.success) {
 				setConfig(storedData)
 				setInput(storedData)
-				if (
-					new Date().getTime() - storedData.installed >= 2419200000 &&
-					!storedData.displayedReviewPrompt
-				) {
-					setTimeout(() => {
-						displayReviewPrompt()
-					}, 1e3)
-				}
 			} else {
 				const mergedObject = mergeObjects(storedData, config)
 				setConfig(mergedObject as Config)
 				setInput(mergedObject as Config)
-				if (
-					new Date().getTime() - mergedObject.installed >= 2419200000 &&
-					!mergedObject.displayedReviewPrompt
-				) {
-					setTimeout(() => {
-						displayReviewPrompt()
-					}, 1e3)
-				}
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -411,67 +397,6 @@ const App = () => {
 			)
 		})
 
-	/**
-	 * A function that triggers a review prompt notification after a delay.
-	 *
-	 * When called, after a delay of 1 second, the function checks if:
-	 * 1. The time difference between the current date and the installation date
-	 *    (from `config.installed`) exceeds 28 days (2419200000 milliseconds).
-	 * 2. The review prompt has not yet been displayed based on the value from `localStorage`.
-	 *
-	 * If both conditions are met, a notification is shown to the user, prompting them to leave a review.
-	 *
-	 * The notification contains two main actions:
-	 * 1. A button to leave a review.
-	 * 2. A button to dismiss the prompt and ensure it's never shown again.
-	 */
-	const displayReviewPrompt = () => {
-		// notifications.show({
-		// 	id: 'review',
-		// 	title: <Trans>You&apos;ve been using Weather Please for a while</Trans>,
-		// 	message: (
-		// 		<div style={{ display: 'flex', flexDirection: 'column' }}>
-		// 			<p style={{ margin: '0.2rem 0' }}>
-		// 				<Trans>Would you like to leave a review?</Trans>
-		// 			</p>
-		// 			<Button
-		// 				component="a"
-		// 				href={
-		// 					getUserAgent() ??
-		// 					'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews'
-		// 				} // can't pass computed value in here, need to figure out alternative asap
-		// 				style={{ marginTop: '0.5rem' }}
-		// 				onClick={() => {
-		// 					notifications.hide('review')
-		// 					setConfig((prev) => ({
-		// 						...prev,
-		// 						displayedReviewPrompt: true,
-		// 					}))
-		// 				}}
-		// 			>
-		// 				<Trans>🌟 Leave a review</Trans>
-		// 			</Button>
-		// 			<Button
-		// 				style={{ marginTop: '0.5rem' }}
-		// 				variant="light"
-		// 				color="red"
-		// 				onClick={() => {
-		// 					notifications.hide('review')
-		// 					setConfig((prev) => ({
-		// 						...prev,
-		// 						displayedReviewPrompt: true,
-		// 					}))
-		// 				}}
-		// 			>
-		// 				<Trans>Never show this again</Trans>
-		// 			</Button>
-		// 		</div>
-		// 	),
-		// 	autoClose: false,
-		// 	withCloseButton: false,
-		// })
-	}
-
 	return (
 		<>
 			{config.showAlerts && (
@@ -486,6 +411,7 @@ const App = () => {
 					/>
 				</AnimatePresence>
 			)}
+			<ReviewPrompt config={config} setInput={setInput} />
 			<AnimatePresence>
 				<motion.main className="relative grid min-h-[84px] max-w-4xl min-w-[84px] grid-cols-3 gap-5 p-5">
 					<Initialisation

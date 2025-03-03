@@ -133,9 +133,14 @@ export const Tile = ({
 	delayBaseline,
 }: TileProps) => {
 	const displayedIdentifier =
-		identifier === 'day'
-			? days[new Date(day * 1000).getDay()]
-			: <>{new Date(day * 1000).getDate()} {months[new Date(day * 1000).getMonth()]}</>
+		identifier === 'day' ? (
+			days[new Date(day * 1000).getDay()]
+		) : (
+			<>
+				{new Date(day * 1000).getDate()}{' '}
+				{months[new Date(day * 1000).getMonth()]}
+			</>
+		)
 
 	return (
 		<motion.div
