@@ -5,7 +5,7 @@ import { changeLocalisation, locales } from '@/lib/i18n'
 import { i18n } from '@lingui/core'
 import { I18nProvider } from '@lingui/react'
 import { Trans } from '@lingui/react/macro'
-import { IconCircleCheckFilled, IconMailFilled } from '@tabler/icons-react'
+import { IconCircleCheckFilled } from '@tabler/icons-react'
 import Form from 'next/form'
 import { useSearchParams } from 'next/navigation'
 import { Suspense, useActionState, useId } from 'react'
@@ -76,7 +76,7 @@ const ContactForm = () => {
 						</div>
 						<input type="hidden" name="locale" value={locale} />
 						<input type="hidden" name="validation" value={id} />
-						<Button icon={IconMailFilled} type="submit" disabled={pending}>
+						<Button type="submit" disabled={pending}>
 							<Trans>Submit</Trans>
 						</Button>
 					</>
