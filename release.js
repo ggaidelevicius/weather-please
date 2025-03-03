@@ -129,11 +129,7 @@ const processReleaseType = (releaseType) => {
 	processZipCreation(EXTENSION_DIR, newVersion, '-firefox')
 
 	modifyManifest(
-		{
-			background: {
-				service_worker: 'background.js',
-			},
-		},
+		{},
 		['browser_specific_settings'],
 	)
 
