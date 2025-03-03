@@ -30,7 +30,7 @@ interface UncontrolledButtonProps extends BaseButtonProps {
 
 interface AnchorButtonProps extends BaseButtonProps {
 	href: string
-	onClick?: MouseEventHandler<HTMLButtonElement>
+	onClick?: MouseEventHandler<HTMLAnchorElement>
 	type?: undefined
 }
 
@@ -42,7 +42,7 @@ export const Button = ({
 	type,
 	icon: Icon,
 	href,
-	secondary
+	secondary = false,
 }: ControlledButtonProps | UncontrolledButtonProps | AnchorButtonProps) => {
 	const primaryClasses = fullWidth
 		? "group relative flex w-full cursor-pointer items-center rounded-md bg-white px-3 py-2 text-center text-sm font-medium text-dark-600 select-none hover:not-disabled:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-zinc-300 disabled:cursor-wait disabled:bg-zinc-200"
@@ -52,13 +52,34 @@ export const Button = ({
 		? "group relative flex w-full cursor-pointer items-center rounded-md bg-dark-800 px-3 py-2 text-center text-sm font-medium text-white select-none hover:not-disabled:bg-dark-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-dark-950 disabled:cursor-wait disabled:bg-dark-900"
 		: "group relative flex cursor-pointer items-center place-self-start rounded-md bg-dark-800 px-3 py-2 text-sm font-medium text-white select-none hover:not-disabled:bg-dark-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-dark-950 disabled:cursor-wait disabled:bg-dark-900"
 
-	return (
-		<HeadlessButton
-			as={href ? 'a' : 'button'}
+	const classes = secondary ? secondaryClasses : primaryClasses
+
+	return href ? (
+		<a
 			href={href}
-			target={href ? '_blank' : undefined}
+			target="_blank"
 			onClick={onClick}
-			className={secondary ? secondaryClasses : primaryClasses}
+			className={classes}
+			aria-disabled={disabled}
+		>
+			{disabled && (
+				<span className="absolute inset-0 m-auto flex h-[20px] w-[20px] -translate-y-2 animate-spin rounded-full border-3 border-t-dark-600 border-r-dark-600 border-b-transparent border-l-dark-600 opacity-0 transition group-data-[disabled]:translate-y-0 group-data-[disabled]:opacity-100"></span>
+			)}
+			{Icon && (
+				<Icon
+					aria-hidden
+					size={18}
+					className="mr-1.5 transition group-data-[disabled]:translate-y-2 group-data-[disabled]:opacity-0"
+				/>
+			)}
+			<span className="flex place-self-center transition group-data-[disabled]:translate-y-2 group-data-[disabled]:opacity-0">
+				{children}
+			</span>
+		</a>
+	) : (
+		<HeadlessButton
+			onClick={onClick as MouseEventHandler<HTMLButtonElement>}
+			className={classes}
 			disabled={disabled}
 			type={type}
 		>
