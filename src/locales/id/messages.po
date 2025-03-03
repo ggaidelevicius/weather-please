@@ -13,22 +13,26 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/alert/index.tsx:164
-#: src/components/alert/index.tsx:171
-#~ msgid "{0} inches of precipitation expected over the next {1} hours"
-#~ msgstr "{0} inci presipitasi diharapkan selama {1} jam ke depan"
+#. placeholder {0}: (precipitation.value / 25.4).toFixed(1)
+#. placeholder {1}: duration.indexOf(false)
+#. placeholder {1}: duration.length - 1
+#: src/components/weather-alert.tsx:144
+#: src/components/weather-alert.tsx:151
+msgid "{0} inches of precipitation expected over the next {1} hours"
+msgstr "{0} inci presipitasi diharapkan selama {1} jam ke depan"
 
-#: src/components/alert/index.tsx:156
-#~ msgid "{0} inches of precipitation expected over the next hour"
-#~ msgstr "{0} inci presipitasi diharapkan selama jam berikutnya"
+#. placeholder {0}: (precipitation.value / 25.4).toFixed(1)
+#: src/components/weather-alert.tsx:136
+msgid "{0} inches of precipitation expected over the next hour"
+msgstr "{0} inci presipitasi diharapkan selama jam berikutnya"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:229
+#: src/components/tile.tsx:234
 msgid "{0} km/h"
 msgstr "{0} km/j"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:230
+#: src/components/tile.tsx:235
 msgid "{0} mph"
 msgstr "{0} mph"
 
@@ -40,25 +44,28 @@ msgstr "{0} mph"
 #~ msgid "{0}in of precipitation expected over the next hour"
 #~ msgstr "Diperkirakan akan terjadi {0} inci presipitasi dalam 1 jam mendatang"
 
-#: src/components/alert/index.tsx:144
-#: src/components/alert/index.tsx:150
-#~ msgid "{0}mm of precipitation expected over the next {1} hours"
-#~ msgstr "Diperkirakan akan terjadi {0} mm presipitasi dalam {1} jam mendatang"
+#. placeholder {0}: precipitation.value.toFixed(1)
+#. placeholder {1}: duration.indexOf(false)
+#. placeholder {1}: duration.length - 1
+#: src/components/weather-alert.tsx:124
+#: src/components/weather-alert.tsx:130
+msgid "{0}mm of precipitation expected over the next {1} hours"
+msgstr "Diperkirakan akan terjadi {0} mm presipitasi dalam {1} jam mendatang"
 
-#: src/components/alert/index.tsx:136
-#~ msgid "{0}mm of precipitation expected over the next hour"
-#~ msgstr "Diperkirakan akan terjadi {0} mm presipitasi dalam 1 jam mendatang"
+#. placeholder {0}: precipitation.value.toFixed(1)
+#: src/components/weather-alert.tsx:116
+msgid "{0}mm of precipitation expected over the next hour"
+msgstr "Diperkirakan akan terjadi {0} mm presipitasi dalam 1 jam mendatang"
 
 #: src/pages/feedback/index.tsx:153
 #~ msgid "{label}"
 #~ msgstr "Bahasa"
 
-#. placeholder {0}: state.message
-#: src/app/bug/page.tsx:71
-msgid "<0/>{0}"
-msgstr ""
+#: src/app/bug/page.tsx:75
+#~ msgid "<0/>{0}"
+#~ msgstr ""
 
-#: src/components/settings.tsx:216
+#: src/components/settings.tsx:215
 msgid "☕ Gift a coffee"
 msgstr "☕ Berikan secangkir kopi"
 
@@ -66,11 +73,11 @@ msgstr "☕ Berikan secangkir kopi"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Kirim masukan"
 
-#: src/components/settings.tsx:202
+#: src/components/settings.tsx:201
 msgid "🌟 Leave a review"
 msgstr "🌟 Tinggalkan ulasan"
 
-#: src/components/settings.tsx:209
+#: src/components/settings.tsx:208
 msgid "🐛 Report a bug"
 msgstr "🐛 Laporkan bug"
 
@@ -78,7 +85,7 @@ msgstr "🐛 Laporkan bug"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Minta fitur"
 
-#: src/components/settings.tsx:226
+#: src/components/settings.tsx:225
 msgid "🔒 Privacy policy"
 msgstr "🔒 Kebijakan privasi"
 
@@ -158,11 +165,11 @@ msgstr "langit cerah"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "Menggunakan terlalu banyak memori atau CPU"
 
-#: src/components/settings.tsx:146
+#: src/components/settings.tsx:145
 msgid "Date"
 msgstr "Tanggal"
 
-#: src/components/settings.tsx:142
+#: src/components/settings.tsx:141
 msgid "Day"
 msgstr "Hari"
 
@@ -190,6 +197,10 @@ msgstr "kabut membeku"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "Sulit untuk digunakan atau dipahami"
 
+#: src/app/bug/page.tsx:57
+msgid "Do not fill this field if you are human"
+msgstr "Jangan isi kolom ini jika Anda manusia"
+
 #: src/components/settings/index.tsx:565
 #~ msgid "Don't save"
 #~ msgstr "Jangan simpan"
@@ -206,21 +217,21 @@ msgstr "kabut membeku"
 #~ msgid "Error submitting feedback. Try again later."
 #~ msgstr "Kesalahan mengirimkan masukan. Coba lagi nanti."
 
-#: src/components/alert/index.tsx:71
-#~ msgid "Extreme UV for the next {durationOfExtremeUv} hours"
-#~ msgstr "UV ekstrem untuk {durationOfExtremeUv} jam kedepan"
+#: src/components/weather-alert.tsx:60
+msgid "Extreme UV for the next {durationOfExtremeUv} hours"
+msgstr "UV ekstrem untuk {durationOfExtremeUv} jam kedepan"
 
-#: src/components/alert/index.tsx:76
-#~ msgid "Extreme UV for the next 12 hours"
-#~ msgstr "UV ekstrem untuk 12 jam kedepan"
+#: src/components/weather-alert.tsx:65
+msgid "Extreme UV for the next 12 hours"
+msgstr "UV ekstrem untuk 12 jam kedepan"
 
-#: src/components/alert/index.tsx:79
-#~ msgid "Extreme UV for the next hour"
-#~ msgstr "UV ekstrem untuk jam kedepan"
+#: src/components/weather-alert.tsx:68
+msgid "Extreme UV for the next hour"
+msgstr "UV ekstrem untuk jam kedepan"
 
-#: src/components/alert/index.tsx:62
-#~ msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
-#~ msgstr "UV ekstrem dimulai dalam {timeUntilExtremeUv} jam"
+#: src/components/weather-alert.tsx:52
+msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
+msgstr "UV ekstrem dimulai dalam {timeUntilExtremeUv} jam"
 
 #: src/pages/feedback/index.tsx:388
 #~ msgid "Feature request"
@@ -234,7 +245,7 @@ msgstr "kabut membeku"
 msgid "February"
 msgstr "Februari"
 
-#: src/components/settings.tsx:195
+#: src/components/settings.tsx:194
 msgid "Feedback"
 msgstr "Masukan"
 
@@ -254,25 +265,25 @@ msgstr "Masukan"
 msgid "Friday"
 msgstr "Jumat"
 
-#: src/components/settings.tsx:65
+#: src/components/settings.tsx:64
 msgid "General"
 msgstr "Umum"
 
-#: src/components/alert/index.tsx:250
-#~ msgid "Generally strong wind for the next {durationOfStrongWind} hours"
-#~ msgstr "Umumnya angin kencang selama {durationOfStrongWind} jam ke depan"
+#: src/components/weather-alert.tsx:215
+msgid "Generally strong wind for the next {durationOfStrongWind} hours"
+msgstr "Umumnya angin kencang selama {durationOfStrongWind} jam ke depan"
 
-#: src/components/alert/index.tsx:256
-#~ msgid "Generally strong wind for the next 24 hours"
-#~ msgstr "Umumnya angin kencang selama 24 jam ke depan"
+#: src/components/weather-alert.tsx:221
+msgid "Generally strong wind for the next 24 hours"
+msgstr "Umumnya angin kencang selama 24 jam ke depan"
 
-#: src/components/alert/index.tsx:259
-#~ msgid "Generally strong wind for the next hour"
-#~ msgstr "Umumnya angin kencang selama jam berikutnya"
+#: src/components/weather-alert.tsx:224
+msgid "Generally strong wind for the next hour"
+msgstr "Umumnya angin kencang selama jam berikutnya"
 
-#: src/components/alert/index.tsx:239
-#~ msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
-#~ msgstr "Umumnya angin kencang mulai dalam {timeUntilStrongWind} jam"
+#: src/components/weather-alert.tsx:205
+msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
+msgstr "Umumnya angin kencang mulai dalam {timeUntilStrongWind} jam"
 
 #: src/components/tile.tsx:68
 msgid "heavy freezing rain"
@@ -298,7 +309,7 @@ msgstr "salju lebat"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "Saya ingin membawa Weather Please ke lebih banyak bahasa."
 
-#: src/components/settings.tsx:135
+#: src/components/settings.tsx:134
 msgid "Identifier"
 msgstr "Pengenal"
 
@@ -310,7 +321,7 @@ msgstr "Pengenal"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "Jika Anda memiliki permintaan terjemahan, silakan hubungi di <0>contact@weather-please.app</0>"
 
-#: src/components/initialisation.tsx:69
+#: src/components/initialisation.tsx:77
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Jika browser Anda meminta izin lokasi, silakan pilih \"izinkan\"."
 
@@ -353,15 +364,20 @@ msgstr "Juni"
 #~ msgid "Lacks features I need"
 #~ msgstr "Kekurangan fitur yang saya butuhkan"
 
-#: src/components/settings.tsx:68
+#: src/components/settings.tsx:67
+#: src/components/initialisation.tsx:83
 msgid "Language"
 msgstr "Bahasa"
 
-#: src/components/settings.tsx:95
+#: src/components/settings.tsx:94
 msgid "Latitude"
 msgstr "Lintang"
 
-#: src/components/settings.tsx:219
+#: src/components/review-prompt.tsx:47
+msgid "Leave a review"
+msgstr "Tinggalkan ulasan"
+
+#: src/components/settings.tsx:218
 msgid "Legal"
 msgstr "Legal"
 
@@ -381,7 +397,7 @@ msgstr "hujan beku ringan"
 #~ msgid "Location"
 #~ msgstr "Lokasi"
 
-#: src/components/settings.tsx:103
+#: src/components/settings.tsx:102
 msgid "Longitude"
 msgstr "Bujur"
 
@@ -389,21 +405,21 @@ msgstr "Bujur"
 #~ msgid "Looks like we can't grab your location info automatically."
 #~ msgstr "Sepertinya kami tidak dapat mengambil info lokasi Anda secara otomatis."
 
-#: src/components/alert/index.tsx:411
-#~ msgid "Low visibility for the next {durationOfLowVisibility} hours"
-#~ msgstr "Visibilitas rendah untuk {durationOfLowVisibility} jam ke depan"
+#: src/components/weather-alert.tsx:354
+msgid "Low visibility for the next {durationOfLowVisibility} hours"
+msgstr "Visibilitas rendah untuk {durationOfLowVisibility} jam ke depan"
 
-#: src/components/alert/index.tsx:416
-#~ msgid "Low visibility for the next 24 hours"
-#~ msgstr "Visibilitas rendah untuk 24 jam ke depan"
+#: src/components/weather-alert.tsx:359
+msgid "Low visibility for the next 24 hours"
+msgstr "Visibilitas rendah untuk 24 jam ke depan"
 
-#: src/components/alert/index.tsx:419
-#~ msgid "Low visibility for the next hour"
-#~ msgstr "Visibilitas rendah untuk jam ke depan"
+#: src/components/weather-alert.tsx:362
+msgid "Low visibility for the next hour"
+msgstr "Visibilitas rendah untuk jam ke depan"
 
-#: src/components/alert/index.tsx:400
-#~ msgid "Low visibility starting in {timeUntilLowVisibility} hours"
-#~ msgstr "Visibilitas rendah dimulai dalam {timeUntilLowVisibility} jam"
+#: src/components/weather-alert.tsx:340
+msgid "Low visibility starting in {timeUntilLowVisibility} hours"
+msgstr "Visibilitas rendah dimulai dalam {timeUntilLowVisibility} jam"
 
 #: src/components/tile.tsx:54
 #: src/components/tile.tsx:57
@@ -446,9 +462,9 @@ msgstr "salju lebat sedang"
 msgid "Monday"
 msgstr "Senin"
 
-#: src/pages/index.tsx:805
-#~ msgid "Never show this again"
-#~ msgstr "Jangan tampilkan ini lagi"
+#: src/components/review-prompt.tsx:58
+msgid "Never show this again"
+msgstr "Jangan tampilkan ini lagi"
 
 #: src/pages/_app.tsx:21
 #~ msgid "New tab"
@@ -470,7 +486,7 @@ msgstr "Senin"
 msgid "November"
 msgstr "November"
 
-#: src/components/settings.tsx:123
+#: src/components/settings.tsx:122
 msgid "Number of days to forecast"
 msgstr "Jumlah hari untuk ramalan"
 
@@ -490,7 +506,7 @@ msgstr "sebagian berawan"
 #~ msgid "Performance issues"
 #~ msgstr "Masalah kinerja"
 
-#: src/components/settings.tsx:115
+#: src/components/settings.tsx:114
 msgid "Periodically update location automatically"
 msgstr "Secara berkala perbarui lokasi secara otomatis"
 
@@ -498,7 +514,7 @@ msgstr "Secara berkala perbarui lokasi secara otomatis"
 #~ msgid "Please enter it manually below."
 #~ msgstr "Silakan masukkan secara manual di bawah ini."
 
-#: src/app/bug/page.tsx:47
+#: src/app/bug/page.tsx:51
 msgid "Report a bug"
 msgstr "Laporkan bug"
 
@@ -528,8 +544,8 @@ msgstr "September"
 #~ msgid "Set my location"
 #~ msgstr "Atur lokasi saya"
 
-#: src/components/settings.tsx:45
-#: src/components/settings.tsx:62
+#: src/components/settings.tsx:44
+#: src/components/settings.tsx:61
 msgid "Settings"
 msgstr "Pengaturan"
 
@@ -537,23 +553,23 @@ msgstr "Pengaturan"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "Bagikan data kecelakaan dan log kesalahan yang di-anonimkan"
 
-#: src/components/settings.tsx:160
+#: src/components/settings.tsx:159
 msgid "Show extreme UV alerts"
 msgstr "Tampilkan peringatan UV ekstrem"
 
-#: src/components/settings.tsx:168
+#: src/components/settings.tsx:167
 msgid "Show high precipitation alerts"
 msgstr "Tampilkan peringatan presipitasi tinggi"
 
-#: src/components/settings.tsx:186
+#: src/components/settings.tsx:185
 msgid "Show low visibility alerts"
 msgstr "Tampilkan peringatan visibilitas rendah"
 
-#: src/components/settings.tsx:177
+#: src/components/settings.tsx:176
 msgid "Show strong wind alerts"
 msgstr "Tampilkan peringatan angin kencang"
 
-#: src/components/settings.tsx:152
+#: src/components/settings.tsx:151
 msgid "Show weather alerts"
 msgstr "Tampilkan peringatan cuaca"
 
@@ -593,77 +609,76 @@ msgstr "butiran salju"
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "Angin kencang untuk 1 jam ke depan"
 
-#: src/components/alert/index.tsx:331
-#~ msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
-#~ msgstr "Hembusan angin kencang untuk {durationOfStrongWind} jam ke depan"
+#: src/components/weather-alert.tsx:281
+msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+msgstr "Hembusan angin kencang untuk {durationOfStrongWind} jam ke depan"
 
-#: src/components/alert/index.tsx:336
-#~ msgid "Strong wind gusts for the next 24 hours"
-#~ msgstr "Hembusan angin kencang untuk 24 jam ke depan"
+#: src/components/weather-alert.tsx:286
+msgid "Strong wind gusts for the next 24 hours"
+msgstr "Hembusan angin kencang untuk 24 jam ke depan"
 
-#: src/components/alert/index.tsx:339
-#~ msgid "Strong wind gusts for the next hour"
-#~ msgstr "Hembusan angin kencang untuk 1 jam ke depan"
+#: src/components/weather-alert.tsx:289
+msgid "Strong wind gusts for the next hour"
+msgstr "Hembusan angin kencang untuk 1 jam ke depan"
 
-#: src/components/alert/index.tsx:320
-#~ msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
-#~ msgstr "Hembusan angin kencang dimulai dalam {timeUntilStrongWind} jam"
+#: src/components/weather-alert.tsx:271
+msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+msgstr "Hembusan angin kencang dimulai dalam {timeUntilStrongWind} jam"
 
 #: src/components/alert/index.tsx:227
 #~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
 #~ msgstr "Angin kencang dimulai dalam {timeUntilStrongWind} jam"
 
-#: src/pages/feedback/index.tsx:352
-#: src/pages/feedback/index.tsx:438
-#~ msgid "Submit"
-#~ msgstr "Kirim"
+#: src/app/bug/page.tsx:72
+msgid "Submit"
+msgstr "Kirim"
 
 #: src/components/tile.tsx:84
 msgid "Sunday"
 msgstr "Minggu"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap]
-#: src/components/tile.tsx:200
+#: src/components/tile.tsx:205
 msgid "The expected type of weather is {0}."
 msgstr "Tipe cuaca yang diharapkan adalah {0}."
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile.tsx:166
+#: src/components/tile.tsx:171
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "Suhu maksimum akan mencapai {0} derajat celsius."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile.tsx:172
+#: src/components/tile.tsx:177
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "Suhu maksimum akan mencapai {0} derajat fahrenheit."
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/tile.tsx:223
+#: src/components/tile.tsx:228
 msgid "The maximum UV index will be {0}."
 msgstr "Indeks UV maksimum akan mencapai {0}."
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:234
+#: src/components/tile.tsx:239
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "Kecepatan angin maksimum akan mencapai {0} kilometer per jam."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:240
+#: src/components/tile.tsx:245
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "Kecepatan angin maksimum akan mencapai {0} mil per jam."
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile.tsx:183
+#: src/components/tile.tsx:188
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "Suhu minimum akan mencapai {0} derajat celsius."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile.tsx:189
+#: src/components/tile.tsx:194
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "Suhu minimum akan mencapai {0} derajat fahrenheit."
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/tile.tsx:254
+#: src/components/tile.tsx:259
 msgid "There is a {0}% chance of precipitation."
 msgstr "Ada kemungkinan {0}% akan terjadi presipitasi."
 
@@ -687,7 +702,7 @@ msgstr "Kamis"
 #~ msgid "Tiles"
 #~ msgstr "Ubin"
 
-#: src/components/initialisation.tsx:64
+#: src/components/initialisation.tsx:72
 msgid "To get started, let's set your language and location."
 msgstr "Untuk memulai, mari atur bahasa dan lokasi Anda."
 
@@ -720,7 +735,7 @@ msgstr "Selasa"
 #~ msgid "Use keyboard shortcuts"
 #~ msgstr "Gunakan pintasan keyboard"
 
-#: src/components/settings.tsx:80
+#: src/components/settings.tsx:79
 msgid "Use metric number format"
 msgstr "Gunakan format nomor metrik"
 
@@ -732,11 +747,11 @@ msgstr "hujan deras"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Kami ingin membawa Weather Please ke lebih banyak bahasa."
 
-#: src/components/settings.tsx:86
+#: src/components/settings.tsx:85
 msgid "Weather"
 msgstr "Cuaca"
 
-#: src/pages/index.tsx:501
+#: src/pages/index.tsx:497
 msgid "weather data provided by open-meteo"
 msgstr "data cuaca disediakan oleh open-meteo"
 
@@ -749,9 +764,9 @@ msgstr "data cuaca disediakan oleh open-meteo"
 msgid "Wednesday"
 msgstr "Rabu"
 
-#: src/pages/index.tsx:774
-#~ msgid "Would you like to leave a review?"
-#~ msgstr "Apakah Anda ingin meninggalkan ulasan?"
+#: src/components/review-prompt.tsx:35
+msgid "Would you like to leave a review?"
+msgstr "Apakah Anda ingin meninggalkan ulasan?"
 
 #: src/components/settings/index.tsx:365
 #~ msgid "You can press numbers 1-9 to change how many weather tiles are displayed."
@@ -765,11 +780,19 @@ msgstr "Rabu"
 #~ msgid "You have unsaved changes"
 #~ msgstr "Anda memiliki perubahan yang belum disimpan"
 
-#: src/pages/index.tsx:770
-#~ msgid "You've been using Weather Please for a while"
-#~ msgstr "Anda telah menggunakan Weather Please untuk beberapa waktu"
+#: src/components/review-prompt.tsx:32
+msgid "You've been using Weather Please for a while"
+msgstr "Anda telah menggunakan Weather Please untuk beberapa waktu"
 
-#: src/components/settings.tsx:89
-#: src/components/initialisation.tsx:86
+#: src/app/bug/page.tsx:53
+msgid "Your email (optional)"
+msgstr "Email Anda (opsional)"
+
+#: src/components/settings.tsx:88
+#: src/components/initialisation.tsx:94
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Data lokasi Anda disimpan dengan aman secara eksklusif di perangkat pribadi Anda."
+
+#: src/app/bug/page.tsx:54
+msgid "Your message"
+msgstr "Pesan Anda"

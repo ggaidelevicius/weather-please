@@ -50,11 +50,21 @@ const ContactForm = () => {
 						<h1 className="mb-8 text-4xl font-bold text-white">
 							<Trans>Report a bug</Trans>
 						</h1>
-						<Input label="Your email (optional)" name="email" type="email" />
-						<Textarea label="Your message" name="message" required />
+						<Input
+							label={
+								(<Trans>Your email (optional)</Trans>) as unknown as string
+							}
+							name="email"
+							type="email"
+						/>
+						<Textarea
+							label={(<Trans>Your message</Trans>) as unknown as string}
+							name="message"
+							required
+						/>
 						<div className="absolute top-auto left-[-10000px] h-px w-px overflow-hidden">
 							<label htmlFor={id} className="sr-only">
-								Do not fill this field if you are human
+								<Trans>Do not fill this field if you are human</Trans>
 							</label>
 							<input
 								type="text"
@@ -67,15 +77,13 @@ const ContactForm = () => {
 						<input type="hidden" name="locale" value={locale} />
 						<input type="hidden" name="validation" value={id} />
 						<Button icon={IconMailFilled} type="submit" disabled={pending}>
-							Submit
+							<Trans>Submit</Trans>
 						</Button>
 					</>
 				) : (
 					<h1 className="flex items-end justify-center text-center text-4xl font-bold text-white">
-						<Trans>
-							<IconCircleCheckFilled size={36} aria-hidden className="mr-2" />
-							{state.message}
-						</Trans>
+						<IconCircleCheckFilled size={36} aria-hidden className="mr-2" />
+						{state.message}
 					</h1>
 				)}
 			</Form>

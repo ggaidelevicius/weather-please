@@ -80,7 +80,7 @@ export const Initialisation = ({
 						</Trans>
 					</p>
 					<Select
-						label="Language"
+						label={(<Trans>Language</Trans>) as unknown as string}
 						value={input.lang}
 						onChange={(e) => {
 							handleChange('lang', e.target.value)

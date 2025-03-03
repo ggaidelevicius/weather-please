@@ -13,22 +13,26 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/alert/index.tsx:164
-#: src/components/alert/index.tsx:171
-#~ msgid "{0} inches of precipitation expected over the next {1} hours"
-#~ msgstr "अगले {1} घंटों में {0} इंच वर्षा की उम्मीद"
+#. placeholder {0}: (precipitation.value / 25.4).toFixed(1)
+#. placeholder {1}: duration.indexOf(false)
+#. placeholder {1}: duration.length - 1
+#: src/components/weather-alert.tsx:144
+#: src/components/weather-alert.tsx:151
+msgid "{0} inches of precipitation expected over the next {1} hours"
+msgstr "अगले {1} घंटों में {0} इंच वर्षा की उम्मीद"
 
-#: src/components/alert/index.tsx:156
-#~ msgid "{0} inches of precipitation expected over the next hour"
-#~ msgstr "अगले घंटे में {0} इंच वर्षा की उम्मीद"
+#. placeholder {0}: (precipitation.value / 25.4).toFixed(1)
+#: src/components/weather-alert.tsx:136
+msgid "{0} inches of precipitation expected over the next hour"
+msgstr "अगले घंटे में {0} इंच वर्षा की उम्मीद"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:229
+#: src/components/tile.tsx:234
 msgid "{0} km/h"
 msgstr "{0} किमी/घंटा"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:230
+#: src/components/tile.tsx:235
 msgid "{0} mph"
 msgstr "{0} मील प्रति घंटा"
 
@@ -40,25 +44,28 @@ msgstr "{0} मील प्रति घंटा"
 #~ msgid "{0}in of precipitation expected over the next hour"
 #~ msgstr "अगले 1 घंटे में {0} इंच वर्षा की संभावना है"
 
-#: src/components/alert/index.tsx:144
-#: src/components/alert/index.tsx:150
-#~ msgid "{0}mm of precipitation expected over the next {1} hours"
-#~ msgstr "अगले {1} घंटों में {0} मिमी वर्षा की संभावना है"
+#. placeholder {0}: precipitation.value.toFixed(1)
+#. placeholder {1}: duration.indexOf(false)
+#. placeholder {1}: duration.length - 1
+#: src/components/weather-alert.tsx:124
+#: src/components/weather-alert.tsx:130
+msgid "{0}mm of precipitation expected over the next {1} hours"
+msgstr "अगले {1} घंटों में {0} मिमी वर्षा की संभावना है"
 
-#: src/components/alert/index.tsx:136
-#~ msgid "{0}mm of precipitation expected over the next hour"
-#~ msgstr "अगले 1 घंटे में {0} मिमी वर्षा की संभावना है"
+#. placeholder {0}: precipitation.value.toFixed(1)
+#: src/components/weather-alert.tsx:116
+msgid "{0}mm of precipitation expected over the next hour"
+msgstr "अगले 1 घंटे में {0} मिमी वर्षा की संभावना है"
 
 #: src/pages/feedback/index.tsx:153
 #~ msgid "{label}"
 #~ msgstr "भाषा"
 
-#. placeholder {0}: state.message
-#: src/app/bug/page.tsx:71
-msgid "<0/>{0}"
-msgstr ""
+#: src/app/bug/page.tsx:75
+#~ msgid "<0/>{0}"
+#~ msgstr ""
 
-#: src/components/settings.tsx:216
+#: src/components/settings.tsx:215
 msgid "☕ Gift a coffee"
 msgstr "☕ कॉफ़ी का उपहार दें"
 
@@ -66,11 +73,11 @@ msgstr "☕ कॉफ़ी का उपहार दें"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ प्रतिसाद जमा करें"
 
-#: src/components/settings.tsx:202
+#: src/components/settings.tsx:201
 msgid "🌟 Leave a review"
 msgstr "🌟 समीक्षा छोड़ें"
 
-#: src/components/settings.tsx:209
+#: src/components/settings.tsx:208
 msgid "🐛 Report a bug"
 msgstr "🐛 एक बग रिपोर्ट करें"
 
@@ -78,7 +85,7 @@ msgstr "🐛 एक बग रिपोर्ट करें"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 एक सुविधा का अनुरोध करें"
 
-#: src/components/settings.tsx:226
+#: src/components/settings.tsx:225
 msgid "🔒 Privacy policy"
 msgstr "🔒 गोपनीयता नीति"
 
@@ -158,11 +165,11 @@ msgstr "साफ़ आकाश"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "बहुत अधिक मेमोरी या CPU का उपयोग"
 
-#: src/components/settings.tsx:146
+#: src/components/settings.tsx:145
 msgid "Date"
 msgstr "तारीख़"
 
-#: src/components/settings.tsx:142
+#: src/components/settings.tsx:141
 msgid "Day"
 msgstr "दिन"
 
@@ -190,6 +197,10 @@ msgstr "राइम कोहरा जमा हो रहा है"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "उपयोग करना या समझना कठिन"
 
+#: src/app/bug/page.tsx:57
+msgid "Do not fill this field if you are human"
+msgstr "यदि आप मनुष्य हैं, तो इस फ़ील्ड को न भरें"
+
 #: src/components/settings/index.tsx:565
 #~ msgid "Don't save"
 #~ msgstr "सेव न करें"
@@ -206,21 +217,21 @@ msgstr "राइम कोहरा जमा हो रहा है"
 #~ msgid "Error submitting feedback. Try again later."
 #~ msgstr "प्रतिसाद सबमिट करते समय त्रुटि। बाद में पुनः प्रयास करें।"
 
-#: src/components/alert/index.tsx:71
-#~ msgid "Extreme UV for the next {durationOfExtremeUv} hours"
-#~ msgstr "अगले {durationOfExtremeUv} घंटों के लिए अत्यधिक यूवी"
+#: src/components/weather-alert.tsx:60
+msgid "Extreme UV for the next {durationOfExtremeUv} hours"
+msgstr "अगले {durationOfExtremeUv} घंटों के लिए अत्यधिक यूवी"
 
-#: src/components/alert/index.tsx:76
-#~ msgid "Extreme UV for the next 12 hours"
-#~ msgstr "अगले 12 घंटों के लिए अत्यधिक यूवी"
+#: src/components/weather-alert.tsx:65
+msgid "Extreme UV for the next 12 hours"
+msgstr "अगले 12 घंटों के लिए अत्यधिक यूवी"
 
-#: src/components/alert/index.tsx:79
-#~ msgid "Extreme UV for the next hour"
-#~ msgstr "अगले घंटे के लिए अत्यधिक यूवी"
+#: src/components/weather-alert.tsx:68
+msgid "Extreme UV for the next hour"
+msgstr "अगले घंटे के लिए अत्यधिक यूवी"
 
-#: src/components/alert/index.tsx:62
-#~ msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
-#~ msgstr "{timeUntilExtremeUv} घंटों में अत्यधिक यूवी शुरू होगी"
+#: src/components/weather-alert.tsx:52
+msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
+msgstr "{timeUntilExtremeUv} घंटों में अत्यधिक यूवी शुरू होगी"
 
 #: src/pages/feedback/index.tsx:388
 #~ msgid "Feature request"
@@ -234,7 +245,7 @@ msgstr "राइम कोहरा जमा हो रहा है"
 msgid "February"
 msgstr "फ़रवरी"
 
-#: src/components/settings.tsx:195
+#: src/components/settings.tsx:194
 msgid "Feedback"
 msgstr "प्रतिक्रिया"
 
@@ -254,25 +265,25 @@ msgstr "प्रतिक्रिया"
 msgid "Friday"
 msgstr "शुक्रवार"
 
-#: src/components/settings.tsx:65
+#: src/components/settings.tsx:64
 msgid "General"
 msgstr "सामान्य"
 
-#: src/components/alert/index.tsx:250
-#~ msgid "Generally strong wind for the next {durationOfStrongWind} hours"
-#~ msgstr "अगले {durationOfStrongWind} घंटों के लिए आम तौर पर तेज हवा"
+#: src/components/weather-alert.tsx:215
+msgid "Generally strong wind for the next {durationOfStrongWind} hours"
+msgstr "अगले {durationOfStrongWind} घंटों के लिए आम तौर पर तेज हवा"
 
-#: src/components/alert/index.tsx:256
-#~ msgid "Generally strong wind for the next 24 hours"
-#~ msgstr "अगले 24 घंटों के लिए आम तौर पर तेज हवा"
+#: src/components/weather-alert.tsx:221
+msgid "Generally strong wind for the next 24 hours"
+msgstr "अगले 24 घंटों के लिए आम तौर पर तेज हवा"
 
-#: src/components/alert/index.tsx:259
-#~ msgid "Generally strong wind for the next hour"
-#~ msgstr "अगले घंटे के लिए आम तौर पर तेज हवा"
+#: src/components/weather-alert.tsx:224
+msgid "Generally strong wind for the next hour"
+msgstr "अगले घंटे के लिए आम तौर पर तेज हवा"
 
-#: src/components/alert/index.tsx:239
-#~ msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
-#~ msgstr "{timeUntilStrongWind} घंटों में शुरू होने वाली आम तौर पर तेज हवा"
+#: src/components/weather-alert.tsx:205
+msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind} घंटों में शुरू होने वाली आम तौर पर तेज हवा"
 
 #: src/components/tile.tsx:68
 msgid "heavy freezing rain"
@@ -298,7 +309,7 @@ msgstr "भारी हिमपात"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "मुझे Weather Please को और अधिक भाषाओं में लाना पसंद होगा।"
 
-#: src/components/settings.tsx:135
+#: src/components/settings.tsx:134
 msgid "Identifier"
 msgstr "पहचानकर्ता"
 
@@ -310,7 +321,7 @@ msgstr "पहचानकर्ता"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "यदि आपके पास कोई अनुवाद अनुरोध है, कृपया हमें इस पर संपर्क करें <0>contact@weather-please.app</0>"
 
-#: src/components/initialisation.tsx:69
+#: src/components/initialisation.tsx:77
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "अगर आपका ब्राउज़र आपसे स्थान अनुमतियाँ मांगता है, तो कृपया \"अनुमति दें\" चुनें।"
 
@@ -353,15 +364,20 @@ msgstr "जून"
 #~ msgid "Lacks features I need"
 #~ msgstr "मुझे जरूरत की सुविधाएँ नहीं हैं"
 
-#: src/components/settings.tsx:68
+#: src/components/settings.tsx:67
+#: src/components/initialisation.tsx:83
 msgid "Language"
 msgstr "भाषा"
 
-#: src/components/settings.tsx:95
+#: src/components/settings.tsx:94
 msgid "Latitude"
 msgstr "अक्षांश"
 
-#: src/components/settings.tsx:219
+#: src/components/review-prompt.tsx:47
+msgid "Leave a review"
+msgstr "समीक्षा छोड़ें"
+
+#: src/components/settings.tsx:218
 msgid "Legal"
 msgstr "कानूनी"
 
@@ -381,7 +397,7 @@ msgstr "हल्की हिमबंध वर्षा"
 #~ msgid "Location"
 #~ msgstr "स्थान"
 
-#: src/components/settings.tsx:103
+#: src/components/settings.tsx:102
 msgid "Longitude"
 msgstr "देशांतर"
 
@@ -389,21 +405,21 @@ msgstr "देशांतर"
 #~ msgid "Looks like we can't grab your location info automatically."
 #~ msgstr "लगता है हम आपकी स्थान जानकारी स्वचालित रूप से नहीं ले सकते।"
 
-#: src/components/alert/index.tsx:411
-#~ msgid "Low visibility for the next {durationOfLowVisibility} hours"
-#~ msgstr "अगले {durationOfLowVisibility} घंटों के लिए कम दृश्यता"
+#: src/components/weather-alert.tsx:354
+msgid "Low visibility for the next {durationOfLowVisibility} hours"
+msgstr "अगले {durationOfLowVisibility} घंटों के लिए कम दृश्यता"
 
-#: src/components/alert/index.tsx:416
-#~ msgid "Low visibility for the next 24 hours"
-#~ msgstr "अगले 24 घंटों के लिए कम दृश्यता"
+#: src/components/weather-alert.tsx:359
+msgid "Low visibility for the next 24 hours"
+msgstr "अगले 24 घंटों के लिए कम दृश्यता"
 
-#: src/components/alert/index.tsx:419
-#~ msgid "Low visibility for the next hour"
-#~ msgstr "अगले घंटे के लिए कम दृश्यता"
+#: src/components/weather-alert.tsx:362
+msgid "Low visibility for the next hour"
+msgstr "अगले घंटे के लिए कम दृश्यता"
 
-#: src/components/alert/index.tsx:400
-#~ msgid "Low visibility starting in {timeUntilLowVisibility} hours"
-#~ msgstr "{timeUntilLowVisibility} घंटों में कम दृश्यता शुरू होगी"
+#: src/components/weather-alert.tsx:340
+msgid "Low visibility starting in {timeUntilLowVisibility} hours"
+msgstr "{timeUntilLowVisibility} घंटों में कम दृश्यता शुरू होगी"
 
 #: src/components/tile.tsx:54
 #: src/components/tile.tsx:57
@@ -446,9 +462,9 @@ msgstr "मध्यम हिमपात"
 msgid "Monday"
 msgstr "सोमवार"
 
-#: src/pages/index.tsx:805
-#~ msgid "Never show this again"
-#~ msgstr "इसे फिर से न दिखाएं"
+#: src/components/review-prompt.tsx:58
+msgid "Never show this again"
+msgstr "इसे फिर से न दिखाएं"
 
 #: src/pages/_app.tsx:21
 #~ msgid "New tab"
@@ -470,7 +486,7 @@ msgstr "सोमवार"
 msgid "November"
 msgstr "नवं"
 
-#: src/components/settings.tsx:123
+#: src/components/settings.tsx:122
 msgid "Number of days to forecast"
 msgstr "भविष्यवाणी के लिए दिनों की संख्या"
 
@@ -490,7 +506,7 @@ msgstr "आंशिक रूप से बादल"
 #~ msgid "Performance issues"
 #~ msgstr "प्रदर्शन समस्याएं"
 
-#: src/components/settings.tsx:115
+#: src/components/settings.tsx:114
 msgid "Periodically update location automatically"
 msgstr "स्थान को स्वचालित रूप से आवधिक रूप से अपडेट करें"
 
@@ -498,7 +514,7 @@ msgstr "स्थान को स्वचालित रूप से आव�
 #~ msgid "Please enter it manually below."
 #~ msgstr "कृपया इसे नीचे स्वयं दर्ज करें।"
 
-#: src/app/bug/page.tsx:47
+#: src/app/bug/page.tsx:51
 msgid "Report a bug"
 msgstr "बग की रिपोर्ट करें"
 
@@ -528,8 +544,8 @@ msgstr "सितंबर"
 #~ msgid "Set my location"
 #~ msgstr "मेरा स्थान निर्धारित करें"
 
-#: src/components/settings.tsx:45
-#: src/components/settings.tsx:62
+#: src/components/settings.tsx:44
+#: src/components/settings.tsx:61
 msgid "Settings"
 msgstr "सेटिंग्स"
 
@@ -537,23 +553,23 @@ msgstr "सेटिंग्स"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "गुमनाम धड़ाका डाटा और त्रुटि लॉग साझा करें"
 
-#: src/components/settings.tsx:160
+#: src/components/settings.tsx:159
 msgid "Show extreme UV alerts"
 msgstr "अत्यधिक UV चेतावनियाँ दिखाएं"
 
-#: src/components/settings.tsx:168
+#: src/components/settings.tsx:167
 msgid "Show high precipitation alerts"
 msgstr "उच्च वर्षा चेतावनियाँ दिखाएं"
 
-#: src/components/settings.tsx:186
+#: src/components/settings.tsx:185
 msgid "Show low visibility alerts"
 msgstr "निम्न दृश्यता चेतावनियाँ दिखाएं"
 
-#: src/components/settings.tsx:177
+#: src/components/settings.tsx:176
 msgid "Show strong wind alerts"
 msgstr "मजबूत हवा की चेतावनियाँ दिखाएं"
 
-#: src/components/settings.tsx:152
+#: src/components/settings.tsx:151
 msgid "Show weather alerts"
 msgstr "मौसम चेतावनियाँ दिखाएं"
 
@@ -593,77 +609,76 @@ msgstr "हिमकण"
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "अगले एक घंटे तक मजबूत हवा"
 
-#: src/components/alert/index.tsx:331
-#~ msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
-#~ msgstr "अगले {durationOfStrongWind} घंटों तक मजबूत हवा के झोंके"
+#: src/components/weather-alert.tsx:281
+msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
+msgstr "अगले {durationOfStrongWind} घंटों तक मजबूत हवा के झोंके"
 
-#: src/components/alert/index.tsx:336
-#~ msgid "Strong wind gusts for the next 24 hours"
-#~ msgstr "अगले 24 घंटों तक मजबूत हवा के झोंके"
+#: src/components/weather-alert.tsx:286
+msgid "Strong wind gusts for the next 24 hours"
+msgstr "अगले 24 घंटों तक मजबूत हवा के झोंके"
 
-#: src/components/alert/index.tsx:339
-#~ msgid "Strong wind gusts for the next hour"
-#~ msgstr "अगले एक घंटे तक मजबूत हवा के झोंके"
+#: src/components/weather-alert.tsx:289
+msgid "Strong wind gusts for the next hour"
+msgstr "अगले एक घंटे तक मजबूत हवा के झोंके"
 
-#: src/components/alert/index.tsx:320
-#~ msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
-#~ msgstr "{timeUntilStrongWind} घंटों में मजबूत हवा के झोंके शुरू होंगे"
+#: src/components/weather-alert.tsx:271
+msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
+msgstr "{timeUntilStrongWind} घंटों में मजबूत हवा के झोंके शुरू होंगे"
 
 #: src/components/alert/index.tsx:227
 #~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
 #~ msgstr "{timeUntilStrongWind} घंटों में मजबूत हवा शुरू होगी"
 
-#: src/pages/feedback/index.tsx:352
-#: src/pages/feedback/index.tsx:438
-#~ msgid "Submit"
-#~ msgstr "सबमिट करें"
+#: src/app/bug/page.tsx:72
+msgid "Submit"
+msgstr "सबमिट करें"
 
 #: src/components/tile.tsx:84
 msgid "Sunday"
 msgstr "रविवार"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap]
-#: src/components/tile.tsx:200
+#: src/components/tile.tsx:205
 msgid "The expected type of weather is {0}."
 msgstr "अपेक्षित मौसम की प्रकार {0} है।"
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile.tsx:166
+#: src/components/tile.tsx:171
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "अधिकतम तापमान {0} डिग्री सेल्सियस होगा।"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile.tsx:172
+#: src/components/tile.tsx:177
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "अधिकतम तापमान {0} डिग्री फारेनहाइट होगा।"
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/tile.tsx:223
+#: src/components/tile.tsx:228
 msgid "The maximum UV index will be {0}."
 msgstr "अधिकतम यूवी सूचकांक {0} होगा।"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:234
+#: src/components/tile.tsx:239
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "अधिकतम वायु गति {0} किलोमीटर प्रति घंटा होगी।"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:240
+#: src/components/tile.tsx:245
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "अधिकतम वायु गति {0} मील प्रति घंटा होगी।"
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile.tsx:183
+#: src/components/tile.tsx:188
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "न्यूनतम तापमान {0} डिग्री सेल्सियस होगा।"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile.tsx:189
+#: src/components/tile.tsx:194
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "न्यूनतम तापमान {0} डिग्री फारेनहाइट होगा।"
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/tile.tsx:254
+#: src/components/tile.tsx:259
 msgid "There is a {0}% chance of precipitation."
 msgstr "वर्षा की {0}% संभावना है।"
 
@@ -687,7 +702,7 @@ msgstr "गुरुवार"
 #~ msgid "Tiles"
 #~ msgstr "टाइल्स"
 
-#: src/components/initialisation.tsx:64
+#: src/components/initialisation.tsx:72
 msgid "To get started, let's set your language and location."
 msgstr "शुरू करने के लिए, आइए आपकी भाषा और स्थान निर्धारित करें।"
 
@@ -720,7 +735,7 @@ msgstr "मंगलवार"
 #~ msgid "Use keyboard shortcuts"
 #~ msgstr "कीबोर्ड शॉर्टकट का उपयोग करें"
 
-#: src/components/settings.tsx:80
+#: src/components/settings.tsx:79
 msgid "Use metric number format"
 msgstr "मेट्रिक संख्या प्रारूप का उपयोग करें"
 
@@ -732,11 +747,11 @@ msgstr "हिंसक वर्षा की बौछारें"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "हम चाहेंगे कि 'Weather Please' को और अधिक भाषाओं में लाया जाए।"
 
-#: src/components/settings.tsx:86
+#: src/components/settings.tsx:85
 msgid "Weather"
 msgstr "मौसम"
 
-#: src/pages/index.tsx:501
+#: src/pages/index.tsx:497
 msgid "weather data provided by open-meteo"
 msgstr "मौसम डाटा open-meteo द्वारा प्रदान किया गया"
 
@@ -749,9 +764,9 @@ msgstr "मौसम डाटा open-meteo द्वारा प्रदा�
 msgid "Wednesday"
 msgstr "बुधवार"
 
-#: src/pages/index.tsx:774
-#~ msgid "Would you like to leave a review?"
-#~ msgstr "क्या आप समीक्षा छोड़ना चाहेंगे?"
+#: src/components/review-prompt.tsx:35
+msgid "Would you like to leave a review?"
+msgstr "क्या आप समीक्षा छोड़ना चाहेंगे?"
 
 #: src/components/settings/index.tsx:365
 #~ msgid "You can press numbers 1-9 to change how many weather tiles are displayed."
@@ -765,11 +780,19 @@ msgstr "बुधवार"
 #~ msgid "You have unsaved changes"
 #~ msgstr "आपके पास असेवित परिवर्तन हैं"
 
-#: src/pages/index.tsx:770
-#~ msgid "You've been using Weather Please for a while"
-#~ msgstr "आप कुछ समय से Weather Please का उपयोग कर रहे हैं"
+#: src/components/review-prompt.tsx:32
+msgid "You've been using Weather Please for a while"
+msgstr "आप कुछ समय से Weather Please का उपयोग कर रहे हैं"
 
-#: src/components/settings.tsx:89
-#: src/components/initialisation.tsx:86
+#: src/app/bug/page.tsx:53
+msgid "Your email (optional)"
+msgstr "आपका ईमेल (वैकल्पिक)"
+
+#: src/components/settings.tsx:88
+#: src/components/initialisation.tsx:94
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "आपका स्थान डेटा आपके व्यक्तिगत उपकरण पर सुरक्षित रूप से और केवल संग्रहीत किया जाता है।"
+
+#: src/app/bug/page.tsx:54
+msgid "Your message"
+msgstr "आपका संदेश"
