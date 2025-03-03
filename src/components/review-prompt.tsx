@@ -9,7 +9,7 @@ interface ReviewPromptProps {
 }
 
 export const ReviewPrompt = ({ config, setInput }: ReviewPromptProps) => {
-	if (new Date().getTime() - config.installed >= 2419200000) { // 28 days
+	if (!config.displayedReviewPrompt && new Date().getTime() - config.installed >= 2419200000) { // 28 days
 		return (
 			<div className="absolute top-5 right-5 flex flex-col rounded-lg bg-dark-700 p-5 text-white z-1 shadow-md">
 				<p className="mb-2 text-lg font-medium">
