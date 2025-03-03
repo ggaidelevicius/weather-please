@@ -197,7 +197,7 @@ msgstr "রাইম কুয়াশা জমা"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "ব্যবহার করা বা বোঝা কঠিন"
 
-#: src/app/bug/page.tsx:57
+#: src/app/bug/page.tsx:67
 msgid "Do not fill this field if you are human"
 msgstr "আপনি যদি মানুষ হন, তাহলে এই ক্ষেত্রটি পূরণ করবেন না"
 
@@ -539,10 +539,9 @@ msgstr "শনিবার"
 msgid "September"
 msgstr "সেপ্টেম্বর"
 
-#: src/components/intialisation/index.tsx:143
-#: src/components/intialisation/index.tsx:267
-#~ msgid "Set my location"
-#~ msgstr "আমার অবস্থান নির্ধারণ করুন"
+#: src/components/initialisation.tsx:106
+msgid "Set my location"
+msgstr "আমার অবস্থান নির্ধারণ করুন"
 
 #: src/components/settings.tsx:44
 #: src/components/settings.tsx:61
@@ -629,7 +628,7 @@ msgstr "{timeUntilStrongWind} ঘণ্টা পর শক্তিশালী
 #~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
 #~ msgstr "{timeUntilStrongWind} ঘণ্টা পর শক্তিশালী বাতাস শুরু হবে"
 
-#: src/app/bug/page.tsx:72
+#: src/app/bug/page.tsx:80
 msgid "Submit"
 msgstr "জমা দিন"
 
@@ -784,7 +783,7 @@ msgstr "আপনি কি একটি পর্যালোচনা ছে�
 msgid "You've been using Weather Please for a while"
 msgstr "আপনি একটি সময়ের জন্য Weather Please ব্যবহার করেছেন"
 
-#: src/app/bug/page.tsx:53
+#: src/app/bug/page.tsx:55
 msgid "Your email (optional)"
 msgstr "আপনার ইমেল (ঐচ্ছিক)"
 
@@ -793,6 +792,6 @@ msgstr "আপনার ইমেল (ঐচ্ছিক)"
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "আপনার অবস্থানের তথ্য আপনার ব্যক্তিগত ডিভাইসে নিরাপদে এবং একচেটিয়াভাবে সংরক্ষিত আছে।"
 
-#: src/app/bug/page.tsx:54
+#: src/app/bug/page.tsx:61
 msgid "Your message"
 msgstr "আপনার বার্তা"

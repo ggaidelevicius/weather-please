@@ -197,7 +197,7 @@ msgstr "서리가 앉는 안개"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "사용하기 어렵거나 이해하기 어려움"
 
-#: src/app/bug/page.tsx:57
+#: src/app/bug/page.tsx:67
 msgid "Do not fill this field if you are human"
 msgstr "사람이면 이 필드를 작성하지 마세요"
 
@@ -539,10 +539,9 @@ msgstr "토요일"
 msgid "September"
 msgstr "9월"
 
-#: src/components/intialisation/index.tsx:143
-#: src/components/intialisation/index.tsx:267
-#~ msgid "Set my location"
-#~ msgstr "내 위치 설정"
+#: src/components/initialisation.tsx:106
+msgid "Set my location"
+msgstr "내 위치 설정"
 
 #: src/components/settings.tsx:44
 #: src/components/settings.tsx:61
@@ -629,7 +628,7 @@ msgstr "{timeUntilStrongWind} 시간 후 강한 바람이 시작됩니다"
 #~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
 #~ msgstr "{timeUntilStrongWind} 시간 후 강풍이 시작됩니다"
 
-#: src/app/bug/page.tsx:72
+#: src/app/bug/page.tsx:80
 msgid "Submit"
 msgstr "제출"
 
@@ -784,7 +783,7 @@ msgstr "리뷰를 남기시겠습니까?"
 msgid "You've been using Weather Please for a while"
 msgstr "당신은 Weather Please를 잠시동안 사용해왔습니다"
 
-#: src/app/bug/page.tsx:53
+#: src/app/bug/page.tsx:55
 msgid "Your email (optional)"
 msgstr "이메일 주소 (선택 사항)"
 
@@ -793,6 +792,6 @@ msgstr "이메일 주소 (선택 사항)"
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "귀하의 위치 데이터는 귀하의 개인 장치에만 안전하게 저장됩니다."
 
-#: src/app/bug/page.tsx:54
+#: src/app/bug/page.tsx:61
 msgid "Your message"
 msgstr "메시지 내용"
