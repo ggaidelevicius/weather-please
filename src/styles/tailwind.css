@@ -1,3 +1,7 @@
+html, body {
+	font-size: 100% !important; /* necessary because chrome injects (into extensions only for some reason) a font-size: 75% property */
+}
+
 @import 'tailwindcss';
 
 @theme {
