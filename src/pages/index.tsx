@@ -6,7 +6,6 @@ import { Settings } from '@/components/settings'
 import { Tile } from '@/components/tile'
 import { WeatherAlert } from '@/components/weather-alert'
 import { mergeObjects } from '@/lib/helpers'
-import type { HandleChange, WeatherData } from '@/lib/types'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
@@ -78,6 +77,58 @@ const alertSchema = z.object({
 })
 
 export type Alerts = z.infer<typeof alertSchema>
+
+interface WeatherData {
+	latitude: number
+	longitude: number
+	generationtime_ms: number
+	utc_offset_seconds: number
+	timezone: string
+	timezone_abbreviation: string
+	elevation: number
+	hourly_units: HourlyUnits
+	hourly: HourlyData
+	daily_units: DailyUnits
+	daily: DailyData
+}
+
+interface HourlyUnits {
+	time: string
+	precipitation: string
+	uv_index: string
+	windspeed_10m: string
+	visibility: string
+	windgusts_10m: string
+}
+
+interface HourlyData {
+	time: number[]
+	precipitation: number[]
+	uv_index: number[]
+	windspeed_10m: number[]
+	visibility: number[]
+	windgusts_10m: number[]
+}
+
+interface DailyUnits {
+	time: string
+	weathercode: string
+	temperature_2m_max: string
+	temperature_2m_min: string
+	uv_index_max: string
+	precipitation_probability_max: string
+	windspeed_10m_max: string
+}
+
+interface DailyData {
+	time: number[]
+	weathercode: number[]
+	temperature_2m_max: number[]
+	temperature_2m_min: number[]
+	uv_index_max: number[]
+	precipitation_probability_max: number[]
+	windspeed_10m_max: number[]
+}
 
 const App = () => {
 	const [alertData, setAlertData] = useState<Alerts>({
@@ -314,7 +365,14 @@ const App = () => {
 		}
 	}, [config.lat, config.lon, changedLocation])
 
-	const handleChange: HandleChange = (k, v) => {
+	/**
+	 * Manages updates to the "input" state.
+	 *
+	 * Takes in a key and a value. Existing attributes of the "input" state are retained,
+	 * while the provided attribute (key-value pair) will either be added or, if the key already exists,
+	 * its value will be overwritten with the new one.
+	 */
+	const handleChange = (k: keyof Config, v: Config[keyof Config]) => {
 		setInput((prev) => {
 			return {
 				...prev,
