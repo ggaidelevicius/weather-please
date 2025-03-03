@@ -42,7 +42,7 @@ export const Initialisation = ({
 	}
 
 	return (
-		<Dialog open={pending} onClose={() => { }} className="relative z-50">
+		<Dialog open={pending} onClose={() => {}} className="relative z-50">
 			<DialogBackdrop
 				transition
 				className="fixed inset-0 bg-black/60 backdrop-blur-lg transition duration-300 will-change-[backdrop-filter,background-color] data-[closed]:opacity-0"
@@ -103,9 +103,7 @@ export const Initialisation = ({
 						}}
 						disabled={loading}
 					>
-						<Trans>
-							Set my location
-						</Trans>
+						<Trans>Set my location</Trans>
 					</Button>
 				</DialogPanel>
 			</div>

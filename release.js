@@ -128,10 +128,7 @@ const processReleaseType = (releaseType) => {
 	)
 	processZipCreation(EXTENSION_DIR, newVersion, '-firefox')
 
-	modifyManifest(
-		{},
-		['browser_specific_settings'],
-	)
+	modifyManifest({}, ['browser_specific_settings'])
 
 	packageSource()
 	process.exit(0)

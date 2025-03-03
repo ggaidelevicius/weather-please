@@ -129,6 +129,23 @@ interface DailyData {
 	windspeed_10m_max: number[]
 }
 
+const initialState: Config = {
+	lang: 'en',
+	lat: '',
+	lon: '',
+	periodicLocationUpdate: false,
+	useMetric: true,
+	showAlerts: true,
+	showUvAlerts: true,
+	showWindAlerts: true,
+	showVisibilityAlerts: true,
+	showPrecipitationAlerts: true,
+	daysToRetrieve: '3',
+	identifier: 'day',
+	installed: new Date().getTime(),
+	displayedReviewPrompt: false,
+}
+
 const App = () => {
 	const [alertData, setAlertData] = useState<Alerts>({
 		totalPrecipitation: {
@@ -145,22 +162,6 @@ const App = () => {
 		hoursOfStrongWindGusts: Array(25).fill(false),
 	})
 	const [weatherData, setWeatherData] = useState<[] | Data>([])
-	const initialState: Config = {
-		lang: 'en',
-		lat: '',
-		lon: '',
-		periodicLocationUpdate: false,
-		useMetric: true,
-		showAlerts: true,
-		showUvAlerts: true,
-		showWindAlerts: true,
-		showVisibilityAlerts: true,
-		showPrecipitationAlerts: true,
-		daysToRetrieve: '3',
-		identifier: 'day',
-		installed: new Date().getTime(),
-		displayedReviewPrompt: false,
-	}
 	const [config, setConfig] = useState<Config>(initialState)
 	const [input, setInput] = useState<Config>(initialState)
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
@@ -178,7 +179,6 @@ const App = () => {
 		enabled: Boolean(config.lat) && Boolean(config.lon) && !usingCachedData,
 	})
 
-	// good to go - still needs error display
 	useEffect(() => {
 		if (data) {
 			const now = new Date()
@@ -261,22 +261,10 @@ const App = () => {
 				setChangedLocation(false)
 			}
 		} else if (error) {
-			// eslint-disable-next-line no-console
 			console.error(error)
-			// notifications.show({
-			// 	title: <Trans>Error</Trans>,
-			// 	message: (
-			// 		<Trans>
-			// 			An error has occurred while fetching weather data. Please try again
-			// 			later.
-			// 		</Trans>
-			// 	),
-			// 	color: 'red',
-			// })
 		}
 	}, [data, error, changedLocation])
 
-	// good to go
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const currentHour = new Date().getHours()
@@ -298,10 +286,8 @@ const App = () => {
 	 * active language to the one specified in the configuration. This facilitates the dynamic
 	 * switching of languages in Weather Please, allowing it to support internationalization.
 	 *
-	 * Input is used rather than config so users have instant feedback without first needing to
-	 * understand what the text on the 'save' or 'set my location' buttons do.
+	 * Input is used rather than config so users have instant feedback.
 	 */
-	// good to go
 	useEffect(() => {
 		if (input.lang) {
 			changeLocalisation(input.lang)
@@ -312,12 +298,9 @@ const App = () => {
 	 * On component mount, this effect hook checks the localStorage for a saved "config".
 	 *
 	 * - If "config" exists in localStorage, it is parsed and the states of both "config" and "input" are set.
-	 *   - If the object shape of the stored data matches the current "config", both states are directly set to the stored value.
-	 *   - If they don't match, the stored data is merged with the current "config" and the merged result is set to both states.
-	 *
-	 * - If "config" does not exist in localStorage, the <Initialisation /> modal is opened to prompt the user for initial configuration.
+	 * - If the object shape of the stored data matches the current "config", both states are directly set to the stored value.
+	 * - If they don't match, the stored data is merged with the current "config" and the merged result is set to both states.
 	 */
-	// good to go
 	useEffect(() => {
 		const storedData = localStorage?.config
 			? JSON.parse(localStorage.config)
@@ -333,7 +316,6 @@ const App = () => {
 				setInput(mergedObject as Config)
 			}
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	/**
