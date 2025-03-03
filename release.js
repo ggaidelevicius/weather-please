@@ -129,11 +129,7 @@ const processReleaseType = (releaseType) => {
 	processZipCreation(EXTENSION_DIR, newVersion, '-firefox')
 
 	modifyManifest(
-		{
-			background: {
-				service_worker: 'background.js',
-			},
-		},
+		{},
 		['browser_specific_settings'],
 	)
 
@@ -182,7 +178,6 @@ const packageSource = () => {
 		if (
 			fs.statSync(fullPath).isFile() &&
 			fullPath.slice(-4) !== '.zip' &&
-			fullPath !== './.sentryclirc' &&
 			fullPath !== './.env.local'
 		) {
 			zip.addLocalFile(fullPath)

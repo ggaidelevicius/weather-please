@@ -1,0 +1,18 @@
+html, body {
+	font-size: 100% !important; /* necessary because chrome injects (into extensions only for some reason) a font-size: 75% property */
+}
+
+@import 'tailwindcss';
+
+@theme {
+	--color-dark-100: #c1c2c5;
+	--color-dark-200: #a6a7ab;
+	--color-dark-300: #909296;
+	--color-dark-400: #5c5f66;
+	--color-dark-500: #373a40;
+	--color-dark-600: #2c2e33;
+	--color-dark-700: #25262b;
+	--color-dark-800: #1a1b1e;
+	--color-dark-900: #141517;
+	--color-dark-950: #101113;
+}

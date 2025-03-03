@@ -1,41 +1,35 @@
-# Política de Privacidad para la Extensión de Navegador "Weather Please"
+# Política de Privacidad de la Extensión del Navegador "Weather Please"
 
-_Actualizada por última vez: 10 de marzo de 2024_
+_Última actualización: 2 de marzo de 2025_
 
-Tu privacidad es importante para nosotros. Esta política de privacidad describe los datos personales que la extensión de navegador "Weather Please" puede recoger y cómo se utilizan esos datos.
+Tu privacidad es importante para nosotros. Esta política explica qué datos puede recopilar la extensión del navegador "Weather Please" y cómo se utilizan.
 
-## 1. Información que No Recogemos
+## 1. Información que no recopilamos
 
-"Weather Please" **no** recoge, almacena ni transmite ningún dato personal relacionado con tu actividad de navegación. No accedemos, retenemos ni compartimos datos personales como direcciones IP, datos de geolocalización o historial de navegación.
+"Weather Please" **no** recopila, almacena ni transmite ningún dato personal sobre tu actividad de navegación. No accedemos, retenemos ni compartimos direcciones IP, historial de navegación ni información de identificación personal.
 
-## 2. Datos Anonimizados de Fallos y Reportes de Errores
+## 2. Datos de geolocalización y servicios de terceros
 
-Para mejorar la funcionalidad y experiencia de usuario de nuestra extensión de navegador, los usuarios están incluidos por defecto en el envío de datos anonimizados de fallos y registros de errores. Estos datos se utilizan exclusivamente con el propósito de identificar y corregir errores o problemas dentro de la extensión. No contienen información personal y no se pueden rastrear hasta usuarios individuales.
+Para obtener información meteorológica local, "Weather Please" necesita acceso a la geolocalización de tu dispositivo (latitud y longitud). Al instalar la extensión, se te pedirá permiso para acceder a tu ubicación. Si rechazas, la extensión no funcionará.
 
-Tus datos de geolocalización se reducirán a solo 1 decimal, lo cual representa un radio aproximado de 11.1 km, asegurando la anonimización de tu ubicación mientras nos permite mantener una funcionalidad útil.
+Los datos de ubicación se envían directamente a servicios meteorológicos de terceros para recuperar la información del clima. Estos servicios operan bajo sus propias políticas de privacidad, que puedes consultar aquí:
 
-Si deseas no participar en esta característica, puedes hacerlo en cualquier momento a través del menú de configuración de la extensión. Tienes plena discreción para habilitar o deshabilitar esta característica en cualquier momento.
+- [Política de privacidad de Open-Meteo](https://open-meteo.com/en/terms)
 
-## 3. Uso de Datos por Terceros
+"Weather Please" no almacena ni transmite tus datos de ubicación más allá de la solicitud a estos servicios.
 
-Para obtener información meteorológica localizada, los usuarios pueden optar por proporcionar su información de IP o su latitud/longitud a servicios de terceros. Estos servicios de terceros operan bajo sus propias políticas de privacidad, y "Weather Please" no tiene control sobre sus prácticas de recolección y uso de datos. Puedes acceder a las políticas de privacidad de los servicios de terceros aquí:
+## 3. Cómo usamos tu información
 
-- https://wiki.osmfoundation.org/wiki/Privacy_Policy
-- https://open-meteo.com/en/terms
-- https://ip-api.com/docs/legal
+No recopilamos, almacenamos ni compartimos datos personales. Tu ubicación solo se utiliza para obtener información meteorológica de servicios de terceros.
 
-## 4. Cómo Utilizamos Tu Información
+## 4. Tus opciones
 
-Aparte de los datos anonimizados de fallos y reportes de errores a los que estás incluido por defecto para compartir con nosotros, no recogemos ningún otro dato personal. Como tal, no podemos usar o compartirlo de ninguna manera.
+Puedes elegir si otorgar acceso a tu ubicación cuando se te solicite. Si no lo permites, la extensión no funcionará. Al usar "Weather Please", aceptas esta condición.
 
-## 5. Tus Opciones
+## 5. Cambios en esta Política de Privacidad
 
-Tienes la capacidad de elegir si usar nuestra extensión de navegador, proporcionar tu IP o datos de geolocalización a los servicios meteorológicos de terceros y optar por enviarnos datos anonimizados de fallos y reportes de errores. Si no estás de acuerdo con estos términos, deberías dejar de usar la extensión de navegador "Weather Please".
+Podemos actualizar esta política periódicamente. Los cambios se publicarán en esta página y serán efectivos inmediatamente.
 
-## 6. Cambios en esta Política de Privacidad
+## 6. Contáctanos
 
-Podemos actualizar nuestra Política de Privacidad de vez en cuando. Te notificaremos de cualquier cambio publicando la nueva Política de Privacidad en esta página. Estos cambios son efectivos inmediatamente después de su publicación.
-
-## 7. Contáctanos
-
-Si tienes alguna pregunta o sugerencia sobre nuestra Política de Privacidad, no dudes en contactarnos en [contact@weather-please.app](mailto:contact@weather-please.app).
+Si tienes preguntas o sugerencias, contáctanos en [contact@weather-please.app](mailto:contact@weather-please.app).

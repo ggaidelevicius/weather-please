@@ -1,41 +1,35 @@
 # Datenschutzrichtlinie für die "Weather Please" Browsererweiterung
 
-_Zuletzt aktualisiert: 10. März 2024_
+_Letzte Aktualisierung: 2. März 2025_
 
-Ihre Privatsphäre ist uns wichtig. Diese Datenschutzrichtlinie beschreibt, welche persönlichen Daten die "Weather Please" Browsererweiterung erfassen kann und wie diese Daten verwendet werden.
+Ihre Privatsphäre ist uns wichtig. Diese Richtlinie beschreibt, welche Daten die "Weather Please" Browsererweiterung erfassen kann und wie diese genutzt werden.
 
-## 1. Informationen, die wir nicht sammeln
+## 1. Welche Daten wir nicht sammeln
 
-"Weather Please" sammelt, speichert oder übermittelt keine Ihrer persönlichen Daten im Zusammenhang mit Ihrer Browsing-Aktivität. Wir greifen nicht auf persönliche Daten wie IP-Adressen, Geolokationsdaten oder Browsing-Historie zu und behalten oder teilen diese nicht.
+"Weather Please" sammelt, speichert oder überträgt keine personenbezogenen Daten zu Ihrem Surfverhalten. Wir erfassen keine IP-Adressen, Browserverläufe oder persönlich identifizierbare Informationen.
 
-## 2. Anonymisierte Crash-Daten und Fehlerberichte
+## 2. Standortdaten und Drittanbieter
 
-Um die Funktionalität und Benutzererfahrung unserer Browsererweiterung zu verbessern, bieten wir Nutzern die Möglichkeit, sich für die Übermittlung anonymisierter Crash-Daten und Fehlerberichte zu entscheiden. Diese Daten werden ausschließlich zum Zweck der Identifizierung und Behebung von Fehlern oder Problemen innerhalb der Erweiterung verwendet. Sie enthalten keine persönlichen Informationen und können nicht auf einzelne Benutzer zurückverfolgt werden.
+Um lokale Wetterdaten bereitzustellen, benötigt "Weather Please" Zugriff auf die Standortdaten Ihres Geräts (Breiten- und Längengrad). Bei der Installation werden Sie um Erlaubnis zur Standortfreigabe gebeten. Wenn Sie diese verweigern, funktioniert die Erweiterung nicht.
 
-Nutzer sind standardmäßig in die Übermittlung dieser Daten eingewilligt, können sich jedoch jederzeit über das Einstellungsmenü dafür oder dagegen entscheiden.
+Ihre Standortdaten werden direkt an Drittanbieter weitergeleitet, um Wetterinformationen abzurufen. Diese Drittanbieter haben ihre eigenen Datenschutzrichtlinien, die Sie hier einsehen können:
 
-Die Geolokationsinformationen der Nutzer werden auf lediglich 1 Dezimalstelle reduziert, was einem ungefähren Radius von 11,1 Kilometern entspricht. Diese Maßnahme gewährleistet, dass die Daten nicht persönlich identifizierbar sind und die Privatsphäre der Nutzer geschützt bleibt.
+- [Open-Meteo Datenschutzrichtlinie](https://open-meteo.com/en/terms)
 
-## 3. Datenverwendung durch Dritte
+"Weather Please" speichert oder überträgt Ihre Standortdaten nicht.
 
-Um lokalisierte Wetterinformationen abzurufen, können Nutzer wählen, entweder ihre IP-Informationen oder ihre Breiten- und Längengrade an Drittanbieterdienste zu übermitteln. Diese Drittanbieterdienste unterliegen ihren eigenen Datenschutzrichtlinien, und "Weather Please" hat keine Kontrolle über deren Datenerhebungs- und Nutzungspraktiken. Sie können auf die Datenschutzrichtlinien der Drittanbieter hier zugreifen:
+## 3. Wie wir Ihre Daten verwenden
 
-- https://wiki.osmfoundation.org/wiki/Privacy_Policy
-- https://open-meteo.com/de/terms
-- https://ip-api.com/docs/legal
+Wir sammeln, speichern oder teilen keine persönlichen Daten. Ihre Standortinformationen werden ausschließlich verwendet, um Wetterdaten von Drittanbietern abzurufen.
 
-## 4. Wie wir Ihre Informationen verwenden
+## 4. Ihre Wahlmöglichkeiten
 
-Abgesehen von den anonymisierten Crash-Daten und Fehlerberichten, zu deren Übermittlung Sie sich entschieden haben, sammeln wir keine anderen persönlichen Daten. Daher können wir diese nicht auf irgendeine Weise nutzen oder teilen.
+Sie können beim Installationsvorgang entscheiden, ob Sie den Standortzugriff erlauben. Ohne Ihre Zustimmung funktioniert die Erweiterung nicht. Durch die Nutzung von "Weather Please" stimmen Sie dieser Anforderung zu.
 
-## 5. Ihre Wahlmöglichkeiten
+## 5. Änderungen dieser Datenschutzrichtlinie
 
-Sie haben die Möglichkeit zu wählen, ob Sie unsere Browsererweiterung nutzen, Ihre IP- oder Geolokationsdaten an die Wetterdienste Dritter weitergeben und sich für die Übermittlung anonymisierter Crash-Daten und Fehlerberichte an uns entscheiden. Wenn Sie diesen Bedingungen nicht zustimmen, sollten Sie die Nutzung der "Weather Please" Browsererweiterung einstellen.
+Diese Datenschutzrichtlinie kann gelegentlich aktualisiert werden. Änderungen werden auf dieser Seite veröffentlicht und treten sofort in Kraft.
 
-## 6. Änderungen dieser Datenschutzrichtlinie
+## 6. Kontaktieren Sie uns
 
-Wir können unsere Datenschutzrichtlinie von Zeit zu Zeit aktualisieren. Wir werden Sie über jegliche Änderungen informieren, indem wir die neue Datenschutzrichtlinie auf dieser Seite veröffentlichen. Diese Änderungen treten sofort nach ihrer Veröffentlichung in Kraft.
-
-## 7. Kontaktieren Sie uns
-
-Wenn Sie Fragen oder Anregungen zu unserer Datenschutzrichtlinie haben, zögern Sie nicht, uns unter [contact@weather-please.app](mailto:contact@weather-please.app) zu kontaktieren.
+Bei Fragen oder Anregungen kontaktieren Sie uns bitte unter [contact@weather-please.app](mailto:contact@weather-please.app).

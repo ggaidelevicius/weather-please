@@ -1,41 +1,35 @@
-# "Weather Please" Naršyklės Plėtinio Privatumo Politika
+# "Weather Please" naršyklės plėtinio privatumo politika
 
-_Paskutinį kartą atnaujinta: 2024 m. kovo 10 d._
+_Paskutinį kartą atnaujinta: 2025 m. kovo 2 d._
 
-Jūsų privatumas mums svarbus. Ši privatumo politika apibūdina, kokius asmeninius duomenis gali rinkti naršyklės plėtinys "Weather Please" ir kaip šie duomenys naudojami.
+Jūsų privatumas mums svarbus. Ši politika aprašo, kokius duomenis gali rinkti "Weather Please" naršyklės plėtinys ir kaip jie naudojami.
 
-## 1. Informacija, Kurią Mes Neprenkame
+## 1. Kokios informacijos nerenkame
 
-"Weather Please" **neprenk** jokios jūsų naršymo veiklos susijusios asmeninės informacijos. Mes nepasiekime, nesaugome ar nesiunčiame asmeninių duomenų, tokios kaip IP adresai, geografinė informacija ar naršymo istorija.
+"Weather Please" **nerenka, nesaugo ir neperduoda jokių jūsų naršymo veiklai susijusių asmens duomenų**. Mes nerenkame IP adresų, naršymo istorijos ar jokios asmeniškai identifikuojamos informacijos.
 
-## 2. Anonimiški Avarijos Duomenys ir Klaidų Pranešimai
+## 2. Geolokacijos duomenys ir trečiųjų šalių paslaugos
 
-Siekdami pagerinti mūsų naršyklės plėtinio funkcionalumą ir vartotojo patirtį, vartotojai pagal numatytuosius nustatymus pritaria siųsti anonimiškus avarijos duomenis ir klaidų pranešimus. Šie duomenys naudojami tik identifikuotiems ir taisytiems defektams ar problemoms nustatyti. Jie neįtraukia jokios asmeninės informacijos ir negali būti atsekami iki atskirų vartotojų.
+Norint gauti vietinę orų informaciją, "Weather Please" reikia prieigos prie jūsų įrenginio geolokacijos (platuma ir ilguma). Įdiegimo metu jums bus pasiūlyta suteikti prieigą prie vietos nustatymo. Jei atsisakysite, plėtinys neveiks.
 
-Informacija apie geografinę padėtį, surinkta šiuose pranešimuose, bus supaprastinta iki 1 dešimtainės skaitmenų dalies, apimant apie 11,1 km spindulį, užtikrinant duomenų anonimiškumą ir suteikiant naudingą informaciją problemų analizei.
+Jūsų buvimo vietos duomenys siunčiami tiesiogiai trečiųjų šalių orų paslaugoms, kad būtų gauta orų informacija. Šios paslaugos turi savo privatumo politiką, kurią galite peržiūrėti čia:
 
-Jei norite atsisakyti šios rinkimo funkcijos, galite tai padaryti bet kuriuo metu per nustatymų meniu.
+- [Open-Meteo privatumo politika](https://open-meteo.com/en/terms)
 
-## 3. Trečiųjų Šalių Duomenų Naudojimas
+"Weather Please" nesaugo ir neperduoda jūsų vietos duomenų kitais būdais.
 
-Norėdami gauti lokalizuotą oro informaciją, vartotojai gali pasirinkti pateikti arba savo IP informaciją, arba savo platumos/ilgumos koordinates trečiųjų šalių paslaugoms. Šios trečiųjų šalių paslaugos veikia pagal savo privatumo politiką, ir "Weather Please" neturi kontrolės jų duomenų rinkimo ir naudojimo praktikų. Trečiųjų šalių paslaugų privatumo politiką galite rasti čia:
+## 3. Kaip naudojame jūsų informaciją
 
-- https://wiki.osmfoundation.org/wiki/Privacy_Policy
-- https://open-meteo.com/en/terms
-- https://ip-api.com/docs/legal
+Mes nerenkame, nesaugome ir nebendriname jokių asmens duomenų. Jūsų geolokacija naudojama tik orų duomenims gauti iš trečiųjų šalių paslaugų.
 
-## 4. Kaip Mes Naudosime Jūsų Informaciją
+## 4. Jūsų pasirinkimai
 
-Išskyrus anonimiškus avarijos duomenis ir klaidų pranešimus, kuriuos sutinkate su mumis dalintis, mes nebeturime ir negalime naudoti ar bendrinti jokių kitų asmeninių duomenų.
+Jūs galite pasirinkti, ar leisti prieigą prie vietos nustatymo. Jei neleisite, plėtinys neveiks. Naudodamiesi "Weather Please", jūs sutinkate su šia sąlyga.
 
-## 5. Jūsų Pasirinkimai
+## 5. Privatumo politikos pakeitimai
 
-Jūs turite galimybę pasirinkti, ar naudoti mūsų naršyklės plėtinį, ar teikti savo IP ar geografinę informaciją trečiųjų šalių orų paslaugoms, ir ar sutinkate siųsti mums anonimiškus avarijos duomenis ir klaidų pranešimus. Jei nesutinkate su šiomis sąlygomis, turėtumėte nutraukti naršyklės plėtinio "Weather Please" naudojimą.
+Mes galime atnaujinti šią privatumo politiką. Pakeitimai bus paskelbti šiame puslapyje ir įsigalios nedelsiant.
 
-## 6. Šios Privatumo Politikos Pakeitimai
+## 6. Susisiekite su mumis
 
-Mes galime laiku atnaujinti savo Privatumo Politiką. Apie bet kokius pakeitimus mes jus informuosime paskelbdami naują Privatumo Politiką šiame puslapyje. Šie pakeitimai įsigalios nedelsiant po jų paskelbimo.
-
-## 7. Susisiekite Su Mumis
-
-Jei turite klausimų ar pasiūlymų dėl mūsų Privatumo Politikos, nedvejokite susisiekti su mumis adresu [contact@weather-please.app](mailto:contact@weather-please.app).
+Jei turite klausimų ar pasiūlymų, kreipkitės el. paštu [contact@weather-please.app](mailto:contact@weather-please.app).

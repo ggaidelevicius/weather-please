@@ -1,5 +1,4 @@
 import type { NextConfig } from 'next'
-import { withSentryConfig } from '@sentry/nextjs'
 
 const nextConfig: NextConfig = {
 	reactStrictMode: true,
@@ -8,7 +7,7 @@ const nextConfig: NextConfig = {
 	},
 }
 
-if (process.env.NEXT_PUBLIC_BUILD_MODE === 'extension') {
+if (process.env.NEXT_PUBLIC_DEMO === 'false') {
 	Object.assign(nextConfig, {
 		output: 'export',
 		assetPrefix: '.',
@@ -18,11 +17,4 @@ if (process.env.NEXT_PUBLIC_BUILD_MODE === 'extension') {
 	})
 }
 
-module.exports = withSentryConfig(nextConfig, {
-	silent: true,
-	org: process.env.SENTRY_ORG,
-	project: process.env.SENTRY_PROJECT,
-	widenClientFileUpload: true,
-	hideSourceMaps: true,
-	disableLogger: true,
-})
+module.exports = nextConfig

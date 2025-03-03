@@ -1,41 +1,35 @@
 # Privacy Policy for the "Weather Please" Browser Extension
 
-_Last updated: March 10, 2024_
+_Last updated: March 02, 2025_
 
-Your privacy is important to us. This privacy policy outlines the personal data the "Weather Please" browser extension may collect and how that data is used.
+Your privacy is important to us. This policy outlines what data the "Weather Please" browser extension may collect and how it is used.
 
 ## 1. Information We Don't Collect
 
-"Weather Please" does **not** collect, store, or transmit any of your personal data related to your browsing activity. We do not access, retain, or share personal data such as IP addresses, geolocation data, or browsing history.
+"Weather Please" does **not** collect, store, or transmit any personal data related to your browsing activity. We do not access, retain, or share data such as IP addresses, browsing history, or any personally identifiable information.
 
-## 2. Anonymised Crash Data and Error Reporting
+## 2. Geolocation Data and Third-Party Services
 
-To improve the functionality and user experience of our browser extension, users are **opted in by default** to sending anonymised crash data and error reports. This data helps us identify and fix bugs or issues within the extension. It does not contain any personal information and cannot be traced back to individual users.
+To retrieve local weather information, "Weather Please" requires access to your device's geolocation (latitude and longitude). Upon installation, you will be prompted to allow location access. If you decline, the extension will not function.
 
-Additionally, to further protect your privacy, any geolocation information provided for the purpose of error reporting or crash data will be reduced to an accuracy of 1 decimal place. This adjustment approximates your location to an 11.1km radius, enhancing anonymity while allowing us to understand and resolve region-specific issues effectively.
+Location data is sent directly to third-party weather services to fetch weather updates. These services operate under their own privacy policies, which you can review here:
 
-If you wish to opt out of this default setting, you can do so in the extension settings. You have the full discretion to enable or disable this feature at any time.
+- [Open-Meteo Privacy Policy](https://open-meteo.com/en/terms)
 
-## 3. Third-party Data Use
+"Weather Please" does not store or transmit your location data beyond the request to these services.
 
-To retrieve localized weather information, users may choose to provide either their IP information or their latitude/longitude to third-party services. These third-party services operate under their own privacy policies, and "Weather Please" does not have control over their data collection and usage practices. You can access third-party service privacy policies here:
+## 3. How We Use Your Information
 
-- https://wiki.osmfoundation.org/wiki/Privacy_Policy
-- https://open-meteo.com/en/terms
-- https://ip-api.com/docs/legal
+We do not collect, store, or share any personal data. Your geolocation is used **only** to retrieve weather data from third-party services.
 
-## 4. How We Use Your Information
+## 4. Your Choices
 
-Apart from the anonymised crash data and error reports which you are opted into by default, we don't collect any other personal data. As such, we do not and cannot use or share it in any way.
+You may choose whether to grant location access when prompted. If you do not allow it, the extension will not function. By using "Weather Please," you acknowledge and accept this requirement.
 
-## 5. Your Choices
+## 5. Changes to This Privacy Policy
 
-You have the ability to choose whether to use our browser extension, to provide your IP or geolocation data to the third-party weather services, and to opt-in or opt-out of sending us anonymised crash data and error reports. If you do not agree with these terms, you should cease use of the "Weather Please" browser extension.
+We may update this Privacy Policy from time to time. Changes will be posted on this page and take effect immediately upon posting.
 
-## 6. Changes to this Privacy Policy
+## 6. Contact Us
 
-We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately after they are posted.
-
-## 7. Contact Us
-
-If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at [contact@weather-please.app](mailto:contact@weather-please.app).
+If you have any questions or suggestions about this Privacy Policy, contact us at [contact@weather-please.app](mailto:contact@weather-please.app).

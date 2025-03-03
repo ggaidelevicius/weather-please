@@ -1,28 +1,18 @@
-import Alert from '@/components/alert'
-import Initialisation from '@/components/intialisation'
+import { Initialisation } from '@/components/initialisation'
 import { RingLoader } from '@/components/loader'
-import Settings from '@/components/settings'
-import Tile from '@/components/tile'
-import styles from '@/styles/styles.module.css'
-import { mergeObjects } from '@/util/helpers'
-import type {
-	DetermineGridColumns,
-	HandleChange,
-	HandleClick,
-	WeatherData,
-} from '@/util/types'
+import { ReviewPrompt } from '@/components/review-prompt'
+import { Settings } from '@/components/settings'
+import { Tile } from '@/components/tile'
+import { WeatherAlert } from '@/components/weather-alert'
+import { mergeObjects } from '@/lib/helpers'
 import { i18n } from '@lingui/core'
-import { Trans } from '@lingui/macro'
-import { Button, Loader } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-import { notifications } from '@mantine/notifications'
-import * as Sentry from '@sentry/nextjs'
+import { Trans } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
+import { changeLocalisation, locales } from '../lib/i18n'
 import { messages } from '../locales/en/messages'
-import { changeLocalisation, locales } from '../util/i18n'
 import { queryClient } from './_app'
 
 i18n.load({
@@ -43,14 +33,12 @@ const configSchema = z.object({
 			/^(\+|-)?(?:180(?:\.0{1,6})?|((1[0-7]\d)|([1-9]?\d))(?:\.\d{1,6})?)$/,
 		),
 	periodicLocationUpdate: z.boolean(),
-	shareCrashesAndErrors: z.boolean(),
 	showAlerts: z.boolean(),
 	showPrecipitationAlerts: z.boolean(),
 	showUvAlerts: z.boolean(),
 	showVisibilityAlerts: z.boolean(),
 	showWindAlerts: z.boolean(),
 	useMetric: z.boolean(),
-	useShortcuts: z.boolean(),
 })
 
 export type Config = z.infer<typeof configSchema>
@@ -89,7 +77,59 @@ const alertSchema = z.object({
 
 export type Alerts = z.infer<typeof alertSchema>
 
-const WeatherPlease = () => {
+interface WeatherData {
+	latitude: number
+	longitude: number
+	generationtime_ms: number
+	utc_offset_seconds: number
+	timezone: string
+	timezone_abbreviation: string
+	elevation: number
+	hourly_units: HourlyUnits
+	hourly: HourlyData
+	daily_units: DailyUnits
+	daily: DailyData
+}
+
+interface HourlyUnits {
+	time: string
+	precipitation: string
+	uv_index: string
+	windspeed_10m: string
+	visibility: string
+	windgusts_10m: string
+}
+
+interface HourlyData {
+	time: number[]
+	precipitation: number[]
+	uv_index: number[]
+	windspeed_10m: number[]
+	visibility: number[]
+	windgusts_10m: number[]
+}
+
+interface DailyUnits {
+	time: string
+	weathercode: string
+	temperature_2m_max: string
+	temperature_2m_min: string
+	uv_index_max: string
+	precipitation_probability_max: string
+	windspeed_10m_max: string
+}
+
+interface DailyData {
+	time: number[]
+	weathercode: number[]
+	temperature_2m_max: number[]
+	temperature_2m_min: number[]
+	uv_index_max: number[]
+	precipitation_probability_max: number[]
+	windspeed_10m_max: number[]
+}
+
+const App = () => {
 	const [alertData, setAlertData] = useState<Alerts>({
 		totalPrecipitation: {
 			precipitation: {
@@ -105,9 +145,6 @@ const WeatherPlease = () => {
 		hoursOfStrongWindGusts: Array(25).fill(false),
 	})
 	const [weatherData, setWeatherData] = useState<[] | Data>([])
-	const [geolocationError, setGeolocationError] = useState<boolean>(false)
-	const [opened, { open, close }] = useDisclosure(false)
-	const settingsOpened = useRef(false)
 	const initialState: Config = {
 		lang: 'en',
 		lat: '',
@@ -121,19 +158,12 @@ const WeatherPlease = () => {
 		showPrecipitationAlerts: true,
 		daysToRetrieve: '3',
 		identifier: 'day',
-		shareCrashesAndErrors: true,
 		installed: new Date().getTime(),
 		displayedReviewPrompt: false,
-		useShortcuts: false,
 	}
 	const [config, setConfig] = useState<Config>(initialState)
 	const [input, setInput] = useState<Config>(initialState)
-	const [usingFreshData, setUsingFreshData] = useState<boolean>(false)
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
-	const [completedFirstLoad, setCompletedFirstLoad] = useState<boolean>(false)
-	const [reviewLink, setReviewLink] = useState(
-		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
-	)
 	const [usingCachedData, setUsingCachedData] = useState(true)
 
 	const currentDateRef = useRef(new Date().getDate())
@@ -148,32 +178,7 @@ const WeatherPlease = () => {
 		enabled: Boolean(config.lat) && Boolean(config.lon) && !usingCachedData,
 	})
 
-	useEffect(() => {
-		const keys = Array.from({ length: 10 }, (_, i) => (i + 1).toString())
-
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (!opened && config.useShortcuts && !settingsOpened.current) {
-				if (keys.includes(event.key)) {
-					setConfig((p) => ({
-						...p,
-						daysToRetrieve: event.key,
-					}))
-
-					setInput((p) => ({
-						...p,
-						daysToRetrieve: event.key,
-					}))
-				}
-			}
-		}
-
-		window.addEventListener('keydown', handleKeyDown)
-
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown)
-		}
-	}, [config.useShortcuts, opened])
-
+	// good to go - still needs error display
 	useEffect(() => {
 		if (data) {
 			const now = new Date()
@@ -258,22 +263,20 @@ const WeatherPlease = () => {
 		} else if (error) {
 			// eslint-disable-next-line no-console
 			console.error(error)
-			notifications.show({
-				title: <Trans>Error</Trans>,
-				message: (
-					<Trans>
-						An error has occurred while fetching weather data. Please try again
-						later.
-					</Trans>
-				),
-				color: 'red',
-			})
-			if (config.shareCrashesAndErrors) {
-				Sentry.captureException(error)
-			}
+			// notifications.show({
+			// 	title: <Trans>Error</Trans>,
+			// 	message: (
+			// 		<Trans>
+			// 			An error has occurred while fetching weather data. Please try again
+			// 			later.
+			// 		</Trans>
+			// 	),
+			// 	color: 'red',
+			// })
 		}
-	}, [data, error, config.shareCrashesAndErrors, changedLocation])
+	}, [data, error, changedLocation])
 
+	// good to go
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const currentHour = new Date().getHours()
@@ -298,89 +301,12 @@ const WeatherPlease = () => {
 	 * Input is used rather than config so users have instant feedback without first needing to
 	 * understand what the text on the 'save' or 'set my location' buttons do.
 	 */
+	// good to go
 	useEffect(() => {
 		if (input.lang) {
-			changeLocalisation(input.lang, config.shareCrashesAndErrors)
+			changeLocalisation(input.lang)
 		}
-	}, [input.lang, config.shareCrashesAndErrors])
-
-	/**
-	 * Initializes or closes the Sentry error reporting based on user permissions.
-	 *
-	 * When the `config.shareCrashesAndErrors` value changes (either read from localStorage or
-	 * updated in the app), this effect hook checks its value. If the user has granted permission,
-	 * Sentry is initialized to capture and report crashes and errors. If the permission is not given,
-	 * Sentry is closed to stop any error reporting.
-	 */
-	useEffect(() => {
-		if (config.shareCrashesAndErrors) {
-			Sentry.init({
-				dsn: process.env.NEXT_PUBLIC_SENTRY_DSN ?? '',
-				tracesSampleRate: 1,
-				debug: false,
-				replaysOnErrorSampleRate: 0,
-				replaysSessionSampleRate: 0,
-				beforeSend: (event) => {
-					if (event.request) {
-						if (event.request.url) {
-							const url = new URL(event.request.url)
-							const params = url.searchParams
-
-							if (params.has('latitude')) {
-								const latValue = params.get('latitude')
-								if (latValue !== null) {
-									const lat = parseFloat(latValue).toFixed(1)
-									params.set('latitude', lat)
-									url.search = params.toString()
-									event.request.url = url.toString()
-								}
-							}
-							if (params.has('longitude')) {
-								const lonValue = params.get('longitude')
-								if (lonValue !== null) {
-									const lon = parseFloat(lonValue).toFixed(1)
-									params.set('longitude', lon)
-									url.search = params.toString()
-									event.request.url = url.toString()
-								}
-							}
-						}
-
-						if (event.request.data) {
-							let data = event.request.data
-
-							if (typeof data === 'string') {
-								try {
-									data = JSON.parse(data)
-								} catch (e) {
-									// eslint-disable-next-line no-console
-									console.error(e)
-								}
-							}
-
-							if (data && typeof data === 'object') {
-								if ('latitude' in data && 'longitude' in data) {
-									data.latitude = parseFloat(data.latitude).toFixed(1)
-									data.longitude = parseFloat(data.longitude).toFixed(1)
-
-									event.request.data = JSON.stringify(data)
-								}
-							}
-						}
-					}
-
-					return event
-				},
-			})
-
-			Sentry.setTag('version', '2.5.35')
-		} else {
-			Sentry.close()
-		}
-		return () => {
-			Sentry.close()
-		}
-	}, [config.shareCrashesAndErrors])
+	}, [input.lang])
 
 	/**
 	 * On component mount, this effect hook checks the localStorage for a saved "config".
@@ -391,6 +317,7 @@ const WeatherPlease = () => {
 	 *
 	 * - If "config" does not exist in localStorage, the <Initialisation /> modal is opened to prompt the user for initial configuration.
 	 */
+	// good to go
 	useEffect(() => {
 		const storedData = localStorage?.config
 			? JSON.parse(localStorage.config)
@@ -400,29 +327,11 @@ const WeatherPlease = () => {
 			if (objectShapesMatch.success) {
 				setConfig(storedData)
 				setInput(storedData)
-				if (
-					new Date().getTime() - storedData.installed >= 2419200000 &&
-					!storedData.displayedReviewPrompt
-				) {
-					setTimeout(() => {
-						displayReviewPrompt()
-					}, 1e3)
-				}
 			} else {
 				const mergedObject = mergeObjects(storedData, config)
 				setConfig(mergedObject as Config)
 				setInput(mergedObject as Config)
-				if (
-					new Date().getTime() - mergedObject.installed >= 2419200000 &&
-					!mergedObject.displayedReviewPrompt
-				) {
-					setTimeout(() => {
-						displayReviewPrompt()
-					}, 1e3)
-				}
 			}
-		} else {
-			open()
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
@@ -445,7 +354,9 @@ const WeatherPlease = () => {
 	 * - It ensures that data used is timely and relevant, either by validating cached data against current criteria or signaling the need for new data fetching.
 	 */
 	useEffect(() => {
-		if (isLocalStorageDataValid(changedLocation)) {
+		if (changedLocation) {
+			setUsingCachedData(false)
+		} else if (isLocalStorageDataValid()) {
 			setWeatherData(JSON.parse(localStorage.data))
 			setAlertData(JSON.parse(localStorage.alerts))
 		} else {
@@ -453,129 +364,40 @@ const WeatherPlease = () => {
 		}
 	}, [config.lat, config.lon, changedLocation])
 
-	const handleChange: HandleChange = (k, v) => {
+	/**
+	 * Manages updates to the "input" state.
+	 *
+	 * Takes in a key and a value. Existing attributes of the "input" state are retained,
+	 * while the provided attribute (key-value pair) will either be added or, if the key already exists,
+	 * its value will be overwritten with the new one.
+	 */
+	const handleChange = (k: keyof Config, v: Config[keyof Config]) => {
 		setInput((prev) => {
 			return {
 				...prev,
-				[k]: v,
+				[k]: typeof v === 'string' ? v.trim() : v,
 			}
 		})
 	}
 
-	const handleClick: HandleClick = async (method) => {
-		const userAgent = navigator.userAgent.toLowerCase()
-
+	useEffect(() => {
 		if (
-			method === 'auto' &&
-			!(
-				userAgent.indexOf('safari') !== -1 && userAgent.indexOf('chrome') === -1
+			input.lat &&
+			input.lon &&
+			/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat) &&
+			/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(
+				input.lon,
 			)
 		) {
-			navigator.geolocation.getCurrentPosition((pos) => {
-				if (
-					config.lat !== pos.coords.latitude.toString() ||
-					config.lon !== pos.coords.longitude.toString()
-				) {
-					setChangedLocation(true)
-				}
-				setConfig((prev) => ({
-					...prev,
-					lat: pos.coords.latitude.toString(),
-					lon: pos.coords.longitude.toString(),
-					lang: input.lang,
-				}))
-				setInput((prev) => ({
-					...prev,
-					lat: pos.coords.latitude.toString(),
-					lon: pos.coords.longitude.toString(),
-				}))
-			})
-			setTimeout(() => {
-				setGeolocationError(true)
-			}, 5e3)
-		} else if (
-			method === 'auto' &&
-			userAgent.indexOf('safari') !== -1 &&
-			userAgent.indexOf('chrome') === -1
-		) {
-			try {
-				const req = await fetch('http://ip-api.com/json/', {
-					method: 'GET',
-					mode: 'cors',
-				})
-				const res = await req.json()
-				const { lat, lon } = res
-				if (config.lat !== lat || config.lon !== lon) {
-					setChangedLocation(true)
-				}
-				setConfig((prev) => ({
-					...prev,
-					lat: lat,
-					lon: lon,
-					lang: input.lang,
-				}))
-				setInput((prev) => ({
-					...prev,
-					lat: lat,
-					lon: lon,
-				}))
-			} catch (e) {
-				// eslint-disable-next-line no-console
-				console.error(e)
-				setGeolocationError(true)
-				if (config.shareCrashesAndErrors) {
-					Sentry.captureException(e)
-				}
-			}
-			setTimeout(() => {
-				setGeolocationError(true)
-			}, 5e3)
-		} else {
-			if (config.lat !== input.lat || config.lon !== input.lon) {
-				setChangedLocation(true)
-			}
+			localStorage.config = JSON.stringify(input)
 			setConfig(input)
 		}
-	}
-
-	/**
-	 * Closes the <Initialisation /> modal if it's opened and both "lat" and "lon" are configured in the "config".
-	 */
-	useEffect(() => {
-		if (opened && config.lat && config.lon) {
-			close()
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [opened, config.lat, config.lon])
-
-	/**
-	 * Commits the "config" to localStorage if "config.lat" and "config.lon" are valid latitude and longitude values, respectively.
-	 * Latitude: -90 to +90, Longitude: -180 to +180.
-	 * If the geolocation has been updated, it sets "usingFreshData" to true, indicating the need to fetch fresh data.
-	 */
-	useEffect(() => {
-		if (
-			config.lat &&
-			config.lon &&
-			/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(config.lat) &&
-			/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(
-				config.lon,
-			)
-		) {
-			localStorage.config = JSON.stringify(config)
-			if (changedLocation) {
-				setUsingFreshData(true)
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [config])
+	}, [input])
 
 	/**
 	 * Periodically (every minute) checks if the current date has changed.
 	 * If it's a new day and the user has opted-in for periodic location updates,
-	 * the user's geolocation is checked:
-	 * - For non-Safari browsers, the built-in Geolocation API is utilized.
-	 * - For Safari, an external service (ip-api.com) is used to fetch geolocation data.
+	 * the user's geolocation is checked
 	 *
 	 * If the geolocation has changed from what's saved in "config", the "changedLocation" flag is set to true.
 	 *
@@ -590,338 +412,99 @@ const WeatherPlease = () => {
 		}, 6e4)
 
 		if (config.periodicLocationUpdate) {
-			const userAgent = navigator.userAgent.toLowerCase()
-
-			if (
-				userAgent.indexOf('safari') === -1 &&
-				userAgent.indexOf('chrome') === -1
-			) {
-				try {
-					navigator.geolocation.getCurrentPosition((pos) => {
-						if (
-							config.lat !== pos.coords.latitude.toString() ||
-							config.lon !== pos.coords.longitude.toString()
-						) {
-							setChangedLocation(true)
-						}
-						setConfig((prev) => ({
-							...prev,
-							lat: pos.coords.latitude.toString(),
-							lon: pos.coords.longitude.toString(),
-						}))
-					})
-				} catch (e) {
-					// eslint-disable-next-line no-console
-					console.error(e)
-					notifications.show({
-						title: <Trans>Error</Trans>,
-						message: (
-							<Trans>
-								An error has occurred while periodically updating location.
-								Please check the console for more details.
-							</Trans>
-						),
-						color: 'red',
-					})
-					if (config.shareCrashesAndErrors) {
-						Sentry.captureException(e)
+			try {
+				navigator.geolocation.getCurrentPosition((pos) => {
+					if (
+						config.lat !== pos.coords.latitude.toString() ||
+						config.lon !== pos.coords.longitude.toString()
+					) {
+						setChangedLocation(true)
 					}
-				}
-			} else {
-				const fetchSafariGeoData = async () => {
-					try {
-						const req = await fetch('http://ip-api.com/json/', {
-							method: 'GET',
-							mode: 'cors',
-						})
-						const res = await req.json()
-						const { latitude, longitude } = res
-						if (latitude && longitude) {
-							if (config.lat !== latitude || config.lon !== longitude) {
-								setChangedLocation(true)
-							}
-							setConfig((prev) => ({
-								...prev,
-								lat: latitude,
-								lon: longitude,
-							}))
-						}
-					} catch (e) {
-						// eslint-disable-next-line no-console
-						console.warn(e)
-						notifications.show({
-							title: <Trans>Error</Trans>,
-							message: (
-								<Trans>
-									An error has occurred while fetching location data. Please
-									check the console for more details.
-								</Trans>
-							),
-							color: 'red',
-						})
-						if (config.shareCrashesAndErrors) {
-							Sentry.captureException(e)
-						}
-					}
-				}
-				fetchSafariGeoData()
+					setInput((prev) => ({
+						...prev,
+						lat: pos.coords.latitude.toString(),
+						lon: pos.coords.longitude.toString(),
+					}))
+				})
+			} catch (e) {
+				console.error(e)
 			}
 		}
 		return () => {
 			clearInterval(checkDate)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentDateRef, config.periodicLocationUpdate])
 
 	const tiles = weatherData
 		.slice(0, parseInt(config.daysToRetrieve))
-		.map((day, i: number) => {
+		.map((day, index) => {
 			let delayBaseline = 0.75
 			if (localStorage.data) {
 				delayBaseline = 0
 			}
 			return (
-				<motion.div
+				<Tile
+					{...day}
 					key={day.day}
-					initial={{ scale: 0.95, opacity: 0 }}
-					animate={{
-						scale: 1,
-						opacity: 1,
-						transition: {
-							type: 'spring',
-							duration: 2,
-							delay: i * 0.075 + delayBaseline,
-						},
-					}}
-					exit={{ scale: 0.95, opacity: 0 }}
-					layout={completedFirstLoad}
-					style={{ background: 'none', willChange: 'transform, opacity' }}
-				>
-					<Tile
-						{...day}
-						useMetric={config.useMetric}
-						identifier={config.identifier}
-					/>
-				</motion.div>
+					index={index}
+					delayBaseline={delayBaseline}
+					useMetric={config.useMetric}
+					identifier={config.identifier}
+				/>
 			)
 		})
-
-	/**
-	 * Delays setting `completedFirstLoad` to mitigate layout shifts during initial render.
-	 *
-	 * The effect sets a delay of 1.9 seconds before marking the first load as complete. This
-	 * ensures that weather tiles render smoothly without abrupt layout shifts due to
-	 * alerts being mounted separately.
-	 *
-	 * NOTE: This currently does not work as expected. Need to figure another solution to prevent
-	 * layout shift - changing keys mounts new elements
-	 */
-	useEffect(() => {
-		setTimeout(() => {
-			setCompletedFirstLoad(true)
-		}, 0) // 1900
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
-
-	const determineGridColumns: DetermineGridColumns = (daysToRetrieve) => {
-		const value = parseInt(daysToRetrieve)
-
-		switch (value) {
-			case 1:
-				return 1
-			case 2:
-				return 2
-			case 3:
-				return 3
-			case 4:
-				return 4
-			case 5:
-				return 5
-			case 6:
-				return 3
-			case 7:
-				return 3
-			case 8:
-				return 4
-			case 9:
-				return 3
-			default:
-				return 3
-		}
-	}
-
-	/**
-	 * A function that triggers a review prompt notification after a delay.
-	 *
-	 * When called, after a delay of 1 second, the function checks if:
-	 * 1. The time difference between the current date and the installation date
-	 *    (from `config.installed`) exceeds 28 days (2419200000 milliseconds).
-	 * 2. The review prompt has not yet been displayed based on the value from `localStorage`.
-	 *
-	 * If both conditions are met, a notification is shown to the user, prompting them to leave a review.
-	 *
-	 * The notification contains two main actions:
-	 * 1. A button to leave a review.
-	 * 2. A button to dismiss the prompt and ensure it's never shown again.
-	 */
-	const displayReviewPrompt = () => {
-		notifications.show({
-			id: 'review',
-			title: <Trans>You&apos;ve been using Weather Please for a while</Trans>,
-			message: (
-				<div style={{ display: 'flex', flexDirection: 'column' }}>
-					<p style={{ margin: '0.2rem 0' }}>
-						<Trans>Would you like to leave a review?</Trans>
-					</p>
-					<Button
-						component="a"
-						href={
-							getUserAgent() ??
-							'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews'
-						} // can't pass computed value in here, need to figure out alternative asap
-						style={{ marginTop: '0.5rem' }}
-						onClick={() => {
-							notifications.hide('review')
-							setConfig((prev) => ({
-								...prev,
-								displayedReviewPrompt: true,
-							}))
-						}}
-					>
-						<Trans>🌟 Leave a review</Trans>
-					</Button>
-					<Button
-						style={{ marginTop: '0.5rem' }}
-						variant="light"
-						color="red"
-						onClick={() => {
-							notifications.hide('review')
-							setConfig((prev) => ({
-								...prev,
-								displayedReviewPrompt: true,
-							}))
-						}}
-					>
-						<Trans>Never show this again</Trans>
-					</Button>
-				</div>
-			),
-			autoClose: false,
-			withCloseButton: false,
-		})
-	}
-
-	const getUserAgent = () => {
-		const userAgent = navigator.userAgent.toLowerCase()
-
-		if (
-			userAgent.indexOf('safari') !== -1 &&
-			userAgent.indexOf('chrome') === -1
-		) {
-			setReviewLink('https://apps.apple.com/au/app/weather-please/id6462968576')
-			return 'https://apps.apple.com/au/app/weather-please/id6462968576'
-		} else if (userAgent.includes('firefox/')) {
-			setReviewLink(
-				'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/',
-			)
-			return 'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/'
-		}
-	}
-
-	useEffect(() => {
-		getUserAgent()
-	}, [])
 
 	return (
 		<>
-			<AnimatePresence>
-				{weatherData.length === 0 && config.lat && config.lon && (
-					<motion.div
-						initial={{ scale: 1, opacity: 0 }}
-						animate={{ scale: 1, opacity: 1 }}
-						exit={{ scale: 0.95, opacity: 0 }}
-						style={{
-							position: 'absolute',
-							width: '100%',
-							margin: 'auto',
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							background: 'none',
-						}}
-					>
-						<Loader loaders={{ ring: RingLoader }} type="ring" size={80} />
-					</motion.div>
-				)}
-			</AnimatePresence>
-
+			{config.showAlerts && (
+				<AnimatePresence>
+					<WeatherAlert
+						{...alertData}
+						useMetric={config.useMetric}
+						showUvAlerts={config.showUvAlerts}
+						showWindAlerts={config.showWindAlerts}
+						showVisibilityAlerts={config.showVisibilityAlerts}
+						showPrecipitationAlerts={config.showPrecipitationAlerts}
+					/>
+				</AnimatePresence>
+			)}
+			<ReviewPrompt config={config} setInput={setInput} />
 			<AnimatePresence>
 				<motion.main
-					layout={usingFreshData}
-					className={styles.main}
-					style={{
-						gridTemplateColumns: `repeat(${determineGridColumns(
-							config.daysToRetrieve,
-						)}, 1fr)`,
-					}}
+					className={`relative grid min-h-[84px] min-w-[84px] grid-cols-1 gap-5 p-5 ${config.daysToRetrieve === '1' ? 'lg:grid-cols-1' : ''}${config.daysToRetrieve === '2' ? 'lg:grid-cols-2' : ''}${config.daysToRetrieve === '3' ? 'lg:grid-cols-3' : ''}${config.daysToRetrieve === '4' ? 'lg:grid-cols-4' : ''}${config.daysToRetrieve === '5' ? 'lg:grid-cols-5' : ''}${config.daysToRetrieve === '6' ? 'lg:grid-cols-3' : ''}${config.daysToRetrieve === '7' ? 'lg:grid-cols-3' : ''}${config.daysToRetrieve === '8' ? 'lg:grid-cols-4' : ''}${config.daysToRetrieve === '9' ? 'lg:grid-cols-3' : ''}`}
 				>
-					{tiles}
-					{config.showAlerts && (
-						<Alert
-							{...alertData}
-							useMetric={config.useMetric}
-							showUvAlerts={config.showUvAlerts}
-							showWindAlerts={config.showWindAlerts}
-							showVisibilityAlerts={config.showVisibilityAlerts}
-							showPrecipitationAlerts={config.showPrecipitationAlerts}
-							width={determineGridColumns(config.daysToRetrieve)}
-						/>
+					<Initialisation
+						setInput={setInput}
+						input={input}
+						handleChange={handleChange}
+						pending={!config?.lat || !config?.lon}
+					/>
+					{weatherData.length === 0 ? (
+						<AnimatePresence>
+							<RingLoader />
+						</AnimatePresence>
+					) : (
+						<AnimatePresence>{tiles}</AnimatePresence>
 					)}
 				</motion.main>
 			</AnimatePresence>
 
-			<Settings
-				input={input}
-				handleChange={handleChange}
-				handleClick={handleClick}
-				config={config}
-				setInput={setInput}
-				reviewLink={reviewLink}
-				settingsOpened={settingsOpened}
-			/>
-
-			<Initialisation
-				geolocationError={geolocationError}
-				handleClick={handleClick}
-				input={input}
-				handleChange={handleChange}
-				opened={opened}
-				close={close}
-			/>
-
 			<a
 				href="https://open-meteo.com/"
 				target="_blank"
-				className={styles.link}
-				style={{
-					position: 'fixed',
-					bottom: '1rem',
-					left: '1rem',
-					fontSize: '0.75rem',
-					color: 'hsl(220deg 2.78% 57.65%)',
-					lineHeight: 1,
-					textDecoration: 'none',
-				}}
+				className="fixed bottom-4 left-4 text-xs text-dark-300 hover:underline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500"
 			>
 				<Trans>weather data provided by open-meteo</Trans>
 			</a>
+
+			<Settings handleChange={handleChange} input={input} />
 		</>
 	)
 }
 
-const isLocalStorageDataValid = (changedLocation: boolean) => {
+const isLocalStorageDataValid = () => {
 	const { data, lastUpdated, alerts } = localStorage
-	if (!data || !lastUpdated || changedLocation) return false
+	if (!data || !lastUpdated) return false
 
 	const [year, month, day, hour] = lastUpdated.split('-').map(Number)
 	const currentDate = new Date()
@@ -942,4 +525,4 @@ const isLocalStorageDataValid = (changedLocation: boolean) => {
 	)
 }
 
-export default WeatherPlease
+export default App
