@@ -1,5 +1,8 @@
 name: Create Release from package.json
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
@@ -8,7 +11,6 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
