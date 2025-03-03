@@ -1,4 +1,3 @@
-import { Button } from '@/components/button'
 import { Initialisation } from '@/components/initialisation'
 import { RingLoader } from '@/components/loader'
 import { ReviewPrompt } from '@/components/review-prompt'

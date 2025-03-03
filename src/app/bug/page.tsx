@@ -2,7 +2,6 @@
 
 import { Input, Textarea } from '@/components/input'
 import { changeLocalisation, locales } from '@/lib/i18n'
-import { messages } from '@/locales/en/messages'
 import { i18n } from '@lingui/core'
 import { I18nProvider } from '@lingui/react'
 import { Trans } from '@lingui/react/macro'

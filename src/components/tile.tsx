@@ -13,10 +13,10 @@ import {
 } from '@/assets/images'
 import { Trans } from '@lingui/react/macro'
 import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
+import { motion } from 'framer-motion'
 import type { StaticImageData } from 'next/image'
 import Image from 'next/image'
 import type { ReactElement } from 'react'
-import { motion } from 'framer-motion'
 
 const iconMap: Record<number, StaticImageData> = {
 	0: ClearSky,
