@@ -1,6 +1,6 @@
 import type { Config } from '@/pages'
 import { Trans } from '@lingui/react/macro'
-import type { Dispatch, SetStateAction } from 'react'
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react'
 import { Button } from './button'
 
 interface ReviewPromptProps {
@@ -9,9 +9,25 @@ interface ReviewPromptProps {
 }
 
 export const ReviewPrompt = ({ config, setInput }: ReviewPromptProps) => {
-	if (!config.displayedReviewPrompt && new Date().getTime() - config.installed >= 2419200000) { // 28 days
+	const [platformReviewLink, setPlatformReviewLink] = useState(
+		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
+	)
+
+	useEffect(() => {
+		if (navigator.userAgent.toLowerCase().includes('firefox/')) {
+			setPlatformReviewLink(
+				'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/',
+			)
+		}
+	}, [])
+
+	if (
+		!config.displayedReviewPrompt &&
+		new Date().getTime() - config.installed >= 2419200000
+	) {
+		// 28 days
 		return (
-			<div className="absolute top-5 right-5 flex flex-col rounded-lg bg-dark-700 p-5 text-white z-1 shadow-md">
+			<div className="absolute top-5 right-5 z-1 flex flex-col rounded-lg bg-dark-700 p-5 text-white shadow-md">
 				<p className="mb-2 text-lg font-medium">
 					<Trans>You&apos;ve been using Weather Please for a while</Trans>
 				</p>
@@ -20,7 +36,7 @@ export const ReviewPrompt = ({ config, setInput }: ReviewPromptProps) => {
 				</p>
 				<div className="flex flex-row gap-2">
 					<Button
-						href="https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews"
+						href={platformReviewLink}
 						onClick={() =>
 							setInput((prev) => ({
 								...prev,
