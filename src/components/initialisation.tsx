@@ -1,5 +1,4 @@
 import { locales } from '@/lib/i18n'
-import { HandleChange } from '@/lib/types'
 import type { Config } from '@/pages'
 import {
 	Description,
@@ -20,7 +19,7 @@ import { Select } from './input'
 
 interface InitialisationProps {
 	setInput: Dispatch<SetStateAction<Config>>
-	handleChange: HandleChange
+	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
 	input: Config
 	pending: boolean
 }

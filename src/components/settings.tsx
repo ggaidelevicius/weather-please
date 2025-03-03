@@ -1,5 +1,4 @@
 import { locales } from '@/lib/i18n'
-import type { HandleChange } from '@/lib/types'
 import type { Config } from '@/pages'
 import {
 	Dialog,
@@ -15,7 +14,7 @@ import { IconButton } from './button'
 import { Input, Select, Switch } from './input'
 
 interface SettingsProps {
-	handleChange: HandleChange
+	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
 	input: Config
 }
 
