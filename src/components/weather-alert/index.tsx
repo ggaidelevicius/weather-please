@@ -4,7 +4,7 @@ import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
 import { motion } from 'framer-motion'
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
-import { Alert } from './alert'
+import { Alert } from '../alert'
 
 interface AlertProps extends Alerts {
 	useMetric: boolean

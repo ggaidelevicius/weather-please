@@ -13,9 +13,9 @@ import Image from 'next/image'
 import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
 import Favicon from '../../public/favicon.png'
-import { Alert } from './alert'
-import { Button } from './button'
-import { Select } from './input'
+import { Alert } from '../alert'
+import { Button } from '../button'
+import { Select } from '../input'
 
 interface InitialisationProps {
 	setInput: Dispatch<SetStateAction<Config>>

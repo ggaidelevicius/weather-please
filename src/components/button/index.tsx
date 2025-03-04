@@ -12,7 +12,6 @@ interface BaseButtonProps {
 	children: ReactNode
 	fullWidth?: boolean
 	disabled?: boolean
-	icon?: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>
 	secondary?: boolean
 }
 
@@ -40,7 +39,6 @@ export const Button = ({
 	fullWidth = false,
 	disabled = false,
 	type,
-	icon: Icon,
 	href,
 	secondary = false,
 }: ControlledButtonProps | UncontrolledButtonProps | AnchorButtonProps) => {
@@ -65,13 +63,6 @@ export const Button = ({
 			{disabled && (
 				<span className="absolute inset-0 m-auto flex h-[20px] w-[20px] -translate-y-2 animate-spin rounded-full border-3 border-t-dark-600 border-r-dark-600 border-b-transparent border-l-dark-600 opacity-0 transition group-data-[disabled]:translate-y-0 group-data-[disabled]:opacity-100"></span>
 			)}
-			{Icon && (
-				<Icon
-					aria-hidden
-					size={18}
-					className="mr-1.5 transition group-data-[disabled]:translate-y-2 group-data-[disabled]:opacity-0"
-				/>
-			)}
 			<span className="flex place-self-center transition group-data-[disabled]:translate-y-2 group-data-[disabled]:opacity-0">
 				{children}
 			</span>
@@ -85,13 +76,6 @@ export const Button = ({
 		>
 			{disabled && (
 				<span className="absolute inset-0 m-auto flex h-[20px] w-[20px] -translate-y-2 animate-spin rounded-full border-3 border-t-dark-600 border-r-dark-600 border-b-transparent border-l-dark-600 opacity-0 transition group-data-[disabled]:translate-y-0 group-data-[disabled]:opacity-100"></span>
-			)}
-			{Icon && (
-				<Icon
-					aria-hidden
-					size={18}
-					className="mr-1.5 transition group-data-[disabled]:translate-y-2 group-data-[disabled]:opacity-0"
-				/>
 			)}
 			<span className="flex place-self-center transition group-data-[disabled]:translate-y-2 group-data-[disabled]:opacity-0">
 				{children}

@@ -9,9 +9,9 @@ import {
 import { Trans } from '@lingui/react/macro'
 import { IconSettings, IconShieldCheckFilled } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
-import { Alert } from './alert'
-import { IconButton } from './button'
-import { Input, Select, Switch } from './input'
+import { Alert } from '../alert'
+import { IconButton } from '../button'
+import { Input, Select, Switch } from '../input'
 
 interface SettingsProps {
 	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
