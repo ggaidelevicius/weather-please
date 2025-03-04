@@ -34,6 +34,17 @@ export const Secondary: Story = {
 		secondary: true,
 		onClick: fn(),
 	},
+	argTypes: {
+		fullWidth: {
+			control: false,
+		},
+		disabled: {
+			control: false,
+		},
+		secondary: {
+			control: false,
+		},
+	},
 	parameters: {
 		backgrounds: {
 			default: 'dark-700',
@@ -55,4 +66,9 @@ export const Disabled: Story = {
 		secondary: false,
 		onClick: fn(),
 	},
+	argTypes: {
+		secondary: {
+			control: false,
+		}
+	}
 }
