@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-export const RingLoader = () => (
+export const Loader = () => (
 	<motion.svg
 		initial={{ scale: 0.95, opacity: 0 }}
 		animate={{ scale: 1, opacity: 1 }}

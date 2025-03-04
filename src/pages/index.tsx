@@ -1,5 +1,5 @@
 import { Initialisation } from '@/components/initialisation'
-import { RingLoader } from '@/components/loader'
+import { Loader } from '@/components/loader'
 import { ReviewPrompt } from '@/components/review-prompt'
 import { Settings } from '@/components/settings'
 import { Tile } from '@/components/tile'
@@ -463,7 +463,7 @@ const App = () => {
 					/>
 					{weatherData.length === 0 ? (
 						<AnimatePresence>
-							<RingLoader />
+							<Loader />
 						</AnimatePresence>
 					) : (
 						<AnimatePresence>{tiles}</AnimatePresence>

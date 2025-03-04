@@ -6,7 +6,7 @@ import { Button } from '.'
 const meta = {
 	title: 'Button',
 	component: Button,
-	tags: ['autodocs'],
+
 	parameters: {
 		layout: 'centered',
 	},
@@ -69,6 +69,6 @@ export const Disabled: Story = {
 	argTypes: {
 		secondary: {
 			control: false,
-		}
-	}
+		},
+	},
 }

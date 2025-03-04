@@ -6,7 +6,7 @@ import { Alert } from '.'
 const meta = {
 	title: 'Alert',
 	component: Alert,
-	tags: ['autodocs'],
+
 	parameters: {
 		layout: 'centered',
 	},
