@@ -1,81 +1,81 @@
 {
-  "name": "weather-please",
-  "version": "2.6.2",
-  "description": "Savor the elegance and grace of Weather Please as it integrates flawlessly into your browser. A symphony of design and performance awaits – where weather meets artistry in the most subtle, yet captivating, manner.",
-  "private": true,
-  "author": {
-    "name": "Gus Gaidelevicius"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ggaidelevicius/weather-please.git"
-  },
-  "homepage": "https://github.com/ggaidelevicius/weather-please",
-  "bugs": {
-    "url": "https://github.com/ggaidelevicius/weather-please/issues"
-  },
-  "funding": {
-    "type": "individual",
-    "url": "https://www.buymeacoffee.com/ggaidelevicius"
-  },
-  "license": "SEE LICENSE IN LICENSE.md",
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "node renameAppDir rename && pnpm compile && cross-env NEXT_PUBLIC_DEMO=false next build && node build && node renameAppDir restore",
-    "start": "next start",
-    "lint": "pnpm prettier . --write && next lint",
-    "release": "pnpm build && node release",
-    "extract": "lingui extract",
-    "compile": "lingui compile"
-  },
-  "dependencies": {
-    "@headlessui/react": "^2.2.0",
-    "@lingui/core": "^5.2.0",
-    "@lingui/macro": "^5.2.0",
-    "@lingui/react": "^5.2.0",
-    "@lingui/swc-plugin": "^5.4.0",
-    "@prisma/client": "^6.4.1",
-    "@tabler/icons-react": "^3.30.0",
-    "@tailwindcss/postcss": "^4.0.9",
-    "@tanstack/react-query": "^5.66.11",
-    "@vercel/analytics": "^1.5.0",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.4.7",
-    "next": "15.2.0",
-    "postcss": "^8.5.3",
-    "prisma": "^6.4.1",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "sharp": "^0.33.5",
-    "tailwindcss": "^4.0.9",
-    "zod": "^3.24.2"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3.3.0",
-    "@lingui/cli": "^5.2.0",
-    "@types/node": "^22.13.8",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "adm-zip": "^0.5.16",
-    "cross-env": "^7.0.3",
-    "eslint": "^9.21.0",
-    "eslint-config-next": "15.2.0",
-    "eslint-config-prettier": "^10.0.2",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "fs-extra": "^11.3.0",
-    "glob": "^11.0.1",
-    "prettier": "^3.5.2",
-    "prettier-plugin-tailwindcss": "^0.6.11",
-    "typescript": "^5.8.2"
-  },
-  "packageManager": "pnpm@10.5.2",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@prisma/client",
-      "@prisma/engines",
-      "esbuild",
-      "prisma",
-      "sharp"
-    ]
-  }
+	"name": "weather-please",
+	"version": "2.6.2",
+	"description": "Savor the elegance and grace of Weather Please as it integrates flawlessly into your browser. A symphony of design and performance awaits – where weather meets artistry in the most subtle, yet captivating, manner.",
+	"private": true,
+	"author": {
+		"name": "Gus Gaidelevicius"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ggaidelevicius/weather-please.git"
+	},
+	"homepage": "https://github.com/ggaidelevicius/weather-please",
+	"bugs": {
+		"url": "https://github.com/ggaidelevicius/weather-please/issues"
+	},
+	"funding": {
+		"type": "individual",
+		"url": "https://www.buymeacoffee.com/ggaidelevicius"
+	},
+	"license": "SEE LICENSE IN LICENSE.md",
+	"scripts": {
+		"dev": "next dev --turbopack",
+		"build": "node renameAppDir rename && pnpm compile && cross-env NEXT_PUBLIC_DEMO=false next build && node build && node renameAppDir restore",
+		"start": "next start",
+		"lint": "pnpm prettier . --write && next lint",
+		"release": "pnpm build && node release",
+		"extract": "lingui extract",
+		"compile": "lingui compile"
+	},
+	"dependencies": {
+		"@headlessui/react": "^2.2.0",
+		"@lingui/core": "^5.2.0",
+		"@lingui/macro": "^5.2.0",
+		"@lingui/react": "^5.2.0",
+		"@lingui/swc-plugin": "^5.4.0",
+		"@prisma/client": "^6.4.1",
+		"@tabler/icons-react": "^3.30.0",
+		"@tailwindcss/postcss": "^4.0.9",
+		"@tanstack/react-query": "^5.66.11",
+		"@vercel/analytics": "^1.5.0",
+		"clsx": "^2.1.1",
+		"framer-motion": "^12.4.7",
+		"next": "15.2.0",
+		"postcss": "^8.5.3",
+		"prisma": "^6.4.1",
+		"react": "19.0.0",
+		"react-dom": "19.0.0",
+		"sharp": "^0.33.5",
+		"tailwindcss": "^4.0.9",
+		"zod": "^3.24.2"
+	},
+	"devDependencies": {
+		"@eslint/eslintrc": "^3.3.0",
+		"@lingui/cli": "^5.2.0",
+		"@types/node": "^22.13.8",
+		"@types/react": "^19.0.10",
+		"@types/react-dom": "^19.0.4",
+		"adm-zip": "^0.5.16",
+		"cross-env": "^7.0.3",
+		"eslint": "^9.21.0",
+		"eslint-config-next": "15.2.0",
+		"eslint-config-prettier": "^10.0.2",
+		"eslint-plugin-react-hooks": "^5.2.0",
+		"fs-extra": "^11.3.0",
+		"glob": "^11.0.1",
+		"prettier": "^3.5.2",
+		"prettier-plugin-tailwindcss": "^0.6.11",
+		"typescript": "^5.8.2"
+	},
+	"packageManager": "pnpm@10.5.2",
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"@prisma/client",
+			"@prisma/engines",
+			"esbuild",
+			"prisma",
+			"sharp"
+		]
+	}
 }
