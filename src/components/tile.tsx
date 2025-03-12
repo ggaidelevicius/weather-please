@@ -159,10 +159,10 @@ export const Tile = ({
 			exit={{ scale: 0.95, opacity: 0 }}
 			className="group relative flex flex-col rounded-lg bg-dark-700 p-5 will-change-[transform,opacity] select-none"
 		>
-			<span className="scale-100 text-2xl font-bold text-white opacity-100 transition-[scale,opacity] delay-150 duration-300 will-change-[opacity,scale] group-hover:scale-95 group-hover:opacity-0">
+			<span className="origin-left scale-100 text-2xl font-bold text-white opacity-100 transition-[scale,opacity] delay-150 duration-300 will-change-[opacity,scale] group-hover:scale-95 group-hover:opacity-0">
 				{displayedIdentifier}
 			</span>
-			<span className="absolute scale-95 text-2xl font-bold text-white opacity-0 transition-[scale,opacity] duration-300 will-change-[opacity,scale] group-hover:scale-100 group-hover:opacity-100 group-hover:delay-300">
+			<span className="absolute origin-left scale-95 text-2xl font-bold text-white opacity-0 transition-[scale,opacity] duration-300 will-change-[opacity,scale] group-hover:scale-100 group-hover:opacity-100 group-hover:delay-300">
 				{hiddenIdentifier}
 			</span>
 			<div className="mt-2.5 flex items-center justify-between gap-4">
