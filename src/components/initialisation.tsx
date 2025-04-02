@@ -15,7 +15,7 @@ import { useState } from 'react'
 import Favicon from '../../public/favicon.png'
 import { Alert } from './alert'
 import { Button } from './button'
-import { Select } from './input'
+import { Select, Switch } from './input'
 
 interface InitialisationProps {
 	setInput: Dispatch<SetStateAction<Config>>
@@ -42,7 +42,7 @@ export const Initialisation = ({
 	}
 
 	return (
-		<Dialog open={pending} onClose={() => {}} className="relative z-50">
+		<Dialog open={pending} onClose={() => { }} className="relative z-50">
 			<DialogBackdrop
 				transition
 				className="fixed inset-0 bg-black/60 backdrop-blur-lg transition duration-300 will-change-[backdrop-filter,background-color] data-[closed]:opacity-0"
@@ -89,6 +89,13 @@ export const Initialisation = ({
 							value: key,
 							label: locales[key].label,
 						}))}
+					/>
+					<Switch
+						label={
+							(<Trans>Use metric number format</Trans>) as unknown as string
+						}
+						checked={input.useMetric}
+						onChange={(e) => handleChange('useMetric', e)}
 					/>
 					<Alert icon={IconShieldCheckFilled}>
 						<Trans>
