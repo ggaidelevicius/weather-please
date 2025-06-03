@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
 		swcPlugins: [['@lingui/swc-plugin', {}]],
 		reactCompiler: true,
 	},
+	turbopack: {},
 }
 
 if (process.env.NEXT_PUBLIC_DEMO === 'false') {
@@ -18,6 +19,7 @@ if (process.env.NEXT_PUBLIC_DEMO === 'false') {
 		experimental: {
 			reactCompiler: true,
 		},
+		turbopack: {},
 	})
 }
 
