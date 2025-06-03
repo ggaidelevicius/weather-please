@@ -26,7 +26,8 @@
 		"lint": "pnpm prettier . --write && next lint",
 		"release": "pnpm build && node release",
 		"extract": "lingui extract",
-		"compile": "lingui compile"
+		"compile": "lingui compile",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@headlessui/react": "^2.2.3",
@@ -65,6 +66,8 @@
 		"eslint-plugin-react-hooks": "^5.2.0",
 		"fs-extra": "^11.3.0",
 		"glob": "^11.0.2",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.1.0",
 		"prettier": "^3.5.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
 		"typescript": "^5.8.3"
@@ -79,5 +82,8 @@
 			"prisma",
 			"sharp"
 		]
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,json,css,scss,md,mdx}": "prettier --write"
 	}
 }
