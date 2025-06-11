@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<html lang="en" className='antialiased" h-full bg-dark-800'>
+               <html lang="en" className="antialiased h-full bg-dark-800">
 			<body className="flex min-h-full flex-col items-center justify-center">
 				{children}
 				<Analytics />
