@@ -19,16 +19,17 @@
 		"url": "https://www.buymeacoffee.com/ggaidelevicius"
 	},
 	"license": "SEE LICENSE IN LICENSE.md",
-	"scripts": {
-		"dev": "next dev --turbopack",
-		"build": "node renameAppDir rename && pnpm compile && cross-env NEXT_PUBLIC_DEMO=false next build && node build && node renameAppDir restore",
-		"start": "next start",
-		"lint": "pnpm prettier . --write && next lint",
-		"release": "pnpm build && node release",
-		"extract": "lingui extract",
-		"compile": "lingui compile",
-		"prepare": "husky"
-	},
+        "scripts": {
+                "dev": "next dev --turbopack",
+                "build": "node renameAppDir rename && pnpm compile && cross-env NEXT_PUBLIC_DEMO=false next build && node build && node renameAppDir restore",
+                "start": "next start",
+                "lint": "pnpm prettier . --write && next lint",
+                "release": "pnpm build && node release",
+                "extract": "lingui extract",
+                "compile": "lingui compile",
+                "prepare": "husky",
+                "test": "vitest"
+        },
 	"dependencies": {
 		"@headlessui/react": "^2.2.4",
 		"@lingui/core": "^5.3.2",
@@ -67,11 +68,12 @@
 		"fs-extra": "^11.3.0",
 		"glob": "^11.0.2",
 		"husky": "^9.1.7",
-		"lint-staged": "^16.1.0",
-		"prettier": "^3.5.3",
-		"prettier-plugin-tailwindcss": "^0.6.12",
-		"typescript": "^5.8.3"
-	},
+                "lint-staged": "^16.1.0",
+                "prettier": "^3.5.3",
+                "prettier-plugin-tailwindcss": "^0.6.12",
+                "typescript": "^5.8.3",
+                "vitest": "^1.5.0"
+        },
 	"packageManager": "pnpm@10.11.1",
 	"pnpm": {
 		"onlyBuiltDependencies": [
