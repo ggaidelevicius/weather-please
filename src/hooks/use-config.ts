@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import { z } from 'zod'
 import { mergeObjects } from '@/lib/helpers'
 import { changeLocalisation, locales } from '@/lib/i18n'
+import { useEffect, useState } from 'react'
+import { z } from 'zod'
 
 const configSchema = z.object({
 	daysToRetrieve: z.string(),
@@ -49,20 +49,26 @@ export const useConfig = () => {
 
 	// Load config from localStorage on mount
 	useEffect(() => {
-		const storedData = localStorage?.config
-			? JSON.parse(localStorage.config)
-			: null
-		if (storedData) {
-			const objectShapesMatch = configSchema.safeParse(storedData)
-			if (objectShapesMatch.success) {
-				setConfig(storedData)
-				setInput(storedData)
-			} else {
-				const mergedObject = mergeObjects(storedData, config)
-				setConfig(mergedObject as Config)
-				setInput(mergedObject as Config)
+		try {
+			const storedData = localStorage?.config
+				? JSON.parse(localStorage.config)
+				: null
+			if (storedData) {
+				const objectShapesMatch = configSchema.safeParse(storedData)
+				if (objectShapesMatch.success) {
+					setConfig(storedData)
+					setInput(storedData)
+				} else {
+					const mergedObject = mergeObjects(storedData, config)
+					setConfig(mergedObject as Config)
+					setInput(mergedObject as Config)
+				}
 			}
+		} catch {
+			// Invalid JSON in localStorage, use defaults
+			console.warn('Invalid config in localStorage, using defaults')
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	// Save config when input changes and is valid
