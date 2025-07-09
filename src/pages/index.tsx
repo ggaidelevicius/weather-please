@@ -5,13 +5,11 @@ import { Settings } from '@/components/settings'
 import { Tile } from '@/components/tile'
 import { WeatherAlert } from '@/components/weather-alert'
 import { useWeather } from '@/hooks/use-weather'
-import { mergeObjects } from '@/lib/helpers'
+import { useConfig } from '@/hooks/use-config'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
-import { z } from 'zod'
-import { changeLocalisation, locales } from '../lib/i18n'
 import { messages } from '../locales/en/messages'
 
 i18n.load({
@@ -19,53 +17,11 @@ i18n.load({
 })
 i18n.activate('en')
 
-const configSchema = z.object({
-	daysToRetrieve: z.string(),
-	displayedReviewPrompt: z.boolean(),
-	identifier: z.enum(['day', 'date']),
-	installed: z.number(),
-	lang: z.enum(Object.keys(locales).map((key) => key) as [string, ...string[]]),
-	lat: z.string().regex(/^(\+|-)?(?:90(?:\.0{1,6})?|[1-8]?\d(?:\.\d{1,6})?)$/),
-	lon: z
-		.string()
-		.regex(
-			/^(\+|-)?(?:180(?:\.0{1,6})?|((1[0-7]\d)|([1-9]?\d))(?:\.\d{1,6})?)$/,
-		),
-	periodicLocationUpdate: z.boolean(),
-	showAlerts: z.boolean(),
-	showPrecipitationAlerts: z.boolean(),
-	showUvAlerts: z.boolean(),
-	showVisibilityAlerts: z.boolean(),
-	showWindAlerts: z.boolean(),
-	useMetric: z.boolean(),
-})
-
-export type Config = z.infer<typeof configSchema>
-
-const initialState: Config = {
-	lang: 'en',
-	lat: '',
-	lon: '',
-	periodicLocationUpdate: false,
-	useMetric: true,
-	showAlerts: true,
-	showUvAlerts: true,
-	showWindAlerts: true,
-	showVisibilityAlerts: true,
-	showPrecipitationAlerts: true,
-	daysToRetrieve: '3',
-	identifier: 'day',
-	installed: new Date().getTime(),
-	displayedReviewPrompt: false,
-}
-
 const App = () => {
-	const [config, setConfig] = useState<Config>(initialState)
-	const [input, setInput] = useState<Config>(initialState)
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
-
 	const currentDateRef = useRef(new Date().getDate())
 
+	const { config, input, handleChange, updateConfig, setInput } = useConfig()
 	const { weatherData, alertData, isLoading, error } = useWeather(
 		config.lat,
 		config.lon,
@@ -85,84 +41,11 @@ const App = () => {
 	}, [error])
 
 	/**
-	 * Synchronizes the active language with the language specified in the configuration.
-	 *
-	 * This effect listens for changes to `input.lang`. If `input.lang` is truthy, it will
-	 * invoke the `i18n.activate` function with `input.lang` as its argument, changing the
-	 * active language to the one specified in the configuration. This facilitates the dynamic
-	 * switching of languages in Weather Please, allowing it to support internationalization.
-	 *
-	 * Input is used rather than config so users have instant feedback.
-	 */
-	useEffect(() => {
-		if (input.lang) {
-			changeLocalisation(input.lang)
-		}
-	}, [input.lang])
-
-	/**
-	 * On component mount, this effect hook checks the localStorage for a saved "config".
-	 *
-	 * - If "config" exists in localStorage, it is parsed and the states of both "config" and "input" are set.
-	 * - If the object shape of the stored data matches the current "config", both states are directly set to the stored value.
-	 * - If they don't match, the stored data is merged with the current "config" and the merged result is set to both states.
-	 */
-	useEffect(() => {
-		const storedData = localStorage?.config
-			? JSON.parse(localStorage.config)
-			: null
-		if (storedData) {
-			const objectShapesMatch = configSchema.safeParse(storedData)
-			if (objectShapesMatch.success) {
-				setConfig(storedData)
-				setInput(storedData)
-			} else {
-				const mergedObject = mergeObjects(storedData, config)
-				setConfig(mergedObject as Config)
-				setInput(mergedObject as Config)
-			}
-		}
-	}, [])
-
-	/**
-	 * Manages updates to the "input" state.
-	 *
-	 * Takes in a key and a value. Existing attributes of the "input" state are retained,
-	 * while the provided attribute (key-value pair) will either be added or, if the key already exists,
-	 * its value will be overwritten with the new one.
-	 */
-	const handleChange = (k: keyof Config, v: Config[keyof Config]) => {
-		setInput((prev) => {
-			return {
-				...prev,
-				[k]: typeof v === 'string' ? v.trim() : v,
-			}
-		})
-	}
-
-	useEffect(() => {
-		if (
-			input.lat &&
-			input.lon &&
-			/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat) &&
-			/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(
-				input.lon,
-			)
-		) {
-			localStorage.config = JSON.stringify(input)
-			setConfig(input)
-		}
-	}, [input])
-
-	/**
 	 * Periodically (every minute) checks if the current date has changed.
 	 * If it's a new day and the user has opted-in for periodic location updates,
 	 * the user's geolocation is checked
 	 *
 	 * If the geolocation has changed from what's saved in "config", the "changedLocation" flag is set to true.
-	 *
-	 * TODO:
-	 *  - Consider abstracting the geolocation identifying techniques for code reusability and maintainability.
 	 */
 	useEffect(() => {
 		const checkDate = setInterval(() => {
@@ -180,11 +63,10 @@ const App = () => {
 					) {
 						setChangedLocation(true)
 					}
-					setInput((prev) => ({
-						...prev,
+					updateConfig({
 						lat: pos.coords.latitude.toString(),
 						lon: pos.coords.longitude.toString(),
-					}))
+					})
 				})
 			} catch (e) {
 				console.error(e)
