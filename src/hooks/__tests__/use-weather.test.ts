@@ -56,8 +56,10 @@ const createWrapper = () => {
 			},
 		},
 	})
-	return ({ children }: { children: ReactNode }) =>
+	const TestWrapper = ({ children }: { children: ReactNode }) =>
 		createElement(QueryClientProvider, { client: queryClient }, children)
+	TestWrapper.displayName = 'TestWrapper'
+	return TestWrapper
 }
 
 describe('useWeather - Core Functionality', () => {
