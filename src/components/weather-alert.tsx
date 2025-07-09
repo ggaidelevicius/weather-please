@@ -1,4 +1,4 @@
-import type { Alerts } from '@/pages'
+import type { Alerts } from '@/hooks/use-weather'
 import { Trans } from '@lingui/react/macro'
 import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
 import { motion } from 'framer-motion'

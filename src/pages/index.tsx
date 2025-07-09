@@ -4,16 +4,15 @@ import { ReviewPrompt } from '@/components/review-prompt'
 import { Settings } from '@/components/settings'
 import { Tile } from '@/components/tile'
 import { WeatherAlert } from '@/components/weather-alert'
+import { useWeather } from '@/hooks/use-weather'
 import { mergeObjects } from '@/lib/helpers'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
-import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 import { changeLocalisation, locales } from '../lib/i18n'
 import { messages } from '../locales/en/messages'
-import { queryClient } from './_app'
 
 i18n.load({
 	en: messages,
@@ -43,92 +42,6 @@ const configSchema = z.object({
 
 export type Config = z.infer<typeof configSchema>
 
-const dataSchema = z
-	.array(
-		z.object({
-			day: z.number(),
-			description: z.number(),
-			max: z.number(),
-			min: z.number(),
-			rain: z.number(),
-			uv: z.number(),
-			wind: z.number(),
-		}),
-	)
-	.min(1)
-	.max(9)
-
-type Data = z.infer<typeof dataSchema>
-
-const alertSchema = z.object({
-	hoursOfExtremeUv: z.array(z.boolean()).length(13),
-	hoursOfLowVisibility: z.array(z.boolean()).length(25),
-	hoursOfStrongWind: z.array(z.boolean()).length(25),
-	hoursOfStrongWindGusts: z.array(z.boolean()).length(25),
-	totalPrecipitation: z.object({
-		duration: z.array(z.boolean()).length(25),
-		precipitation: z.object({
-			flag: z.boolean(),
-			value: z.number(),
-			zeroCount: z.number(),
-		}),
-	}),
-})
-
-export type Alerts = z.infer<typeof alertSchema>
-
-interface WeatherData {
-	latitude: number
-	longitude: number
-	generationtime_ms: number
-	utc_offset_seconds: number
-	timezone: string
-	timezone_abbreviation: string
-	elevation: number
-	hourly_units: HourlyUnits
-	hourly: HourlyData
-	daily_units: DailyUnits
-	daily: DailyData
-}
-
-interface HourlyUnits {
-	time: string
-	precipitation: string
-	uv_index: string
-	windspeed_10m: string
-	visibility: string
-	windgusts_10m: string
-}
-
-interface HourlyData {
-	time: number[]
-	precipitation: number[]
-	uv_index: number[]
-	windspeed_10m: number[]
-	visibility: number[]
-	windgusts_10m: number[]
-}
-
-interface DailyUnits {
-	time: string
-	weathercode: string
-	temperature_2m_max: string
-	temperature_2m_min: string
-	uv_index_max: string
-	precipitation_probability_max: string
-	windspeed_10m_max: string
-}
-
-interface DailyData {
-	time: number[]
-	weathercode: number[]
-	temperature_2m_max: number[]
-	temperature_2m_min: number[]
-	uv_index_max: number[]
-	precipitation_probability_max: number[]
-	windspeed_10m_max: number[]
-}
-
 const initialState: Config = {
 	lang: 'en',
 	lat: '',
@@ -147,136 +60,29 @@ const initialState: Config = {
 }
 
 const App = () => {
-	const [alertData, setAlertData] = useState<Alerts>({
-		totalPrecipitation: {
-			precipitation: {
-				value: 0,
-				flag: false,
-				zeroCount: 0,
-			},
-			duration: Array(25).fill(false),
-		},
-		hoursOfExtremeUv: Array(13).fill(false),
-		hoursOfStrongWind: Array(25).fill(false),
-		hoursOfLowVisibility: Array(25).fill(false),
-		hoursOfStrongWindGusts: Array(25).fill(false),
-	})
-	const [weatherData, setWeatherData] = useState<[] | Data>([])
 	const [config, setConfig] = useState<Config>(initialState)
 	const [input, setInput] = useState<Config>(initialState)
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
-	const [usingCachedData, setUsingCachedData] = useState(true)
 
 	const currentDateRef = useRef(new Date().getDate())
-	const lastHourRef = useRef(new Date().getHours())
 
-	const { error, data } = useQuery<WeatherData>({
-		queryKey: ['weather', config.lat, config.lon, usingCachedData],
-		queryFn: () =>
-			fetch(
-				`https://api.open-meteo.com/v1/forecast?latitude=${config.lat}&longitude=${config.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=9`,
-			).then((res) => res.json()),
-		enabled: Boolean(config.lat) && Boolean(config.lon) && !usingCachedData,
-	})
+	const { weatherData, alertData, isLoading, error } = useWeather(
+		config.lat,
+		config.lon,
+		changedLocation,
+	)
 
 	useEffect(() => {
-		if (data) {
-			const now = new Date()
-			const currentHour = now.getHours()
-
-			const futureData = data.daily.time.map((day, i: number) => ({
-				day,
-				max: data.daily.temperature_2m_max[i],
-				min: data.daily.temperature_2m_min[i],
-				description: data.daily.weathercode[i],
-				uv: data.daily.uv_index_max[i],
-				wind: data.daily.windspeed_10m_max[i],
-				rain: data.daily.precipitation_probability_max[i],
-			}))
-			setWeatherData(futureData)
-			localStorage.data = JSON.stringify(futureData)
-
-			const alerts = {
-				totalPrecipitation: {
-					precipitation: data.hourly.precipitation
-						.slice(currentHour, currentHour + 25)
-						.reduce(
-							(
-								p: { value: number; flag: boolean; zeroCount: number },
-								c: number,
-							) => {
-								if (p.flag) {
-									return { ...p, flag: true }
-								}
-								if (c === 0) {
-									if (p.zeroCount === 3) {
-										return { ...p, flag: true }
-									}
-									return {
-										value: p.value,
-										flag: false,
-										zeroCount: p.zeroCount + 1,
-									}
-								}
-								return { value: p.value + c, flag: false, zeroCount: 0 }
-							},
-							{ value: 0, flag: false, zeroCount: 0 },
-						),
-					duration: (() => {
-						let negativeCount = 0
-						return data.hourly.precipitation
-							.slice(currentHour, currentHour + 25)
-							.map((val: number) => {
-								if (negativeCount === 3) {
-									return false
-								}
-								if (val === 0) {
-									negativeCount++
-									return true
-								}
-								negativeCount = 0
-								return true
-							})
-					})(),
-				},
-				hoursOfExtremeUv: data.hourly.uv_index
-					.slice(currentHour, currentHour + 13)
-					.map((val: number) => val >= 11),
-				hoursOfStrongWind: data.hourly.windspeed_10m
-					.slice(currentHour, currentHour + 25)
-					.map((val: number) => val >= 60),
-				hoursOfStrongWindGusts: data.hourly.windgusts_10m
-					.slice(currentHour, currentHour + 25)
-					.map((val: number) => val >= 80),
-				hoursOfLowVisibility: data.hourly.visibility
-					.slice(currentHour, currentHour + 25)
-					.map((val: number) => val <= 200),
-			}
-			setAlertData(alerts)
-			localStorage.alerts = JSON.stringify(alerts)
-
-			localStorage.lastUpdated = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`
-
-			if (changedLocation) {
-				setChangedLocation(false)
-			}
-		} else if (error) {
-			console.error(error)
+		if (changedLocation) {
+			setChangedLocation(false)
 		}
-	}, [data, error, changedLocation])
+	}, [changedLocation])
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			const currentHour = new Date().getHours()
-			if (currentHour !== lastHourRef.current) {
-				lastHourRef.current = currentHour
-				setUsingCachedData(false)
-				queryClient.invalidateQueries({ queryKey: ['weather'] })
-			}
-		}, 6e4)
-
-		return () => clearInterval(interval)
-	}, [])
+		if (error) {
+			console.error('Weather fetch error:', error)
+		}
+	}, [error])
 
 	/**
 	 * Synchronizes the active language with the language specified in the configuration.
@@ -317,34 +123,6 @@ const App = () => {
 			}
 		}
 	}, [])
-
-	/**
-	 * This effect hook is responsible for managing the weather data, deciding between using cached data or fetching new data.
-	 *
-	 * Process overview:
-	 * - It first checks if there's cached weather data available in localStorage and verifies the timestamp of the last update.
-	 * - The criteria for using cached data include:
-	 *   - The date and hour of the last update match the current date and hour to ensure data is up-to-date by the hour.
-	 *   - The amount of data (days retrieved) in the cache matches the user's current preference.
-	 *   - The user's location has not changed since the last data fetch.
-	 * - If the cached data meets these criteria, the weather states are set using the cached data from localStorage.
-	 * - If the cached data does not meet the criteria or is absent, a flag is set to indicate that cached data is not being used, prompting a data refresh.
-	 *
-	 * Important considerations:
-	 * - This effect depends on changes to the user's location (latitude and longitude), the number of days to retrieve, and whether the user's location has changed.
-	 * - The effect does not directly fetch new data but sets conditions for determining the data source (cached or fresh).
-	 * - It ensures that data used is timely and relevant, either by validating cached data against current criteria or signaling the need for new data fetching.
-	 */
-	useEffect(() => {
-		if (changedLocation) {
-			setUsingCachedData(false)
-		} else if (isLocalStorageDataValid()) {
-			setWeatherData(JSON.parse(localStorage.data))
-			setAlertData(JSON.parse(localStorage.alerts))
-		} else {
-			setUsingCachedData(false)
-		}
-	}, [config.lat, config.lon, changedLocation])
 
 	/**
 	 * Manages updates to the "input" state.
@@ -461,7 +239,7 @@ const App = () => {
 						handleChange={handleChange}
 						pending={!config?.lat || !config?.lon}
 					/>
-					{weatherData.length === 0 ? (
+					{isLoading ? (
 						<AnimatePresence>
 							<RingLoader />
 						</AnimatePresence>
@@ -481,29 +259,6 @@ const App = () => {
 
 			<Settings handleChange={handleChange} input={input} />
 		</>
-	)
-}
-
-const isLocalStorageDataValid = () => {
-	const { data, lastUpdated, alerts } = localStorage
-	if (!data || !lastUpdated) return false
-
-	const [year, month, day, hour] = lastUpdated.split('-').map(Number)
-	const currentDate = new Date()
-	const isSameYear = currentDate.getFullYear() === year
-	const isSameMonth = currentDate.getMonth() === month
-	const isSameDay = currentDate.getDate() === day
-	const isSameHour = currentDate.getHours() === hour
-	const storedAlertsAreValid = alertSchema.safeParse(JSON.parse(alerts))
-	const storedDataIsValid = dataSchema.safeParse(JSON.parse(data))
-
-	return (
-		isSameYear &&
-		isSameMonth &&
-		isSameDay &&
-		isSameHour &&
-		storedAlertsAreValid.success &&
-		storedDataIsValid.success
 	)
 }
 
