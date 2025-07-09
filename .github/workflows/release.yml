@@ -8,7 +8,7 @@ on:
     branches:
       - main
   workflow_run:
-    workflows: ['CI/CD Pipeline']
+    workflows: ['CI Pipeline']
     types: [completed]
 
 jobs:
