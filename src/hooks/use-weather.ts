@@ -151,7 +151,7 @@ export const useWeather = (
 	const lastHourRef = useRef(new Date().getHours())
 
 	const { error, data } = useQuery<WeatherData>({
-		queryKey: ['weather', lat, lon, usingCachedData],
+		queryKey: ['weather', lat, lon],
 		queryFn: () =>
 			fetch(
 				`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=9`,
