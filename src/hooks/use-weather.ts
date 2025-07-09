@@ -2,6 +2,12 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 import { queryClient } from '../pages/_app'
+import {
+	processSimpleAlert,
+	processPrecipitationAlert,
+	processPrecipitationDuration,
+	ALERT_CONDITIONS,
+} from '../lib/alert-processor'
 
 const dataSchema = z
 	.array(
@@ -172,59 +178,29 @@ export const useWeather = (
 
 			const alerts = {
 				totalPrecipitation: {
-					precipitation: data.hourly.precipitation
-						.slice(currentHour, currentHour + 25)
-						.reduce(
-							(
-								p: { value: number; flag: boolean; zeroCount: number },
-								c: number,
-							) => {
-								if (p.flag) {
-									return { ...p, flag: true }
-								}
-								if (c === 0) {
-									if (p.zeroCount === 3) {
-										return { ...p, flag: true }
-									}
-									return {
-										value: p.value,
-										flag: false,
-										zeroCount: p.zeroCount + 1,
-									}
-								}
-								return { value: p.value + c, flag: false, zeroCount: 0 }
-							},
-							{ value: 0, flag: false, zeroCount: 0 },
-						),
-					duration: (() => {
-						let negativeCount = 0
-						return data.hourly.precipitation
-							.slice(currentHour, currentHour + 25)
-							.map((val: number) => {
-								if (negativeCount === 3) {
-									return false
-								}
-								if (val === 0) {
-									negativeCount++
-									return true
-								}
-								negativeCount = 0
-								return true
-							})
-					})(),
+					precipitation: processPrecipitationAlert(
+						data.hourly.precipitation.slice(currentHour, currentHour + 25),
+					),
+					duration: processPrecipitationDuration(
+						data.hourly.precipitation.slice(currentHour, currentHour + 25),
+					),
 				},
-				hoursOfExtremeUv: data.hourly.uv_index
-					.slice(currentHour, currentHour + 13)
-					.map((val: number) => val >= 11),
-				hoursOfStrongWind: data.hourly.windspeed_10m
-					.slice(currentHour, currentHour + 25)
-					.map((val: number) => val >= 60),
-				hoursOfStrongWindGusts: data.hourly.windgusts_10m
-					.slice(currentHour, currentHour + 25)
-					.map((val: number) => val >= 80),
-				hoursOfLowVisibility: data.hourly.visibility
-					.slice(currentHour, currentHour + 25)
-					.map((val: number) => val <= 200),
+				hoursOfExtremeUv: processSimpleAlert(
+					data.hourly.uv_index.slice(currentHour, currentHour + 13),
+					ALERT_CONDITIONS.extremeUv,
+				),
+				hoursOfStrongWind: processSimpleAlert(
+					data.hourly.windspeed_10m.slice(currentHour, currentHour + 25),
+					ALERT_CONDITIONS.strongWind,
+				),
+				hoursOfStrongWindGusts: processSimpleAlert(
+					data.hourly.windgusts_10m.slice(currentHour, currentHour + 25),
+					ALERT_CONDITIONS.strongWindGusts,
+				),
+				hoursOfLowVisibility: processSimpleAlert(
+					data.hourly.visibility.slice(currentHour, currentHour + 25),
+					ALERT_CONDITIONS.lowVisibility,
+				),
 			}
 			setAlertData(alerts)
 			localStorage.alerts = JSON.stringify(alerts)

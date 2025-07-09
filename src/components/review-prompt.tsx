@@ -1,4 +1,4 @@
-import type { Config } from '@/pages'
+import type { Config } from '@/hooks/use-config'
 import { Trans } from '@lingui/react/macro'
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react'
 import { Button } from './button'

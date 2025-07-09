@@ -1,5 +1,5 @@
 import { locales } from '@/lib/i18n'
-import type { Config } from '@/pages'
+import type { Config } from '@/hooks/use-config'
 import {
 	Dialog,
 	DialogBackdrop,
