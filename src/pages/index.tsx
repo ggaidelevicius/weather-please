@@ -57,16 +57,64 @@ const App = () => {
 		if (config.periodicLocationUpdate) {
 			try {
 				navigator.geolocation.getCurrentPosition((pos) => {
-					if (
-						config.lat !== pos.coords.latitude.toString() ||
-						config.lon !== pos.coords.longitude.toString()
-					) {
-						setChangedLocation(true)
+					// Calculate distance between current and new coordinates using Haversine formula
+					const calculateDistance = (
+						currentLat: number,
+						currentLon: number,
+						incomingLat: number,
+						incomingLon: number,
+					) => {
+						const R = 6371 // Earth's radius in kilometers
+
+						// Haversine formula variables:
+						const dLat = ((incomingLat - currentLat) * Math.PI) / 180 // Latitude difference in radians
+						const dLon = ((incomingLon - currentLon) * Math.PI) / 180 // Longitude difference in radians
+
+						// 'a' is the square of half the chord length between the two points
+						const a =
+							Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+							Math.cos((currentLat * Math.PI) / 180) *
+								Math.cos((incomingLat * Math.PI) / 180) *
+								Math.sin(dLon / 2) *
+								Math.sin(dLon / 2)
+
+						// 'c' is the angular distance in radians
+						const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+						return R * c // Distance in kilometers
 					}
-					updateConfig({
-						lat: pos.coords.latitude.toString(),
-						lon: pos.coords.longitude.toString(),
-					})
+
+					const currentLat = parseFloat(config.lat)
+					const currentLon = parseFloat(config.lon)
+					const newLat = pos.coords.latitude
+					const newLon = pos.coords.longitude
+
+					// Only update if user has moved more than 1km or if we don't have coordinates yet
+					if (!config.lat || !config.lon) {
+						// First time setting coordinates
+						setChangedLocation(true)
+						updateConfig({
+							lat: newLat.toString(),
+							lon: newLon.toString(),
+						})
+					} else {
+						const distance = calculateDistance(
+							currentLat,
+							currentLon,
+							newLat,
+							newLon,
+						)
+
+						if (distance > 1) {
+							// User has moved more than 1km, trigger refresh
+							setChangedLocation(true)
+							updateConfig({
+								lat: newLat.toString(),
+								lon: newLon.toString(),
+							})
+						}
+						// If distance <= 1km, don't update anything to avoid unnecessary refreshes
+					}
 				})
 			} catch (e) {
 				console.error(e)
@@ -75,7 +123,13 @@ const App = () => {
 		return () => {
 			clearInterval(checkDate)
 		}
-	}, [currentDateRef, config.periodicLocationUpdate])
+	}, [
+		currentDateRef,
+		config.periodicLocationUpdate,
+		config.lat,
+		config.lon,
+		updateConfig,
+	])
 
 	const tiles = weatherData
 		.slice(0, parseInt(config.daysToRetrieve))
