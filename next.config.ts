@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
 	turbopack: {},
 }
 
-if (process.env.NEXT_PUBLIC_DEMO === 'false') {
+if (process.env.VERCEL !== '1') {
 	Object.assign(nextConfig, {
 		output: 'export',
 		assetPrefix: '.',

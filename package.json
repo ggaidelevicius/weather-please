@@ -21,7 +21,7 @@
 	"license": "SEE LICENSE IN LICENSE.md",
 	"scripts": {
 		"dev": "next dev --turbopack",
-		"build": "node renameAppDir rename && pnpm compile && cross-env NEXT_PUBLIC_DEMO=false next build && node build && node renameAppDir restore",
+		"build": "node renameAppDir rename && pnpm compile && next build && node build && node renameAppDir restore",
 		"start": "next start",
 		"lint": "pnpm prettier . --write && next lint",
 		"release": "pnpm build && node release",
@@ -63,7 +63,6 @@
 		"@types/react-dom": "^19.1.6",
 		"adm-zip": "^0.5.16",
 		"babel-plugin-react-compiler": "19.1.0-rc.2",
-		"cross-env": "^7.0.3",
 		"eslint": "^9.30.1",
 		"eslint-config-next": "15.3.5",
 		"eslint-config-prettier": "^10.1.5",
