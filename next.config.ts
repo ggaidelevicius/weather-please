@@ -16,7 +16,7 @@ if (process.env.VERCEL !== '1') {
 		images: {
 			unoptimized: true,
 		},
-	})
+	} as NextConfig)
 }
 
 module.exports = nextConfig
