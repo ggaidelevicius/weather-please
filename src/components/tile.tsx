@@ -10,7 +10,7 @@ import {
 	ShowerRain,
 	Snow,
 	Thunderstorm,
-} from '@/assets/images'
+} from '@/images'
 import { Trans } from '@lingui/react/macro'
 import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
 import { motion } from 'framer-motion'
