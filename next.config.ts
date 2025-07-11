@@ -16,10 +16,6 @@ if (process.env.VERCEL !== '1') {
 		images: {
 			unoptimized: true,
 		},
-		experimental: {
-			reactCompiler: true,
-		},
-		turbopack: {},
 	})
 }
 
