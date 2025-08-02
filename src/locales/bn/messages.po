@@ -27,12 +27,12 @@ msgid "{0} inches of precipitation expected over the next hour"
 msgstr "{0} ইঞ্চি বৃষ্টিপাত প্রত্যাশিত আগামী ঘণ্টায়"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:234
+#: src/components/tile.tsx:239
 msgid "{0} km/h"
 msgstr "{0} কিমি/ঘণ্টা"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:235
+#: src/components/tile.tsx:240
 msgid "{0} mph"
 msgstr "{0} মাইল/ঘণ্টা"
 
@@ -60,10 +60,6 @@ msgstr "পরের 1 ঘণ্টায় {0}মিমি বৃষ্টি�
 #: src/pages/feedback/index.tsx:153
 #~ msgid "{label}"
 #~ msgstr "ভাষা"
-
-#: src/app/bug/page.tsx:75
-#~ msgid "<0/>{0}"
-#~ msgstr ""
 
 #: src/components/settings.tsx:215
 msgid "☕ Gift a coffee"
@@ -249,10 +245,6 @@ msgstr "ফেব্রুয়ারি"
 msgid "Feedback"
 msgstr "প্রতিক্রিয়া"
 
-#: src/components/settings.tsx:195
-#~ msgid "Feedback and support"
-#~ msgstr ""
-
 #: src/pages/feedback/index.tsx:458
 #~ msgid "Feedback successfully submitted"
 #~ msgstr "প্রতিক্রিয়া সফলভাবে জমা হয়েছে"
@@ -334,10 +326,6 @@ msgstr "আপনার ব্রাউজার অবস্থানের অ
 #: src/components/settings/index.tsx:235
 #~ msgid "Invalid longitude value"
 #~ msgstr "অবৈধ দ্রাঘিমাংশের মান"
-
-#: src/components/input.tsx:81
-#~ msgid "Invalid value"
-#~ msgstr ""
 
 #: src/components/input.tsx:96
 #: src/components/input.tsx:147
@@ -539,7 +527,7 @@ msgstr "শনিবার"
 msgid "September"
 msgstr "সেপ্টেম্বর"
 
-#: src/components/initialisation.tsx:106
+#: src/components/initialisation.tsx:113
 msgid "Set my location"
 msgstr "আমার অবস্থান নির্ধারণ করুন"
 
@@ -637,47 +625,47 @@ msgid "Sunday"
 msgstr "রবিবার"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap]
-#: src/components/tile.tsx:205
+#: src/components/tile.tsx:210
 msgid "The expected type of weather is {0}."
 msgstr "প্রত্যাশিত আবহাওয়ার ধরণ হলো {0}।"
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile.tsx:171
+#: src/components/tile.tsx:176
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "সর্বাধিক তাপমাত্রা হবে {0} ডিগ্রি সেলসিয়াস।"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile.tsx:177
+#: src/components/tile.tsx:182
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "সর্বাধিক তাপমাত্রা হবে {0} ডিগ্রি ফারেনহাইট।"
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/tile.tsx:228
+#: src/components/tile.tsx:233
 msgid "The maximum UV index will be {0}."
 msgstr "সর্বাধিক ইউভি সূচক হবে {0}।"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:239
+#: src/components/tile.tsx:244
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "সর্বাধিক বায়ুর গতি হবে {0} কিলোমিটার প্রতি ঘণ্টা।"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:245
+#: src/components/tile.tsx:250
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "সর্বাধিক বায়ুর গতি হবে {0} মাইল প্রতি ঘণ্টা।"
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile.tsx:188
+#: src/components/tile.tsx:193
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "ন্যূনতম তাপমাত্রা হবে {0} ডিগ্রি সেলসিয়াস।"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile.tsx:194
+#: src/components/tile.tsx:199
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "ন্যূনতম তাপমাত্রা হবে {0} ডিগ্রি ফারেনহাইট।"
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/tile.tsx:259
+#: src/components/tile.tsx:264
 msgid "There is a {0}% chance of precipitation."
 msgstr "বৃষ্টির সম্ভাবনা {0}%।"
 
@@ -735,6 +723,7 @@ msgstr "মঙ্গলবার"
 #~ msgstr "কীবোর্ড শর্টকাট ব্যবহার করুন"
 
 #: src/components/settings.tsx:79
+#: src/components/initialisation.tsx:95
 msgid "Use metric number format"
 msgstr "মেট্রিক সংখ্যা বিন্যাস ব্যবহার করুন"
 
@@ -750,7 +739,7 @@ msgstr "তীব্র বৃষ্টির ঝড়"
 msgid "Weather"
 msgstr "আবহাওয়া"
 
-#: src/pages/index.tsx:497
+#: src/pages/index.tsx:193
 msgid "weather data provided by open-meteo"
 msgstr "আবহাওয়া তথ্য প্রদান করে open-meteo"
 
@@ -788,7 +777,7 @@ msgid "Your email (optional)"
 msgstr "আপনার ইমেল (ঐচ্ছিক)"
 
 #: src/components/settings.tsx:88
-#: src/components/initialisation.tsx:94
+#: src/components/initialisation.tsx:101
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "আপনার অবস্থানের তথ্য আপনার ব্যক্তিগত ডিভাইসে নিরাপদে এবং একচেটিয়াভাবে সংরক্ষিত আছে।"
 

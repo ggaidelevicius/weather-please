@@ -27,12 +27,12 @@ msgid "{0} inches of precipitation expected over the next hour"
 msgstr "Ожидается {0} дюймов осадков в следующий час"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:234
+#: src/components/tile.tsx:239
 msgid "{0} km/h"
 msgstr "{0} км/ч"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:235
+#: src/components/tile.tsx:240
 msgid "{0} mph"
 msgstr "{0} миль/ч"
 
@@ -60,10 +60,6 @@ msgstr "Ожидается {0} мм осадков в течение следу�
 #: src/pages/feedback/index.tsx:153
 #~ msgid "{label}"
 #~ msgstr "Язык"
-
-#: src/app/bug/page.tsx:75
-#~ msgid "<0/>{0}"
-#~ msgstr ""
 
 #: src/components/settings.tsx:215
 msgid "☕ Gift a coffee"
@@ -249,10 +245,6 @@ msgstr "Февраль"
 msgid "Feedback"
 msgstr "Обратная связь"
 
-#: src/components/settings.tsx:195
-#~ msgid "Feedback and support"
-#~ msgstr ""
-
 #: src/pages/feedback/index.tsx:458
 #~ msgid "Feedback successfully submitted"
 #~ msgstr "Отзыв успешно отправлен"
@@ -334,10 +326,6 @@ msgstr "Если ваш браузер запрашивает разрешени
 #: src/components/settings/index.tsx:235
 #~ msgid "Invalid longitude value"
 #~ msgstr "Неверное значение долготы"
-
-#: src/components/input.tsx:81
-#~ msgid "Invalid value"
-#~ msgstr ""
 
 #: src/components/input.tsx:96
 #: src/components/input.tsx:147
@@ -539,7 +527,7 @@ msgstr "Суббота"
 msgid "September"
 msgstr "Сентябрь"
 
-#: src/components/initialisation.tsx:106
+#: src/components/initialisation.tsx:113
 msgid "Set my location"
 msgstr "Установить мое местоположение"
 
@@ -637,47 +625,47 @@ msgid "Sunday"
 msgstr "Воскресенье"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap]
-#: src/components/tile.tsx:205
+#: src/components/tile.tsx:210
 msgid "The expected type of weather is {0}."
 msgstr "Ожидаемый тип погоды — {0}."
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile.tsx:171
+#: src/components/tile.tsx:176
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "Максимальная температура составит {0} градусов по Цельсию."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile.tsx:177
+#: src/components/tile.tsx:182
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "Максимальная температура составит {0} градусов по Фаренгейту."
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/tile.tsx:228
+#: src/components/tile.tsx:233
 msgid "The maximum UV index will be {0}."
 msgstr "Максимальный индекс УФ будет {0}."
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:239
+#: src/components/tile.tsx:244
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "Максимальная скорость ветра составит {0} километров в час."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:245
+#: src/components/tile.tsx:250
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "Максимальная скорость ветра составит {0} миль в час."
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile.tsx:188
+#: src/components/tile.tsx:193
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "Минимальная температура будет {0} градусов по Цельсию."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile.tsx:194
+#: src/components/tile.tsx:199
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "Минимальная температура будет {0} градусов по Фаренгейту."
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/tile.tsx:259
+#: src/components/tile.tsx:264
 msgid "There is a {0}% chance of precipitation."
 msgstr "Вероятность осадков составляет {0}%."
 
@@ -735,6 +723,7 @@ msgstr "Вторник"
 #~ msgstr "Используйте сочетания клавиш"
 
 #: src/components/settings.tsx:79
+#: src/components/initialisation.tsx:95
 msgid "Use metric number format"
 msgstr "Использовать метрический формат чисел"
 
@@ -750,7 +739,7 @@ msgstr "жесткие дождевые ливни"
 msgid "Weather"
 msgstr "Погода"
 
-#: src/pages/index.tsx:497
+#: src/pages/index.tsx:193
 msgid "weather data provided by open-meteo"
 msgstr "метеоданные предоставлены open-meteo"
 
@@ -788,7 +777,7 @@ msgid "Your email (optional)"
 msgstr "Ваш email (необязательно)"
 
 #: src/components/settings.tsx:88
-#: src/components/initialisation.tsx:94
+#: src/components/initialisation.tsx:101
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Ваши данные о местоположении надежно хранятся исключительно на вашем личном устройстве."
 

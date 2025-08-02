@@ -27,12 +27,12 @@ msgid "{0} inches of precipitation expected over the next hour"
 msgstr "다음 1시간 동안 {0}인치의 강수량 예상"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:234
+#: src/components/tile.tsx:239
 msgid "{0} km/h"
 msgstr "{0} km/h"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:235
+#: src/components/tile.tsx:240
 msgid "{0} mph"
 msgstr "{0} mph"
 
@@ -60,10 +60,6 @@ msgstr "다음 1시간 동안 강수량 {0}밀리미터 예상"
 #: src/pages/feedback/index.tsx:153
 #~ msgid "{label}"
 #~ msgstr "언어"
-
-#: src/app/bug/page.tsx:75
-#~ msgid "<0/>{0}"
-#~ msgstr ""
 
 #: src/components/settings.tsx:215
 msgid "☕ Gift a coffee"
@@ -249,10 +245,6 @@ msgstr "2월"
 msgid "Feedback"
 msgstr "피드백"
 
-#: src/components/settings.tsx:195
-#~ msgid "Feedback and support"
-#~ msgstr ""
-
 #: src/pages/feedback/index.tsx:458
 #~ msgid "Feedback successfully submitted"
 #~ msgstr "피드백이 성공적으로 제출되었습니다"
@@ -334,10 +326,6 @@ msgstr "브라우저가 위치 권한을 요청하면, \"허용\"을 선택해�
 #: src/components/settings/index.tsx:235
 #~ msgid "Invalid longitude value"
 #~ msgstr "잘못된 경도 값"
-
-#: src/components/input.tsx:81
-#~ msgid "Invalid value"
-#~ msgstr ""
 
 #: src/components/input.tsx:96
 #: src/components/input.tsx:147
@@ -539,7 +527,7 @@ msgstr "토요일"
 msgid "September"
 msgstr "9월"
 
-#: src/components/initialisation.tsx:106
+#: src/components/initialisation.tsx:113
 msgid "Set my location"
 msgstr "내 위치 설정"
 
@@ -637,47 +625,47 @@ msgid "Sunday"
 msgstr "일요일"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap]
-#: src/components/tile.tsx:205
+#: src/components/tile.tsx:210
 msgid "The expected type of weather is {0}."
 msgstr "예상되는 날씨 유형은 {0}입니다."
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile.tsx:171
+#: src/components/tile.tsx:176
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "최고 기온은 {0}도 섭씨가 될 것입니다."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile.tsx:177
+#: src/components/tile.tsx:182
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "최고 기온은 {0}도 화씨가 될 것입니다."
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/tile.tsx:228
+#: src/components/tile.tsx:233
 msgid "The maximum UV index will be {0}."
 msgstr "최대 UV 지수는 {0}이 될 것입니다."
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:239
+#: src/components/tile.tsx:244
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "최대 풍속은 {0}킬로미터/시간이 될 것입니다."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:245
+#: src/components/tile.tsx:250
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "최대 풍속은 {0}마일/시간이 될 것입니다."
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile.tsx:188
+#: src/components/tile.tsx:193
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "최저 기온은 {0}도 섭씨가 될 것입니다."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile.tsx:194
+#: src/components/tile.tsx:199
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "최저 기온은 {0}도 화씨가 될 것입니다."
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/tile.tsx:259
+#: src/components/tile.tsx:264
 msgid "There is a {0}% chance of precipitation."
 msgstr "강수 확률은 {0}%입니다."
 
@@ -735,6 +723,7 @@ msgstr "화요일"
 #~ msgstr "키보드 단축키 사용"
 
 #: src/components/settings.tsx:79
+#: src/components/initialisation.tsx:95
 msgid "Use metric number format"
 msgstr "메트릭 숫자 형식 사용"
 
@@ -750,7 +739,7 @@ msgstr "강한 비소나기"
 msgid "Weather"
 msgstr "날씨"
 
-#: src/pages/index.tsx:497
+#: src/pages/index.tsx:193
 msgid "weather data provided by open-meteo"
 msgstr "날씨 데이터 제공: open-meteo"
 
@@ -788,7 +777,7 @@ msgid "Your email (optional)"
 msgstr "이메일 주소 (선택 사항)"
 
 #: src/components/settings.tsx:88
-#: src/components/initialisation.tsx:94
+#: src/components/initialisation.tsx:101
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "귀하의 위치 데이터는 귀하의 개인 장치에만 안전하게 저장됩니다."
 
