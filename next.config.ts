@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
 	reactStrictMode: true,
 	experimental: {
 		swcPlugins: [['@lingui/swc-plugin', {}]],
-		reactCompiler: true,
+		// reactCompiler: true,
 	},
 	turbopack: {},
 }
