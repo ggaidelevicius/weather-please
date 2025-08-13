@@ -12,7 +12,7 @@ export const Alert = ({ children, icon: Icon, variant }: AlertProps) => {
 	return (
 		<div
 			className={clsx(
-				'flex flex-row items-center gap-4 p-4 text-white',
+				'flex flex-row items-center justify-center gap-4 p-4 text-white',
 				variant === 'light-blue'
 					? 'bg-blue-500/75 font-medium select-none'
 					: variant === 'light-red'
