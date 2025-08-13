@@ -1,4 +1,5 @@
 import type { Icon, IconProps } from '@tabler/icons-react'
+import { clsx } from 'clsx'
 import type { ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react'
 
 interface AlertProps {
@@ -10,13 +11,14 @@ interface AlertProps {
 export const Alert = ({ children, icon: Icon, variant }: AlertProps) => {
 	return (
 		<div
-			className={
+			className={clsx(
+				'flex flex-row items-center gap-4 p-4 text-white',
 				variant === 'light-blue'
-					? 'flex flex-row items-center justify-center gap-4 bg-blue-500/75 p-4 font-medium text-white select-none'
+					? 'bg-blue-500/75 font-medium select-none'
 					: variant === 'light-red'
-						? 'flex flex-row items-center justify-center gap-4 bg-red-500/75 p-4 font-medium text-white select-none'
-						: 'flex w-full flex-row items-center gap-4 rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500 p-4 text-white'
-			}
+						? 'bg-red-500/75 font-medium select-none'
+						: 'w-full rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500',
+			)}
 		>
 			<Icon size={30} strokeWidth={1.5} aria-hidden />
 			<span
