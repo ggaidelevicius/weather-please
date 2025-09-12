@@ -61,7 +61,7 @@ msgstr "अगले 1 घंटे में {0} मिमी वर्षा �
 #~ msgid "{label}"
 #~ msgstr "भाषा"
 
-#: src/components/settings.tsx:215
+#: src/components/settings.tsx:223
 msgid "☕ Gift a coffee"
 msgstr "☕ कॉफ़ी का उपहार दें"
 
@@ -69,11 +69,11 @@ msgstr "☕ कॉफ़ी का उपहार दें"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ प्रतिसाद जमा करें"
 
-#: src/components/settings.tsx:201
+#: src/components/settings.tsx:209
 msgid "🌟 Leave a review"
 msgstr "🌟 समीक्षा छोड़ें"
 
-#: src/components/settings.tsx:208
+#: src/components/settings.tsx:216
 msgid "🐛 Report a bug"
 msgstr "🐛 एक बग रिपोर्ट करें"
 
@@ -81,7 +81,7 @@ msgstr "🐛 एक बग रिपोर्ट करें"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 एक सुविधा का अनुरोध करें"
 
-#: src/components/settings.tsx:225
+#: src/components/settings.tsx:233
 msgid "🔒 Privacy policy"
 msgstr "🔒 गोपनीयता नीति"
 
@@ -161,11 +161,11 @@ msgstr "साफ़ आकाश"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "बहुत अधिक मेमोरी या CPU का उपयोग"
 
-#: src/components/settings.tsx:145
+#: src/components/settings.tsx:153
 msgid "Date"
 msgstr "तारीख़"
 
-#: src/components/settings.tsx:141
+#: src/components/settings.tsx:149
 msgid "Day"
 msgstr "दिन"
 
@@ -241,7 +241,7 @@ msgstr "{timeUntilExtremeUv} घंटों में अत्यधिक य
 msgid "February"
 msgstr "फ़रवरी"
 
-#: src/components/settings.tsx:194
+#: src/components/settings.tsx:202
 msgid "Feedback"
 msgstr "प्रतिक्रिया"
 
@@ -301,7 +301,7 @@ msgstr "भारी हिमपात"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "मुझे Weather Please को और अधिक भाषाओं में लाना पसंद होगा।"
 
-#: src/components/settings.tsx:134
+#: src/components/settings.tsx:142
 msgid "Identifier"
 msgstr "पहचानकर्ता"
 
@@ -313,7 +313,7 @@ msgstr "पहचानकर्ता"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "यदि आपके पास कोई अनुवाद अनुरोध है, कृपया हमें इस पर संपर्क करें <0>contact@weather-please.app</0>"
 
-#: src/components/initialisation.tsx:77
+#: src/components/initialisation.tsx:92
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "अगर आपका ब्राउज़र आपसे स्थान अनुमतियाँ मांगता है, तो कृपया \"अनुमति दें\" चुनें।"
 
@@ -352,12 +352,12 @@ msgstr "जून"
 #~ msgid "Lacks features I need"
 #~ msgstr "मुझे जरूरत की सुविधाएँ नहीं हैं"
 
+#: src/components/initialisation.tsx:98
 #: src/components/settings.tsx:67
-#: src/components/initialisation.tsx:83
 msgid "Language"
 msgstr "भाषा"
 
-#: src/components/settings.tsx:94
+#: src/components/settings.tsx:102
 msgid "Latitude"
 msgstr "अक्षांश"
 
@@ -365,7 +365,7 @@ msgstr "अक्षांश"
 msgid "Leave a review"
 msgstr "समीक्षा छोड़ें"
 
-#: src/components/settings.tsx:218
+#: src/components/settings.tsx:226
 msgid "Legal"
 msgstr "कानूनी"
 
@@ -381,11 +381,11 @@ msgstr "हल्की हिमबंध झीलन"
 msgid "light freezing rain"
 msgstr "हल्की हिमबंध वर्षा"
 
-#: src/components/settings/index.tsx:191
-#~ msgid "Location"
-#~ msgstr "स्थान"
+#: src/components/settings.tsx:95
+msgid "Location"
+msgstr "स्थान"
 
-#: src/components/settings.tsx:102
+#: src/components/settings.tsx:110
 msgid "Longitude"
 msgstr "देशांतर"
 
@@ -474,7 +474,7 @@ msgstr "इसे फिर से न दिखाएं"
 msgid "November"
 msgstr "नवं"
 
-#: src/components/settings.tsx:122
+#: src/components/settings.tsx:130
 msgid "Number of days to forecast"
 msgstr "भविष्यवाणी के लिए दिनों की संख्या"
 
@@ -494,7 +494,7 @@ msgstr "आंशिक रूप से बादल"
 #~ msgid "Performance issues"
 #~ msgstr "प्रदर्शन समस्याएं"
 
-#: src/components/settings.tsx:114
+#: src/components/settings.tsx:122
 msgid "Periodically update location automatically"
 msgstr "स्थान को स्वचालित रूप से आवधिक रूप से अपडेट करें"
 
@@ -527,7 +527,7 @@ msgstr "शनिवार"
 msgid "September"
 msgstr "सितंबर"
 
-#: src/components/initialisation.tsx:113
+#: src/components/initialisation.tsx:128
 msgid "Set my location"
 msgstr "मेरा स्थान निर्धारित करें"
 
@@ -540,23 +540,23 @@ msgstr "सेटिंग्स"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "गुमनाम धड़ाका डाटा और त्रुटि लॉग साझा करें"
 
-#: src/components/settings.tsx:159
+#: src/components/settings.tsx:167
 msgid "Show extreme UV alerts"
 msgstr "अत्यधिक UV चेतावनियाँ दिखाएं"
 
-#: src/components/settings.tsx:167
+#: src/components/settings.tsx:175
 msgid "Show high precipitation alerts"
 msgstr "उच्च वर्षा चेतावनियाँ दिखाएं"
 
-#: src/components/settings.tsx:185
+#: src/components/settings.tsx:193
 msgid "Show low visibility alerts"
 msgstr "निम्न दृश्यता चेतावनियाँ दिखाएं"
 
-#: src/components/settings.tsx:176
+#: src/components/settings.tsx:184
 msgid "Show strong wind alerts"
 msgstr "मजबूत हवा की चेतावनियाँ दिखाएं"
 
-#: src/components/settings.tsx:151
+#: src/components/settings.tsx:159
 msgid "Show weather alerts"
 msgstr "मौसम चेतावनियाँ दिखाएं"
 
@@ -689,7 +689,7 @@ msgstr "गुरुवार"
 #~ msgid "Tiles"
 #~ msgstr "टाइल्स"
 
-#: src/components/initialisation.tsx:72
+#: src/components/initialisation.tsx:87
 msgid "To get started, let's set your language and location."
 msgstr "शुरू करने के लिए, आइए आपकी भाषा और स्थान निर्धारित करें।"
 
@@ -722,8 +722,8 @@ msgstr "मंगलवार"
 #~ msgid "Use keyboard shortcuts"
 #~ msgstr "कीबोर्ड शॉर्टकट का उपयोग करें"
 
+#: src/components/initialisation.tsx:110
 #: src/components/settings.tsx:79
-#: src/components/initialisation.tsx:95
 msgid "Use metric number format"
 msgstr "मेट्रिक संख्या प्रारूप का उपयोग करें"
 
@@ -739,7 +739,7 @@ msgstr "हिंसक वर्षा की बौछारें"
 msgid "Weather"
 msgstr "मौसम"
 
-#: src/pages/index.tsx:193
+#: src/pages/index.tsx:211
 msgid "weather data provided by open-meteo"
 msgstr "मौसम डाटा open-meteo द्वारा प्रदान किया गया"
 
@@ -776,8 +776,8 @@ msgstr "आप कुछ समय से Weather Please का उपयोग 
 msgid "Your email (optional)"
 msgstr "आपका ईमेल (वैकल्पिक)"
 
+#: src/components/initialisation.tsx:116
 #: src/components/settings.tsx:88
-#: src/components/initialisation.tsx:101
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "आपका स्थान डेटा आपके व्यक्तिगत उपकरण पर सुरक्षित रूप से और केवल संग्रहीत किया जाता है।"
 

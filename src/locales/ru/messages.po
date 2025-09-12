@@ -61,7 +61,7 @@ msgstr "Ожидается {0} мм осадков в течение следу�
 #~ msgid "{label}"
 #~ msgstr "Язык"
 
-#: src/components/settings.tsx:215
+#: src/components/settings.tsx:223
 msgid "☕ Gift a coffee"
 msgstr "☕ Подарить кофе"
 
@@ -69,11 +69,11 @@ msgstr "☕ Подарить кофе"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Отправить отзыв"
 
-#: src/components/settings.tsx:201
+#: src/components/settings.tsx:209
 msgid "🌟 Leave a review"
 msgstr "🌟 Оставить отзыв"
 
-#: src/components/settings.tsx:208
+#: src/components/settings.tsx:216
 msgid "🐛 Report a bug"
 msgstr "🐛 Сообщить об ошибке"
 
@@ -81,7 +81,7 @@ msgstr "🐛 Сообщить об ошибке"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Запросить функцию"
 
-#: src/components/settings.tsx:225
+#: src/components/settings.tsx:233
 msgid "🔒 Privacy policy"
 msgstr "🔒 Политика конфиденциальности"
 
@@ -161,11 +161,11 @@ msgstr "ясное небо"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "Потребляет слишком много памяти или ЦПУ"
 
-#: src/components/settings.tsx:145
+#: src/components/settings.tsx:153
 msgid "Date"
 msgstr "Дата"
 
-#: src/components/settings.tsx:141
+#: src/components/settings.tsx:149
 msgid "Day"
 msgstr "День"
 
@@ -241,7 +241,7 @@ msgstr "Экстремальный УФ начнется через {timeUntilEx
 msgid "February"
 msgstr "Февраль"
 
-#: src/components/settings.tsx:194
+#: src/components/settings.tsx:202
 msgid "Feedback"
 msgstr "Обратная связь"
 
@@ -301,7 +301,7 @@ msgstr "сильный снегопад"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "Мне бы хотелось привнести Weather Please на другие языки."
 
-#: src/components/settings.tsx:134
+#: src/components/settings.tsx:142
 msgid "Identifier"
 msgstr "Идентификатор"
 
@@ -313,7 +313,7 @@ msgstr "Идентификатор"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "Если у вас есть запрос на перевод, пожалуйста, обратитесь по адресу <0>contact@weather-please.app</0>"
 
-#: src/components/initialisation.tsx:77
+#: src/components/initialisation.tsx:92
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Если ваш браузер запрашивает разрешение на доступ к местоположению, выберите \"разрешить\"."
 
@@ -352,12 +352,12 @@ msgstr "Июнь"
 #~ msgid "Lacks features I need"
 #~ msgstr "Не хватает необходимых мне функций"
 
+#: src/components/initialisation.tsx:98
 #: src/components/settings.tsx:67
-#: src/components/initialisation.tsx:83
 msgid "Language"
 msgstr "Язык"
 
-#: src/components/settings.tsx:94
+#: src/components/settings.tsx:102
 msgid "Latitude"
 msgstr "Широта"
 
@@ -365,7 +365,7 @@ msgstr "Широта"
 msgid "Leave a review"
 msgstr "Оставить отзыв"
 
-#: src/components/settings.tsx:218
+#: src/components/settings.tsx:226
 msgid "Legal"
 msgstr "Юридический"
 
@@ -381,11 +381,11 @@ msgstr "легкая замораживающая морось"
 msgid "light freezing rain"
 msgstr "легкий замораживающий дождь"
 
-#: src/components/settings/index.tsx:191
-#~ msgid "Location"
-#~ msgstr "Местоположение"
+#: src/components/settings.tsx:95
+msgid "Location"
+msgstr "Местоположение"
 
-#: src/components/settings.tsx:102
+#: src/components/settings.tsx:110
 msgid "Longitude"
 msgstr "Долгота"
 
@@ -474,7 +474,7 @@ msgstr "Больше не показывать это"
 msgid "November"
 msgstr "Ноябрь"
 
-#: src/components/settings.tsx:122
+#: src/components/settings.tsx:130
 msgid "Number of days to forecast"
 msgstr "Количество дней для прогноза"
 
@@ -494,7 +494,7 @@ msgstr "частично облачно"
 #~ msgid "Performance issues"
 #~ msgstr "Проблемы с производительностью"
 
-#: src/components/settings.tsx:114
+#: src/components/settings.tsx:122
 msgid "Periodically update location automatically"
 msgstr "Периодически обновлять местоположение автоматически"
 
@@ -527,7 +527,7 @@ msgstr "Суббота"
 msgid "September"
 msgstr "Сентябрь"
 
-#: src/components/initialisation.tsx:113
+#: src/components/initialisation.tsx:128
 msgid "Set my location"
 msgstr "Установить мое местоположение"
 
@@ -540,23 +540,23 @@ msgstr "Настройки"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "Делиться анонимизированными данными о сбоях и журналами ошибок"
 
-#: src/components/settings.tsx:159
+#: src/components/settings.tsx:167
 msgid "Show extreme UV alerts"
 msgstr "Показывать предупреждения об экстремальном УФ"
 
-#: src/components/settings.tsx:167
+#: src/components/settings.tsx:175
 msgid "Show high precipitation alerts"
 msgstr "Показывать предупреждения о больших осадках"
 
-#: src/components/settings.tsx:185
+#: src/components/settings.tsx:193
 msgid "Show low visibility alerts"
 msgstr "Показывать предупреждения о низкой видимости"
 
-#: src/components/settings.tsx:176
+#: src/components/settings.tsx:184
 msgid "Show strong wind alerts"
 msgstr "Показать предупреждения о сильном ветре"
 
-#: src/components/settings.tsx:151
+#: src/components/settings.tsx:159
 msgid "Show weather alerts"
 msgstr "Показывать метеопредупреждения"
 
@@ -689,7 +689,7 @@ msgstr "Четверг"
 #~ msgid "Tiles"
 #~ msgstr "Плитки"
 
-#: src/components/initialisation.tsx:72
+#: src/components/initialisation.tsx:87
 msgid "To get started, let's set your language and location."
 msgstr "Для начала давайте установим ваш язык и местоположение."
 
@@ -722,8 +722,8 @@ msgstr "Вторник"
 #~ msgid "Use keyboard shortcuts"
 #~ msgstr "Используйте сочетания клавиш"
 
+#: src/components/initialisation.tsx:110
 #: src/components/settings.tsx:79
-#: src/components/initialisation.tsx:95
 msgid "Use metric number format"
 msgstr "Использовать метрический формат чисел"
 
@@ -739,7 +739,7 @@ msgstr "жесткие дождевые ливни"
 msgid "Weather"
 msgstr "Погода"
 
-#: src/pages/index.tsx:193
+#: src/pages/index.tsx:211
 msgid "weather data provided by open-meteo"
 msgstr "метеоданные предоставлены open-meteo"
 
@@ -776,8 +776,8 @@ msgstr "Вы используете Weather Please уже довольно до�
 msgid "Your email (optional)"
 msgstr "Ваш email (необязательно)"
 
+#: src/components/initialisation.tsx:116
 #: src/components/settings.tsx:88
-#: src/components/initialisation.tsx:101
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Ваши данные о местоположении надежно хранятся исключительно на вашем личном устройстве."
 

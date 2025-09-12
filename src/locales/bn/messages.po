@@ -61,7 +61,7 @@ msgstr "পরের 1 ঘণ্টায় {0}মিমি বৃষ্টি�
 #~ msgid "{label}"
 #~ msgstr "ভাষা"
 
-#: src/components/settings.tsx:215
+#: src/components/settings.tsx:223
 msgid "☕ Gift a coffee"
 msgstr "☕ একটি কফি উপহার দিন"
 
@@ -69,11 +69,11 @@ msgstr "☕ একটি কফি উপহার দিন"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ প্রতিক্রিয়া জমা দিন"
 
-#: src/components/settings.tsx:201
+#: src/components/settings.tsx:209
 msgid "🌟 Leave a review"
 msgstr "🌟 একটি পর্যালোচনা ছেড়ে দিন"
 
-#: src/components/settings.tsx:208
+#: src/components/settings.tsx:216
 msgid "🐛 Report a bug"
 msgstr "🐛 একটি বাগ প্রতিবেদন করুন"
 
@@ -81,7 +81,7 @@ msgstr "🐛 একটি বাগ প্রতিবেদন করুন"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 একটি বৈশিষ্ট্য অনুরোধ করুন"
 
-#: src/components/settings.tsx:225
+#: src/components/settings.tsx:233
 msgid "🔒 Privacy policy"
 msgstr "🔒 গোপনীয়তা নীতি"
 
@@ -161,11 +161,11 @@ msgstr "পরিষ্কার আকাশ"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "অত্যধিক মেমোরি অথবা CPU ব্যবহার করে"
 
-#: src/components/settings.tsx:145
+#: src/components/settings.tsx:153
 msgid "Date"
 msgstr "তারিখ"
 
-#: src/components/settings.tsx:141
+#: src/components/settings.tsx:149
 msgid "Day"
 msgstr "দিন"
 
@@ -241,7 +241,7 @@ msgstr "{timeUntilExtremeUv} ঘণ্টা পরে আত্যধিক ই
 msgid "February"
 msgstr "ফেব্রুয়ারি"
 
-#: src/components/settings.tsx:194
+#: src/components/settings.tsx:202
 msgid "Feedback"
 msgstr "প্রতিক্রিয়া"
 
@@ -301,7 +301,7 @@ msgstr "ভারী তুষারপাত"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "আমি প্রিয়ভাবে Weather Please কে আরও বেশি ভাষায় আনতে চাই।"
 
-#: src/components/settings.tsx:134
+#: src/components/settings.tsx:142
 msgid "Identifier"
 msgstr "পরিচয়ক"
 
@@ -313,7 +313,7 @@ msgstr "পরিচয়ক"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "আপনার কাছে কোনও অনুবাদের অনুরোধ থাকলে, দয়া করে <0>contact@weather-please.app</0> এ যোগাযোগ করুন।"
 
-#: src/components/initialisation.tsx:77
+#: src/components/initialisation.tsx:92
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "আপনার ব্রাউজার অবস্থানের অনুমতি চাইলে, দয়া করে \"অনুমতি দিন\" নির্বাচন করুন।"
 
@@ -352,12 +352,12 @@ msgstr "জুন"
 #~ msgid "Lacks features I need"
 #~ msgstr "আমার প্রয়োজনীয় ফিচারগুলি নেই"
 
+#: src/components/initialisation.tsx:98
 #: src/components/settings.tsx:67
-#: src/components/initialisation.tsx:83
 msgid "Language"
 msgstr "ভাষা"
 
-#: src/components/settings.tsx:94
+#: src/components/settings.tsx:102
 msgid "Latitude"
 msgstr "অক্ষাংশ"
 
@@ -365,7 +365,7 @@ msgstr "অক্ষাংশ"
 msgid "Leave a review"
 msgstr "একটি পর্যালোচনা দিন"
 
-#: src/components/settings.tsx:218
+#: src/components/settings.tsx:226
 msgid "Legal"
 msgstr "আইনগত"
 
@@ -381,11 +381,11 @@ msgstr "হালকা হিমায়িত ঝরঝর বৃষ্টি
 msgid "light freezing rain"
 msgstr "হালকা হিমায়িত বৃষ্টি"
 
-#: src/components/settings/index.tsx:191
-#~ msgid "Location"
-#~ msgstr "অবস্থান"
+#: src/components/settings.tsx:95
+msgid "Location"
+msgstr "অবস্থান"
 
-#: src/components/settings.tsx:102
+#: src/components/settings.tsx:110
 msgid "Longitude"
 msgstr "দ্রাঘিমাংশ"
 
@@ -474,7 +474,7 @@ msgstr "এটি আবার দেখাবেন না"
 msgid "November"
 msgstr "নভেম্বর"
 
-#: src/components/settings.tsx:122
+#: src/components/settings.tsx:130
 msgid "Number of days to forecast"
 msgstr "পূর্বাভাস দেওয়ার দিনের সংখ্যা"
 
@@ -494,7 +494,7 @@ msgstr "আংশিকভাবে মেঘলা"
 #~ msgid "Performance issues"
 #~ msgstr "পারফরম্যান্স সমস্যা"
 
-#: src/components/settings.tsx:114
+#: src/components/settings.tsx:122
 msgid "Periodically update location automatically"
 msgstr "পূর্বনির্ধারিত সময়ে স্থান স্বয়ংক্রিয়ভাবে আপডেট করুন"
 
@@ -527,7 +527,7 @@ msgstr "শনিবার"
 msgid "September"
 msgstr "সেপ্টেম্বর"
 
-#: src/components/initialisation.tsx:113
+#: src/components/initialisation.tsx:128
 msgid "Set my location"
 msgstr "আমার অবস্থান নির্ধারণ করুন"
 
@@ -540,23 +540,23 @@ msgstr "সেটিংস"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "বেনামে ক্র্যাশ ডাটা এবং ত্রুটি লগ ভাগ করুন"
 
-#: src/components/settings.tsx:159
+#: src/components/settings.tsx:167
 msgid "Show extreme UV alerts"
 msgstr "এক্সট্রিম ইউভি সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:167
+#: src/components/settings.tsx:175
 msgid "Show high precipitation alerts"
 msgstr "উচ্চ বৃষ্টির সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:185
+#: src/components/settings.tsx:193
 msgid "Show low visibility alerts"
 msgstr "নিম্ন দৃশ্যতা সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:176
+#: src/components/settings.tsx:184
 msgid "Show strong wind alerts"
 msgstr "শক্তিশালী বায়ু সতর্কবার্তা দেখান"
 
-#: src/components/settings.tsx:151
+#: src/components/settings.tsx:159
 msgid "Show weather alerts"
 msgstr "আবহাওয়া সতর্কবাণী দেখান"
 
@@ -689,7 +689,7 @@ msgstr "বৃহস্পতিবার"
 #~ msgid "Tiles"
 #~ msgstr "টাইলস"
 
-#: src/components/initialisation.tsx:72
+#: src/components/initialisation.tsx:87
 msgid "To get started, let's set your language and location."
 msgstr "শুরু করার জন্য, চলুন আপনার ভাষা এবং অবস্থান নির্ধারণ করি।"
 
@@ -722,8 +722,8 @@ msgstr "মঙ্গলবার"
 #~ msgid "Use keyboard shortcuts"
 #~ msgstr "কীবোর্ড শর্টকাট ব্যবহার করুন"
 
+#: src/components/initialisation.tsx:110
 #: src/components/settings.tsx:79
-#: src/components/initialisation.tsx:95
 msgid "Use metric number format"
 msgstr "মেট্রিক সংখ্যা বিন্যাস ব্যবহার করুন"
 
@@ -739,7 +739,7 @@ msgstr "তীব্র বৃষ্টির ঝড়"
 msgid "Weather"
 msgstr "আবহাওয়া"
 
-#: src/pages/index.tsx:193
+#: src/pages/index.tsx:211
 msgid "weather data provided by open-meteo"
 msgstr "আবহাওয়া তথ্য প্রদান করে open-meteo"
 
@@ -776,8 +776,8 @@ msgstr "আপনি একটি সময়ের জন্য Weather Please
 msgid "Your email (optional)"
 msgstr "আপনার ইমেল (ঐচ্ছিক)"
 
+#: src/components/initialisation.tsx:116
 #: src/components/settings.tsx:88
-#: src/components/initialisation.tsx:101
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "আপনার অবস্থানের তথ্য আপনার ব্যক্তিগত ডিভাইসে নিরাপদে এবং একচেটিয়াভাবে সংরক্ষিত আছে।"
 

@@ -61,7 +61,7 @@ msgstr "{0} mm de précipitations attendues au cours de la prochaine heure"
 #~ msgid "{label}"
 #~ msgstr "Langue"
 
-#: src/components/settings.tsx:215
+#: src/components/settings.tsx:223
 msgid "☕ Gift a coffee"
 msgstr "☕ Offrir un café"
 
@@ -69,11 +69,11 @@ msgstr "☕ Offrir un café"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Soumettre des commentaires"
 
-#: src/components/settings.tsx:201
+#: src/components/settings.tsx:209
 msgid "🌟 Leave a review"
 msgstr "🌟 Laisser un avis"
 
-#: src/components/settings.tsx:208
+#: src/components/settings.tsx:216
 msgid "🐛 Report a bug"
 msgstr "🐛 Signaler un bug"
 
@@ -81,7 +81,7 @@ msgstr "🐛 Signaler un bug"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Demander une fonctionnalité"
 
-#: src/components/settings.tsx:225
+#: src/components/settings.tsx:233
 msgid "🔒 Privacy policy"
 msgstr "🔒 Politique de confidentialité"
 
@@ -161,11 +161,11 @@ msgstr "ciel clair"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "Consomme trop de mémoire ou de CPU"
 
-#: src/components/settings.tsx:145
+#: src/components/settings.tsx:153
 msgid "Date"
 msgstr "Date"
 
-#: src/components/settings.tsx:141
+#: src/components/settings.tsx:149
 msgid "Day"
 msgstr "Jour"
 
@@ -241,7 +241,7 @@ msgstr "UV extrêmes débutant dans {timeUntilExtremeUv} heures"
 msgid "February"
 msgstr "Février"
 
-#: src/components/settings.tsx:194
+#: src/components/settings.tsx:202
 msgid "Feedback"
 msgstr "Retour d'information"
 
@@ -301,7 +301,7 @@ msgstr "fortes chutes de neige"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "J'aimerais apporter Weather Please à d'autres langues."
 
-#: src/components/settings.tsx:134
+#: src/components/settings.tsx:142
 msgid "Identifier"
 msgstr "Identificateur"
 
@@ -313,7 +313,7 @@ msgstr "Identificateur"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "Si vous avez une demande de traduction, veuillez nous contacter à <0>contact@weather-please.app</0>"
 
-#: src/components/initialisation.tsx:77
+#: src/components/initialisation.tsx:92
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Si votre navigateur vous demande l'autorisation d'accéder à votre localisation, veuillez sélectionner \"autoriser\"."
 
@@ -352,12 +352,12 @@ msgstr "Juin"
 #~ msgid "Lacks features I need"
 #~ msgstr "Manque de fonctionnalités dont j'ai besoin"
 
+#: src/components/initialisation.tsx:98
 #: src/components/settings.tsx:67
-#: src/components/initialisation.tsx:83
 msgid "Language"
 msgstr "Langue"
 
-#: src/components/settings.tsx:94
+#: src/components/settings.tsx:102
 msgid "Latitude"
 msgstr "Latitude"
 
@@ -365,7 +365,7 @@ msgstr "Latitude"
 msgid "Leave a review"
 msgstr "Laisser un avis"
 
-#: src/components/settings.tsx:218
+#: src/components/settings.tsx:226
 msgid "Legal"
 msgstr "Légal"
 
@@ -381,11 +381,11 @@ msgstr "bruine givrante légère"
 msgid "light freezing rain"
 msgstr "pluie verglaçante légère"
 
-#: src/components/settings/index.tsx:191
-#~ msgid "Location"
-#~ msgstr "Localisation"
+#: src/components/settings.tsx:95
+msgid "Location"
+msgstr "Localisation"
 
-#: src/components/settings.tsx:102
+#: src/components/settings.tsx:110
 msgid "Longitude"
 msgstr "Longitude"
 
@@ -474,7 +474,7 @@ msgstr "Ne plus jamais afficher ceci"
 msgid "November"
 msgstr "Novembre"
 
-#: src/components/settings.tsx:122
+#: src/components/settings.tsx:130
 msgid "Number of days to forecast"
 msgstr "Nombre de jours à prévoir"
 
@@ -494,7 +494,7 @@ msgstr "partiellement nuageux"
 #~ msgid "Performance issues"
 #~ msgstr "Problèmes de performance"
 
-#: src/components/settings.tsx:114
+#: src/components/settings.tsx:122
 msgid "Periodically update location automatically"
 msgstr "Mettre à jour périodiquement la localisation automatiquement"
 
@@ -527,7 +527,7 @@ msgstr "Samedi"
 msgid "September"
 msgstr "Septembre"
 
-#: src/components/initialisation.tsx:113
+#: src/components/initialisation.tsx:128
 msgid "Set my location"
 msgstr "Définir ma localisation"
 
@@ -540,23 +540,23 @@ msgstr "Paramètres"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "Partager les données anonymisées de crash et les journaux d'erreurs"
 
-#: src/components/settings.tsx:159
+#: src/components/settings.tsx:167
 msgid "Show extreme UV alerts"
 msgstr "Afficher les alertes UV extrêmes"
 
-#: src/components/settings.tsx:167
+#: src/components/settings.tsx:175
 msgid "Show high precipitation alerts"
 msgstr "Afficher les alertes de fortes précipitations"
 
-#: src/components/settings.tsx:185
+#: src/components/settings.tsx:193
 msgid "Show low visibility alerts"
 msgstr "Afficher les alertes de faible visibilité"
 
-#: src/components/settings.tsx:176
+#: src/components/settings.tsx:184
 msgid "Show strong wind alerts"
 msgstr "Afficher les alertes de vent fort"
 
-#: src/components/settings.tsx:151
+#: src/components/settings.tsx:159
 msgid "Show weather alerts"
 msgstr "Afficher les alertes météorologiques"
 
@@ -689,7 +689,7 @@ msgstr "Jeudi"
 #~ msgid "Tiles"
 #~ msgstr "Tuiles"
 
-#: src/components/initialisation.tsx:72
+#: src/components/initialisation.tsx:87
 msgid "To get started, let's set your language and location."
 msgstr "Pour commencer, définissons votre langue et votre localisation."
 
@@ -722,8 +722,8 @@ msgstr "Mardi"
 #~ msgid "Use keyboard shortcuts"
 #~ msgstr "Utilisez des raccourcis clavier"
 
+#: src/components/initialisation.tsx:110
 #: src/components/settings.tsx:79
-#: src/components/initialisation.tsx:95
 msgid "Use metric number format"
 msgstr "Utiliser le format numérique métrique"
 
@@ -739,7 +739,7 @@ msgstr "averses de pluie violentes"
 msgid "Weather"
 msgstr "Météo"
 
-#: src/pages/index.tsx:193
+#: src/pages/index.tsx:211
 msgid "weather data provided by open-meteo"
 msgstr "données météorologiques fournies par open-meteo"
 
@@ -776,8 +776,8 @@ msgstr "Vous utilisez Weather Please depuis un moment"
 msgid "Your email (optional)"
 msgstr "Votre e-mail (optionnel)"
 
+#: src/components/initialisation.tsx:116
 #: src/components/settings.tsx:88
-#: src/components/initialisation.tsx:101
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Vos données de localisation sont stockées en toute sécurité et exclusivement sur votre appareil personnel."
 

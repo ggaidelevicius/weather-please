@@ -92,7 +92,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						</Alert>
 						<div>
 							<span className="block text-sm font-medium text-white">
-								Location
+								<Trans>Location</Trans>
 							</span>
 							<span className="mt-2 block w-full text-base text-dark-100 sm:text-sm">
 								{input.locationName}

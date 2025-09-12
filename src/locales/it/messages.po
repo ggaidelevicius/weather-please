@@ -61,7 +61,7 @@ msgstr "Previsti {0} mm di precipitazioni nella prossima ora"
 #~ msgid "{label}"
 #~ msgstr "Lingua"
 
-#: src/components/settings.tsx:215
+#: src/components/settings.tsx:223
 msgid "☕ Gift a coffee"
 msgstr "☕ Regala un caffè"
 
@@ -69,11 +69,11 @@ msgstr "☕ Regala un caffè"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Invia feedback"
 
-#: src/components/settings.tsx:201
+#: src/components/settings.tsx:209
 msgid "🌟 Leave a review"
 msgstr "🌟 Lascia una recensione"
 
-#: src/components/settings.tsx:208
+#: src/components/settings.tsx:216
 msgid "🐛 Report a bug"
 msgstr "🐛 Segnala un bug"
 
@@ -81,7 +81,7 @@ msgstr "🐛 Segnala un bug"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Richiedi una funzionalità"
 
-#: src/components/settings.tsx:225
+#: src/components/settings.tsx:233
 msgid "🔒 Privacy policy"
 msgstr "🔒 Politica sulla privacy"
 
@@ -161,11 +161,11 @@ msgstr "cielo sereno"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "Consuma troppa memoria o CPU"
 
-#: src/components/settings.tsx:145
+#: src/components/settings.tsx:153
 msgid "Date"
 msgstr "Data"
 
-#: src/components/settings.tsx:141
+#: src/components/settings.tsx:149
 msgid "Day"
 msgstr "Giorno"
 
@@ -241,7 +241,7 @@ msgstr "UV estremi iniziano tra {timeUntilExtremeUv} ore"
 msgid "February"
 msgstr "Febbraio"
 
-#: src/components/settings.tsx:194
+#: src/components/settings.tsx:202
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -301,7 +301,7 @@ msgstr "forte nevicata"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "Mi piacerebbe portare Weather Please in altre lingue."
 
-#: src/components/settings.tsx:134
+#: src/components/settings.tsx:142
 msgid "Identifier"
 msgstr "Identificatore"
 
@@ -313,7 +313,7 @@ msgstr "Identificatore"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "Se hai una richiesta di traduzione, contattaci a <0>contact@weather-please.app</0>"
 
-#: src/components/initialisation.tsx:77
+#: src/components/initialisation.tsx:92
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Se il tuo browser chiede il permesso per accedere alla tua posizione, seleziona \"consenti\"."
 
@@ -352,12 +352,12 @@ msgstr "Giugno"
 #~ msgid "Lacks features I need"
 #~ msgstr "Mancano le funzionalità di cui ho bisogno"
 
+#: src/components/initialisation.tsx:98
 #: src/components/settings.tsx:67
-#: src/components/initialisation.tsx:83
 msgid "Language"
 msgstr "Lingua"
 
-#: src/components/settings.tsx:94
+#: src/components/settings.tsx:102
 msgid "Latitude"
 msgstr "Latitudine"
 
@@ -365,7 +365,7 @@ msgstr "Latitudine"
 msgid "Leave a review"
 msgstr "Lascia una recensione"
 
-#: src/components/settings.tsx:218
+#: src/components/settings.tsx:226
 msgid "Legal"
 msgstr "Legale"
 
@@ -381,11 +381,11 @@ msgstr "pioggerella gelida leggera"
 msgid "light freezing rain"
 msgstr "pioggia gelida leggera"
 
-#: src/components/settings/index.tsx:191
-#~ msgid "Location"
-#~ msgstr "Posizione"
+#: src/components/settings.tsx:95
+msgid "Location"
+msgstr "Posizione"
 
-#: src/components/settings.tsx:102
+#: src/components/settings.tsx:110
 msgid "Longitude"
 msgstr "Longitudine"
 
@@ -474,7 +474,7 @@ msgstr "Non mostrare più questo"
 msgid "November"
 msgstr "Novembre"
 
-#: src/components/settings.tsx:122
+#: src/components/settings.tsx:130
 msgid "Number of days to forecast"
 msgstr "Numero di giorni da prevedere"
 
@@ -494,7 +494,7 @@ msgstr "parzialmente nuvoloso"
 #~ msgid "Performance issues"
 #~ msgstr "Problemi di prestazioni"
 
-#: src/components/settings.tsx:114
+#: src/components/settings.tsx:122
 msgid "Periodically update location automatically"
 msgstr "Aggiorna periodicamente la posizione automaticamente"
 
@@ -527,7 +527,7 @@ msgstr "Sabato"
 msgid "September"
 msgstr "Settembre"
 
-#: src/components/initialisation.tsx:113
+#: src/components/initialisation.tsx:128
 msgid "Set my location"
 msgstr "Imposta la mia posizione"
 
@@ -540,23 +540,23 @@ msgstr "Impostazioni"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "Condividi dati anonimi di crash e log degli errori"
 
-#: src/components/settings.tsx:159
+#: src/components/settings.tsx:167
 msgid "Show extreme UV alerts"
 msgstr "Mostra allarmi UV estremi"
 
-#: src/components/settings.tsx:167
+#: src/components/settings.tsx:175
 msgid "Show high precipitation alerts"
 msgstr "Mostra allarmi per alte precipitazioni"
 
-#: src/components/settings.tsx:185
+#: src/components/settings.tsx:193
 msgid "Show low visibility alerts"
 msgstr "Mostra allarmi per bassa visibilità"
 
-#: src/components/settings.tsx:176
+#: src/components/settings.tsx:184
 msgid "Show strong wind alerts"
 msgstr "Mostra gli avvisi di vento forte"
 
-#: src/components/settings.tsx:151
+#: src/components/settings.tsx:159
 msgid "Show weather alerts"
 msgstr "Mostra avvisi meteorologici"
 
@@ -689,7 +689,7 @@ msgstr "Giovedì"
 #~ msgid "Tiles"
 #~ msgstr "Riquadri"
 
-#: src/components/initialisation.tsx:72
+#: src/components/initialisation.tsx:87
 msgid "To get started, let's set your language and location."
 msgstr "Per iniziare, impostiamo la tua lingua e la tua posizione."
 
@@ -722,8 +722,8 @@ msgstr "Martedì"
 #~ msgid "Use keyboard shortcuts"
 #~ msgstr "Usa le scorciatoie da tastiera"
 
+#: src/components/initialisation.tsx:110
 #: src/components/settings.tsx:79
-#: src/components/initialisation.tsx:95
 msgid "Use metric number format"
 msgstr "Usa il formato numerico metrico"
 
@@ -739,7 +739,7 @@ msgstr "piogge violente"
 msgid "Weather"
 msgstr "Meteo"
 
-#: src/pages/index.tsx:193
+#: src/pages/index.tsx:211
 msgid "weather data provided by open-meteo"
 msgstr "dati meteorologici forniti da open-meteo"
 
@@ -776,8 +776,8 @@ msgstr "Stai usando Weather Please da un po'"
 msgid "Your email (optional)"
 msgstr "La tua email (opzionale)"
 
+#: src/components/initialisation.tsx:116
 #: src/components/settings.tsx:88
-#: src/components/initialisation.tsx:101
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "I tuoi dati di localizzazione sono memorizzati in modo sicuro ed esclusivamente sul tuo dispositivo personale."
 
