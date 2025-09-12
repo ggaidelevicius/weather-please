@@ -56,7 +56,7 @@ const App = () => {
 
 		if (config.periodicLocationUpdate) {
 			try {
-				navigator.geolocation.getCurrentPosition((pos) => {
+				navigator.geolocation.getCurrentPosition(async (pos) => {
 					// Calculate distance between current and new coordinates using Haversine formula
 					const calculateDistance = (
 						currentLat: number,
@@ -92,10 +92,19 @@ const App = () => {
 					// Only update if user has moved more than 1km or if we don't have coordinates yet
 					if (!config.lat || !config.lon) {
 						// First time setting coordinates
+						const req = await fetch(
+							`https://nominatim.openstreetmap.org/reverse?format=json&lat=${newLat.toString()}&lon=${newLon.toString()}`,
+						)
+						const res = await req.json()
 						setChangedLocation(true)
 						updateConfig({
 							lat: newLat.toString(),
 							lon: newLon.toString(),
+							locationName: res?.name
+								? res.name
+								: res?.display_name
+									? res?.display_name
+									: 'Unknown',
 						})
 					} else {
 						const distance = calculateDistance(
@@ -107,10 +116,19 @@ const App = () => {
 
 						if (distance > 1) {
 							// User has moved more than 1km, trigger refresh
+							const req = await fetch(
+								`https://nominatim.openstreetmap.org/reverse?format=json&lat=${newLat.toString()}&lon=${newLon.toString()}`,
+							)
+							const res = await req.json()
 							setChangedLocation(true)
 							updateConfig({
 								lat: newLat.toString(),
 								lon: newLon.toString(),
+								locationName: res?.name
+									? res.name
+									: res?.display_name
+										? res?.display_name
+										: 'Unknown',
 							})
 						}
 						// If distance <= 1km, don't update anything to avoid unnecessary refreshes

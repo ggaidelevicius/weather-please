@@ -15,6 +15,7 @@ const configSchema = z.object({
 		.regex(
 			/^(\+|-)?(?:180(?:\.0{1,6})?|((1[0-7]\d)|([1-9]?\d))(?:\.\d{1,6})?)$/,
 		),
+	locationName: z.string(),
 	periodicLocationUpdate: z.boolean(),
 	showAlerts: z.boolean(),
 	showPrecipitationAlerts: z.boolean(),
@@ -30,6 +31,7 @@ const initialState: Config = {
 	lang: 'en',
 	lat: '',
 	lon: '',
+	locationName: '',
 	periodicLocationUpdate: false,
 	useMetric: true,
 	showAlerts: true,

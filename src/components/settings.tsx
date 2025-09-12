@@ -90,6 +90,14 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 								personal device.
 							</Trans>
 						</Alert>
+						<div>
+							<span className="block text-sm font-medium text-white">
+								Location
+							</span>
+							<span className="mt-2 block w-full text-base text-dark-100 sm:text-sm">
+								{input.locationName}
+							</span>
+						</div>
 						<Input
 							label={(<Trans>Latitude</Trans>) as unknown as string}
 							value={input.lat}

@@ -1,5 +1,5 @@
 import { locales } from '@/lib/i18n'
-import type { Config } from '@/hooks/use-config'
+import { type Config } from '@/hooks/use-config'
 import {
 	Description,
 	Dialog,
@@ -31,12 +31,27 @@ export const Initialisation = ({
 	pending,
 }: Readonly<InitialisationProps>) => {
 	const [loading, setLoading] = useState<boolean>(false)
+
 	const handleClick = () => {
-		navigator.geolocation.getCurrentPosition((pos) => {
+		navigator.geolocation.getCurrentPosition(async (pos) => {
 			setInput((prev) => ({
 				...prev,
 				lat: pos.coords.latitude.toString(),
 				lon: pos.coords.longitude.toString(),
+			}))
+			const req = await fetch(
+				`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude.toString()}&lon=${pos.coords.longitude.toString()}`,
+			)
+			const res = await req.json()
+			setInput((prev) => ({
+				...prev,
+				lat: pos.coords.latitude.toString(),
+				lon: pos.coords.longitude.toString(),
+				locationName: res?.name
+					? res.name
+					: res?.display_name
+						? res?.display_name
+						: 'Unknown',
 			}))
 		})
 	}
