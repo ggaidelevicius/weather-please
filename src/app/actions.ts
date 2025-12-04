@@ -1,14 +1,12 @@
 'use server'
 
-import { PrismaClient } from '@prisma/client'
 import { headers } from 'next/headers'
 import { z } from 'zod'
+import { prisma } from '../lib/prisma'
 import { rateLimit } from '../lib/rate-limit'
 
-const prisma = new PrismaClient()
-
 const formSchema = z.object({
-	email: z.string().email().optional(),
+	email: z.email().optional(),
 	message: z.string().nonempty(),
 	locale: z.enum([
 		'bn',
