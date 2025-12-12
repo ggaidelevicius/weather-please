@@ -20,9 +20,6 @@ importers:
       '@lingui/react':
         specifier: ^5.6.1
         version: 5.6.1(@lingui/babel-plugin-lingui-macro@5.6.1(babel-plugin-macros@3.1.0)(typescript@5.9.3))(babel-plugin-macros@3.1.0)(react@19.2.3)
-      '@lingui/swc-plugin':
-        specifier: ^5.9.0
-        version: 5.9.0(@lingui/core@5.6.1(@lingui/babel-plugin-lingui-macro@5.6.1(babel-plugin-macros@3.1.0)(typescript@5.9.3))(babel-plugin-macros@3.1.0))(next@16.0.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
       '@prisma/adapter-pg':
         specifier: ^7.1.0
         version: 7.1.0
@@ -41,6 +38,9 @@ importers:
       '@vercel/analytics':
         specifier: ^1.6.1
         version: 1.6.1(next@16.0.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
+      babel-plugin-macros:
+        specifier: ^3.1.0
+        version: 3.1.0
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -885,18 +885,6 @@ packages:
       '@lingui/babel-plugin-lingui-macro':
         optional: true
       babel-plugin-macros:
-        optional: true
-
-  '@lingui/swc-plugin@5.9.0':
-    resolution: {integrity: sha512-Lsm7pSAW7HdUpfDFi6E4G6iEvJzyeUwq8s5ubgU0akHBMzKp6FSt/EsjBcYIpGQoLZ173VECF/Mjqo/JmQmBDg==}
-    peerDependencies:
-      '@lingui/core': '5'
-      '@swc/core': '*'
-      next: '*'
-    peerDependenciesMeta:
-      '@swc/core':
-        optional: true
-      next:
         optional: true
 
   '@messageformat/parser@5.1.0':
@@ -4590,12 +4578,6 @@ snapshots:
       '@lingui/babel-plugin-lingui-macro': 5.6.1(babel-plugin-macros@3.1.0)(typescript@5.9.3)
       babel-plugin-macros: 3.1.0
 
-  '@lingui/swc-plugin@5.9.0(@lingui/core@5.6.1(@lingui/babel-plugin-lingui-macro@5.6.1(babel-plugin-macros@3.1.0)(typescript@5.9.3))(babel-plugin-macros@3.1.0))(next@16.0.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))':
-    dependencies:
-      '@lingui/core': 5.6.1(@lingui/babel-plugin-lingui-macro@5.6.1(babel-plugin-macros@3.1.0)(typescript@5.9.3))(babel-plugin-macros@3.1.0)
-    optionalDependencies:
-      next: 16.0.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-
   '@messageformat/parser@5.1.0':
     dependencies:
       moo: 0.5.2
@@ -5014,8 +4996,7 @@ snapshots:
     dependencies:
       undici-types: 7.16.0
 
-  '@types/parse-json@4.0.2':
-    optional: true
+  '@types/parse-json@4.0.2': {}
 
   '@types/react-dom@19.2.3(@types/react@19.2.7)':
     dependencies:
@@ -5297,7 +5278,6 @@ snapshots:
       '@babel/runtime': 7.23.6
       cosmiconfig: 7.1.0
       resolve: 1.22.8
-    optional: true
 
   babel-plugin-react-compiler@19.1.0-rc.2:
     dependencies:
@@ -5482,7 +5462,6 @@ snapshots:
       parse-json: 5.2.0
       path-type: 4.0.0
       yaml: 1.10.2
-    optional: true
 
   cosmiconfig@8.3.6(typescript@5.9.3):
     dependencies:
@@ -7697,8 +7676,7 @@ snapshots:
 
   yallist@3.1.1: {}
 
-  yaml@1.10.2:
-    optional: true
+  yaml@1.10.2: {}
 
   yaml@2.8.1: {}
 

@@ -2,10 +2,6 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
 	reactStrictMode: true,
-	experimental: {
-		swcPlugins: [['@lingui/swc-plugin', {}]],
-		// reactCompiler: true,
-	},
 	turbopack: {},
 }
 
