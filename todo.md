@@ -12,12 +12,13 @@
 
 ## UX and error handling
 
-- [ ] Handle geolocation errors in
+- [x] Handle geolocation errors in
       [initialisation.tsx](src/components/initialisation.tsx) (show an error,
-      stop the loading spinner, and provide a manual lat/lon entry or a "skip
-      for now" path).
+      stop the loading spinner, and provide instructions for enabling
+      geolocation).
   - **Action:** Add error callback to `getCurrentPosition()`, set `loading` to
-    false, display error message, and provide manual coordinate input fallback.
+    false, display browser-specific instructions for enabling location
+    permissions with a retry button.
 
 - [ ] Show a user-facing weather fetch error and add a retry path; check
       `res.ok` and handle non-200 responses in

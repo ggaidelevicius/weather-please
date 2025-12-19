@@ -1,5 +1,5 @@
-import { locales } from '@/lib/i18n'
 import type { Config } from '@/hooks/use-config'
+import { locales } from '@/lib/i18n'
 import {
 	Description,
 	Dialog,
@@ -8,7 +8,7 @@ import {
 	DialogTitle,
 } from '@headlessui/react'
 import { Trans } from '@lingui/react/macro'
-import { IconShieldCheckFilled } from '@tabler/icons-react'
+import { IconAlertTriangle, IconShieldCheckFilled } from '@tabler/icons-react'
 import Image from 'next/image'
 import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
@@ -31,14 +31,91 @@ export const Initialisation = ({
 	pending,
 }: Readonly<InitialisationProps>) => {
 	const [loading, setLoading] = useState<boolean>(false)
+	const [errorCode, setErrorCode] = useState<
+		'permission_denied' | 'position_unavailable' | 'timeout' | null
+	>(null)
+
 	const handleClick = () => {
-		navigator.geolocation.getCurrentPosition((pos) => {
-			setInput((prev) => ({
-				...prev,
-				lat: pos.coords.latitude.toString(),
-				lon: pos.coords.longitude.toString(),
-			}))
-		})
+		setLoading(true)
+		setErrorCode(null)
+		navigator.geolocation.getCurrentPosition(
+			(pos) => {
+				setInput((prev) => ({
+					...prev,
+					lat: pos.coords.latitude.toString(),
+					lon: pos.coords.longitude.toString(),
+				}))
+				setLoading(false)
+			},
+			(err) => {
+				setLoading(false)
+				if (err.code === err.PERMISSION_DENIED) {
+					setErrorCode('permission_denied')
+				} else if (err.code === err.POSITION_UNAVAILABLE) {
+					setErrorCode('position_unavailable')
+				} else if (err.code === err.TIMEOUT) {
+					setErrorCode('timeout')
+				}
+			},
+		)
+	}
+
+	const getErrorInstructions = () => {
+		const userAgent = navigator.userAgent.toLowerCase()
+		const isChrome = userAgent.includes('chrome') && !userAgent.includes('edg')
+		const isFirefox = userAgent.includes('firefox')
+		const isSafari =
+			userAgent.includes('safari') && !userAgent.includes('chrome')
+		const isEdge = userAgent.includes('edg')
+
+		if (errorCode === 'permission_denied') {
+			if (isChrome || isEdge) {
+				return (
+					<Trans>
+						<strong>Location access denied.</strong> Click the location icon in
+						the address bar, and select "always allow this to access your
+						location". Then click the button below to try again.
+					</Trans>
+				)
+			} else if (isFirefox) {
+				return (
+					<Trans>
+						<strong>Location access denied.</strong> Click the location icon in
+						the address bar, and select "always allow this to access your
+						location". Then click the button below to try again.
+					</Trans>
+				)
+			} else if (isSafari) {
+				return (
+					<Trans>
+						<strong>Location access denied.</strong> Click the location icon in
+						the address bar, and select "always allow this to access your
+						location". Then click the button below to try again.
+					</Trans>
+				)
+			}
+			return (
+				<Trans>
+					<strong>Location access denied.</strong> Check your browser&apos;s
+					settings to allow this site to access your location, then try again.
+				</Trans>
+			)
+		} else if (errorCode === 'position_unavailable') {
+			return (
+				<Trans>
+					Your location is currently unavailable. Please check that location
+					services are enabled on your device and try again.
+				</Trans>
+			)
+		} else if (errorCode === 'timeout') {
+			return (
+				<Trans>
+					The location request timed out. Please check your internet connection
+					and try again.
+				</Trans>
+			)
+		}
+		return null
 	}
 
 	return (
@@ -103,14 +180,17 @@ export const Initialisation = ({
 							device.
 						</Trans>
 					</Alert>
-					<Button
-						onClick={() => {
-							handleClick()
-							setLoading(true)
-						}}
-						disabled={loading}
-					>
-						<Trans>Set my location</Trans>
+					{errorCode && (
+						<Alert icon={IconAlertTriangle} variant="info-red">
+							{getErrorInstructions()}
+						</Alert>
+					)}
+					<Button onClick={handleClick} disabled={loading}>
+						{errorCode ? (
+							<Trans>Try again</Trans>
+						) : (
+							<Trans>Set my location</Trans>
+						)}
 					</Button>
 				</DialogPanel>
 			</div>
