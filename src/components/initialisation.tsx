@@ -122,12 +122,12 @@ export const Initialisation = ({
 		<Dialog open={pending} onClose={() => {}} className="relative z-50">
 			<DialogBackdrop
 				transition
-				className="fixed inset-0 bg-black/60 backdrop-blur-lg transition duration-300 will-change-[backdrop-filter,background-color] data-[closed]:opacity-0"
+				className="fixed inset-0 bg-black/60 backdrop-blur-lg transition duration-300 will-change-[backdrop-filter,background-color] data-closed:opacity-0"
 			/>{' '}
 			<div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 				<DialogPanel
 					transition
-					className="m-auto w-full max-w-lg space-y-4 rounded-xl bg-dark-800 p-12 transition duration-400 will-change-[transform,opacity,filter] data-[closed]:scale-97 data-[closed]:opacity-0 data-[closed]:blur-xs"
+					className="m-auto w-full max-w-lg space-y-4 rounded-xl bg-dark-800 p-12 transition duration-400 will-change-[transform,opacity,filter] data-closed:scale-97 data-closed:opacity-0 data-closed:blur-xs"
 				>
 					{' '}
 					<DialogTitle

@@ -225,7 +225,7 @@ export const Tile = ({
 					alt=""
 					width={56}
 					height={56}
-					className="h-[56px] w-[56px]"
+					className="h-14 w-14"
 				/>
 			</div>
 			<div className="mt-4 flex flex-row justify-between gap-3">
