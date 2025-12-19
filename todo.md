@@ -2,7 +2,7 @@
 
 ## Data correctness and caching
 
-- [ ] Key cached weather data/alerts by coordinates and invalidate when lat/lon
+- [x] Key cached weather data/alerts by coordinates and invalidate when lat/lon
       changes (store lat/lon with cache and verify in
       [use-weather.ts](src/hooks/use-weather.ts)).
   - **Action:** Add `lat` and `lon` to localStorage alongside data and verify

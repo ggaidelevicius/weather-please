@@ -95,9 +95,21 @@ interface DailyData {
 	windspeed_10m_max: number[]
 }
 
-const isLocalStorageDataValid = () => {
-	const { data, lastUpdated, alerts } = localStorage
-	if (!data || !lastUpdated || !alerts) return false
+const isLocalStorageDataValid = (lat: string, lon: string) => {
+	const data = localStorage.getItem('data')
+	const lastUpdated = localStorage.getItem('lastUpdated')
+	const alerts = localStorage.getItem('alerts')
+	const cachedLat = localStorage.getItem('cachedLat')
+	const cachedLon = localStorage.getItem('cachedLon')
+
+	if (!data || !lastUpdated || !alerts || !cachedLat || !cachedLon) {
+		return false
+	}
+
+	// Check if coordinates match
+	if (cachedLat !== lat || cachedLon !== lon) {
+		return false
+	}
 
 	try {
 		const [year, month, day, hour] = lastUpdated.split('-').map(Number)
@@ -174,7 +186,7 @@ export const useWeather = (
 				rain: data.daily.precipitation_probability_max[i],
 			}))
 			setWeatherData(futureData)
-			localStorage.data = JSON.stringify(futureData)
+			localStorage.setItem('data', JSON.stringify(futureData))
 
 			const alerts = {
 				totalPrecipitation: {
@@ -203,13 +215,17 @@ export const useWeather = (
 				),
 			}
 			setAlertData(alerts)
-			localStorage.alerts = JSON.stringify(alerts)
-
-			localStorage.lastUpdated = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`
+			localStorage.setItem('alerts', JSON.stringify(alerts))
+			localStorage.setItem('cachedLat', lat)
+			localStorage.setItem('cachedLon', lon)
+			localStorage.setItem(
+				'lastUpdated',
+				`${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`,
+			)
 		} else if (error) {
 			console.error(error)
 		}
-	}, [data, error])
+	}, [data, error, lat, lon])
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -227,9 +243,13 @@ export const useWeather = (
 	useEffect(() => {
 		if (changedLocation) {
 			setUsingCachedData(false)
-		} else if (isLocalStorageDataValid()) {
-			setWeatherData(JSON.parse(localStorage.data))
-			setAlertData(JSON.parse(localStorage.alerts))
+		} else if (isLocalStorageDataValid(lat, lon)) {
+			const cachedData = localStorage.getItem('data')
+			const cachedAlerts = localStorage.getItem('alerts')
+			if (cachedData && cachedAlerts) {
+				setWeatherData(JSON.parse(cachedData))
+				setAlertData(JSON.parse(cachedAlerts))
+			}
 		} else {
 			setUsingCachedData(false)
 		}
