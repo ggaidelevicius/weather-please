@@ -84,7 +84,7 @@
 
 ## Backend robustness
 
-- [ ] Replace in-memory rate limiting with durable storage (Redis/Vercel
+- [x] Replace in-memory rate limiting with durable storage (Redis/Vercel
       KV/etc.) and parse `x-forwarded-for` safely.
   - **File:** [rate-limit.ts](src/lib/rate-limit.ts),
     [actions.ts](src/app/actions.ts)
@@ -92,14 +92,20 @@
     1. Use Vercel KV or similar for rate limit state in production
     2. Parse only the first IP from `x-forwarded-for` (e.g.,
        `ip.split(',')[0].trim()`)
+  - **Resolution:** Implemented database-backed rate limiting using Prisma with
+    proper IP parsing (first IP from x-forwarded-for), fail-closed security on
+    errors, and probabilistic cleanup.
 
-- [ ] Add a Prisma client singleton and guard against missing `DATABASE_URL`,
+- [x] Add a Prisma client singleton and guard against missing `DATABASE_URL`,
       plus wrap `submitForm` in try/catch for graceful failures.
   - **Files:** [prisma.ts](src/lib/prisma.ts), [actions.ts](src/app/actions.ts)
   - **Action:**
     1. Verify prisma.ts uses singleton pattern (check if it already does)
     2. Wrap the `prisma.formSubmission.create()` call in try/catch and return a
        user-friendly error message on failure
+  - **Resolution:** Added Prisma singleton pattern with global caching,
+    DATABASE_URL validation, and try/catch wrapper around form submission with
+    user-friendly error messages.
 
 ---
 

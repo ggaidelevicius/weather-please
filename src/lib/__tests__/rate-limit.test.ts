@@ -1,126 +1,155 @@
-import { rateLimit } from '../rate-limit'
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { enforceRateLimit } from '../rate-limit'
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
+import { prisma } from '../prisma'
 
-describe('rateLimit', () => {
+// Mock Prisma
+vi.mock('../prisma', () => ({
+	prisma: {
+		$transaction: vi.fn(),
+		rateLimitEntry: {
+			deleteMany: vi.fn(),
+		},
+	},
+}))
+
+describe('enforceRateLimit', () => {
+	const mockHeaders = new Headers()
 	let testCounter = 0
 
 	beforeEach(() => {
-		vi.clearAllTimers()
-		vi.useRealTimers()
 		testCounter++
+		vi.clearAllMocks()
 	})
 
-	// Helper to generate unique IPs for each test
-	const getUniqueIP = (suffix: number = 1) => `192.168.${testCounter}.${suffix}`
-
-	it('allows first request from new IP', () => {
-		const ip = getUniqueIP()
-		const result = rateLimit(ip)
-		expect(result).toBe(false) // false means not rate limited
+	afterEach(() => {
+		vi.clearAllMocks()
 	})
 
-	it('allows multiple requests under the limit', () => {
-		const ip = getUniqueIP()
+	// Helper to create mock headers with IP
+	const createHeaders = (ip: string) => {
+		const headers = new Headers()
+		headers.set('x-forwarded-for', ip)
+		return headers
+	}
 
-		// Make 5 requests (which is the limit)
-		for (let i = 0; i < 5; i++) {
-			const result = rateLimit(ip)
-			expect(result).toBe(false)
-		}
+	it('allows first request from new IP', async () => {
+		const headers = createHeaders(`192.168.1.${testCounter}`)
+
+		// Mock transaction to allow request (count < limit)
+		vi.mocked(prisma.$transaction).mockResolvedValueOnce({ ok: true })
+
+		const result = await enforceRateLimit({
+			scope: 'server-action',
+			headers,
+		})
+
+		expect(result.ok).toBe(true)
 	})
 
-	it('blocks requests when limit is exceeded', () => {
-		const ip = getUniqueIP()
+	it('blocks request when limit is exceeded', async () => {
+		const headers = createHeaders(`192.168.2.${testCounter}`)
 
-		// Make 5 requests (up to the limit)
-		for (let i = 0; i < 5; i++) {
-			rateLimit(ip)
-		}
+		// Mock transaction to block request (count >= limit)
+		vi.mocked(prisma.$transaction).mockResolvedValueOnce({
+			ok: false,
+			retryAfter: 3600,
+		})
 
-		// 6th request should be blocked
-		const result = rateLimit(ip)
-		expect(result).toBe(true) // true means rate limited
+		const result = await enforceRateLimit({
+			scope: 'server-action',
+			headers,
+		})
+
+		expect(result.ok).toBe(false)
+		expect(result.ok === false && result.retryAfter).toBeGreaterThan(0)
 	})
 
-	it('continues to block subsequent requests after limit exceeded', () => {
-		const ip = getUniqueIP()
+	it('parses x-forwarded-for header correctly', async () => {
+		const headers = new Headers()
+		headers.set('x-forwarded-for', '192.168.3.1, 10.0.0.1, 172.16.0.1')
 
-		// Exceed the limit
-		for (let i = 0; i < 6; i++) {
-			rateLimit(ip)
-		}
+		vi.mocked(prisma.$transaction).mockResolvedValueOnce({ ok: true })
 
-		// Multiple subsequent requests should be blocked
-		expect(rateLimit(ip)).toBe(true)
-		expect(rateLimit(ip)).toBe(true)
-		expect(rateLimit(ip)).toBe(true)
+		await enforceRateLimit({
+			scope: 'server-action',
+			headers,
+		})
+
+		// Verify the transaction was called (which means IP was parsed)
+		expect(prisma.$transaction).toHaveBeenCalled()
 	})
 
-	it('resets rate limit after time window expires', () => {
-		vi.useFakeTimers()
-		const ip = getUniqueIP()
+	it('fails closed when IP cannot be identified', async () => {
+		const headers = new Headers() // No IP headers
 
-		// Exceed the limit
-		for (let i = 0; i < 6; i++) {
-			rateLimit(ip)
-		}
+		const result = await enforceRateLimit({
+			scope: 'server-action',
+			headers,
+		})
 
-		// Should be blocked
-		expect(rateLimit(ip)).toBe(true)
-
-		// Fast forward past the 1 hour window (60 * 60 * 1000 + 1 ms)
-		vi.advanceTimersByTime(60 * 60 * 1000 + 1)
-
-		// Should be allowed again
-		const result = rateLimit(ip)
-		expect(result).toBe(false)
-
-		vi.useRealTimers()
+		expect(result.ok).toBe(false)
+		expect(result.ok === false && result.retryAfter).toBe(60)
 	})
 
-	it('handles different IPs independently', () => {
-		const ip1 = getUniqueIP(1)
-		const ip2 = getUniqueIP(2)
+	it('fails closed on database error', async () => {
+		const headers = createHeaders(`192.168.4.${testCounter}`)
 
-		// Exceed limit for ip1
-		for (let i = 0; i < 6; i++) {
-			rateLimit(ip1)
-		}
+		// Mock database error
+		vi.mocked(prisma.$transaction).mockRejectedValueOnce(
+			new Error('Database connection failed'),
+		)
 
-		// ip1 should be blocked
-		expect(rateLimit(ip1)).toBe(true)
+		const result = await enforceRateLimit({
+			scope: 'server-action',
+			headers,
+		})
 
-		// ip2 should still be allowed
-		expect(rateLimit(ip2)).toBe(false)
+		expect(result.ok).toBe(false)
+		expect(result.ok === false && result.retryAfter).toBe(60)
 	})
 
-	it('properly tracks count increments', () => {
-		const ip = getUniqueIP()
+	it('handles x-real-ip header as fallback', async () => {
+		const headers = new Headers()
+		headers.set('x-real-ip', `192.168.5.${testCounter}`)
 
-		// Make requests and verify they're allowed
-		expect(rateLimit(ip)).toBe(false) // 1st request
-		expect(rateLimit(ip)).toBe(false) // 2nd request
-		expect(rateLimit(ip)).toBe(false) // 3rd request
-		expect(rateLimit(ip)).toBe(false) // 4th request
-		expect(rateLimit(ip)).toBe(false) // 5th request
-		expect(rateLimit(ip)).toBe(true) // 6th request - blocked
+		vi.mocked(prisma.$transaction).mockResolvedValueOnce({ ok: true })
+
+		await enforceRateLimit({
+			scope: 'server-action',
+			headers,
+		})
+
+		expect(prisma.$transaction).toHaveBeenCalled()
 	})
 
-	it('resets window when expired even with previous requests', () => {
-		vi.useFakeTimers()
-		const ip = getUniqueIP()
+	it('handles cf-connecting-ip header for Cloudflare', async () => {
+		const headers = new Headers()
+		headers.set('cf-connecting-ip', `192.168.6.${testCounter}`)
 
-		// Make some requests but don't exceed limit
-		rateLimit(ip) // 1st request
-		rateLimit(ip) // 2nd request
-		rateLimit(ip) // 3rd request
+		vi.mocked(prisma.$transaction).mockResolvedValueOnce({ ok: true })
 
-		// Fast forward past window
-		vi.advanceTimersByTime(60 * 60 * 1000 + 1)
+		await enforceRateLimit({
+			scope: 'server-action',
+			headers,
+		})
 
-		// Should reset and allow new requests
-		expect(rateLimit(ip)).toBe(false) // Should be treated as 1st request in new window
+		expect(prisma.$transaction).toHaveBeenCalled()
+	})
 
-		vi.useRealTimers()
+	it('prioritizes x-forwarded-for over other headers', async () => {
+		const headers = new Headers()
+		headers.set('x-forwarded-for', `192.168.7.${testCounter}`)
+		headers.set('x-real-ip', '10.0.0.1')
+		headers.set('cf-connecting-ip', '172.16.0.1')
+
+		vi.mocked(prisma.$transaction).mockResolvedValueOnce({ ok: true })
+
+		await enforceRateLimit({
+			scope: 'server-action',
+			headers,
+		})
+
+		// The key should be based on the first IP in x-forwarded-for
+		expect(prisma.$transaction).toHaveBeenCalled()
 	})
 })

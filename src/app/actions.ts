@@ -3,7 +3,7 @@
 import { headers } from 'next/headers'
 import { z } from 'zod'
 import { prisma } from '../lib/prisma'
-import { rateLimit } from '../lib/rate-limit'
+import { enforceRateLimit } from '../lib/rate-limit'
 
 const formSchema = z.object({
 	email: z.email().optional(),
@@ -31,14 +31,24 @@ export const submitForm = async (
 	formData: FormData,
 ) => {
 	const requestHeaders = await headers()
-	const ip = requestHeaders.get('x-forwarded-for') ?? 'unknown'
 	const userAgent = requestHeaders.get('user-agent') ?? 'unknown'
 	const referrerUrl = requestHeaders.get('referer') ?? 'unknown'
 
-	const isRateLimited = rateLimit(ip)
-	if (isRateLimited) {
-		return { message: "You're doing that too quickly" }
+	// Check rate limit with proper IP parsing
+	const rateLimitResult = await enforceRateLimit({
+		scope: 'server-action',
+		headers: requestHeaders,
+	})
+
+	if (!rateLimitResult.ok) {
+		return {
+			message: `You're doing that too quickly. Please try again in ${rateLimitResult.retryAfter} seconds.`,
+		}
 	}
+
+	// Get IP for logging (after rate limit check)
+	const forwardedFor = requestHeaders.get('x-forwarded-for')
+	const ip = forwardedFor ? forwardedFor.split(',')[0]?.trim() : 'unknown'
 
 	// Retrieve the honeypot field name from the hidden field
 	const honeypotValidation = formData.get('validation')
@@ -78,16 +88,24 @@ export const submitForm = async (
 		return { message: errors || 'Validation failed' }
 	}
 
-	await prisma.formSubmission.create({
-		data: {
-			email: result.data.email,
-			message: result.data.message,
-			locale: result.data.locale,
-			userAgent: userAgent,
-			referrerUrl: referrerUrl,
-			ipSubmittedFrom: ip,
-		},
-	})
+	try {
+		await prisma.formSubmission.create({
+			data: {
+				email: result.data.email,
+				message: result.data.message,
+				locale: result.data.locale,
+				userAgent: userAgent,
+				referrerUrl: referrerUrl,
+				ipSubmittedFrom: ip,
+			},
+		})
 
-	return { message: 'Message received' }
+		return { message: 'Message received' }
+	} catch (error) {
+		console.error('Form submission failed:', error)
+		return {
+			message:
+				'Unable to submit your message at this time. Please try again later.',
+		}
+	}
 }
