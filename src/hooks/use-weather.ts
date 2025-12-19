@@ -9,6 +9,9 @@ import {
 	ALERT_CONDITIONS,
 } from '../lib/alert-processor'
 
+const ALERT_HOURS_UV = 13 // 12 hours + current hour
+const ALERT_HOURS_GENERAL = 25 // 24 hours + current hour
+
 const dataSchema = z
 	.array(
 		z.object({
@@ -27,12 +30,12 @@ const dataSchema = z
 type Data = z.infer<typeof dataSchema>
 
 const alertSchema = z.object({
-	hoursOfExtremeUv: z.array(z.boolean()).length(13),
-	hoursOfLowVisibility: z.array(z.boolean()).length(25),
-	hoursOfStrongWind: z.array(z.boolean()).length(25),
-	hoursOfStrongWindGusts: z.array(z.boolean()).length(25),
+	hoursOfExtremeUv: z.array(z.boolean()).length(ALERT_HOURS_UV),
+	hoursOfLowVisibility: z.array(z.boolean()).length(ALERT_HOURS_GENERAL),
+	hoursOfStrongWind: z.array(z.boolean()).length(ALERT_HOURS_GENERAL),
+	hoursOfStrongWindGusts: z.array(z.boolean()).length(ALERT_HOURS_GENERAL),
 	totalPrecipitation: z.object({
-		duration: z.array(z.boolean()).length(25),
+		duration: z.array(z.boolean()).length(ALERT_HOURS_GENERAL),
 		precipitation: z.object({
 			flag: z.boolean(),
 			value: z.number(),

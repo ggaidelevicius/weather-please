@@ -1,17 +1,5 @@
 # TODO
 
-## Magic numbers
-
-- [ ] Extract magic numbers into named constants.
-  - **Examples:**
-    - Precipitation threshold `15` in
-      [weather-alert.tsx:108](src/components/weather-alert.tsx#L108)
-    - Distance threshold `1` (km) in [index.tsx:108](src/pages/index.tsx#L108)
-    - Array lengths `13` and `25` for alert arrays in
-      [use-weather.ts:30-36](src/hooks/use-weather.ts#L30-L36)
-  - **Action:** Create a constants file or define constants at module level with
-    descriptive names.
-
 ## Error boundary
 
 - [ ] Add a React error boundary component.

@@ -20,6 +20,8 @@ i18n.load({
 })
 i18n.activate('en')
 
+const LOCATION_CHANGE_THRESHOLD_KM = 1
+
 const App = () => {
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
 	const currentDateRef = useRef(new Date().getDate())
@@ -108,15 +110,15 @@ const App = () => {
 							newLon,
 						)
 
-						if (distance > 1) {
-							// User has moved more than 1km, trigger refresh
+						if (distance > LOCATION_CHANGE_THRESHOLD_KM) {
+							// User has moved more than threshold distance, trigger refresh
 							setChangedLocation(true)
 							updateConfig({
 								lat: newLat.toString(),
 								lon: newLon.toString(),
 							})
 						}
-						// If distance <= 1km, don't update anything to avoid unnecessary refreshes
+						// If distance <= threshold, don't update anything to avoid unnecessary refreshes
 					}
 				})
 			} catch (e) {

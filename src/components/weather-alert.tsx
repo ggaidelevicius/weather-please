@@ -4,6 +4,8 @@ import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
 import { motion } from 'framer-motion'
 import { Alert } from './alert'
 
+const PRECIPITATION_ALERT_THRESHOLD_MM = 15
+
 interface AlertProps extends Alerts {
 	useMetric: boolean
 	showUvAlerts: boolean
@@ -55,7 +57,10 @@ export const WeatherAlert = ({
 	}
 
 	// Precipitation Alert
-	if (showPrecipitationAlerts && totalPrecipitation.precipitation.value >= 15) {
+	if (
+		showPrecipitationAlerts &&
+		totalPrecipitation.precipitation.value >= PRECIPITATION_ALERT_THRESHOLD_MM
+	) {
 		const { precipitation, duration } = totalPrecipitation
 		// Compute duration once: indexOf(false) gives the index of the first false,
 		// which represents when the precipitation period ends
