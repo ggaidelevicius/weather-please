@@ -70,7 +70,7 @@
   - **Action:** Add a fallback: `iconMap[description] ?? FallbackIcon` and
     `descriptionMap[description] ?? <Trans>Unknown conditions</Trans>`.
 
-- [ ] Revisit precipitation duration logic and copy so the duration shown
+- [x] Revisit precipitation duration logic and copy so the duration shown
       matches the algorithm; compute the duration once and update tests.
   - **Files:** [alert-processor.ts](src/lib/alert-processor.ts),
     [weather-alert.tsx](src/components/weather-alert.tsx),
@@ -79,6 +79,12 @@
     UI text accurately reflects what the duration array represents. The current
     logic uses `indexOf(false)` which may not correctly handle non-contiguous
     precipitation.
+  - **Resolution:** Refactored weather-alert.tsx to compute duration once using
+    `indexOf(false)` instead of calling it 6 times. Added comprehensive
+    documentation to `processPrecipitationDuration` explaining that the
+    algorithm includes the 3 consecutive zero hours as part of the event, then
+    marks subsequent hours as ended. Updated tests with clearer comments
+    explaining the behavior step-by-step.
 
 ---
 

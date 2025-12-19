@@ -57,50 +57,40 @@ export const WeatherAlert = ({
 	// Precipitation Alert
 	if (showPrecipitationAlerts && totalPrecipitation.precipitation.value >= 15) {
 		const { precipitation, duration } = totalPrecipitation
+		// Compute duration once: indexOf(false) gives the index of the first false,
+		// which represents when the precipitation period ends
+		const firstEndIndex = duration.indexOf(false)
+		const durationHours = firstEndIndex === -1 ? duration.length : firstEndIndex
+		const precipitationMm = precipitation.value.toFixed(1)
+		const precipitationInches = (precipitation.value / 25.4).toFixed(1)
+
 		alerts.push(
 			<Alert
 				key="precipitationAlert"
 				icon={IconInfoCircle}
 				variant="light-blue"
 			>
-				{useMetric && duration.indexOf(false) === 1 && (
+				{useMetric && durationHours === 1 && (
 					<Trans>
-						{precipitation.value.toFixed(1)}mm of precipitation expected over
-						the next hour
+						{precipitationMm}mm of precipitation expected over the next hour
 					</Trans>
 				)}
-				{useMetric &&
-					duration.indexOf(false) !== 1 &&
-					duration.indexOf(false) !== -1 && (
-						<Trans>
-							{precipitation.value.toFixed(1)}mm of precipitation expected over
-							the next {duration.indexOf(false)} hours
-						</Trans>
-					)}
-				{useMetric && duration.indexOf(false) === -1 && (
+				{useMetric && durationHours > 1 && (
 					<Trans>
-						{precipitation.value.toFixed(1)}mm of precipitation expected over
-						the next {duration.length - 1} hours
+						{precipitationMm}mm of precipitation expected over the next{' '}
+						{durationHours} hours
 					</Trans>
 				)}
-				{!useMetric && duration.indexOf(false) === 1 && (
+				{!useMetric && durationHours === 1 && (
 					<Trans>
-						{(precipitation.value / 25.4).toFixed(1)} inches of precipitation
-						expected over the next hour
+						{precipitationInches} inches of precipitation expected over the next
+						hour
 					</Trans>
 				)}
-				{!useMetric &&
-					duration.indexOf(false) !== 1 &&
-					duration.indexOf(false) !== -1 && (
-						<Trans>
-							{(precipitation.value / 25.4).toFixed(1)} inches of precipitation
-							expected over the next {duration.indexOf(false)} hours
-						</Trans>
-					)}
-				{!useMetric && duration.indexOf(false) === -1 && (
+				{!useMetric && durationHours > 1 && (
 					<Trans>
-						{(precipitation.value / 25.4).toFixed(1)} inches of precipitation
-						expected over the next {duration.length - 1} hours
+						{precipitationInches} inches of precipitation expected over the next{' '}
+						{durationHours} hours
 					</Trans>
 				)}
 			</Alert>,

@@ -174,7 +174,9 @@ describe('Alert Processor', () => {
 		})
 
 		it('handles consecutive zeros correctly', () => {
-			const data = [1, 0, 0, 0, 1] // 3 consecutive zeros should trigger
+			const data = [1, 0, 0, 0, 1] // 3 consecutive zeros should trigger end
+			// The algorithm includes the 3 zeros in the duration, then marks subsequent hours as false
+			// Result: first 4 hours (including the 3 zeros) are part of event, 5th hour is not
 
 			const result = processPrecipitationDuration(data)
 
@@ -204,20 +206,22 @@ describe('Alert Processor', () => {
 
 			const result = processPrecipitationDuration(data)
 
-			// The function returns false when negativeCount reaches 3
+			// The function returns false once negativeCount reaches 3
 			// For data [1, 2, 0, 0, 0, 0, 3, 4, 0, 0, 0, 0]:
-			// 1: negativeCount=0, returns true
-			// 2: negativeCount=0, returns true
-			// 0: negativeCount=1, returns true
-			// 0: negativeCount=2, returns true
-			// 0: negativeCount=3, returns false (and stays false)
+			// Index 0: val=1, negativeCount=0 → returns true
+			// Index 1: val=2, negativeCount=0 → returns true
+			// Index 2: val=0, negativeCount→1 → returns true
+			// Index 3: val=0, negativeCount→2 → returns true
+			// Index 4: val=0, negativeCount→3 → returns true (3rd zero is still included)
+			// Index 5: val=0, negativeCount=3 → returns false (check happens first)
+			// Index 6+: All return false (precipitation event has ended)
 			expect(result).toEqual([
 				true,
 				true,
 				true,
 				true,
-				true, // negativeCount=3 here, but check happens before increment
-				false, // After 3 zeros, negativeCount=3
+				true, // The 3rd zero is still part of the event
+				false, // 4th consecutive zero marks the end
 				false,
 				false,
 				false,

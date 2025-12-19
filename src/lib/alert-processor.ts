@@ -54,6 +54,18 @@ export const processPrecipitationAlert = (
 	)
 }
 
+/**
+ * Determines the duration of a precipitation event by finding when it ends.
+ * Returns a boolean array where `true` indicates the hour is part of the precipitation event,
+ * and `false` indicates the event has ended.
+ *
+ * The event ends after 3 consecutive hours of zero precipitation. The 3 zero hours themselves
+ * are included in the event (marked as `true`), and subsequent hours are marked as `false`.
+ *
+ * Example: [1, 0, 0, 0, 1] → [true, true, true, true, false]
+ * - Hours 0-3 are part of the event (including the 3 consecutive zeros)
+ * - Hour 4 onwards are marked as ended
+ */
 export const processPrecipitationDuration = (
 	precipitationData: number[],
 ): boolean[] => {
