@@ -23,7 +23,7 @@
 		"dev": "next dev",
 		"build": "node renameAppDir rename && pnpm compile && next build && node build && node renameAppDir restore",
 		"start": "next start",
-		"lint": "pnpm tsc %% pnpm prettier . --write",
+		"lint": "pnpm tsc && pnpm prettier . --write",
 		"release": "pnpm build && node release",
 		"extract": "lingui extract",
 		"compile": "lingui compile",
