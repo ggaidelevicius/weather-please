@@ -1,16 +1,5 @@
 # TODO
 
-## Type safety issues
-
-- [ ] Fix `as unknown as string` type assertions throughout the codebase.
-  - **Files:** [settings.tsx:67](src/components/settings.tsx#L67),
-    [settings.tsx:79](src/components/settings.tsx#L79),
-    [settings.tsx:94](src/components/settings.tsx#L94), and many more
-  - **Action:** Create a proper type for Lingui `Trans` component output that
-    can be used as label props. Consider updating the `Input`, `Select`, and
-    `Switch` components to accept `ReactNode` for their label props instead of
-    `string`.
-
 ## Magic numbers
 
 - [ ] Extract magic numbers into named constants.

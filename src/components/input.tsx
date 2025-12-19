@@ -9,12 +9,16 @@ import {
 } from '@headlessui/react'
 import { Trans } from '@lingui/react/macro'
 import { IconChevronDown } from '@tabler/icons-react'
-import type { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
+import type {
+	ChangeEventHandler,
+	ComponentPropsWithoutRef,
+	ReactNode,
+} from 'react'
 
 interface SelectProps {
-	label: string
+	label: ReactNode
 	value: string
-	options: { value: string; label: string }[]
+	options: { value: string; label: ReactNode }[]
 	onChange: ChangeEventHandler<HTMLSelectElement>
 }
 
@@ -31,7 +35,6 @@ export const Select = ({
 		<div className="relative mt-2">
 			<HeadlessSelect
 				className="block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm"
-				aria-label={label}
 				value={value}
 				onChange={onChange}
 			>
@@ -50,7 +53,7 @@ export const Select = ({
 )
 
 interface BaseInputProps {
-	label: string
+	label: ReactNode
 	validation?: boolean
 	required?: boolean
 }
@@ -83,7 +86,6 @@ export const Input = ({
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessInput
 				className="mt-2 block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-[invalid]:outline-red-500 sm:text-sm"
-				aria-label={label}
 				value={value}
 				onChange={onChange}
 				invalid={validation === false}
@@ -103,7 +105,7 @@ export const Input = ({
 }
 
 interface BaseTextareaProps {
-	label: string
+	label: ReactNode
 	validation?: boolean
 }
 
@@ -134,7 +136,6 @@ export const Textarea = ({
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessTextarea
 				className="mt-2 block w-full resize-none appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-[invalid]:outline-red-500 sm:text-sm"
-				aria-label={label}
 				value={value}
 				onChange={onChange}
 				invalid={validation === false}
@@ -154,7 +155,7 @@ export const Textarea = ({
 }
 
 interface SwitchProps {
-	label: string
+	label: ReactNode
 	checked: boolean
 	onChange: (e: boolean) => void
 	description?: string

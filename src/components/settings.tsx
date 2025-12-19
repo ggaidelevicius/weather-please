@@ -64,7 +64,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							<Trans>General</Trans>
 						</h2>
 						<Select
-							label={(<Trans>Language</Trans>) as unknown as string}
+							label={<Trans>Language</Trans>}
 							value={input.lang}
 							onChange={(e) => {
 								handleChange('lang', e.target.value)
@@ -75,9 +75,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							}))}
 						/>
 						<Switch
-							label={
-								(<Trans>Use metric number format</Trans>) as unknown as string
-							}
+							label={<Trans>Use metric number format</Trans>}
 							checked={input.useMetric}
 							onChange={(e) => handleChange('useMetric', e)}
 						/>
@@ -91,7 +89,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							</Trans>
 						</Alert>
 						<Input
-							label={(<Trans>Latitude</Trans>) as unknown as string}
+							label={<Trans>Latitude</Trans>}
 							value={input.lat}
 							onChange={(e) => {
 								handleChange('lat', e.target.value)
@@ -99,7 +97,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							validation={/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat)}
 						/>
 						<Input
-							label={(<Trans>Longitude</Trans>) as unknown as string}
+							label={<Trans>Longitude</Trans>}
 							value={input.lon}
 							onChange={(e) => {
 								handleChange('lon', e.target.value)
@@ -109,18 +107,12 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							)}
 						/>
 						<Switch
-							label={
-								(
-									<Trans>Periodically update location automatically</Trans>
-								) as unknown as string
-							}
+							label={<Trans>Periodically update location automatically</Trans>}
 							checked={input.periodicLocationUpdate}
 							onChange={(e) => handleChange('periodicLocationUpdate', e)}
 						/>
 						<Select
-							label={
-								(<Trans>Number of days to forecast</Trans>) as unknown as string
-							}
+							label={<Trans>Number of days to forecast</Trans>}
 							value={input.daysToRetrieve}
 							onChange={(e) => {
 								handleChange('daysToRetrieve', e.target.value)
@@ -131,60 +123,46 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							}))}
 						/>
 						<Select
-							label={(<Trans>Identifier</Trans>) as unknown as string}
+							label={<Trans>Identifier</Trans>}
 							value={input.identifier}
 							onChange={(e) => {
 								handleChange('identifier', e.target.value)
 							}}
 							options={[
 								{
-									label: (<Trans>Day</Trans>) as unknown as string,
+									label: <Trans>Day</Trans>,
 									value: 'day',
 								},
 								{
-									label: (<Trans>Date</Trans>) as unknown as string,
+									label: <Trans>Date</Trans>,
 									value: 'date',
 								},
 							]}
 						/>
 						<Switch
-							label={(<Trans>Show weather alerts</Trans>) as unknown as string}
+							label={<Trans>Show weather alerts</Trans>}
 							checked={input.showAlerts}
 							onChange={(e) => handleChange('showAlerts', e)}
 						/>
 						{input.showAlerts && (
 							<>
 								<Switch
-									label={
-										(<Trans>Show extreme UV alerts</Trans>) as unknown as string
-									}
+									label={<Trans>Show extreme UV alerts</Trans>}
 									checked={input.showUvAlerts}
 									onChange={(e) => handleChange('showUvAlerts', e)}
 								/>
 								<Switch
-									label={
-										(
-											<Trans>Show high precipitation alerts</Trans>
-										) as unknown as string
-									}
+									label={<Trans>Show high precipitation alerts</Trans>}
 									checked={input.showPrecipitationAlerts}
 									onChange={(e) => handleChange('showPrecipitationAlerts', e)}
 								/>
 								<Switch
-									label={
-										(
-											<Trans>Show strong wind alerts</Trans>
-										) as unknown as string
-									}
+									label={<Trans>Show strong wind alerts</Trans>}
 									checked={input.showWindAlerts}
 									onChange={(e) => handleChange('showWindAlerts', e)}
 								/>
 								<Switch
-									label={
-										(
-											<Trans>Show low visibility alerts</Trans>
-										) as unknown as string
-									}
+									label={<Trans>Show low visibility alerts</Trans>}
 									checked={input.showVisibilityAlerts}
 									onChange={(e) => handleChange('showVisibilityAlerts', e)}
 								/>
