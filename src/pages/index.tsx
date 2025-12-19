@@ -203,6 +203,7 @@ const App = () => {
 			<a
 				href="https://open-meteo.com/"
 				target="_blank"
+				rel="noopener noreferrer"
 				className="fixed bottom-4 left-4 text-xs text-dark-300 hover:underline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500"
 			>
 				<Trans>weather data provided by open-meteo</Trans>

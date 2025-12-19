@@ -34,19 +34,12 @@
 
 ## Security and accessibility
 
-- [ ] Add `rel="noopener noreferrer"` to all external `target="_blank"` links.
+- [x] Add `rel="noopener noreferrer"` to all external `target="_blank"` links.
   - **Files:** [button.tsx:58](src/components/button.tsx#L58),
     [settings.tsx:196-224](src/components/settings.tsx#L196-L224),
     [index.tsx:188-194](src/pages/index.tsx#L188-L194)
   - **Action:** Add `rel="noopener noreferrer"` to all anchor tags with
     `target="_blank"`.
-
-- [ ] Make disabled anchor buttons non-interactive (prevent default, add
-      `tabIndex={-1}`, set a `data-disabled` flag for styles) in
-      [button.tsx](src/components/button.tsx).
-  - **Action:** When `disabled` is true and `href` is set, add `tabIndex={-1}`,
-    `aria-disabled="true"`, and an `onClick` handler that calls
-    `e.preventDefault()`.
 
 ---
 

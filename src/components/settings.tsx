@@ -196,6 +196,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						<a
 							href={platformReviewLink}
 							target="_blank"
+							rel="noopener noreferrer"
 							className="mb-2 flex text-sm text-blue-300 hover:underline"
 						>
 							<Trans>🌟 Leave a review</Trans>
@@ -203,6 +204,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						<a
 							href={`https://weather-please.app/bug?locale=${input.lang}`}
 							target="_blank"
+							rel="noopener noreferrer"
 							className="mb-2 flex text-sm text-blue-300 hover:underline"
 						>
 							<Trans>🐛 Report a bug</Trans>
@@ -210,6 +212,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						<a
 							href="https://www.buymeacoffee.com/ggaidelevicius"
 							target="_blank"
+							rel="noopener noreferrer"
 							className="mb-2 flex text-sm text-blue-300 hover:underline"
 						>
 							<Trans>☕ Gift a coffee</Trans>
@@ -220,6 +223,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						<a
 							href={locales[input.lang].privacy}
 							target="_blank"
+							rel="noopener noreferrer"
 							className="flex text-sm text-blue-300 hover:underline"
 						>
 							<Trans>🔒 Privacy policy</Trans>

@@ -58,6 +58,7 @@ export const Button = ({
 		<a
 			href={href}
 			target="_blank"
+			rel="noopener noreferrer"
 			onClick={onClick}
 			className={classes}
 			aria-disabled={disabled}
