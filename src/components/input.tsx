@@ -85,7 +85,7 @@ export const Input = ({
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessInput
-				className="mt-2 block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-[invalid]:outline-red-500 sm:text-sm"
+				className="mt-2 block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm"
 				value={value}
 				onChange={onChange}
 				invalid={validation === false}
@@ -135,7 +135,7 @@ export const Textarea = ({
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessTextarea
-				className="mt-2 block w-full resize-none appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-[invalid]:outline-red-500 sm:text-sm"
+				className="mt-2 block w-full resize-none appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm"
 				value={value}
 				onChange={onChange}
 				invalid={validation === false}
@@ -173,9 +173,9 @@ export const Switch = ({
 			<HeadlessSwitch
 				checked={checked}
 				onChange={onChange}
-				className="group mt-2 inline-flex h-6 w-11 items-center rounded-full bg-dark-500 transition-[background-color] select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-[checked]:bg-blue-600"
+				className="group mt-2 inline-flex h-6 w-11 items-center rounded-full bg-dark-500 transition-[background-color] select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-checked:bg-blue-600"
 			>
-				<span className="size-4 translate-x-1 rounded-full bg-white transition group-data-[checked]:translate-x-6" />
+				<span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-6" />
 			</HeadlessSwitch>
 			{description && (
 				<Description className="mt-1 text-sm text-dark-100">

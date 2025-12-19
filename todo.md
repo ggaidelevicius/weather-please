@@ -34,27 +34,3 @@
   - **Issue:** Comment says "might not need to be doing +1" - this should be
     verified and the comment either removed or converted to documentation
     explaining why +1 is needed.
-
-## Query invalidation scope
-
-- [ ] Consider scoping query invalidation to specific coordinates.
-  - **File:** [use-weather.ts:220](src/hooks/use-weather.ts#L220)
-  - **Issue:** `queryClient.invalidateQueries({ queryKey: ['weather'] })`
-    invalidates all weather queries, not just the current location's.
-  - **Action:** This is fine for single-location use but would be an issue if
-    multi-location support was added. Low priority.
-
-## Grid class string could be simplified
-
-- [ ] Refactor the grid column class generation in
-      [index.tsx:170](src/pages/index.tsx#L170).
-  - **Issue:** Long ternary chain for grid-cols classes.
-  - **Action:** Create a lookup object or utility function:
-    ```tsx
-    const gridColsClass =
-    	{
-    		'1': 'lg:grid-cols-1',
-    		'2': 'lg:grid-cols-2',
-    		// ...
-    	}[config.daysToRetrieve] ?? ''
-    ```

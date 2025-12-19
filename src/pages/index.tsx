@@ -22,6 +22,18 @@ i18n.activate('en')
 
 const LOCATION_CHANGE_THRESHOLD_KM = 1
 
+const GRID_COLS_CLASS = {
+	'1': 'lg:grid-cols-1',
+	'2': 'lg:grid-cols-2',
+	'3': 'lg:grid-cols-3',
+	'4': 'lg:grid-cols-4',
+	'5': 'lg:grid-cols-5',
+	'6': 'lg:grid-cols-3',
+	'7': 'lg:grid-cols-3',
+	'8': 'lg:grid-cols-4',
+	'9': 'lg:grid-cols-3',
+} as const
+
 const App = () => {
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
 	const currentDateRef = useRef(new Date().getDate())
@@ -172,7 +184,7 @@ const App = () => {
 			<ReviewPrompt config={config} setInput={setInput} />
 			<AnimatePresence>
 				<motion.main
-					className={`relative grid min-h-[84px] min-w-[84px] grid-cols-1 gap-5 p-5 ${config.daysToRetrieve === '1' ? 'lg:grid-cols-1' : ''}${config.daysToRetrieve === '2' ? 'lg:grid-cols-2' : ''}${config.daysToRetrieve === '3' ? 'lg:grid-cols-3' : ''}${config.daysToRetrieve === '4' ? 'lg:grid-cols-4' : ''}${config.daysToRetrieve === '5' ? 'lg:grid-cols-5' : ''}${config.daysToRetrieve === '6' ? 'lg:grid-cols-3' : ''}${config.daysToRetrieve === '7' ? 'lg:grid-cols-3' : ''}${config.daysToRetrieve === '8' ? 'lg:grid-cols-4' : ''}${config.daysToRetrieve === '9' ? 'lg:grid-cols-3' : ''}`}
+					className={`relative grid min-h-21 min-w-21 grid-cols-1 gap-5 p-5 ${GRID_COLS_CLASS[config.daysToRetrieve as keyof typeof GRID_COLS_CLASS] ?? ''}`}
 				>
 					<Initialisation
 						setInput={setInput}
