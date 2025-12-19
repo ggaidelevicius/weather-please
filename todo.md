@@ -45,7 +45,7 @@
 
 ## Performance and rendering
 
-- [ ] Replace `WeatherAlert` stateful ReactElement list with derived data to
+- [x] Replace `WeatherAlert` stateful ReactElement list with derived data to
       avoid multi-effect state churn and enforce a stable order.
   - **File:** [weather-alert.tsx](src/components/weather-alert.tsx)
   - **Action:** Refactor to compute alerts declaratively. Instead of 5
@@ -128,7 +128,7 @@
 
 ## Code duplication
 
-- [ ] Consolidate duplicate alert handling logic in
+- [x] Consolidate duplicate alert handling logic in
       [weather-alert.tsx](src/components/weather-alert.tsx).
   - **Issue:** There are 5 nearly identical useEffect hooks (lines 44-92,
     104-182, 197-248, 263-313, 328-391) that all follow the same pattern.
@@ -141,6 +141,8 @@
       renderAlert: (timing: number) => ReactElement
     ) => { ... }
     ```
+  - **Resolution:** Replaced all 5 useEffect hooks with declarative derived data
+    computed directly from props.
 
 ## Magic numbers
 
@@ -183,7 +185,7 @@
 
 ## Empty fragment anti-pattern
 
-- [ ] Replace empty fragment return with `null`.
+- [x] Replace empty fragment return with `null`.
   - **File:** [weather-alert.tsx:414](src/components/weather-alert.tsx#L414)
   - **Issue:** `return <></>` should be `return null` for clarity.
 
