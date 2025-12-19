@@ -8,7 +8,7 @@ import { Trans } from '@lingui/react/macro'
 import { IconCircleCheckFilled } from '@tabler/icons-react'
 import Form from 'next/form'
 import { useSearchParams } from 'next/navigation'
-import { Suspense, useActionState, useId } from 'react'
+import { Suspense, useActionState, useEffect, useId } from 'react'
 import { Button } from '../../components/button'
 import { submitForm } from '../actions'
 
@@ -27,17 +27,20 @@ const Page = () => {
 const ContactForm = () => {
 	const params = useSearchParams()
 	const locale = params?.get('locale') ?? 'en'
-	if (
-		Object.keys(locales)
-			.map((key) => key)
-			.includes(locale)
-	) {
-		changeLocalisation(locale)
-	} else {
-		changeLocalisation('en')
-	}
 	const [state, formAction, pending] = useActionState(submitForm, initialState)
 	const id = useId()
+
+	useEffect(() => {
+		if (
+			Object.keys(locales)
+				.map((key) => key)
+				.includes(locale)
+		) {
+			changeLocalisation(locale)
+		} else {
+			changeLocalisation('en')
+		}
+	}, [locale])
 
 	return (
 		<I18nProvider i18n={i18n}>
@@ -62,7 +65,7 @@ const ContactForm = () => {
 							name="message"
 							required
 						/>
-						<div className="absolute top-auto left-[-10000px] h-px w-px overflow-hidden">
+						<div className="absolute top-auto -left-2500 h-px w-px overflow-hidden">
 							<label htmlFor={id} className="sr-only">
 								<Trans>Do not fill this field if you are human</Trans>
 							</label>

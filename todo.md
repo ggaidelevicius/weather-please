@@ -1,132 +1,5 @@
 # TODO
 
-## Data correctness and caching
-
-- [x] Key cached weather data/alerts by coordinates and invalidate when lat/lon
-      changes (store lat/lon with cache and verify in
-      [use-weather.ts](src/hooks/use-weather.ts)).
-  - **Action:** Add `lat` and `lon` to localStorage alongside data and verify
-    they match before using cached data in `isLocalStorageDataValid()`.
-
----
-
-## UX and error handling
-
-- [x] Handle geolocation errors in
-      [initialisation.tsx](src/components/initialisation.tsx) (show an error,
-      stop the loading spinner, and provide instructions for enabling
-      geolocation).
-  - **Action:** Add error callback to `getCurrentPosition()`, set `loading` to
-    false, display browser-specific instructions for enabling location
-    permissions with a retry button.
-
-- [x] Show a user-facing weather fetch error and add a retry path; check
-      `res.ok` and handle non-200 responses in
-      [use-weather.ts](src/hooks/use-weather.ts), and render the error in
-      [index.tsx](src/pages/index.tsx).
-  - **Action:**
-    1. Update fetch to throw on non-200:
-       `.then(res => { if (!res.ok) throw new Error('Weather fetch failed'); return res.json() })`
-    2. Add error UI in index.tsx when `error` is truthy with a retry button that
-       invalidates the query.
-
----
-
-## Security and accessibility
-
-- [x] Add `rel="noopener noreferrer"` to all external `target="_blank"` links.
-  - **Files:** [button.tsx:58](src/components/button.tsx#L58),
-    [settings.tsx:196-224](src/components/settings.tsx#L196-L224),
-    [index.tsx:188-194](src/pages/index.tsx#L188-L194)
-  - **Action:** Add `rel="noopener noreferrer"` to all anchor tags with
-    `target="_blank"`.
-
----
-
-## Performance and rendering
-
-- [x] Replace `WeatherAlert` stateful ReactElement list with derived data to
-      avoid multi-effect state churn and enforce a stable order.
-  - **File:** [weather-alert.tsx](src/components/weather-alert.tsx)
-  - **Action:** Refactor to compute alerts declaratively. Instead of 5
-    useEffects managing an array of ReactElements via `setAlerts`, derive the
-    alerts array directly from props (React Compiler handles memoization
-    automatically):
-    ```tsx
-    const alerts = []
-    if (showUvAlerts && hoursOfExtremeUv.includes(true)) { alerts.push({ type: 'uv', ... }) }
-    // etc for each alert type
-    ```
-    Then render `alerts.map(alert => <Alert ... />)`.
-
----
-
-## Data and display consistency
-
-- [x] Add a fallback icon/description for unknown weather codes to avoid
-      rendering `undefined`.
-  - **File:** [tile.tsx:219](src/components/tile.tsx#L219),
-    [tile.tsx:207](src/components/tile.tsx#L207)
-  - **Action:** Add a fallback: `iconMap[description] ?? FallbackIcon` and
-    `descriptionMap[description] ?? <Trans>Unknown conditions</Trans>`.
-
-- [x] Revisit precipitation duration logic and copy so the duration shown
-      matches the algorithm; compute the duration once and update tests.
-  - **Files:** [alert-processor.ts](src/lib/alert-processor.ts),
-    [weather-alert.tsx](src/components/weather-alert.tsx),
-    [alert-processor.test.ts](src/lib/__tests__/alert-processor.test.ts)
-  - **Action:** Audit the `processPrecipitationDuration` function and ensure the
-    UI text accurately reflects what the duration array represents. The current
-    logic uses `indexOf(false)` which may not correctly handle non-contiguous
-    precipitation.
-  - **Resolution:** Refactored weather-alert.tsx to compute duration once using
-    `indexOf(false)` instead of calling it 6 times. Added comprehensive
-    documentation to `processPrecipitationDuration` explaining that the
-    algorithm includes the 3 consecutive zero hours as part of the event, then
-    marks subsequent hours as ended. Updated tests with clearer comments
-    explaining the behavior step-by-step.
-
----
-
-## Backend robustness
-
-- [x] Replace in-memory rate limiting with durable storage (Redis/Vercel
-      KV/etc.) and parse `x-forwarded-for` safely.
-  - **File:** [rate-limit.ts](src/lib/rate-limit.ts),
-    [actions.ts](src/app/actions.ts)
-  - **Action:**
-    1. Use Vercel KV or similar for rate limit state in production
-    2. Parse only the first IP from `x-forwarded-for` (e.g.,
-       `ip.split(',')[0].trim()`)
-  - **Resolution:** Implemented database-backed rate limiting using Prisma with
-    proper IP parsing (first IP from x-forwarded-for), fail-closed security on
-    errors, and probabilistic cleanup.
-
-- [x] Add a Prisma client singleton and guard against missing `DATABASE_URL`,
-      plus wrap `submitForm` in try/catch for graceful failures.
-  - **Files:** [prisma.ts](src/lib/prisma.ts), [actions.ts](src/app/actions.ts)
-  - **Action:**
-    1. Verify prisma.ts uses singleton pattern (check if it already does)
-    2. Wrap the `prisma.formSubmission.create()` call in try/catch and return a
-       user-friendly error message on failure
-  - **Resolution:** Added Prisma singleton pattern with global caching,
-    DATABASE_URL validation, and try/catch wrapper around form submission with
-    user-friendly error messages.
-
----
-
-## Internationalization
-
-- [ ] Move `changeLocalisation` into a `useEffect` in
-      [bug/page.tsx](src/app/bug/page.tsx) to avoid side effects in render, and
-      handle the async load state.
-  - **Action:** The locale change should be in a useEffect that runs on mount or
-    when locale param changes, not during render.
-
----
-
-# Independent Review Findings (Opus)
-
 ## Type safety issues
 
 - [ ] Fix `as unknown as string` type assertions throughout the codebase.
@@ -137,24 +10,6 @@
     can be used as label props. Consider updating the `Input`, `Select`, and
     `Switch` components to accept `ReactNode` for their label props instead of
     `string`.
-
-## Code duplication
-
-- [x] Consolidate duplicate alert handling logic in
-      [weather-alert.tsx](src/components/weather-alert.tsx).
-  - **Issue:** There are 5 nearly identical useEffect hooks (lines 44-92,
-    104-182, 197-248, 263-313, 328-391) that all follow the same pattern.
-  - **Action:** Extract a reusable function or custom hook:
-    ```tsx
-    const useAlertState = (
-      condition: boolean[],
-      showAlert: boolean,
-      key: string,
-      renderAlert: (timing: number) => ReactElement
-    ) => { ... }
-    ```
-  - **Resolution:** Replaced all 5 useEffect hooks with declarative derived data
-    computed directly from props.
 
 ## Magic numbers
 
@@ -194,12 +49,6 @@
     non-standard and can confuse test mocks.
   - **Action:** Replace with `localStorage.getItem('data')` and
     `localStorage.setItem('data', value)`.
-
-## Empty fragment anti-pattern
-
-- [x] Replace empty fragment return with `null`.
-  - **File:** [weather-alert.tsx:414](src/components/weather-alert.tsx#L414)
-  - **Issue:** `return <></>` should be `return null` for clarity.
 
 ## Unused comment/uncertainty marker
 
