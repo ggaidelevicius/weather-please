@@ -63,7 +63,7 @@
 
 ## Data and display consistency
 
-- [ ] Add a fallback icon/description for unknown weather codes to avoid
+- [x] Add a fallback icon/description for unknown weather codes to avoid
       rendering `undefined`.
   - **File:** [tile.tsx:219](src/components/tile.tsx#L219),
     [tile.tsx:207](src/components/tile.tsx#L207)

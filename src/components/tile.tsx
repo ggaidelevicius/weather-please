@@ -204,19 +204,24 @@ export const Tile = ({
 						</span>
 					</div>
 					<span className="text-dark-100" aria-hidden>
-						{descriptionMap[description as keyof typeof descriptionMap]}
+						{descriptionMap[description as keyof typeof descriptionMap] ?? (
+							<Trans>unknown conditions</Trans>
+						)}
 					</span>
 					<span className="sr-only">
 						<Trans>
 							The expected type of weather is{' '}
-							{descriptionMap[description as keyof typeof descriptionMap]}.
+							{descriptionMap[description as keyof typeof descriptionMap] ?? (
+								<Trans>unknown conditions</Trans>
+							)}
+							.
 						</Trans>
 					</span>
 				</div>
 				<Image
 					quality={100}
 					priority
-					src={iconMap[description as keyof typeof iconMap]}
+					src={iconMap[description as keyof typeof iconMap] ?? FewClouds}
 					alt=""
 					width={56}
 					height={56}
