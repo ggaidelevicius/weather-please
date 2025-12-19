@@ -1,10 +1,10 @@
-import type { Icon, IconProps } from '@tabler/icons-react'
+import type { IconProps } from '@tabler/icons-react'
 import { clsx } from 'clsx'
 import type { ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react'
 
 interface AlertProps {
 	children: ReactNode
-	icon: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>
+	icon: ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>>
 	variant?: 'light-blue' | 'light-red'
 }
 

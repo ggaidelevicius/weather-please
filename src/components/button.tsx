@@ -1,5 +1,5 @@
 import { Button as HeadlessButton } from '@headlessui/react'
-import type { Icon, IconProps } from '@tabler/icons-react'
+import type { IconProps } from '@tabler/icons-react'
 import { clsx } from 'clsx'
 import type {
 	ForwardRefExoticComponent,
@@ -85,7 +85,7 @@ export const Button = ({
 }
 
 interface IconButtonProps {
-	icon: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>
+	icon: ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>>
 	onClick: MouseEventHandler<HTMLButtonElement>
 	className?: string
 	children: ReactNode
