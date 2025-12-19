@@ -162,12 +162,17 @@ export const useWeather = (
 
 	const lastHourRef = useRef(new Date().getHours())
 
-	const { error, data } = useQuery<WeatherData>({
+	const { error, data, refetch } = useQuery<WeatherData>({
 		queryKey: ['weather', lat, lon],
 		queryFn: () =>
 			fetch(
 				`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=9`,
-			).then((res) => res.json()),
+			).then((res) => {
+				if (!res.ok) {
+					throw new Error('Weather fetch failed')
+				}
+				return res.json()
+			}),
 		enabled: Boolean(lat) && Boolean(lon) && !usingCachedData,
 	})
 
@@ -255,10 +260,16 @@ export const useWeather = (
 		}
 	}, [lat, lon, changedLocation])
 
+	const retry = () => {
+		setUsingCachedData(false)
+		refetch()
+	}
+
 	return {
 		weatherData,
 		alertData,
 		isLoading: !Boolean(lat) || !Boolean(lon) || (!data && !usingCachedData),
 		error,
+		retry,
 	}
 }

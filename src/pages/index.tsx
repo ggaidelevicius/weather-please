@@ -1,13 +1,16 @@
+import { Alert } from '@/components/alert'
+import { Button } from '@/components/button'
 import { Initialisation } from '@/components/initialisation'
 import { RingLoader } from '@/components/loader'
 import { ReviewPrompt } from '@/components/review-prompt'
 import { Settings } from '@/components/settings'
 import { Tile } from '@/components/tile'
 import { WeatherAlert } from '@/components/weather-alert'
-import { useWeather } from '@/hooks/use-weather'
 import { useConfig } from '@/hooks/use-config'
+import { useWeather } from '@/hooks/use-weather'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
+import { IconAlertTriangle } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { messages } from '../locales/en/messages'
@@ -22,7 +25,7 @@ const App = () => {
 	const currentDateRef = useRef(new Date().getDate())
 
 	const { config, input, handleChange, updateConfig, setInput } = useConfig()
-	const { weatherData, alertData, isLoading, error } = useWeather(
+	const { weatherData, alertData, isLoading, error, retry } = useWeather(
 		config.lat,
 		config.lon,
 		changedLocation,
@@ -175,7 +178,19 @@ const App = () => {
 						handleChange={handleChange}
 						pending={!config?.lat || !config?.lon}
 					/>
-					{isLoading ? (
+					{error ? (
+						<div className="col-span-full flex flex-col items-center justify-center gap-4">
+							<Alert icon={IconAlertTriangle} variant="info-red">
+								<Trans>
+									Unable to fetch weather data. Please check your internet
+									connection and try again.
+								</Trans>
+							</Alert>
+							<Button className="ml-auto" onClick={retry}>
+								<Trans>Retry</Trans>
+							</Button>
+						</div>
+					) : isLoading ? (
 						<AnimatePresence>
 							<RingLoader />
 						</AnimatePresence>

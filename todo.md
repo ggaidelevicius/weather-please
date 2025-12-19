@@ -20,7 +20,7 @@
     false, display browser-specific instructions for enabling location
     permissions with a retry button.
 
-- [ ] Show a user-facing weather fetch error and add a retry path; check
+- [x] Show a user-facing weather fetch error and add a retry path; check
       `res.ok` and handle non-200 responses in
       [use-weather.ts](src/hooks/use-weather.ts), and render the error in
       [index.tsx](src/pages/index.tsx).
