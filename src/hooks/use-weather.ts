@@ -345,7 +345,8 @@ export const useWeather = (
 	return {
 		weatherData,
 		alertData,
-		isLoading: !Boolean(lat) || !Boolean(lon) || (!data && !usingCachedData),
+		isLoading:
+			!Boolean(lat) || !Boolean(lon) || (weatherData.length === 0 && !data),
 		error,
 		retry,
 	}
