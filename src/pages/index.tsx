@@ -2,7 +2,7 @@ import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
 import { IconAlertTriangle } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Alert } from '../components/alert'
 import { Button } from '../components/button'
 import { Initialisation } from '../components/initialisation'
@@ -21,7 +21,7 @@ i18n.load({
 i18n.activate('en')
 
 const LOCATION_CHANGE_THRESHOLD_KM = 1
-const DATE_CHECK_INTERVAL_MS = 60 * 1000
+const LOCATION_CHECK_INTERVAL_MS = 60 * 1000
 const TILE_STAGGER_DELAY_BASELINE = 0.75
 
 const GRID_COLS_CLASS = {
@@ -38,7 +38,6 @@ const GRID_COLS_CLASS = {
 
 const App = () => {
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
-	const currentDateRef = useRef(new Date().getDate())
 
 	const { config, input, handleChange, updateConfig, setInput } = useConfig()
 	const { weatherData, alertData, isLoading, error, retry } = useWeather(
@@ -60,10 +59,7 @@ const App = () => {
 	}, [error])
 
 	/**
-	 * Periodically (every minute) checks if the current date has changed.
-	 * If it's a new day and the user has opted-in for periodic location updates,
-	 * the user's geolocation is checked
-	 *
+	 * Periodically (every minute) checks the user's geolocation when opted in.
 	 * If the geolocation has changed from what's saved in "config", the "changedLocation" flag is set to true.
 	 */
 	useEffect(() => {
@@ -143,16 +139,13 @@ const App = () => {
 			)
 		}
 
-		const checkDate = setInterval(() => {
-			const currentDate = new Date().getDate()
-			if (currentDate !== currentDateRef.current) {
-				currentDateRef.current = currentDate
-				handleLocationUpdate()
-			}
-		}, DATE_CHECK_INTERVAL_MS)
+		handleLocationUpdate()
+		const checkLocation = setInterval(() => {
+			handleLocationUpdate()
+		}, LOCATION_CHECK_INTERVAL_MS)
 
 		return () => {
-			clearInterval(checkDate)
+			clearInterval(checkLocation)
 		}
 	}, [config.periodicLocationUpdate, config.lat, config.lon, updateConfig])
 

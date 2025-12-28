@@ -12,6 +12,7 @@ import { queryClient } from '../lib/query-client'
 const ALERT_HOURS_UV = 13 // 12 hours + current hour
 const ALERT_HOURS_GENERAL = 25 // 24 hours + current hour
 const CACHE_REFRESH_INTERVAL_MS = 60 * 1000
+const CACHE_VALIDITY_MS = 60 * 60 * 1000
 
 const dataSchema = z
 	.array(
@@ -70,17 +71,98 @@ const weatherResponseSchema = z
 
 type WeatherResponse = z.infer<typeof weatherResponseSchema>
 
+const LEGACY_LAST_UPDATED_PATTERN = /^\d{4}-\d{1,2}-\d{1,2}-\d{1,2}$/
+
+const lastUpdatedSchema = z.union([
+	z.iso.datetime().transform((value) => new Date(value)),
+	z
+		.string()
+		.regex(LEGACY_LAST_UPDATED_PATTERN)
+		.transform((value) => {
+			const [year, month, day, hour] = value.split('-').map(Number)
+			return new Date(year, month, day, hour)
+		}),
+])
+
+const readStorageItem = <T>({
+	key,
+	schema,
+	parse,
+	normalize,
+}: {
+	key: string
+	schema: z.ZodType<T>
+	parse?: (value: string) => unknown
+	normalize?: (value: T) => string
+}): T | null => {
+	const raw = localStorage.getItem(key)
+	if (!raw) {
+		return null
+	}
+
+	let parsed: unknown = raw
+	if (parse) {
+		try {
+			parsed = parse(raw)
+		} catch {
+			localStorage.removeItem(key)
+			return null
+		}
+	}
+
+	const result = schema.safeParse(parsed)
+	if (!result.success) {
+		localStorage.removeItem(key)
+		return null
+	}
+
+	if (normalize) {
+		const normalized = normalize(result.data)
+		if (normalized !== raw) {
+			localStorage.setItem(key, normalized)
+		}
+	}
+
+	return result.data
+}
+
 const getCachedWeather = (
 	lat: string,
 	lon: string,
 ): { weatherData: Data; alertData: Alerts } | null => {
-	const data = localStorage.getItem('data')
-	const lastUpdated = localStorage.getItem('lastUpdated')
-	const alerts = localStorage.getItem('alerts')
-	const cachedLat = localStorage.getItem('cachedLat')
-	const cachedLon = localStorage.getItem('cachedLon')
+	const cachedLat = readStorageItem({
+		key: 'cachedLat',
+		schema: z.string().min(1),
+	})
+	const cachedLon = readStorageItem({
+		key: 'cachedLon',
+		schema: z.string().min(1),
+	})
+	const lastUpdatedDate = readStorageItem({
+		key: 'lastUpdated',
+		schema: lastUpdatedSchema,
+		normalize: (value) => value.toISOString(),
+	})
+	const storedAlerts = readStorageItem({
+		key: 'alerts',
+		schema: alertSchema,
+		parse: JSON.parse,
+		normalize: (value) => JSON.stringify(value),
+	})
+	const storedData = readStorageItem({
+		key: 'data',
+		schema: dataSchema,
+		parse: JSON.parse,
+		normalize: (value) => JSON.stringify(value),
+	})
 
-	if (!data || !lastUpdated || !alerts || !cachedLat || !cachedLon) {
+	if (
+		!cachedLat ||
+		!cachedLon ||
+		!lastUpdatedDate ||
+		!storedAlerts ||
+		!storedData
+	) {
 		return null
 	}
 
@@ -88,40 +170,16 @@ const getCachedWeather = (
 	if (cachedLat !== lat || cachedLon !== lon) {
 		return null
 	}
+	const now = new Date()
+	const isFresh = now.getTime() - lastUpdatedDate.getTime() <= CACHE_VALIDITY_MS
 
-	try {
-		const [year, month, day, hour] = lastUpdated.split('-').map(Number)
-		if ([year, month, day, hour].some((value) => Number.isNaN(value))) {
-			return null
-		}
-		const currentDate = new Date()
-		const isSameYear = currentDate.getFullYear() === year
-		const isSameMonth = currentDate.getMonth() === month
-		const isSameDay = currentDate.getDate() === day
-		const isSameHour = currentDate.getHours() === hour
-
-		const parsedAlerts = JSON.parse(alerts)
-		const parsedData = JSON.parse(data)
-
-		const storedAlertsAreValid = alertSchema.safeParse(parsedAlerts)
-		const storedDataIsValid = dataSchema.safeParse(parsedData)
-
-		if (
-			isSameYear &&
-			isSameMonth &&
-			isSameDay &&
-			isSameHour &&
-			storedAlertsAreValid.success &&
-			storedDataIsValid.success
-		) {
-			return {
-				weatherData: storedDataIsValid.data,
-				alertData: storedAlertsAreValid.data,
-			}
-		}
+	if (!isFresh) {
 		return null
-	} catch {
-		return null
+	}
+
+	return {
+		weatherData: storedData,
+		alertData: storedAlerts,
 	}
 }
 
@@ -240,10 +298,7 @@ export const useWeather = (
 			localStorage.setItem('alerts', JSON.stringify(alerts))
 			localStorage.setItem('cachedLat', lat)
 			localStorage.setItem('cachedLon', lon)
-			localStorage.setItem(
-				'lastUpdated',
-				`${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`,
-			)
+			localStorage.setItem('lastUpdated', now.toISOString())
 		} else if (error) {
 			console.error('Weather fetch error:', error)
 		}
