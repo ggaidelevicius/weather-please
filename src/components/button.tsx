@@ -1,6 +1,6 @@
 import { Button as HeadlessButton } from '@headlessui/react'
-import type { IconProps } from '@tabler/icons-react'
 import { clsx } from 'clsx'
+import type { IconProps } from '@tabler/icons-react'
 import type {
 	ForwardRefExoticComponent,
 	MouseEventHandler,
@@ -13,6 +13,7 @@ interface BaseButtonProps {
 	fullWidth?: boolean
 	disabled?: boolean
 	secondary?: boolean
+	className?: string
 }
 
 interface ControlledButtonProps extends BaseButtonProps {
@@ -33,6 +34,22 @@ interface AnchorButtonProps extends BaseButtonProps {
 	type?: undefined
 }
 
+const isAnchorClick = (
+	handler:
+		| MouseEventHandler<HTMLButtonElement>
+		| MouseEventHandler<HTMLAnchorElement>
+		| undefined,
+	href: string | undefined,
+): handler is MouseEventHandler<HTMLAnchorElement> => typeof href === 'string'
+
+const isButtonClick = (
+	handler:
+		| MouseEventHandler<HTMLButtonElement>
+		| MouseEventHandler<HTMLAnchorElement>
+		| undefined,
+	href: string | undefined,
+): handler is MouseEventHandler<HTMLButtonElement> => typeof href !== 'string'
+
 export const Button = ({
 	children,
 	onClick,
@@ -41,43 +58,58 @@ export const Button = ({
 	type,
 	href,
 	secondary = false,
-}: ControlledButtonProps | UncontrolledButtonProps | AnchorButtonProps) => {
+	className,
+}: Readonly<
+	ControlledButtonProps | UncontrolledButtonProps | AnchorButtonProps
+>) => {
 	const primaryClasses = fullWidth
-		? 'group relative flex w-full cursor-pointer items-center rounded-md bg-white px-3 py-2 text-center text-sm font-medium text-dark-600 select-none hover:not-disabled:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-zinc-300 disabled:cursor-wait disabled:bg-zinc-200'
-		: 'group relative flex cursor-pointer items-center place-self-start rounded-md bg-white px-3 py-2 text-sm font-medium text-dark-600 select-none hover:not-disabled:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-zinc-300 disabled:cursor-wait disabled:bg-zinc-200'
+		? `group relative flex w-full cursor-pointer items-center rounded-md bg-white px-3 py-2 text-center text-sm font-medium text-dark-600 select-none hover:not-disabled:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-zinc-300 disabled:cursor-wait disabled:bg-zinc-200 ${className}`
+		: `group relative flex cursor-pointer items-center place-self-start rounded-md bg-white px-3 py-2 text-sm font-medium text-dark-600 select-none hover:not-disabled:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-zinc-300 disabled:cursor-wait disabled:bg-zinc-200 ${className}`
 
 	const secondaryClasses = fullWidth
-		? 'group relative flex w-full cursor-pointer items-center rounded-md bg-dark-800 px-3 py-2 text-center text-sm font-medium text-white select-none hover:not-disabled:bg-dark-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-dark-950 disabled:cursor-wait disabled:bg-dark-900'
-		: 'group relative flex cursor-pointer items-center place-self-start rounded-md bg-dark-800 px-3 py-2 text-sm font-medium text-white select-none hover:not-disabled:bg-dark-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-dark-950 disabled:cursor-wait disabled:bg-dark-900'
+		? `group relative flex w-full cursor-pointer items-center rounded-md bg-dark-800 px-3 py-2 text-center text-sm font-medium text-white select-none hover:not-disabled:bg-dark-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-dark-950 disabled:cursor-wait disabled:bg-dark-900 ${className}`
+		: `group relative flex cursor-pointer items-center place-self-start rounded-md bg-dark-800 px-3 py-2 text-sm font-medium text-white select-none hover:not-disabled:bg-dark-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-dark-950 disabled:cursor-wait disabled:bg-dark-900 ${className}`
 
 	const classes = secondary ? secondaryClasses : primaryClasses
+	const anchorOnClick = isAnchorClick(onClick, href) ? onClick : undefined
+	const buttonOnClick = isButtonClick(onClick, href) ? onClick : undefined
 
 	return href ? (
 		<a
 			href={href}
 			target="_blank"
-			onClick={onClick}
-			className={classes}
+			rel="noopener noreferrer"
+			onClick={(event) => {
+				if (disabled) {
+					event.preventDefault()
+					event.stopPropagation()
+					return
+				}
+				anchorOnClick?.(event)
+			}}
+			className={clsx(classes, disabled && 'pointer-events-none')}
 			aria-disabled={disabled}
+			tabIndex={disabled ? -1 : undefined}
+			data-disabled={disabled ? '' : undefined}
 		>
 			{disabled && (
-				<span className="absolute inset-0 m-auto flex h-[20px] w-[20px] -translate-y-2 animate-spin rounded-full border-3 border-t-dark-600 border-r-dark-600 border-b-transparent border-l-dark-600 opacity-0 transition group-data-[disabled]:translate-y-0 group-data-[disabled]:opacity-100"></span>
+				<span className="absolute inset-0 m-auto flex h-5 w-5 -translate-y-2 animate-spin rounded-full border-3 border-t-dark-600 border-r-dark-600 border-b-transparent border-l-dark-600 opacity-0 transition group-data-disabled:translate-y-0 group-data-disabled:opacity-100"></span>
 			)}
-			<span className="flex place-self-center transition group-data-[disabled]:translate-y-2 group-data-[disabled]:opacity-0">
+			<span className="flex place-self-center transition group-data-disabled:translate-y-2 group-data-disabled:opacity-0">
 				{children}
 			</span>
 		</a>
 	) : (
 		<HeadlessButton
-			onClick={onClick as MouseEventHandler<HTMLButtonElement>}
+			onClick={buttonOnClick}
 			className={classes}
 			disabled={disabled}
 			type={type}
 		>
 			{disabled && (
-				<span className="absolute inset-0 m-auto flex h-[20px] w-[20px] -translate-y-2 animate-spin rounded-full border-3 border-t-dark-600 border-r-dark-600 border-b-transparent border-l-dark-600 opacity-0 transition group-data-[disabled]:translate-y-0 group-data-[disabled]:opacity-100"></span>
+				<span className="absolute inset-0 m-auto flex h-5 w-5 -translate-y-2 animate-spin rounded-full border-3 border-t-dark-600 border-r-dark-600 border-b-transparent border-l-dark-600 opacity-0 transition group-data-disabled:translate-y-0 group-data-disabled:opacity-100"></span>
 			)}
-			<span className="flex place-self-center transition group-data-[disabled]:translate-y-2 group-data-[disabled]:opacity-0">
+			<span className="flex place-self-center transition group-data-disabled:translate-y-2 group-data-disabled:opacity-0">
 				{children}
 			</span>
 		</HeadlessButton>
@@ -96,16 +128,16 @@ export const IconButton = ({
 	className,
 	icon: Icon,
 	children,
-}: IconButtonProps) => {
+}: Readonly<IconButtonProps>) => {
 	return (
 		<HeadlessButton
 			onClick={onClick}
 			className={clsx(
-				'cursor-pointer rounded-md bg-dark-100/10 p-2 text-white select-none hover:bg-dark-100/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:bg-dark-100/30',
+				'cursor-pointer rounded-md bg-dark-100/10 p-2 text-white ring-1 ring-white/5 select-none hover:bg-dark-100/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:bg-dark-100/30',
 				className,
 			)}
 		>
-			<Icon aria-hidden size={18} />
+			<Icon aria-hidden size={20} />
 			<span className="sr-only">{children}</span>
 		</HeadlessButton>
 	)

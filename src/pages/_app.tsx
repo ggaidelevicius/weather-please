@@ -1,20 +1,13 @@
-import '@/styles/tailwind.css'
+import '../styles/tailwind.css'
 import { i18n } from '@lingui/core'
 import { I18nProvider } from '@lingui/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { Analytics } from '@vercel/analytics/react'
-import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import { queryClient } from '../lib/query-client'
+import type { AppProps } from 'next/app'
 
-export const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			refetchOnWindowFocus: false,
-		},
-	},
-})
-
-const App = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps }: Readonly<AppProps>) => {
 	return (
 		<I18nProvider i18n={i18n}>
 			<Head>

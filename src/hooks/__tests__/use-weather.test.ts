@@ -132,11 +132,13 @@ describe('useWeather - Core Functionality', () => {
 			hoursOfStrongWindGusts: Array(25).fill(false),
 		}
 
-		const lastUpdated = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`
+		const lastUpdated = now.toISOString()
 
-		localStorageMock.data = JSON.stringify(cachedData)
-		localStorageMock.alerts = JSON.stringify(cachedAlerts)
-		localStorageMock.lastUpdated = lastUpdated
+		localStorageMock.setItem('data', JSON.stringify(cachedData))
+		localStorageMock.setItem('alerts', JSON.stringify(cachedAlerts))
+		localStorageMock.setItem('lastUpdated', lastUpdated)
+		localStorageMock.setItem('cachedLat', '40.7128')
+		localStorageMock.setItem('cachedLon', '-74.0060')
 
 		const { result } = renderHook(
 			() => useWeather('40.7128', '-74.0060', false),
@@ -151,10 +153,57 @@ describe('useWeather - Core Functionality', () => {
 		expect(fetch).not.toHaveBeenCalled()
 	})
 
+	it('accepts legacy lastUpdated format', () => {
+		const now = new Date()
+		const cachedData = [
+			{
+				day: now.getTime(),
+				max: 30,
+				min: 20,
+				description: 1,
+				uv: 9,
+				wind: 15,
+				rain: 10,
+			},
+		]
+
+		const cachedAlerts = {
+			totalPrecipitation: {
+				precipitation: { value: 5, flag: false, zeroCount: 0 },
+				duration: Array(25).fill(true),
+			},
+			hoursOfExtremeUv: Array(13).fill(true),
+			hoursOfStrongWind: Array(25).fill(false),
+			hoursOfLowVisibility: Array(25).fill(false),
+			hoursOfStrongWindGusts: Array(25).fill(false),
+		}
+
+		const lastUpdated = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`
+
+		localStorageMock.setItem('data', JSON.stringify(cachedData))
+		localStorageMock.setItem('alerts', JSON.stringify(cachedAlerts))
+		localStorageMock.setItem('lastUpdated', lastUpdated)
+		localStorageMock.setItem('cachedLat', '40.7128')
+		localStorageMock.setItem('cachedLon', '-74.0060')
+
+		const { result } = renderHook(
+			() => useWeather('40.7128', '-74.0060', false),
+			{
+				wrapper: createWrapper(),
+			},
+		)
+
+		expect(result.current.weatherData).toEqual(cachedData)
+		expect(result.current.alertData).toEqual(cachedAlerts)
+		expect(result.current.isLoading).toBe(false)
+	})
+
 	it('ignores invalid cached data', () => {
-		localStorageMock.data = 'invalid json'
-		localStorageMock.alerts = 'invalid json'
-		localStorageMock.lastUpdated = 'invalid date'
+		localStorageMock.setItem('data', 'invalid json')
+		localStorageMock.setItem('alerts', 'invalid json')
+		localStorageMock.setItem('lastUpdated', 'invalid date')
+		localStorageMock.setItem('cachedLat', '40.7128')
+		localStorageMock.setItem('cachedLon', '-74.0060')
 
 		const { result } = renderHook(
 			() => useWeather('40.7128', '-74.0060', false),

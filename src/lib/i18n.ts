@@ -1,13 +1,6 @@
 import { i18n } from '@lingui/core'
 
-interface Locale {
-	[key: string]: {
-		label: string
-		privacy: string
-	}
-}
-
-export const locales: Locale = {
+export const locales = {
 	bn: {
 		label: 'বাংলা', // bengali
 		privacy:
@@ -78,7 +71,7 @@ export const locales: Locale = {
 		privacy:
 			'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/zh_CN/PRIVACY.md',
 	},
-}
+} as const satisfies Record<string, { label: string; privacy: string }>
 
 export const changeLocalisation = async (
 	locale: Extract<keyof typeof locales, string>,
@@ -92,3 +85,5 @@ export const changeLocalisation = async (
 		console.error(`Failed to load messages: ${e}`)
 	}
 }
+
+export type LocaleKey = keyof typeof locales

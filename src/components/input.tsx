@@ -2,19 +2,23 @@ import {
 	Description,
 	Field,
 	Input as HeadlessInput,
+	Label,
 	Select as HeadlessSelect,
 	Switch as HeadlessSwitch,
 	Textarea as HeadlessTextarea,
-	Label,
 } from '@headlessui/react'
 import { Trans } from '@lingui/react/macro'
 import { IconChevronDown } from '@tabler/icons-react'
-import type { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
+import type {
+	ChangeEventHandler,
+	ComponentPropsWithoutRef,
+	ReactNode,
+} from 'react'
 
 interface SelectProps {
-	label: string
+	label: ReactNode
 	value: string
-	options: { value: string; label: string }[]
+	options: { value: string; label: ReactNode }[]
 	onChange: ChangeEventHandler<HTMLSelectElement>
 }
 
@@ -31,7 +35,6 @@ export const Select = ({
 		<div className="relative mt-2">
 			<HeadlessSelect
 				className="block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm"
-				aria-label={label}
 				value={value}
 				onChange={onChange}
 			>
@@ -50,7 +53,7 @@ export const Select = ({
 )
 
 interface BaseInputProps {
-	label: string
+	label: ReactNode
 	validation?: boolean
 	required?: boolean
 }
@@ -82,8 +85,7 @@ export const Input = ({
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessInput
-				className="mt-2 block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-[invalid]:outline-red-500 sm:text-sm"
-				aria-label={label}
+				className="mt-2 block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm"
 				value={value}
 				onChange={onChange}
 				invalid={validation === false}
@@ -103,7 +105,7 @@ export const Input = ({
 }
 
 interface BaseTextareaProps {
-	label: string
+	label: ReactNode
 	validation?: boolean
 }
 
@@ -133,8 +135,7 @@ export const Textarea = ({
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessTextarea
-				className="mt-2 block w-full resize-none appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-[invalid]:outline-red-500 sm:text-sm"
-				aria-label={label}
+				className="mt-2 block w-full resize-none appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm"
 				value={value}
 				onChange={onChange}
 				invalid={validation === false}
@@ -154,7 +155,7 @@ export const Textarea = ({
 }
 
 interface SwitchProps {
-	label: string
+	label: ReactNode
 	checked: boolean
 	onChange: (e: boolean) => void
 	description?: string
@@ -165,16 +166,16 @@ export const Switch = ({
 	checked,
 	onChange,
 	description,
-}: SwitchProps) => {
+}: Readonly<SwitchProps>) => {
 	return (
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessSwitch
 				checked={checked}
 				onChange={onChange}
-				className="group mt-2 inline-flex h-6 w-11 items-center rounded-full bg-dark-500 transition-[background-color] select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-[checked]:bg-blue-600"
+				className="group mt-2 inline-flex h-6 w-11 items-center rounded-full bg-dark-500 transition-[background-color] select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-checked:bg-blue-600"
 			>
-				<span className="size-4 translate-x-1 rounded-full bg-white transition group-data-[checked]:translate-x-6" />
+				<span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-6" />
 			</HeadlessSwitch>
 			{description && (
 				<Description className="mt-1 text-sm text-dark-100">

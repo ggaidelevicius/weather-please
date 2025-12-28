@@ -1,5 +1,3 @@
-import { locales } from '@/lib/i18n'
-import type { Config } from '@/hooks/use-config'
 import {
 	Dialog,
 	DialogBackdrop,
@@ -12,6 +10,9 @@ import { useEffect, useState } from 'react'
 import { Alert } from './alert'
 import { IconButton } from './button'
 import { Input, Select, Switch } from './input'
+import { locales } from '../lib/i18n'
+import type { Config } from '../hooks/use-config'
+import type { LocaleKey } from '../lib/i18n'
 
 interface SettingsProps {
 	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
@@ -23,6 +24,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 	const [platformReviewLink, setPlatformReviewLink] = useState(
 		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
 	)
+	const localeKeys = Object.keys(locales) as LocaleKey[]
 
 	useEffect(() => {
 		if (navigator.userAgent.toLowerCase().includes('firefox/')) {
@@ -38,7 +40,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 				onClick={() => {
 					setIsOpen(true)
 				}}
-				className="fixed right-4 bottom-4"
+				className="fixed right-4 bottom-4 shadow-md"
 				icon={IconSettings}
 			>
 				<Trans>Settings</Trans>
@@ -50,12 +52,12 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 			>
 				<DialogBackdrop
 					transition
-					className="fixed inset-0 bg-black/60 backdrop-blur-lg transition duration-300 will-change-[backdrop-filter,background-color] data-[closed]:opacity-0"
+					className="fixed inset-0 bg-black/60 backdrop-blur-lg transition duration-300 will-change-[backdrop-filter,background-color] data-closed:opacity-0"
 				/>
 				<div className="fixed inset-0 flex w-screen items-center justify-center overflow-y-auto p-8">
 					<DialogPanel
 						transition
-						className="m-auto w-full max-w-lg space-y-4 rounded-xl bg-dark-800 p-12 transition duration-400 will-change-[transform,opacity,filter] data-[closed]:scale-97 data-[closed]:opacity-0 data-[closed]:blur-xs"
+						className="m-auto w-full max-w-lg space-y-4 rounded-xl bg-dark-800 p-12 transition duration-400 will-change-[transform,opacity,filter] data-closed:scale-97 data-closed:opacity-0 data-closed:blur-xs"
 					>
 						<DialogTitle as="h1" className="text-4xl font-bold text-white">
 							<Trans>Settings</Trans>
@@ -64,20 +66,18 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							<Trans>General</Trans>
 						</h2>
 						<Select
-							label={(<Trans>Language</Trans>) as unknown as string}
+							label={<Trans>Language</Trans>}
 							value={input.lang}
 							onChange={(e) => {
 								handleChange('lang', e.target.value)
 							}}
-							options={Object.keys(locales).map((key) => ({
+							options={localeKeys.map((key) => ({
 								value: key,
 								label: locales[key].label,
 							}))}
 						/>
 						<Switch
-							label={
-								(<Trans>Use metric number format</Trans>) as unknown as string
-							}
+							label={<Trans>Use metric number format</Trans>}
 							checked={input.useMetric}
 							onChange={(e) => handleChange('useMetric', e)}
 						/>
@@ -91,7 +91,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							</Trans>
 						</Alert>
 						<Input
-							label={(<Trans>Latitude</Trans>) as unknown as string}
+							label={<Trans>Latitude</Trans>}
 							value={input.lat}
 							onChange={(e) => {
 								handleChange('lat', e.target.value)
@@ -99,7 +99,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							validation={/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat)}
 						/>
 						<Input
-							label={(<Trans>Longitude</Trans>) as unknown as string}
+							label={<Trans>Longitude</Trans>}
 							value={input.lon}
 							onChange={(e) => {
 								handleChange('lon', e.target.value)
@@ -109,18 +109,12 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							)}
 						/>
 						<Switch
-							label={
-								(
-									<Trans>Periodically update location automatically</Trans>
-								) as unknown as string
-							}
+							label={<Trans>Periodically update location automatically</Trans>}
 							checked={input.periodicLocationUpdate}
 							onChange={(e) => handleChange('periodicLocationUpdate', e)}
 						/>
 						<Select
-							label={
-								(<Trans>Number of days to forecast</Trans>) as unknown as string
-							}
+							label={<Trans>Number of days to forecast</Trans>}
 							value={input.daysToRetrieve}
 							onChange={(e) => {
 								handleChange('daysToRetrieve', e.target.value)
@@ -131,60 +125,46 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							}))}
 						/>
 						<Select
-							label={(<Trans>Identifier</Trans>) as unknown as string}
+							label={<Trans>Identifier</Trans>}
 							value={input.identifier}
 							onChange={(e) => {
 								handleChange('identifier', e.target.value)
 							}}
 							options={[
 								{
-									label: (<Trans>Day</Trans>) as unknown as string,
+									label: <Trans>Day</Trans>,
 									value: 'day',
 								},
 								{
-									label: (<Trans>Date</Trans>) as unknown as string,
+									label: <Trans>Date</Trans>,
 									value: 'date',
 								},
 							]}
 						/>
 						<Switch
-							label={(<Trans>Show weather alerts</Trans>) as unknown as string}
+							label={<Trans>Show weather alerts</Trans>}
 							checked={input.showAlerts}
 							onChange={(e) => handleChange('showAlerts', e)}
 						/>
 						{input.showAlerts && (
 							<>
 								<Switch
-									label={
-										(<Trans>Show extreme UV alerts</Trans>) as unknown as string
-									}
+									label={<Trans>Show extreme UV alerts</Trans>}
 									checked={input.showUvAlerts}
 									onChange={(e) => handleChange('showUvAlerts', e)}
 								/>
 								<Switch
-									label={
-										(
-											<Trans>Show high precipitation alerts</Trans>
-										) as unknown as string
-									}
+									label={<Trans>Show high precipitation alerts</Trans>}
 									checked={input.showPrecipitationAlerts}
 									onChange={(e) => handleChange('showPrecipitationAlerts', e)}
 								/>
 								<Switch
-									label={
-										(
-											<Trans>Show strong wind alerts</Trans>
-										) as unknown as string
-									}
+									label={<Trans>Show strong wind alerts</Trans>}
 									checked={input.showWindAlerts}
 									onChange={(e) => handleChange('showWindAlerts', e)}
 								/>
 								<Switch
-									label={
-										(
-											<Trans>Show low visibility alerts</Trans>
-										) as unknown as string
-									}
+									label={<Trans>Show low visibility alerts</Trans>}
 									checked={input.showVisibilityAlerts}
 									onChange={(e) => handleChange('showVisibilityAlerts', e)}
 								/>
@@ -196,6 +176,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						<a
 							href={platformReviewLink}
 							target="_blank"
+							rel="noopener noreferrer"
 							className="mb-2 flex text-sm text-blue-300 hover:underline"
 						>
 							<Trans>🌟 Leave a review</Trans>
@@ -203,6 +184,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						<a
 							href={`https://weather-please.app/bug?locale=${input.lang}`}
 							target="_blank"
+							rel="noopener noreferrer"
 							className="mb-2 flex text-sm text-blue-300 hover:underline"
 						>
 							<Trans>🐛 Report a bug</Trans>
@@ -210,6 +192,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						<a
 							href="https://www.buymeacoffee.com/ggaidelevicius"
 							target="_blank"
+							rel="noopener noreferrer"
 							className="mb-2 flex text-sm text-blue-300 hover:underline"
 						>
 							<Trans>☕ Gift a coffee</Trans>
@@ -220,6 +203,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						<a
 							href={locales[input.lang].privacy}
 							target="_blank"
+							rel="noopener noreferrer"
 							className="flex text-sm text-blue-300 hover:underline"
 						>
 							<Trans>🔒 Privacy policy</Trans>

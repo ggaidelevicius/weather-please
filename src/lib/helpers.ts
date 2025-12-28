@@ -12,15 +12,5 @@ export const mergeObjects = <T extends object, U extends object>(
 	targetObj: T,
 	sourceObj: U,
 ): T & Omit<U, keyof T> => {
-	const mergedObject = { ...targetObj } as T & Omit<U, keyof T>
-
-	;(Object.keys(sourceObj) as Array<keyof U>).forEach((key) => {
-		if (!(key in targetObj)) {
-			// Type assertion is safe here because we're adding keys not present in T
-			//eslint-disable-next-line @typescript-eslint/no-explicit-any
-			;(mergedObject as any)[key] = sourceObj[key]
-		}
-	})
-
-	return mergedObject
+	return { ...sourceObj, ...targetObj }
 }

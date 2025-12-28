@@ -40,3 +40,11 @@ model FormSubmission {
   referrerUrl     String
   ipSubmittedFrom String
 }
+
+model RateLimitEntry {
+  id        Int      @id @default(autoincrement())
+  key       String
+  createdAt DateTime @default(now())
+
+  @@index([key, createdAt])
+}

@@ -1,14 +1,18 @@
-import type { IconProps } from '@tabler/icons-react'
 import { clsx } from 'clsx'
+import type { IconProps } from '@tabler/icons-react'
 import type { ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react'
 
 interface AlertProps {
 	children: ReactNode
 	icon: ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>>
-	variant?: 'light-blue' | 'light-red'
+	variant?: 'light-blue' | 'light-red' | 'info-red'
 }
 
-export const Alert = ({ children, icon: Icon, variant }: AlertProps) => {
+export const Alert = ({
+	children,
+	icon: Icon,
+	variant,
+}: Readonly<AlertProps>) => {
 	return (
 		<div
 			className={clsx(
@@ -17,13 +21,15 @@ export const Alert = ({ children, icon: Icon, variant }: AlertProps) => {
 					? 'bg-blue-500/75 font-medium select-none'
 					: variant === 'light-red'
 						? 'bg-red-500/75 font-medium select-none'
-						: 'w-full rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500',
+						: variant === 'info-red'
+							? 'w-full rounded-lg bg-linear-to-tl from-red-700 to-red-500'
+							: 'w-full rounded-lg bg-linear-to-tl from-blue-700 to-blue-500',
 			)}
 		>
 			<Icon size={30} strokeWidth={1.5} aria-hidden />
 			<span
 				className={
-					variant
+					variant && variant !== 'info-red'
 						? 'max-w-[calc(100%-46px)]'
 						: 'max-w-[calc(100%-46px)] text-sm'
 				}

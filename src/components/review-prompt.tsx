@@ -1,14 +1,20 @@
-import type { Config } from '@/hooks/use-config'
 import { Trans } from '@lingui/react/macro'
-import { useEffect, useState, type Dispatch, type SetStateAction } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from './button'
+import type { Dispatch, SetStateAction } from 'react'
+import type { Config } from '../hooks/use-config'
 
 interface ReviewPromptProps {
 	config: Config
 	setInput: Dispatch<SetStateAction<Config>>
 }
 
-export const ReviewPrompt = ({ config, setInput }: ReviewPromptProps) => {
+const REVIEW_PROMPT_DELAY_MS = 28 * 24 * 60 * 60 * 1000
+
+export const ReviewPrompt = ({
+	config,
+	setInput,
+}: Readonly<ReviewPromptProps>) => {
 	const [platformReviewLink, setPlatformReviewLink] = useState(
 		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
 	)
@@ -23,9 +29,8 @@ export const ReviewPrompt = ({ config, setInput }: ReviewPromptProps) => {
 
 	if (
 		!config.displayedReviewPrompt &&
-		new Date().getTime() - config.installed >= 2419200000
+		new Date().getTime() - config.installed >= REVIEW_PROMPT_DELAY_MS
 	) {
-		// 28 days
 		return (
 			<div className="absolute top-5 right-5 z-1 flex flex-col rounded-lg bg-dark-700 p-5 text-white shadow-md">
 				<p className="mb-2 text-lg font-medium">

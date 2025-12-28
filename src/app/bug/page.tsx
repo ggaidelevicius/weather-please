@@ -1,20 +1,24 @@
 'use client'
 
-import { Input, Textarea } from '@/components/input'
-import { changeLocalisation, locales } from '@/lib/i18n'
 import { i18n } from '@lingui/core'
 import { I18nProvider } from '@lingui/react'
 import { Trans } from '@lingui/react/macro'
 import { IconCircleCheckFilled } from '@tabler/icons-react'
 import Form from 'next/form'
 import { useSearchParams } from 'next/navigation'
-import { Suspense, useActionState, useId } from 'react'
+import { Suspense, useActionState, useEffect, useId } from 'react'
 import { Button } from '../../components/button'
+import { Input, Textarea } from '../../components/input'
+import { changeLocalisation, locales } from '../../lib/i18n'
 import { submitForm } from '../actions'
+import type { LocaleKey } from '../../lib/i18n'
 
 const initialState = {
 	message: '',
 }
+
+const isLocaleKey = (value: string): value is LocaleKey =>
+	Object.hasOwn(locales, value)
 
 const Page = () => {
 	return (
@@ -27,17 +31,16 @@ const Page = () => {
 const ContactForm = () => {
 	const params = useSearchParams()
 	const locale = params?.get('locale') ?? 'en'
-	if (
-		Object.keys(locales)
-			.map((key) => key)
-			.includes(locale)
-	) {
-		changeLocalisation(locale)
-	} else {
-		changeLocalisation('en')
-	}
 	const [state, formAction, pending] = useActionState(submitForm, initialState)
 	const id = useId()
+
+	useEffect(() => {
+		if (isLocaleKey(locale)) {
+			changeLocalisation(locale)
+		} else {
+			changeLocalisation('en')
+		}
+	}, [locale])
 
 	return (
 		<I18nProvider i18n={i18n}>
@@ -51,18 +54,16 @@ const ContactForm = () => {
 							<Trans>Report a bug</Trans>
 						</h1>
 						<Input
-							label={
-								(<Trans>Your email (optional)</Trans>) as unknown as string
-							}
+							label={<Trans>Your email (optional)</Trans>}
 							name="email"
 							type="email"
 						/>
 						<Textarea
-							label={(<Trans>Your message</Trans>) as unknown as string}
+							label={<Trans>Your message</Trans>}
 							name="message"
 							required
 						/>
-						<div className="absolute top-auto left-[-10000px] h-px w-px overflow-hidden">
+						<div className="absolute top-auto -left-2500 h-px w-px overflow-hidden">
 							<label htmlFor={id} className="sr-only">
 								<Trans>Do not fill this field if you are human</Trans>
 							</label>

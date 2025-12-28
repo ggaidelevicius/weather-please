@@ -1,15 +1,18 @@
-import { Initialisation } from '@/components/initialisation'
-import { RingLoader } from '@/components/loader'
-import { ReviewPrompt } from '@/components/review-prompt'
-import { Settings } from '@/components/settings'
-import { Tile } from '@/components/tile'
-import { WeatherAlert } from '@/components/weather-alert'
-import { useWeather } from '@/hooks/use-weather'
-import { useConfig } from '@/hooks/use-config'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
+import { IconAlertTriangle } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { Alert } from '../components/alert'
+import { Button } from '../components/button'
+import { Initialisation } from '../components/initialisation'
+import { RingLoader } from '../components/loader'
+import { ReviewPrompt } from '../components/review-prompt'
+import { Settings } from '../components/settings'
+import { Tile } from '../components/tile'
+import { WeatherAlert } from '../components/weather-alert'
+import { useConfig } from '../hooks/use-config'
+import { useWeather } from '../hooks/use-weather'
 import { messages } from '../locales/en/messages'
 
 i18n.load({
@@ -17,12 +20,27 @@ i18n.load({
 })
 i18n.activate('en')
 
+const LOCATION_CHANGE_THRESHOLD_KM = 1
+const LOCATION_CHECK_INTERVAL_MS = 60 * 1000
+const TILE_STAGGER_DELAY_BASELINE = 0.75
+
+const GRID_COLS_CLASS = {
+	'1': 'lg:grid-cols-1',
+	'2': 'lg:grid-cols-2',
+	'3': 'lg:grid-cols-3',
+	'4': 'lg:grid-cols-4',
+	'5': 'lg:grid-cols-5',
+	'6': 'lg:grid-cols-3',
+	'7': 'lg:grid-cols-3',
+	'8': 'lg:grid-cols-4',
+	'9': 'lg:grid-cols-3',
+} as const
+
 const App = () => {
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
-	const currentDateRef = useRef(new Date().getDate())
 
 	const { config, input, handleChange, updateConfig, setInput } = useConfig()
-	const { weatherData, alertData, isLoading, error } = useWeather(
+	const { weatherData, alertData, isLoading, error, retry } = useWeather(
 		config.lat,
 		config.lon,
 		changedLocation,
@@ -41,22 +59,21 @@ const App = () => {
 	}, [error])
 
 	/**
-	 * Periodically (every minute) checks if the current date has changed.
-	 * If it's a new day and the user has opted-in for periodic location updates,
-	 * the user's geolocation is checked
-	 *
+	 * Periodically (every minute) checks the user's geolocation when opted in.
 	 * If the geolocation has changed from what's saved in "config", the "changedLocation" flag is set to true.
 	 */
 	useEffect(() => {
-		const checkDate = setInterval(() => {
-			if (new Date().getDate() !== currentDateRef.current) {
-				currentDateRef.current = new Date().getDate()
-			}
-		}, 6e4)
+		if (!config.periodicLocationUpdate) {
+			return
+		}
 
-		if (config.periodicLocationUpdate) {
-			try {
-				navigator.geolocation.getCurrentPosition((pos) => {
+		const handleLocationUpdate = () => {
+			if (!navigator.geolocation) {
+				console.error('Geolocation is not supported in this browser.')
+				return
+			}
+			navigator.geolocation.getCurrentPosition(
+				(pos) => {
 					// Calculate distance between current and new coordinates using Haversine formula
 					const calculateDistance = (
 						currentLat: number,
@@ -105,39 +122,40 @@ const App = () => {
 							newLon,
 						)
 
-						if (distance > 1) {
-							// User has moved more than 1km, trigger refresh
+						if (distance > LOCATION_CHANGE_THRESHOLD_KM) {
+							// User has moved more than threshold distance, trigger refresh
 							setChangedLocation(true)
 							updateConfig({
 								lat: newLat.toString(),
 								lon: newLon.toString(),
 							})
 						}
-						// If distance <= 1km, don't update anything to avoid unnecessary refreshes
+						// If distance <= threshold, don't update anything to avoid unnecessary refreshes
 					}
-				})
-			} catch (e) {
-				console.error(e)
-			}
+				},
+				(geoError) => {
+					console.error('Geolocation error:', geoError)
+				},
+			)
 		}
+
+		handleLocationUpdate()
+		const checkLocation = setInterval(() => {
+			handleLocationUpdate()
+		}, LOCATION_CHECK_INTERVAL_MS)
+
 		return () => {
-			clearInterval(checkDate)
+			clearInterval(checkLocation)
 		}
-	}, [
-		currentDateRef,
-		config.periodicLocationUpdate,
-		config.lat,
-		config.lon,
-		updateConfig,
-	])
+	}, [config.periodicLocationUpdate, config.lat, config.lon, updateConfig])
+
+	const hasCachedData =
+		typeof window !== 'undefined' && Boolean(localStorage.getItem('data'))
 
 	const tiles = weatherData
 		.slice(0, parseInt(config.daysToRetrieve))
 		.map((day, index) => {
-			let delayBaseline = 0.75
-			if (localStorage.data) {
-				delayBaseline = 0
-			}
+			const delayBaseline = hasCachedData ? 0 : TILE_STAGGER_DELAY_BASELINE
 			return (
 				<Tile
 					{...day}
@@ -167,7 +185,7 @@ const App = () => {
 			<ReviewPrompt config={config} setInput={setInput} />
 			<AnimatePresence>
 				<motion.main
-					className={`relative grid min-h-[84px] min-w-[84px] grid-cols-1 gap-5 p-5 ${config.daysToRetrieve === '1' ? 'lg:grid-cols-1' : ''}${config.daysToRetrieve === '2' ? 'lg:grid-cols-2' : ''}${config.daysToRetrieve === '3' ? 'lg:grid-cols-3' : ''}${config.daysToRetrieve === '4' ? 'lg:grid-cols-4' : ''}${config.daysToRetrieve === '5' ? 'lg:grid-cols-5' : ''}${config.daysToRetrieve === '6' ? 'lg:grid-cols-3' : ''}${config.daysToRetrieve === '7' ? 'lg:grid-cols-3' : ''}${config.daysToRetrieve === '8' ? 'lg:grid-cols-4' : ''}${config.daysToRetrieve === '9' ? 'lg:grid-cols-3' : ''}`}
+					className={`relative grid min-h-21 min-w-21 grid-cols-1 gap-5 p-5 ${GRID_COLS_CLASS[config.daysToRetrieve as keyof typeof GRID_COLS_CLASS] ?? ''}`}
 				>
 					<Initialisation
 						setInput={setInput}
@@ -175,7 +193,19 @@ const App = () => {
 						handleChange={handleChange}
 						pending={!config?.lat || !config?.lon}
 					/>
-					{isLoading ? (
+					{error ? (
+						<div className="col-span-full flex flex-col items-center justify-center gap-4">
+							<Alert icon={IconAlertTriangle} variant="info-red">
+								<Trans>
+									Unable to fetch weather data. Please check your internet
+									connection and try again.
+								</Trans>
+							</Alert>
+							<Button className="ml-auto" onClick={retry}>
+								<Trans>Retry</Trans>
+							</Button>
+						</div>
+					) : isLoading ? (
 						<AnimatePresence>
 							<RingLoader />
 						</AnimatePresence>
@@ -188,6 +218,7 @@ const App = () => {
 			<a
 				href="https://open-meteo.com/"
 				target="_blank"
+				rel="noopener noreferrer"
 				className="fixed bottom-4 left-4 text-xs text-dark-300 hover:underline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500"
 			>
 				<Trans>weather data provided by open-meteo</Trans>
