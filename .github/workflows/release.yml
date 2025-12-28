@@ -34,6 +34,9 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
+      - name: Generate Next.js types
+        run: pnpm next telemetry disable
+
       - name: Run tsc before release
         run: pnpm tsc
 
