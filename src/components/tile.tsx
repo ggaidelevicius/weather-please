@@ -157,7 +157,7 @@ export const Tile = ({
 				},
 			}}
 			exit={{ scale: 0.95, opacity: 0 }}
-			className="group relative flex flex-col rounded-lg border border-white/3 bg-dark-700/95 p-5 shadow-md will-change-[transform,opacity] select-none"
+			className="group relative flex flex-col rounded-2xl border border-white/3 bg-dark-700/95 p-6 shadow-md will-change-[transform,opacity] select-none"
 		>
 			<span className="origin-left scale-100 text-2xl font-bold text-white opacity-100 transition-[scale,opacity] delay-150 duration-300 will-change-[opacity,scale] group-hover:scale-95 group-hover:opacity-0">
 				{displayedIdentifier}
@@ -165,7 +165,7 @@ export const Tile = ({
 			<span className="absolute origin-left scale-95 text-2xl font-bold text-white opacity-0 transition-[scale,opacity] duration-300 will-change-[opacity,scale] group-hover:scale-100 group-hover:opacity-100 group-hover:delay-300">
 				{hiddenIdentifier}
 			</span>
-			<div className="mt-2.5 flex items-center justify-between gap-4">
+			<div className="mt-3.5 flex items-center justify-between gap-4">
 				<div className="flex flex-col">
 					<div className="flex items-baseline gap-2">
 						<span className="text-3xl text-dark-100" aria-hidden>
@@ -228,7 +228,7 @@ export const Tile = ({
 					className="h-14 w-14"
 				/>
 			</div>
-			<div className="mt-4 flex flex-row justify-between gap-3">
+			<div className="mt-4.5 flex flex-row justify-between gap-3">
 				<div className="flex flex-row items-center gap-1">
 					<IconUvIndex size={18} className="text-dark-100" aria-hidden />
 					<span aria-hidden className="text-sm text-dark-100">
