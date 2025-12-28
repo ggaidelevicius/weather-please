@@ -1,5 +1,5 @@
-import type { IconProps } from '@tabler/icons-react'
 import { clsx } from 'clsx'
+import type { IconProps } from '@tabler/icons-react'
 import type { ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react'
 
 interface AlertProps {
@@ -8,7 +8,11 @@ interface AlertProps {
 	variant?: 'light-blue' | 'light-red' | 'info-red'
 }
 
-export const Alert = ({ children, icon: Icon, variant }: AlertProps) => {
+export const Alert = ({
+	children,
+	icon: Icon,
+	variant,
+}: Readonly<AlertProps>) => {
 	return (
 		<div
 			className={clsx(

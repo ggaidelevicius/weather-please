@@ -1,14 +1,15 @@
-import { mergeObjects } from '@/lib/helpers'
-import { changeLocalisation, locales } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
 import { z } from 'zod'
+import { mergeObjects } from '../lib/helpers'
+import { changeLocalisation, locales } from '../lib/i18n'
+import type { LocaleKey } from '../lib/i18n'
 
 const configSchema = z.object({
 	daysToRetrieve: z.string(),
 	displayedReviewPrompt: z.boolean(),
 	identifier: z.enum(['day', 'date']),
 	installed: z.number(),
-	lang: z.enum(Object.keys(locales).map((key) => key) as [string, ...string[]]),
+	lang: z.enum(Object.keys(locales) as [LocaleKey, ...LocaleKey[]]),
 	lat: z.string().regex(/^(\+|-)?(?:90(?:\.0{1,6})?|[1-8]?\d(?:\.\d{1,6})?)$/),
 	lon: z
 		.string()

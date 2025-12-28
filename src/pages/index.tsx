@@ -1,18 +1,18 @@
-import { Alert } from '@/components/alert'
-import { Button } from '@/components/button'
-import { Initialisation } from '@/components/initialisation'
-import { RingLoader } from '@/components/loader'
-import { ReviewPrompt } from '@/components/review-prompt'
-import { Settings } from '@/components/settings'
-import { Tile } from '@/components/tile'
-import { WeatherAlert } from '@/components/weather-alert'
-import { useConfig } from '@/hooks/use-config'
-import { useWeather } from '@/hooks/use-weather'
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
 import { IconAlertTriangle } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
+import { Alert } from '../components/alert'
+import { Button } from '../components/button'
+import { Initialisation } from '../components/initialisation'
+import { RingLoader } from '../components/loader'
+import { ReviewPrompt } from '../components/review-prompt'
+import { Settings } from '../components/settings'
+import { Tile } from '../components/tile'
+import { WeatherAlert } from '../components/weather-alert'
+import { useConfig } from '../hooks/use-config'
+import { useWeather } from '../hooks/use-weather'
 import { messages } from '../locales/en/messages'
 
 i18n.load({
@@ -21,6 +21,8 @@ i18n.load({
 i18n.activate('en')
 
 const LOCATION_CHANGE_THRESHOLD_KM = 1
+const DATE_CHECK_INTERVAL_MS = 60 * 1000
+const TILE_STAGGER_DELAY_BASELINE = 0.75
 
 const GRID_COLS_CLASS = {
 	'1': 'lg:grid-cols-1',
@@ -65,15 +67,17 @@ const App = () => {
 	 * If the geolocation has changed from what's saved in "config", the "changedLocation" flag is set to true.
 	 */
 	useEffect(() => {
-		const checkDate = setInterval(() => {
-			if (new Date().getDate() !== currentDateRef.current) {
-				currentDateRef.current = new Date().getDate()
-			}
-		}, 6e4)
+		if (!config.periodicLocationUpdate) {
+			return
+		}
 
-		if (config.periodicLocationUpdate) {
-			try {
-				navigator.geolocation.getCurrentPosition((pos) => {
+		const handleLocationUpdate = () => {
+			if (!navigator.geolocation) {
+				console.error('Geolocation is not supported in this browser.')
+				return
+			}
+			navigator.geolocation.getCurrentPosition(
+				(pos) => {
 					// Calculate distance between current and new coordinates using Haversine formula
 					const calculateDistance = (
 						currentLat: number,
@@ -132,29 +136,33 @@ const App = () => {
 						}
 						// If distance <= threshold, don't update anything to avoid unnecessary refreshes
 					}
-				})
-			} catch (e) {
-				console.error(e)
-			}
+				},
+				(geoError) => {
+					console.error('Geolocation error:', geoError)
+				},
+			)
 		}
+
+		const checkDate = setInterval(() => {
+			const currentDate = new Date().getDate()
+			if (currentDate !== currentDateRef.current) {
+				currentDateRef.current = currentDate
+				handleLocationUpdate()
+			}
+		}, DATE_CHECK_INTERVAL_MS)
+
 		return () => {
 			clearInterval(checkDate)
 		}
-	}, [
-		currentDateRef,
-		config.periodicLocationUpdate,
-		config.lat,
-		config.lon,
-		updateConfig,
-	])
+	}, [config.periodicLocationUpdate, config.lat, config.lon, updateConfig])
+
+	const hasCachedData =
+		typeof window !== 'undefined' && Boolean(localStorage.getItem('data'))
 
 	const tiles = weatherData
 		.slice(0, parseInt(config.daysToRetrieve))
 		.map((day, index) => {
-			let delayBaseline = 0.75
-			if (localStorage.data) {
-				delayBaseline = 0
-			}
+			const delayBaseline = hasCachedData ? 0 : TILE_STAGGER_DELAY_BASELINE
 			return (
 				<Tile
 					{...day}

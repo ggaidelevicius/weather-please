@@ -2,10 +2,10 @@ import {
 	Description,
 	Field,
 	Input as HeadlessInput,
+	Label,
 	Select as HeadlessSelect,
 	Switch as HeadlessSwitch,
 	Textarea as HeadlessTextarea,
-	Label,
 } from '@headlessui/react'
 import { Trans } from '@lingui/react/macro'
 import { IconChevronDown } from '@tabler/icons-react'
@@ -166,7 +166,7 @@ export const Switch = ({
 	checked,
 	onChange,
 	description,
-}: SwitchProps) => {
+}: Readonly<SwitchProps>) => {
 	return (
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>

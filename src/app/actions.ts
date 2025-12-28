@@ -2,43 +2,52 @@
 
 import { headers } from 'next/headers'
 import { z } from 'zod'
-import { prisma } from '../lib/prisma'
+import { locales } from '../lib/i18n'
 import { enforceRateLimit } from '../lib/rate-limit'
+import { prisma } from '../lib/prisma'
+
+const localeKeys = Object.keys(locales) as [
+	keyof typeof locales,
+	...(keyof typeof locales)[],
+]
 
 const formSchema = z.object({
-	email: z.email().optional(),
+	email: z.string().email().optional(),
 	message: z.string().nonempty(),
-	locale: z.enum([
-		'bn',
-		'de',
-		'en',
-		'es',
-		'fr',
-		'hi',
-		'id',
-		'it',
-		'ja',
-		'ko',
-		'lt',
-		'ru',
-		'vi',
-		'zh',
-	]),
+	locale: z.enum(localeKeys),
 })
 
 export const submitForm = async (
 	_prevState: { message: string },
 	formData: FormData,
 ) => {
-	const requestHeaders = await headers()
+	let requestHeaders: Headers
+	try {
+		requestHeaders = await headers()
+	} catch (error) {
+		console.error('Unable to read request headers:', error)
+		return {
+			message:
+				'Unable to submit your message at this time. Please try again later.',
+		}
+	}
 	const userAgent = requestHeaders.get('user-agent') ?? 'unknown'
 	const referrerUrl = requestHeaders.get('referer') ?? 'unknown'
 
 	// Check rate limit with proper IP parsing
-	const rateLimitResult = await enforceRateLimit({
-		scope: 'server-action',
-		headers: requestHeaders,
-	})
+	let rateLimitResult
+	try {
+		rateLimitResult = await enforceRateLimit({
+			scope: 'server-action',
+			headers: requestHeaders,
+		})
+	} catch (error) {
+		console.error('Rate limit check failed:', error)
+		return {
+			message:
+				'Unable to submit your message at this time. Please try again later.',
+		}
+	}
 
 	if (!rateLimitResult.ok) {
 		return {

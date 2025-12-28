@@ -1,5 +1,3 @@
-import type { Config } from '@/hooks/use-config'
-import { locales } from '@/lib/i18n'
 import {
 	Description,
 	Dialog,
@@ -10,12 +8,15 @@ import {
 import { Trans } from '@lingui/react/macro'
 import { IconAlertTriangle, IconShieldCheckFilled } from '@tabler/icons-react'
 import Image from 'next/image'
-import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
+import { locales } from '../lib/i18n'
 import Favicon from '../../public/favicon.png'
 import { Alert } from './alert'
 import { Button } from './button'
 import { Select, Switch } from './input'
+import type { Config } from '../hooks/use-config'
+import type { LocaleKey } from '../lib/i18n'
+import type { Dispatch, SetStateAction } from 'react'
 
 interface InitialisationProps {
 	setInput: Dispatch<SetStateAction<Config>>
@@ -34,6 +35,7 @@ export const Initialisation = ({
 	const [errorCode, setErrorCode] = useState<
 		'permission_denied' | 'position_unavailable' | 'timeout' | null
 	>(null)
+	const localeKeys = Object.keys(locales) as LocaleKey[]
 
 	const handleClick = () => {
 		setLoading(true)
@@ -157,20 +159,18 @@ export const Initialisation = ({
 						</Trans>
 					</p>
 					<Select
-						label={(<Trans>Language</Trans>) as unknown as string}
+						label={<Trans>Language</Trans>}
 						value={input.lang}
 						onChange={(e) => {
 							handleChange('lang', e.target.value)
 						}}
-						options={Object.keys(locales).map((key) => ({
+						options={localeKeys.map((key) => ({
 							value: key,
 							label: locales[key].label,
 						}))}
 					/>
 					<Switch
-						label={
-							(<Trans>Use metric number format</Trans>) as unknown as string
-						}
+						label={<Trans>Use metric number format</Trans>}
 						checked={input.useMetric}
 						onChange={(e) => handleChange('useMetric', e)}
 					/>

@@ -1,16 +1,17 @@
+import { z } from 'zod'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
-import { z } from 'zod'
-import { queryClient } from '../pages/_app'
 import {
-	processSimpleAlert,
+	ALERT_CONDITIONS,
 	processPrecipitationAlert,
 	processPrecipitationDuration,
-	ALERT_CONDITIONS,
+	processSimpleAlert,
 } from '../lib/alert-processor'
+import { queryClient } from '../lib/query-client'
 
 const ALERT_HOURS_UV = 13 // 12 hours + current hour
 const ALERT_HOURS_GENERAL = 25 // 24 hours + current hour
+const CACHE_REFRESH_INTERVAL_MS = 60 * 1000
 
 const dataSchema = z
 	.array(
@@ -46,59 +47,33 @@ const alertSchema = z.object({
 
 export type Alerts = z.infer<typeof alertSchema>
 
-interface WeatherData {
-	latitude: number
-	longitude: number
-	generationtime_ms: number
-	utc_offset_seconds: number
-	timezone: string
-	timezone_abbreviation: string
-	elevation: number
-	hourly_units: HourlyUnits
-	hourly: HourlyData
-	daily_units: DailyUnits
-	daily: DailyData
-}
+const weatherResponseSchema = z
+	.object({
+		daily: z.object({
+			time: z.array(z.number()).min(1),
+			weathercode: z.array(z.number()).min(1),
+			temperature_2m_max: z.array(z.number()).min(1),
+			temperature_2m_min: z.array(z.number()).min(1),
+			uv_index_max: z.array(z.number()).min(1),
+			precipitation_probability_max: z.array(z.number()).min(1),
+			windspeed_10m_max: z.array(z.number()).min(1),
+		}),
+		hourly: z.object({
+			precipitation: z.array(z.number()).min(1),
+			uv_index: z.array(z.number()).min(1),
+			windspeed_10m: z.array(z.number()).min(1),
+			visibility: z.array(z.number()).min(1),
+			windgusts_10m: z.array(z.number()).min(1),
+		}),
+	})
+	.passthrough()
 
-interface HourlyUnits {
-	time: string
-	precipitation: string
-	uv_index: string
-	windspeed_10m: string
-	visibility: string
-	windgusts_10m: string
-}
+type WeatherResponse = z.infer<typeof weatherResponseSchema>
 
-interface HourlyData {
-	time: number[]
-	precipitation: number[]
-	uv_index: number[]
-	windspeed_10m: number[]
-	visibility: number[]
-	windgusts_10m: number[]
-}
-
-interface DailyUnits {
-	time: string
-	weathercode: string
-	temperature_2m_max: string
-	temperature_2m_min: string
-	uv_index_max: string
-	precipitation_probability_max: string
-	windspeed_10m_max: string
-}
-
-interface DailyData {
-	time: number[]
-	weathercode: number[]
-	temperature_2m_max: number[]
-	temperature_2m_min: number[]
-	uv_index_max: number[]
-	precipitation_probability_max: number[]
-	windspeed_10m_max: number[]
-}
-
-const isLocalStorageDataValid = (lat: string, lon: string) => {
+const getCachedWeather = (
+	lat: string,
+	lon: string,
+): { weatherData: Data; alertData: Alerts } | null => {
 	const data = localStorage.getItem('data')
 	const lastUpdated = localStorage.getItem('lastUpdated')
 	const alerts = localStorage.getItem('alerts')
@@ -106,16 +81,19 @@ const isLocalStorageDataValid = (lat: string, lon: string) => {
 	const cachedLon = localStorage.getItem('cachedLon')
 
 	if (!data || !lastUpdated || !alerts || !cachedLat || !cachedLon) {
-		return false
+		return null
 	}
 
 	// Check if coordinates match
 	if (cachedLat !== lat || cachedLon !== lon) {
-		return false
+		return null
 	}
 
 	try {
 		const [year, month, day, hour] = lastUpdated.split('-').map(Number)
+		if ([year, month, day, hour].some((value) => Number.isNaN(value))) {
+			return null
+		}
 		const currentDate = new Date()
 		const isSameYear = currentDate.getFullYear() === year
 		const isSameMonth = currentDate.getMonth() === month
@@ -128,16 +106,22 @@ const isLocalStorageDataValid = (lat: string, lon: string) => {
 		const storedAlertsAreValid = alertSchema.safeParse(parsedAlerts)
 		const storedDataIsValid = dataSchema.safeParse(parsedData)
 
-		return (
+		if (
 			isSameYear &&
 			isSameMonth &&
 			isSameDay &&
 			isSameHour &&
 			storedAlertsAreValid.success &&
 			storedDataIsValid.success
-		)
+		) {
+			return {
+				weatherData: storedDataIsValid.data,
+				alertData: storedAlertsAreValid.data,
+			}
+		}
+		return null
 	} catch {
-		return false
+		return null
 	}
 }
 
@@ -153,29 +137,44 @@ export const useWeather = (
 				flag: false,
 				zeroCount: 0,
 			},
-			duration: Array(25).fill(false),
+			duration: Array(ALERT_HOURS_GENERAL).fill(false),
 		},
-		hoursOfExtremeUv: Array(13).fill(false),
-		hoursOfStrongWind: Array(25).fill(false),
-		hoursOfLowVisibility: Array(25).fill(false),
-		hoursOfStrongWindGusts: Array(25).fill(false),
+		hoursOfExtremeUv: Array(ALERT_HOURS_UV).fill(false),
+		hoursOfStrongWind: Array(ALERT_HOURS_GENERAL).fill(false),
+		hoursOfLowVisibility: Array(ALERT_HOURS_GENERAL).fill(false),
+		hoursOfStrongWindGusts: Array(ALERT_HOURS_GENERAL).fill(false),
 	})
 	const [weatherData, setWeatherData] = useState<[] | Data>([])
 	const [usingCachedData, setUsingCachedData] = useState(true)
 
 	const lastHourRef = useRef(new Date().getHours())
 
-	const { error, data, refetch } = useQuery<WeatherData>({
+	const { error, data, refetch } = useQuery<WeatherResponse>({
 		queryKey: ['weather', lat, lon],
-		queryFn: () =>
-			fetch(
-				`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=9`,
-			).then((res) => {
-				if (!res.ok) {
+		queryFn: async () => {
+			try {
+				const response = await fetch(
+					`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=auto&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=9`,
+				)
+
+				if (!response.ok) {
 					throw new Error('Weather fetch failed')
 				}
-				return res.json()
-			}),
+
+				const json = await response.json()
+				const parsed = weatherResponseSchema.safeParse(json)
+				if (!parsed.success) {
+					throw new Error('Invalid weather response')
+				}
+				return parsed.data
+			} catch (fetchError) {
+				const errorMessage =
+					fetchError instanceof Error
+						? fetchError.message
+						: 'Weather fetch failed'
+				throw new Error(errorMessage, { cause: fetchError })
+			}
+		},
 		enabled: Boolean(lat) && Boolean(lon) && !usingCachedData,
 	})
 
@@ -199,26 +198,41 @@ export const useWeather = (
 			const alerts = {
 				totalPrecipitation: {
 					precipitation: processPrecipitationAlert(
-						data.hourly.precipitation.slice(currentHour, currentHour + 25),
+						data.hourly.precipitation.slice(
+							currentHour,
+							currentHour + ALERT_HOURS_GENERAL,
+						),
 					),
 					duration: processPrecipitationDuration(
-						data.hourly.precipitation.slice(currentHour, currentHour + 25),
+						data.hourly.precipitation.slice(
+							currentHour,
+							currentHour + ALERT_HOURS_GENERAL,
+						),
 					),
 				},
 				hoursOfExtremeUv: processSimpleAlert(
-					data.hourly.uv_index.slice(currentHour, currentHour + 13),
+					data.hourly.uv_index.slice(currentHour, currentHour + ALERT_HOURS_UV),
 					ALERT_CONDITIONS.extremeUv,
 				),
 				hoursOfStrongWind: processSimpleAlert(
-					data.hourly.windspeed_10m.slice(currentHour, currentHour + 25),
+					data.hourly.windspeed_10m.slice(
+						currentHour,
+						currentHour + ALERT_HOURS_GENERAL,
+					),
 					ALERT_CONDITIONS.strongWind,
 				),
 				hoursOfStrongWindGusts: processSimpleAlert(
-					data.hourly.windgusts_10m.slice(currentHour, currentHour + 25),
+					data.hourly.windgusts_10m.slice(
+						currentHour,
+						currentHour + ALERT_HOURS_GENERAL,
+					),
 					ALERT_CONDITIONS.strongWindGusts,
 				),
 				hoursOfLowVisibility: processSimpleAlert(
-					data.hourly.visibility.slice(currentHour, currentHour + 25),
+					data.hourly.visibility.slice(
+						currentHour,
+						currentHour + ALERT_HOURS_GENERAL,
+					),
 					ALERT_CONDITIONS.lowVisibility,
 				),
 			}
@@ -231,7 +245,7 @@ export const useWeather = (
 				`${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`,
 			)
 		} else if (error) {
-			console.error(error)
+			console.error('Weather fetch error:', error)
 		}
 	}, [data, error, lat, lon])
 
@@ -243,7 +257,7 @@ export const useWeather = (
 				setUsingCachedData(false)
 				queryClient.invalidateQueries({ queryKey: ['weather'] })
 			}
-		}, 6e4)
+		}, CACHE_REFRESH_INTERVAL_MS)
 
 		return () => clearInterval(interval)
 	}, [])
@@ -251,14 +265,13 @@ export const useWeather = (
 	useEffect(() => {
 		if (changedLocation) {
 			setUsingCachedData(false)
-		} else if (isLocalStorageDataValid(lat, lon)) {
-			const cachedData = localStorage.getItem('data')
-			const cachedAlerts = localStorage.getItem('alerts')
-			if (cachedData && cachedAlerts) {
-				setWeatherData(JSON.parse(cachedData))
-				setAlertData(JSON.parse(cachedAlerts))
-			}
 		} else {
+			const cached = getCachedWeather(lat, lon)
+			if (cached) {
+				setWeatherData(cached.weatherData)
+				setAlertData(cached.alertData)
+				return
+			}
 			setUsingCachedData(false)
 		}
 	}, [lat, lon, changedLocation])

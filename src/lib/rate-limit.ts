@@ -1,4 +1,5 @@
-import { prisma } from '@/lib/prisma'
+import { prisma } from './prisma'
+import type { Prisma } from '../generated/prisma/client'
 
 type RateLimitScope = 'server-action'
 
@@ -61,47 +62,49 @@ export const enforceRateLimit = async (
 
 	try {
 		// Use a transaction to ensure atomicity
-		const result = await prisma.$transaction(async (tx) => {
-			// Count requests in the current window
-			const recentCount = await tx.rateLimitEntry.count({
-				where: {
-					key,
-					createdAt: { gte: windowStart },
-				},
-			})
-
-			if (recentCount >= rule.maxRequests) {
-				// Find the oldest entry in the window to calculate retry time
-				const oldestEntry = await tx.rateLimitEntry.findFirst({
+		const result = await prisma.$transaction(
+			async (tx: Prisma.TransactionClient) => {
+				// Count requests in the current window
+				const recentCount = await tx.rateLimitEntry.count({
 					where: {
 						key,
 						createdAt: { gte: windowStart },
 					},
-					orderBy: { createdAt: 'asc' },
 				})
 
-				const retryAfter = oldestEntry
-					? Math.max(
-							1,
-							Math.ceil(
-								(oldestEntry.createdAt.getTime() +
-									rule.windowMs -
-									now.getTime()) /
-									1000,
-							),
-						)
-					: Math.ceil(rule.windowMs / 1000)
+				if (recentCount >= rule.maxRequests) {
+					// Find the oldest entry in the window to calculate retry time
+					const oldestEntry = await tx.rateLimitEntry.findFirst({
+						where: {
+							key,
+							createdAt: { gte: windowStart },
+						},
+						orderBy: { createdAt: 'asc' },
+					})
 
-				return { ok: false as const, retryAfter }
-			}
+					const retryAfter = oldestEntry
+						? Math.max(
+								1,
+								Math.ceil(
+									(oldestEntry.createdAt.getTime() +
+										rule.windowMs -
+										now.getTime()) /
+										1000,
+								),
+							)
+						: Math.ceil(rule.windowMs / 1000)
 
-			// Record this request
-			await tx.rateLimitEntry.create({
-				data: { key },
-			})
+					return { ok: false as const, retryAfter }
+				}
 
-			return { ok: true as const }
-		})
+				// Record this request
+				await tx.rateLimitEntry.create({
+					data: { key },
+				})
+
+				return { ok: true as const }
+			},
+		)
 
 		// Probabilistic cleanup: ~1% of requests trigger cleanup
 		// This spreads the cleanup load across requests

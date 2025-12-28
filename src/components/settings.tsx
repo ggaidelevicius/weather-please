@@ -1,5 +1,3 @@
-import { locales } from '@/lib/i18n'
-import type { Config } from '@/hooks/use-config'
 import {
 	Dialog,
 	DialogBackdrop,
@@ -12,6 +10,9 @@ import { useEffect, useState } from 'react'
 import { Alert } from './alert'
 import { IconButton } from './button'
 import { Input, Select, Switch } from './input'
+import { locales } from '../lib/i18n'
+import type { Config } from '../hooks/use-config'
+import type { LocaleKey } from '../lib/i18n'
 
 interface SettingsProps {
 	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
@@ -23,6 +24,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 	const [platformReviewLink, setPlatformReviewLink] = useState(
 		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
 	)
+	const localeKeys = Object.keys(locales) as LocaleKey[]
 
 	useEffect(() => {
 		if (navigator.userAgent.toLowerCase().includes('firefox/')) {
@@ -69,7 +71,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							onChange={(e) => {
 								handleChange('lang', e.target.value)
 							}}
-							options={Object.keys(locales).map((key) => ({
+							options={localeKeys.map((key) => ({
 								value: key,
 								label: locales[key].label,
 							}))}

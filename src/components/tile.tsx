@@ -1,3 +1,7 @@
+import { Trans } from '@lingui/react/macro'
+import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
+import { motion } from 'framer-motion'
+import Image from 'next/image'
 import {
 	BrokenClouds,
 	ClearSky,
@@ -10,12 +14,8 @@ import {
 	ShowerRain,
 	Snow,
 	Thunderstorm,
-} from '@/images'
-import { Trans } from '@lingui/react/macro'
-import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
-import { motion } from 'framer-motion'
+} from '../images'
 import type { StaticImageData } from 'next/image'
-import Image from 'next/image'
 import type { ReactElement } from 'react'
 
 const iconMap: Record<number, StaticImageData> = {
@@ -131,7 +131,7 @@ export const Tile = ({
 	identifier,
 	index,
 	delayBaseline,
-}: TileProps) => {
+}: Readonly<TileProps>) => {
 	const dayDescriptor = days[new Date(day * 1000).getDay()]
 	const dateDescriptor = (
 		<>

@@ -30,7 +30,7 @@ Object.defineProperty(window, 'localStorage', {
 })
 
 // Mock i18n functions
-vi.mock('@/lib/i18n', () => ({
+vi.mock('../../lib/i18n', () => ({
 	changeLocalisation: vi.fn(),
 	locales: {
 		en: 'English',
@@ -41,7 +41,7 @@ vi.mock('@/lib/i18n', () => ({
 }))
 
 // Mock helpers
-vi.mock('@/lib/helpers', () => ({
+vi.mock('../../lib/helpers', () => ({
 	mergeObjects: vi.fn((target, source) => ({ ...source, ...target })),
 }))
 
@@ -268,7 +268,7 @@ describe('useConfig - Core Functionality', () => {
 	})
 
 	it('calls changeLocalisation when language changes', async () => {
-		const { changeLocalisation } = await import('@/lib/i18n')
+		const { changeLocalisation } = await import('../../lib/i18n')
 		const { result } = renderHook(() => useConfig())
 
 		act(() => {
