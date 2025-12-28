@@ -12,6 +12,7 @@ import { queryClient } from '../lib/query-client'
 const ALERT_HOURS_UV = 13 // 12 hours + current hour
 const ALERT_HOURS_GENERAL = 25 // 24 hours + current hour
 const CACHE_REFRESH_INTERVAL_MS = 60 * 1000
+const CACHE_REFRESH_DELAY_MINUTE = 1
 const CACHE_VALIDITY_MS = 60 * 60 * 1000
 
 const dataSchema = z
@@ -306,8 +307,13 @@ export const useWeather = (
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			const currentHour = new Date().getHours()
-			if (currentHour !== lastHourRef.current) {
+			const now = new Date()
+			const currentHour = now.getHours()
+			const currentMinute = now.getMinutes()
+			if (
+				currentHour !== lastHourRef.current &&
+				currentMinute >= CACHE_REFRESH_DELAY_MINUTE
+			) {
 				lastHourRef.current = currentHour
 				setUsingCachedData(false)
 				queryClient.invalidateQueries({ queryKey: ['weather'] })
