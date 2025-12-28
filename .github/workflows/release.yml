@@ -31,6 +31,8 @@ jobs:
 
       - name: Generate prisma
         run: pnpm prisma generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Run tsc before release
         run: pnpm tsc
