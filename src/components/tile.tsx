@@ -157,7 +157,7 @@ export const Tile = ({
 				},
 			}}
 			exit={{ scale: 0.95, opacity: 0 }}
-			className="group relative flex flex-col rounded-2xl border border-white/3 bg-dark-700/95 p-6 shadow-md will-change-[transform,opacity] select-none"
+			className="group relative flex flex-col rounded-2xl border border-white/3 bg-dark-700/95 p-5.5 shadow-md will-change-[transform,opacity] select-none"
 		>
 			<span className="origin-left scale-100 text-2xl font-bold text-white opacity-100 transition-[scale,opacity] delay-150 duration-300 will-change-[opacity,scale] group-hover:scale-95 group-hover:opacity-0">
 				{displayedIdentifier}
