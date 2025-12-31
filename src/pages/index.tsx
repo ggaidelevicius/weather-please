@@ -39,7 +39,8 @@ const GRID_COLS_CLASS = {
 const App = () => {
 	const [changedLocation, setChangedLocation] = useState<boolean>(false)
 
-	const { config, input, handleChange, updateConfig, setInput } = useConfig()
+	const { config, input, handleChange, updateConfig, setInput, isHydrated } =
+		useConfig()
 	const { weatherData, alertData, isLoading, error, retry } = useWeather(
 		config.lat,
 		config.lon,
@@ -191,7 +192,7 @@ const App = () => {
 						setInput={setInput}
 						input={input}
 						handleChange={handleChange}
-						pending={!config?.lat || !config?.lon}
+						pending={isHydrated && (!config?.lat || !config?.lon)}
 					/>
 					{error ? (
 						<div className="col-span-full flex flex-col items-center justify-center gap-4">

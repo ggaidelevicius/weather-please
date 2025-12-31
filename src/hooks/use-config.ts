@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { z } from 'zod'
 import { mergeObjects } from '../lib/helpers'
 import { changeLocalisation, locales } from '../lib/i18n'
@@ -44,6 +44,9 @@ const initialState: Config = {
 	displayedReviewPrompt: false,
 }
 
+const useIsomorphicLayoutEffect =
+	typeof window === 'undefined' ? useEffect : useLayoutEffect
+
 const getInitialConfig = (): Config => {
 	if (typeof window === 'undefined') {
 		return initialState
@@ -70,8 +73,16 @@ const getInitialConfig = (): Config => {
 }
 
 export const useConfig = () => {
-	const [config, setConfig] = useState<Config>(getInitialConfig)
-	const [input, setInput] = useState<Config>(getInitialConfig)
+	const [config, setConfig] = useState<Config>(initialState)
+	const [input, setInput] = useState<Config>(initialState)
+	const [isHydrated, setIsHydrated] = useState(false)
+
+	useIsomorphicLayoutEffect(() => {
+		const storedConfig = getInitialConfig()
+		setConfig(storedConfig)
+		setInput(storedConfig)
+		setIsHydrated(true)
+	}, [])
 
 	// Save config when input changes and is valid
 	useEffect(() => {
@@ -112,5 +123,6 @@ export const useConfig = () => {
 		handleChange,
 		updateConfig,
 		setInput,
+		isHydrated,
 	}
 }

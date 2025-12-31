@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react'
+import { renderHook, act, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useConfig, type Config } from '../use-config'
 
@@ -91,16 +91,18 @@ describe('useConfig - Core Functionality', () => {
 		expect(result.current.input).toEqual(result.current.config)
 	})
 
-	it('loads valid config from localStorage on mount', () => {
+	it('loads valid config from localStorage on mount', async () => {
 		localStorageMock.config = JSON.stringify(mockValidConfig)
 
 		const { result } = renderHook(() => useConfig())
 
-		expect(result.current.config).toEqual(mockValidConfig)
-		expect(result.current.input).toEqual(mockValidConfig)
+		await waitFor(() => {
+			expect(result.current.config).toEqual(mockValidConfig)
+			expect(result.current.input).toEqual(mockValidConfig)
+		})
 	})
 
-	it('merges invalid config with defaults', () => {
+	it('merges invalid config with defaults', async () => {
 		const invalidConfig = {
 			lang: 'en',
 			lat: '40.7128',
@@ -112,23 +114,27 @@ describe('useConfig - Core Functionality', () => {
 		const { result } = renderHook(() => useConfig())
 
 		// Should merge with defaults
-		expect(result.current.config).toMatchObject({
-			lang: 'en',
-			lat: '40.7128',
-			lon: '', // Should be filled with default
-			useMetric: true, // Should be filled with default
+		await waitFor(() => {
+			expect(result.current.config).toMatchObject({
+				lang: 'en',
+				lat: '40.7128',
+				lon: '', // Should be filled with default
+				useMetric: true, // Should be filled with default
+			})
 		})
 	})
 
-	it('handles corrupted localStorage data gracefully', () => {
+	it('handles corrupted localStorage data gracefully', async () => {
 		localStorageMock.config = 'invalid json'
 
 		const { result } = renderHook(() => useConfig())
 
 		// Should fall back to defaults
-		expect(result.current.config.lang).toBe('en')
-		expect(result.current.config.lat).toBe('')
-		expect(result.current.config.lon).toBe('')
+		await waitFor(() => {
+			expect(result.current.config.lang).toBe('en')
+			expect(result.current.config.lat).toBe('')
+			expect(result.current.config.lon).toBe('')
+		})
 	})
 
 	it('updates input state with handleChange', () => {

@@ -165,7 +165,7 @@ export const Tile = ({
 			<span className="absolute origin-left scale-95 text-2xl font-bold text-white opacity-0 transition-[scale,opacity] duration-300 will-change-[opacity,scale] group-hover:scale-100 group-hover:opacity-100 group-hover:delay-300">
 				{hiddenIdentifier}
 			</span>
-			<div className="mt-3.5 flex items-center justify-between gap-4">
+			<div className="mt-3 flex items-center justify-between gap-4">
 				<div className="flex flex-col">
 					<div className="flex items-baseline gap-2">
 						<span className="text-3xl text-dark-100" aria-hidden>
