@@ -246,7 +246,37 @@ async function launchHalloweenSpirits() {
 			context.translate(particle.x, particle.y)
 			context.rotate(particle.rotation)
 			context.scale(scale, scale)
-			context.globalAlpha = particle.opacity * eased * pulse
+			const baseAlpha = particle.opacity * eased * pulse
+			if (particle.hasSparkle) {
+				const sparklePulse =
+					(Math.sin(time * 0.0018 + particle.sparklePhase) + 1) / 2
+				const sparkleStrength = Math.max(0, sparklePulse - 0.7)
+				if (sparkleStrength > 0) {
+					const sparkleRadius = particle.size * (0.55 + sparkleStrength * 1.05)
+					context.globalAlpha = baseAlpha * sparkleStrength * 0.55
+					const sparkleGradient = context.createRadialGradient(
+						0,
+						0,
+						0,
+						0,
+						0,
+						sparkleRadius,
+					)
+					sparkleGradient.addColorStop(0, 'rgba(255, 244, 214, 0.7)')
+					sparkleGradient.addColorStop(0.5, 'rgba(255, 244, 214, 0.18)')
+					sparkleGradient.addColorStop(1, 'rgba(255, 244, 214, 0)')
+					context.fillStyle = sparkleGradient
+					context.shadowColor = 'rgba(255, 244, 214, 0.65)'
+					context.shadowBlur = particle.glow * 2.6
+					context.beginPath()
+					context.arc(0, 0, sparkleRadius, 0, Math.PI * 2)
+					context.fill()
+					context.shadowBlur = 0
+					context.shadowColor = 'transparent'
+				}
+			}
+
+			context.globalAlpha = baseAlpha
 			context.font = `${particle.size}px ${HALLOWEEN_FONT}`
 			context.textAlign = 'center'
 			context.textBaseline = 'middle'
@@ -264,20 +294,6 @@ async function launchHalloweenSpirits() {
 				drawSize,
 				drawSize,
 			)
-
-			if (particle.hasSparkle) {
-				const sparklePulse = Math.sin(time * 0.0022 + particle.sparklePhase)
-				if (sparklePulse > 0.9) {
-					const sparkleAlpha = ((sparklePulse - 0.9) / 0.1) * eased
-					context.globalAlpha = sparkleAlpha
-					context.fillStyle = 'rgba(255, 244, 214, 0.9)'
-					context.shadowColor = 'rgba(255, 244, 214, 0.8)'
-					context.shadowBlur = particle.glow * 1.6
-					context.beginPath()
-					context.arc(0, 0, particle.size * 0.14, 0, Math.PI * 2)
-					context.fill()
-				}
-			}
 			context.restore()
 		}
 		const updateParticle = (

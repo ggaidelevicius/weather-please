@@ -7,5 +7,3 @@
 - [x] Earth Day (Apr 22): ecosystem particle field with glowing flora.
 - [x] Summer Solstice (Jun 20/21): warm sun-ray shimmer over the background.
 - [x] Halloween (Oct 31): spooky confetti with ghosts, bats, and warm sparks.
-- [ ] First snow (weather-driven): snowflake confetti when the temperature drops
-      below freezing.

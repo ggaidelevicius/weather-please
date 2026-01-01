@@ -5,6 +5,7 @@ export type SeasonalEventId =
 	| 'spring-equinox'
 	| 'earth-day'
 	| 'summer-solstice'
+	| 'winter-solstice'
 	| 'halloween'
 
 export type Hemisphere = 'northern' | 'southern'

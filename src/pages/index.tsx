@@ -74,6 +74,9 @@ const App = () => {
 		if (config.showSummerSolsticeEvent) {
 			enabledSeasonalEvents.add('summer-solstice')
 		}
+		if (config.showWinterSolsticeEvent) {
+			enabledSeasonalEvents.add('winter-solstice')
+		}
 		if (config.showHalloweenEvent) {
 			enabledSeasonalEvents.add('halloween')
 		}

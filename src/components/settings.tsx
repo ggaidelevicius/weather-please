@@ -216,6 +216,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									onChange={(e) => handleChange('showSummerSolsticeEvent', e)}
 								/>
 								<Switch
+									label={<Trans>Show Winter Solstice event</Trans>}
+									checked={input.showWinterSolsticeEvent}
+									onChange={(e) => handleChange('showWinterSolsticeEvent', e)}
+								/>
+								<Switch
 									label={<Trans>Show Halloween event</Trans>}
 									checked={input.showHalloweenEvent}
 									onChange={(e) => handleChange('showHalloweenEvent', e)}
