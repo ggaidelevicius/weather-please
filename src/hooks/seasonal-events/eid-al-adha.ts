@@ -1,70 +1,63 @@
 import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
-const EID_AL_FITR_DATES = new Set([
-	'2024-04-10',
-	'2025-03-30',
-	'2026-03-20',
-	'2027-03-09',
-	'2028-02-26',
-	'2029-02-14',
-	'2030-02-04',
-	'2031-01-24',
-	'2032-01-14',
-	'2033-01-02',
-	'2033-12-23',
-	'2034-12-12',
-	'2035-12-01',
-	'2036-11-20',
-	'2037-11-09',
-	'2038-10-28',
-	'2039-10-17',
-	'2040-10-06',
-	'2041-09-25',
-	'2042-09-14',
-	'2043-09-05',
+const EID_AL_ADHA_DATES = new Set([
+	'2024-06-16',
+	'2025-06-06',
+	'2026-05-27',
+	'2027-05-17',
+	'2028-05-05',
+	'2029-04-24',
+	'2030-04-14',
+	'2031-04-02',
+	'2032-03-22',
+	'2033-03-11',
+	'2034-03-01',
+	'2035-02-18',
+	'2036-02-07',
 ])
-const EID_MOUNT_DELAY_MS = 900
-const EID_OVERLAY_OPACITY = '0.75'
-const EID_OVERLAY_FILTER = 'saturate(125%)'
-const EID_MAX_DPR = 2
-const EID_STAR_COUNT = 140
-const EID_STAR_RADIUS_RANGE = { min: 0.5, max: 1.6 }
-const EID_STAR_OPACITY_RANGE = { min: 0.18, max: 0.55 }
-const EID_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0015 }
-const EID_LANTERN_COUNT = 22
-const EID_LANTERN_SIZE_RANGE = { min: 18, max: 36 }
-const EID_LANTERN_SPEED_RANGE = { min: 8, max: 20 }
-const EID_LANTERN_SWAY_RANGE = { min: 4, max: 14 }
-const EID_LANTERN_OPACITY_RANGE = { min: 0.35, max: 0.75 }
-const EID_LANTERN_FADE_IN_DELAY_RANGE = { min: 0, max: 1800 }
-const EID_LANTERN_FADE_IN_DURATION_RANGE = { min: 1000, max: 2000 }
-const EID_SCENE_FADE_DELAY_MS = 300
-const EID_SCENE_FADE_DURATION_MS = 1400
-const EID_LANTERN_COLORS = [
-	'rgba(253, 230, 138, 0.9)',
-	'rgba(251, 191, 36, 0.85)',
-	'rgba(94, 234, 212, 0.75)',
-	'rgba(167, 139, 250, 0.7)',
+const EID_ADHA_MOUNT_DELAY_MS = 900
+const EID_ADHA_OVERLAY_OPACITY = '0.72'
+const EID_ADHA_OVERLAY_FILTER = 'saturate(120%)'
+const EID_ADHA_MAX_DPR = 2
+const EID_ADHA_STAR_COUNT = 140
+const EID_ADHA_STAR_RADIUS_RANGE = { min: 0.5, max: 1.5 }
+const EID_ADHA_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
+const EID_ADHA_STAR_TWINKLE_RANGE = { min: 0.0005, max: 0.0013 }
+const EID_ADHA_EMBER_COUNT = 26
+const EID_ADHA_EMBER_SIZE_RANGE = { min: 6, max: 14 }
+const EID_ADHA_EMBER_SPEED_RANGE = { min: 8, max: 18 }
+const EID_ADHA_EMBER_SWAY_RANGE = { min: 6, max: 16 }
+const EID_ADHA_EMBER_OPACITY_RANGE = { min: 0.35, max: 0.75 }
+const EID_ADHA_EMBER_FADE_IN_DELAY_RANGE = { min: 0, max: 2000 }
+const EID_ADHA_EMBER_FADE_IN_DURATION_RANGE = { min: 1100, max: 2200 }
+const EID_ADHA_SCENE_FADE_DELAY_MS = 300
+const EID_ADHA_SCENE_FADE_DURATION_MS = 1400
+const EID_ADHA_EMBER_COLORS = [
+	'rgba(254, 243, 199, 0.9)',
+	'rgba(253, 230, 138, 0.85)',
+	'rgba(251, 191, 36, 0.78)',
+	'rgba(245, 158, 11, 0.68)',
+	'rgba(52, 211, 153, 0.6)',
 ]
 
-export const eidAlFitrEvent: SeasonalEvent = {
-	id: 'eid-al-fitr',
-	isActive: isEidAlFitr,
-	run: launchEidAlFitrGlow,
+export const eidAlAdhaEvent: SeasonalEvent = {
+	id: 'eid-al-adha',
+	isActive: isEidAlAdha,
+	run: launchEidAlAdhaGlow,
 	tileAccent: {
-		colors: ['#fef3c7', '#facc15', '#38bdf8', '#a78bfa', '#fef3c7'],
+		colors: ['#fef3c7', '#fbbf24', '#f59e0b', '#34d399', '#fef3c7'],
 	},
 }
 
-function isEidAlFitr({ date }: SeasonalEventContext) {
+function isEidAlAdha({ date }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
-	return EID_AL_FITR_DATES.has(`${year}-${month}-${day}`)
+	return EID_AL_ADHA_DATES.has(`${year}-${month}-${day}`)
 }
 
-async function launchEidAlFitrGlow() {
+async function launchEidAlAdhaGlow() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}
@@ -76,7 +69,7 @@ async function launchEidAlFitrGlow() {
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
-			throw new Error('Unable to create 2D context for Eid canvas')
+			throw new Error('Unable to create 2D context for Eid al-Adha canvas')
 		}
 
 		type Star = {
@@ -87,7 +80,7 @@ async function launchEidAlFitrGlow() {
 			twinkle: number
 			phase: number
 		}
-		type Lantern = {
+		type Ember = {
 			baseX: number
 			y: number
 			vy: number
@@ -105,44 +98,46 @@ async function launchEidAlFitrGlow() {
 		let width = window.innerWidth
 		let height = window.innerHeight
 		let stars: Star[] = []
-		let lanterns: Lantern[] = []
+		let embers: Ember[] = []
 		let lastTime = performance.now()
 		let sceneFadeStart = performance.now()
 
-		const randomLanternColor = () =>
-			EID_LANTERN_COLORS[Math.floor(Math.random() * EID_LANTERN_COLORS.length)]
+		const randomEmberColor = () =>
+			EID_ADHA_EMBER_COLORS[
+				Math.floor(Math.random() * EID_ADHA_EMBER_COLORS.length)
+			]
 
 		const createStar = (): Star => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: randomInRange(EID_STAR_RADIUS_RANGE),
-			opacity: randomInRange(EID_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(EID_STAR_TWINKLE_RANGE),
+			radius: randomInRange(EID_ADHA_STAR_RADIUS_RANGE),
+			opacity: randomInRange(EID_ADHA_STAR_OPACITY_RANGE),
+			twinkle: randomInRange(EID_ADHA_STAR_TWINKLE_RANGE),
 			phase: Math.random() * Math.PI * 2,
 		})
 
-		const createLantern = (time: number): Lantern => ({
+		const createEmber = (time: number): Ember => ({
 			baseX: Math.random() * width,
-			y: height + Math.random() * height * 0.3,
-			vy: randomInRange(EID_LANTERN_SPEED_RANGE),
-			size: randomInRange(EID_LANTERN_SIZE_RANGE),
-			opacity: randomInRange(EID_LANTERN_OPACITY_RANGE),
-			color: randomLanternColor(),
-			sway: randomInRange(EID_LANTERN_SWAY_RANGE),
+			y: height + Math.random() * height * 0.35,
+			vy: randomInRange(EID_ADHA_EMBER_SPEED_RANGE),
+			size: randomInRange(EID_ADHA_EMBER_SIZE_RANGE),
+			opacity: randomInRange(EID_ADHA_EMBER_OPACITY_RANGE),
+			color: randomEmberColor(),
+			sway: randomInRange(EID_ADHA_EMBER_SWAY_RANGE),
 			phase: Math.random() * Math.PI * 2,
-			birthTime: time + randomInRange(EID_LANTERN_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(EID_LANTERN_FADE_IN_DURATION_RANGE),
+			birthTime: time + randomInRange(EID_ADHA_EMBER_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(EID_ADHA_EMBER_FADE_IN_DURATION_RANGE),
 		})
 
 		const resetField = (time: number) => {
-			stars = Array.from({ length: EID_STAR_COUNT }, createStar)
-			lanterns = Array.from({ length: EID_LANTERN_COUNT }, () =>
-				createLantern(time),
+			stars = Array.from({ length: EID_ADHA_STAR_COUNT }, createStar)
+			embers = Array.from({ length: EID_ADHA_EMBER_COUNT }, () =>
+				createEmber(time),
 			)
 		}
 
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, EID_MAX_DPR)
+			const dpr = Math.min(window.devicePixelRatio || 1, EID_ADHA_MAX_DPR)
 			width = window.innerWidth
 			height = window.innerHeight
 			canvas.width = Math.round(width * dpr)
@@ -154,8 +149,8 @@ async function launchEidAlFitrGlow() {
 		}
 
 		const drawCrescent = (alpha: number) => {
-			const radius = Math.min(width, height) * 0.18
-			const cx = width * 0.16
+			const radius = Math.min(width, height) * 0.12
+			const cx = width * 0.8
 			const cy = height * 0.2
 			context.save()
 			context.globalAlpha = alpha
@@ -163,36 +158,26 @@ async function launchEidAlFitrGlow() {
 			const glow = context.createRadialGradient(
 				cx,
 				cy,
-				radius * 0.2,
+				radius * 0.25,
 				cx,
 				cy,
 				radius,
 			)
-			glow.addColorStop(0, 'rgba(255, 246, 214, 0.95)')
-			glow.addColorStop(0.55, 'rgba(255, 236, 179, 0.55)')
-			glow.addColorStop(1, 'rgba(255, 236, 179, 0)')
+			glow.addColorStop(0, 'rgba(255, 246, 214, 0.9)')
+			glow.addColorStop(0.55, 'rgba(255, 220, 140, 0.55)')
+			glow.addColorStop(1, 'rgba(255, 220, 140, 0)')
 			context.fillStyle = glow
 			context.beginPath()
 			context.arc(cx, cy, radius, 0, Math.PI * 2)
 			context.fill()
+
 			context.globalAlpha = 1
-			const mask = context.createRadialGradient(
-				cx + radius * 0.42,
-				cy - radius * 0.12,
-				radius * 0.2,
-				cx + radius * 0.42,
-				cy - radius * 0.12,
-				radius * 0.95,
-			)
-			mask.addColorStop(0, '#1a1b1e')
-			mask.addColorStop(0.82, '#1a1b1e')
-			mask.addColorStop(1, 'rgba(26, 27, 30, 0)')
-			context.fillStyle = mask
+			context.fillStyle = '#1a1b1e'
 			context.beginPath()
 			context.arc(
-				cx + radius * 0.42,
-				cy - radius * 0.12,
-				radius * 0.95,
+				cx + radius * 0.4,
+				cy - radius * 0.1,
+				radius * 0.9,
 				0,
 				Math.PI * 2,
 			)
@@ -203,7 +188,7 @@ async function launchEidAlFitrGlow() {
 		const drawStars = (time: number, alpha: number) => {
 			context.fillStyle = 'rgba(226, 232, 240, 1)'
 			for (const star of stars) {
-				const twinkle = 0.6 + 0.4 * Math.sin(time * star.twinkle + star.phase)
+				const twinkle = 0.65 + 0.35 * Math.sin(time * star.twinkle + star.phase)
 				context.globalAlpha = alpha * star.opacity * twinkle
 				context.beginPath()
 				context.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
@@ -213,19 +198,19 @@ async function launchEidAlFitrGlow() {
 
 		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
 
-		const drawLantern = (
-			lantern: Lantern,
+		const drawEmber = (
+			ember: Ember,
 			time: number,
 			alpha: number,
 			sceneAlpha: number,
 		) => {
-			const sway = Math.sin(time * 0.0004 + lantern.phase) * lantern.sway
-			const x = lantern.baseX + sway
-			const y = lantern.y
-			const radius = lantern.size * 1.2
+			const sway = Math.sin(time * 0.0005 + ember.phase) * ember.sway
+			const x = ember.baseX + sway
+			const y = ember.y
+			const radius = ember.size * 1.4
 			const gradient = context.createRadialGradient(x, y, 0, x, y, radius)
-			gradient.addColorStop(0, lantern.color)
-			gradient.addColorStop(0.7, lantern.color.replace('0.', '0.25'))
+			gradient.addColorStop(0, ember.color)
+			gradient.addColorStop(0.7, ember.color.replace('0.', '0.22'))
 			gradient.addColorStop(1, 'rgba(15, 23, 42, 0)')
 			context.globalAlpha = alpha * sceneAlpha
 			context.fillStyle = gradient
@@ -238,7 +223,7 @@ async function launchEidAlFitrGlow() {
 			const delta = Math.min(time - lastTime, 48)
 			lastTime = time
 			const sceneFadeProgress = Math.min(
-				Math.max((time - sceneFadeStart) / EID_SCENE_FADE_DURATION_MS, 0),
+				Math.max((time - sceneFadeStart) / EID_ADHA_SCENE_FADE_DURATION_MS, 0),
 				1,
 			)
 			const sceneAlpha = easeOutCubic(sceneFadeProgress)
@@ -247,18 +232,18 @@ async function launchEidAlFitrGlow() {
 			context.globalCompositeOperation = 'lighter'
 			drawStars(time, sceneAlpha)
 
-			for (const lantern of lanterns) {
-				lantern.y -= (lantern.vy * delta) / 1000
-				if (lantern.y < -lantern.size * 2) {
-					Object.assign(lantern, createLantern(time))
+			for (const ember of embers) {
+				ember.y -= (ember.vy * delta) / 1000
+				if (ember.y < -ember.size * 2) {
+					Object.assign(ember, createEmber(time))
 				}
 
 				const fadeProgress = Math.min(
-					Math.max((time - lantern.birthTime) / lantern.fadeDuration, 0),
+					Math.max((time - ember.birthTime) / ember.fadeDuration, 0),
 					1,
 				)
 				const fade = easeOutCubic(fadeProgress)
-				drawLantern(lantern, time, lantern.opacity * fade, sceneAlpha)
+				drawEmber(ember, time, ember.opacity * fade, sceneAlpha)
 			}
 
 			if (shouldAnimate) {
@@ -272,11 +257,11 @@ async function launchEidAlFitrGlow() {
 			drawCrescent(1)
 			context.globalCompositeOperation = 'lighter'
 			drawStars(now, 1)
-			for (let i = 0; i < Math.min(8, lanterns.length); i += 1) {
-				const lantern = createLantern(now)
-				lantern.baseX = width * (0.1 + i * 0.1)
-				lantern.y = height * (0.85 - i * 0.06)
-				drawLantern(lantern, now, lantern.opacity, 1)
+			for (let i = 0; i < Math.min(7, embers.length); i += 1) {
+				const ember = createEmber(now)
+				ember.baseX = width * (0.12 + i * 0.12)
+				ember.y = height * (0.82 - i * 0.05)
+				drawEmber(ember, now, ember.opacity, 1)
 			}
 		}
 
@@ -284,14 +269,14 @@ async function launchEidAlFitrGlow() {
 		overlay.style.inset = '0'
 		overlay.style.pointerEvents = 'none'
 		overlay.style.zIndex = '0'
-		overlay.style.opacity = EID_OVERLAY_OPACITY
-		overlay.style.filter = EID_OVERLAY_FILTER
+		overlay.style.opacity = EID_ADHA_OVERLAY_OPACITY
+		overlay.style.filter = EID_ADHA_OVERLAY_FILTER
 		overlay.appendChild(canvas)
 
 		const mount = () => {
 			document.body.appendChild(overlay)
 			resizeCanvas()
-			sceneFadeStart = performance.now() + EID_SCENE_FADE_DELAY_MS
+			sceneFadeStart = performance.now() + EID_ADHA_SCENE_FADE_DELAY_MS
 			if (shouldAnimate) {
 				lastTime = performance.now()
 				animationFrameId = window.requestAnimationFrame(tick)
@@ -300,7 +285,7 @@ async function launchEidAlFitrGlow() {
 			}
 		}
 
-		timeoutId = window.setTimeout(mount, EID_MOUNT_DELAY_MS)
+		timeoutId = window.setTimeout(mount, EID_ADHA_MOUNT_DELAY_MS)
 
 		const handleResize = () => {
 			resizeCanvas()
@@ -323,7 +308,7 @@ async function launchEidAlFitrGlow() {
 			}
 		}
 	} catch (error) {
-		console.error('Failed to launch Eid al-Fitr glow', error)
+		console.error('Failed to launch Eid al-Adha glow', error)
 		return () => {}
 	}
 }

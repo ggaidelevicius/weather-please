@@ -12,7 +12,7 @@
 - [x] Winter Solstice (Dec 21/22): aurora wash with frost shimmer.
 - [x] Halloween (Oct 31): spooky confetti with ghosts, bats, and warm sparks.
 - [x] eid al-fitr
-- [] eid al-adha
+- [x] eid al-adha
 - [] hanukkah
 - [] christmas
 - [x] perseids

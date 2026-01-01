@@ -255,6 +255,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									checked={input.showEidAlFitrEvent}
 									onChange={(e) => handleChange('showEidAlFitrEvent', e)}
 								/>
+								<Switch
+									label={<Trans>Show Eid al-Adha event</Trans>}
+									checked={input.showEidAlAdhaEvent}
+									onChange={(e) => handleChange('showEidAlAdhaEvent', e)}
+								/>
 							</>
 						)}
 						<h2 className="mt-14 text-2xl font-medium text-white">
