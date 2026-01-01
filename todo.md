@@ -13,7 +13,7 @@
 - [x] Halloween (Oct 31): spooky confetti with ghosts, bats, and warm sparks.
 - [x] eid al-fitr
 - [x] eid al-adha
-- [] hanukkah
+- [x] hanukkah
 - [] christmas
 - [x] perseids
 - [x] geminids

@@ -14,6 +14,7 @@ export type SeasonalEventId =
 	| 'geminids'
 	| 'eid-al-fitr'
 	| 'eid-al-adha'
+	| 'hanukkah'
 
 export type Hemisphere = 'northern' | 'southern'
 

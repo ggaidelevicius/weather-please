@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const EID_AL_ADHA_DATES = new Set([
-	'2024-06-16',
-	'2025-06-06',
 	'2026-05-27',
 	'2027-05-17',
 	'2028-05-05',

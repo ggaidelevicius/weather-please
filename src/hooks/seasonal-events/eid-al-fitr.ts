@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const EID_AL_FITR_DATES = new Set([
-	'2024-04-10',
-	'2025-03-30',
 	'2026-03-20',
 	'2027-03-09',
 	'2028-02-26',

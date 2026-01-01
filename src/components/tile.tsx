@@ -170,6 +170,10 @@ const getSeasonalEmoji = (eventId: SeasonalEventId) => {
 		return '🕋'
 	}
 
+	if (eventId === 'hanukkah') {
+		return '🕎'
+	}
+
 	return '❤'
 }
 
@@ -228,6 +232,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 
 	if (eventId === 'eid-al-adha') {
 		return <Trans>Eid al-Adha</Trans>
+	}
+
+	if (eventId === 'hanukkah') {
+		return <Trans>Hanukkah</Trans>
 	}
 
 	return <Trans>Valentine&apos;s Day</Trans>
