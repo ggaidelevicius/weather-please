@@ -4,7 +4,7 @@
 - [x] Lunar New Year (variable): red/gold confetti and a lantern sticker on the
       first tile.
 - [x] Spring Equinox (Mar 20/21): gentle petal drift animation.
-- [ ] Earth Day (Apr 22): leaf confetti and a small leaf badge.
+- [x] Earth Day (Apr 22): earth + water + air confetti and a small globe badge.
 - [ ] Pride Month start (Jun 1): quick rainbow sparkle sweep.
 - [ ] Summer Solstice (Jun 20/21): warm sun-ray shimmer over the background.
 - [ ] Halloween (Oct 31): tiny ghost sticker and orange/black sparkles.

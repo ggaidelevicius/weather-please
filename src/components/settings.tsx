@@ -205,6 +205,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									checked={input.showSpringEquinoxEvent}
 									onChange={(e) => handleChange('showSpringEquinoxEvent', e)}
 								/>
+								<Switch
+									label={<Trans>Show Earth Day event</Trans>}
+									checked={input.showEarthDayEvent}
+									onChange={(e) => handleChange('showEarthDayEvent', e)}
+								/>
 							</>
 						)}
 						<h2 className="mt-14 text-2xl font-medium text-white">

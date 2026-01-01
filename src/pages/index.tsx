@@ -66,9 +66,12 @@ const App = () => {
 		if (config.showSpringEquinoxEvent) {
 			enabledSeasonalEvents.add('spring-equinox')
 		}
+		if (config.showEarthDayEvent) {
+			enabledSeasonalEvents.add('earth-day')
+		}
 	}
 
-	useSeasonalEvents({
+	const activeSeasonalEvent = useSeasonalEvents({
 		isEnabled: config.showSeasonalEvents,
 		isHydrated,
 		isOnboarded: isHydrated && isOnboarded,
@@ -216,34 +219,36 @@ const App = () => {
 			)}
 			<ReviewPrompt config={config} setInput={setInput} />
 			<AnimatePresence>
-				<motion.main
-					className={`relative grid min-h-21 min-w-21 grid-cols-1 gap-5 p-5 ${GRID_COLS_CLASS[config.daysToRetrieve as keyof typeof GRID_COLS_CLASS] ?? ''}`}
-				>
-					<Initialisation
-						setInput={setInput}
-						input={input}
-						handleChange={handleChange}
-						pending={isHydrated && (!config?.lat || !config?.lon)}
-					/>
-					{error ? (
-						<div className="col-span-full flex flex-col items-center justify-center gap-4">
-							<Alert icon={IconAlertTriangle} variant="info-red">
-								<Trans>
-									Unable to fetch weather data. Please check your internet
-									connection and try again.
-								</Trans>
-							</Alert>
-							<Button className="ml-auto" onClick={retry}>
-								<Trans>Retry</Trans>
-							</Button>
-						</div>
-					) : isLoading ? (
-						<AnimatePresence>
-							<RingLoader />
-						</AnimatePresence>
-					) : (
-						<AnimatePresence>{tiles}</AnimatePresence>
-					)}
+				<motion.main className="relative min-h-21 min-w-21 p-5">
+					<div
+						className={`relative z-10 grid h-full w-full grid-cols-1 gap-5 ${GRID_COLS_CLASS[config.daysToRetrieve as keyof typeof GRID_COLS_CLASS] ?? ''}`}
+					>
+						<Initialisation
+							setInput={setInput}
+							input={input}
+							handleChange={handleChange}
+							pending={isHydrated && (!config?.lat || !config?.lon)}
+						/>
+						{error ? (
+							<div className="col-span-full flex flex-col items-center justify-center gap-4">
+								<Alert icon={IconAlertTriangle} variant="info-red">
+									<Trans>
+										Unable to fetch weather data. Please check your internet
+										connection and try again.
+									</Trans>
+								</Alert>
+								<Button className="ml-auto" onClick={retry}>
+									<Trans>Retry</Trans>
+								</Button>
+							</div>
+						) : isLoading ? (
+							<AnimatePresence>
+								<RingLoader />
+							</AnimatePresence>
+						) : (
+							<AnimatePresence>{tiles}</AnimatePresence>
+						)}
+					</div>
 				</motion.main>
 			</AnimatePresence>
 
