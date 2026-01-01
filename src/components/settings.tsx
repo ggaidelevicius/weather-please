@@ -81,6 +81,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							checked={input.useMetric}
 							onChange={(e) => handleChange('useMetric', e)}
 						/>
+						<Switch
+							label={<Trans>Show seasonal surprises</Trans>}
+							checked={input.showSeasonalSurprises}
+							onChange={(e) => handleChange('showSeasonalSurprises', e)}
+						/>
 						<h2 className="mt-14 text-2xl font-medium text-white">
 							<Trans>Weather</Trans>
 						</h2>

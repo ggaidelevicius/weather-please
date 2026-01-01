@@ -69,17 +69,17 @@ msgstr "আগামী {durationHours} ঘণ্টায় {precipitationMm} 
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
 msgstr "আগামী এক ঘণ্টায় {precipitationMm} mm বৃষ্টিপাত প্রত্যাশিত."
 
-#: src/components/initialisation.tsx:98
+#: src/components/initialisation.tsx:100
 msgid "<0>Location access denied.</0> Check your browser's settings to allow this site to access your location, then try again."
 msgstr "<0>অবস্থান অ্যাক্সেস বাতিল করা হয়েছে.</0> এই সাইটকে আপনার অবস্থান অ্যাক্সেস করতে অনুমতি দিতে ব্রাউজারের সেটিংস যাচাই করুন, তারপর আবার চেষ্টা করুন."
 
-#: src/components/initialisation.tsx:74
-#: src/components/initialisation.tsx:82
-#: src/components/initialisation.tsx:90
+#: src/components/initialisation.tsx:76
+#: src/components/initialisation.tsx:84
+#: src/components/initialisation.tsx:92
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>অবস্থান অ্যাক্সেস বাতিল করা হয়েছে.</0> ঠিকানাবারের অবস্থান আইকনে ক্লিক করে \"সবসময় আপনার অবস্থান অ্যাক্সেস করতে অনুমতি দিন\" নির্বাচন করুন. তারপর নিচের বোতামে ক্লিক করে আবার চেষ্টা করুন."
 
-#: src/components/settings.tsx:196
+#: src/components/settings.tsx:203
 msgid "☕ Gift a coffee"
 msgstr "☕ একটি কফি উপহার দিন"
 
@@ -87,11 +87,11 @@ msgstr "☕ একটি কফি উপহার দিন"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ প্রতিক্রিয়া জমা দিন"
 
-#: src/components/settings.tsx:180
+#: src/components/settings.tsx:187
 msgid "🌟 Leave a review"
 msgstr "🌟 একটি পর্যালোচনা ছেড়ে দিন"
 
-#: src/components/settings.tsx:188
+#: src/components/settings.tsx:195
 msgid "🐛 Report a bug"
 msgstr "🐛 একটি বাগ প্রতিবেদন করুন"
 
@@ -99,7 +99,7 @@ msgstr "🐛 একটি বাগ প্রতিবেদন করুন"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 একটি বৈশিষ্ট্য অনুরোধ করুন"
 
-#: src/components/settings.tsx:207
+#: src/components/settings.tsx:214
 msgid "🔒 Privacy policy"
 msgstr "🔒 গোপনীয়তা নীতি"
 
@@ -179,11 +179,11 @@ msgstr "পরিষ্কার আকাশ"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "অত্যধিক মেমোরি অথবা CPU ব্যবহার করে"
 
-#: src/components/settings.tsx:137
+#: src/components/settings.tsx:144
 msgid "Date"
 msgstr "তারিখ"
 
-#: src/components/settings.tsx:133
+#: src/components/settings.tsx:140
 msgid "Day"
 msgstr "দিন"
 
@@ -211,7 +211,7 @@ msgstr "রাইম কুয়াশা জমা"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "ব্যবহার করা বা বোঝা কঠিন"
 
-#: src/app/bug/page.tsx:70
+#: src/app/bug/page.tsx:68
 msgid "Do not fill this field if you are human"
 msgstr "আপনি যদি মানুষ হন, তাহলে এই ক্ষেত্রটি পূরণ করবেন না"
 
@@ -259,7 +259,7 @@ msgstr "{timeUntilExtremeUv} ঘণ্টা পরে আত্যধিক ই
 msgid "February"
 msgstr "ফেব্রুয়ারি"
 
-#: src/components/settings.tsx:172
+#: src/components/settings.tsx:179
 msgid "Feedback"
 msgstr "প্রতিক্রিয়া"
 
@@ -275,7 +275,7 @@ msgstr "প্রতিক্রিয়া"
 msgid "Friday"
 msgstr "শুক্রবার"
 
-#: src/components/settings.tsx:64
+#: src/components/settings.tsx:66
 msgid "General"
 msgstr "সাধারণ"
 
@@ -319,7 +319,7 @@ msgstr "ভারী তুষারপাত"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "আমি প্রিয়ভাবে Weather Please কে আরও বেশি ভাষায় আনতে চাই।"
 
-#: src/components/settings.tsx:126
+#: src/components/settings.tsx:133
 msgid "Identifier"
 msgstr "পরিচয়ক"
 
@@ -331,7 +331,7 @@ msgstr "পরিচয়ক"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "আপনার কাছে কোনও অনুবাদের অনুরোধ থাকলে, দয়া করে <0>contact@weather-please.app</0> এ যোগাযোগ করুন।"
 
-#: src/components/initialisation.tsx:154
+#: src/components/initialisation.tsx:156
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "আপনার ব্রাউজার অবস্থানের অনুমতি চাইলে, দয়া করে \"অনুমতি দিন\" নির্বাচন করুন।"
 
@@ -370,20 +370,20 @@ msgstr "জুন"
 #~ msgid "Lacks features I need"
 #~ msgstr "আমার প্রয়োজনীয় ফিচারগুলি নেই"
 
-#: src/components/initialisation.tsx:160
-#: src/components/settings.tsx:67
+#: src/components/initialisation.tsx:162
+#: src/components/settings.tsx:69
 msgid "Language"
 msgstr "ভাষা"
 
-#: src/components/settings.tsx:92
+#: src/components/settings.tsx:99
 msgid "Latitude"
 msgstr "অক্ষাংশ"
 
-#: src/components/review-prompt.tsx:47
+#: src/components/review-prompt.tsx:52
 msgid "Leave a review"
 msgstr "একটি পর্যালোচনা দিন"
 
-#: src/components/settings.tsx:199
+#: src/components/settings.tsx:206
 msgid "Legal"
 msgstr "আইনগত"
 
@@ -403,7 +403,7 @@ msgstr "হালকা হিমায়িত বৃষ্টি"
 #~ msgid "Location"
 #~ msgstr "অবস্থান"
 
-#: src/components/settings.tsx:100
+#: src/components/settings.tsx:107
 msgid "Longitude"
 msgstr "দ্রাঘিমাংশ"
 
@@ -468,7 +468,7 @@ msgstr "মধ্যম তুষারপাত"
 msgid "Monday"
 msgstr "সোমবার"
 
-#: src/components/review-prompt.tsx:58
+#: src/components/review-prompt.tsx:63
 msgid "Never show this again"
 msgstr "এটি আবার দেখাবেন না"
 
@@ -492,7 +492,7 @@ msgstr "এটি আবার দেখাবেন না"
 msgid "November"
 msgstr "নভেম্বর"
 
-#: src/components/settings.tsx:115
+#: src/components/settings.tsx:122
 msgid "Number of days to forecast"
 msgstr "পূর্বাভাস দেওয়ার দিনের সংখ্যা"
 
@@ -512,7 +512,7 @@ msgstr "আংশিকভাবে মেঘলা"
 #~ msgid "Performance issues"
 #~ msgstr "পারফরম্যান্স সমস্যা"
 
-#: src/components/settings.tsx:110
+#: src/components/settings.tsx:117
 msgid "Periodically update location automatically"
 msgstr "পূর্বনির্ধারিত সময়ে স্থান স্বয়ংক্রিয়ভাবে আপডেট করুন"
 
@@ -528,7 +528,7 @@ msgstr "একটি বাগ রিপোর্ট করুন"
 #~ msgid "Resource usage"
 #~ msgstr "সম্পদ ব্যবহার"
 
-#: src/pages/index.tsx:204
+#: src/pages/index.tsx:214
 msgid "Retry"
 msgstr "পুনরায় চেষ্টা করুন"
 
@@ -553,8 +553,8 @@ msgstr "সেপ্টেম্বর"
 msgid "Set my location"
 msgstr "আমার অবস্থান নির্ধারণ করুন"
 
-#: src/components/settings.tsx:44
-#: src/components/settings.tsx:61
+#: src/components/settings.tsx:46
+#: src/components/settings.tsx:63
 msgid "Settings"
 msgstr "সেটিংস"
 
@@ -562,23 +562,27 @@ msgstr "সেটিংস"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "বেনামে ক্র্যাশ ডাটা এবং ত্রুটি লগ ভাগ করুন"
 
-#: src/components/settings.tsx:150
+#: src/components/settings.tsx:157
 msgid "Show extreme UV alerts"
 msgstr "এক্সট্রিম ইউভি সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:155
+#: src/components/settings.tsx:162
 msgid "Show high precipitation alerts"
 msgstr "উচ্চ বৃষ্টির সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:165
+#: src/components/settings.tsx:172
 msgid "Show low visibility alerts"
 msgstr "নিম্ন দৃশ্যতা সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:160
+#: src/components/settings.tsx:85
+msgid "Show seasonal surprises"
+msgstr "মৌসুমি চমক দেখান"
+
+#: src/components/settings.tsx:167
 msgid "Show strong wind alerts"
 msgstr "শক্তিশালী বায়ু সতর্কবার্তা দেখান"
 
-#: src/components/settings.tsx:143
+#: src/components/settings.tsx:150
 msgid "Show weather alerts"
 msgstr "আবহাওয়া সতর্কবাণী দেখান"
 
@@ -638,7 +642,7 @@ msgstr "{timeUntilStrongWind} ঘণ্টা পর শক্তিশালী
 #~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
 #~ msgstr "{timeUntilStrongWind} ঘণ্টা পর শক্তিশালী বাতাস শুরু হবে"
 
-#: src/app/bug/page.tsx:83
+#: src/app/bug/page.tsx:81
 msgid "Submit"
 msgstr "জমা দিন"
 
@@ -651,7 +655,7 @@ msgstr "রবিবার"
 msgid "The expected type of weather is {0}."
 msgstr "প্রত্যাশিত আবহাওয়ার ধরণ হলো {0}।"
 
-#: src/components/initialisation.tsx:112
+#: src/components/initialisation.tsx:114
 msgid "The location request timed out. Please check your internet connection and try again."
 msgstr "অবস্থান অনুরোধের সময় শেষ হয়ে গেছে. অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন."
 
@@ -715,7 +719,7 @@ msgstr "বৃহস্পতিবার"
 #~ msgid "Tiles"
 #~ msgstr "টাইলস"
 
-#: src/components/initialisation.tsx:149
+#: src/components/initialisation.tsx:151
 msgid "To get started, let's set your language and location."
 msgstr "শুরু করার জন্য, চলুন আপনার ভাষা এবং অবস্থান নির্ধারণ করি।"
 
@@ -731,7 +735,7 @@ msgstr "আবার চেষ্টা করুন"
 msgid "Tuesday"
 msgstr "মঙ্গলবার"
 
-#: src/pages/index.tsx:198
+#: src/pages/index.tsx:208
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "আবহাওয়ার ডেটা আনা যায়নি. অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন."
 
@@ -761,8 +765,8 @@ msgstr "অজানা অবস্থা"
 #~ msgid "Use keyboard shortcuts"
 #~ msgstr "কীবোর্ড শর্টকাট ব্যবহার করুন"
 
-#: src/components/initialisation.tsx:172
-#: src/components/settings.tsx:78
+#: src/components/initialisation.tsx:173
+#: src/components/settings.tsx:80
 msgid "Use metric number format"
 msgstr "মেট্রিক সংখ্যা বিন্যাস ব্যবহার করুন"
 
@@ -774,11 +778,11 @@ msgstr "তীব্র বৃষ্টির ঝড়"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "আমরা আরও অনেক ভাষায় 'ওয়েদার প্লিজ' এনে আসতে চাই।"
 
-#: src/components/settings.tsx:83
+#: src/components/settings.tsx:90
 msgid "Weather"
 msgstr "আবহাওয়া"
 
-#: src/pages/index.tsx:223
+#: src/pages/index.tsx:233
 msgid "weather data provided by open-meteo"
 msgstr "আবহাওয়া তথ্য প্রদান করে open-meteo"
 
@@ -791,7 +795,7 @@ msgstr "আবহাওয়া তথ্য প্রদান করে open-
 msgid "Wednesday"
 msgstr "বুধবার"
 
-#: src/components/review-prompt.tsx:35
+#: src/components/review-prompt.tsx:40
 msgid "Would you like to leave a review?"
 msgstr "আপনি কি একটি পর্যালোচনা ছেড়তে চান?"
 
@@ -807,23 +811,23 @@ msgstr "আপনি কি একটি পর্যালোচনা ছে�
 #~ msgid "You have unsaved changes"
 #~ msgstr "আপনার অসংরক্ষিত পরিবর্তন রয়েছে"
 
-#: src/components/review-prompt.tsx:32
+#: src/components/review-prompt.tsx:37
 msgid "You've been using Weather Please for a while"
 msgstr "আপনি একটি সময়ের জন্য Weather Please ব্যবহার করেছেন"
 
-#: src/app/bug/page.tsx:58
+#: src/app/bug/page.tsx:57
 msgid "Your email (optional)"
 msgstr "আপনার ইমেল (ঐচ্ছিক)"
 
 #: src/components/initialisation.tsx:178
-#: src/components/settings.tsx:86
+#: src/components/settings.tsx:93
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "আপনার অবস্থানের তথ্য আপনার ব্যক্তিগত ডিভাইসে নিরাপদে এবং একচেটিয়াভাবে সংরক্ষিত আছে।"
 
-#: src/components/initialisation.tsx:105
+#: src/components/initialisation.tsx:107
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "আপনার অবস্থান বর্তমানে উপলব্ধ নয়. অনুগ্রহ করে নিশ্চিত করুন যে আপনার ডিভাইসে অবস্থান পরিষেবা চালু আছে এবং আবার চেষ্টা করুন."
 
-#: src/app/bug/page.tsx:64
+#: src/app/bug/page.tsx:62
 msgid "Your message"
 msgstr "আপনার বার্তা"

@@ -69,17 +69,17 @@ msgstr "Per artimiausias {durationHours} val. prognozuojama {precipitationMm} mm
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
 msgstr "Per artimiausią valandą prognozuojama {precipitationMm} mm kritulių."
 
-#: src/components/initialisation.tsx:98
+#: src/components/initialisation.tsx:100
 msgid "<0>Location access denied.</0> Check your browser's settings to allow this site to access your location, then try again."
 msgstr "<0>Prieiga prie vietos uždrausta.</0> Patikrinkite naršyklės nustatymus ir leiskite šiai svetainei pasiekti jūsų vietą, tada bandykite dar kartą."
 
-#: src/components/initialisation.tsx:74
-#: src/components/initialisation.tsx:82
-#: src/components/initialisation.tsx:90
+#: src/components/initialisation.tsx:76
+#: src/components/initialisation.tsx:84
+#: src/components/initialisation.tsx:92
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Prieiga prie vietos uždrausta.</0> Spustelėkite vietos piktogramą adreso juostoje ir pasirinkite \"visada leisti pasiekti jūsų vietą\". Tada spustelėkite mygtuką žemiau ir bandykite dar kartą."
 
-#: src/components/settings.tsx:196
+#: src/components/settings.tsx:203
 msgid "☕ Gift a coffee"
 msgstr "☕ Padovanokite kavą"
 
@@ -87,11 +87,11 @@ msgstr "☕ Padovanokite kavą"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Pateikti atsiliepimą"
 
-#: src/components/settings.tsx:180
+#: src/components/settings.tsx:187
 msgid "🌟 Leave a review"
 msgstr "🌟 Palikite atsiliepimą"
 
-#: src/components/settings.tsx:188
+#: src/components/settings.tsx:195
 msgid "🐛 Report a bug"
 msgstr "🐛 Pranešti apie klaidą"
 
@@ -99,7 +99,7 @@ msgstr "🐛 Pranešti apie klaidą"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Prašyti funkcijos"
 
-#: src/components/settings.tsx:207
+#: src/components/settings.tsx:214
 msgid "🔒 Privacy policy"
 msgstr "🔒 Privatumo politika"
 
@@ -179,11 +179,11 @@ msgstr "giedras dangus"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "Sunaudoja per daug atminties arba CPU"
 
-#: src/components/settings.tsx:137
+#: src/components/settings.tsx:144
 msgid "Date"
 msgstr "Data"
 
-#: src/components/settings.tsx:133
+#: src/components/settings.tsx:140
 msgid "Day"
 msgstr "Diena"
 
@@ -211,7 +211,7 @@ msgstr "nusėdęs rimo rūkas"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "Sunku naudotis ar suprasti"
 
-#: src/app/bug/page.tsx:70
+#: src/app/bug/page.tsx:68
 msgid "Do not fill this field if you are human"
 msgstr "Jei esate žmogus, neįveskite duomenų į šį laukel"
 
@@ -259,7 +259,7 @@ msgstr "Ekstremalus UV spinduliavimas prasideda po {timeUntilExtremeUv} valandų
 msgid "February"
 msgstr "Vasaris"
 
-#: src/components/settings.tsx:172
+#: src/components/settings.tsx:179
 msgid "Feedback"
 msgstr "Atsiliepimas"
 
@@ -275,7 +275,7 @@ msgstr "Atsiliepimas"
 msgid "Friday"
 msgstr "Penktadienis"
 
-#: src/components/settings.tsx:64
+#: src/components/settings.tsx:66
 msgid "General"
 msgstr "Bendras"
 
@@ -319,7 +319,7 @@ msgstr "stiprus sniegas"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "Norėčiau atnesti Weather Please į daugiau kalbų."
 
-#: src/components/settings.tsx:126
+#: src/components/settings.tsx:133
 msgid "Identifier"
 msgstr "Identifikatorius"
 
@@ -331,7 +331,7 @@ msgstr "Identifikatorius"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "Jeigu turite vertimo užklausą, prašome kreiptis el. paštu <0>contact@weather-please.app</0>"
 
-#: src/components/initialisation.tsx:154
+#: src/components/initialisation.tsx:156
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Jei jūsų naršyklė prašo jūsų vietos leidimų, pasirinkite \"leisti\"."
 
@@ -370,20 +370,20 @@ msgstr "Birželis"
 #~ msgid "Lacks features I need"
 #~ msgstr "Trūksta man reikalingų funkcijų"
 
-#: src/components/initialisation.tsx:160
-#: src/components/settings.tsx:67
+#: src/components/initialisation.tsx:162
+#: src/components/settings.tsx:69
 msgid "Language"
 msgstr "Kalba"
 
-#: src/components/settings.tsx:92
+#: src/components/settings.tsx:99
 msgid "Latitude"
 msgstr "Platuma"
 
-#: src/components/review-prompt.tsx:47
+#: src/components/review-prompt.tsx:52
 msgid "Leave a review"
 msgstr "Palikite atsiliepimą"
 
-#: src/components/settings.tsx:199
+#: src/components/settings.tsx:206
 msgid "Legal"
 msgstr "Teisinis"
 
@@ -403,7 +403,7 @@ msgstr "lengvas įšaldymas lietus"
 #~ msgid "Location"
 #~ msgstr "Vieta"
 
-#: src/components/settings.tsx:100
+#: src/components/settings.tsx:107
 msgid "Longitude"
 msgstr "Ilguma"
 
@@ -468,7 +468,7 @@ msgstr "vidutinis sniegas"
 msgid "Monday"
 msgstr "Pirmadienis"
 
-#: src/components/review-prompt.tsx:58
+#: src/components/review-prompt.tsx:63
 msgid "Never show this again"
 msgstr "Daugiau niekada nerodyti"
 
@@ -492,7 +492,7 @@ msgstr "Daugiau niekada nerodyti"
 msgid "November"
 msgstr "Lapkritis"
 
-#: src/components/settings.tsx:115
+#: src/components/settings.tsx:122
 msgid "Number of days to forecast"
 msgstr "Prognozuojamų dienų skaičius"
 
@@ -512,7 +512,7 @@ msgstr "debesuota"
 #~ msgid "Performance issues"
 #~ msgstr "Veikimo problemos"
 
-#: src/components/settings.tsx:110
+#: src/components/settings.tsx:117
 msgid "Periodically update location automatically"
 msgstr "Automatiškai periodiškai atnaujinti vietą"
 
@@ -528,7 +528,7 @@ msgstr "Pranešti apie klaidą"
 #~ msgid "Resource usage"
 #~ msgstr "Išteklių naudojimas"
 
-#: src/pages/index.tsx:204
+#: src/pages/index.tsx:214
 msgid "Retry"
 msgstr "Bandyti dar kartą"
 
@@ -553,8 +553,8 @@ msgstr "Rugsėjis"
 msgid "Set my location"
 msgstr "Nustatyti mano vietą"
 
-#: src/components/settings.tsx:44
-#: src/components/settings.tsx:61
+#: src/components/settings.tsx:46
+#: src/components/settings.tsx:63
 msgid "Settings"
 msgstr "Nustatymai"
 
@@ -562,23 +562,27 @@ msgstr "Nustatymai"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "Dalintis anonimizuotais strigties duomenimis ir klaidų žurnalais"
 
-#: src/components/settings.tsx:150
+#: src/components/settings.tsx:157
 msgid "Show extreme UV alerts"
 msgstr "Rodyti ekstremalių UV spinduliavimo įspėjimus"
 
-#: src/components/settings.tsx:155
+#: src/components/settings.tsx:162
 msgid "Show high precipitation alerts"
 msgstr "Rodyti didelio kritulio įspėjimus"
 
-#: src/components/settings.tsx:165
+#: src/components/settings.tsx:172
 msgid "Show low visibility alerts"
 msgstr "Rodyti prasto matomumo įspėjimus"
 
-#: src/components/settings.tsx:160
+#: src/components/settings.tsx:85
+msgid "Show seasonal surprises"
+msgstr "Rodyti sezonines staigmenas"
+
+#: src/components/settings.tsx:167
 msgid "Show strong wind alerts"
 msgstr "Rodyti stipraus vėjo įspėjimus"
 
-#: src/components/settings.tsx:143
+#: src/components/settings.tsx:150
 msgid "Show weather alerts"
 msgstr "Rodyti oro sąlygų įspėjimus"
 
@@ -638,7 +642,7 @@ msgstr "Stiprūs vėjo gūsiai prasidės už {timeUntilStrongWind} valandų"
 #~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
 #~ msgstr "Stiprus vėjas prasidės už {timeUntilStrongWind} valandų"
 
-#: src/app/bug/page.tsx:83
+#: src/app/bug/page.tsx:81
 msgid "Submit"
 msgstr "Pateikti"
 
@@ -651,7 +655,7 @@ msgstr "Sekmadienis"
 msgid "The expected type of weather is {0}."
 msgstr "Numatomas orų tipas yra"
 
-#: src/components/initialisation.tsx:112
+#: src/components/initialisation.tsx:114
 msgid "The location request timed out. Please check your internet connection and try again."
 msgstr "Vietos užklausos laikas baigėsi. Patikrinkite interneto ryšį ir bandykite dar kartą."
 
@@ -715,7 +719,7 @@ msgstr "Ketvirtadienis"
 #~ msgid "Tiles"
 #~ msgstr "Plytelės"
 
-#: src/components/initialisation.tsx:149
+#: src/components/initialisation.tsx:151
 msgid "To get started, let's set your language and location."
 msgstr "Norėdami pradėti, nustatykite savo kalbą ir vietą."
 
@@ -731,7 +735,7 @@ msgstr "Bandykite dar kartą"
 msgid "Tuesday"
 msgstr "Antradienis"
 
-#: src/pages/index.tsx:198
+#: src/pages/index.tsx:208
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Nepavyko gauti orų duomenų. Patikrinkite interneto ryšį ir bandykite dar kartą."
 
@@ -761,8 +765,8 @@ msgstr "nežinomos sąlygos"
 #~ msgid "Use keyboard shortcuts"
 #~ msgstr "Naudokite klaviatūros trumpinius"
 
-#: src/components/initialisation.tsx:172
-#: src/components/settings.tsx:78
+#: src/components/initialisation.tsx:173
+#: src/components/settings.tsx:80
 msgid "Use metric number format"
 msgstr "Naudoti metrinį skaičių formatą"
 
@@ -774,11 +778,11 @@ msgstr "smarkus lietus"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Mes norėtume pateikti „Weather Please“ daugiau kalbų."
 
-#: src/components/settings.tsx:83
+#: src/components/settings.tsx:90
 msgid "Weather"
 msgstr "Oras"
 
-#: src/pages/index.tsx:223
+#: src/pages/index.tsx:233
 msgid "weather data provided by open-meteo"
 msgstr "orų duomenis pateikė open-meteo"
 
@@ -791,7 +795,7 @@ msgstr "orų duomenis pateikė open-meteo"
 msgid "Wednesday"
 msgstr "Trečiadienis"
 
-#: src/components/review-prompt.tsx:35
+#: src/components/review-prompt.tsx:40
 msgid "Would you like to leave a review?"
 msgstr "Norėtumėte palikti atsiliepimą?"
 
@@ -807,23 +811,23 @@ msgstr "Norėtumėte palikti atsiliepimą?"
 #~ msgid "You have unsaved changes"
 #~ msgstr "Jūs turite neišsaugotų pakeitimų"
 
-#: src/components/review-prompt.tsx:32
+#: src/components/review-prompt.tsx:37
 msgid "You've been using Weather Please for a while"
 msgstr "Jūs naudojatės „Weather Please“ jau kurį laiką"
 
-#: src/app/bug/page.tsx:58
+#: src/app/bug/page.tsx:57
 msgid "Your email (optional)"
 msgstr "Jūsų el. paštas (pasirinktinai)"
 
 #: src/components/initialisation.tsx:178
-#: src/components/settings.tsx:86
+#: src/components/settings.tsx:93
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Jūsų vietos duomenys saugiai ir išskirtinai saugomi jūsų asmeniniame įrenginyje."
 
-#: src/components/initialisation.tsx:105
+#: src/components/initialisation.tsx:107
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "Jūsų vieta šiuo metu nepasiekiama. Patikrinkite, ar įrenginyje įjungtos vietos paslaugos, ir bandykite dar kartą."
 
-#: src/app/bug/page.tsx:64
+#: src/app/bug/page.tsx:62
 msgid "Your message"
 msgstr "Jūsų žinutė"

@@ -12,6 +12,7 @@ import { Settings } from '../components/settings'
 import { Tile } from '../components/tile'
 import { WeatherAlert } from '../components/weather-alert'
 import { useConfig } from '../hooks/use-config'
+import { useSeasonalSurprises } from '../hooks/use-seasonal-surprises'
 import { useWeather } from '../hooks/use-weather'
 import { messages } from '../locales/en/messages'
 
@@ -46,6 +47,13 @@ const App = () => {
 		config.lon,
 		changedLocation,
 	)
+	const isOnboarded = Boolean(config.lat && config.lon)
+
+	useSeasonalSurprises({
+		isEnabled: config.showSeasonalSurprises,
+		isHydrated,
+		isOnboarded: isHydrated && isOnboarded,
+	})
 
 	useEffect(() => {
 		if (changedLocation) {

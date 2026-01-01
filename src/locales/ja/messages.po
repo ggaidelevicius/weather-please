@@ -69,17 +69,17 @@ msgstr "今後{durationHours}時間で{precipitationMm}mmの降水が予想さ�
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
 msgstr "今後1時間で{precipitationMm}mmの降水が予想されます。"
 
-#: src/components/initialisation.tsx:98
+#: src/components/initialisation.tsx:100
 msgid "<0>Location access denied.</0> Check your browser's settings to allow this site to access your location, then try again."
 msgstr "<0>位置情報へのアクセスが拒否されました。</0> ブラウザーの設定でこのサイトが位置情報にアクセスできるようにし、再度お試しください。"
 
-#: src/components/initialisation.tsx:74
-#: src/components/initialisation.tsx:82
-#: src/components/initialisation.tsx:90
+#: src/components/initialisation.tsx:76
+#: src/components/initialisation.tsx:84
+#: src/components/initialisation.tsx:92
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>位置情報へのアクセスが拒否されました。</0> アドレスバーの位置情報アイコンをクリックし、\"このサイトが位置情報に常にアクセスすることを許可\"を選択してください。その後、下のボタンをクリックして再度お試しください。"
 
-#: src/components/settings.tsx:196
+#: src/components/settings.tsx:203
 msgid "☕ Gift a coffee"
 msgstr "☕ コーヒーを贈る"
 
@@ -87,11 +87,11 @@ msgstr "☕ コーヒーを贈る"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ フィードバックを送信"
 
-#: src/components/settings.tsx:180
+#: src/components/settings.tsx:187
 msgid "🌟 Leave a review"
 msgstr "🌟 レビューを残す"
 
-#: src/components/settings.tsx:188
+#: src/components/settings.tsx:195
 msgid "🐛 Report a bug"
 msgstr "🐛 バグを報告"
 
@@ -99,7 +99,7 @@ msgstr "🐛 バグを報告"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 機能をリクエスト"
 
-#: src/components/settings.tsx:207
+#: src/components/settings.tsx:214
 msgid "🔒 Privacy policy"
 msgstr "🔒 プライバシーポリシー"
 
@@ -179,11 +179,11 @@ msgstr "晴れ"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "多くのメモリまたはCPUを消費する"
 
-#: src/components/settings.tsx:137
+#: src/components/settings.tsx:144
 msgid "Date"
 msgstr "日付"
 
-#: src/components/settings.tsx:133
+#: src/components/settings.tsx:140
 msgid "Day"
 msgstr "日"
 
@@ -211,7 +211,7 @@ msgstr "着氷霧"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "使用または理解が難しい"
 
-#: src/app/bug/page.tsx:70
+#: src/app/bug/page.tsx:68
 msgid "Do not fill this field if you are human"
 msgstr "あなたが人間の場合、このフィールドを入力しないでください"
 
@@ -259,7 +259,7 @@ msgstr "{timeUntilExtremeUv}時間後から極端なUVが始まります"
 msgid "February"
 msgstr "2月"
 
-#: src/components/settings.tsx:172
+#: src/components/settings.tsx:179
 msgid "Feedback"
 msgstr "フィードバック"
 
@@ -275,7 +275,7 @@ msgstr "フィードバック"
 msgid "Friday"
 msgstr "金曜日"
 
-#: src/components/settings.tsx:64
+#: src/components/settings.tsx:66
 msgid "General"
 msgstr "一般"
 
@@ -319,7 +319,7 @@ msgstr "大雪"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "私はWeather Pleaseを他の言語に持って行きたいです。"
 
-#: src/components/settings.tsx:126
+#: src/components/settings.tsx:133
 msgid "Identifier"
 msgstr "識別子"
 
@@ -331,7 +331,7 @@ msgstr "識別子"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "翻訳のリクエストがある場合は、<0>contact@weather-please.app</0>までお問い合わせください"
 
-#: src/components/initialisation.tsx:154
+#: src/components/initialisation.tsx:156
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "ブラウザが位置情報の権限を求める場合は、「許可」を選択してください。"
 
@@ -370,20 +370,20 @@ msgstr "6月"
 #~ msgid "Lacks features I need"
 #~ msgstr "必要な機能が不足している"
 
-#: src/components/initialisation.tsx:160
-#: src/components/settings.tsx:67
+#: src/components/initialisation.tsx:162
+#: src/components/settings.tsx:69
 msgid "Language"
 msgstr "言語"
 
-#: src/components/settings.tsx:92
+#: src/components/settings.tsx:99
 msgid "Latitude"
 msgstr "緯度"
 
-#: src/components/review-prompt.tsx:47
+#: src/components/review-prompt.tsx:52
 msgid "Leave a review"
 msgstr "レビューを残す"
 
-#: src/components/settings.tsx:199
+#: src/components/settings.tsx:206
 msgid "Legal"
 msgstr "法的"
 
@@ -403,7 +403,7 @@ msgstr "軽い凍雨"
 #~ msgid "Location"
 #~ msgstr "位置"
 
-#: src/components/settings.tsx:100
+#: src/components/settings.tsx:107
 msgid "Longitude"
 msgstr "経度"
 
@@ -468,7 +468,7 @@ msgstr "適度な降雪"
 msgid "Monday"
 msgstr "月曜日"
 
-#: src/components/review-prompt.tsx:58
+#: src/components/review-prompt.tsx:63
 msgid "Never show this again"
 msgstr "再度表示しない"
 
@@ -492,7 +492,7 @@ msgstr "再度表示しない"
 msgid "November"
 msgstr "11月"
 
-#: src/components/settings.tsx:115
+#: src/components/settings.tsx:122
 msgid "Number of days to forecast"
 msgstr "予報する日数"
 
@@ -512,7 +512,7 @@ msgstr "一部曇り"
 #~ msgid "Performance issues"
 #~ msgstr "パフォーマンスの問題"
 
-#: src/components/settings.tsx:110
+#: src/components/settings.tsx:117
 msgid "Periodically update location automatically"
 msgstr "定期的に位置情報を自動更新"
 
@@ -528,7 +528,7 @@ msgstr "バグを報告する"
 #~ msgid "Resource usage"
 #~ msgstr "リソースの使用"
 
-#: src/pages/index.tsx:204
+#: src/pages/index.tsx:214
 msgid "Retry"
 msgstr "再試行"
 
@@ -553,8 +553,8 @@ msgstr "9月"
 msgid "Set my location"
 msgstr "私の位置を設定"
 
-#: src/components/settings.tsx:44
-#: src/components/settings.tsx:61
+#: src/components/settings.tsx:46
+#: src/components/settings.tsx:63
 msgid "Settings"
 msgstr "設定"
 
@@ -562,23 +562,27 @@ msgstr "設定"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "匿名化されたクラッシュデータとエラーログを共有"
 
-#: src/components/settings.tsx:150
+#: src/components/settings.tsx:157
 msgid "Show extreme UV alerts"
 msgstr "極端なUVアラートを表示"
 
-#: src/components/settings.tsx:155
+#: src/components/settings.tsx:162
 msgid "Show high precipitation alerts"
 msgstr "高降水量アラートを表示"
 
-#: src/components/settings.tsx:165
+#: src/components/settings.tsx:172
 msgid "Show low visibility alerts"
 msgstr "低視認性アラートを表示"
 
-#: src/components/settings.tsx:160
+#: src/components/settings.tsx:85
+msgid "Show seasonal surprises"
+msgstr "季節のサプライズを表示"
+
+#: src/components/settings.tsx:167
 msgid "Show strong wind alerts"
 msgstr "強風警報を表示する"
 
-#: src/components/settings.tsx:143
+#: src/components/settings.tsx:150
 msgid "Show weather alerts"
 msgstr "天気警報を表示"
 
@@ -638,7 +642,7 @@ msgstr "{timeUntilStrongWind}時間後に強い風の突風が始まります"
 #~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
 #~ msgstr "{timeUntilStrongWind}時間後に強風が始まります"
 
-#: src/app/bug/page.tsx:83
+#: src/app/bug/page.tsx:81
 msgid "Submit"
 msgstr "提出"
 
@@ -651,7 +655,7 @@ msgstr "日曜日"
 msgid "The expected type of weather is {0}."
 msgstr "予想される天気は{0}です。"
 
-#: src/components/initialisation.tsx:112
+#: src/components/initialisation.tsx:114
 msgid "The location request timed out. Please check your internet connection and try again."
 msgstr "位置情報のリクエストがタイムアウトしました。インターネット接続を確認して再度お試しください。"
 
@@ -715,7 +719,7 @@ msgstr "木曜日"
 #~ msgid "Tiles"
 #~ msgstr "タイル"
 
-#: src/components/initialisation.tsx:149
+#: src/components/initialisation.tsx:151
 msgid "To get started, let's set your language and location."
 msgstr "始めるには、言語と場所を設定しましょう。"
 
@@ -731,7 +735,7 @@ msgstr "もう一度試す"
 msgid "Tuesday"
 msgstr "火曜日"
 
-#: src/pages/index.tsx:198
+#: src/pages/index.tsx:208
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "天気データを取得できませんでした。インターネット接続を確認して再度お試しください。"
 
@@ -761,8 +765,8 @@ msgstr "不明な状態"
 #~ msgid "Use keyboard shortcuts"
 #~ msgstr "キーボードショートカットを使用する"
 
-#: src/components/initialisation.tsx:172
-#: src/components/settings.tsx:78
+#: src/components/initialisation.tsx:173
+#: src/components/settings.tsx:80
 msgid "Use metric number format"
 msgstr "メトリック数値フォーマットを使用する"
 
@@ -774,11 +778,11 @@ msgstr "激しいにわか雨"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "「Weather Please」をさらに多くの言語に提供したいと考えています。"
 
-#: src/components/settings.tsx:83
+#: src/components/settings.tsx:90
 msgid "Weather"
 msgstr "天気"
 
-#: src/pages/index.tsx:223
+#: src/pages/index.tsx:233
 msgid "weather data provided by open-meteo"
 msgstr "天気データはopen-meteoによって提供されています"
 
@@ -791,7 +795,7 @@ msgstr "天気データはopen-meteoによって提供されています"
 msgid "Wednesday"
 msgstr "水曜日"
 
-#: src/components/review-prompt.tsx:35
+#: src/components/review-prompt.tsx:40
 msgid "Would you like to leave a review?"
 msgstr "レビューを残してもよろしいですか？"
 
@@ -807,23 +811,23 @@ msgstr "レビューを残してもよろしいですか？"
 #~ msgid "You have unsaved changes"
 #~ msgstr "未保存の変更があります"
 
-#: src/components/review-prompt.tsx:32
+#: src/components/review-prompt.tsx:37
 msgid "You've been using Weather Please for a while"
 msgstr "あなたはしばらく「Weather Please」を使用してきました"
 
-#: src/app/bug/page.tsx:58
+#: src/app/bug/page.tsx:57
 msgid "Your email (optional)"
 msgstr "あなたのメール（任意）"
 
 #: src/components/initialisation.tsx:178
-#: src/components/settings.tsx:86
+#: src/components/settings.tsx:93
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "あなたの位置データは、あなたの個人的なデバイス上で安全に専用的に保存されています。"
 
-#: src/components/initialisation.tsx:105
+#: src/components/initialisation.tsx:107
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "現在、位置情報を利用できません。デバイスの位置情報サービスが有効になっていることを確認して再度お試しください。"
 
-#: src/app/bug/page.tsx:64
+#: src/app/bug/page.tsx:62
 msgid "Your message"
 msgstr "あなたのメッセージ"
