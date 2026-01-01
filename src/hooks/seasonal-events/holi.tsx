@@ -109,13 +109,16 @@ varying float vAlpha;
 void main() {
 	vec2 uv = gl_PointCoord - vec2(0.5);
 	float dist = length(uv);
-	float alpha = smoothstep(0.4, 0.08, dist);
+	float glow = exp(-dist * dist * 12.0);
+	float core = exp(-dist * dist * 42.0);
+	float alpha = glow;
 	vec3 color = min(vColor * 1.25, 1.0);
 	vec3 luma = vec3(dot(color, vec3(0.2126, 0.7152, 0.0722)));
 	color = clamp(mix(luma, color, 1.35), 0.0, 1.0);
-	gl_FragColor = vec4(color, alpha * vAlpha * 0.72);
+	color = mix(color, vec3(1.0), core * 0.08);
+	gl_FragColor = vec4(color, alpha * vAlpha * 0.75);
 
-	if (gl_FragColor.a < 0.01) discard;
+	if (gl_FragColor.a < 0.003) discard;
 }
 `
 
