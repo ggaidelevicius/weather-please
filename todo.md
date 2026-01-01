@@ -1,9 +1,9 @@
 # Seasonal Events TODO
 
 - [x] Valentine's Day (Feb 14): falling heart confetti with a soft pink glow.
-- [ ] Lunar New Year (variable): red/gold confetti and a lantern sticker on the
+- [x] Lunar New Year (variable): red/gold confetti and a lantern sticker on the
       first tile.
-- [ ] Spring Equinox (Mar 20/21): gentle petal drift animation.
+- [x] Spring Equinox (Mar 20/21): gentle petal drift animation.
 - [ ] Earth Day (Apr 22): leaf confetti and a small leaf badge.
 - [ ] Pride Month start (Jun 1): quick rainbow sparkle sweep.
 - [ ] Summer Solstice (Jun 20/21): warm sun-ray shimmer over the background.

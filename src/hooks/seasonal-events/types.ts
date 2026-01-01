@@ -2,6 +2,7 @@ export type SeasonalEventId =
 	| 'new-years-day'
 	| 'valentines-day'
 	| 'lunar-new-year'
+	| 'spring-equinox'
 
 export type SeasonalEventTileAccent = {
 	colors: readonly string[]

@@ -122,6 +122,10 @@ const getSeasonalEmoji = (eventId: SeasonalEventId) => {
 		return '🧧'
 	}
 
+	if (eventId === 'spring-equinox') {
+		return '🌸'
+	}
+
 	return '❤'
 }
 
@@ -132,6 +136,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 
 	if (eventId === 'lunar-new-year') {
 		return <Trans>Lunar New Year</Trans>
+	}
+
+	if (eventId === 'spring-equinox') {
+		return <Trans>Spring Equinox</Trans>
 	}
 
 	return <Trans>Valentine&apos;s Day</Trans>

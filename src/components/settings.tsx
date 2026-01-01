@@ -200,6 +200,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									checked={input.showLunarNewYearEvent}
 									onChange={(e) => handleChange('showLunarNewYearEvent', e)}
 								/>
+								<Switch
+									label={<Trans>Show Spring Equinox event</Trans>}
+									checked={input.showSpringEquinoxEvent}
+									onChange={(e) => handleChange('showSpringEquinoxEvent', e)}
+								/>
 							</>
 						)}
 						<h2 className="mt-14 text-2xl font-medium text-white">

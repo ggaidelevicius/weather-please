@@ -63,6 +63,9 @@ const App = () => {
 		if (config.showLunarNewYearEvent) {
 			enabledSeasonalEvents.add('lunar-new-year')
 		}
+		if (config.showSpringEquinoxEvent) {
+			enabledSeasonalEvents.add('spring-equinox')
+		}
 	}
 
 	useSeasonalEvents({

@@ -1,5 +1,6 @@
 import { lunarNewYearEvent } from './lunar-new-year'
 import { newYearsEvent } from './new-years'
+import { springEquinoxEvent } from './spring-equinox'
 import { valentinesEvent } from './valentines'
 import type {
 	SeasonalEvent,
@@ -11,6 +12,7 @@ const seasonalEvents: SeasonalEvent[] = [
 	newYearsEvent,
 	valentinesEvent,
 	lunarNewYearEvent,
+	springEquinoxEvent,
 ]
 const seasonalEventMap = new Map<SeasonalEventId, SeasonalEvent>(
 	seasonalEvents.map((event) => [event.id, event]),
