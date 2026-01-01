@@ -89,6 +89,9 @@ const App = () => {
 		if (config.showHalloweenEvent) {
 			enabledSeasonalEvents.add('halloween')
 		}
+		if (config.showPerseidsEvent) {
+			enabledSeasonalEvents.add('perseids')
+		}
 	}
 
 	const activeSeasonalEvent = useSeasonalEvents({

@@ -15,5 +15,5 @@
 - [] eid al-adha
 - [] hanukkah
 - [] christmas
-- [] perseids
+- [x] perseids
 - [] geminids
