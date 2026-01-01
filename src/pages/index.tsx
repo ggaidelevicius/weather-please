@@ -74,6 +74,9 @@ const App = () => {
 		if (config.showDiwaliEvent) {
 			enabledSeasonalEvents.add('diwali')
 		}
+		if (config.showHoliEvent) {
+			enabledSeasonalEvents.add('holi')
+		}
 		if (config.showEarthDayEvent) {
 			enabledSeasonalEvents.add('earth-day')
 		}

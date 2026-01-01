@@ -5,6 +5,7 @@ export type SeasonalEventId =
 	| 'spring-equinox'
 	| 'autumn-equinox'
 	| 'diwali'
+	| 'holi'
 	| 'earth-day'
 	| 'summer-solstice'
 	| 'winter-solstice'

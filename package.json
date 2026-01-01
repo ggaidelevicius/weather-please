@@ -37,9 +37,10 @@
 		"@lingui/react": "^5.7.0",
 		"@prisma/adapter-pg": "^7.2.0",
 		"@prisma/client": "^7.2.0",
+		"@react-three/fiber": "^9.5.0",
 		"@tabler/icons-react": "^3.36.0",
 		"@tailwindcss/postcss": "^4.1.18",
-		"@tanstack/react-query": "^5.90.13",
+		"@tanstack/react-query": "^5.90.16",
 		"@vercel/analytics": "^1.6.1",
 		"babel-plugin-macros": "^3.1.0",
 		"canvas-confetti": "^1.9.4",
@@ -51,7 +52,8 @@
 		"react-dom": "19.2.3",
 		"sharp": "^0.34.5",
 		"tailwindcss": "^4.1.18",
-		"zod": "^4.2.1"
+		"three": "^0.182.0",
+		"zod": "^4.3.4"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.3.3",
@@ -63,6 +65,7 @@
 		"@types/node": "^25.0.3",
 		"@types/react": "^19.2.7",
 		"@types/react-dom": "^19.2.3",
+		"@types/three": "^0.182.0",
 		"adm-zip": "^0.5.16",
 		"babel-plugin-react-compiler": "19.1.0-rc.2",
 		"dotenv": "^17.2.3",
@@ -81,7 +84,7 @@
 		"typescript": "^5.9.3",
 		"vitest": "^4.0.16"
 	},
-	"packageManager": "pnpm@10.26.2",
+	"packageManager": "pnpm@10.27.0",
 	"pnpm": {
 		"onlyBuiltDependencies": [
 			"@prisma/client",

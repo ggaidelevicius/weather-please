@@ -134,6 +134,10 @@ const getSeasonalEmoji = (eventId: SeasonalEventId) => {
 		return '🪔'
 	}
 
+	if (eventId === 'holi') {
+		return '🎨'
+	}
+
 	if (eventId === 'summer-solstice') {
 		return '🌞'
 	}
@@ -172,6 +176,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 
 	if (eventId === 'diwali') {
 		return <Trans>Diwali</Trans>
+	}
+
+	if (eventId === 'holi') {
+		return <Trans>Holi</Trans>
 	}
 
 	if (eventId === 'summer-solstice') {
