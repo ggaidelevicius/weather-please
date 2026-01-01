@@ -56,7 +56,11 @@ const mockValidConfig: Config = {
 	showWindAlerts: true,
 	showVisibilityAlerts: true,
 	showPrecipitationAlerts: true,
-	showSeasonalSurprises: true,
+	showNewYearsEvent: true,
+	showValentinesEvent: true,
+	showLunarNewYearEvent: true,
+	showSeasonalEvents: true,
+	showSeasonalTileGlow: true,
 	daysToRetrieve: '3',
 	identifier: 'day',
 	installed: 1640995200000,
@@ -83,7 +87,11 @@ describe('useConfig - Core Functionality', () => {
 			showWindAlerts: true,
 			showVisibilityAlerts: true,
 			showPrecipitationAlerts: true,
-			showSeasonalSurprises: true,
+			showNewYearsEvent: true,
+			showValentinesEvent: true,
+			showLunarNewYearEvent: true,
+			showSeasonalEvents: true,
+			showSeasonalTileGlow: true,
 			daysToRetrieve: '3',
 			identifier: 'day',
 			installed: expect.any(Number),
@@ -101,6 +109,30 @@ describe('useConfig - Core Functionality', () => {
 		await waitFor(() => {
 			expect(result.current.config).toEqual(mockValidConfig)
 			expect(result.current.input).toEqual(mockValidConfig)
+		})
+	})
+
+	it('migrates legacy seasonal surprise keys', async () => {
+		const legacyConfig = { ...mockValidConfig } as Record<string, unknown>
+
+		legacyConfig.showSeasonalSurprises = false
+		legacyConfig.showNewYearsSurprise = false
+		legacyConfig.showValentinesSurprise = true
+		legacyConfig.showLunarNewYearSurprise = false
+		delete legacyConfig.showSeasonalEvents
+		delete legacyConfig.showNewYearsEvent
+		delete legacyConfig.showValentinesEvent
+		delete legacyConfig.showLunarNewYearEvent
+
+		localStorageMock.config = JSON.stringify(legacyConfig)
+
+		const { result } = renderHook(() => useConfig())
+
+		await waitFor(() => {
+			expect(result.current.config.showSeasonalEvents).toBe(false)
+			expect(result.current.config.showNewYearsEvent).toBe(false)
+			expect(result.current.config.showValentinesEvent).toBe(true)
+			expect(result.current.config.showLunarNewYearEvent).toBe(false)
 		})
 	})
 

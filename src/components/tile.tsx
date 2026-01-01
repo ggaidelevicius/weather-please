@@ -21,10 +21,10 @@ import {
 	Snow,
 	Thunderstorm,
 } from '../images'
-import { getSeasonalSurpriseForDate } from '../hooks/seasonal-surprises'
+import { getSeasonalEventForDate } from '../hooks/seasonal-events'
 import type { StaticImageData } from 'next/image'
 import type { ReactElement } from 'react'
-import type { SeasonalSurpriseId } from '../hooks/seasonal-surprises'
+import type { SeasonalEventId } from '../hooks/seasonal-events'
 
 const iconMap: Record<number, StaticImageData> = {
 	0: ClearSky,
@@ -113,17 +113,25 @@ const months = [
 	<Trans key="december">December</Trans>,
 ]
 
-const getSeasonalEmoji = (surpriseId: SeasonalSurpriseId) => {
-	if (surpriseId === 'new-years-day') {
+const getSeasonalEmoji = (eventId: SeasonalEventId) => {
+	if (eventId === 'new-years-day') {
 		return '🎆'
+	}
+
+	if (eventId === 'lunar-new-year') {
+		return '🧧'
 	}
 
 	return '❤'
 }
 
-const renderSeasonalLabel = (surpriseId: SeasonalSurpriseId) => {
-	if (surpriseId === 'new-years-day') {
+const renderSeasonalLabel = (eventId: SeasonalEventId) => {
+	if (eventId === 'new-years-day') {
 		return <Trans>New Year&apos;s Day</Trans>
+	}
+
+	if (eventId === 'lunar-new-year') {
+		return <Trans>Lunar New Year</Trans>
 	}
 
 	return <Trans>Valentine&apos;s Day</Trans>
@@ -141,7 +149,9 @@ interface TileProps {
 	identifier: 'day' | 'date'
 	index: number
 	delayBaseline: number
-	showSeasonalSurprises: boolean
+	showSeasonalEvents: boolean
+	showSeasonalTileGlow: boolean
+	enabledSeasonalEvents?: Set<SeasonalEventId>
 }
 
 export const Tile = ({
@@ -156,7 +166,9 @@ export const Tile = ({
 	identifier,
 	index,
 	delayBaseline,
-	showSeasonalSurprises,
+	showSeasonalEvents,
+	showSeasonalTileGlow,
+	enabledSeasonalEvents,
 }: Readonly<TileProps>) => {
 	const tileDate = new Date(day * 1000)
 	const dayDescriptor = days[tileDate.getDay()]
@@ -171,12 +183,14 @@ export const Tile = ({
 
 	const hiddenIdentifier = identifier === 'day' ? dateDescriptor : dayDescriptor
 
-	const seasonalSurprise = showSeasonalSurprises
-		? getSeasonalSurpriseForDate(tileDate)
+	const seasonalEvent = showSeasonalEvents
+		? getSeasonalEventForDate(tileDate, enabledSeasonalEvents)
 		: null
-	const seasonalAccent = seasonalSurprise?.tileAccent ?? null
-	const seasonalBadgeId =
-		seasonalSurprise && seasonalAccent ? seasonalSurprise.id : null
+	const seasonalAccent =
+		showSeasonalTileGlow && seasonalEvent
+			? (seasonalEvent.tileAccent ?? null)
+			: null
+	const seasonalBadgeId = seasonalEvent ? seasonalEvent.id : null
 	const borderAngle = useMotionValue(0)
 	const borderStops = seasonalAccent?.colors.join(', ') ?? 'transparent'
 	const borderGradient = useMotionTemplate`conic-gradient(from ${borderAngle}deg, ${borderStops})`

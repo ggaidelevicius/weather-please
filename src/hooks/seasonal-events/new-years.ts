@@ -1,5 +1,5 @@
 import { randomInRange } from './utils'
-import type { SeasonalSurprise } from './types'
+import type { SeasonalEvent } from './types'
 
 const NEW_YEARS_MONTH = 0
 const NEW_YEARS_DAY = 1
@@ -17,7 +17,7 @@ const FIREWORKS_DEFAULTS = {
 const FIREWORKS_LEFT_ORIGIN_RANGE = { min: 0.1, max: 0.3 }
 const FIREWORKS_RIGHT_ORIGIN_RANGE = { min: 0.7, max: 0.9 }
 
-export const newYearsSurprise: SeasonalSurprise = {
+export const newYearsEvent: SeasonalEvent = {
 	id: 'new-years-day',
 	isActive: isNewYearsDay,
 	run: launchNewYearsFireworks,

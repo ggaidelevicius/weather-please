@@ -62,7 +62,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						<DialogTitle as="h1" className="text-4xl font-bold text-white">
 							<Trans>Settings</Trans>
 						</DialogTitle>
-						<h2 className="mt-8 text-2xl font-medium text-white">
+						<h2 className="mt-14 text-2xl font-medium text-white">
 							<Trans>General</Trans>
 						</h2>
 						<Select
@@ -80,11 +80,6 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							label={<Trans>Use metric number format</Trans>}
 							checked={input.useMetric}
 							onChange={(e) => handleChange('useMetric', e)}
-						/>
-						<Switch
-							label={<Trans>Show seasonal surprises</Trans>}
-							checked={input.showSeasonalSurprises}
-							onChange={(e) => handleChange('showSeasonalSurprises', e)}
 						/>
 						<h2 className="mt-14 text-2xl font-medium text-white">
 							<Trans>Weather</Trans>
@@ -172,6 +167,38 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									label={<Trans>Show low visibility alerts</Trans>}
 									checked={input.showVisibilityAlerts}
 									onChange={(e) => handleChange('showVisibilityAlerts', e)}
+								/>
+							</>
+						)}
+						<h2 className="mt-8 text-2xl font-medium text-white">
+							<Trans>Seasonal events</Trans>
+						</h2>
+						<Switch
+							label={<Trans>Show seasonal events</Trans>}
+							checked={input.showSeasonalEvents}
+							onChange={(e) => handleChange('showSeasonalEvents', e)}
+						/>
+						{input.showSeasonalEvents && (
+							<>
+								<Switch
+									label={<Trans>Show seasonal tile glow</Trans>}
+									checked={input.showSeasonalTileGlow}
+									onChange={(e) => handleChange('showSeasonalTileGlow', e)}
+								/>
+								<Switch
+									label={<Trans>Show New Year&apos;s Day event</Trans>}
+									checked={input.showNewYearsEvent}
+									onChange={(e) => handleChange('showNewYearsEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Valentine&apos;s Day event</Trans>}
+									checked={input.showValentinesEvent}
+									onChange={(e) => handleChange('showValentinesEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Lunar New Year event</Trans>}
+									checked={input.showLunarNewYearEvent}
+									onChange={(e) => handleChange('showLunarNewYearEvent', e)}
 								/>
 							</>
 						)}

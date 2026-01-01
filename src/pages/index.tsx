@@ -12,9 +12,10 @@ import { Settings } from '../components/settings'
 import { Tile } from '../components/tile'
 import { WeatherAlert } from '../components/weather-alert'
 import { useConfig } from '../hooks/use-config'
-import { useSeasonalSurprises } from '../hooks/use-seasonal-surprises'
+import { useSeasonalEvents } from '../hooks/use-seasonal-events'
 import { useWeather } from '../hooks/use-weather'
 import { messages } from '../locales/en/messages'
+import type { SeasonalEventId } from '../hooks/seasonal-events'
 
 i18n.load({
 	en: messages,
@@ -48,13 +49,27 @@ const App = () => {
 		changedLocation,
 	)
 	const isOnboarded = Boolean(config.lat && config.lon)
-	const canShowSeasonalSurprises =
-		config.showSeasonalSurprises && isHydrated && isOnboarded
+	const canShowSeasonalEvents =
+		config.showSeasonalEvents && isHydrated && isOnboarded
+	const enabledSeasonalEvents = new Set<SeasonalEventId>()
 
-	const activeSeasonalSurprise = useSeasonalSurprises({
-		isEnabled: config.showSeasonalSurprises,
+	if (config.showSeasonalEvents) {
+		if (config.showNewYearsEvent) {
+			enabledSeasonalEvents.add('new-years-day')
+		}
+		if (config.showValentinesEvent) {
+			enabledSeasonalEvents.add('valentines-day')
+		}
+		if (config.showLunarNewYearEvent) {
+			enabledSeasonalEvents.add('lunar-new-year')
+		}
+	}
+
+	useSeasonalEvents({
+		isEnabled: config.showSeasonalEvents,
 		isHydrated,
 		isOnboarded: isHydrated && isOnboarded,
+		enabledEvents: enabledSeasonalEvents,
 	})
 
 	useEffect(() => {
@@ -175,7 +190,9 @@ const App = () => {
 					delayBaseline={delayBaseline}
 					useMetric={config.useMetric}
 					identifier={config.identifier}
-					showSeasonalSurprises={canShowSeasonalSurprises}
+					showSeasonalEvents={canShowSeasonalEvents}
+					showSeasonalTileGlow={config.showSeasonalTileGlow}
+					enabledSeasonalEvents={enabledSeasonalEvents}
 				/>
 			)
 		})

@@ -1,5 +1,5 @@
 import { randomInRange } from './utils'
-import type { SeasonalSurprise } from './types'
+import type { SeasonalEvent } from './types'
 
 const VALENTINES_MONTH = 1
 const VALENTINES_DAY = 14
@@ -18,7 +18,7 @@ const HEARTS_GLOW_FILTER = 'drop-shadow(0 0 8px rgba(255, 155, 190, 0.65))'
 const HEARTS_COLOR = '#ff7aa8'
 const HEARTS_DRIFT_RANGE = { min: -0.45, max: 0.45 }
 
-export const valentinesSurprise: SeasonalSurprise = {
+export const valentinesEvent: SeasonalEvent = {
 	id: 'valentines-day',
 	isActive: isValentinesDay,
 	run: launchValentinesHearts,

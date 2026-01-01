@@ -1,4 +1,4 @@
-# Seasonal Surprises TODO
+# Seasonal Events TODO
 
 - [x] Valentine's Day (Feb 14): falling heart confetti with a soft pink glow.
 - [ ] Lunar New Year (variable): red/gold confetti and a lantern sticker on the
