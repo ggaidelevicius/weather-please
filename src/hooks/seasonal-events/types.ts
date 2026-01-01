@@ -11,6 +11,7 @@ export type SeasonalEventId =
 	| 'winter-solstice'
 	| 'halloween'
 	| 'perseids'
+	| 'geminids'
 
 export type Hemisphere = 'northern' | 'southern'
 

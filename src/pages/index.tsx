@@ -92,6 +92,9 @@ const App = () => {
 		if (config.showPerseidsEvent) {
 			enabledSeasonalEvents.add('perseids')
 		}
+		if (config.showGeminidsEvent) {
+			enabledSeasonalEvents.add('geminids')
+		}
 	}
 
 	const activeSeasonalEvent = useSeasonalEvents({

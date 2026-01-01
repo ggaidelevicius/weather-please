@@ -245,6 +245,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									checked={input.showPerseidsEvent}
 									onChange={(e) => handleChange('showPerseidsEvent', e)}
 								/>
+								<Switch
+									label={<Trans>Show Geminids meteor shower event</Trans>}
+									checked={input.showGeminidsEvent}
+									onChange={(e) => handleChange('showGeminidsEvent', e)}
+								/>
 							</>
 						)}
 						<h2 className="mt-14 text-2xl font-medium text-white">

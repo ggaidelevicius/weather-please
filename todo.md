@@ -16,4 +16,4 @@
 - [] hanukkah
 - [] christmas
 - [x] perseids
-- [] geminids
+- [x] geminids
