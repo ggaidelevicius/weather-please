@@ -3,6 +3,7 @@ export type SeasonalEventId =
 	| 'valentines-day'
 	| 'lunar-new-year'
 	| 'spring-equinox'
+	| 'autumn-equinox'
 	| 'earth-day'
 	| 'summer-solstice'
 	| 'winter-solstice'

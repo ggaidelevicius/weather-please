@@ -126,6 +126,10 @@ const getSeasonalEmoji = (eventId: SeasonalEventId) => {
 		return '🌸'
 	}
 
+	if (eventId === 'autumn-equinox') {
+		return '🍂'
+	}
+
 	if (eventId === 'summer-solstice') {
 		return '🌞'
 	}
@@ -156,6 +160,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 
 	if (eventId === 'spring-equinox') {
 		return <Trans>Spring Equinox</Trans>
+	}
+
+	if (eventId === 'autumn-equinox') {
+		return <Trans>Autumn Equinox</Trans>
 	}
 
 	if (eventId === 'summer-solstice') {

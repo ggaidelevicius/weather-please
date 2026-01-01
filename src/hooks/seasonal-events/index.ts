@@ -1,6 +1,7 @@
 import { lunarNewYearEvent } from './lunar-new-year'
 import { newYearsEvent } from './new-years'
 import { springEquinoxEvent } from './spring-equinox'
+import { autumnEquinoxEvent } from './autumn-equinox'
 import { summerSolsticeEvent } from './summer-solstice'
 import { winterSolsticeEvent } from './winter-solstice'
 import { valentinesEvent } from './valentines'
@@ -18,6 +19,7 @@ const seasonalEvents: SeasonalEvent[] = [
 	valentinesEvent,
 	lunarNewYearEvent,
 	springEquinoxEvent,
+	autumnEquinoxEvent,
 	summerSolsticeEvent,
 	winterSolsticeEvent,
 	earthDayEvent,

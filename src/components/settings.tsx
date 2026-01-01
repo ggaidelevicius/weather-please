@@ -206,6 +206,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									onChange={(e) => handleChange('showSpringEquinoxEvent', e)}
 								/>
 								<Switch
+									label={<Trans>Show Autumn Equinox event</Trans>}
+									checked={input.showAutumnEquinoxEvent}
+									onChange={(e) => handleChange('showAutumnEquinoxEvent', e)}
+								/>
+								<Switch
 									label={<Trans>Show Earth Day event</Trans>}
 									checked={input.showEarthDayEvent}
 									onChange={(e) => handleChange('showEarthDayEvent', e)}
