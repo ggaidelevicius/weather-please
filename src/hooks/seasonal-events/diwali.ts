@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const DIWALI_DATES = new Set([
-	'2024-11-01',
-	'2025-10-21',
 	'2026-11-08',
 	'2027-10-29',
 	'2028-10-17',

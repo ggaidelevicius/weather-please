@@ -6,8 +6,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const HOLI_DATES = new Set([
-	'2024-03-25',
-	'2025-03-14',
 	'2026-03-04',
 	'2027-03-22',
 	'2028-03-11',

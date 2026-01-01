@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const WINTER_SOLSTICE_DATES_NORTHERN = new Set([
-	'2024-12-21',
-	'2025-12-21',
 	'2026-12-21',
 	'2027-12-22',
 	'2028-12-21',
@@ -24,8 +22,6 @@ const WINTER_SOLSTICE_DATES_NORTHERN = new Set([
 	'2043-12-22',
 ])
 const WINTER_SOLSTICE_DATES_SOUTHERN = new Set([
-	'2024-06-20',
-	'2025-06-20',
 	'2026-06-21',
 	'2027-06-21',
 	'2028-06-20',

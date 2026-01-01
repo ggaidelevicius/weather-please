@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const LUNAR_NEW_YEAR_DATES = new Set([
-	'2024-02-10',
-	'2025-01-29',
 	'2026-02-17',
 	'2027-02-06',
 	'2028-01-26',

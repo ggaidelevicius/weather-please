@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const AUTUMN_EQUINOX_DATES_NORTHERN = new Set([
-	'2024-09-22',
-	'2025-09-22',
 	'2026-09-23',
 	'2027-09-23',
 	'2028-09-22',
@@ -24,8 +22,6 @@ const AUTUMN_EQUINOX_DATES_NORTHERN = new Set([
 	'2043-09-23',
 ])
 const AUTUMN_EQUINOX_DATES_SOUTHERN = new Set([
-	'2024-03-20',
-	'2025-03-20',
 	'2026-03-20',
 	'2027-03-20',
 	'2028-03-20',
