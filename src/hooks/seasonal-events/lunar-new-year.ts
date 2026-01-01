@@ -1,5 +1,5 @@
 import { randomInRange } from './utils'
-import type { SeasonalEvent } from './types'
+import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const LUNAR_NEW_YEAR_DATES = new Set([
 	'2024-02-10',
@@ -48,7 +48,7 @@ export const lunarNewYearEvent: SeasonalEvent = {
 	},
 }
 
-function isLunarNewYear(date: Date) {
+function isLunarNewYear({ date }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')

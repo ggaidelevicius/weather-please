@@ -14,6 +14,7 @@ import { WeatherAlert } from '../components/weather-alert'
 import { useConfig } from '../hooks/use-config'
 import { useSeasonalEvents } from '../hooks/use-seasonal-events'
 import { useWeather } from '../hooks/use-weather'
+import { getHemisphereFromLatitude } from '../hooks/seasonal-events/utils'
 import { messages } from '../locales/en/messages'
 import type { SeasonalEventId } from '../hooks/seasonal-events'
 
@@ -49,6 +50,7 @@ const App = () => {
 		changedLocation,
 	)
 	const isOnboarded = Boolean(config.lat && config.lon)
+	const hemisphere = getHemisphereFromLatitude(config.lat)
 	const canShowSeasonalEvents =
 		config.showSeasonalEvents && isHydrated && isOnboarded
 	const enabledSeasonalEvents = new Set<SeasonalEventId>()
@@ -69,6 +71,9 @@ const App = () => {
 		if (config.showEarthDayEvent) {
 			enabledSeasonalEvents.add('earth-day')
 		}
+		if (config.showSummerSolsticeEvent) {
+			enabledSeasonalEvents.add('summer-solstice')
+		}
 	}
 
 	const activeSeasonalEvent = useSeasonalEvents({
@@ -76,6 +81,7 @@ const App = () => {
 		isHydrated,
 		isOnboarded: isHydrated && isOnboarded,
 		enabledEvents: enabledSeasonalEvents,
+		hemisphere,
 	})
 
 	useEffect(() => {
@@ -199,6 +205,7 @@ const App = () => {
 					showSeasonalEvents={canShowSeasonalEvents}
 					showSeasonalTileGlow={config.showSeasonalTileGlow}
 					enabledSeasonalEvents={enabledSeasonalEvents}
+					hemisphere={hemisphere}
 				/>
 			)
 		})

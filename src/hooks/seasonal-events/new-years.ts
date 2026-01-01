@@ -1,5 +1,5 @@
 import { randomInRange } from './utils'
-import type { SeasonalEvent } from './types'
+import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const NEW_YEARS_MONTH = 0
 const NEW_YEARS_DAY = 1
@@ -26,7 +26,7 @@ export const newYearsEvent: SeasonalEvent = {
 	},
 }
 
-function isNewYearsDay(date: Date) {
+function isNewYearsDay({ date }: SeasonalEventContext) {
 	return date.getMonth() === NEW_YEARS_MONTH && date.getDate() === NEW_YEARS_DAY
 }
 

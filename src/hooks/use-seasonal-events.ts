@@ -1,12 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { getActiveSeasonalEvent, runSeasonalEvent } from './seasonal-events'
-import type { SeasonalEventId } from './seasonal-events'
+import type { Hemisphere, SeasonalEventId } from './seasonal-events'
 
 type UseSeasonalEventsOptions = {
 	isEnabled: boolean
 	isHydrated?: boolean
 	isOnboarded?: boolean
 	enabledEvents?: Set<SeasonalEventId>
+	hemisphere?: Hemisphere
 }
 
 export const useSeasonalEvents = ({
@@ -14,11 +15,16 @@ export const useSeasonalEvents = ({
 	isHydrated = true,
 	isOnboarded = true,
 	enabledEvents,
+	hemisphere,
 }: Readonly<UseSeasonalEventsOptions>) => {
 	const triggeredEvents = useRef<Set<SeasonalEventId>>(new Set())
 	const activeEvent =
 		isHydrated && isEnabled && isOnboarded
-			? getActiveSeasonalEvent(new Date(), enabledEvents)
+			? getActiveSeasonalEvent({
+					date: new Date(),
+					enabledEvents,
+					hemisphere,
+				})
 			: null
 
 	useEffect(() => {

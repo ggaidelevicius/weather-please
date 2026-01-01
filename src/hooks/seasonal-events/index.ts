@@ -1,9 +1,11 @@
 import { lunarNewYearEvent } from './lunar-new-year'
 import { newYearsEvent } from './new-years'
 import { springEquinoxEvent } from './spring-equinox'
+import { summerSolsticeEvent } from './summer-solstice'
 import { valentinesEvent } from './valentines'
 import { earthDayEvent } from './earth-day'
 import type {
+	Hemisphere,
 	SeasonalEvent,
 	SeasonalEventId,
 	SeasonalEventTileAccent,
@@ -14,24 +16,28 @@ const seasonalEvents: SeasonalEvent[] = [
 	valentinesEvent,
 	lunarNewYearEvent,
 	springEquinoxEvent,
+	summerSolsticeEvent,
 	earthDayEvent,
 ]
 const seasonalEventMap = new Map<SeasonalEventId, SeasonalEvent>(
 	seasonalEvents.map((event) => [event.id, event]),
 )
 
-export type { SeasonalEventId } from './types'
+export type { Hemisphere, SeasonalEventId } from './types'
 export type { SeasonalEventTileAccent } from './types'
 
-export const getSeasonalEventForDate = (
-	date: Date,
-	enabledEvents?: Set<SeasonalEventId>,
-): SeasonalEvent | null => {
+export const getSeasonalEventForDate = (params: {
+	date: Date
+	enabledEvents?: Set<SeasonalEventId>
+	hemisphere?: Hemisphere
+}): SeasonalEvent | null => {
+	const { date, enabledEvents, hemisphere = 'northern' } = params
+
 	for (const event of seasonalEvents) {
 		if (enabledEvents && !enabledEvents.has(event.id)) {
 			continue
 		}
-		if (event.isActive(date)) {
+		if (event.isActive({ date, hemisphere })) {
 			return event
 		}
 	}
@@ -39,11 +45,12 @@ export const getSeasonalEventForDate = (
 	return null
 }
 
-export const getActiveSeasonalEvent = (
-	date: Date,
-	enabledEvents?: Set<SeasonalEventId>,
-): SeasonalEventId | null => {
-	const event = getSeasonalEventForDate(date, enabledEvents)
+export const getActiveSeasonalEvent = (params: {
+	date: Date
+	enabledEvents?: Set<SeasonalEventId>
+	hemisphere?: Hemisphere
+}): SeasonalEventId | null => {
+	const event = getSeasonalEventForDate(params)
 	return event ? event.id : null
 }
 
@@ -57,10 +64,11 @@ export const runSeasonalEvent = (eventId: SeasonalEventId) => {
 	return event.run()
 }
 
-export const getSeasonalTileAccent = (
-	date: Date,
-	enabledEvents?: Set<SeasonalEventId>,
-): SeasonalEventTileAccent | null => {
-	const event = getSeasonalEventForDate(date, enabledEvents)
+export const getSeasonalTileAccent = (params: {
+	date: Date
+	enabledEvents?: Set<SeasonalEventId>
+	hemisphere?: Hemisphere
+}): SeasonalEventTileAccent | null => {
+	const event = getSeasonalEventForDate(params)
 	return event?.tileAccent ?? null
 }

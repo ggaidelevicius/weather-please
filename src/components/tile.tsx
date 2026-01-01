@@ -24,7 +24,7 @@ import {
 import { getSeasonalEventForDate } from '../hooks/seasonal-events'
 import type { StaticImageData } from 'next/image'
 import type { ReactElement } from 'react'
-import type { SeasonalEventId } from '../hooks/seasonal-events'
+import type { Hemisphere, SeasonalEventId } from '../hooks/seasonal-events'
 
 const iconMap: Record<number, StaticImageData> = {
 	0: ClearSky,
@@ -126,6 +126,10 @@ const getSeasonalEmoji = (eventId: SeasonalEventId) => {
 		return '🌸'
 	}
 
+	if (eventId === 'summer-solstice') {
+		return '🌞'
+	}
+
 	if (eventId === 'earth-day') {
 		return '🌍'
 	}
@@ -144,6 +148,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 
 	if (eventId === 'spring-equinox') {
 		return <Trans>Spring Equinox</Trans>
+	}
+
+	if (eventId === 'summer-solstice') {
+		return <Trans>Summer Solstice</Trans>
 	}
 
 	if (eventId === 'earth-day') {
@@ -168,6 +176,7 @@ interface TileProps {
 	showSeasonalEvents: boolean
 	showSeasonalTileGlow: boolean
 	enabledSeasonalEvents?: Set<SeasonalEventId>
+	hemisphere: Hemisphere
 }
 
 export const Tile = ({
@@ -185,6 +194,7 @@ export const Tile = ({
 	showSeasonalEvents,
 	showSeasonalTileGlow,
 	enabledSeasonalEvents,
+	hemisphere,
 }: Readonly<TileProps>) => {
 	const tileDate = new Date(day * 1000)
 	const dayDescriptor = days[tileDate.getDay()]
@@ -200,7 +210,11 @@ export const Tile = ({
 	const hiddenIdentifier = identifier === 'day' ? dateDescriptor : dayDescriptor
 
 	const seasonalEvent = showSeasonalEvents
-		? getSeasonalEventForDate(tileDate, enabledSeasonalEvents)
+		? getSeasonalEventForDate({
+				date: tileDate,
+				enabledEvents: enabledSeasonalEvents,
+				hemisphere,
+			})
 		: null
 	const seasonalAccent =
 		showSeasonalTileGlow && seasonalEvent

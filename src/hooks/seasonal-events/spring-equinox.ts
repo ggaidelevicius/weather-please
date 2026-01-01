@@ -1,7 +1,7 @@
 import { randomInRange } from './utils'
-import type { SeasonalEvent } from './types'
+import type { SeasonalEvent, SeasonalEventContext } from './types'
 
-const SPRING_EQUINOX_DATES = new Set([
+const SPRING_EQUINOX_DATES_NORTHERN = new Set([
 	'2026-03-20',
 	'2027-03-20',
 	'2028-03-20',
@@ -20,6 +20,26 @@ const SPRING_EQUINOX_DATES = new Set([
 	'2041-03-20',
 	'2042-03-20',
 	'2043-03-20',
+])
+const SPRING_EQUINOX_DATES_SOUTHERN = new Set([
+	'2026-09-22',
+	'2027-09-22',
+	'2028-09-22',
+	'2029-09-22',
+	'2030-09-22',
+	'2031-09-22',
+	'2032-09-22',
+	'2033-09-22',
+	'2034-09-22',
+	'2035-09-22',
+	'2036-09-22',
+	'2037-09-22',
+	'2038-09-22',
+	'2039-09-22',
+	'2040-09-22',
+	'2041-09-22',
+	'2042-09-22',
+	'2043-09-22',
 ])
 const SPRING_DURATION_MS = 10000
 const SPRING_INTERVAL_MS = 175
@@ -47,11 +67,15 @@ export const springEquinoxEvent: SeasonalEvent = {
 	},
 }
 
-function isSpringEquinox(date: Date) {
+function isSpringEquinox({ date, hemisphere }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
-	return SPRING_EQUINOX_DATES.has(`${year}-${month}-${day}`)
+	const equinoxDates =
+		hemisphere === 'southern'
+			? SPRING_EQUINOX_DATES_SOUTHERN
+			: SPRING_EQUINOX_DATES_NORTHERN
+	return equinoxDates.has(`${year}-${month}-${day}`)
 }
 
 async function launchSpringEquinoxPetals() {

@@ -1,5 +1,5 @@
 import { randomInRange } from './utils'
-import type { SeasonalEvent } from './types'
+import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const EARTH_DAY_DATES = new Set([
 	'2026-04-22',
@@ -117,7 +117,7 @@ export const earthDayEvent: SeasonalEvent = {
 	},
 }
 
-function isEarthDay(date: Date) {
+function isEarthDay({ date }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')

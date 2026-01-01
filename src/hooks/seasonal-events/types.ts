@@ -4,6 +4,14 @@ export type SeasonalEventId =
 	| 'lunar-new-year'
 	| 'spring-equinox'
 	| 'earth-day'
+	| 'summer-solstice'
+
+export type Hemisphere = 'northern' | 'southern'
+
+export type SeasonalEventContext = {
+	date: Date
+	hemisphere: Hemisphere
+}
 
 export type SeasonalEventTileAccent = {
 	colors: readonly string[]
@@ -11,7 +19,7 @@ export type SeasonalEventTileAccent = {
 
 export type SeasonalEvent = {
 	id: SeasonalEventId
-	isActive: (date: Date) => boolean
+	isActive: (context: SeasonalEventContext) => boolean
 	run: () => Promise<() => void>
 	tileAccent?: SeasonalEventTileAccent
 }
