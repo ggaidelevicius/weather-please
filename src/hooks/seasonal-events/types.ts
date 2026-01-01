@@ -12,6 +12,7 @@ export type SeasonalEventId =
 	| 'halloween'
 	| 'perseids'
 	| 'geminids'
+	| 'eid-al-fitr'
 
 export type Hemisphere = 'northern' | 'southern'
 

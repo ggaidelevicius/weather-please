@@ -11,6 +11,7 @@ import { earthDayEvent } from './earth-day'
 import { halloweenEvent } from './halloween'
 import { perseidsEvent } from './perseids'
 import { geminidsEvent } from './geminids'
+import { eidAlFitrEvent } from './eid-al-fitr'
 import type {
 	Hemisphere,
 	SeasonalEvent,
@@ -25,6 +26,7 @@ const seasonalEvents: SeasonalEvent[] = [
 	springEquinoxEvent,
 	autumnEquinoxEvent,
 	diwaliEvent,
+	eidAlFitrEvent,
 	holiEvent,
 	summerSolsticeEvent,
 	winterSolsticeEvent,

@@ -95,6 +95,9 @@ const App = () => {
 		if (config.showGeminidsEvent) {
 			enabledSeasonalEvents.add('geminids')
 		}
+		if (config.showEidAlFitrEvent) {
+			enabledSeasonalEvents.add('eid-al-fitr')
+		}
 	}
 
 	const activeSeasonalEvent = useSeasonalEvents({

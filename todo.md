@@ -11,7 +11,7 @@
 - [x] Summer Solstice (Jun 20/21): warm sun-ray shimmer over the background.
 - [x] Winter Solstice (Dec 21/22): aurora wash with frost shimmer.
 - [x] Halloween (Oct 31): spooky confetti with ghosts, bats, and warm sparks.
-- [] eid al-fitr
+- [x] eid al-fitr
 - [] eid al-adha
 - [] hanukkah
 - [] christmas

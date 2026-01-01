@@ -162,6 +162,10 @@ const getSeasonalEmoji = (eventId: SeasonalEventId) => {
 		return '🌠'
 	}
 
+	if (eventId === 'eid-al-fitr') {
+		return '🌙'
+	}
+
 	return '❤'
 }
 
@@ -212,6 +216,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 
 	if (eventId === 'geminids') {
 		return <Trans>Geminids Meteor Shower</Trans>
+	}
+
+	if (eventId === 'eid-al-fitr') {
+		return <Trans>Eid al-Fitr</Trans>
 	}
 
 	return <Trans>Valentine&apos;s Day</Trans>
