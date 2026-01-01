@@ -22,7 +22,7 @@ export const newYearsEvent: SeasonalEvent = {
 	isActive: isNewYearsDay,
 	run: launchNewYearsFireworks,
 	tileAccent: {
-		colors: ['#fde68a', '#f59e0b', '#60a5fa', '#a78bfa', '#fde68a'],
+		colors: ['#f8fafc', '#e2e8f0', '#94a3b8', '#cbd5f5', '#f8fafc'],
 	},
 }
 

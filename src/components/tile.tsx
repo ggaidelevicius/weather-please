@@ -130,6 +130,10 @@ const getSeasonalEmoji = (eventId: SeasonalEventId) => {
 		return '🌞'
 	}
 
+	if (eventId === 'halloween') {
+		return '🎃'
+	}
+
 	if (eventId === 'earth-day') {
 		return '🌍'
 	}
@@ -152,6 +156,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 
 	if (eventId === 'summer-solstice') {
 		return <Trans>Summer Solstice</Trans>
+	}
+
+	if (eventId === 'halloween') {
+		return <Trans>Halloween</Trans>
 	}
 
 	if (eventId === 'earth-day') {

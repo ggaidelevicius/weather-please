@@ -215,6 +215,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									checked={input.showSummerSolsticeEvent}
 									onChange={(e) => handleChange('showSummerSolsticeEvent', e)}
 								/>
+								<Switch
+									label={<Trans>Show Halloween event</Trans>}
+									checked={input.showHalloweenEvent}
+									onChange={(e) => handleChange('showHalloweenEvent', e)}
+								/>
 							</>
 						)}
 						<h2 className="mt-14 text-2xl font-medium text-white">
