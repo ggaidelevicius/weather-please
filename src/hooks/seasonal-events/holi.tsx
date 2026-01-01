@@ -327,7 +327,7 @@ async function launchHoliColors() {
 					dpr={dpr}
 					gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
 					frameloop={shouldAnimate ? 'always' : 'demand'}
-					style={{ position: 'absolute', inset: 0 }}
+					style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
 				>
 					<HoliParticles isAnimated={shouldAnimate} />
 				</Canvas>,
