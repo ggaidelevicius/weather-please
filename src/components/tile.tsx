@@ -1,7 +1,13 @@
 import { Trans } from '@lingui/react/macro'
 import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
-import { motion } from 'framer-motion'
+import {
+	animate,
+	motion,
+	useMotionTemplate,
+	useMotionValue,
+} from 'framer-motion'
 import Image from 'next/image'
+import { useEffect } from 'react'
 import {
 	BrokenClouds,
 	ClearSky,
@@ -15,8 +21,10 @@ import {
 	Snow,
 	Thunderstorm,
 } from '../images'
+import { getSeasonalSurpriseForDate } from '../hooks/seasonal-surprises'
 import type { StaticImageData } from 'next/image'
 import type { ReactElement } from 'react'
+import type { SeasonalSurpriseId } from '../hooks/seasonal-surprises'
 
 const iconMap: Record<number, StaticImageData> = {
 	0: ClearSky,
@@ -105,6 +113,22 @@ const months = [
 	<Trans key="december">December</Trans>,
 ]
 
+const getSeasonalEmoji = (surpriseId: SeasonalSurpriseId) => {
+	if (surpriseId === 'new-years-day') {
+		return '🎆'
+	}
+
+	return '❤'
+}
+
+const renderSeasonalLabel = (surpriseId: SeasonalSurpriseId) => {
+	if (surpriseId === 'new-years-day') {
+		return <Trans>New Year&apos;s Day</Trans>
+	}
+
+	return <Trans>Valentine&apos;s Day</Trans>
+}
+
 interface TileProps {
 	day: number
 	max: number
@@ -117,6 +141,7 @@ interface TileProps {
 	identifier: 'day' | 'date'
 	index: number
 	delayBaseline: number
+	showSeasonalSurprises: boolean
 }
 
 export const Tile = ({
@@ -131,11 +156,13 @@ export const Tile = ({
 	identifier,
 	index,
 	delayBaseline,
+	showSeasonalSurprises,
 }: Readonly<TileProps>) => {
-	const dayDescriptor = days[new Date(day * 1000).getDay()]
+	const tileDate = new Date(day * 1000)
+	const dayDescriptor = days[tileDate.getDay()]
 	const dateDescriptor = (
 		<>
-			{new Date(day * 1000).getDate()} {months[new Date(day * 1000).getMonth()]}
+			{tileDate.getDate()} {months[tileDate.getMonth()]}
 		</>
 	)
 
@@ -143,6 +170,29 @@ export const Tile = ({
 		identifier === 'day' ? dayDescriptor : dateDescriptor
 
 	const hiddenIdentifier = identifier === 'day' ? dateDescriptor : dayDescriptor
+
+	const seasonalSurprise = showSeasonalSurprises
+		? getSeasonalSurpriseForDate(tileDate)
+		: null
+	const seasonalAccent = seasonalSurprise?.tileAccent ?? null
+	const seasonalBadgeId =
+		seasonalSurprise && seasonalAccent ? seasonalSurprise.id : null
+	const borderAngle = useMotionValue(0)
+	const borderStops = seasonalAccent?.colors.join(', ') ?? 'transparent'
+	const borderGradient = useMotionTemplate`conic-gradient(from ${borderAngle}deg, ${borderStops})`
+
+	useEffect(() => {
+		if (!seasonalAccent) return
+		const controls = animate(borderAngle, 360, {
+			duration: 12,
+			ease: 'linear',
+			repeat: Infinity,
+		})
+
+		return () => {
+			controls.stop()
+		}
+	}, [borderAngle, seasonalAccent])
 
 	return (
 		<motion.div
@@ -157,119 +207,155 @@ export const Tile = ({
 				},
 			}}
 			exit={{ scale: 0.95, opacity: 0 }}
-			className="group relative flex flex-col rounded-2xl border border-white/3 bg-dark-700/95 p-5.5 shadow-md will-change-[transform,opacity] select-none"
+			className="group relative will-change-[transform,opacity]"
 		>
-			<span className="origin-left scale-100 text-2xl font-bold text-white opacity-100 transition-[scale,opacity] delay-150 duration-300 will-change-[opacity,scale] group-hover:scale-95 group-hover:opacity-0">
-				{displayedIdentifier}
-			</span>
-			<span className="absolute origin-left scale-95 text-2xl font-bold text-white opacity-0 transition-[scale,opacity] duration-300 will-change-[opacity,scale] group-hover:scale-100 group-hover:opacity-100 group-hover:delay-300">
-				{hiddenIdentifier}
-			</span>
-			<div className="mt-3 flex items-center justify-between gap-4">
-				<div className="flex flex-col">
-					<div className="flex items-baseline gap-2">
-						<span className="text-3xl text-dark-100" aria-hidden>
-							{useMetric ? Math.round(max) : Math.round((max * 9) / 5 + 32)}
+			{seasonalAccent && (
+				<>
+					<motion.div
+						aria-hidden="true"
+						className="pointer-events-none absolute -inset-1.5 rounded-3xl opacity-60 blur-sm saturate-200 transition duration-300 group-hover:opacity-70"
+						style={{ background: borderGradient }}
+					/>
+					<motion.div
+						aria-hidden="true"
+						className="pointer-events-none absolute -inset-0.5 rounded-2xl"
+						style={{ background: borderGradient }}
+					/>
+				</>
+			)}
+			<div className="relative z-10 flex flex-col rounded-2xl border border-white/3 bg-[#24252b] p-5.5 shadow-md select-none">
+				{seasonalBadgeId && (
+					<div className="absolute top-3 right-3">
+						<div className="group/seasonal relative">
+							<span className="flex h-6 w-6 items-center justify-center rounded-full bg-dark-800/80 text-sm text-white/90 shadow-sm ring-1 ring-white/10 backdrop-blur-sm">
+								<span aria-hidden="true">
+									{getSeasonalEmoji(seasonalBadgeId)}
+								</span>
+								<span className="sr-only">
+									{renderSeasonalLabel(seasonalBadgeId)}
+								</span>
+							</span>
+							<span
+								aria-hidden="true"
+								className="pointer-events-none absolute right-0 bottom-full mb-2 rounded-full border border-white/10 bg-dark-900/95 px-2 py-1 text-xs whitespace-nowrap text-dark-100 opacity-0 shadow-md transition duration-200 group-hover/seasonal:opacity-100"
+							>
+								{renderSeasonalLabel(seasonalBadgeId)}
+							</span>
+						</div>
+					</div>
+				)}
+				<span className="origin-left scale-100 text-2xl font-bold text-white opacity-100 transition-[scale,opacity] delay-150 duration-300 will-change-[opacity,scale] group-hover:scale-95 group-hover:opacity-0">
+					{displayedIdentifier}
+				</span>
+				<span className="absolute origin-left scale-95 text-2xl font-bold text-white opacity-0 transition-[scale,opacity] duration-300 will-change-[opacity,scale] group-hover:scale-100 group-hover:opacity-100 group-hover:delay-300">
+					{hiddenIdentifier}
+				</span>
+				<div className="mt-3 flex items-center justify-between gap-4">
+					<div className="flex flex-col">
+						<div className="flex items-baseline gap-2">
+							<span className="text-3xl text-dark-100" aria-hidden>
+								{useMetric ? Math.round(max) : Math.round((max * 9) / 5 + 32)}
+							</span>
+							<span className="sr-only">
+								{useMetric && (
+									<Trans>
+										The maximum temperature will be {Math.round(max)} degrees
+										celsius.
+									</Trans>
+								)}
+								{!useMetric && (
+									<Trans>
+										The maximum temperature will be{' '}
+										{Math.round((max * 9) / 5 + 32)} degrees fahrenheit.
+									</Trans>
+								)}
+							</span>
+							<span className="text-lg text-dark-300" aria-hidden>
+								{useMetric ? Math.round(min) : Math.round((min * 9) / 5 + 32)}
+							</span>
+							<span className="sr-only">
+								{useMetric && (
+									<Trans>
+										The minimum temperature will be {Math.round(min)} degrees
+										celsius.
+									</Trans>
+								)}
+								{!useMetric && (
+									<Trans>
+										The minimum temperature will be{' '}
+										{Math.round((min * 9) / 5 + 32)} degrees fahrenheit.
+									</Trans>
+								)}
+							</span>
+						</div>
+						<span className="text-dark-100" aria-hidden>
+							{descriptionMap[description as keyof typeof descriptionMap] ?? (
+								<Trans>unknown conditions</Trans>
+							)}
+						</span>
+						<span className="sr-only">
+							<Trans>
+								The expected type of weather is{' '}
+								{descriptionMap[description as keyof typeof descriptionMap] ?? (
+									<Trans>unknown conditions</Trans>
+								)}
+								.
+							</Trans>
+						</span>
+					</div>
+					<Image
+						quality={100}
+						priority
+						src={iconMap[description as keyof typeof iconMap] ?? FewClouds}
+						alt=""
+						width={56}
+						height={56}
+						className="h-14 w-14"
+					/>
+				</div>
+				<div className="mt-4.5 flex flex-row justify-between gap-3">
+					<div className="flex flex-row items-center gap-1">
+						<IconUvIndex size={18} className="text-dark-100" aria-hidden />
+						<span aria-hidden className="text-sm text-dark-100">
+							{Math.round(uv)}
+						</span>
+						<span className="sr-only">
+							<Trans>The maximum UV index will be {Math.round(uv)}.</Trans>
+						</span>
+					</div>
+					<div className="flex flex-row items-center gap-1">
+						<IconWind size={18} className="text-dark-100" aria-hidden />
+						<span aria-hidden className="text-sm text-dark-100">
+							{useMetric && <Trans>{Math.round(wind)} km/h</Trans>}
+							{!useMetric && <Trans>{Math.round(wind / 1.609344)} mph</Trans>}
 						</span>
 						<span className="sr-only">
 							{useMetric && (
 								<Trans>
-									The maximum temperature will be {Math.round(max)} degrees
-									celsius.
+									The maximum wind speed will be {Math.round(wind)} kilometers
+									per hour.
 								</Trans>
 							)}
 							{!useMetric && (
 								<Trans>
-									The maximum temperature will be{' '}
-									{Math.round((max * 9) / 5 + 32)} degrees fahrenheit.
-								</Trans>
-							)}
-						</span>
-						<span className="text-lg text-dark-300" aria-hidden>
-							{useMetric ? Math.round(min) : Math.round((min * 9) / 5 + 32)}
-						</span>
-						<span className="sr-only">
-							{useMetric && (
-								<Trans>
-									The minimum temperature will be {Math.round(min)} degrees
-									celsius.
-								</Trans>
-							)}
-							{!useMetric && (
-								<Trans>
-									The minimum temperature will be{' '}
-									{Math.round((min * 9) / 5 + 32)} degrees fahrenheit.
+									The maximum wind speed will be {Math.round(wind / 1.609344)}{' '}
+									miles per hour.
 								</Trans>
 							)}
 						</span>
 					</div>
-					<span className="text-dark-100" aria-hidden>
-						{descriptionMap[description as keyof typeof descriptionMap] ?? (
-							<Trans>unknown conditions</Trans>
-						)}
-					</span>
-					<span className="sr-only">
-						<Trans>
-							The expected type of weather is{' '}
-							{descriptionMap[description as keyof typeof descriptionMap] ?? (
-								<Trans>unknown conditions</Trans>
-							)}
-							.
-						</Trans>
-					</span>
-				</div>
-				<Image
-					quality={100}
-					priority
-					src={iconMap[description as keyof typeof iconMap] ?? FewClouds}
-					alt=""
-					width={56}
-					height={56}
-					className="h-14 w-14"
-				/>
-			</div>
-			<div className="mt-4.5 flex flex-row justify-between gap-3">
-				<div className="flex flex-row items-center gap-1">
-					<IconUvIndex size={18} className="text-dark-100" aria-hidden />
-					<span aria-hidden className="text-sm text-dark-100">
-						{Math.round(uv)}
-					</span>
-					<span className="sr-only">
-						<Trans>The maximum UV index will be {Math.round(uv)}.</Trans>
-					</span>
-				</div>
-				<div className="flex flex-row items-center gap-1">
-					<IconWind size={18} className="text-dark-100" aria-hidden />
-					<span aria-hidden className="text-sm text-dark-100">
-						{useMetric && <Trans>{Math.round(wind)} km/h</Trans>}
-						{!useMetric && <Trans>{Math.round(wind / 1.609344)} mph</Trans>}
-					</span>
-					<span className="sr-only">
-						{useMetric && (
+					<div className="flex flex-row items-center gap-1">
+						<IconCloudRain size={18} className="text-dark-100" aria-hidden />
+						<span
+							aria-hidden
+							className="text-sm text-dark-100"
+						>{`${Math.round(rain)}%`}</span>
+						<span className="sr-only">
 							<Trans>
-								The maximum wind speed will be {Math.round(wind)} kilometers per
-								hour.
+								There is a {Math.round(rain)}% chance of precipitation.
 							</Trans>
-						)}
-						{!useMetric && (
-							<Trans>
-								The maximum wind speed will be {Math.round(wind / 1.609344)}{' '}
-								miles per hour.
-							</Trans>
-						)}
-					</span>
-				</div>
-				<div className="flex flex-row items-center gap-1">
-					<IconCloudRain size={18} className="text-dark-100" aria-hidden />
-					<span
-						aria-hidden
-						className="text-sm text-dark-100"
-					>{`${Math.round(rain)}%`}</span>
-					<span className="sr-only">
-						<Trans>
-							There is a {Math.round(rain)}% chance of precipitation.
-						</Trans>
-					</span>
+						</span>
+					</div>
 				</div>
 			</div>
 		</motion.div>

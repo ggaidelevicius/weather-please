@@ -48,8 +48,10 @@ const App = () => {
 		changedLocation,
 	)
 	const isOnboarded = Boolean(config.lat && config.lon)
+	const canShowSeasonalSurprises =
+		config.showSeasonalSurprises && isHydrated && isOnboarded
 
-	useSeasonalSurprises({
+	const activeSeasonalSurprise = useSeasonalSurprises({
 		isEnabled: config.showSeasonalSurprises,
 		isHydrated,
 		isOnboarded: isHydrated && isOnboarded,
@@ -173,6 +175,7 @@ const App = () => {
 					delayBaseline={delayBaseline}
 					useMetric={config.useMetric}
 					identifier={config.identifier}
+					showSeasonalSurprises={canShowSeasonalSurprises}
 				/>
 			)
 		})
@@ -224,14 +227,16 @@ const App = () => {
 				</motion.main>
 			</AnimatePresence>
 
-			<a
-				href="https://open-meteo.com/"
-				target="_blank"
-				rel="noopener noreferrer"
-				className="fixed bottom-4 left-4 text-xs text-dark-300 hover:underline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500"
-			>
-				<Trans>weather data provided by open-meteo</Trans>
-			</a>
+			<div className="fixed bottom-4 left-4 flex flex-col items-start gap-2">
+				<a
+					href="https://open-meteo.com/"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="text-xs text-dark-300 hover:underline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500"
+				>
+					<Trans>weather data provided by open-meteo</Trans>
+				</a>
+			</div>
 
 			<Settings handleChange={handleChange} input={input} />
 		</>
