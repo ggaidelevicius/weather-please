@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const GEMINIDS_PEAK_DATES = new Set([
-	'2024-12-14',
-	'2025-12-14',
 	'2026-12-14',
 	'2027-12-14',
 	'2028-12-14',
@@ -28,7 +26,7 @@ const GEMINIDS_OVERLAY_OPACITY = '0.78'
 const GEMINIDS_OVERLAY_FILTER = 'saturate(120%)'
 const GEMINIDS_MAX_DPR = 2
 const GEMINIDS_METEOR_COUNT = 12
-const GEMINIDS_STAR_COUNT = 110
+const GEMINIDS_STAR_COUNT = 140
 const GEMINIDS_METEOR_LENGTH_RANGE = { min: 120, max: 230 }
 const GEMINIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.3 }
 const GEMINIDS_METEOR_SPEED_RANGE = { min: 460, max: 760 }
