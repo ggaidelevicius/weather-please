@@ -14,6 +14,7 @@ import { geminidsEvent } from './geminids'
 import { eidAlFitrEvent } from './eid-al-fitr'
 import { eidAlAdhaEvent } from './eid-al-adha'
 import { hanukkahEvent } from './hanukkah'
+import { christmasEvent } from './christmas'
 import type {
 	Hemisphere,
 	SeasonalEvent,
@@ -31,6 +32,7 @@ const seasonalEvents: SeasonalEvent[] = [
 	eidAlFitrEvent,
 	eidAlAdhaEvent,
 	hanukkahEvent,
+	christmasEvent,
 	holiEvent,
 	summerSolsticeEvent,
 	winterSolsticeEvent,

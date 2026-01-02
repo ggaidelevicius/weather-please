@@ -14,6 +14,6 @@
 - [x] eid al-fitr
 - [x] eid al-adha
 - [x] hanukkah
-- [] christmas
+- [x] Christmas Day (Dec 25): gentle snowfall with warm holiday glow.
 - [x] perseids
 - [x] geminids

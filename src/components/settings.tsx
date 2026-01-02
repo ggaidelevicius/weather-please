@@ -259,6 +259,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									checked={input.showHanukkahEvent}
 									onChange={(e) => handleChange('showHanukkahEvent', e)}
 								/>
+								<Switch
+									label={<Trans>Show Christmas Day event</Trans>}
+									checked={input.showChristmasEvent}
+									onChange={(e) => handleChange('showChristmasEvent', e)}
+								/>
 								<h3 className="mt-8 text-sm font-semibold tracking-wide text-white uppercase">
 									<Trans>Other holidays</Trans>
 								</h3>

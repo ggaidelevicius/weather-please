@@ -104,6 +104,9 @@ const App = () => {
 		if (config.showHanukkahEvent) {
 			enabledSeasonalEvents.add('hanukkah')
 		}
+		if (config.showChristmasEvent) {
+			enabledSeasonalEvents.add('christmas-day')
+		}
 	}
 
 	const activeSeasonalEvent = useSeasonalEvents({
