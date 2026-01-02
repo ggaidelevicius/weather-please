@@ -232,6 +232,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									onChange={(e) => handleChange('showEtaAquariidsEvent', e)}
 								/>
 								<Switch
+									label={<Trans>Show Orionids meteor shower event</Trans>}
+									checked={input.showOrionidsEvent}
+									onChange={(e) => handleChange('showOrionidsEvent', e)}
+								/>
+								<Switch
 									label={<Trans>Show Perseids meteor shower event</Trans>}
 									checked={input.showPerseidsEvent}
 									onChange={(e) => handleChange('showPerseidsEvent', e)}
