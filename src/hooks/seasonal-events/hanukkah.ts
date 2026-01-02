@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const HANUKKAH_START_DATES = new Set([
-	'2024-12-25',
-	'2025-12-14',
 	'2026-12-04',
 	'2027-11-25',
 	'2028-12-12',

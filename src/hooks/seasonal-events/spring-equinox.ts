@@ -52,7 +52,9 @@ const SPRING_FADE_IN_DURATION_RANGE = { min: 1000, max: 1900 }
 const SPRING_SCALE_RANGE = { min: 0.5, max: 0.9 }
 const SPRING_SIZE_RANGE = { min: 16, max: 30 }
 const SPRING_VELOCITY_X_RANGE = { min: -8, max: 8 }
-const SPRING_VELOCITY_Y_RANGE = { min: -16, max: -6 }
+const SPRING_VELOCITY_Y_RANGE = { min: -10, max: -3 }
+const SPRING_FLOAT_VELOCITY_Y_RANGE = { min: -1.5, max: 1.5 }
+const SPRING_FLOAT_CHANCE = 0.4
 const SPRING_SWAY_RANGE = { min: 2.5, max: 8 }
 const SPRING_ROTATION_SPEED_RANGE = { min: -0.35, max: 0.35 }
 const SPRING_SWAY_SPEED_X = 0.00055
@@ -148,30 +150,37 @@ async function launchSpringEquinoxGrowth() {
 			SPRING_EMOJIS[Math.floor(Math.random() * SPRING_EMOJIS.length)]
 		const randomGlow = () =>
 			SPRING_GLOW_COLORS[Math.floor(Math.random() * SPRING_GLOW_COLORS.length)]
-		const createParticle = (time: number): SproutParticle => ({
-			x: randomInRange({
-				min: -SPRING_FIELD_MARGIN,
-				max: width + SPRING_FIELD_MARGIN,
-			}),
-			y: randomInRange({
-				min: height * SPRING_SPAWN_Y_RANGE.min,
-				max: height * SPRING_SPAWN_Y_RANGE.max,
-			}),
-			vx: randomInRange(SPRING_VELOCITY_X_RANGE),
-			vy: randomInRange(SPRING_VELOCITY_Y_RANGE),
-			size: randomInRange(SPRING_SIZE_RANGE),
-			rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-			rotationSpeed: randomInRange(SPRING_ROTATION_SPEED_RANGE),
-			opacity: randomInRange({ min: 0.45, max: 0.85 }),
-			emoji: randomEmoji(),
-			glow: randomInRange(SPRING_GLOW_RANGE),
-			glowColor: randomGlow(),
-			phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-			sway: randomInRange(SPRING_SWAY_RANGE),
-			birthTime: time + randomInRange(SPRING_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(SPRING_FADE_IN_DURATION_RANGE),
-			scaleFrom: randomInRange(SPRING_SCALE_RANGE),
-		})
+		const createParticle = (time: number): SproutParticle => {
+			const vyRange =
+				Math.random() < SPRING_FLOAT_CHANCE
+					? SPRING_FLOAT_VELOCITY_Y_RANGE
+					: SPRING_VELOCITY_Y_RANGE
+
+			return {
+				x: randomInRange({
+					min: -SPRING_FIELD_MARGIN,
+					max: width + SPRING_FIELD_MARGIN,
+				}),
+				y: randomInRange({
+					min: height * SPRING_SPAWN_Y_RANGE.min,
+					max: height * SPRING_SPAWN_Y_RANGE.max,
+				}),
+				vx: randomInRange(SPRING_VELOCITY_X_RANGE),
+				vy: randomInRange(vyRange),
+				size: randomInRange(SPRING_SIZE_RANGE),
+				rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
+				rotationSpeed: randomInRange(SPRING_ROTATION_SPEED_RANGE),
+				opacity: randomInRange({ min: 0.45, max: 0.85 }),
+				emoji: randomEmoji(),
+				glow: randomInRange(SPRING_GLOW_RANGE),
+				glowColor: randomGlow(),
+				phase: randomInRange({ min: 0, max: Math.PI * 2 }),
+				sway: randomInRange(SPRING_SWAY_RANGE),
+				birthTime: time + randomInRange(SPRING_FADE_IN_DELAY_RANGE),
+				fadeDuration: randomInRange(SPRING_FADE_IN_DURATION_RANGE),
+				scaleFrom: randomInRange(SPRING_SCALE_RANGE),
+			}
+		}
 		const getSpriteKey = (
 			emoji: string,
 			size: number,

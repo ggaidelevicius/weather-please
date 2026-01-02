@@ -23,12 +23,12 @@ msgstr ""
 #~ msgstr "次の1時間で{0}インチの降水量が予想されます"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:453
+#: src/components/tile.tsx:533
 msgid "{0} km/h"
 msgstr "{0} キロメートル/時"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:454
+#: src/components/tile.tsx:534
 msgid "{0} mph"
 msgstr "{0} マイル/時"
 
@@ -79,7 +79,7 @@ msgstr "<0>位置情報へのアクセスが拒否されました。</0> ブラ�
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>位置情報へのアクセスが拒否されました。</0> アドレスバーの位置情報アイコンをクリックし、\"このサイトが位置情報に常にアクセスすることを許可\"を選択してください。その後、下のボタンをクリックして再度お試しください。"
 
-#: src/components/settings.tsx:307
+#: src/components/settings.tsx:361
 msgid "☕ Gift a coffee"
 msgstr "☕ コーヒーを贈る"
 
@@ -87,11 +87,11 @@ msgstr "☕ コーヒーを贈る"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ フィードバックを送信"
 
-#: src/components/settings.tsx:291
+#: src/components/settings.tsx:345
 msgid "🌟 Leave a review"
 msgstr "🌟 レビューを残す"
 
-#: src/components/settings.tsx:299
+#: src/components/settings.tsx:353
 msgid "🐛 Report a bug"
 msgstr "🐛 バグを報告"
 
@@ -99,7 +99,7 @@ msgstr "🐛 バグを報告"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 機能をリクエスト"
 
-#: src/components/settings.tsx:318
+#: src/components/settings.tsx:372
 msgid "🔒 Privacy policy"
 msgstr "🔒 プライバシーポリシー"
 
@@ -147,7 +147,7 @@ msgstr "天文"
 msgid "August"
 msgstr "8月"
 
-#: src/components/tile.tsx:194
+#: src/components/tile.tsx:234
 msgid "Autumn Equinox"
 msgstr "秋分"
 
@@ -170,6 +170,10 @@ msgstr "秋分"
 #: src/pages/feedback/index.tsx:268
 #~ msgid "Changed needs"
 #~ msgstr "変更されたニーズ"
+
+#: src/components/tile.tsx:318
+msgid "Christmas Day"
+msgstr "クリスマス"
 
 #: src/components/tile.tsx:61
 msgid "clear sky"
@@ -195,6 +199,10 @@ msgstr "日付"
 msgid "Day"
 msgstr "日"
 
+#: src/components/tile.tsx:294
+msgid "Day of the Dead"
+msgstr "死者の日"
+
 #: src/components/tile.tsx:113
 msgid "December"
 msgstr "12月"
@@ -219,7 +227,7 @@ msgstr "着氷霧"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "使用または理解が難しい"
 
-#: src/components/tile.tsx:198
+#: src/components/tile.tsx:238
 msgid "Diwali"
 msgstr "ディワリ"
 
@@ -231,15 +239,19 @@ msgstr "あなたが人間の場合、このフィールドを入力しないで
 #~ msgid "Don't save"
 #~ msgstr "保存しない"
 
-#: src/components/tile.tsx:218
+#: src/components/tile.tsx:258
 msgid "Earth Day"
 msgstr "アースデイ"
 
-#: src/components/tile.tsx:234
+#: src/components/tile.tsx:298
+msgid "Easter"
+msgstr "イースター"
+
+#: src/components/tile.tsx:310
 msgid "Eid al-Adha"
 msgstr "イード・アル＝アドハー"
 
-#: src/components/tile.tsx:230
+#: src/components/tile.tsx:306
 msgid "Eid al-Fitr"
 msgstr "イード・アル＝フィトル"
 
@@ -254,6 +266,10 @@ msgstr "イード・アル＝フィトル"
 #: src/pages/feedback/index.tsx:475
 #~ msgid "Error submitting feedback. Try again later."
 #~ msgstr "フィードバックの送信エラー。後でもう一度試してください。"
+
+#: src/components/tile.tsx:274
+msgid "Eta Aquariids Meteor Shower"
+msgstr "みずがめ座η流星群"
 
 #: src/components/weather-alert.tsx:46
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
@@ -283,7 +299,7 @@ msgstr "{timeUntilExtremeUv}時間後から極端なUVが始まります"
 msgid "February"
 msgstr "2月"
 
-#: src/components/settings.tsx:283
+#: src/components/settings.tsx:337
 msgid "Feedback"
 msgstr "フィードバック"
 
@@ -299,7 +315,7 @@ msgstr "フィードバック"
 msgid "Friday"
 msgstr "金曜日"
 
-#: src/components/tile.tsx:226
+#: src/components/tile.tsx:302
 msgid "Geminids Meteor Shower"
 msgstr "ふたご座流星群"
 
@@ -323,11 +339,11 @@ msgstr "次の1時間は一般的に強風"
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}時間後から一般的に強風が始まる"
 
-#: src/components/tile.tsx:214
+#: src/components/tile.tsx:254
 msgid "Halloween"
 msgstr "ハロウィン"
 
-#: src/components/tile.tsx:238
+#: src/components/tile.tsx:314
 msgid "Hanukkah"
 msgstr "ハヌカー"
 
@@ -347,7 +363,7 @@ msgstr "激しい雪降り"
 msgid "heavy snowfall"
 msgstr "大雪"
 
-#: src/components/tile.tsx:202
+#: src/components/tile.tsx:242
 msgid "Holi"
 msgstr "ホーリー"
 
@@ -423,9 +439,13 @@ msgstr "緯度"
 msgid "Leave a review"
 msgstr "レビューを残す"
 
-#: src/components/settings.tsx:310
+#: src/components/settings.tsx:364
 msgid "Legal"
 msgstr "法的"
+
+#: src/components/tile.tsx:282
+msgid "Leonids Meteor Shower"
+msgstr "しし座流星群"
 
 #: src/components/tile.tsx:67
 msgid "light drizzle"
@@ -467,9 +487,13 @@ msgstr "次の1時間は視界が悪い"
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "{timeUntilLowVisibility}時間後から視界が悪くなります"
 
-#: src/components/tile.tsx:186
+#: src/components/tile.tsx:226
 msgid "Lunar New Year"
 msgstr "旧正月"
+
+#: src/components/tile.tsx:270
+msgid "Lyrids Meteor Shower"
+msgstr "こと座流星群"
 
 #: src/components/tile.tsx:62
 #: src/components/tile.tsx:65
@@ -520,7 +544,7 @@ msgstr "再度表示しない"
 #~ msgid "New tab"
 #~ msgstr "新しいタブ"
 
-#: src/components/tile.tsx:182
+#: src/components/tile.tsx:222
 msgid "New Year's Day"
 msgstr "元日"
 
@@ -548,7 +572,11 @@ msgstr "予報する日数"
 msgid "October"
 msgstr "10月"
 
-#: src/components/settings.tsx:263
+#: src/components/tile.tsx:278
+msgid "Orionids Meteor Shower"
+msgstr "オリオン座流星群"
+
+#: src/components/settings.tsx:312
 msgid "Other holidays"
 msgstr "その他の祝日"
 
@@ -568,7 +596,7 @@ msgstr "一部曇り"
 msgid "Periodically update location automatically"
 msgstr "定期的に位置情報を自動更新"
 
-#: src/components/tile.tsx:222
+#: src/components/tile.tsx:262
 msgid "Perseids Meteor Shower"
 msgstr "ペルセウス座流星群"
 
@@ -576,7 +604,11 @@ msgstr "ペルセウス座流星群"
 #~ msgid "Please enter it manually below."
 #~ msgstr "以下に手動で入力してください。"
 
-#: src/components/settings.tsx:230
+#: src/components/tile.tsx:266
+msgid "Quadrantids Meteor Shower"
+msgstr "しぶんぎ座流星群"
+
+#: src/components/settings.tsx:269
 msgid "Religious & cultural"
 msgstr "宗教・文化"
 
@@ -588,7 +620,7 @@ msgstr "バグを報告する"
 #~ msgid "Resource usage"
 #~ msgstr "リソースの使用"
 
-#: src/pages/index.tsx:278
+#: src/pages/index.tsx:308
 msgid "Retry"
 msgstr "再試行"
 
@@ -634,7 +666,15 @@ msgstr "設定"
 msgid "Show Autumn Equinox event"
 msgstr "秋分を表示"
 
-#: src/components/settings.tsx:238
+#: src/components/settings.tsx:307
+msgid "Show Christmas Day event"
+msgstr "クリスマスを表示"
+
+#: src/components/settings.tsx:330
+msgid "Show Day of the Dead event"
+msgstr "死者の日を表示"
+
+#: src/components/settings.tsx:282
 msgid "Show Diwali event"
 msgstr "ディワリを表示"
 
@@ -642,27 +682,35 @@ msgstr "ディワリを表示"
 msgid "Show Earth Day event"
 msgstr "アースデイを表示"
 
-#: src/components/settings.tsx:253
+#: src/components/settings.tsx:277
+msgid "Show Easter event"
+msgstr "イースターを表示"
+
+#: src/components/settings.tsx:297
 msgid "Show Eid al-Adha event"
 msgstr "イード・アル＝アドハーを表示"
 
-#: src/components/settings.tsx:248
+#: src/components/settings.tsx:292
 msgid "Show Eid al-Fitr event"
 msgstr "イード・アル＝フィトルを表示"
+
+#: src/components/settings.tsx:230
+msgid "Show Eta Aquariids meteor shower event"
+msgstr "みずがめ座η流星群を表示"
 
 #: src/components/settings.tsx:152
 msgid "Show extreme UV alerts"
 msgstr "極端なUVアラートを表示"
 
-#: src/components/settings.tsx:225
+#: src/components/settings.tsx:264
 msgid "Show Geminids meteor shower event"
 msgstr "ふたご座流星群を表示"
 
-#: src/components/settings.tsx:276
+#: src/components/settings.tsx:325
 msgid "Show Halloween event"
 msgstr "ハロウィンを表示"
 
-#: src/components/settings.tsx:258
+#: src/components/settings.tsx:302
 msgid "Show Hanukkah event"
 msgstr "ハヌカーを表示"
 
@@ -670,25 +718,41 @@ msgstr "ハヌカーを表示"
 msgid "Show high precipitation alerts"
 msgstr "高降水量アラートを表示"
 
-#: src/components/settings.tsx:243
+#: src/components/settings.tsx:287
 msgid "Show Holi event"
 msgstr "ホーリーを表示"
+
+#: src/components/settings.tsx:240
+msgid "Show Leonids meteor shower event"
+msgstr "しし座流星群を表示"
 
 #: src/components/settings.tsx:167
 msgid "Show low visibility alerts"
 msgstr "低視認性アラートを表示"
 
-#: src/components/settings.tsx:233
+#: src/components/settings.tsx:272
 msgid "Show Lunar New Year event"
 msgstr "旧正月を表示"
 
-#: src/components/settings.tsx:266
+#: src/components/settings.tsx:225
+msgid "Show Lyrids meteor shower event"
+msgstr "こと座流星群を表示"
+
+#: src/components/settings.tsx:315
 msgid "Show New Year's Day event"
 msgstr "元日を表示"
 
-#: src/components/settings.tsx:220
+#: src/components/settings.tsx:235
+msgid "Show Orionids meteor shower event"
+msgstr "オリオン座流星群を表示"
+
+#: src/components/settings.tsx:259
 msgid "Show Perseids meteor shower event"
 msgstr "ペルセウス座流星群を表示"
+
+#: src/components/settings.tsx:220
+msgid "Show Quadrantids meteor shower event"
+msgstr "しぶんぎ座流星群を表示"
 
 #: src/components/settings.tsx:177
 msgid "Show seasonal events"
@@ -710,7 +774,15 @@ msgstr "強風警報を表示する"
 msgid "Show Summer Solstice event"
 msgstr "夏至を表示"
 
-#: src/components/settings.tsx:271
+#: src/components/settings.tsx:252
+msgid "Show total lunar eclipse event"
+msgstr "皆既月食を表示"
+
+#: src/components/settings.tsx:245
+msgid "Show total solar eclipse event"
+msgstr "皆既日食を表示"
+
+#: src/components/settings.tsx:320
 msgid "Show Valentine's Day event"
 msgstr "バレンタインデーを表示"
 
@@ -746,7 +818,7 @@ msgstr "小雪"
 msgid "snow grains"
 msgstr "粉雪"
 
-#: src/components/tile.tsx:190
+#: src/components/tile.tsx:230
 msgid "Spring Equinox"
 msgstr "春分"
 
@@ -786,7 +858,7 @@ msgstr "{timeUntilStrongWind}時間後に強い風の突風が始まります"
 msgid "Submit"
 msgstr "提出"
 
-#: src/components/tile.tsx:206
+#: src/components/tile.tsx:246
 msgid "Summer Solstice"
 msgstr "夏至"
 
@@ -795,7 +867,7 @@ msgid "Sunday"
 msgstr "日曜日"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/components/tile.tsx:421
+#: src/components/tile.tsx:501
 msgid "The expected type of weather is {0}."
 msgstr "予想される天気は{0}です。"
 
@@ -804,42 +876,42 @@ msgid "The location request timed out. Please check your internet connection and
 msgstr "位置情報のリクエストがタイムアウトしました。インターネット接続を確認して再度お試しください。"
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile.tsx:385
+#: src/components/tile.tsx:465
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "最高気温は{0}度Cになります。"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile.tsx:391
+#: src/components/tile.tsx:471
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "最高気温は{0}度ファーレンハイトになります。"
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/tile.tsx:447
+#: src/components/tile.tsx:527
 msgid "The maximum UV index will be {0}."
 msgstr "最大UV指数は{0}になります。"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:458
+#: src/components/tile.tsx:538
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "最大風速は時速{0}キロメートルになります。"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:464
+#: src/components/tile.tsx:544
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "最大風速は時速{0}マイルになります。"
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile.tsx:402
+#: src/components/tile.tsx:482
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "最低気温は{0}度セルシウスになります。"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile.tsx:408
+#: src/components/tile.tsx:488
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "最低気温は{0}度ファーレンハイトになります。"
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/tile.tsx:478
+#: src/components/tile.tsx:558
 msgid "There is a {0}% chance of precipitation."
 msgstr "降水確率は{0}%です。"
 
@@ -871,6 +943,14 @@ msgstr "始めるには、言語と場所を設定しましょう。"
 #~ msgid "Too much battery usage"
 #~ msgstr "過度のバッテリー使用"
 
+#: src/components/tile.tsx:290
+msgid "Total Lunar Eclipse"
+msgstr "皆既月食"
+
+#: src/components/tile.tsx:286
+msgid "Total Solar Eclipse"
+msgstr "皆既日食"
+
 #: src/components/initialisation.tsx:190
 msgid "Try again"
 msgstr "もう一度試す"
@@ -879,7 +959,7 @@ msgstr "もう一度試す"
 msgid "Tuesday"
 msgstr "火曜日"
 
-#: src/pages/index.tsx:272
+#: src/pages/index.tsx:302
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "天気データを取得できませんでした。インターネット接続を確認して再度お試しください。"
 
@@ -887,8 +967,8 @@ msgstr "天気データを取得できませんでした。インターネット
 #~ msgid "Uninstall feedback"
 #~ msgstr "アンインストールに関するフィードバック"
 
-#: src/components/tile.tsx:417
-#: src/components/tile.tsx:424
+#: src/components/tile.tsx:497
+#: src/components/tile.tsx:504
 msgid "unknown conditions"
 msgstr "不明な状態"
 
@@ -914,7 +994,7 @@ msgstr "不明な状態"
 msgid "Use metric number format"
 msgstr "メトリック数値フォーマットを使用する"
 
-#: src/components/tile.tsx:241
+#: src/components/tile.tsx:321
 msgid "Valentine's Day"
 msgstr "バレンタインデー"
 
@@ -930,7 +1010,7 @@ msgstr "激しいにわか雨"
 msgid "Weather"
 msgstr "天気"
 
-#: src/pages/index.tsx:299
+#: src/pages/index.tsx:329
 msgid "weather data provided by open-meteo"
 msgstr "天気データはopen-meteoによって提供されています"
 
@@ -943,7 +1023,7 @@ msgstr "天気データはopen-meteoによって提供されています"
 msgid "Wednesday"
 msgstr "水曜日"
 
-#: src/components/tile.tsx:210
+#: src/components/tile.tsx:250
 msgid "Winter Solstice"
 msgstr "冬至"
 
@@ -983,9 +1063,3 @@ msgstr "現在、位置情報を利用できません。デバイスの位置情
 #: src/app/bug/page.tsx:62
 msgid "Your message"
 msgstr "あなたのメッセージ"
-
-msgid "Christmas Day"
-msgstr "クリスマス"
-
-msgid "Show Christmas Day event"
-msgstr "クリスマスを表示"

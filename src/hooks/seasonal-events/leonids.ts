@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const LEONIDS_PEAK_DATES = new Set([
-	'2025-11-17',
-	'2025-11-18',
 	'2026-11-17',
 	'2026-11-18',
 	'2027-11-17',

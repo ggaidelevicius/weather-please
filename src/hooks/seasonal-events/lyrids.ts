@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const LYRIDS_PEAK_DATES = new Set([
-	'2025-04-22',
-	'2025-04-23',
 	'2026-04-22',
 	'2026-04-23',
 	'2027-04-22',

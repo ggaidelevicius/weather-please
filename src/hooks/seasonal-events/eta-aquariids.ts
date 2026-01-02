@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const ETA_AQUARIIDS_PEAK_DATES = new Set([
-	'2025-05-05',
-	'2025-05-06',
 	'2026-05-05',
 	'2026-05-06',
 	'2027-05-05',

@@ -23,12 +23,12 @@ msgstr ""
 #~ msgstr "{0} ইঞ্চি বৃষ্টিপাত প্রত্যাশিত আগামী ঘণ্টায়"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:453
+#: src/components/tile.tsx:533
 msgid "{0} km/h"
 msgstr "{0} কিমি/ঘণ্টা"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:454
+#: src/components/tile.tsx:534
 msgid "{0} mph"
 msgstr "{0} মাইল/ঘণ্টা"
 
@@ -79,7 +79,7 @@ msgstr "<0>অবস্থান অ্যাক্সেস বাতিল ক
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>অবস্থান অ্যাক্সেস বাতিল করা হয়েছে.</0> ঠিকানাবারের অবস্থান আইকনে ক্লিক করে \"সবসময় আপনার অবস্থান অ্যাক্সেস করতে অনুমতি দিন\" নির্বাচন করুন. তারপর নিচের বোতামে ক্লিক করে আবার চেষ্টা করুন."
 
-#: src/components/settings.tsx:307
+#: src/components/settings.tsx:361
 msgid "☕ Gift a coffee"
 msgstr "☕ একটি কফি উপহার দিন"
 
@@ -87,11 +87,11 @@ msgstr "☕ একটি কফি উপহার দিন"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ প্রতিক্রিয়া জমা দিন"
 
-#: src/components/settings.tsx:291
+#: src/components/settings.tsx:345
 msgid "🌟 Leave a review"
 msgstr "🌟 একটি পর্যালোচনা ছেড়ে দিন"
 
-#: src/components/settings.tsx:299
+#: src/components/settings.tsx:353
 msgid "🐛 Report a bug"
 msgstr "🐛 একটি বাগ প্রতিবেদন করুন"
 
@@ -99,7 +99,7 @@ msgstr "🐛 একটি বাগ প্রতিবেদন করুন"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 একটি বৈশিষ্ট্য অনুরোধ করুন"
 
-#: src/components/settings.tsx:318
+#: src/components/settings.tsx:372
 msgid "🔒 Privacy policy"
 msgstr "🔒 গোপনীয়তা নীতি"
 
@@ -147,7 +147,7 @@ msgstr "জ্যোতির্বিজ্ঞান"
 msgid "August"
 msgstr "আগস্ট"
 
-#: src/components/tile.tsx:194
+#: src/components/tile.tsx:234
 msgid "Autumn Equinox"
 msgstr "শরৎ বিষুব"
 
@@ -170,6 +170,10 @@ msgstr "শরৎ বিষুব"
 #: src/pages/feedback/index.tsx:268
 #~ msgid "Changed needs"
 #~ msgstr "প্রয়োজনীয়তা পরিবর্তন হয়েছে"
+
+#: src/components/tile.tsx:318
+msgid "Christmas Day"
+msgstr "বড়দিন"
 
 #: src/components/tile.tsx:61
 msgid "clear sky"
@@ -195,6 +199,10 @@ msgstr "তারিখ"
 msgid "Day"
 msgstr "দিন"
 
+#: src/components/tile.tsx:294
+msgid "Day of the Dead"
+msgstr "মৃতদের দিবস"
+
 #: src/components/tile.tsx:113
 msgid "December"
 msgstr "ডিসেম্বর"
@@ -219,7 +227,7 @@ msgstr "রাইম কুয়াশা জমা"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "ব্যবহার করা বা বোঝা কঠিন"
 
-#: src/components/tile.tsx:198
+#: src/components/tile.tsx:238
 msgid "Diwali"
 msgstr "দিওয়ালি"
 
@@ -231,15 +239,19 @@ msgstr "আপনি যদি মানুষ হন, তাহলে এই �
 #~ msgid "Don't save"
 #~ msgstr "সংরক্ষণ করবেন না"
 
-#: src/components/tile.tsx:218
+#: src/components/tile.tsx:258
 msgid "Earth Day"
 msgstr "পৃথিবী দিবস"
 
-#: src/components/tile.tsx:234
+#: src/components/tile.tsx:298
+msgid "Easter"
+msgstr "ইস্টার"
+
+#: src/components/tile.tsx:310
 msgid "Eid al-Adha"
 msgstr "ঈদুল আজহা"
 
-#: src/components/tile.tsx:230
+#: src/components/tile.tsx:306
 msgid "Eid al-Fitr"
 msgstr "ঈদুল ফিতর"
 
@@ -254,6 +266,10 @@ msgstr "ঈদুল ফিতর"
 #: src/pages/feedback/index.tsx:475
 #~ msgid "Error submitting feedback. Try again later."
 #~ msgstr "প্রতিক্রিয়া জমা দেওয়ার সময় ত্রুটি। পরে আবার চেষ্টা করুন।"
+
+#: src/components/tile.tsx:274
+msgid "Eta Aquariids Meteor Shower"
+msgstr "এটা অ্যাকুয়ারিডস উল্কাবৃষ্টি"
 
 #: src/components/weather-alert.tsx:46
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
@@ -283,7 +299,7 @@ msgstr "{timeUntilExtremeUv} ঘণ্টা পরে আত্যধিক ই
 msgid "February"
 msgstr "ফেব্রুয়ারি"
 
-#: src/components/settings.tsx:283
+#: src/components/settings.tsx:337
 msgid "Feedback"
 msgstr "প্রতিক্রিয়া"
 
@@ -299,7 +315,7 @@ msgstr "প্রতিক্রিয়া"
 msgid "Friday"
 msgstr "শুক্রবার"
 
-#: src/components/tile.tsx:226
+#: src/components/tile.tsx:302
 msgid "Geminids Meteor Shower"
 msgstr "জেমিনিডস উল্কাবৃষ্টি"
 
@@ -323,11 +339,11 @@ msgstr "আগামী এক ঘণ্টা ধরে সাধারণত �
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind} ঘণ্টা পর থেকে সাধারণত প্রবল বাতাস শুরু হবে"
 
-#: src/components/tile.tsx:214
+#: src/components/tile.tsx:254
 msgid "Halloween"
 msgstr "হ্যালোইন"
 
-#: src/components/tile.tsx:238
+#: src/components/tile.tsx:314
 msgid "Hanukkah"
 msgstr "হনুক্কাহ"
 
@@ -347,7 +363,7 @@ msgstr "ভারী তুষারঝড়"
 msgid "heavy snowfall"
 msgstr "ভারী তুষারপাত"
 
-#: src/components/tile.tsx:202
+#: src/components/tile.tsx:242
 msgid "Holi"
 msgstr "হোলি"
 
@@ -423,9 +439,13 @@ msgstr "অক্ষাংশ"
 msgid "Leave a review"
 msgstr "একটি পর্যালোচনা দিন"
 
-#: src/components/settings.tsx:310
+#: src/components/settings.tsx:364
 msgid "Legal"
 msgstr "আইনগত"
+
+#: src/components/tile.tsx:282
+msgid "Leonids Meteor Shower"
+msgstr "লিওনিডস উল্কাবৃষ্টি"
 
 #: src/components/tile.tsx:67
 msgid "light drizzle"
@@ -467,9 +487,13 @@ msgstr "পরের এক ঘণ্টা ধরে কম দৃশ্যত�
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "{timeUntilLowVisibility} ঘণ্টা পরে কম দৃশ্যতা শুরু হবে"
 
-#: src/components/tile.tsx:186
+#: src/components/tile.tsx:226
 msgid "Lunar New Year"
 msgstr "চন্দ্র নববর্ষ"
+
+#: src/components/tile.tsx:270
+msgid "Lyrids Meteor Shower"
+msgstr "লাইরিডস উল্কাবৃষ্টি"
 
 #: src/components/tile.tsx:62
 #: src/components/tile.tsx:65
@@ -520,7 +544,7 @@ msgstr "এটি আবার দেখাবেন না"
 #~ msgid "New tab"
 #~ msgstr "নতুন ট্যাব"
 
-#: src/components/tile.tsx:182
+#: src/components/tile.tsx:222
 msgid "New Year's Day"
 msgstr "নববর্ষ দিবস"
 
@@ -548,7 +572,11 @@ msgstr "পূর্বাভাস দেওয়ার দিনের সং
 msgid "October"
 msgstr "অক্টোবর"
 
-#: src/components/settings.tsx:263
+#: src/components/tile.tsx:278
+msgid "Orionids Meteor Shower"
+msgstr "ওরায়োনিডস উল্কাবৃষ্টি"
+
+#: src/components/settings.tsx:312
 msgid "Other holidays"
 msgstr "অন্যান্য উৎসব"
 
@@ -568,7 +596,7 @@ msgstr "আংশিকভাবে মেঘলা"
 msgid "Periodically update location automatically"
 msgstr "পূর্বনির্ধারিত সময়ে স্থান স্বয়ংক্রিয়ভাবে আপডেট করুন"
 
-#: src/components/tile.tsx:222
+#: src/components/tile.tsx:262
 msgid "Perseids Meteor Shower"
 msgstr "পারসিডস উল্কাবৃষ্টি"
 
@@ -576,7 +604,11 @@ msgstr "পারসিডস উল্কাবৃষ্টি"
 #~ msgid "Please enter it manually below."
 #~ msgstr "দয়া করে এটি নিচে ম্যানুয়ালি লিখুন।"
 
-#: src/components/settings.tsx:230
+#: src/components/tile.tsx:266
+msgid "Quadrantids Meteor Shower"
+msgstr "কোয়াড্রান্টিডস উল্কাবৃষ্টি"
+
+#: src/components/settings.tsx:269
 msgid "Religious & cultural"
 msgstr "ধর্মীয় ও সাংস্কৃতিক"
 
@@ -588,7 +620,7 @@ msgstr "একটি বাগ রিপোর্ট করুন"
 #~ msgid "Resource usage"
 #~ msgstr "সম্পদ ব্যবহার"
 
-#: src/pages/index.tsx:278
+#: src/pages/index.tsx:308
 msgid "Retry"
 msgstr "পুনরায় চেষ্টা করুন"
 
@@ -634,7 +666,15 @@ msgstr "সেটিংস"
 msgid "Show Autumn Equinox event"
 msgstr "শরৎ বিষুব দেখান"
 
-#: src/components/settings.tsx:238
+#: src/components/settings.tsx:307
+msgid "Show Christmas Day event"
+msgstr "বড়দিন দেখান"
+
+#: src/components/settings.tsx:330
+msgid "Show Day of the Dead event"
+msgstr "মৃতদের দিবস ইভেন্ট দেখান"
+
+#: src/components/settings.tsx:282
 msgid "Show Diwali event"
 msgstr "দিওয়ালি দেখান"
 
@@ -642,27 +682,35 @@ msgstr "দিওয়ালি দেখান"
 msgid "Show Earth Day event"
 msgstr "পৃথিবী দিবস দেখান"
 
-#: src/components/settings.tsx:253
+#: src/components/settings.tsx:277
+msgid "Show Easter event"
+msgstr "ইস্টার ইভেন্ট দেখান"
+
+#: src/components/settings.tsx:297
 msgid "Show Eid al-Adha event"
 msgstr "ঈদুল আজহা দেখান"
 
-#: src/components/settings.tsx:248
+#: src/components/settings.tsx:292
 msgid "Show Eid al-Fitr event"
 msgstr "ঈদুল ফিতর দেখান"
+
+#: src/components/settings.tsx:230
+msgid "Show Eta Aquariids meteor shower event"
+msgstr "এটা অ্যাকুয়ারিডস উল্কাবৃষ্টি ইভেন্ট দেখান"
 
 #: src/components/settings.tsx:152
 msgid "Show extreme UV alerts"
 msgstr "এক্সট্রিম ইউভি সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:225
+#: src/components/settings.tsx:264
 msgid "Show Geminids meteor shower event"
 msgstr "জেমিনিডস উল্কাবৃষ্টি দেখান"
 
-#: src/components/settings.tsx:276
+#: src/components/settings.tsx:325
 msgid "Show Halloween event"
 msgstr "হ্যালোইন দেখান"
 
-#: src/components/settings.tsx:258
+#: src/components/settings.tsx:302
 msgid "Show Hanukkah event"
 msgstr "হনুক্কাহ দেখান"
 
@@ -670,25 +718,41 @@ msgstr "হনুক্কাহ দেখান"
 msgid "Show high precipitation alerts"
 msgstr "উচ্চ বৃষ্টির সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:243
+#: src/components/settings.tsx:287
 msgid "Show Holi event"
 msgstr "হোলি দেখান"
+
+#: src/components/settings.tsx:240
+msgid "Show Leonids meteor shower event"
+msgstr "লিওনিডস উল্কাবৃষ্টি ইভেন্ট দেখান"
 
 #: src/components/settings.tsx:167
 msgid "Show low visibility alerts"
 msgstr "নিম্ন দৃশ্যতা সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:233
+#: src/components/settings.tsx:272
 msgid "Show Lunar New Year event"
 msgstr "চন্দ্র নববর্ষ দেখান"
 
-#: src/components/settings.tsx:266
+#: src/components/settings.tsx:225
+msgid "Show Lyrids meteor shower event"
+msgstr "লাইরিডস উল্কাবৃষ্টি ইভেন্ট দেখান"
+
+#: src/components/settings.tsx:315
 msgid "Show New Year's Day event"
 msgstr "নববর্ষ দিবস দেখান"
 
-#: src/components/settings.tsx:220
+#: src/components/settings.tsx:235
+msgid "Show Orionids meteor shower event"
+msgstr "ওরায়োনিডস উল্কাবৃষ্টি ইভেন্ট দেখান"
+
+#: src/components/settings.tsx:259
 msgid "Show Perseids meteor shower event"
 msgstr "পারসিডস উল্কাবৃষ্টি দেখান"
+
+#: src/components/settings.tsx:220
+msgid "Show Quadrantids meteor shower event"
+msgstr "কোয়াড্রান্টিডস উল্কাবৃষ্টি ইভেন্ট দেখান"
 
 #: src/components/settings.tsx:177
 msgid "Show seasonal events"
@@ -710,7 +774,15 @@ msgstr "শক্তিশালী বায়ু সতর্কবার্�
 msgid "Show Summer Solstice event"
 msgstr "গ্রীষ্ম অয়নান্ত দেখান"
 
-#: src/components/settings.tsx:271
+#: src/components/settings.tsx:252
+msgid "Show total lunar eclipse event"
+msgstr "পূর্ণ চন্দ্রগ্রহণ ইভেন্ট দেখান"
+
+#: src/components/settings.tsx:245
+msgid "Show total solar eclipse event"
+msgstr "পূর্ণ সূর্যগ্রহণ ইভেন্ট দেখান"
+
+#: src/components/settings.tsx:320
 msgid "Show Valentine's Day event"
 msgstr "ভ্যালেন্টাইনস ডে দেখান"
 
@@ -746,7 +818,7 @@ msgstr "হালকা তুষারপাত"
 msgid "snow grains"
 msgstr "তুষার কণা"
 
-#: src/components/tile.tsx:190
+#: src/components/tile.tsx:230
 msgid "Spring Equinox"
 msgstr "বসন্ত বিষুব"
 
@@ -786,7 +858,7 @@ msgstr "{timeUntilStrongWind} ঘণ্টা পর শক্তিশালী
 msgid "Submit"
 msgstr "জমা দিন"
 
-#: src/components/tile.tsx:206
+#: src/components/tile.tsx:246
 msgid "Summer Solstice"
 msgstr "গ্রীষ্ম অয়নান্ত"
 
@@ -795,7 +867,7 @@ msgid "Sunday"
 msgstr "রবিবার"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/components/tile.tsx:421
+#: src/components/tile.tsx:501
 msgid "The expected type of weather is {0}."
 msgstr "প্রত্যাশিত আবহাওয়ার ধরণ হলো {0}।"
 
@@ -804,42 +876,42 @@ msgid "The location request timed out. Please check your internet connection and
 msgstr "অবস্থান অনুরোধের সময় শেষ হয়ে গেছে. অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন."
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile.tsx:385
+#: src/components/tile.tsx:465
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "সর্বাধিক তাপমাত্রা হবে {0} ডিগ্রি সেলসিয়াস।"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile.tsx:391
+#: src/components/tile.tsx:471
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "সর্বাধিক তাপমাত্রা হবে {0} ডিগ্রি ফারেনহাইট।"
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/tile.tsx:447
+#: src/components/tile.tsx:527
 msgid "The maximum UV index will be {0}."
 msgstr "সর্বাধিক ইউভি সূচক হবে {0}।"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:458
+#: src/components/tile.tsx:538
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "সর্বাধিক বায়ুর গতি হবে {0} কিলোমিটার প্রতি ঘণ্টা।"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:464
+#: src/components/tile.tsx:544
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "সর্বাধিক বায়ুর গতি হবে {0} মাইল প্রতি ঘণ্টা।"
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile.tsx:402
+#: src/components/tile.tsx:482
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "ন্যূনতম তাপমাত্রা হবে {0} ডিগ্রি সেলসিয়াস।"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile.tsx:408
+#: src/components/tile.tsx:488
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "ন্যূনতম তাপমাত্রা হবে {0} ডিগ্রি ফারেনহাইট।"
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/tile.tsx:478
+#: src/components/tile.tsx:558
 msgid "There is a {0}% chance of precipitation."
 msgstr "বৃষ্টির সম্ভাবনা {0}%।"
 
@@ -871,6 +943,14 @@ msgstr "শুরু করার জন্য, চলুন আপনার ভ
 #~ msgid "Too much battery usage"
 #~ msgstr "অত্যধিক ব্যাটারি ব্যবহার"
 
+#: src/components/tile.tsx:290
+msgid "Total Lunar Eclipse"
+msgstr "পূর্ণ চন্দ্রগ্রহণ"
+
+#: src/components/tile.tsx:286
+msgid "Total Solar Eclipse"
+msgstr "পূর্ণ সূর্যগ্রহণ"
+
 #: src/components/initialisation.tsx:190
 msgid "Try again"
 msgstr "আবার চেষ্টা করুন"
@@ -879,7 +959,7 @@ msgstr "আবার চেষ্টা করুন"
 msgid "Tuesday"
 msgstr "মঙ্গলবার"
 
-#: src/pages/index.tsx:272
+#: src/pages/index.tsx:302
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "আবহাওয়ার ডেটা আনা যায়নি. অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন."
 
@@ -887,8 +967,8 @@ msgstr "আবহাওয়ার ডেটা আনা যায়নি. অন�
 #~ msgid "Uninstall feedback"
 #~ msgstr "আনইনস্টল প্রতিক্রিয়া"
 
-#: src/components/tile.tsx:417
-#: src/components/tile.tsx:424
+#: src/components/tile.tsx:497
+#: src/components/tile.tsx:504
 msgid "unknown conditions"
 msgstr "অজানা অবস্থা"
 
@@ -914,7 +994,7 @@ msgstr "অজানা অবস্থা"
 msgid "Use metric number format"
 msgstr "মেট্রিক সংখ্যা বিন্যাস ব্যবহার করুন"
 
-#: src/components/tile.tsx:241
+#: src/components/tile.tsx:321
 msgid "Valentine's Day"
 msgstr "ভ্যালেন্টাইনস ডে"
 
@@ -930,7 +1010,7 @@ msgstr "তীব্র বৃষ্টির ঝড়"
 msgid "Weather"
 msgstr "আবহাওয়া"
 
-#: src/pages/index.tsx:299
+#: src/pages/index.tsx:329
 msgid "weather data provided by open-meteo"
 msgstr "আবহাওয়া তথ্য প্রদান করে open-meteo"
 
@@ -943,7 +1023,7 @@ msgstr "আবহাওয়া তথ্য প্রদান করে open-
 msgid "Wednesday"
 msgstr "বুধবার"
 
-#: src/components/tile.tsx:210
+#: src/components/tile.tsx:250
 msgid "Winter Solstice"
 msgstr "শীত অয়নান্ত"
 
@@ -983,9 +1063,3 @@ msgstr "আপনার অবস্থান বর্তমানে উপল
 #: src/app/bug/page.tsx:62
 msgid "Your message"
 msgstr "আপনার বার্তা"
-
-msgid "Christmas Day"
-msgstr "বড়দিন"
-
-msgid "Show Christmas Day event"
-msgstr "বড়দিন দেখান"

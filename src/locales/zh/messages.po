@@ -23,12 +23,12 @@ msgstr ""
 #~ msgstr "预计下一个小时内有 {0} 英寸降水"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:453
+#: src/components/tile.tsx:533
 msgid "{0} km/h"
 msgstr "{0} 公里/小时"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:454
+#: src/components/tile.tsx:534
 msgid "{0} mph"
 msgstr "{0} 英里/小时"
 
@@ -79,7 +79,7 @@ msgstr "<0>位置访问被拒绝。</0> 请检查浏览器设置，允许此网�
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>位置访问被拒绝。</0> 点击地址栏中的位置图标，并选择\"始终允许访问您的位置\"。然后点击下面的按钮再试一次。"
 
-#: src/components/settings.tsx:307
+#: src/components/settings.tsx:361
 msgid "☕ Gift a coffee"
 msgstr "☕ 送一杯咖啡"
 
@@ -87,11 +87,11 @@ msgstr "☕ 送一杯咖啡"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ 提交反馈"
 
-#: src/components/settings.tsx:291
+#: src/components/settings.tsx:345
 msgid "🌟 Leave a review"
 msgstr "🌟 留下评论"
 
-#: src/components/settings.tsx:299
+#: src/components/settings.tsx:353
 msgid "🐛 Report a bug"
 msgstr "🐛 报告错误"
 
@@ -99,7 +99,7 @@ msgstr "🐛 报告错误"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 请求功能"
 
-#: src/components/settings.tsx:318
+#: src/components/settings.tsx:372
 msgid "🔒 Privacy policy"
 msgstr "🔒 隐私政策"
 
@@ -147,7 +147,7 @@ msgstr "天文学"
 msgid "August"
 msgstr "八月"
 
-#: src/components/tile.tsx:194
+#: src/components/tile.tsx:234
 msgid "Autumn Equinox"
 msgstr "秋分"
 
@@ -170,6 +170,10 @@ msgstr "秋分"
 #: src/pages/feedback/index.tsx:268
 #~ msgid "Changed needs"
 #~ msgstr "需求变化"
+
+#: src/components/tile.tsx:318
+msgid "Christmas Day"
+msgstr "圣诞节"
 
 #: src/components/tile.tsx:61
 msgid "clear sky"
@@ -195,6 +199,10 @@ msgstr "日期"
 msgid "Day"
 msgstr "日"
 
+#: src/components/tile.tsx:294
+msgid "Day of the Dead"
+msgstr "亡灵节"
+
 #: src/components/tile.tsx:113
 msgid "December"
 msgstr "十二月"
@@ -219,7 +227,7 @@ msgstr "储存白霜雾"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "难以使用或理解"
 
-#: src/components/tile.tsx:198
+#: src/components/tile.tsx:238
 msgid "Diwali"
 msgstr "排灯节"
 
@@ -231,15 +239,19 @@ msgstr "如果您是人类，请不要填写此字段"
 #~ msgid "Don't save"
 #~ msgstr "不保存"
 
-#: src/components/tile.tsx:218
+#: src/components/tile.tsx:258
 msgid "Earth Day"
 msgstr "地球日"
 
-#: src/components/tile.tsx:234
+#: src/components/tile.tsx:298
+msgid "Easter"
+msgstr "复活节"
+
+#: src/components/tile.tsx:310
 msgid "Eid al-Adha"
 msgstr "宰牲节"
 
-#: src/components/tile.tsx:230
+#: src/components/tile.tsx:306
 msgid "Eid al-Fitr"
 msgstr "开斋节"
 
@@ -254,6 +266,10 @@ msgstr "开斋节"
 #: src/pages/feedback/index.tsx:475
 #~ msgid "Error submitting feedback. Try again later."
 #~ msgstr "提交反馈时出错。请稍后再试。"
+
+#: src/components/tile.tsx:274
+msgid "Eta Aquariids Meteor Shower"
+msgstr "宝瓶座η流星雨"
 
 #: src/components/weather-alert.tsx:46
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
@@ -283,7 +299,7 @@ msgstr "极端紫外线将于 {timeUntilExtremeUv} 小时后开始"
 msgid "February"
 msgstr "二月"
 
-#: src/components/settings.tsx:283
+#: src/components/settings.tsx:337
 msgid "Feedback"
 msgstr "反馈"
 
@@ -299,7 +315,7 @@ msgstr "反馈"
 msgid "Friday"
 msgstr "星期五"
 
-#: src/components/tile.tsx:226
+#: src/components/tile.tsx:302
 msgid "Geminids Meteor Shower"
 msgstr "双子座流星雨"
 
@@ -323,11 +339,11 @@ msgstr "下一个小时内通常有大风"
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}小时后开始通常有大风"
 
-#: src/components/tile.tsx:214
+#: src/components/tile.tsx:254
 msgid "Halloween"
 msgstr "万圣节"
 
-#: src/components/tile.tsx:238
+#: src/components/tile.tsx:314
 msgid "Hanukkah"
 msgstr "光明节"
 
@@ -347,7 +363,7 @@ msgstr "大雪暴"
 msgid "heavy snowfall"
 msgstr "大雪"
 
-#: src/components/tile.tsx:202
+#: src/components/tile.tsx:242
 msgid "Holi"
 msgstr "胡里节"
 
@@ -423,9 +439,13 @@ msgstr "纬度"
 msgid "Leave a review"
 msgstr "留下评价"
 
-#: src/components/settings.tsx:310
+#: src/components/settings.tsx:364
 msgid "Legal"
 msgstr "法律"
+
+#: src/components/tile.tsx:282
+msgid "Leonids Meteor Shower"
+msgstr "狮子座流星雨"
 
 #: src/components/tile.tsx:67
 msgid "light drizzle"
@@ -467,9 +487,13 @@ msgstr "接下来的一个小时内将有低能见度"
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "低能见度将于{timeUntilLowVisibility}小时后开始"
 
-#: src/components/tile.tsx:186
+#: src/components/tile.tsx:226
 msgid "Lunar New Year"
 msgstr "农历新年"
+
+#: src/components/tile.tsx:270
+msgid "Lyrids Meteor Shower"
+msgstr "天琴座流星雨"
 
 #: src/components/tile.tsx:62
 #: src/components/tile.tsx:65
@@ -520,7 +544,7 @@ msgstr "再也不显示这个"
 #~ msgid "New tab"
 #~ msgstr "新标签"
 
-#: src/components/tile.tsx:182
+#: src/components/tile.tsx:222
 msgid "New Year's Day"
 msgstr "元旦"
 
@@ -548,7 +572,11 @@ msgstr "预报天数"
 msgid "October"
 msgstr "十月"
 
-#: src/components/settings.tsx:263
+#: src/components/tile.tsx:278
+msgid "Orionids Meteor Shower"
+msgstr "猎户座流星雨"
+
+#: src/components/settings.tsx:312
 msgid "Other holidays"
 msgstr "其他节日"
 
@@ -568,7 +596,7 @@ msgstr "多云"
 msgid "Periodically update location automatically"
 msgstr "定期自动更新位置"
 
-#: src/components/tile.tsx:222
+#: src/components/tile.tsx:262
 msgid "Perseids Meteor Shower"
 msgstr "英仙座流星雨"
 
@@ -576,7 +604,11 @@ msgstr "英仙座流星雨"
 #~ msgid "Please enter it manually below."
 #~ msgstr "请在下方手动输入。"
 
-#: src/components/settings.tsx:230
+#: src/components/tile.tsx:266
+msgid "Quadrantids Meteor Shower"
+msgstr "象限仪座流星雨"
+
+#: src/components/settings.tsx:269
 msgid "Religious & cultural"
 msgstr "宗教与文化"
 
@@ -588,7 +620,7 @@ msgstr "报告错误"
 #~ msgid "Resource usage"
 #~ msgstr "资源使用"
 
-#: src/pages/index.tsx:278
+#: src/pages/index.tsx:308
 msgid "Retry"
 msgstr "重试"
 
@@ -634,7 +666,15 @@ msgstr "设置"
 msgid "Show Autumn Equinox event"
 msgstr "显示秋分活动"
 
-#: src/components/settings.tsx:238
+#: src/components/settings.tsx:307
+msgid "Show Christmas Day event"
+msgstr "显示圣诞节活动"
+
+#: src/components/settings.tsx:330
+msgid "Show Day of the Dead event"
+msgstr "显示亡灵节活动"
+
+#: src/components/settings.tsx:282
 msgid "Show Diwali event"
 msgstr "显示排灯节活动"
 
@@ -642,27 +682,35 @@ msgstr "显示排灯节活动"
 msgid "Show Earth Day event"
 msgstr "显示地球日活动"
 
-#: src/components/settings.tsx:253
+#: src/components/settings.tsx:277
+msgid "Show Easter event"
+msgstr "显示复活节活动"
+
+#: src/components/settings.tsx:297
 msgid "Show Eid al-Adha event"
 msgstr "显示宰牲节活动"
 
-#: src/components/settings.tsx:248
+#: src/components/settings.tsx:292
 msgid "Show Eid al-Fitr event"
 msgstr "显示开斋节活动"
+
+#: src/components/settings.tsx:230
+msgid "Show Eta Aquariids meteor shower event"
+msgstr "显示宝瓶座η流星雨活动"
 
 #: src/components/settings.tsx:152
 msgid "Show extreme UV alerts"
 msgstr "显示极端紫外线警报"
 
-#: src/components/settings.tsx:225
+#: src/components/settings.tsx:264
 msgid "Show Geminids meteor shower event"
 msgstr "显示双子座流星雨活动"
 
-#: src/components/settings.tsx:276
+#: src/components/settings.tsx:325
 msgid "Show Halloween event"
 msgstr "显示万圣节活动"
 
-#: src/components/settings.tsx:258
+#: src/components/settings.tsx:302
 msgid "Show Hanukkah event"
 msgstr "显示光明节活动"
 
@@ -670,25 +718,41 @@ msgstr "显示光明节活动"
 msgid "Show high precipitation alerts"
 msgstr "显示高降水量警报"
 
-#: src/components/settings.tsx:243
+#: src/components/settings.tsx:287
 msgid "Show Holi event"
 msgstr "显示胡里节活动"
+
+#: src/components/settings.tsx:240
+msgid "Show Leonids meteor shower event"
+msgstr "显示狮子座流星雨活动"
 
 #: src/components/settings.tsx:167
 msgid "Show low visibility alerts"
 msgstr "显示低能见度警报"
 
-#: src/components/settings.tsx:233
+#: src/components/settings.tsx:272
 msgid "Show Lunar New Year event"
 msgstr "显示农历新年活动"
 
-#: src/components/settings.tsx:266
+#: src/components/settings.tsx:225
+msgid "Show Lyrids meteor shower event"
+msgstr "显示天琴座流星雨活动"
+
+#: src/components/settings.tsx:315
 msgid "Show New Year's Day event"
 msgstr "显示元旦活动"
 
-#: src/components/settings.tsx:220
+#: src/components/settings.tsx:235
+msgid "Show Orionids meteor shower event"
+msgstr "显示猎户座流星雨活动"
+
+#: src/components/settings.tsx:259
 msgid "Show Perseids meteor shower event"
 msgstr "显示英仙座流星雨活动"
+
+#: src/components/settings.tsx:220
+msgid "Show Quadrantids meteor shower event"
+msgstr "显示象限仪座流星雨活动"
 
 #: src/components/settings.tsx:177
 msgid "Show seasonal events"
@@ -710,7 +774,15 @@ msgstr "显示强风警报"
 msgid "Show Summer Solstice event"
 msgstr "显示夏至活动"
 
-#: src/components/settings.tsx:271
+#: src/components/settings.tsx:252
+msgid "Show total lunar eclipse event"
+msgstr "显示月全食活动"
+
+#: src/components/settings.tsx:245
+msgid "Show total solar eclipse event"
+msgstr "显示日全食活动"
+
+#: src/components/settings.tsx:320
 msgid "Show Valentine's Day event"
 msgstr "显示情人节活动"
 
@@ -746,7 +818,7 @@ msgstr "小雪"
 msgid "snow grains"
 msgstr "雪粒"
 
-#: src/components/tile.tsx:190
+#: src/components/tile.tsx:230
 msgid "Spring Equinox"
 msgstr "春分"
 
@@ -786,7 +858,7 @@ msgstr "{timeUntilStrongWind}小时后开始有强风暴"
 msgid "Submit"
 msgstr "提交"
 
-#: src/components/tile.tsx:206
+#: src/components/tile.tsx:246
 msgid "Summer Solstice"
 msgstr "夏至"
 
@@ -795,7 +867,7 @@ msgid "Sunday"
 msgstr "星期天"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/components/tile.tsx:421
+#: src/components/tile.tsx:501
 msgid "The expected type of weather is {0}."
 msgstr "预期的天气类型是{0}。"
 
@@ -804,42 +876,42 @@ msgid "The location request timed out. Please check your internet connection and
 msgstr "位置请求超时。请检查您的网络连接并重试。"
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile.tsx:385
+#: src/components/tile.tsx:465
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "最高温度将为{0}摄氏度。"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile.tsx:391
+#: src/components/tile.tsx:471
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "最高温度将为{0}华氏度。"
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/tile.tsx:447
+#: src/components/tile.tsx:527
 msgid "The maximum UV index will be {0}."
 msgstr "最大紫外线指数将为{0}。"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:458
+#: src/components/tile.tsx:538
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "最大风速将为每小时{0}公里。"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:464
+#: src/components/tile.tsx:544
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "最大风速将为每小时{0}英里。"
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile.tsx:402
+#: src/components/tile.tsx:482
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "最低温度将为{0}摄氏度。"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile.tsx:408
+#: src/components/tile.tsx:488
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "最低温度将为{0}华氏度。"
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/tile.tsx:478
+#: src/components/tile.tsx:558
 msgid "There is a {0}% chance of precipitation."
 msgstr "有{0}%的降水概率。"
 
@@ -871,6 +943,14 @@ msgstr "首先，让我们设置您的语言和位置。"
 #~ msgid "Too much battery usage"
 #~ msgstr "过多的电池使用"
 
+#: src/components/tile.tsx:290
+msgid "Total Lunar Eclipse"
+msgstr "月全食"
+
+#: src/components/tile.tsx:286
+msgid "Total Solar Eclipse"
+msgstr "日全食"
+
 #: src/components/initialisation.tsx:190
 msgid "Try again"
 msgstr "再试一次"
@@ -879,7 +959,7 @@ msgstr "再试一次"
 msgid "Tuesday"
 msgstr "星期二"
 
-#: src/pages/index.tsx:272
+#: src/pages/index.tsx:302
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "无法获取天气数据。请检查您的网络连接并重试。"
 
@@ -887,8 +967,8 @@ msgstr "无法获取天气数据。请检查您的网络连接并重试。"
 #~ msgid "Uninstall feedback"
 #~ msgstr "卸载反馈"
 
-#: src/components/tile.tsx:417
-#: src/components/tile.tsx:424
+#: src/components/tile.tsx:497
+#: src/components/tile.tsx:504
 msgid "unknown conditions"
 msgstr "未知状况"
 
@@ -914,7 +994,7 @@ msgstr "未知状况"
 msgid "Use metric number format"
 msgstr "使用公制数字格式"
 
-#: src/components/tile.tsx:241
+#: src/components/tile.tsx:321
 msgid "Valentine's Day"
 msgstr "情人节"
 
@@ -930,7 +1010,7 @@ msgstr "猛烈的阵雨"
 msgid "Weather"
 msgstr "天气"
 
-#: src/pages/index.tsx:299
+#: src/pages/index.tsx:329
 msgid "weather data provided by open-meteo"
 msgstr "天气数据由open-meteo提供"
 
@@ -943,7 +1023,7 @@ msgstr "天气数据由open-meteo提供"
 msgid "Wednesday"
 msgstr "星期三"
 
-#: src/components/tile.tsx:210
+#: src/components/tile.tsx:250
 msgid "Winter Solstice"
 msgstr "冬至"
 
@@ -983,9 +1063,3 @@ msgstr "您的位置当前不可用。请确认设备上的位置服务已启用
 #: src/app/bug/page.tsx:62
 msgid "Your message"
 msgstr "您的信息"
-
-msgid "Christmas Day"
-msgstr "圣诞节"
-
-msgid "Show Christmas Day event"
-msgstr "显示圣诞节活动"

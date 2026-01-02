@@ -23,12 +23,12 @@ msgstr ""
 #~ msgstr "{0} inci presipitasi diharapkan selama jam berikutnya"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:453
+#: src/components/tile.tsx:533
 msgid "{0} km/h"
 msgstr "{0} km/j"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:454
+#: src/components/tile.tsx:534
 msgid "{0} mph"
 msgstr "{0} mph"
 
@@ -79,7 +79,7 @@ msgstr "<0>Akses lokasi ditolak.</0> Periksa pengaturan browser Anda untuk mengi
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Akses lokasi ditolak.</0> Klik ikon lokasi di bilah alamat, lalu pilih \"selalu izinkan akses ke lokasi Anda\". Kemudian klik tombol di bawah untuk mencoba lagi."
 
-#: src/components/settings.tsx:307
+#: src/components/settings.tsx:361
 msgid "☕ Gift a coffee"
 msgstr "☕ Berikan secangkir kopi"
 
@@ -87,11 +87,11 @@ msgstr "☕ Berikan secangkir kopi"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Kirim masukan"
 
-#: src/components/settings.tsx:291
+#: src/components/settings.tsx:345
 msgid "🌟 Leave a review"
 msgstr "🌟 Tinggalkan ulasan"
 
-#: src/components/settings.tsx:299
+#: src/components/settings.tsx:353
 msgid "🐛 Report a bug"
 msgstr "🐛 Laporkan bug"
 
@@ -99,7 +99,7 @@ msgstr "🐛 Laporkan bug"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Minta fitur"
 
-#: src/components/settings.tsx:318
+#: src/components/settings.tsx:372
 msgid "🔒 Privacy policy"
 msgstr "🔒 Kebijakan privasi"
 
@@ -147,7 +147,7 @@ msgstr "Astronomi"
 msgid "August"
 msgstr "Agustus"
 
-#: src/components/tile.tsx:194
+#: src/components/tile.tsx:234
 msgid "Autumn Equinox"
 msgstr "Ekuinoks musim gugur"
 
@@ -170,6 +170,10 @@ msgstr "Ekuinoks musim gugur"
 #: src/pages/feedback/index.tsx:268
 #~ msgid "Changed needs"
 #~ msgstr "Kebutuhan berubah"
+
+#: src/components/tile.tsx:318
+msgid "Christmas Day"
+msgstr "Hari Natal"
 
 #: src/components/tile.tsx:61
 msgid "clear sky"
@@ -195,6 +199,10 @@ msgstr "Tanggal"
 msgid "Day"
 msgstr "Hari"
 
+#: src/components/tile.tsx:294
+msgid "Day of the Dead"
+msgstr "Hari Orang Mati"
+
 #: src/components/tile.tsx:113
 msgid "December"
 msgstr "Desember"
@@ -219,7 +227,7 @@ msgstr "kabut membeku"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "Sulit untuk digunakan atau dipahami"
 
-#: src/components/tile.tsx:198
+#: src/components/tile.tsx:238
 msgid "Diwali"
 msgstr "Diwali"
 
@@ -231,15 +239,19 @@ msgstr "Jangan isi kolom ini jika Anda manusia"
 #~ msgid "Don't save"
 #~ msgstr "Jangan simpan"
 
-#: src/components/tile.tsx:218
+#: src/components/tile.tsx:258
 msgid "Earth Day"
 msgstr "Hari Bumi"
 
-#: src/components/tile.tsx:234
+#: src/components/tile.tsx:298
+msgid "Easter"
+msgstr "Paskah"
+
+#: src/components/tile.tsx:310
 msgid "Eid al-Adha"
 msgstr "Idul Adha"
 
-#: src/components/tile.tsx:230
+#: src/components/tile.tsx:306
 msgid "Eid al-Fitr"
 msgstr "Idul Fitri"
 
@@ -254,6 +266,10 @@ msgstr "Idul Fitri"
 #: src/pages/feedback/index.tsx:475
 #~ msgid "Error submitting feedback. Try again later."
 #~ msgstr "Kesalahan mengirimkan masukan. Coba lagi nanti."
+
+#: src/components/tile.tsx:274
+msgid "Eta Aquariids Meteor Shower"
+msgstr "Hujan meteor Eta Aquariid"
 
 #: src/components/weather-alert.tsx:46
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
@@ -283,7 +299,7 @@ msgstr "UV ekstrem dimulai dalam {timeUntilExtremeUv} jam"
 msgid "February"
 msgstr "Februari"
 
-#: src/components/settings.tsx:283
+#: src/components/settings.tsx:337
 msgid "Feedback"
 msgstr "Masukan"
 
@@ -299,7 +315,7 @@ msgstr "Masukan"
 msgid "Friday"
 msgstr "Jumat"
 
-#: src/components/tile.tsx:226
+#: src/components/tile.tsx:302
 msgid "Geminids Meteor Shower"
 msgstr "Hujan meteor Geminid"
 
@@ -323,11 +339,11 @@ msgstr "Umumnya angin kencang selama jam berikutnya"
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "Umumnya angin kencang mulai dalam {timeUntilStrongWind} jam"
 
-#: src/components/tile.tsx:214
+#: src/components/tile.tsx:254
 msgid "Halloween"
 msgstr "Halloween"
 
-#: src/components/tile.tsx:238
+#: src/components/tile.tsx:314
 msgid "Hanukkah"
 msgstr "Hanukkah"
 
@@ -347,7 +363,7 @@ msgstr "hujan salju lebat"
 msgid "heavy snowfall"
 msgstr "salju lebat"
 
-#: src/components/tile.tsx:202
+#: src/components/tile.tsx:242
 msgid "Holi"
 msgstr "Holi"
 
@@ -423,9 +439,13 @@ msgstr "Lintang"
 msgid "Leave a review"
 msgstr "Tinggalkan ulasan"
 
-#: src/components/settings.tsx:310
+#: src/components/settings.tsx:364
 msgid "Legal"
 msgstr "Legal"
+
+#: src/components/tile.tsx:282
+msgid "Leonids Meteor Shower"
+msgstr "Hujan meteor Leonid"
 
 #: src/components/tile.tsx:67
 msgid "light drizzle"
@@ -467,9 +487,13 @@ msgstr "Visibilitas rendah untuk jam ke depan"
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "Visibilitas rendah dimulai dalam {timeUntilLowVisibility} jam"
 
-#: src/components/tile.tsx:186
+#: src/components/tile.tsx:226
 msgid "Lunar New Year"
 msgstr "Tahun Baru Imlek"
+
+#: src/components/tile.tsx:270
+msgid "Lyrids Meteor Shower"
+msgstr "Hujan meteor Lyrid"
 
 #: src/components/tile.tsx:62
 #: src/components/tile.tsx:65
@@ -520,7 +544,7 @@ msgstr "Jangan tampilkan ini lagi"
 #~ msgid "New tab"
 #~ msgstr "Tab baru"
 
-#: src/components/tile.tsx:182
+#: src/components/tile.tsx:222
 msgid "New Year's Day"
 msgstr "Tahun Baru"
 
@@ -548,7 +572,11 @@ msgstr "Jumlah hari untuk ramalan"
 msgid "October"
 msgstr "Oktober"
 
-#: src/components/settings.tsx:263
+#: src/components/tile.tsx:278
+msgid "Orionids Meteor Shower"
+msgstr "Hujan meteor Orionid"
+
+#: src/components/settings.tsx:312
 msgid "Other holidays"
 msgstr "Hari libur lainnya"
 
@@ -568,7 +596,7 @@ msgstr "sebagian berawan"
 msgid "Periodically update location automatically"
 msgstr "Secara berkala perbarui lokasi secara otomatis"
 
-#: src/components/tile.tsx:222
+#: src/components/tile.tsx:262
 msgid "Perseids Meteor Shower"
 msgstr "Hujan meteor Perseid"
 
@@ -576,7 +604,11 @@ msgstr "Hujan meteor Perseid"
 #~ msgid "Please enter it manually below."
 #~ msgstr "Silakan masukkan secara manual di bawah ini."
 
-#: src/components/settings.tsx:230
+#: src/components/tile.tsx:266
+msgid "Quadrantids Meteor Shower"
+msgstr "Hujan meteor Quadrantid"
+
+#: src/components/settings.tsx:269
 msgid "Religious & cultural"
 msgstr "Keagamaan & budaya"
 
@@ -588,7 +620,7 @@ msgstr "Laporkan bug"
 #~ msgid "Resource usage"
 #~ msgstr "Penggunaan sumber daya"
 
-#: src/pages/index.tsx:278
+#: src/pages/index.tsx:308
 msgid "Retry"
 msgstr "Coba lagi"
 
@@ -634,7 +666,15 @@ msgstr "Pengaturan"
 msgid "Show Autumn Equinox event"
 msgstr "Tampilkan Ekuinoks musim gugur"
 
-#: src/components/settings.tsx:238
+#: src/components/settings.tsx:307
+msgid "Show Christmas Day event"
+msgstr "Tampilkan Hari Natal"
+
+#: src/components/settings.tsx:330
+msgid "Show Day of the Dead event"
+msgstr "Tampilkan Hari Orang Mati"
+
+#: src/components/settings.tsx:282
 msgid "Show Diwali event"
 msgstr "Tampilkan Diwali"
 
@@ -642,27 +682,35 @@ msgstr "Tampilkan Diwali"
 msgid "Show Earth Day event"
 msgstr "Tampilkan Hari Bumi"
 
-#: src/components/settings.tsx:253
+#: src/components/settings.tsx:277
+msgid "Show Easter event"
+msgstr "Tampilkan Paskah"
+
+#: src/components/settings.tsx:297
 msgid "Show Eid al-Adha event"
 msgstr "Tampilkan Idul Adha"
 
-#: src/components/settings.tsx:248
+#: src/components/settings.tsx:292
 msgid "Show Eid al-Fitr event"
 msgstr "Tampilkan Idul Fitri"
+
+#: src/components/settings.tsx:230
+msgid "Show Eta Aquariids meteor shower event"
+msgstr "Tampilkan hujan meteor Eta Aquariid"
 
 #: src/components/settings.tsx:152
 msgid "Show extreme UV alerts"
 msgstr "Tampilkan peringatan UV ekstrem"
 
-#: src/components/settings.tsx:225
+#: src/components/settings.tsx:264
 msgid "Show Geminids meteor shower event"
 msgstr "Tampilkan hujan meteor Geminid"
 
-#: src/components/settings.tsx:276
+#: src/components/settings.tsx:325
 msgid "Show Halloween event"
 msgstr "Tampilkan Halloween"
 
-#: src/components/settings.tsx:258
+#: src/components/settings.tsx:302
 msgid "Show Hanukkah event"
 msgstr "Tampilkan Hanukkah"
 
@@ -670,25 +718,41 @@ msgstr "Tampilkan Hanukkah"
 msgid "Show high precipitation alerts"
 msgstr "Tampilkan peringatan presipitasi tinggi"
 
-#: src/components/settings.tsx:243
+#: src/components/settings.tsx:287
 msgid "Show Holi event"
 msgstr "Tampilkan Holi"
+
+#: src/components/settings.tsx:240
+msgid "Show Leonids meteor shower event"
+msgstr "Tampilkan hujan meteor Leonid"
 
 #: src/components/settings.tsx:167
 msgid "Show low visibility alerts"
 msgstr "Tampilkan peringatan visibilitas rendah"
 
-#: src/components/settings.tsx:233
+#: src/components/settings.tsx:272
 msgid "Show Lunar New Year event"
 msgstr "Tampilkan Tahun Baru Imlek"
 
-#: src/components/settings.tsx:266
+#: src/components/settings.tsx:225
+msgid "Show Lyrids meteor shower event"
+msgstr "Tampilkan hujan meteor Lyrid"
+
+#: src/components/settings.tsx:315
 msgid "Show New Year's Day event"
 msgstr "Tampilkan Tahun Baru"
 
-#: src/components/settings.tsx:220
+#: src/components/settings.tsx:235
+msgid "Show Orionids meteor shower event"
+msgstr "Tampilkan hujan meteor Orionid"
+
+#: src/components/settings.tsx:259
 msgid "Show Perseids meteor shower event"
 msgstr "Tampilkan hujan meteor Perseid"
+
+#: src/components/settings.tsx:220
+msgid "Show Quadrantids meteor shower event"
+msgstr "Tampilkan hujan meteor Quadrantid"
 
 #: src/components/settings.tsx:177
 msgid "Show seasonal events"
@@ -710,7 +774,15 @@ msgstr "Tampilkan peringatan angin kencang"
 msgid "Show Summer Solstice event"
 msgstr "Tampilkan Solstis musim panas"
 
-#: src/components/settings.tsx:271
+#: src/components/settings.tsx:252
+msgid "Show total lunar eclipse event"
+msgstr "Tampilkan gerhana bulan total"
+
+#: src/components/settings.tsx:245
+msgid "Show total solar eclipse event"
+msgstr "Tampilkan gerhana matahari total"
+
+#: src/components/settings.tsx:320
 msgid "Show Valentine's Day event"
 msgstr "Tampilkan Hari Valentine"
 
@@ -746,7 +818,7 @@ msgstr "salju ringan"
 msgid "snow grains"
 msgstr "butiran salju"
 
-#: src/components/tile.tsx:190
+#: src/components/tile.tsx:230
 msgid "Spring Equinox"
 msgstr "Ekuinoks musim semi"
 
@@ -786,7 +858,7 @@ msgstr "Hembusan angin kencang dimulai dalam {timeUntilStrongWind} jam"
 msgid "Submit"
 msgstr "Kirim"
 
-#: src/components/tile.tsx:206
+#: src/components/tile.tsx:246
 msgid "Summer Solstice"
 msgstr "Solstis musim panas"
 
@@ -795,7 +867,7 @@ msgid "Sunday"
 msgstr "Minggu"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/components/tile.tsx:421
+#: src/components/tile.tsx:501
 msgid "The expected type of weather is {0}."
 msgstr "Tipe cuaca yang diharapkan adalah {0}."
 
@@ -804,42 +876,42 @@ msgid "The location request timed out. Please check your internet connection and
 msgstr "Permintaan lokasi kehabisan waktu. Periksa koneksi internet Anda dan coba lagi."
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile.tsx:385
+#: src/components/tile.tsx:465
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "Suhu maksimum akan mencapai {0} derajat celsius."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile.tsx:391
+#: src/components/tile.tsx:471
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "Suhu maksimum akan mencapai {0} derajat fahrenheit."
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/tile.tsx:447
+#: src/components/tile.tsx:527
 msgid "The maximum UV index will be {0}."
 msgstr "Indeks UV maksimum akan mencapai {0}."
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:458
+#: src/components/tile.tsx:538
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "Kecepatan angin maksimum akan mencapai {0} kilometer per jam."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:464
+#: src/components/tile.tsx:544
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "Kecepatan angin maksimum akan mencapai {0} mil per jam."
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile.tsx:402
+#: src/components/tile.tsx:482
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "Suhu minimum akan mencapai {0} derajat celsius."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile.tsx:408
+#: src/components/tile.tsx:488
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "Suhu minimum akan mencapai {0} derajat fahrenheit."
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/tile.tsx:478
+#: src/components/tile.tsx:558
 msgid "There is a {0}% chance of precipitation."
 msgstr "Ada kemungkinan {0}% akan terjadi presipitasi."
 
@@ -871,6 +943,14 @@ msgstr "Untuk memulai, mari atur bahasa dan lokasi Anda."
 #~ msgid "Too much battery usage"
 #~ msgstr "Penggunaan baterai terlalu banyak"
 
+#: src/components/tile.tsx:290
+msgid "Total Lunar Eclipse"
+msgstr "Gerhana Bulan Total"
+
+#: src/components/tile.tsx:286
+msgid "Total Solar Eclipse"
+msgstr "Gerhana Matahari Total"
+
 #: src/components/initialisation.tsx:190
 msgid "Try again"
 msgstr "Coba lagi"
@@ -879,7 +959,7 @@ msgstr "Coba lagi"
 msgid "Tuesday"
 msgstr "Selasa"
 
-#: src/pages/index.tsx:272
+#: src/pages/index.tsx:302
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Tidak dapat mengambil data cuaca. Periksa koneksi internet Anda dan coba lagi."
 
@@ -887,8 +967,8 @@ msgstr "Tidak dapat mengambil data cuaca. Periksa koneksi internet Anda dan coba
 #~ msgid "Uninstall feedback"
 #~ msgstr "Umpan balik penghapusan"
 
-#: src/components/tile.tsx:417
-#: src/components/tile.tsx:424
+#: src/components/tile.tsx:497
+#: src/components/tile.tsx:504
 msgid "unknown conditions"
 msgstr "kondisi tidak diketahui"
 
@@ -914,7 +994,7 @@ msgstr "kondisi tidak diketahui"
 msgid "Use metric number format"
 msgstr "Gunakan format nomor metrik"
 
-#: src/components/tile.tsx:241
+#: src/components/tile.tsx:321
 msgid "Valentine's Day"
 msgstr "Hari Valentine"
 
@@ -930,7 +1010,7 @@ msgstr "hujan deras"
 msgid "Weather"
 msgstr "Cuaca"
 
-#: src/pages/index.tsx:299
+#: src/pages/index.tsx:329
 msgid "weather data provided by open-meteo"
 msgstr "data cuaca disediakan oleh open-meteo"
 
@@ -943,7 +1023,7 @@ msgstr "data cuaca disediakan oleh open-meteo"
 msgid "Wednesday"
 msgstr "Rabu"
 
-#: src/components/tile.tsx:210
+#: src/components/tile.tsx:250
 msgid "Winter Solstice"
 msgstr "Solstis musim dingin"
 
@@ -983,9 +1063,3 @@ msgstr "Lokasi Anda saat ini tidak tersedia. Pastikan layanan lokasi di perangka
 #: src/app/bug/page.tsx:62
 msgid "Your message"
 msgstr "Pesan Anda"
-
-msgid "Christmas Day"
-msgstr "Hari Natal"
-
-msgid "Show Christmas Day event"
-msgstr "Tampilkan Hari Natal"

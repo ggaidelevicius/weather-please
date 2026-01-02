@@ -23,12 +23,12 @@ msgstr ""
 #~ msgstr "다음 1시간 동안 {0}인치의 강수량 예상"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:453
+#: src/components/tile.tsx:533
 msgid "{0} km/h"
 msgstr "{0} km/h"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:454
+#: src/components/tile.tsx:534
 msgid "{0} mph"
 msgstr "{0} mph"
 
@@ -79,7 +79,7 @@ msgstr "<0>위치 접근이 거부되었습니다.</0> 브라우저 설정에서
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>위치 접근이 거부되었습니다.</0> 주소 표시줄의 위치 아이콘을 클릭하고 \"항상 위치 접근 허용\"을 선택하세요. 그런 다음 아래 버튼을 클릭해 다시 시도하세요."
 
-#: src/components/settings.tsx:307
+#: src/components/settings.tsx:361
 msgid "☕ Gift a coffee"
 msgstr "☕ 커피 선물하기"
 
@@ -87,11 +87,11 @@ msgstr "☕ 커피 선물하기"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ 피드백 제출"
 
-#: src/components/settings.tsx:291
+#: src/components/settings.tsx:345
 msgid "🌟 Leave a review"
 msgstr "🌟 리뷰 남기기"
 
-#: src/components/settings.tsx:299
+#: src/components/settings.tsx:353
 msgid "🐛 Report a bug"
 msgstr "🐛 버그 신고"
 
@@ -99,7 +99,7 @@ msgstr "🐛 버그 신고"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 기능 요청"
 
-#: src/components/settings.tsx:318
+#: src/components/settings.tsx:372
 msgid "🔒 Privacy policy"
 msgstr "🔒 개인정보 처리방침"
 
@@ -147,7 +147,7 @@ msgstr "천문학"
 msgid "August"
 msgstr "8월"
 
-#: src/components/tile.tsx:194
+#: src/components/tile.tsx:234
 msgid "Autumn Equinox"
 msgstr "추분"
 
@@ -170,6 +170,10 @@ msgstr "추분"
 #: src/pages/feedback/index.tsx:268
 #~ msgid "Changed needs"
 #~ msgstr "변경된 요구 사항"
+
+#: src/components/tile.tsx:318
+msgid "Christmas Day"
+msgstr "크리스마스"
 
 #: src/components/tile.tsx:61
 msgid "clear sky"
@@ -195,6 +199,10 @@ msgstr "날짜"
 msgid "Day"
 msgstr "날"
 
+#: src/components/tile.tsx:294
+msgid "Day of the Dead"
+msgstr "망자의 날"
+
 #: src/components/tile.tsx:113
 msgid "December"
 msgstr "12월"
@@ -219,7 +227,7 @@ msgstr "서리가 앉는 안개"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "사용하기 어렵거나 이해하기 어려움"
 
-#: src/components/tile.tsx:198
+#: src/components/tile.tsx:238
 msgid "Diwali"
 msgstr "디왈리"
 
@@ -231,15 +239,19 @@ msgstr "사람이면 이 필드를 작성하지 마세요"
 #~ msgid "Don't save"
 #~ msgstr "저장하지 마세요"
 
-#: src/components/tile.tsx:218
+#: src/components/tile.tsx:258
 msgid "Earth Day"
 msgstr "지구의 날"
 
-#: src/components/tile.tsx:234
+#: src/components/tile.tsx:298
+msgid "Easter"
+msgstr "부활절"
+
+#: src/components/tile.tsx:310
 msgid "Eid al-Adha"
 msgstr "이드 알아드하"
 
-#: src/components/tile.tsx:230
+#: src/components/tile.tsx:306
 msgid "Eid al-Fitr"
 msgstr "이드 알피트르"
 
@@ -254,6 +266,10 @@ msgstr "이드 알피트르"
 #: src/pages/feedback/index.tsx:475
 #~ msgid "Error submitting feedback. Try again later."
 #~ msgstr "피드백 제출 오류. 나중에 다시 시도하세요."
+
+#: src/components/tile.tsx:274
+msgid "Eta Aquariids Meteor Shower"
+msgstr "물병자리 에타 유성우"
 
 #: src/components/weather-alert.tsx:46
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
@@ -283,7 +299,7 @@ msgstr "{timeUntilExtremeUv}시간 후에 극심한 자외선이 시작됩니다
 msgid "February"
 msgstr "2월"
 
-#: src/components/settings.tsx:283
+#: src/components/settings.tsx:337
 msgid "Feedback"
 msgstr "피드백"
 
@@ -299,7 +315,7 @@ msgstr "피드백"
 msgid "Friday"
 msgstr "금요일"
 
-#: src/components/tile.tsx:226
+#: src/components/tile.tsx:302
 msgid "Geminids Meteor Shower"
 msgstr "쌍둥이자리 유성우"
 
@@ -323,11 +339,11 @@ msgstr "다음 1시간 동안 일반적으로 강한 바람"
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}시간 후부터 일반적으로 강한 바람 시작"
 
-#: src/components/tile.tsx:214
+#: src/components/tile.tsx:254
 msgid "Halloween"
 msgstr "할로윈"
 
-#: src/components/tile.tsx:238
+#: src/components/tile.tsx:314
 msgid "Hanukkah"
 msgstr "하누카"
 
@@ -347,7 +363,7 @@ msgstr "심한 눈보라"
 msgid "heavy snowfall"
 msgstr "많은 눈"
 
-#: src/components/tile.tsx:202
+#: src/components/tile.tsx:242
 msgid "Holi"
 msgstr "홀리"
 
@@ -423,9 +439,13 @@ msgstr "위도"
 msgid "Leave a review"
 msgstr "리뷰를 남겨주세요"
 
-#: src/components/settings.tsx:310
+#: src/components/settings.tsx:364
 msgid "Legal"
 msgstr "법적"
+
+#: src/components/tile.tsx:282
+msgid "Leonids Meteor Shower"
+msgstr "사자자리 유성우"
 
 #: src/components/tile.tsx:67
 msgid "light drizzle"
@@ -467,9 +487,13 @@ msgstr "다음 1시간 동안 저시력"
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "{timeUntilLowVisibility} 시간 후 저시력 시작"
 
-#: src/components/tile.tsx:186
+#: src/components/tile.tsx:226
 msgid "Lunar New Year"
 msgstr "음력 새해"
+
+#: src/components/tile.tsx:270
+msgid "Lyrids Meteor Shower"
+msgstr "거문고자리 유성우"
 
 #: src/components/tile.tsx:62
 #: src/components/tile.tsx:65
@@ -520,7 +544,7 @@ msgstr "다시 보지 않기"
 #~ msgid "New tab"
 #~ msgstr "새 탭"
 
-#: src/components/tile.tsx:182
+#: src/components/tile.tsx:222
 msgid "New Year's Day"
 msgstr "새해 첫날"
 
@@ -548,7 +572,11 @@ msgstr "예보 할 일수"
 msgid "October"
 msgstr "10월"
 
-#: src/components/settings.tsx:263
+#: src/components/tile.tsx:278
+msgid "Orionids Meteor Shower"
+msgstr "오리온자리 유성우"
+
+#: src/components/settings.tsx:312
 msgid "Other holidays"
 msgstr "기타 공휴일"
 
@@ -568,7 +596,7 @@ msgstr "구름이 조금"
 msgid "Periodically update location automatically"
 msgstr "주기적으로 위치 자동 업데이트"
 
-#: src/components/tile.tsx:222
+#: src/components/tile.tsx:262
 msgid "Perseids Meteor Shower"
 msgstr "페르세우스자리 유성우"
 
@@ -576,7 +604,11 @@ msgstr "페르세우스자리 유성우"
 #~ msgid "Please enter it manually below."
 #~ msgstr "아래에 수동으로 입력해주세요."
 
-#: src/components/settings.tsx:230
+#: src/components/tile.tsx:266
+msgid "Quadrantids Meteor Shower"
+msgstr "사분의자리 유성우"
+
+#: src/components/settings.tsx:269
 msgid "Religious & cultural"
 msgstr "종교 및 문화"
 
@@ -588,7 +620,7 @@ msgstr "버그 신고하기"
 #~ msgid "Resource usage"
 #~ msgstr "리소스 사용"
 
-#: src/pages/index.tsx:278
+#: src/pages/index.tsx:308
 msgid "Retry"
 msgstr "다시 시도"
 
@@ -634,7 +666,15 @@ msgstr "설정"
 msgid "Show Autumn Equinox event"
 msgstr "추분 표시"
 
-#: src/components/settings.tsx:238
+#: src/components/settings.tsx:307
+msgid "Show Christmas Day event"
+msgstr "크리스마스 표시"
+
+#: src/components/settings.tsx:330
+msgid "Show Day of the Dead event"
+msgstr "망자의 날 표시"
+
+#: src/components/settings.tsx:282
 msgid "Show Diwali event"
 msgstr "디왈리 표시"
 
@@ -642,27 +682,35 @@ msgstr "디왈리 표시"
 msgid "Show Earth Day event"
 msgstr "지구의 날 표시"
 
-#: src/components/settings.tsx:253
+#: src/components/settings.tsx:277
+msgid "Show Easter event"
+msgstr "부활절 표시"
+
+#: src/components/settings.tsx:297
 msgid "Show Eid al-Adha event"
 msgstr "이드 알아드하 표시"
 
-#: src/components/settings.tsx:248
+#: src/components/settings.tsx:292
 msgid "Show Eid al-Fitr event"
 msgstr "이드 알피트르 표시"
+
+#: src/components/settings.tsx:230
+msgid "Show Eta Aquariids meteor shower event"
+msgstr "물병자리 에타 유성우 표시"
 
 #: src/components/settings.tsx:152
 msgid "Show extreme UV alerts"
 msgstr "극한의 UV 경보 표시"
 
-#: src/components/settings.tsx:225
+#: src/components/settings.tsx:264
 msgid "Show Geminids meteor shower event"
 msgstr "쌍둥이자리 유성우 표시"
 
-#: src/components/settings.tsx:276
+#: src/components/settings.tsx:325
 msgid "Show Halloween event"
 msgstr "할로윈 표시"
 
-#: src/components/settings.tsx:258
+#: src/components/settings.tsx:302
 msgid "Show Hanukkah event"
 msgstr "하누카 표시"
 
@@ -670,25 +718,41 @@ msgstr "하누카 표시"
 msgid "Show high precipitation alerts"
 msgstr "강수량이 많은 경보 표시"
 
-#: src/components/settings.tsx:243
+#: src/components/settings.tsx:287
 msgid "Show Holi event"
 msgstr "홀리 표시"
+
+#: src/components/settings.tsx:240
+msgid "Show Leonids meteor shower event"
+msgstr "사자자리 유성우 표시"
 
 #: src/components/settings.tsx:167
 msgid "Show low visibility alerts"
 msgstr "저시력 경보 표시"
 
-#: src/components/settings.tsx:233
+#: src/components/settings.tsx:272
 msgid "Show Lunar New Year event"
 msgstr "음력 새해 표시"
 
-#: src/components/settings.tsx:266
+#: src/components/settings.tsx:225
+msgid "Show Lyrids meteor shower event"
+msgstr "거문고자리 유성우 표시"
+
+#: src/components/settings.tsx:315
 msgid "Show New Year's Day event"
 msgstr "새해 첫날 표시"
 
-#: src/components/settings.tsx:220
+#: src/components/settings.tsx:235
+msgid "Show Orionids meteor shower event"
+msgstr "오리온자리 유성우 표시"
+
+#: src/components/settings.tsx:259
 msgid "Show Perseids meteor shower event"
 msgstr "페르세우스자리 유성우 표시"
+
+#: src/components/settings.tsx:220
+msgid "Show Quadrantids meteor shower event"
+msgstr "사분의자리 유성우 표시"
 
 #: src/components/settings.tsx:177
 msgid "Show seasonal events"
@@ -710,7 +774,15 @@ msgstr "강풍 경보 보이기"
 msgid "Show Summer Solstice event"
 msgstr "하지 표시"
 
-#: src/components/settings.tsx:271
+#: src/components/settings.tsx:252
+msgid "Show total lunar eclipse event"
+msgstr "개기월식 표시"
+
+#: src/components/settings.tsx:245
+msgid "Show total solar eclipse event"
+msgstr "개기일식 표시"
+
+#: src/components/settings.tsx:320
 msgid "Show Valentine's Day event"
 msgstr "발렌타인데이 표시"
 
@@ -746,7 +818,7 @@ msgstr "약한 눈내림"
 msgid "snow grains"
 msgstr "눈 과립"
 
-#: src/components/tile.tsx:190
+#: src/components/tile.tsx:230
 msgid "Spring Equinox"
 msgstr "춘분"
 
@@ -786,7 +858,7 @@ msgstr "{timeUntilStrongWind} 시간 후 강한 바람이 시작됩니다"
 msgid "Submit"
 msgstr "제출"
 
-#: src/components/tile.tsx:206
+#: src/components/tile.tsx:246
 msgid "Summer Solstice"
 msgstr "하지"
 
@@ -795,7 +867,7 @@ msgid "Sunday"
 msgstr "일요일"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/components/tile.tsx:421
+#: src/components/tile.tsx:501
 msgid "The expected type of weather is {0}."
 msgstr "예상되는 날씨 유형은 {0}입니다."
 
@@ -804,42 +876,42 @@ msgid "The location request timed out. Please check your internet connection and
 msgstr "위치 요청 시간이 초과되었습니다. 인터넷 연결을 확인하고 다시 시도하세요."
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile.tsx:385
+#: src/components/tile.tsx:465
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "최고 기온은 {0}도 섭씨가 될 것입니다."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile.tsx:391
+#: src/components/tile.tsx:471
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "최고 기온은 {0}도 화씨가 될 것입니다."
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/tile.tsx:447
+#: src/components/tile.tsx:527
 msgid "The maximum UV index will be {0}."
 msgstr "최대 UV 지수는 {0}이 될 것입니다."
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:458
+#: src/components/tile.tsx:538
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "최대 풍속은 {0}킬로미터/시간이 될 것입니다."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:464
+#: src/components/tile.tsx:544
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "최대 풍속은 {0}마일/시간이 될 것입니다."
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile.tsx:402
+#: src/components/tile.tsx:482
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "최저 기온은 {0}도 섭씨가 될 것입니다."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile.tsx:408
+#: src/components/tile.tsx:488
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "최저 기온은 {0}도 화씨가 될 것입니다."
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/tile.tsx:478
+#: src/components/tile.tsx:558
 msgid "There is a {0}% chance of precipitation."
 msgstr "강수 확률은 {0}%입니다."
 
@@ -871,6 +943,14 @@ msgstr "시작하려면 언어와 위치를 설정해주세요."
 #~ msgid "Too much battery usage"
 #~ msgstr "배터리 사용량이 너무 많음"
 
+#: src/components/tile.tsx:290
+msgid "Total Lunar Eclipse"
+msgstr "개기월식"
+
+#: src/components/tile.tsx:286
+msgid "Total Solar Eclipse"
+msgstr "개기일식"
+
 #: src/components/initialisation.tsx:190
 msgid "Try again"
 msgstr "다시 시도"
@@ -879,7 +959,7 @@ msgstr "다시 시도"
 msgid "Tuesday"
 msgstr "화요일"
 
-#: src/pages/index.tsx:272
+#: src/pages/index.tsx:302
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "날씨 데이터를 가져올 수 없습니다. 인터넷 연결을 확인하고 다시 시도하세요."
 
@@ -887,8 +967,8 @@ msgstr "날씨 데이터를 가져올 수 없습니다. 인터넷 연결을 확�
 #~ msgid "Uninstall feedback"
 #~ msgstr "제거에 대한 피드백"
 
-#: src/components/tile.tsx:417
-#: src/components/tile.tsx:424
+#: src/components/tile.tsx:497
+#: src/components/tile.tsx:504
 msgid "unknown conditions"
 msgstr "알 수 없는 상태"
 
@@ -914,7 +994,7 @@ msgstr "알 수 없는 상태"
 msgid "Use metric number format"
 msgstr "메트릭 숫자 형식 사용"
 
-#: src/components/tile.tsx:241
+#: src/components/tile.tsx:321
 msgid "Valentine's Day"
 msgstr "발렌타인데이"
 
@@ -930,7 +1010,7 @@ msgstr "강한 비소나기"
 msgid "Weather"
 msgstr "날씨"
 
-#: src/pages/index.tsx:299
+#: src/pages/index.tsx:329
 msgid "weather data provided by open-meteo"
 msgstr "날씨 데이터 제공: open-meteo"
 
@@ -943,7 +1023,7 @@ msgstr "날씨 데이터 제공: open-meteo"
 msgid "Wednesday"
 msgstr "수요일"
 
-#: src/components/tile.tsx:210
+#: src/components/tile.tsx:250
 msgid "Winter Solstice"
 msgstr "동지"
 
@@ -983,9 +1063,3 @@ msgstr "현재 위치를 사용할 수 없습니다. 기기에서 위치 서비�
 #: src/app/bug/page.tsx:62
 msgid "Your message"
 msgstr "메시지 내용"
-
-msgid "Christmas Day"
-msgstr "크리스마스"
-
-msgid "Show Christmas Day event"
-msgstr "크리스마스 표시"
