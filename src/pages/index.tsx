@@ -12,9 +12,11 @@ import { Settings } from '../components/settings'
 import { Tile } from '../components/tile'
 import { WeatherAlert } from '../components/weather-alert'
 import { useConfig } from '../hooks/use-config'
-import { useSeasonalSurprises } from '../hooks/use-seasonal-surprises'
+import { useSeasonalEvents } from '../hooks/use-seasonal-events'
 import { useWeather } from '../hooks/use-weather'
+import { getHemisphereFromLatitude } from '../hooks/seasonal-events/utils'
 import { messages } from '../locales/en/messages'
+import type { SeasonalEventId } from '../hooks/seasonal-events'
 
 i18n.load({
 	en: messages,
@@ -48,11 +50,98 @@ const App = () => {
 		changedLocation,
 	)
 	const isOnboarded = Boolean(config.lat && config.lon)
+	const hemisphere = getHemisphereFromLatitude(config.lat)
+	const canShowSeasonalEvents =
+		config.showSeasonalEvents && isHydrated && isOnboarded
+	const enabledSeasonalEvents = new Set<SeasonalEventId>()
 
-	useSeasonalSurprises({
-		isEnabled: config.showSeasonalSurprises,
+	if (config.showSeasonalEvents) {
+		if (config.showNewYearsEvent) {
+			enabledSeasonalEvents.add('new-years-day')
+		}
+		if (config.showValentinesEvent) {
+			enabledSeasonalEvents.add('valentines-day')
+		}
+		if (config.showLunarNewYearEvent) {
+			enabledSeasonalEvents.add('lunar-new-year')
+		}
+		if (config.showEasterEvent) {
+			enabledSeasonalEvents.add('easter')
+		}
+		if (config.showSpringEquinoxEvent) {
+			enabledSeasonalEvents.add('spring-equinox')
+		}
+		if (config.showAutumnEquinoxEvent) {
+			enabledSeasonalEvents.add('autumn-equinox')
+		}
+		if (config.showDiwaliEvent) {
+			enabledSeasonalEvents.add('diwali')
+		}
+		if (config.showHoliEvent) {
+			enabledSeasonalEvents.add('holi')
+		}
+		if (config.showEarthDayEvent) {
+			enabledSeasonalEvents.add('earth-day')
+		}
+		if (config.showSummerSolsticeEvent) {
+			enabledSeasonalEvents.add('summer-solstice')
+		}
+		if (config.showWinterSolsticeEvent) {
+			enabledSeasonalEvents.add('winter-solstice')
+		}
+		if (config.showHalloweenEvent) {
+			enabledSeasonalEvents.add('halloween')
+		}
+		if (config.showDayOfTheDeadEvent) {
+			enabledSeasonalEvents.add('day-of-the-dead')
+		}
+		if (config.showPerseidsEvent) {
+			enabledSeasonalEvents.add('perseids')
+		}
+		if (config.showQuadrantidsEvent) {
+			enabledSeasonalEvents.add('quadrantids')
+		}
+		if (config.showLyridsEvent) {
+			enabledSeasonalEvents.add('lyrids')
+		}
+		if (config.showEtaAquariidsEvent) {
+			enabledSeasonalEvents.add('eta-aquariids')
+		}
+		if (config.showOrionidsEvent) {
+			enabledSeasonalEvents.add('orionids')
+		}
+		if (config.showLeonidsEvent) {
+			enabledSeasonalEvents.add('leonids')
+		}
+		if (config.showTotalSolarEclipseEvent) {
+			enabledSeasonalEvents.add('total-solar-eclipse')
+		}
+		if (config.showTotalLunarEclipseEvent) {
+			enabledSeasonalEvents.add('total-lunar-eclipse')
+		}
+		if (config.showGeminidsEvent) {
+			enabledSeasonalEvents.add('geminids')
+		}
+		if (config.showEidAlFitrEvent) {
+			enabledSeasonalEvents.add('eid-al-fitr')
+		}
+		if (config.showEidAlAdhaEvent) {
+			enabledSeasonalEvents.add('eid-al-adha')
+		}
+		if (config.showHanukkahEvent) {
+			enabledSeasonalEvents.add('hanukkah')
+		}
+		if (config.showChristmasEvent) {
+			enabledSeasonalEvents.add('christmas-day')
+		}
+	}
+
+	const activeSeasonalEvent = useSeasonalEvents({
+		isEnabled: config.showSeasonalEvents,
 		isHydrated,
 		isOnboarded: isHydrated && isOnboarded,
+		enabledEvents: enabledSeasonalEvents,
+		hemisphere,
 	})
 
 	useEffect(() => {
@@ -173,6 +262,10 @@ const App = () => {
 					delayBaseline={delayBaseline}
 					useMetric={config.useMetric}
 					identifier={config.identifier}
+					showSeasonalEvents={canShowSeasonalEvents}
+					showSeasonalTileGlow={config.showSeasonalTileGlow}
+					enabledSeasonalEvents={enabledSeasonalEvents}
+					hemisphere={hemisphere}
 				/>
 			)
 		})
@@ -193,45 +286,49 @@ const App = () => {
 			)}
 			<ReviewPrompt config={config} setInput={setInput} />
 			<AnimatePresence>
-				<motion.main
-					className={`relative grid min-h-21 min-w-21 grid-cols-1 gap-5 p-5 ${GRID_COLS_CLASS[config.daysToRetrieve as keyof typeof GRID_COLS_CLASS] ?? ''}`}
-				>
-					<Initialisation
-						setInput={setInput}
-						input={input}
-						handleChange={handleChange}
-						pending={isHydrated && (!config?.lat || !config?.lon)}
-					/>
-					{error ? (
-						<div className="col-span-full flex flex-col items-center justify-center gap-4">
-							<Alert icon={IconAlertTriangle} variant="info-red">
-								<Trans>
-									Unable to fetch weather data. Please check your internet
-									connection and try again.
-								</Trans>
-							</Alert>
-							<Button className="ml-auto" onClick={retry}>
-								<Trans>Retry</Trans>
-							</Button>
-						</div>
-					) : isLoading ? (
-						<AnimatePresence>
-							<RingLoader />
-						</AnimatePresence>
-					) : (
-						<AnimatePresence>{tiles}</AnimatePresence>
-					)}
+				<motion.main className="relative min-h-21 min-w-21 p-5">
+					<div
+						className={`relative z-10 grid h-full w-full grid-cols-1 gap-5 ${GRID_COLS_CLASS[config.daysToRetrieve as keyof typeof GRID_COLS_CLASS] ?? ''}`}
+					>
+						<Initialisation
+							setInput={setInput}
+							input={input}
+							handleChange={handleChange}
+							pending={isHydrated && (!config?.lat || !config?.lon)}
+						/>
+						{error ? (
+							<div className="col-span-full flex flex-col items-center justify-center gap-4">
+								<Alert icon={IconAlertTriangle} variant="info-red">
+									<Trans>
+										Unable to fetch weather data. Please check your internet
+										connection and try again.
+									</Trans>
+								</Alert>
+								<Button className="ml-auto" onClick={retry}>
+									<Trans>Retry</Trans>
+								</Button>
+							</div>
+						) : isLoading ? (
+							<AnimatePresence>
+								<RingLoader />
+							</AnimatePresence>
+						) : (
+							<AnimatePresence>{tiles}</AnimatePresence>
+						)}
+					</div>
 				</motion.main>
 			</AnimatePresence>
 
-			<a
-				href="https://open-meteo.com/"
-				target="_blank"
-				rel="noopener noreferrer"
-				className="fixed bottom-4 left-4 text-xs text-dark-300 hover:underline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500"
-			>
-				<Trans>weather data provided by open-meteo</Trans>
-			</a>
+			<div className="fixed bottom-4 left-4 flex flex-col items-start gap-2">
+				<a
+					href="https://open-meteo.com/"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="text-xs text-dark-300 hover:underline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500"
+				>
+					<Trans>weather data provided by open-meteo</Trans>
+				</a>
+			</div>
 
 			<Settings handleChange={handleChange} input={input} />
 		</>

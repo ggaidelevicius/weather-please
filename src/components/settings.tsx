@@ -62,7 +62,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						<DialogTitle as="h1" className="text-4xl font-bold text-white">
 							<Trans>Settings</Trans>
 						</DialogTitle>
-						<h2 className="mt-8 text-2xl font-medium text-white">
+						<h2 className="mt-14 text-2xl font-medium text-white">
 							<Trans>General</Trans>
 						</h2>
 						<Select
@@ -80,11 +80,6 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							label={<Trans>Use metric number format</Trans>}
 							checked={input.useMetric}
 							onChange={(e) => handleChange('useMetric', e)}
-						/>
-						<Switch
-							label={<Trans>Show seasonal surprises</Trans>}
-							checked={input.showSeasonalSurprises}
-							onChange={(e) => handleChange('showSeasonalSurprises', e)}
 						/>
 						<h2 className="mt-14 text-2xl font-medium text-white">
 							<Trans>Weather</Trans>
@@ -172,6 +167,169 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									label={<Trans>Show low visibility alerts</Trans>}
 									checked={input.showVisibilityAlerts}
 									onChange={(e) => handleChange('showVisibilityAlerts', e)}
+								/>
+							</>
+						)}
+						<h2 className="mt-8 text-2xl font-medium text-white">
+							<Trans>Seasonal events</Trans>
+						</h2>
+						<Switch
+							label={<Trans>Show seasonal events</Trans>}
+							checked={input.showSeasonalEvents}
+							onChange={(e) => handleChange('showSeasonalEvents', e)}
+						/>
+						{input.showSeasonalEvents && (
+							<>
+								<Switch
+									label={<Trans>Show seasonal tile glow</Trans>}
+									checked={input.showSeasonalTileGlow}
+									onChange={(e) => handleChange('showSeasonalTileGlow', e)}
+								/>
+								<h3 className="mt-8 text-sm font-semibold tracking-wide text-white uppercase">
+									<Trans>Seasons & nature</Trans>
+								</h3>
+								<Switch
+									label={<Trans>Show Spring Equinox event</Trans>}
+									checked={input.showSpringEquinoxEvent}
+									onChange={(e) => handleChange('showSpringEquinoxEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Summer Solstice event</Trans>}
+									checked={input.showSummerSolsticeEvent}
+									onChange={(e) => handleChange('showSummerSolsticeEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Autumn Equinox event</Trans>}
+									checked={input.showAutumnEquinoxEvent}
+									onChange={(e) => handleChange('showAutumnEquinoxEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Winter Solstice event</Trans>}
+									checked={input.showWinterSolsticeEvent}
+									onChange={(e) => handleChange('showWinterSolsticeEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Earth Day event</Trans>}
+									checked={input.showEarthDayEvent}
+									onChange={(e) => handleChange('showEarthDayEvent', e)}
+								/>
+								<h3 className="mt-8 text-sm font-semibold tracking-wide text-white uppercase">
+									<Trans>Astronomy</Trans>
+								</h3>
+								<Switch
+									label={<Trans>Show Quadrantids meteor shower event</Trans>}
+									checked={input.showQuadrantidsEvent}
+									onChange={(e) => handleChange('showQuadrantidsEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Lyrids meteor shower event</Trans>}
+									checked={input.showLyridsEvent}
+									onChange={(e) => handleChange('showLyridsEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Eta Aquariids meteor shower event</Trans>}
+									checked={input.showEtaAquariidsEvent}
+									onChange={(e) => handleChange('showEtaAquariidsEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Orionids meteor shower event</Trans>}
+									checked={input.showOrionidsEvent}
+									onChange={(e) => handleChange('showOrionidsEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Leonids meteor shower event</Trans>}
+									checked={input.showLeonidsEvent}
+									onChange={(e) => handleChange('showLeonidsEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show total solar eclipse event</Trans>}
+									checked={input.showTotalSolarEclipseEvent}
+									onChange={(e) =>
+										handleChange('showTotalSolarEclipseEvent', e)
+									}
+								/>
+								<Switch
+									label={<Trans>Show total lunar eclipse event</Trans>}
+									checked={input.showTotalLunarEclipseEvent}
+									onChange={(e) =>
+										handleChange('showTotalLunarEclipseEvent', e)
+									}
+								/>
+								<Switch
+									label={<Trans>Show Perseids meteor shower event</Trans>}
+									checked={input.showPerseidsEvent}
+									onChange={(e) => handleChange('showPerseidsEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Geminids meteor shower event</Trans>}
+									checked={input.showGeminidsEvent}
+									onChange={(e) => handleChange('showGeminidsEvent', e)}
+								/>
+								<h3 className="mt-8 text-sm font-semibold tracking-wide text-white uppercase">
+									<Trans>Religious & cultural</Trans>
+								</h3>
+								<Switch
+									label={<Trans>Show Lunar New Year event</Trans>}
+									checked={input.showLunarNewYearEvent}
+									onChange={(e) => handleChange('showLunarNewYearEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Easter event</Trans>}
+									checked={input.showEasterEvent}
+									onChange={(e) => handleChange('showEasterEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Diwali event</Trans>}
+									checked={input.showDiwaliEvent}
+									onChange={(e) => handleChange('showDiwaliEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Holi event</Trans>}
+									checked={input.showHoliEvent}
+									onChange={(e) => handleChange('showHoliEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Eid al-Fitr event</Trans>}
+									checked={input.showEidAlFitrEvent}
+									onChange={(e) => handleChange('showEidAlFitrEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Eid al-Adha event</Trans>}
+									checked={input.showEidAlAdhaEvent}
+									onChange={(e) => handleChange('showEidAlAdhaEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Hanukkah event</Trans>}
+									checked={input.showHanukkahEvent}
+									onChange={(e) => handleChange('showHanukkahEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Christmas Day event</Trans>}
+									checked={input.showChristmasEvent}
+									onChange={(e) => handleChange('showChristmasEvent', e)}
+								/>
+								<h3 className="mt-8 text-sm font-semibold tracking-wide text-white uppercase">
+									<Trans>Other holidays</Trans>
+								</h3>
+								<Switch
+									label={<Trans>Show New Year&apos;s Day event</Trans>}
+									checked={input.showNewYearsEvent}
+									onChange={(e) => handleChange('showNewYearsEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Valentine&apos;s Day event</Trans>}
+									checked={input.showValentinesEvent}
+									onChange={(e) => handleChange('showValentinesEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Halloween event</Trans>}
+									checked={input.showHalloweenEvent}
+									onChange={(e) => handleChange('showHalloweenEvent', e)}
+								/>
+								<Switch
+									label={<Trans>Show Day of the Dead event</Trans>}
+									checked={input.showDayOfTheDeadEvent}
+									onChange={(e) => handleChange('showDayOfTheDeadEvent', e)}
 								/>
 							</>
 						)}
