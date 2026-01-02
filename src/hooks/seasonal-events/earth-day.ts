@@ -27,6 +27,9 @@ const EARTH_FIELD_OPACITY = '0.78'
 const EARTH_FIELD_FILTER = 'saturate(130%)'
 const EARTH_FIELD_MAX_DPR = 2
 const EARTH_FIELD_MARGIN = 140
+const EARTH_GLOW_OPACITY = '0.35'
+const EARTH_GLOW_GRADIENT =
+	'radial-gradient(120% 90% at 50% 100%, rgba(34, 197, 94, 0.35), rgba(16, 185, 129, 0.18) 45%, rgba(15, 23, 42, 0) 75%)'
 const EARTH_FIELD_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
 const EARTH_FIELD_FADE_IN_DURATION_RANGE = { min: 900, max: 1600 }
 const EARTH_FIELD_SCALE_RANGE = { min: 0.4, max: 0.75 }
@@ -168,6 +171,8 @@ async function launchEarthDay() {
 		let height = window.innerHeight
 		let particles: Particle[] = []
 		let lastTime = performance.now()
+		let overlay: HTMLDivElement | null = null
+		let styleEl: HTMLStyleElement | null = null
 
 		const randomFromPool = <T>(items: readonly T[]) =>
 			items[Math.floor(Math.random() * items.length)]
@@ -431,11 +436,47 @@ async function launchEarthDay() {
 
 		const mountField = () => {
 			if (hasCanceled) return
+			const style = document.createElement('style')
+			const overlayNode = document.createElement('div')
+			const glow = document.createElement('div')
+
+			style.setAttribute('data-earth-day', 'glow')
+			style.textContent = `
+@keyframes earth-day-glow-reveal {
+	0% { opacity: 0; transform: translate3d(0, 2%, 0) scale(1.02); }
+	100% { opacity: ${EARTH_GLOW_OPACITY}; transform: translate3d(0, 0, 0) scale(1); }
+}
+`
+
+			overlayNode.setAttribute('aria-hidden', 'true')
+			overlayNode.style.position = 'fixed'
+			overlayNode.style.inset = '0'
+			overlayNode.style.pointerEvents = 'none'
+			overlayNode.style.zIndex = '0'
+			overlayNode.style.mixBlendMode = 'screen'
+
+			glow.style.position = 'absolute'
+			glow.style.inset = '40% -10% -30% -10%'
+			glow.style.background = EARTH_GLOW_GRADIENT
+			glow.style.opacity = shouldAnimate ? '0' : EARTH_GLOW_OPACITY
+			glow.style.filter = 'blur(26px)'
+			glow.style.willChange = 'opacity, transform'
+
+			if (shouldAnimate) {
+				glow.style.animation = 'earth-day-glow-reveal 4s ease-out 0.8s forwards'
+			}
+
+			overlayNode.appendChild(glow)
+			document.head.appendChild(style)
+			document.body.appendChild(overlayNode)
+			overlay = overlayNode
+			styleEl = style
+
 			canvas.setAttribute('aria-hidden', 'true')
 			canvas.style.position = 'fixed'
 			canvas.style.inset = '0'
 			canvas.style.pointerEvents = 'none'
-			canvas.style.zIndex = '0'
+			canvas.style.zIndex = '1'
 			canvas.style.opacity = EARTH_FIELD_OPACITY
 			canvas.style.filter = EARTH_FIELD_FILTER
 			canvas.style.mixBlendMode = 'screen'
@@ -465,6 +506,12 @@ async function launchEarthDay() {
 			window.removeEventListener('resize', resizeCanvas)
 			if (document.body.contains(canvas)) {
 				document.body.removeChild(canvas)
+			}
+			if (overlay && overlay.parentElement) {
+				overlay.parentElement.removeChild(overlay)
+			}
+			if (styleEl && styleEl.parentElement) {
+				styleEl.parentElement.removeChild(styleEl)
 			}
 		}
 	} catch (error) {
