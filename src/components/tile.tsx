@@ -182,6 +182,10 @@ const getSeasonalEmoji = (eventId: SeasonalEventId) => {
 		return '🌑'
 	}
 
+	if (eventId === 'total-lunar-eclipse') {
+		return '🌕'
+	}
+
 	if (eventId === 'geminids') {
 		return '🌠'
 	}
@@ -272,6 +276,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 
 	if (eventId === 'total-solar-eclipse') {
 		return <Trans>Total Solar Eclipse</Trans>
+	}
+
+	if (eventId === 'total-lunar-eclipse') {
+		return <Trans>Total Lunar Eclipse</Trans>
 	}
 
 	if (eventId === 'geminids') {

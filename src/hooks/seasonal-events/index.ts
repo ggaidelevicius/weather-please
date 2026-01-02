@@ -14,6 +14,7 @@ import { etaAquariidsEvent } from './eta-aquariids'
 import { orionidsEvent } from './orionids'
 import { leonidsEvent } from './leonids'
 import { totalSolarEclipseEvent } from './total-solar-eclipse'
+import { totalLunarEclipseEvent } from './total-lunar-eclipse'
 import { perseidsEvent } from './perseids'
 import { quadrantidsEvent } from './quadrantids'
 import { geminidsEvent } from './geminids'
@@ -49,6 +50,7 @@ const seasonalEvents: SeasonalEvent[] = [
 	orionidsEvent,
 	leonidsEvent,
 	totalSolarEclipseEvent,
+	totalLunarEclipseEvent,
 	perseidsEvent,
 	quadrantidsEvent,
 	geminidsEvent,

@@ -17,6 +17,7 @@ export type SeasonalEventId =
 	| 'orionids'
 	| 'leonids'
 	| 'total-solar-eclipse'
+	| 'total-lunar-eclipse'
 	| 'geminids'
 	| 'eid-al-fitr'
 	| 'eid-al-adha'

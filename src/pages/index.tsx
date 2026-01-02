@@ -110,6 +110,9 @@ const App = () => {
 		if (config.showTotalSolarEclipseEvent) {
 			enabledSeasonalEvents.add('total-solar-eclipse')
 		}
+		if (config.showTotalLunarEclipseEvent) {
+			enabledSeasonalEvents.add('total-lunar-eclipse')
+		}
 		if (config.showGeminidsEvent) {
 			enabledSeasonalEvents.add('geminids')
 		}
