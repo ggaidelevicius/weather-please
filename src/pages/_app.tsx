@@ -17,7 +17,7 @@ const App = ({ Component, pageProps }: Readonly<AppProps>) => {
 			<QueryClientProvider client={queryClient}>
 				<Component {...pageProps} />
 			</QueryClientProvider>
-			{process.env.NEXT_PUBLIC_VERCEL === '1' && <Analytics />}
+			{process.env.VERCEL === '1' && <Analytics />}
 		</I18nProvider>
 	)
 }
