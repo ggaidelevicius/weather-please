@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const QUADRANTIDS_PEAK_DATES = new Set([
-	'2025-01-03',
-	'2025-01-04',
 	'2026-01-03',
 	'2026-01-04',
 	'2027-01-03',

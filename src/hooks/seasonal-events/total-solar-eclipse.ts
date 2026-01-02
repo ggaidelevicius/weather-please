@@ -1,7 +1,6 @@
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const TOTAL_SOLAR_ECLIPSE_DATES = new Set([
-	'2024-04-08',
 	'2026-08-12',
 	'2027-08-02',
 	'2028-07-22',

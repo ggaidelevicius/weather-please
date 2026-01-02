@@ -2,8 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const ORIONIDS_PEAK_DATES = new Set([
-	'2025-10-21',
-	'2025-10-22',
 	'2026-10-21',
 	'2026-10-22',
 	'2027-10-21',

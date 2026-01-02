@@ -2,7 +2,6 @@ import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const PERSEIDS_PEAK_DATES = new Set([
-	'2025-08-13',
 	'2026-08-13',
 	'2027-08-12',
 	'2027-08-13',
