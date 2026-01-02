@@ -287,6 +287,11 @@ const App = () => {
 			<ReviewPrompt config={config} setInput={setInput} />
 			<AnimatePresence>
 				<motion.main className="relative min-h-21 min-w-21 p-5">
+					{isLoading && (
+						<AnimatePresence>
+							<RingLoader />
+						</AnimatePresence>
+					)}
 					<div
 						className={`relative z-10 grid h-full w-full grid-cols-1 gap-5 ${GRID_COLS_CLASS[config.daysToRetrieve as keyof typeof GRID_COLS_CLASS] ?? ''}`}
 					>
@@ -308,13 +313,9 @@ const App = () => {
 									<Trans>Retry</Trans>
 								</Button>
 							</div>
-						) : isLoading ? (
-							<AnimatePresence>
-								<RingLoader />
-							</AnimatePresence>
-						) : (
+						) : !isLoading ? (
 							<AnimatePresence>{tiles}</AnimatePresence>
-						)}
+						) : null}
 					</div>
 				</motion.main>
 			</AnimatePresence>
