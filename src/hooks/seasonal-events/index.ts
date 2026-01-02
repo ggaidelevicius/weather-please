@@ -10,6 +10,7 @@ import { valentinesEvent } from './valentines'
 import { earthDayEvent } from './earth-day'
 import { halloweenEvent } from './halloween'
 import { perseidsEvent } from './perseids'
+import { quadrantidsEvent } from './quadrantids'
 import { geminidsEvent } from './geminids'
 import { eidAlFitrEvent } from './eid-al-fitr'
 import { eidAlAdhaEvent } from './eid-al-adha'
@@ -39,6 +40,7 @@ const seasonalEvents: SeasonalEvent[] = [
 	earthDayEvent,
 	halloweenEvent,
 	perseidsEvent,
+	quadrantidsEvent,
 	geminidsEvent,
 ]
 const seasonalEventMap = new Map<SeasonalEventId, SeasonalEvent>(

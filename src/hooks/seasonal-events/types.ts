@@ -11,6 +11,7 @@ export type SeasonalEventId =
 	| 'winter-solstice'
 	| 'halloween'
 	| 'perseids'
+	| 'quadrantids'
 	| 'geminids'
 	| 'eid-al-fitr'
 	| 'eid-al-adha'
