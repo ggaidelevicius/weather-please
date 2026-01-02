@@ -190,6 +190,10 @@ const getSeasonalEmoji = (eventId: SeasonalEventId) => {
 		return '💀'
 	}
 
+	if (eventId === 'easter') {
+		return '🐣'
+	}
+
 	if (eventId === 'geminids') {
 		return '🌠'
 	}
@@ -288,6 +292,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 
 	if (eventId === 'day-of-the-dead') {
 		return <Trans>Day of the Dead</Trans>
+	}
+
+	if (eventId === 'easter') {
+		return <Trans>Easter</Trans>
 	}
 
 	if (eventId === 'geminids') {

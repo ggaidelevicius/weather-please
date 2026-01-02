@@ -19,6 +19,7 @@ export type SeasonalEventId =
 	| 'total-solar-eclipse'
 	| 'total-lunar-eclipse'
 	| 'day-of-the-dead'
+	| 'easter'
 	| 'geminids'
 	| 'eid-al-fitr'
 	| 'eid-al-adha'

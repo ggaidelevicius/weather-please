@@ -23,6 +23,7 @@ import { eidAlFitrEvent } from './eid-al-fitr'
 import { eidAlAdhaEvent } from './eid-al-adha'
 import { hanukkahEvent } from './hanukkah'
 import { christmasEvent } from './christmas'
+import { easterEvent } from './easter'
 import type {
 	Hemisphere,
 	SeasonalEvent,
@@ -34,6 +35,7 @@ const seasonalEvents: SeasonalEvent[] = [
 	newYearsEvent,
 	valentinesEvent,
 	lunarNewYearEvent,
+	easterEvent,
 	springEquinoxEvent,
 	autumnEquinoxEvent,
 	diwaliEvent,
