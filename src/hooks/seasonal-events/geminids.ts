@@ -46,6 +46,8 @@ const GEMINIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
 const GEMINIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
 const GEMINIDS_STAR_OPACITY_RANGE = { min: 0.18, max: 0.55 }
 const GEMINIDS_STAR_TWINKLE_RANGE = { min: 0.0005, max: 0.0012 }
+const GEMINIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
+const GEMINIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
 export const geminidsEvent: SeasonalEvent = {
 	id: 'geminids',
@@ -99,6 +101,8 @@ async function launchGeminidsShower() {
 			opacity: number
 			twinkle: number
 			phase: number
+			birthTime: number
+			fadeDuration: number
 		}
 
 		let timeoutId: number | null = null
@@ -114,13 +118,15 @@ async function launchGeminidsShower() {
 				Math.floor(Math.random() * GEMINIDS_METEOR_COLORS.length)
 			]
 
-		const createStar = (): Star => ({
+		const createStar = (time: number): Star => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
 			radius: randomInRange(GEMINIDS_STAR_RADIUS_RANGE),
 			opacity: randomInRange(GEMINIDS_STAR_OPACITY_RANGE),
 			twinkle: randomInRange(GEMINIDS_STAR_TWINKLE_RANGE),
 			phase: Math.random() * Math.PI * 2,
+			birthTime: time + randomInRange(GEMINIDS_STAR_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(GEMINIDS_STAR_FADE_IN_DURATION_RANGE),
 		})
 
 		const createMeteor = (time: number): Meteor => {
@@ -146,7 +152,9 @@ async function launchGeminidsShower() {
 			meteors = Array.from({ length: GEMINIDS_METEOR_COUNT }, () =>
 				createMeteor(time),
 			)
-			stars = Array.from({ length: GEMINIDS_STAR_COUNT }, createStar)
+			stars = Array.from({ length: GEMINIDS_STAR_COUNT }, () =>
+				createStar(time),
+			)
 		}
 
 		const resizeCanvas = () => {
@@ -161,11 +169,32 @@ async function launchGeminidsShower() {
 			resetField(performance.now())
 		}
 
+		const getStarFade = (star: Star, time: number) => {
+			if (!shouldAnimate) {
+				return 1
+			}
+
+			const progress = (time - star.birthTime) / star.fadeDuration
+			if (progress <= 0) {
+				return 0
+			}
+			if (progress >= 1) {
+				return 1
+			}
+
+			return 1 - Math.pow(1 - progress, 3)
+		}
+
 		const drawStars = (time: number) => {
 			context.fillStyle = GEMINIDS_STAR_COLOR
 			for (const star of stars) {
+				const fade = getStarFade(star, time)
+				if (fade <= 0) {
+					continue
+				}
+
 				const twinkle = 0.65 + 0.35 * Math.sin(time * star.twinkle + star.phase)
-				context.globalAlpha = star.opacity * twinkle
+				context.globalAlpha = star.opacity * twinkle * fade
 				context.beginPath()
 				context.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
 				context.fill()

@@ -46,7 +46,7 @@ const QUADRANTIDS_OVERLAY_OPACITY = '0.82'
 const QUADRANTIDS_OVERLAY_FILTER = 'saturate(135%)'
 const QUADRANTIDS_MAX_DPR = 2
 const QUADRANTIDS_METEOR_COUNT = 14
-const QUADRANTIDS_STAR_COUNT = 130
+const QUADRANTIDS_STAR_COUNT = 140
 const QUADRANTIDS_METEOR_LENGTH_RANGE = { min: 150, max: 260 }
 const QUADRANTIDS_METEOR_WIDTH_RANGE = { min: 1.1, max: 2.5 }
 const QUADRANTIDS_METEOR_SPEED_RANGE = { min: 620, max: 900 }
@@ -66,6 +66,8 @@ const QUADRANTIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
 const QUADRANTIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.5 }
 const QUADRANTIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.6 }
 const QUADRANTIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
+const QUADRANTIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
+const QUADRANTIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
 export const quadrantidsEvent: SeasonalEvent = {
 	id: 'quadrantids',
@@ -119,6 +121,8 @@ async function launchQuadrantidsShower() {
 			opacity: number
 			twinkle: number
 			phase: number
+			birthTime: number
+			fadeDuration: number
 		}
 
 		let timeoutId: number | null = null
@@ -134,13 +138,15 @@ async function launchQuadrantidsShower() {
 				Math.floor(Math.random() * QUADRANTIDS_METEOR_COLORS.length)
 			]
 
-		const createStar = (): Star => ({
+		const createStar = (time: number): Star => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
 			radius: randomInRange(QUADRANTIDS_STAR_RADIUS_RANGE),
 			opacity: randomInRange(QUADRANTIDS_STAR_OPACITY_RANGE),
 			twinkle: randomInRange(QUADRANTIDS_STAR_TWINKLE_RANGE),
 			phase: Math.random() * Math.PI * 2,
+			birthTime: time + randomInRange(QUADRANTIDS_STAR_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(QUADRANTIDS_STAR_FADE_IN_DURATION_RANGE),
 		})
 
 		const createMeteor = (time: number): Meteor => {
@@ -166,7 +172,9 @@ async function launchQuadrantidsShower() {
 			meteors = Array.from({ length: QUADRANTIDS_METEOR_COUNT }, () =>
 				createMeteor(time),
 			)
-			stars = Array.from({ length: QUADRANTIDS_STAR_COUNT }, createStar)
+			stars = Array.from({ length: QUADRANTIDS_STAR_COUNT }, () =>
+				createStar(time),
+			)
 		}
 
 		const resizeCanvas = () => {
@@ -181,11 +189,32 @@ async function launchQuadrantidsShower() {
 			resetField(performance.now())
 		}
 
+		const getStarFade = (star: Star, time: number) => {
+			if (!shouldAnimate) {
+				return 1
+			}
+
+			const progress = (time - star.birthTime) / star.fadeDuration
+			if (progress <= 0) {
+				return 0
+			}
+			if (progress >= 1) {
+				return 1
+			}
+
+			return 1 - Math.pow(1 - progress, 3)
+		}
+
 		const drawStars = (time: number) => {
 			context.fillStyle = QUADRANTIDS_STAR_COLOR
 			for (const star of stars) {
+				const fade = getStarFade(star, time)
+				if (fade <= 0) {
+					continue
+				}
+
 				const twinkle = 0.6 + 0.4 * Math.sin(time * star.twinkle + star.phase)
-				context.globalAlpha = star.opacity * twinkle
+				context.globalAlpha = star.opacity * twinkle * fade
 				context.beginPath()
 				context.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
 				context.fill()

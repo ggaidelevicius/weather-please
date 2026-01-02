@@ -166,6 +166,10 @@ const getSeasonalEmoji = (eventId: SeasonalEventId) => {
 		return '✨'
 	}
 
+	if (eventId === 'eta-aquariids') {
+		return '💧'
+	}
+
 	if (eventId === 'geminids') {
 		return '🌠'
 	}
@@ -240,6 +244,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 
 	if (eventId === 'lyrids') {
 		return <Trans>Lyrids Meteor Shower</Trans>
+	}
+
+	if (eventId === 'eta-aquariids') {
+		return <Trans>Eta Aquariids Meteor Shower</Trans>
 	}
 
 	if (eventId === 'geminids') {

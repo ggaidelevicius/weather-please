@@ -10,6 +10,7 @@ import { valentinesEvent } from './valentines'
 import { earthDayEvent } from './earth-day'
 import { halloweenEvent } from './halloween'
 import { lyridsEvent } from './lyrids'
+import { etaAquariidsEvent } from './eta-aquariids'
 import { perseidsEvent } from './perseids'
 import { quadrantidsEvent } from './quadrantids'
 import { geminidsEvent } from './geminids'
@@ -41,6 +42,7 @@ const seasonalEvents: SeasonalEvent[] = [
 	earthDayEvent,
 	halloweenEvent,
 	lyridsEvent,
+	etaAquariidsEvent,
 	perseidsEvent,
 	quadrantidsEvent,
 	geminidsEvent,

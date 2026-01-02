@@ -98,6 +98,9 @@ const App = () => {
 		if (config.showLyridsEvent) {
 			enabledSeasonalEvents.add('lyrids')
 		}
+		if (config.showEtaAquariidsEvent) {
+			enabledSeasonalEvents.add('eta-aquariids')
+		}
 		if (config.showGeminidsEvent) {
 			enabledSeasonalEvents.add('geminids')
 		}

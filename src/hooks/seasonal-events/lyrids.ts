@@ -46,7 +46,7 @@ const LYRIDS_OVERLAY_OPACITY = '0.78'
 const LYRIDS_OVERLAY_FILTER = 'saturate(125%)'
 const LYRIDS_MAX_DPR = 2
 const LYRIDS_METEOR_COUNT = 10
-const LYRIDS_STAR_COUNT = 130
+const LYRIDS_STAR_COUNT = 140
 const LYRIDS_METEOR_LENGTH_RANGE = { min: 130, max: 240 }
 const LYRIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.2 }
 const LYRIDS_METEOR_SPEED_RANGE = { min: 480, max: 780 }
@@ -66,6 +66,8 @@ const LYRIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
 const LYRIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
 const LYRIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
 const LYRIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
+const LYRIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
+const LYRIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
 export const lyridsEvent: SeasonalEvent = {
 	id: 'lyrids',
@@ -119,6 +121,8 @@ async function launchLyridsShower() {
 			opacity: number
 			twinkle: number
 			phase: number
+			birthTime: number
+			fadeDuration: number
 		}
 
 		let timeoutId: number | null = null
@@ -134,13 +138,15 @@ async function launchLyridsShower() {
 				Math.floor(Math.random() * LYRIDS_METEOR_COLORS.length)
 			]
 
-		const createStar = (): Star => ({
+		const createStar = (time: number): Star => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
 			radius: randomInRange(LYRIDS_STAR_RADIUS_RANGE),
 			opacity: randomInRange(LYRIDS_STAR_OPACITY_RANGE),
 			twinkle: randomInRange(LYRIDS_STAR_TWINKLE_RANGE),
 			phase: Math.random() * Math.PI * 2,
+			birthTime: time + randomInRange(LYRIDS_STAR_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(LYRIDS_STAR_FADE_IN_DURATION_RANGE),
 		})
 
 		const createMeteor = (time: number): Meteor => {
@@ -166,7 +172,7 @@ async function launchLyridsShower() {
 			meteors = Array.from({ length: LYRIDS_METEOR_COUNT }, () =>
 				createMeteor(time),
 			)
-			stars = Array.from({ length: LYRIDS_STAR_COUNT }, createStar)
+			stars = Array.from({ length: LYRIDS_STAR_COUNT }, () => createStar(time))
 		}
 
 		const resizeCanvas = () => {
@@ -181,11 +187,32 @@ async function launchLyridsShower() {
 			resetField(performance.now())
 		}
 
+		const getStarFade = (star: Star, time: number) => {
+			if (!shouldAnimate) {
+				return 1
+			}
+
+			const progress = (time - star.birthTime) / star.fadeDuration
+			if (progress <= 0) {
+				return 0
+			}
+			if (progress >= 1) {
+				return 1
+			}
+
+			return 1 - Math.pow(1 - progress, 3)
+		}
+
 		const drawStars = (time: number) => {
 			context.fillStyle = LYRIDS_STAR_COLOR
 			for (const star of stars) {
+				const fade = getStarFade(star, time)
+				if (fade <= 0) {
+					continue
+				}
+
 				const twinkle = 0.65 + 0.35 * Math.sin(time * star.twinkle + star.phase)
-				context.globalAlpha = star.opacity * twinkle
+				context.globalAlpha = star.opacity * twinkle * fade
 				context.beginPath()
 				context.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
 				context.fill()

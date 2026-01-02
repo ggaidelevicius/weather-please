@@ -13,6 +13,7 @@ export type SeasonalEventId =
 	| 'perseids'
 	| 'quadrantids'
 	| 'lyrids'
+	| 'eta-aquariids'
 	| 'geminids'
 	| 'eid-al-fitr'
 	| 'eid-al-adha'
