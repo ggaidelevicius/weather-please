@@ -1,6 +1,6 @@
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 import { Trans } from '@lingui/react/macro'
-import { getCanvasDpr, randomInRange } from './utils'
+import { createAdaptiveDprController, randomInRange } from './utils'
 
 const ETA_AQUARIIDS_PEAK_DATES = new Set([
 	'2026-05-05',
@@ -185,6 +185,10 @@ async function launchEtaAquariidsShower() {
 		let stars: Star[] = []
 		let lastTime = performance.now()
 
+		const dprController = createAdaptiveDprController({
+			maxDpr: ETA_AQUARIIDS_MAX_DPR,
+			minScale: 0.4,
+		})
 		const randomMeteorColor = () =>
 			ETA_AQUARIIDS_METEOR_COLORS[
 				Math.floor(Math.random() * ETA_AQUARIIDS_METEOR_COLORS.length)
@@ -232,7 +236,7 @@ async function launchEtaAquariidsShower() {
 		const resizeCanvas = () => {
 			width = window.innerWidth
 			height = window.innerHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: ETA_AQUARIIDS_MAX_DPR })
+			const dpr = dprController.getDpr({ width, height })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
@@ -296,6 +300,9 @@ async function launchEtaAquariidsShower() {
 		}
 
 		const tick = (time: number) => {
+			if (dprController.reportFrame(time)) {
+				resizeCanvas()
+			}
 			const delta = Math.min(time - lastTime, 48)
 			lastTime = time
 			context.clearRect(0, 0, width, height)

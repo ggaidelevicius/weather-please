@@ -1,6 +1,6 @@
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 import { Trans } from '@lingui/react/macro'
-import { getCanvasDpr, randomInRange } from './utils'
+import { createAdaptiveDprController, randomInRange } from './utils'
 
 const LYRIDS_PEAK_DATES = new Set([
 	'2026-04-22',
@@ -184,6 +184,10 @@ async function launchLyridsShower() {
 		let stars: Star[] = []
 		let lastTime = performance.now()
 
+		const dprController = createAdaptiveDprController({
+			maxDpr: LYRIDS_MAX_DPR,
+			minScale: 0.4,
+		})
 		const randomMeteorColor = () =>
 			LYRIDS_METEOR_COLORS[
 				Math.floor(Math.random() * LYRIDS_METEOR_COLORS.length)
@@ -229,7 +233,7 @@ async function launchLyridsShower() {
 		const resizeCanvas = () => {
 			width = window.innerWidth
 			height = window.innerHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: LYRIDS_MAX_DPR })
+			const dpr = dprController.getDpr({ width, height })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
@@ -293,6 +297,9 @@ async function launchLyridsShower() {
 		}
 
 		const tick = (time: number) => {
+			if (dprController.reportFrame(time)) {
+				resizeCanvas()
+			}
 			const delta = Math.min(time - lastTime, 48)
 			lastTime = time
 			context.clearRect(0, 0, width, height)

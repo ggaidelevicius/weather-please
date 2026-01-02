@@ -1,6 +1,6 @@
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 import { Trans } from '@lingui/react/macro'
-import { getCanvasDpr, randomInRange } from './utils'
+import { createAdaptiveDprController, randomInRange } from './utils'
 
 const QUADRANTIDS_PEAK_DATES = new Set([
 	'2026-01-03',
@@ -201,6 +201,10 @@ async function launchQuadrantidsShower() {
 		let stars: Star[] = []
 		let lastTime = performance.now()
 
+		const dprController = createAdaptiveDprController({
+			maxDpr: QUADRANTIDS_MAX_DPR,
+			minScale: 0.4,
+		})
 		const randomMeteorColor = () =>
 			QUADRANTIDS_METEOR_COLORS[
 				Math.floor(Math.random() * QUADRANTIDS_METEOR_COLORS.length)
@@ -248,7 +252,7 @@ async function launchQuadrantidsShower() {
 		const resizeCanvas = () => {
 			width = window.innerWidth
 			height = window.innerHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: QUADRANTIDS_MAX_DPR })
+			const dpr = dprController.getDpr({ width, height })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
@@ -312,6 +316,9 @@ async function launchQuadrantidsShower() {
 		}
 
 		const tick = (time: number) => {
+			if (dprController.reportFrame(time)) {
+				resizeCanvas()
+			}
 			const delta = Math.min(time - lastTime, 48)
 			lastTime = time
 			context.clearRect(0, 0, width, height)

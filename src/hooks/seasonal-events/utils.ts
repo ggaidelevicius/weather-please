@@ -46,3 +46,71 @@ export function getCanvasDpr({
 
 	return Math.min(maxDpr, devicePixelRatio, pixelBudgetDpr)
 }
+
+export function createAdaptiveDprController({
+	maxDpr,
+	minScale = 0.6,
+	slowFps = 50,
+	fastFps = 58,
+	sampleCount = 30,
+	cooldownMs = 1500,
+	step = 0.1,
+}: {
+	maxDpr: number
+	minScale?: number
+	slowFps?: number
+	fastFps?: number
+	sampleCount?: number
+	cooldownMs?: number
+	step?: number
+}) {
+	let scale = 1
+	let lastFrameTime: number | null = null
+	let lastAdjustment = 0
+	const samples: number[] = []
+
+	const getDpr = ({ width, height }: { width: number; height: number }) =>
+		getCanvasDpr({ width, height, maxDpr: maxDpr * scale })
+
+	const reportFrame = (time: number) => {
+		if (lastFrameTime === null) {
+			lastFrameTime = time
+			return false
+		}
+
+		const delta = time - lastFrameTime
+		lastFrameTime = time
+		if (delta <= 0) {
+			return false
+		}
+
+		samples.push(1000 / delta)
+		if (samples.length < sampleCount) {
+			return false
+		}
+
+		const avgFps =
+			samples.reduce((total, value) => total + value, 0) / samples.length
+		samples.length = 0
+
+		if (time - lastAdjustment < cooldownMs) {
+			return false
+		}
+
+		if (avgFps < slowFps && scale > minScale) {
+			scale = Math.max(minScale, scale - step)
+			lastAdjustment = time
+			return true
+		}
+
+		if (avgFps > fastFps && scale < 1) {
+			scale = Math.min(1, scale + step)
+			lastAdjustment = time
+			return true
+		}
+
+		return false
+	}
+
+	return { getDpr, reportFrame }
+}

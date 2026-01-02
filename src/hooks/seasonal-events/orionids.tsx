@@ -1,6 +1,6 @@
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 import { Trans } from '@lingui/react/macro'
-import { getCanvasDpr, randomInRange } from './utils'
+import { createAdaptiveDprController, randomInRange } from './utils'
 
 const ORIONIDS_PEAK_DATES = new Set([
 	'2026-10-21',
@@ -185,6 +185,10 @@ async function launchOrionidsShower() {
 		let stars: Star[] = []
 		let lastTime = performance.now()
 
+		const dprController = createAdaptiveDprController({
+			maxDpr: ORIONIDS_MAX_DPR,
+			minScale: 0.4,
+		})
 		const randomMeteorColor = () =>
 			ORIONIDS_METEOR_COLORS[
 				Math.floor(Math.random() * ORIONIDS_METEOR_COLORS.length)
@@ -232,7 +236,7 @@ async function launchOrionidsShower() {
 		const resizeCanvas = () => {
 			width = window.innerWidth
 			height = window.innerHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: ORIONIDS_MAX_DPR })
+			const dpr = dprController.getDpr({ width, height })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
@@ -296,6 +300,9 @@ async function launchOrionidsShower() {
 		}
 
 		const tick = (time: number) => {
+			if (dprController.reportFrame(time)) {
+				resizeCanvas()
+			}
 			const delta = Math.min(time - lastTime, 48)
 			lastTime = time
 			context.clearRect(0, 0, width, height)
