@@ -1,6 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 import { Trans } from '@lingui/react/macro'
+import { randomInRange } from './utils'
 
 const NEW_YEARS_MONTH = 0
 const NEW_YEARS_DAY = 1

@@ -1,6 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const HANUKKAH_START_DATES = new Set([
 	'2026-12-04',
@@ -257,9 +257,9 @@ async function launchHanukkahGlow() {
 		}
 
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, HANUKKAH_MAX_DPR)
 			width = window.innerWidth
 			height = window.innerHeight
+			const dpr = getCanvasDpr({ width, height, maxDpr: HANUKKAH_MAX_DPR })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

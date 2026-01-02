@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { AdditiveBlending, Color } from 'three'
 import type { Points, ShaderMaterial } from 'three'
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const HOLI_DATES = new Set([
 	'2026-03-04',
@@ -383,7 +383,11 @@ async function launchHoliColors() {
 
 		const { createRoot } = await import('react-dom/client')
 		const root = createRoot(container)
-		const dpr = Math.min(window.devicePixelRatio || 1, HOLI_CANVAS_MAX_DPR)
+		const dpr = getCanvasDpr({
+			width: window.innerWidth,
+			height: window.innerHeight,
+			maxDpr: HOLI_CANVAS_MAX_DPR,
+		})
 
 		const mountScene = () => {
 			if (isMounted) return

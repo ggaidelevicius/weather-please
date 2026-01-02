@@ -1,6 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const EASTER_MOUNT_DELAY_MS = 900
 const EASTER_FIELD_OPACITY = '0.72'
@@ -276,9 +276,9 @@ async function launchEaster() {
 			}
 		}
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, EASTER_FIELD_MAX_DPR)
 			width = window.innerWidth
 			height = window.innerHeight
+			const dpr = getCanvasDpr({ width, height, maxDpr: EASTER_FIELD_MAX_DPR })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

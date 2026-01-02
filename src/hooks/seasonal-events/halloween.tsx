@@ -1,6 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const HALLOWEEN_MONTH = 9
 const HALLOWEEN_DAY = 31
@@ -257,16 +257,17 @@ async function launchHalloweenSpirits() {
 		}
 		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
 		const resizeCanvas = () => {
-			const dpr = Math.min(
-				window.devicePixelRatio || 1,
-				HALLOWEEN_FIELD_MAX_DPR,
-			)
 			const nextWidth = window.innerWidth
 			const nextHeight = window.innerHeight
 			const prevWidth = width
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
+			const dpr = getCanvasDpr({
+				width,
+				height,
+				maxDpr: HALLOWEEN_FIELD_MAX_DPR,
+			})
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)

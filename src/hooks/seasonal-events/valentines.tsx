@@ -1,6 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const VALENTINES_MONTH = 1
 const VALENTINES_DAY = 14
@@ -199,13 +199,13 @@ async function launchValentinesHearts() {
 		}
 		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, HEARTS_FIELD_MAX_DPR)
 			const nextWidth = window.innerWidth
 			const nextHeight = window.innerHeight
 			const prevWidth = width
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
+			const dpr = getCanvasDpr({ width, height, maxDpr: HEARTS_FIELD_MAX_DPR })
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)

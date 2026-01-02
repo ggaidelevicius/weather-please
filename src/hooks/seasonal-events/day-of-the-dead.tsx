@@ -1,6 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const DAY_OF_THE_DEAD_MONTH = 10
 const DAY_OF_THE_DEAD_DAYS = new Set([1, 2])
@@ -266,12 +266,13 @@ async function launchDayOfTheDead() {
 			}
 		}
 		const resizeCanvas = () => {
-			const dpr = Math.min(
-				window.devicePixelRatio || 1,
-				DAY_OF_THE_DEAD_FIELD_MAX_DPR,
-			)
 			width = window.innerWidth
 			height = window.innerHeight
+			const dpr = getCanvasDpr({
+				width,
+				height,
+				maxDpr: DAY_OF_THE_DEAD_FIELD_MAX_DPR,
+			})
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

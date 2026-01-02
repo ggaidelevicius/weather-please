@@ -1,6 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const SUMMER_SOLSTICE_DATES_NORTHERN = new Set([
 	'2026-06-21',
@@ -218,16 +218,17 @@ async function launchSummerSolstice() {
 			Object.assign(particle, createParticle(time))
 		}
 		const resizeCanvas = () => {
-			const dpr = Math.min(
-				window.devicePixelRatio || 1,
-				SOLSTICE_POLLEN_MAX_DPR,
-			)
 			const nextWidth = window.innerWidth
 			const nextHeight = window.innerHeight
 			const prevWidth = width
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
+			const dpr = getCanvasDpr({
+				width,
+				height,
+				maxDpr: SOLSTICE_POLLEN_MAX_DPR,
+			})
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
