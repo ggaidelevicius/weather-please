@@ -9,6 +9,9 @@ const HEARTS_FIELD_FILTER = 'saturate(170%) contrast(110%)'
 const HEARTS_FIELD_MAX_DPR = 2
 const HEARTS_FIELD_MARGIN = 140
 const HEARTS_FIELD_COUNT = 72
+const HEARTS_GLOW_OPACITY = '0.4'
+const HEARTS_GLOW_GRADIENT =
+	'radial-gradient(120% 90% at 50% 100%, rgba(244, 114, 182, 0.5), rgba(251, 113, 133, 0.25) 45%, rgba(15, 23, 42, 0) 75%)'
 const HEARTS_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
 const HEARTS_FADE_IN_DURATION_RANGE = { min: 900, max: 1600 }
 const HEARTS_SCALE_RANGE = { min: 0.4, max: 0.75 }
@@ -85,6 +88,8 @@ async function launchValentinesHearts() {
 		let height = window.innerHeight
 		let particles: HeartParticle[] = []
 		let lastTime = performance.now()
+		let overlay: HTMLDivElement | null = null
+		let styleEl: HTMLStyleElement | null = null
 
 		const randomGradient = () =>
 			HEARTS_GRADIENTS[Math.floor(Math.random() * HEARTS_GRADIENTS.length)]
@@ -297,6 +302,43 @@ async function launchValentinesHearts() {
 
 		const mountHearts = () => {
 			if (hasCanceled) return
+			const style = document.createElement('style')
+			const overlayNode = document.createElement('div')
+			const glow = document.createElement('div')
+
+			style.setAttribute('data-valentines', 'glow')
+			style.textContent = `
+@keyframes valentines-glow-reveal {
+	0% { opacity: 0; transform: translate3d(0, 2%, 0) scale(1.02); }
+	100% { opacity: ${HEARTS_GLOW_OPACITY}; transform: translate3d(0, 0, 0) scale(1); }
+}
+`
+
+			overlayNode.setAttribute('aria-hidden', 'true')
+			overlayNode.style.position = 'fixed'
+			overlayNode.style.inset = '0'
+			overlayNode.style.pointerEvents = 'none'
+			overlayNode.style.zIndex = '0'
+			overlayNode.style.mixBlendMode = 'screen'
+
+			glow.style.position = 'absolute'
+			glow.style.inset = '40% -10% -30% -10%'
+			glow.style.background = HEARTS_GLOW_GRADIENT
+			glow.style.opacity = shouldAnimate ? '0' : HEARTS_GLOW_OPACITY
+			glow.style.filter = 'blur(26px)'
+			glow.style.willChange = 'opacity, transform'
+
+			if (shouldAnimate) {
+				glow.style.animation =
+					'valentines-glow-reveal 4s ease-out 0.8s forwards'
+			}
+
+			overlayNode.appendChild(glow)
+			document.head.appendChild(style)
+			document.body.appendChild(overlayNode)
+			overlay = overlayNode
+			styleEl = style
+
 			canvas.setAttribute('aria-hidden', 'true')
 			canvas.style.position = 'fixed'
 			canvas.style.inset = '0'
@@ -331,6 +373,12 @@ async function launchValentinesHearts() {
 			window.removeEventListener('resize', resizeCanvas)
 			if (document.body.contains(canvas)) {
 				document.body.removeChild(canvas)
+			}
+			if (overlay && overlay.parentElement) {
+				overlay.parentElement.removeChild(overlay)
+			}
+			if (styleEl && styleEl.parentElement) {
+				styleEl.parentElement.removeChild(styleEl)
 			}
 		}
 	} catch (error) {

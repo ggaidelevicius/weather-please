@@ -1,8 +1,6 @@
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const TOTAL_LUNAR_ECLIPSE_DATES = new Set([
-	'2025-03-14',
-	'2025-09-07',
 	'2026-03-03',
 	'2028-12-31',
 	'2029-01-01',
