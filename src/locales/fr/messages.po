@@ -23,12 +23,12 @@ msgstr ""
 #~ msgstr "{0} pouces de précipitations attendues au cours de la prochaine heure"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:244
+#: src/components/tile.tsx:453
 msgid "{0} km/h"
 msgstr "{0} km/h"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:245
+#: src/components/tile.tsx:454
 msgid "{0} mph"
 msgstr "{0} mph"
 
@@ -79,7 +79,7 @@ msgstr "<0>Accès à la localisation refusé.</0> Vérifiez les paramètres de v
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Accès à la localisation refusé.</0> Cliquez sur l'icône de localisation dans la barre d'adresse et sélectionnez \"toujours autoriser l'accès à votre position\". Cliquez ensuite sur le bouton ci-dessous pour réessayer."
 
-#: src/components/settings.tsx:203
+#: src/components/settings.tsx:307
 msgid "☕ Gift a coffee"
 msgstr "☕ Offrir un café"
 
@@ -87,11 +87,11 @@ msgstr "☕ Offrir un café"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Soumettre des commentaires"
 
-#: src/components/settings.tsx:187
+#: src/components/settings.tsx:291
 msgid "🌟 Leave a review"
 msgstr "🌟 Laisser un avis"
 
-#: src/components/settings.tsx:195
+#: src/components/settings.tsx:299
 msgid "🐛 Report a bug"
 msgstr "🐛 Signaler un bug"
 
@@ -99,7 +99,7 @@ msgstr "🐛 Signaler un bug"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Demander une fonctionnalité"
 
-#: src/components/settings.tsx:214
+#: src/components/settings.tsx:318
 msgid "🔒 Privacy policy"
 msgstr "🔒 Politique de confidentialité"
 
@@ -135,13 +135,21 @@ msgstr "🔒 Politique de confidentialité"
 #~ msgid "An error has occurred while periodically updating location. Please check the console for more details."
 #~ msgstr "Une erreur s'est produite lors de la mise à jour périodique de l'emplacement. Veuillez consulter la console pour plus de détails."
 
-#: src/components/tile.tsx:97
+#: src/components/tile.tsx:105
 msgid "April"
 msgstr "Avril"
 
-#: src/components/tile.tsx:101
+#: src/components/settings.tsx:217
+msgid "Astronomy"
+msgstr "Astronomie"
+
+#: src/components/tile.tsx:109
 msgid "August"
 msgstr "Août"
+
+#: src/components/tile.tsx:194
+msgid "Autumn Equinox"
+msgstr "Équinoxe d'automne"
 
 #: src/components/settings/index.tsx:194
 #~ msgid "Based on the provided information, your location is:"
@@ -163,7 +171,7 @@ msgstr "Août"
 #~ msgid "Changed needs"
 #~ msgstr "Besoins modifiés"
 
-#: src/components/tile.tsx:53
+#: src/components/tile.tsx:61
 msgid "clear sky"
 msgstr "ciel clair"
 
@@ -179,27 +187,27 @@ msgstr "ciel clair"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "Consomme trop de mémoire ou de CPU"
 
-#: src/components/settings.tsx:144
+#: src/components/settings.tsx:139
 msgid "Date"
 msgstr "Date"
 
-#: src/components/settings.tsx:140
+#: src/components/settings.tsx:135
 msgid "Day"
 msgstr "Jour"
 
-#: src/components/tile.tsx:105
+#: src/components/tile.tsx:113
 msgid "December"
 msgstr "Décembre"
 
-#: src/components/tile.tsx:61
+#: src/components/tile.tsx:69
 msgid "dense drizzle"
 msgstr "bruine dense"
 
-#: src/components/tile.tsx:63
+#: src/components/tile.tsx:71
 msgid "dense freezing drizzle"
 msgstr "bruine givrante dense"
 
-#: src/components/tile.tsx:58
+#: src/components/tile.tsx:66
 msgid "depositing rime fog"
 msgstr "brouillard givrant déposant"
 
@@ -211,6 +219,10 @@ msgstr "brouillard givrant déposant"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "Difficile à utiliser ou à comprendre"
 
+#: src/components/tile.tsx:198
+msgid "Diwali"
+msgstr "Diwali"
+
 #: src/app/bug/page.tsx:68
 msgid "Do not fill this field if you are human"
 msgstr "Ne remplissez pas ce champ si vous êtes un humain"
@@ -218,6 +230,18 @@ msgstr "Ne remplissez pas ce champ si vous êtes un humain"
 #: src/components/settings/index.tsx:565
 #~ msgid "Don't save"
 #~ msgstr "Ne pas enregistrer"
+
+#: src/components/tile.tsx:218
+msgid "Earth Day"
+msgstr "Jour de la Terre"
+
+#: src/components/tile.tsx:234
+msgid "Eid al-Adha"
+msgstr "Aïd el-Adha"
+
+#: src/components/tile.tsx:230
+msgid "Eid al-Fitr"
+msgstr "Aïd el-Fitr"
 
 #: src/pages/feedback/index.tsx:423
 #~ msgid "Email (optional)"
@@ -255,11 +279,11 @@ msgstr "UV extrêmes débutant dans {timeUntilExtremeUv} heures"
 #~ msgid "Features don't work as expected"
 #~ msgstr "Les fonctionnalités ne fonctionnent pas comme prévu"
 
-#: src/components/tile.tsx:95
+#: src/components/tile.tsx:103
 msgid "February"
 msgstr "Février"
 
-#: src/components/settings.tsx:179
+#: src/components/settings.tsx:283
 msgid "Feedback"
 msgstr "Retour d'information"
 
@@ -271,9 +295,13 @@ msgstr "Retour d'information"
 #~ msgid "Found a better alternative"
 #~ msgstr "Trouvé une meilleure alternative"
 
-#: src/components/tile.tsx:89
+#: src/components/tile.tsx:97
 msgid "Friday"
 msgstr "Vendredi"
+
+#: src/components/tile.tsx:226
+msgid "Geminids Meteor Shower"
+msgstr "Pluie de météores des Géminides"
 
 #: src/components/settings.tsx:66
 msgid "General"
@@ -295,21 +323,33 @@ msgstr "Vent généralement fort pendant la prochaine heure"
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "Vent généralement fort commençant dans {timeUntilStrongWind} heures"
 
-#: src/components/tile.tsx:68
+#: src/components/tile.tsx:214
+msgid "Halloween"
+msgstr "Halloween"
+
+#: src/components/tile.tsx:238
+msgid "Hanukkah"
+msgstr "Hanoucca"
+
+#: src/components/tile.tsx:76
 msgid "heavy freezing rain"
 msgstr "pluie verglaçante lourde"
 
-#: src/components/tile.tsx:66
+#: src/components/tile.tsx:74
 msgid "heavy rain"
 msgstr "forte pluie"
 
-#: src/components/tile.tsx:77
+#: src/components/tile.tsx:85
 msgid "heavy snow showers"
 msgstr "fortes averses de neige"
 
-#: src/components/tile.tsx:71
+#: src/components/tile.tsx:79
 msgid "heavy snowfall"
 msgstr "fortes chutes de neige"
+
+#: src/components/tile.tsx:202
+msgid "Holi"
+msgstr "Holi"
 
 #: src/pages/feedback/index.tsx:167
 #~ msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
@@ -319,7 +359,7 @@ msgstr "fortes chutes de neige"
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "J'aimerais apporter Weather Please à d'autres langues."
 
-#: src/components/settings.tsx:133
+#: src/components/settings.tsx:128
 msgid "Identifier"
 msgstr "Identificateur"
 
@@ -354,15 +394,15 @@ msgstr "Valeur invalide. Les paramètres ne seront pas enregistrés tant que cet
 #~ msgid "Issues after a recent update"
 #~ msgstr "Problèmes suite à une mise à jour récente"
 
-#: src/components/tile.tsx:94
+#: src/components/tile.tsx:102
 msgid "January"
 msgstr "Janvier"
 
-#: src/components/tile.tsx:100
+#: src/components/tile.tsx:108
 msgid "July"
 msgstr "Juillet"
 
-#: src/components/tile.tsx:99
+#: src/components/tile.tsx:107
 msgid "June"
 msgstr "Juin"
 
@@ -375,7 +415,7 @@ msgstr "Juin"
 msgid "Language"
 msgstr "Langue"
 
-#: src/components/settings.tsx:99
+#: src/components/settings.tsx:94
 msgid "Latitude"
 msgstr "Latitude"
 
@@ -383,19 +423,19 @@ msgstr "Latitude"
 msgid "Leave a review"
 msgstr "Laisser un avis"
 
-#: src/components/settings.tsx:206
+#: src/components/settings.tsx:310
 msgid "Legal"
 msgstr "Légal"
 
-#: src/components/tile.tsx:59
+#: src/components/tile.tsx:67
 msgid "light drizzle"
 msgstr "bruine légère"
 
-#: src/components/tile.tsx:62
+#: src/components/tile.tsx:70
 msgid "light freezing drizzle"
 msgstr "bruine givrante légère"
 
-#: src/components/tile.tsx:67
+#: src/components/tile.tsx:75
 msgid "light freezing rain"
 msgstr "pluie verglaçante légère"
 
@@ -403,7 +443,7 @@ msgstr "pluie verglaçante légère"
 #~ msgid "Location"
 #~ msgstr "Localisation"
 
-#: src/components/settings.tsx:107
+#: src/components/settings.tsx:102
 msgid "Longitude"
 msgstr "Longitude"
 
@@ -427,16 +467,20 @@ msgstr "Faible visibilité pour la prochaine heure"
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "Faible visibilité débutant dans {timeUntilLowVisibility} heures"
 
-#: src/components/tile.tsx:54
-#: src/components/tile.tsx:57
+#: src/components/tile.tsx:186
+msgid "Lunar New Year"
+msgstr "Nouvel An lunaire"
+
+#: src/components/tile.tsx:62
+#: src/components/tile.tsx:65
 msgid "mainly clear"
 msgstr "principalement clair"
 
-#: src/components/tile.tsx:96
+#: src/components/tile.tsx:104
 msgid "March"
 msgstr "Mars"
 
-#: src/components/tile.tsx:98
+#: src/components/tile.tsx:106
 msgid "May"
 msgstr "Mai"
 
@@ -448,23 +492,23 @@ msgstr "Mai"
 #~ msgid "Miscellaneous"
 #~ msgstr "Divers"
 
-#: src/components/tile.tsx:60
+#: src/components/tile.tsx:68
 msgid "moderate drizzle"
 msgstr "bruine modérée"
 
-#: src/components/tile.tsx:65
+#: src/components/tile.tsx:73
 msgid "moderate rain"
 msgstr "pluie modérée"
 
-#: src/components/tile.tsx:74
+#: src/components/tile.tsx:82
 msgid "moderate rain showers"
 msgstr "averses modérées"
 
-#: src/components/tile.tsx:70
+#: src/components/tile.tsx:78
 msgid "moderate snowfall"
 msgstr "chutes de neige modérées"
 
-#: src/components/tile.tsx:85
+#: src/components/tile.tsx:93
 msgid "Monday"
 msgstr "Lundi"
 
@@ -475,6 +519,10 @@ msgstr "Ne plus jamais afficher ceci"
 #: src/pages/_app.tsx:21
 #~ msgid "New tab"
 #~ msgstr "Nouvel onglet"
+
+#: src/components/tile.tsx:182
+msgid "New Year's Day"
+msgstr "Jour de l'An"
 
 #: src/pages/feedback/index.tsx:272
 #~ msgid "No longer need the functionality"
@@ -488,23 +536,27 @@ msgstr "Ne plus jamais afficher ceci"
 #~ msgid "Note: This requires browser permissions"
 #~ msgstr "Remarque : cela nécessite des autorisations de navigateur"
 
-#: src/components/tile.tsx:104
+#: src/components/tile.tsx:112
 msgid "November"
 msgstr "Novembre"
 
-#: src/components/settings.tsx:122
+#: src/components/settings.tsx:117
 msgid "Number of days to forecast"
 msgstr "Nombre de jours à prévoir"
 
-#: src/components/tile.tsx:103
+#: src/components/tile.tsx:111
 msgid "October"
 msgstr "Octobre"
 
-#: src/components/tile.tsx:56
+#: src/components/settings.tsx:263
+msgid "Other holidays"
+msgstr "Autres fêtes"
+
+#: src/components/tile.tsx:64
 msgid "overcast"
 msgstr "couvert"
 
-#: src/components/tile.tsx:55
+#: src/components/tile.tsx:63
 msgid "partly cloudy"
 msgstr "partiellement nuageux"
 
@@ -512,13 +564,21 @@ msgstr "partiellement nuageux"
 #~ msgid "Performance issues"
 #~ msgstr "Problèmes de performance"
 
-#: src/components/settings.tsx:117
+#: src/components/settings.tsx:112
 msgid "Periodically update location automatically"
 msgstr "Mettre à jour périodiquement la localisation automatiquement"
+
+#: src/components/tile.tsx:222
+msgid "Perseids Meteor Shower"
+msgstr "Pluie de météores des Perséides"
 
 #: src/components/intialisation/index.tsx:155
 #~ msgid "Please enter it manually below."
 #~ msgstr "Veuillez l'entrer manuellement ci-dessous."
+
+#: src/components/settings.tsx:230
+msgid "Religious & cultural"
+msgstr "Religieux et culturel"
 
 #: src/app/bug/page.tsx:54
 msgid "Report a bug"
@@ -528,11 +588,11 @@ msgstr "Signaler un bug"
 #~ msgid "Resource usage"
 #~ msgstr "Utilisation des ressources"
 
-#: src/pages/index.tsx:214
+#: src/pages/index.tsx:278
 msgid "Retry"
 msgstr "Réessayer"
 
-#: src/components/tile.tsx:90
+#: src/components/tile.tsx:98
 msgid "Saturday"
 msgstr "Samedi"
 
@@ -541,11 +601,19 @@ msgstr "Samedi"
 #~ msgid "Save"
 #~ msgstr "Enregistrer"
 
+#: src/components/settings.tsx:174
+msgid "Seasonal events"
+msgstr "Événements saisonniers"
+
+#: src/components/settings.tsx:189
+msgid "Seasons & nature"
+msgstr "Saisons et nature"
+
 #: src/pages/feedback/index.tsx:244
 #~ msgid "Security and privacy concerns"
 #~ msgstr "Préoccupations de sécurité et de confidentialité"
 
-#: src/components/tile.tsx:102
+#: src/components/tile.tsx:110
 msgid "September"
 msgstr "Septembre"
 
@@ -562,43 +630,111 @@ msgstr "Paramètres"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "Partager les données anonymisées de crash et les journaux d'erreurs"
 
-#: src/components/settings.tsx:157
+#: src/components/settings.tsx:202
+msgid "Show Autumn Equinox event"
+msgstr "Afficher l'équinoxe d'automne"
+
+#: src/components/settings.tsx:238
+msgid "Show Diwali event"
+msgstr "Afficher Diwali"
+
+#: src/components/settings.tsx:212
+msgid "Show Earth Day event"
+msgstr "Afficher le Jour de la Terre"
+
+#: src/components/settings.tsx:253
+msgid "Show Eid al-Adha event"
+msgstr "Afficher l'Aïd el-Adha"
+
+#: src/components/settings.tsx:248
+msgid "Show Eid al-Fitr event"
+msgstr "Afficher l'Aïd el-Fitr"
+
+#: src/components/settings.tsx:152
 msgid "Show extreme UV alerts"
 msgstr "Afficher les alertes UV extrêmes"
 
-#: src/components/settings.tsx:162
+#: src/components/settings.tsx:225
+msgid "Show Geminids meteor shower event"
+msgstr "Afficher la pluie de météores des Géminides"
+
+#: src/components/settings.tsx:276
+msgid "Show Halloween event"
+msgstr "Afficher Halloween"
+
+#: src/components/settings.tsx:258
+msgid "Show Hanukkah event"
+msgstr "Afficher Hanoucca"
+
+#: src/components/settings.tsx:157
 msgid "Show high precipitation alerts"
 msgstr "Afficher les alertes de fortes précipitations"
 
-#: src/components/settings.tsx:172
+#: src/components/settings.tsx:243
+msgid "Show Holi event"
+msgstr "Afficher Holi"
+
+#: src/components/settings.tsx:167
 msgid "Show low visibility alerts"
 msgstr "Afficher les alertes de faible visibilité"
 
-#: src/components/settings.tsx:85
+#: src/components/settings.tsx:233
+msgid "Show Lunar New Year event"
+msgstr "Afficher le Nouvel An lunaire"
+
+#: src/components/settings.tsx:266
+msgid "Show New Year's Day event"
+msgstr "Afficher le Jour de l'An"
+
+#: src/components/settings.tsx:220
+msgid "Show Perseids meteor shower event"
+msgstr "Afficher la pluie de météores des Perséides"
+
+#: src/components/settings.tsx:177
 msgid "Show seasonal events"
 msgstr "Afficher les événements saisonniers"
 
-#: src/components/settings.tsx:167
+#: src/components/settings.tsx:184
+msgid "Show seasonal tile glow"
+msgstr "Afficher la lueur saisonnière des tuiles"
+
+#: src/components/settings.tsx:192
+msgid "Show Spring Equinox event"
+msgstr "Afficher l'équinoxe de printemps"
+
+#: src/components/settings.tsx:162
 msgid "Show strong wind alerts"
 msgstr "Afficher les alertes de vent fort"
 
-#: src/components/settings.tsx:150
+#: src/components/settings.tsx:197
+msgid "Show Summer Solstice event"
+msgstr "Afficher le solstice d'été"
+
+#: src/components/settings.tsx:271
+msgid "Show Valentine's Day event"
+msgstr "Afficher la Saint-Valentin"
+
+#: src/components/settings.tsx:145
 msgid "Show weather alerts"
 msgstr "Afficher les alertes météorologiques"
 
-#: src/components/tile.tsx:64
+#: src/components/settings.tsx:207
+msgid "Show Winter Solstice event"
+msgstr "Afficher le solstice d'hiver"
+
+#: src/components/tile.tsx:72
 msgid "slight rain"
 msgstr "pluie légère"
 
-#: src/components/tile.tsx:73
+#: src/components/tile.tsx:81
 msgid "slight rain showers"
 msgstr "averses légères"
 
-#: src/components/tile.tsx:76
+#: src/components/tile.tsx:84
 msgid "slight snow showers"
 msgstr "faibles averses de neige"
 
-#: src/components/tile.tsx:69
+#: src/components/tile.tsx:77
 msgid "slight snowfall"
 msgstr "faibles chutes de neige"
 
@@ -606,9 +742,13 @@ msgstr "faibles chutes de neige"
 #~ msgid "Slows down my browser"
 #~ msgstr "Ralentit mon navigateur"
 
-#: src/components/tile.tsx:72
+#: src/components/tile.tsx:80
 msgid "snow grains"
 msgstr "grains de neige"
+
+#: src/components/tile.tsx:190
+msgid "Spring Equinox"
+msgstr "Équinoxe de printemps"
 
 #: src/components/alert/index.tsx:236
 #~ msgid "Strong wind for the next {durationOfStrongWind} hours"
@@ -646,12 +786,16 @@ msgstr "Rafales de vent fort commençant dans {timeUntilStrongWind} heures"
 msgid "Submit"
 msgstr "Soumettre"
 
-#: src/components/tile.tsx:84
+#: src/components/tile.tsx:206
+msgid "Summer Solstice"
+msgstr "Solstice d'été"
+
+#: src/components/tile.tsx:92
 msgid "Sunday"
 msgstr "Dimanche"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/components/tile.tsx:212
+#: src/components/tile.tsx:421
 msgid "The expected type of weather is {0}."
 msgstr "Le type de temps attendu est {0}."
 
@@ -660,58 +804,58 @@ msgid "The location request timed out. Please check your internet connection and
 msgstr "La demande de localisation a expiré. Vérifiez votre connexion internet et réessayez."
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile.tsx:176
+#: src/components/tile.tsx:385
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "La température maximale sera de {0} degrés Celsius."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile.tsx:182
+#: src/components/tile.tsx:391
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "La température maximale sera de {0} degrés Fahrenheit."
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/tile.tsx:238
+#: src/components/tile.tsx:447
 msgid "The maximum UV index will be {0}."
 msgstr "L'indice UV maximal sera de {0}."
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:249
+#: src/components/tile.tsx:458
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "La vitesse du vent maximale sera de {0} kilomètres par heure."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:255
+#: src/components/tile.tsx:464
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "La vitesse du vent maximale sera de {0} miles par heure."
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile.tsx:193
+#: src/components/tile.tsx:402
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "La température minimale sera de {0} degrés Celsius."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile.tsx:199
+#: src/components/tile.tsx:408
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "La température minimale sera de {0} degrés Fahrenheit."
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/tile.tsx:269
+#: src/components/tile.tsx:478
 msgid "There is a {0}% chance of precipitation."
 msgstr "Il y a {0}% de chances de précipitations."
 
-#: src/components/tile.tsx:78
+#: src/components/tile.tsx:86
 msgid "thunderstorm"
 msgstr "orage"
 
-#: src/components/tile.tsx:80
+#: src/components/tile.tsx:88
 msgid "thunderstorm with heavy hail"
 msgstr "orage avec de fortes grêles"
 
-#: src/components/tile.tsx:79
+#: src/components/tile.tsx:87
 msgid "thunderstorm with slight hail"
 msgstr "orage avec de légères grêles"
 
-#: src/components/tile.tsx:88
+#: src/components/tile.tsx:96
 msgid "Thursday"
 msgstr "Jeudi"
 
@@ -731,11 +875,11 @@ msgstr "Pour commencer, définissons votre langue et votre localisation."
 msgid "Try again"
 msgstr "Réessayer"
 
-#: src/components/tile.tsx:86
+#: src/components/tile.tsx:94
 msgid "Tuesday"
 msgstr "Mardi"
 
-#: src/pages/index.tsx:208
+#: src/pages/index.tsx:272
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Impossible de récupérer les données météo. Vérifiez votre connexion internet et réessayez."
 
@@ -743,8 +887,8 @@ msgstr "Impossible de récupérer les données météo. Vérifiez votre connexio
 #~ msgid "Uninstall feedback"
 #~ msgstr "Retour sur la désinstallation"
 
-#: src/components/tile.tsx:208
-#: src/components/tile.tsx:215
+#: src/components/tile.tsx:417
+#: src/components/tile.tsx:424
 msgid "unknown conditions"
 msgstr "conditions inconnues"
 
@@ -770,7 +914,11 @@ msgstr "conditions inconnues"
 msgid "Use metric number format"
 msgstr "Utiliser le format numérique métrique"
 
-#: src/components/tile.tsx:75
+#: src/components/tile.tsx:241
+msgid "Valentine's Day"
+msgstr "Saint-Valentin"
+
+#: src/components/tile.tsx:83
 msgid "violent rain showers"
 msgstr "averses de pluie violentes"
 
@@ -778,11 +926,11 @@ msgstr "averses de pluie violentes"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Nous aimerions proposer Weather Please dans davantage de langues."
 
-#: src/components/settings.tsx:90
+#: src/components/settings.tsx:85
 msgid "Weather"
 msgstr "Météo"
 
-#: src/pages/index.tsx:233
+#: src/pages/index.tsx:299
 msgid "weather data provided by open-meteo"
 msgstr "données météorologiques fournies par open-meteo"
 
@@ -791,9 +939,13 @@ msgstr "données météorologiques fournies par open-meteo"
 #~ msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
 #~ msgstr "Weather Please collecte des données de plantage anonymisées et des journaux d'erreur. Vous pouvez vous désinscrire à tout moment via le menu des paramètres."
 
-#: src/components/tile.tsx:87
+#: src/components/tile.tsx:95
 msgid "Wednesday"
 msgstr "Mercredi"
+
+#: src/components/tile.tsx:210
+msgid "Winter Solstice"
+msgstr "Solstice d'hiver"
 
 #: src/components/review-prompt.tsx:40
 msgid "Would you like to leave a review?"
@@ -820,7 +972,7 @@ msgid "Your email (optional)"
 msgstr "Votre e-mail (optionnel)"
 
 #: src/components/initialisation.tsx:178
-#: src/components/settings.tsx:93
+#: src/components/settings.tsx:88
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Vos données de localisation sont stockées en toute sécurité et exclusivement sur votre appareil personnel."
 
