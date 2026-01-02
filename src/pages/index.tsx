@@ -95,6 +95,9 @@ const App = () => {
 		if (config.showQuadrantidsEvent) {
 			enabledSeasonalEvents.add('quadrantids')
 		}
+		if (config.showLyridsEvent) {
+			enabledSeasonalEvents.add('lyrids')
+		}
 		if (config.showGeminidsEvent) {
 			enabledSeasonalEvents.add('geminids')
 		}
