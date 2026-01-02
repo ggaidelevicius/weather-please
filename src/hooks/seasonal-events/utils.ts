@@ -114,3 +114,78 @@ export function createAdaptiveDprController({
 
 	return { getDpr, reportFrame }
 }
+
+const SOFTWARE_RENDERER_HINTS = [
+	'swiftshader',
+	'llvmpipe',
+	'software',
+	'warp',
+	'angle (software)',
+	'microsoft basic render driver',
+	'mesa offscreen',
+] as const
+
+let cachedIsSoftwareRenderer: boolean | null = null
+
+const getWebglRendererInfo = () => {
+	if (typeof document === 'undefined') {
+		return null
+	}
+
+	const canvas = document.createElement('canvas')
+	const gl =
+		canvas.getContext('webgl2') ||
+		canvas.getContext('webgl') ||
+		canvas.getContext('experimental-webgl')
+
+	if (!isWebglContext(gl)) {
+		return null
+	}
+
+	const debugInfo = gl.getExtension('WEBGL_debug_renderer_info')
+	const renderer = debugInfo
+		? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+		: gl.getParameter(gl.RENDERER)
+	const vendor = debugInfo
+		? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL)
+		: gl.getParameter(gl.VENDOR)
+
+	return {
+		renderer: typeof renderer === 'string' ? renderer : '',
+		vendor: typeof vendor === 'string' ? vendor : '',
+	}
+}
+
+const isWebglContext = (
+	context: RenderingContext | null,
+): context is WebGLRenderingContext | WebGL2RenderingContext =>
+	Boolean(
+		context &&
+		'getExtension' in context &&
+		'getParameter' in context &&
+		'RENDERER' in context &&
+		'VENDOR' in context,
+	)
+
+export const isLikelySoftwareRenderer = () => {
+	if (typeof window === 'undefined') {
+		return false
+	}
+
+	if (cachedIsSoftwareRenderer !== null) {
+		return cachedIsSoftwareRenderer
+	}
+
+	const info = getWebglRendererInfo()
+	if (!info) {
+		cachedIsSoftwareRenderer = true
+		return cachedIsSoftwareRenderer
+	}
+
+	const combined = `${info.vendor} ${info.renderer}`.toLowerCase()
+	cachedIsSoftwareRenderer = SOFTWARE_RENDERER_HINTS.some((hint) =>
+		combined.includes(hint),
+	)
+
+	return cachedIsSoftwareRenderer
+}
