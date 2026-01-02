@@ -174,6 +174,10 @@ const getSeasonalEmoji = (eventId: SeasonalEventId) => {
 		return '🔥'
 	}
 
+	if (eventId === 'leonids') {
+		return '🦁'
+	}
+
 	if (eventId === 'geminids') {
 		return '🌠'
 	}
@@ -256,6 +260,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 
 	if (eventId === 'orionids') {
 		return <Trans>Orionids Meteor Shower</Trans>
+	}
+
+	if (eventId === 'leonids') {
+		return <Trans>Leonids Meteor Shower</Trans>
 	}
 
 	if (eventId === 'geminids') {

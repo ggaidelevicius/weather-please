@@ -104,6 +104,9 @@ const App = () => {
 		if (config.showOrionidsEvent) {
 			enabledSeasonalEvents.add('orionids')
 		}
+		if (config.showLeonidsEvent) {
+			enabledSeasonalEvents.add('leonids')
+		}
 		if (config.showGeminidsEvent) {
 			enabledSeasonalEvents.add('geminids')
 		}
