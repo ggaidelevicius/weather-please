@@ -15,6 +15,7 @@ import { useConfig } from '../hooks/use-config'
 import { useSeasonalEvents } from '../hooks/use-seasonal-events'
 import { useWeather } from '../hooks/use-weather'
 import { getHemisphereFromLatitude } from '../hooks/seasonal-events/utils'
+import { isLikelySoftwareRenderer } from '../hooks/seasonal-events/utils'
 import { messages } from '../locales/en/messages'
 import type { SeasonalEventId } from '../hooks/seasonal-events'
 
@@ -51,6 +52,7 @@ const App = () => {
 	)
 	const isOnboarded = Boolean(config.lat && config.lon)
 	const hemisphere = getHemisphereFromLatitude(config.lat)
+	const isSoftwareRenderer = isLikelySoftwareRenderer()
 	const canShowSeasonalEvents =
 		config.showSeasonalEvents && isHydrated && isOnboarded
 	const enabledSeasonalEvents = new Set<SeasonalEventId>()
@@ -263,7 +265,9 @@ const App = () => {
 					useMetric={config.useMetric}
 					identifier={config.identifier}
 					showSeasonalEvents={canShowSeasonalEvents}
-					showSeasonalTileGlow={config.showSeasonalTileGlow}
+					showSeasonalTileGlow={
+						config.showSeasonalTileGlow && !isSoftwareRenderer
+					}
 					enabledSeasonalEvents={enabledSeasonalEvents}
 					hemisphere={hemisphere}
 				/>
