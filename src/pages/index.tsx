@@ -14,8 +14,10 @@ import { WeatherAlert } from '../components/weather-alert'
 import { useConfig } from '../hooks/use-config'
 import { useSeasonalEvents } from '../hooks/use-seasonal-events'
 import { useWeather } from '../hooks/use-weather'
-import { getHemisphereFromLatitude } from '../hooks/seasonal-events/utils'
-import { isLikelySoftwareRenderer } from '../hooks/seasonal-events/utils'
+import {
+	getHemisphereFromLatitude,
+	isLikelySoftwareRenderer,
+} from '../hooks/seasonal-events/utils'
 import { messages } from '../locales/en/messages'
 import type { SeasonalEventId } from '../hooks/seasonal-events'
 

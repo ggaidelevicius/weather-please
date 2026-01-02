@@ -79,7 +79,7 @@ msgstr "<0>Standortzugriff verweigert.</0> Überprüfen Sie die Einstellungen Ih
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Standortzugriff verweigert.</0> Klicken Sie auf das Standortsymbol in der Adressleiste und wählen Sie \"immer den Zugriff auf Ihren Standort erlauben\". Klicken Sie dann auf die Schaltfläche unten, um es erneut zu versuchen."
 
-#: src/components/settings.tsx:361
+#: src/components/settings.tsx:380
 msgid "☕ Gift a coffee"
 msgstr "☕ Schenke einen Kaffee"
 
@@ -87,11 +87,11 @@ msgstr "☕ Schenke einen Kaffee"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Feedback absenden"
 
-#: src/components/settings.tsx:345
+#: src/components/settings.tsx:364
 msgid "🌟 Leave a review"
 msgstr "🌟 Eine Bewertung hinterlassen"
 
-#: src/components/settings.tsx:353
+#: src/components/settings.tsx:372
 msgid "🐛 Report a bug"
 msgstr "🐛 Einen Fehler melden"
 
@@ -99,7 +99,7 @@ msgstr "🐛 Einen Fehler melden"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Eine Funktion anfragen"
 
-#: src/components/settings.tsx:372
+#: src/components/settings.tsx:391
 msgid "🔒 Privacy policy"
 msgstr "🔒 Datenschutzrichtlinie"
 
@@ -227,7 +227,7 @@ msgstr "Wenn Sonnenlicht durch die Erdatmosphäre strömt, werden die kürzeren 
 msgid "As the Earth turns, the new year arrives in a slow-moving wave that travels across time zones for nearly a full day."
 msgstr "Während sich die Erde dreht, kommt das neue Jahr in einer langsam wandernden Welle, die fast einen ganzen Tag lang über die Zeitzonen zieht."
 
-#: src/components/settings.tsx:217
+#: src/components/settings.tsx:236
 msgid "Astronomy"
 msgstr "Astronomie"
 
@@ -323,11 +323,11 @@ msgstr "Zu den häufigsten Aktivitäten zählen gemeinschaftliche Aufräumaktion
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "Kostüme können heroisch, humorvoll oder unheimlich sein und ermöglichen es, kurz in andere Rollen zu schlüpfen."
 
-#: src/components/settings.tsx:139
+#: src/components/settings.tsx:149
 msgid "Date"
 msgstr "Datum"
 
-#: src/components/settings.tsx:135
+#: src/components/settings.tsx:145
 msgid "Day"
 msgstr "Tag"
 
@@ -503,7 +503,7 @@ msgstr "Schnell und hell erzeugen die Perseiden oft spektakuläre Feuerkugeln, d
 msgid "February"
 msgstr "Februar"
 
-#: src/components/settings.tsx:337
+#: src/components/settings.tsx:356
 msgid "Feedback"
 msgstr "Rückmeldung"
 
@@ -551,7 +551,7 @@ msgstr "Seit seinen frühesten Feierformen verbanden christliche Kalender Ostern
 msgid "Geminids Meteor Shower"
 msgstr "Geminiden-Meteorschauer"
 
-#: src/components/settings.tsx:66
+#: src/components/settings.tsx:76
 msgid "General"
 msgstr "Allgemein"
 
@@ -667,7 +667,7 @@ msgstr "Häuser werden sorgfältig gereinigt und geschmückt, um altes Unglück 
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "Ich würde Weather Please gerne in weitere Sprachen bringen."
 
-#: src/components/settings.tsx:128
+#: src/components/settings.tsx:138
 msgid "Identifier"
 msgstr "Identifikator"
 
@@ -827,7 +827,7 @@ msgstr "Juni"
 #~ msgstr "Fehlende Funktionen, die ich benötige"
 
 #: src/components/initialisation.tsx:162
-#: src/components/settings.tsx:69
+#: src/components/settings.tsx:79
 msgid "Language"
 msgstr "Sprache"
 
@@ -835,7 +835,7 @@ msgstr "Sprache"
 msgid "Lanterns and parades transform the night into a flowing river of light."
 msgstr "Laternen und Umzüge verwandeln die Nacht in einen fliessenden Fluss aus Licht."
 
-#: src/components/settings.tsx:94
+#: src/components/settings.tsx:104
 msgid "Latitude"
 msgstr "Breitengrad"
 
@@ -843,7 +843,7 @@ msgstr "Breitengrad"
 msgid "Leave a review"
 msgstr "Eine Bewertung hinterlassen"
 
-#: src/components/settings.tsx:364
+#: src/components/settings.tsx:383
 msgid "Legal"
 msgstr "Rechtlich"
 
@@ -907,7 +907,7 @@ msgstr "Kleines Wunder und Sicherheit"
 #~ msgid "Location"
 #~ msgstr "Standort"
 
-#: src/components/settings.tsx:102
+#: src/components/settings.tsx:112
 msgid "Longitude"
 msgstr "Längengrad"
 
@@ -1052,7 +1052,7 @@ msgstr "Es ist keine besondere Ausrüstung nötig; der Mond gleitet langsam durc
 msgid "November"
 msgstr "November"
 
-#: src/components/settings.tsx:117
+#: src/components/settings.tsx:127
 msgid "Number of days to forecast"
 msgstr "Anzahl der Tage für die Vorhersage"
 
@@ -1072,7 +1072,7 @@ msgstr "Am folgenden Tag füllen bunte Pulver die Luft, während Menschen sozial
 msgid "Orionids Meteor Shower"
 msgstr "Orioniden-Meteorschauer"
 
-#: src/components/settings.tsx:312
+#: src/components/settings.tsx:331
 msgid "Other holidays"
 msgstr "Andere Feiertage"
 
@@ -1129,7 +1129,7 @@ msgstr "teilweise bewölkt"
 #~ msgid "Performance issues"
 #~ msgstr "Leistungsprobleme"
 
-#: src/components/settings.tsx:112
+#: src/components/settings.tsx:122
 msgid "Periodically update location automatically"
 msgstr "Standort automatisch periodisch aktualisieren"
 
@@ -1153,7 +1153,7 @@ msgstr "Statt eines feierlichen Abschieds begreift es das Erinnern als etwas Kra
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "Rote Umschläge, Mandarinen und kalligrafierte Spruchpaare drücken Wünsche nach Fülle, Glück und neuen Anfängen aus."
 
-#: src/components/settings.tsx:269
+#: src/components/settings.tsx:288
 msgid "Religious & cultural"
 msgstr "Religiös & kulturell"
 
@@ -1165,7 +1165,7 @@ msgstr "Einen Fehler melden"
 #~ msgid "Resource usage"
 #~ msgstr "Ressourcenverbrauch"
 
-#: src/pages/index.tsx:309
+#: src/pages/index.tsx:315
 msgid "Retry"
 msgstr "Wiederholen"
 
@@ -1178,11 +1178,15 @@ msgstr "Samstag"
 #~ msgid "Save"
 #~ msgstr "Speichern"
 
-#: src/components/settings.tsx:174
+#: src/components/settings.tsx:193
+msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
+msgstr ""
+
+#: src/components/settings.tsx:184
 msgid "Seasonal events"
 msgstr "Saisonale Ereignisse"
 
-#: src/components/settings.tsx:189
+#: src/components/settings.tsx:208
 msgid "Seasons & nature"
 msgstr "Jahreszeiten & Natur"
 
@@ -1198,8 +1202,8 @@ msgstr "September"
 msgid "Set my location"
 msgstr "Meinen Standort festlegen"
 
-#: src/components/settings.tsx:46
-#: src/components/settings.tsx:63
+#: src/components/settings.tsx:56
+#: src/components/settings.tsx:73
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -1211,135 +1215,135 @@ msgstr "Einstellungen"
 msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and personal."
 msgstr "Geteilte Süssigkeiten, Blumen und kleine Geschenke halten die Feier intim und persönlich."
 
-#: src/components/settings.tsx:202
+#: src/components/settings.tsx:221
 msgid "Show Autumn Equinox event"
 msgstr "Herbst-Tagundnachtgleiche anzeigen"
 
-#: src/components/settings.tsx:307
+#: src/components/settings.tsx:326
 msgid "Show Christmas Day event"
 msgstr "Weihnachtstag anzeigen"
 
-#: src/components/settings.tsx:330
+#: src/components/settings.tsx:349
 msgid "Show Day of the Dead event"
 msgstr "Tag der Toten anzeigen"
 
-#: src/components/settings.tsx:282
+#: src/components/settings.tsx:301
 msgid "Show Diwali event"
 msgstr "Diwali anzeigen"
 
-#: src/components/settings.tsx:212
+#: src/components/settings.tsx:231
 msgid "Show Earth Day event"
 msgstr "Tag der Erde anzeigen"
 
-#: src/components/settings.tsx:277
+#: src/components/settings.tsx:296
 msgid "Show Easter event"
 msgstr "Ostern anzeigen"
 
-#: src/components/settings.tsx:297
+#: src/components/settings.tsx:316
 msgid "Show Eid al-Adha event"
 msgstr "Eid al-Adha anzeigen"
 
-#: src/components/settings.tsx:292
+#: src/components/settings.tsx:311
 msgid "Show Eid al-Fitr event"
 msgstr "Eid al-Fitr anzeigen"
 
-#: src/components/settings.tsx:230
+#: src/components/settings.tsx:249
 msgid "Show Eta Aquariids meteor shower event"
 msgstr "Eta-Aquariiden-Meteorschauer anzeigen"
 
-#: src/components/settings.tsx:152
+#: src/components/settings.tsx:162
 msgid "Show extreme UV alerts"
 msgstr "Extreme UV-Warnungen anzeigen"
 
-#: src/components/settings.tsx:264
+#: src/components/settings.tsx:283
 msgid "Show Geminids meteor shower event"
 msgstr "Geminiden-Meteorschauer anzeigen"
 
-#: src/components/settings.tsx:325
+#: src/components/settings.tsx:344
 msgid "Show Halloween event"
 msgstr "Halloween anzeigen"
 
-#: src/components/settings.tsx:302
+#: src/components/settings.tsx:321
 msgid "Show Hanukkah event"
 msgstr "Chanukka anzeigen"
 
-#: src/components/settings.tsx:157
+#: src/components/settings.tsx:167
 msgid "Show high precipitation alerts"
 msgstr "Warnungen vor hohem Niederschlag anzeigen"
 
-#: src/components/settings.tsx:287
+#: src/components/settings.tsx:306
 msgid "Show Holi event"
 msgstr "Holi anzeigen"
 
-#: src/components/settings.tsx:240
+#: src/components/settings.tsx:259
 msgid "Show Leonids meteor shower event"
 msgstr "Leoniden-Meteorschauer anzeigen"
 
-#: src/components/settings.tsx:167
+#: src/components/settings.tsx:177
 msgid "Show low visibility alerts"
 msgstr "Warnungen vor geringer Sichtweite anzeigen"
 
-#: src/components/settings.tsx:272
+#: src/components/settings.tsx:291
 msgid "Show Lunar New Year event"
 msgstr "Mondneujahr anzeigen"
 
-#: src/components/settings.tsx:225
+#: src/components/settings.tsx:244
 msgid "Show Lyrids meteor shower event"
 msgstr "Lyriden-Meteorschauer anzeigen"
 
-#: src/components/settings.tsx:315
+#: src/components/settings.tsx:334
 msgid "Show New Year's Day event"
 msgstr "Neujahrstag anzeigen"
 
-#: src/components/settings.tsx:235
+#: src/components/settings.tsx:254
 msgid "Show Orionids meteor shower event"
 msgstr "Orioniden-Meteorschauer anzeigen"
 
-#: src/components/settings.tsx:259
+#: src/components/settings.tsx:278
 msgid "Show Perseids meteor shower event"
 msgstr "Perseiden-Meteorschauer anzeigen"
 
-#: src/components/settings.tsx:220
+#: src/components/settings.tsx:239
 msgid "Show Quadrantids meteor shower event"
 msgstr "Quadrantiden-Meteorschauer anzeigen"
 
-#: src/components/settings.tsx:177
+#: src/components/settings.tsx:187
 msgid "Show seasonal events"
 msgstr "Saisonale Ereignisse anzeigen"
 
-#: src/components/settings.tsx:184
+#: src/components/settings.tsx:203
 msgid "Show seasonal tile glow"
 msgstr "Saisonales Kachel-Leuchten anzeigen"
 
-#: src/components/settings.tsx:192
+#: src/components/settings.tsx:211
 msgid "Show Spring Equinox event"
 msgstr "Frühlings-Tagundnachtgleiche anzeigen"
 
-#: src/components/settings.tsx:162
+#: src/components/settings.tsx:172
 msgid "Show strong wind alerts"
 msgstr "Starke Windwarnungen anzeigen"
 
-#: src/components/settings.tsx:197
+#: src/components/settings.tsx:216
 msgid "Show Summer Solstice event"
 msgstr "Sommersonnenwende anzeigen"
 
-#: src/components/settings.tsx:252
+#: src/components/settings.tsx:271
 msgid "Show total lunar eclipse event"
 msgstr "Totale Mondfinsternis anzeigen"
 
-#: src/components/settings.tsx:245
+#: src/components/settings.tsx:264
 msgid "Show total solar eclipse event"
 msgstr "Totale Sonnenfinsternis anzeigen"
 
-#: src/components/settings.tsx:320
+#: src/components/settings.tsx:339
 msgid "Show Valentine's Day event"
 msgstr "Valentinstag anzeigen"
 
-#: src/components/settings.tsx:145
+#: src/components/settings.tsx:155
 msgid "Show weather alerts"
 msgstr "Wetterwarnungen anzeigen"
 
-#: src/components/settings.tsx:207
+#: src/components/settings.tsx:226
 msgid "Show Winter Solstice event"
 msgstr "Wintersonnenwende anzeigen"
 
@@ -1777,7 +1781,7 @@ msgstr "Dienstag"
 msgid "Twilight lingers, insects fill the air with song, and the sky can feel almost endless."
 msgstr "Die Dämmerung bleibt lange, Insekten füllen die Luft mit Gesang, und der Himmel kann nahezu endlos wirken."
 
-#: src/pages/index.tsx:303
+#: src/pages/index.tsx:309
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Wetterdaten konnten nicht abgerufen werden. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
 
@@ -1820,7 +1824,7 @@ msgstr "Im Gegensatz zu den meisten Meteorschauern stammen die Geminiden vom Ast
 #~ msgstr "Tastenkombinationen nutzen"
 
 #: src/components/initialisation.tsx:173
-#: src/components/settings.tsx:80
+#: src/components/settings.tsx:90
 msgid "Use metric number format"
 msgstr "Metrisches Zahlenformat verwenden"
 
@@ -1848,11 +1852,11 @@ msgstr "Beobachtungsmöglichkeiten"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Wir würden Weather Please gerne in mehr Sprachen bringen."
 
-#: src/components/settings.tsx:85
+#: src/components/settings.tsx:95
 msgid "Weather"
 msgstr "Wetter"
 
-#: src/pages/index.tsx:326
+#: src/pages/index.tsx:332
 msgid "weather data provided by open-meteo"
 msgstr "Wetterdaten zur Verfügung gestellt von open-meteo"
 
@@ -1930,7 +1934,7 @@ msgid "Your email (optional)"
 msgstr "Ihre E-Mail (optional)"
 
 #: src/components/initialisation.tsx:178
-#: src/components/settings.tsx:88
+#: src/components/settings.tsx:98
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Ihre Standortdaten werden sicher und ausschließlich auf Ihrem persönlichen Gerät gespeichert."
 

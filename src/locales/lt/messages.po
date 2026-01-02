@@ -79,7 +79,7 @@ msgstr "<0>Prieiga prie vietos uždrausta.</0> Patikrinkite naršyklės nustatym
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Prieiga prie vietos uždrausta.</0> Spustelėkite vietos piktogramą adreso juostoje ir pasirinkite \"visada leisti pasiekti jūsų vietą\". Tada spustelėkite mygtuką žemiau ir bandykite dar kartą."
 
-#: src/components/settings.tsx:361
+#: src/components/settings.tsx:380
 msgid "☕ Gift a coffee"
 msgstr "☕ Padovanokite kavą"
 
@@ -87,11 +87,11 @@ msgstr "☕ Padovanokite kavą"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Pateikti atsiliepimą"
 
-#: src/components/settings.tsx:345
+#: src/components/settings.tsx:364
 msgid "🌟 Leave a review"
 msgstr "🌟 Palikite atsiliepimą"
 
-#: src/components/settings.tsx:353
+#: src/components/settings.tsx:372
 msgid "🐛 Report a bug"
 msgstr "🐛 Pranešti apie klaidą"
 
@@ -99,7 +99,7 @@ msgstr "🐛 Pranešti apie klaidą"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Prašyti funkcijos"
 
-#: src/components/settings.tsx:372
+#: src/components/settings.tsx:391
 msgid "🔒 Privacy policy"
 msgstr "🔒 Privatumo politika"
 
@@ -227,7 +227,7 @@ msgstr "Saulės šviesai keliaujant per Žemės atmosferą, trumpesnės mėlynos
 msgid "As the Earth turns, the new year arrives in a slow-moving wave that travels across time zones for nearly a full day."
 msgstr "Žemei sukantis, naujieji metai ateina lėtai slenkančia banga, keliaujančia per laiko juostas beveik visą parą."
 
-#: src/components/settings.tsx:217
+#: src/components/settings.tsx:236
 msgid "Astronomy"
 msgstr "Astronomija"
 
@@ -323,11 +323,11 @@ msgstr "Bendruomenės talkos, medžių sodinimas ir buveinių atkūrimas — vie
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "Kostiumai gali būti herojiški, juokingi ar šiurpūs — leidžiantys trumpam įkūnyti kitas roles."
 
-#: src/components/settings.tsx:139
+#: src/components/settings.tsx:149
 msgid "Date"
 msgstr "Data"
 
-#: src/components/settings.tsx:135
+#: src/components/settings.tsx:145
 msgid "Day"
 msgstr "Diena"
 
@@ -503,7 +503,7 @@ msgstr "Greiti ir ryškūs Perseidai dažnai dovanoja įspūdingus ugnies kamuol
 msgid "February"
 msgstr "Vasaris"
 
-#: src/components/settings.tsx:337
+#: src/components/settings.tsx:356
 msgid "Feedback"
 msgstr "Atsiliepimas"
 
@@ -551,7 +551,7 @@ msgstr "Nuo pat ankstyviausių minėjimų krikščioniški kalendoriai derino Ve
 msgid "Geminids Meteor Shower"
 msgstr "Geminidų meteorų lietus"
 
-#: src/components/settings.tsx:66
+#: src/components/settings.tsx:76
 msgid "General"
 msgstr "Bendras"
 
@@ -667,7 +667,7 @@ msgstr "Namai kruopščiai valomi ir puošiami, kad būtų „nušluota“ sena 
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "Norėčiau atnesti Weather Please į daugiau kalbų."
 
-#: src/components/settings.tsx:128
+#: src/components/settings.tsx:138
 msgid "Identifier"
 msgstr "Identifikatorius"
 
@@ -827,7 +827,7 @@ msgstr "Birželis"
 #~ msgstr "Trūksta man reikalingų funkcijų"
 
 #: src/components/initialisation.tsx:162
-#: src/components/settings.tsx:69
+#: src/components/settings.tsx:79
 msgid "Language"
 msgstr "Kalba"
 
@@ -835,7 +835,7 @@ msgstr "Kalba"
 msgid "Lanterns and parades transform the night into a flowing river of light."
 msgstr "Žibintai ir paradai paverčia naktį tekančia šviesos upe."
 
-#: src/components/settings.tsx:94
+#: src/components/settings.tsx:104
 msgid "Latitude"
 msgstr "Platuma"
 
@@ -843,7 +843,7 @@ msgstr "Platuma"
 msgid "Leave a review"
 msgstr "Palikite atsiliepimą"
 
-#: src/components/settings.tsx:364
+#: src/components/settings.tsx:383
 msgid "Legal"
 msgstr "Teisinis"
 
@@ -907,7 +907,7 @@ msgstr "Mažas stebuklas ir saugumas"
 #~ msgid "Location"
 #~ msgstr "Vieta"
 
-#: src/components/settings.tsx:102
+#: src/components/settings.tsx:112
 msgid "Longitude"
 msgstr "Ilguma"
 
@@ -1052,7 +1052,7 @@ msgstr "Jokios specialios įrangos nereikia — Mėnulis lėtai slenka per vario
 msgid "November"
 msgstr "Lapkritis"
 
-#: src/components/settings.tsx:117
+#: src/components/settings.tsx:127
 msgid "Number of days to forecast"
 msgstr "Prognozuojamų dienų skaičius"
 
@@ -1072,7 +1072,7 @@ msgstr "Kitą dieną spalvoti milteliai užpildo orą, o žmonės peržengia soc
 msgid "Orionids Meteor Shower"
 msgstr "Orionidų meteorų lietus"
 
-#: src/components/settings.tsx:312
+#: src/components/settings.tsx:331
 msgid "Other holidays"
 msgstr "Kitos šventės"
 
@@ -1129,7 +1129,7 @@ msgstr "debesuota"
 #~ msgid "Performance issues"
 #~ msgstr "Veikimo problemos"
 
-#: src/components/settings.tsx:112
+#: src/components/settings.tsx:122
 msgid "Periodically update location automatically"
 msgstr "Automatiškai periodiškai atnaujinti vietą"
 
@@ -1153,7 +1153,7 @@ msgstr "Vietoje liūdno atsisveikinimo ji traktuoja prisiminimą kaip gyvą, ben
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "Raudoni vokai, mandarinai ir kaligrafijos poros išreiškia linkėjimus gausai, laimei ir naujoms pradžioms."
 
-#: src/components/settings.tsx:269
+#: src/components/settings.tsx:288
 msgid "Religious & cultural"
 msgstr "Religiniai ir kultūriniai"
 
@@ -1165,7 +1165,7 @@ msgstr "Pranešti apie klaidą"
 #~ msgid "Resource usage"
 #~ msgstr "Išteklių naudojimas"
 
-#: src/pages/index.tsx:309
+#: src/pages/index.tsx:315
 msgid "Retry"
 msgstr "Bandyti dar kartą"
 
@@ -1178,11 +1178,15 @@ msgstr "Šeštadienis"
 #~ msgid "Save"
 #~ msgstr "Išsaugoti"
 
-#: src/components/settings.tsx:174
+#: src/components/settings.tsx:193
+msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
+msgstr ""
+
+#: src/components/settings.tsx:184
 msgid "Seasonal events"
 msgstr "Sezoniniai renginiai"
 
-#: src/components/settings.tsx:189
+#: src/components/settings.tsx:208
 msgid "Seasons & nature"
 msgstr "Metų laikai ir gamta"
 
@@ -1198,8 +1202,8 @@ msgstr "Rugsėjis"
 msgid "Set my location"
 msgstr "Nustatyti mano vietą"
 
-#: src/components/settings.tsx:46
-#: src/components/settings.tsx:63
+#: src/components/settings.tsx:56
+#: src/components/settings.tsx:73
 msgid "Settings"
 msgstr "Nustatymai"
 
@@ -1211,135 +1215,135 @@ msgstr "Nustatymai"
 msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and personal."
 msgstr "Dalijimasis saldumynais, gėlėmis ir mažomis dovanomis išlaiko šventę jaukią ir asmenišką."
 
-#: src/components/settings.tsx:202
+#: src/components/settings.tsx:221
 msgid "Show Autumn Equinox event"
 msgstr "Rodyti Rudens lygiadienį"
 
-#: src/components/settings.tsx:307
+#: src/components/settings.tsx:326
 msgid "Show Christmas Day event"
 msgstr "Rodyti Kalėdas"
 
-#: src/components/settings.tsx:330
+#: src/components/settings.tsx:349
 msgid "Show Day of the Dead event"
 msgstr "Rodyti Mirusiųjų dieną"
 
-#: src/components/settings.tsx:282
+#: src/components/settings.tsx:301
 msgid "Show Diwali event"
 msgstr "Rodyti Diwali"
 
-#: src/components/settings.tsx:212
+#: src/components/settings.tsx:231
 msgid "Show Earth Day event"
 msgstr "Rodyti Žemės dieną"
 
-#: src/components/settings.tsx:277
+#: src/components/settings.tsx:296
 msgid "Show Easter event"
 msgstr "Rodyti Velykas"
 
-#: src/components/settings.tsx:297
+#: src/components/settings.tsx:316
 msgid "Show Eid al-Adha event"
 msgstr "Rodyti Eid al-Adha"
 
-#: src/components/settings.tsx:292
+#: src/components/settings.tsx:311
 msgid "Show Eid al-Fitr event"
 msgstr "Rodyti Eid al-Fitr"
 
-#: src/components/settings.tsx:230
+#: src/components/settings.tsx:249
 msgid "Show Eta Aquariids meteor shower event"
 msgstr "Rodyti Eta Akvaridų meteorų lietų"
 
-#: src/components/settings.tsx:152
+#: src/components/settings.tsx:162
 msgid "Show extreme UV alerts"
 msgstr "Rodyti ekstremalių UV spinduliavimo įspėjimus"
 
-#: src/components/settings.tsx:264
+#: src/components/settings.tsx:283
 msgid "Show Geminids meteor shower event"
 msgstr "Rodyti Geminidų meteorų lietų"
 
-#: src/components/settings.tsx:325
+#: src/components/settings.tsx:344
 msgid "Show Halloween event"
 msgstr "Rodyti Heloviną"
 
-#: src/components/settings.tsx:302
+#: src/components/settings.tsx:321
 msgid "Show Hanukkah event"
 msgstr "Rodyti Chanuką"
 
-#: src/components/settings.tsx:157
+#: src/components/settings.tsx:167
 msgid "Show high precipitation alerts"
 msgstr "Rodyti didelio kritulio įspėjimus"
 
-#: src/components/settings.tsx:287
+#: src/components/settings.tsx:306
 msgid "Show Holi event"
 msgstr "Rodyti Holi"
 
-#: src/components/settings.tsx:240
+#: src/components/settings.tsx:259
 msgid "Show Leonids meteor shower event"
 msgstr "Rodyti Leonidų meteorų lietų"
 
-#: src/components/settings.tsx:167
+#: src/components/settings.tsx:177
 msgid "Show low visibility alerts"
 msgstr "Rodyti prasto matomumo įspėjimus"
 
-#: src/components/settings.tsx:272
+#: src/components/settings.tsx:291
 msgid "Show Lunar New Year event"
 msgstr "Rodyti Mėnulio Naujuosius metus"
 
-#: src/components/settings.tsx:225
+#: src/components/settings.tsx:244
 msgid "Show Lyrids meteor shower event"
 msgstr "Rodyti Lyridų meteorų lietų"
 
-#: src/components/settings.tsx:315
+#: src/components/settings.tsx:334
 msgid "Show New Year's Day event"
 msgstr "Rodyti Naujųjų metų dieną"
 
-#: src/components/settings.tsx:235
+#: src/components/settings.tsx:254
 msgid "Show Orionids meteor shower event"
 msgstr "Rodyti Orionidų meteorų lietų"
 
-#: src/components/settings.tsx:259
+#: src/components/settings.tsx:278
 msgid "Show Perseids meteor shower event"
 msgstr "Rodyti Perseidų meteorų lietų"
 
-#: src/components/settings.tsx:220
+#: src/components/settings.tsx:239
 msgid "Show Quadrantids meteor shower event"
 msgstr "Rodyti Kvadrantidų meteorų lietų"
 
-#: src/components/settings.tsx:177
+#: src/components/settings.tsx:187
 msgid "Show seasonal events"
 msgstr "Rodyti sezoninius įvykius"
 
-#: src/components/settings.tsx:184
+#: src/components/settings.tsx:203
 msgid "Show seasonal tile glow"
 msgstr "Rodyti sezoninį plytelių švytėjimą"
 
-#: src/components/settings.tsx:192
+#: src/components/settings.tsx:211
 msgid "Show Spring Equinox event"
 msgstr "Rodyti Pavasario lygiadienį"
 
-#: src/components/settings.tsx:162
+#: src/components/settings.tsx:172
 msgid "Show strong wind alerts"
 msgstr "Rodyti stipraus vėjo įspėjimus"
 
-#: src/components/settings.tsx:197
+#: src/components/settings.tsx:216
 msgid "Show Summer Solstice event"
 msgstr "Rodyti Vasaros saulėgrįžą"
 
-#: src/components/settings.tsx:252
+#: src/components/settings.tsx:271
 msgid "Show total lunar eclipse event"
 msgstr "Rodyti visišką Mėnulio užtemimą"
 
-#: src/components/settings.tsx:245
+#: src/components/settings.tsx:264
 msgid "Show total solar eclipse event"
 msgstr "Rodyti visišką Saulės užtemimą"
 
-#: src/components/settings.tsx:320
+#: src/components/settings.tsx:339
 msgid "Show Valentine's Day event"
 msgstr "Rodyti Valentino dieną"
 
-#: src/components/settings.tsx:145
+#: src/components/settings.tsx:155
 msgid "Show weather alerts"
 msgstr "Rodyti oro sąlygų įspėjimus"
 
-#: src/components/settings.tsx:207
+#: src/components/settings.tsx:226
 msgid "Show Winter Solstice event"
 msgstr "Rodyti Žiemos saulėgrįžą"
 
@@ -1777,7 +1781,7 @@ msgstr "Antradienis"
 msgid "Twilight lingers, insects fill the air with song, and the sky can feel almost endless."
 msgstr "Prieblanda užsitęsia, vabzdžiai pripildo orą giesme, o dangus gali atrodyti beveik begalinis."
 
-#: src/pages/index.tsx:303
+#: src/pages/index.tsx:309
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Nepavyko gauti orų duomenų. Patikrinkite interneto ryšį ir bandykite dar kartą."
 
@@ -1820,7 +1824,7 @@ msgstr "Skirtingai nei dauguma meteorų lietų, Geminidai kyla iš asteroido 320
 #~ msgstr "Naudokite klaviatūros trumpinius"
 
 #: src/components/initialisation.tsx:173
-#: src/components/settings.tsx:80
+#: src/components/settings.tsx:90
 msgid "Use metric number format"
 msgstr "Naudoti metrinį skaičių formatą"
 
@@ -1848,11 +1852,11 @@ msgstr "Stebėjimo būdai"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Mes norėtume pateikti „Weather Please“ daugiau kalbų."
 
-#: src/components/settings.tsx:85
+#: src/components/settings.tsx:95
 msgid "Weather"
 msgstr "Oras"
 
-#: src/pages/index.tsx:326
+#: src/pages/index.tsx:332
 msgid "weather data provided by open-meteo"
 msgstr "orų duomenis pateikė open-meteo"
 
@@ -1930,7 +1934,7 @@ msgid "Your email (optional)"
 msgstr "Jūsų el. paštas (pasirinktinai)"
 
 #: src/components/initialisation.tsx:178
-#: src/components/settings.tsx:88
+#: src/components/settings.tsx:98
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Jūsų vietos duomenys saugiai ir išskirtinai saugomi jūsų asmeniniame įrenginyje."
 
