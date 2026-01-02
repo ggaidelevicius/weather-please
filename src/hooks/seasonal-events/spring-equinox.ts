@@ -61,7 +61,7 @@ const SPRING_GLOW_RANGE = { min: 6, max: 16 }
 const SPRING_EMOJIS = ['🌱', '🌿', '🍃', '🌷', '🌸']
 const SPRING_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
-const SPRING_SPAWN_Y_RANGE = { min: 0.65, max: 1.05 }
+const SPRING_SPAWN_Y_RANGE = { min: 0.45, max: 0.9 }
 const SPRING_HAZE_OPACITY = '0.5'
 const SPRING_HAZE_GRADIENT =
 	'radial-gradient(120% 90% at 50% 100%, rgba(187, 247, 208, 0.45), rgba(52, 211, 153, 0.2) 40%, rgba(15, 23, 42, 0) 75%), radial-gradient(90% 80% at 20% 90%, rgba(251, 207, 232, 0.35), rgba(15, 23, 42, 0) 70%)'
