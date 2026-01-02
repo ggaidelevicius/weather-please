@@ -107,6 +107,9 @@ const App = () => {
 		if (config.showLeonidsEvent) {
 			enabledSeasonalEvents.add('leonids')
 		}
+		if (config.showTotalSolarEclipseEvent) {
+			enabledSeasonalEvents.add('total-solar-eclipse')
+		}
 		if (config.showGeminidsEvent) {
 			enabledSeasonalEvents.add('geminids')
 		}
