@@ -186,6 +186,10 @@ const getSeasonalEmoji = (eventId: SeasonalEventId) => {
 		return '🌕'
 	}
 
+	if (eventId === 'day-of-the-dead') {
+		return '💀'
+	}
+
 	if (eventId === 'geminids') {
 		return '🌠'
 	}
@@ -280,6 +284,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 
 	if (eventId === 'total-lunar-eclipse') {
 		return <Trans>Total Lunar Eclipse</Trans>
+	}
+
+	if (eventId === 'day-of-the-dead') {
+		return <Trans>Day of the Dead</Trans>
 	}
 
 	if (eventId === 'geminids') {
