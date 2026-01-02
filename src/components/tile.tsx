@@ -7,7 +7,7 @@ import {
 	useMotionValue,
 } from 'framer-motion'
 import Image from 'next/image'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
 	BrokenClouds,
 	ClearSky,
@@ -22,6 +22,7 @@ import {
 	Thunderstorm,
 } from '../images'
 import { getSeasonalEventForDate } from '../hooks/seasonal-events'
+import { SeasonalEventModal } from './seasonal-event-modal'
 import type { StaticImageData } from 'next/image'
 import type { ReactElement } from 'react'
 import type { Hemisphere, SeasonalEventId } from '../hooks/seasonal-events'
@@ -321,6 +322,10 @@ const renderSeasonalLabel = (eventId: SeasonalEventId) => {
 	return <Trans>Valentine&apos;s Day</Trans>
 }
 
+const DefaultSeasonalEventDetails = () => (
+	<p>Details for this event are coming soon.</p>
+)
+
 interface TileProps {
 	day: number
 	max: number
@@ -381,6 +386,8 @@ export const Tile = ({
 			? (seasonalEvent.tileAccent ?? null)
 			: null
 	const seasonalBadgeId = seasonalEvent ? seasonalEvent.id : null
+	const EventDetails = seasonalEvent?.details ?? DefaultSeasonalEventDetails
+	const [isEventOpen, setIsEventOpen] = useState(false)
 	const borderAngle = useMotionValue(0)
 	const borderStops = seasonalAccent?.colors.join(', ') ?? 'transparent'
 	const borderGradient = useMotionTemplate`conic-gradient(from ${borderAngle}deg, ${borderStops})`
@@ -397,6 +404,12 @@ export const Tile = ({
 			controls.stop()
 		}
 	}, [borderAngle, seasonalAccent])
+
+	useEffect(() => {
+		if (!seasonalBadgeId && isEventOpen) {
+			setIsEventOpen(false)
+		}
+	}, [isEventOpen, seasonalBadgeId])
 
 	return (
 		<motion.div
@@ -431,17 +444,23 @@ export const Tile = ({
 				{seasonalBadgeId && (
 					<div className="absolute top-3 right-3">
 						<div className="group/seasonal relative">
-							<span className="flex h-6 w-6 items-center justify-center rounded-full bg-dark-800/80 text-sm text-white/90 shadow-sm ring-1 ring-white/10 backdrop-blur-sm">
+							<button
+								type="button"
+								aria-haspopup="dialog"
+								aria-expanded={isEventOpen}
+								onClick={() => setIsEventOpen(true)}
+								className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-dark-800/80 text-sm text-white/90 shadow-sm ring-1 ring-white/10 backdrop-blur-sm transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+							>
 								<span aria-hidden="true">
 									{getSeasonalEmoji(seasonalBadgeId)}
 								</span>
 								<span className="sr-only">
 									{renderSeasonalLabel(seasonalBadgeId)}
 								</span>
-							</span>
+							</button>
 							<span
 								aria-hidden="true"
-								className="pointer-events-none absolute right-0 bottom-full mb-2 rounded-full border border-white/10 bg-dark-900/95 px-2 py-1 text-xs whitespace-nowrap text-dark-100 opacity-0 shadow-md transition duration-200 group-hover/seasonal:opacity-100"
+								className="pointer-events-none absolute right-0 bottom-full mb-2 rounded-full border border-white/10 bg-dark-900/95 px-2 py-1 text-xs whitespace-nowrap text-dark-100 opacity-0 shadow-md transition duration-200 group-hover/seasonal:opacity-100 group-focus-visible/seasonal:opacity-100"
 							>
 								{renderSeasonalLabel(seasonalBadgeId)}
 							</span>
@@ -562,6 +581,15 @@ export const Tile = ({
 					</div>
 				</div>
 			</div>
+			{seasonalBadgeId && (
+				<SeasonalEventModal
+					isOpen={isEventOpen}
+					onClose={() => setIsEventOpen(false)}
+					title={renderSeasonalLabel(seasonalBadgeId)}
+				>
+					<EventDetails />
+				</SeasonalEventModal>
+			)}
 		</motion.div>
 	)
 }

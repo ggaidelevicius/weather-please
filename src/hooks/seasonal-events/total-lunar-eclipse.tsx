@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const TOTAL_LUNAR_ECLIPSE_DATES = new Set([
@@ -28,10 +29,79 @@ const TOTAL_LUNAR_ECLIPSE_DATES = new Set([
 ])
 const LUNAR_ECLIPSE_MOUNT_DELAY_MS = 900
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				A total lunar eclipse occurs when the Earth moves directly between the
+				Sun and the Moon, fully shading the lunar surface.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				The event unfolds gradually, often lasting several hours from beginning
+				to end.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Across many cultures, the deep red colour of the eclipsed Moon inspired
+				myths and the name “Blood Moon”.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				While eclipses were once viewed as omens, today they are widely
+				appreciated as shared moments of skywatching and wonder.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Why it turns red</Trans>
+		</h2>
+		<p>
+			<Trans>
+				As sunlight passes through Earth’s atmosphere, the shorter blue
+				wavelengths scatter away while the longer red wavelengths bend toward
+				the Moon.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				This same atmospheric filtering that produces red sunsets gives the Moon
+				its copper and crimson tones during totality.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				No special equipment is required; the Moon slowly drifts through shades
+				of copper and crimson overhead.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is a quiet and patient spectacle that rewards unhurried attention.
+			</Trans>
+		</p>
+	</>
+)
+
 export const totalLunarEclipseEvent: SeasonalEvent = {
 	id: 'total-lunar-eclipse',
 	isActive: isTotalLunarEclipse,
 	run: launchTotalLunarEclipse,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#1f2937', '#7f1d1d', '#ef4444', '#fca5a5', '#1f2937'],
 	},

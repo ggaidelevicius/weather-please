@@ -1,5 +1,6 @@
 import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
 
 const QUADRANTIDS_PEAK_DATES = new Set([
 	'2026-01-03',
@@ -67,10 +68,79 @@ const QUADRANTIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
 const QUADRANTIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
 const QUADRANTIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Quadrantids are a meteor shower that peaks in early January and is
+				known for being brief yet often intense.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				When conditions are favourable, they produce sharp, fast-moving meteors
+				in high numbers.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The shower takes its name from Quadrans Muralis, a former constellation
+				that no longer appears on modern star charts.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Although the radiant now lies within the constellation Boötes, the older
+				name preserves a small piece of astronomical history.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Why the peak is brief</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The stream of debris that creates the Quadrantids is unusually narrow,
+				so Earth passes through it quickly.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				This makes the period of strongest activity short, but it can be
+				especially spectacular.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Their likely parent body is the asteroid 2003 EH1, a reminder that even
+				an unassuming rock can paint the sky with light.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				The peak often arrives suddenly, like a secret performance unfolding
+				before dawn.
+			</Trans>
+		</p>
+	</>
+)
+
 export const quadrantidsEvent: SeasonalEvent = {
 	id: 'quadrantids',
 	isActive: isQuadrantidsPeak,
 	run: launchQuadrantidsShower,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#e0f2fe', '#93c5fd', '#60a5fa', '#818cf8', '#e0f2fe'],
 	},

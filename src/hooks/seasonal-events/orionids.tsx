@@ -1,89 +1,143 @@
 import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
 
-const LEONIDS_PEAK_DATES = new Set([
-	'2026-11-17',
-	'2026-11-18',
-	'2027-11-17',
-	'2027-11-18',
-	'2028-11-17',
-	'2028-11-18',
-	'2029-11-17',
-	'2029-11-18',
-	'2030-11-17',
-	'2030-11-18',
-	'2031-11-17',
-	'2031-11-18',
-	'2032-11-17',
-	'2032-11-18',
-	'2033-11-17',
-	'2033-11-18',
-	'2034-11-17',
-	'2034-11-18',
-	'2035-11-17',
-	'2035-11-18',
-	'2036-11-17',
-	'2036-11-18',
-	'2037-11-17',
-	'2037-11-18',
-	'2038-11-17',
-	'2038-11-18',
-	'2039-11-17',
-	'2039-11-18',
-	'2040-11-17',
-	'2040-11-18',
-	'2041-11-17',
-	'2041-11-18',
-	'2042-11-17',
-	'2042-11-18',
-	'2043-11-17',
-	'2043-11-18',
+const ORIONIDS_PEAK_DATES = new Set([
+	'2026-10-21',
+	'2026-10-22',
+	'2027-10-21',
+	'2027-10-22',
+	'2028-10-21',
+	'2028-10-22',
+	'2029-10-21',
+	'2029-10-22',
+	'2030-10-21',
+	'2030-10-22',
+	'2031-10-21',
+	'2031-10-22',
+	'2032-10-21',
+	'2032-10-22',
+	'2033-10-21',
+	'2033-10-22',
+	'2034-10-21',
+	'2034-10-22',
+	'2035-10-21',
+	'2035-10-22',
+	'2036-10-21',
+	'2036-10-22',
+	'2037-10-21',
+	'2037-10-22',
+	'2038-10-21',
+	'2038-10-22',
+	'2039-10-21',
+	'2039-10-22',
+	'2040-10-21',
+	'2040-10-22',
+	'2041-10-21',
+	'2041-10-22',
+	'2042-10-21',
+	'2042-10-22',
+	'2043-10-21',
+	'2043-10-22',
 ])
-const LEONIDS_MOUNT_DELAY_MS = 900
-const LEONIDS_OVERLAY_OPACITY = '0.78'
-const LEONIDS_OVERLAY_FILTER = 'saturate(132%)'
-const LEONIDS_MAX_DPR = 2
-const LEONIDS_METEOR_COUNT = 12
-const LEONIDS_STAR_COUNT = 140
-const LEONIDS_METEOR_LENGTH_RANGE = { min: 150, max: 260 }
-const LEONIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.4 }
-const LEONIDS_METEOR_SPEED_RANGE = { min: 620, max: 940 }
-const LEONIDS_METEOR_ANGLE_RANGE = { min: 0.24, max: 0.42 }
-const LEONIDS_METEOR_SPAWN_DELAY_RANGE = { min: 700, max: 2000 }
-const LEONIDS_METEOR_LIFETIME_RANGE = { min: 1200, max: 2000 }
-const LEONIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
-const LEONIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
-const LEONIDS_METEOR_GLOW_RANGE = { min: 12, max: 26 }
-const LEONIDS_METEOR_COLORS = [
-	'rgba(252, 211, 77, 1)',
-	'rgba(251, 191, 36, 1)',
-	'rgba(249, 115, 22, 1)',
+const ORIONIDS_MOUNT_DELAY_MS = 900
+const ORIONIDS_OVERLAY_OPACITY = '0.78'
+const ORIONIDS_OVERLAY_FILTER = 'saturate(130%)'
+const ORIONIDS_MAX_DPR = 2
+const ORIONIDS_METEOR_COUNT = 11
+const ORIONIDS_STAR_COUNT = 140
+const ORIONIDS_METEOR_LENGTH_RANGE = { min: 150, max: 260 }
+const ORIONIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.4 }
+const ORIONIDS_METEOR_SPEED_RANGE = { min: 600, max: 900 }
+const ORIONIDS_METEOR_ANGLE_RANGE = { min: 0.24, max: 0.42 }
+const ORIONIDS_METEOR_SPAWN_DELAY_RANGE = { min: 760, max: 2200 }
+const ORIONIDS_METEOR_LIFETIME_RANGE = { min: 1300, max: 2100 }
+const ORIONIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
+const ORIONIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
+const ORIONIDS_METEOR_GLOW_RANGE = { min: 12, max: 24 }
+const ORIONIDS_METEOR_COLORS = [
+	'rgba(254, 215, 170, 1)',
+	'rgba(253, 186, 116, 1)',
+	'rgba(251, 146, 60, 1)',
 	'rgba(148, 163, 184, 1)',
 ]
-const LEONIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const LEONIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
-const LEONIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
-const LEONIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
-const LEONIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const LEONIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const ORIONIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
+const ORIONIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
+const ORIONIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
+const ORIONIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
+const ORIONIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
+const ORIONIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
-export const leonidsEvent: SeasonalEvent = {
-	id: 'leonids',
-	isActive: isLeonidsPeak,
-	run: launchLeonidsShower,
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Orionids are an annual meteor shower formed from debris left by
+				Halley’s Comet, reaching their peak in October.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Their meteors appear to radiate from the region near the constellation
+				Orion, a figure long woven into myth and storytelling.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Orionids are visible from both hemispheres and are known for
+				producing bright, fast-moving meteors.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Their peak often coincides with long, dark viewing hours, when observing
+				conditions are especially favourable.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				As Orion rises before dawn, it can feel like a spotlight for the meteors
+				that follow.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				The shower frequently delivers swift, luminous streaks that carve clean
+				lines across the night.
+			</Trans>
+		</p>
+	</>
+)
+
+export const orionidsEvent: SeasonalEvent = {
+	id: 'orionids',
+	isActive: isOrionidsPeak,
+	run: launchOrionidsShower,
+	details: EventDetails,
 	tileAccent: {
-		colors: ['#fcd34d', '#fbbf24', '#f97316', '#94a3b8', '#fcd34d'],
+		colors: ['#fed7aa', '#fdba74', '#fb923c', '#94a3b8', '#fed7aa'],
 	},
 }
 
-function isLeonidsPeak({ date }: SeasonalEventContext) {
+function isOrionidsPeak({ date }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
-	return LEONIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
+	return ORIONIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
 }
 
-async function launchLeonidsShower() {
+async function launchOrionidsShower() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}
@@ -95,7 +149,7 @@ async function launchLeonidsShower() {
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
-			throw new Error('Unable to create 2D context for leonids canvas')
+			throw new Error('Unable to create 2D context for orionids canvas')
 		}
 
 		type Meteor = {
@@ -132,49 +186,51 @@ async function launchLeonidsShower() {
 		let lastTime = performance.now()
 
 		const randomMeteorColor = () =>
-			LEONIDS_METEOR_COLORS[
-				Math.floor(Math.random() * LEONIDS_METEOR_COLORS.length)
+			ORIONIDS_METEOR_COLORS[
+				Math.floor(Math.random() * ORIONIDS_METEOR_COLORS.length)
 			]
 
 		const createStar = (time: number): Star => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: randomInRange(LEONIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(LEONIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(LEONIDS_STAR_TWINKLE_RANGE),
+			radius: randomInRange(ORIONIDS_STAR_RADIUS_RANGE),
+			opacity: randomInRange(ORIONIDS_STAR_OPACITY_RANGE),
+			twinkle: randomInRange(ORIONIDS_STAR_TWINKLE_RANGE),
 			phase: Math.random() * Math.PI * 2,
-			birthTime: time + randomInRange(LEONIDS_STAR_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(LEONIDS_STAR_FADE_IN_DURATION_RANGE),
+			birthTime: time + randomInRange(ORIONIDS_STAR_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(ORIONIDS_STAR_FADE_IN_DURATION_RANGE),
 		})
 
 		const createMeteor = (time: number): Meteor => {
-			const speed = randomInRange(LEONIDS_METEOR_SPEED_RANGE)
-			const angle = randomInRange(LEONIDS_METEOR_ANGLE_RANGE)
+			const speed = randomInRange(ORIONIDS_METEOR_SPEED_RANGE)
+			const angle = randomInRange(ORIONIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(LEONIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(LEONIDS_METEOR_SPAWN_Y),
+				x: width * randomInRange(ORIONIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(ORIONIDS_METEOR_SPAWN_Y),
 				vx: Math.cos(angle) * speed,
 				vy: Math.sin(angle) * speed,
-				length: randomInRange(LEONIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(LEONIDS_METEOR_WIDTH_RANGE),
-				opacity: randomInRange({ min: 0.45, max: 0.88 }),
-				glow: randomInRange(LEONIDS_METEOR_GLOW_RANGE),
+				length: randomInRange(ORIONIDS_METEOR_LENGTH_RANGE),
+				width: randomInRange(ORIONIDS_METEOR_WIDTH_RANGE),
+				opacity: randomInRange({ min: 0.45, max: 0.85 }),
+				glow: randomInRange(ORIONIDS_METEOR_GLOW_RANGE),
 				color: randomMeteorColor(),
 				age: 0,
-				lifetime: randomInRange(LEONIDS_METEOR_LIFETIME_RANGE),
-				nextSpawn: time + randomInRange(LEONIDS_METEOR_SPAWN_DELAY_RANGE),
+				lifetime: randomInRange(ORIONIDS_METEOR_LIFETIME_RANGE),
+				nextSpawn: time + randomInRange(ORIONIDS_METEOR_SPAWN_DELAY_RANGE),
 			}
 		}
 
 		const resetField = (time: number) => {
-			meteors = Array.from({ length: LEONIDS_METEOR_COUNT }, () =>
+			meteors = Array.from({ length: ORIONIDS_METEOR_COUNT }, () =>
 				createMeteor(time),
 			)
-			stars = Array.from({ length: LEONIDS_STAR_COUNT }, () => createStar(time))
+			stars = Array.from({ length: ORIONIDS_STAR_COUNT }, () =>
+				createStar(time),
+			)
 		}
 
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, LEONIDS_MAX_DPR)
+			const dpr = Math.min(window.devicePixelRatio || 1, ORIONIDS_MAX_DPR)
 			width = window.innerWidth
 			height = window.innerHeight
 			canvas.width = Math.round(width * dpr)
@@ -202,7 +258,7 @@ async function launchLeonidsShower() {
 		}
 
 		const drawStars = (time: number) => {
-			context.fillStyle = LEONIDS_STAR_COLOR
+			context.fillStyle = ORIONIDS_STAR_COLOR
 			for (const star of stars) {
 				const fade = getStarFade(star, time)
 				if (fade <= 0) {
@@ -296,8 +352,8 @@ async function launchLeonidsShower() {
 		overlay.style.inset = '0'
 		overlay.style.pointerEvents = 'none'
 		overlay.style.zIndex = '0'
-		overlay.style.opacity = LEONIDS_OVERLAY_OPACITY
-		overlay.style.filter = LEONIDS_OVERLAY_FILTER
+		overlay.style.opacity = ORIONIDS_OVERLAY_OPACITY
+		overlay.style.filter = ORIONIDS_OVERLAY_FILTER
 		overlay.appendChild(canvas)
 
 		const mount = () => {
@@ -311,7 +367,7 @@ async function launchLeonidsShower() {
 			}
 		}
 
-		timeoutId = window.setTimeout(mount, LEONIDS_MOUNT_DELAY_MS)
+		timeoutId = window.setTimeout(mount, ORIONIDS_MOUNT_DELAY_MS)
 
 		const handleResize = () => {
 			resizeCanvas()
@@ -334,7 +390,7 @@ async function launchLeonidsShower() {
 			}
 		}
 	} catch (error) {
-		console.error('Failed to launch Leonids meteor shower', error)
+		console.error('Failed to launch Orionids meteor shower', error)
 		return () => {}
 	}
 }

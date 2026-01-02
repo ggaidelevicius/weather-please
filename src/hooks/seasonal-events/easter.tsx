@@ -1,52 +1,137 @@
 import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
 
-const DAY_OF_THE_DEAD_MONTH = 10
-const DAY_OF_THE_DEAD_DAYS = new Set([1, 2])
-const DAY_OF_THE_DEAD_MOUNT_DELAY_MS = 900
-const DAY_OF_THE_DEAD_FIELD_OPACITY = '0.75'
-const DAY_OF_THE_DEAD_FIELD_FILTER = 'saturate(130%)'
-const DAY_OF_THE_DEAD_FIELD_MAX_DPR = 2
-const DAY_OF_THE_DEAD_FIELD_MARGIN = 160
-const DAY_OF_THE_DEAD_PARTICLE_COUNT = 70
-const DAY_OF_THE_DEAD_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const DAY_OF_THE_DEAD_FADE_IN_DURATION_RANGE = { min: 1000, max: 1900 }
-const DAY_OF_THE_DEAD_SCALE_RANGE = { min: 0.45, max: 0.85 }
-const DAY_OF_THE_DEAD_SIZE_RANGE = { min: 18, max: 32 }
-const DAY_OF_THE_DEAD_VELOCITY_X_RANGE = { min: -9, max: 9 }
-const DAY_OF_THE_DEAD_VELOCITY_Y_RANGE = { min: -6, max: 8 }
-const DAY_OF_THE_DEAD_SWAY_RANGE = { min: 2.5, max: 8 }
-const DAY_OF_THE_DEAD_ROTATION_SPEED_RANGE = { min: -0.35, max: 0.35 }
-const DAY_OF_THE_DEAD_SWAY_SPEED_X = 0.00055
-const DAY_OF_THE_DEAD_SWAY_SPEED_Y = 0.00045
-const DAY_OF_THE_DEAD_GLOW_RANGE = { min: 6, max: 16 }
-const DAY_OF_THE_DEAD_GLOW_COLORS = [
-	'rgba(251, 146, 60, 0.5)',
-	'rgba(248, 113, 113, 0.45)',
-	'rgba(249, 115, 22, 0.4)',
+const EASTER_MOUNT_DELAY_MS = 900
+const EASTER_FIELD_OPACITY = '0.72'
+const EASTER_FIELD_FILTER = 'saturate(135%)'
+const EASTER_FIELD_MAX_DPR = 2
+const EASTER_FIELD_MARGIN = 160
+const EASTER_PARTICLE_COUNT = 70
+const EASTER_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
+const EASTER_FADE_IN_DURATION_RANGE = { min: 1000, max: 1900 }
+const EASTER_SCALE_RANGE = { min: 0.45, max: 0.85 }
+const EASTER_SIZE_RANGE = { min: 16, max: 30 }
+const EASTER_VELOCITY_X_RANGE = { min: -8, max: 8 }
+const EASTER_VELOCITY_Y_RANGE = { min: -7, max: 6 }
+const EASTER_SWAY_RANGE = { min: 2.5, max: 8 }
+const EASTER_ROTATION_SPEED_RANGE = { min: -0.35, max: 0.35 }
+const EASTER_SWAY_SPEED_X = 0.00055
+const EASTER_SWAY_SPEED_Y = 0.00045
+const EASTER_GLOW_RANGE = { min: 6, max: 16 }
+const EASTER_GLOW_COLORS = [
+	'rgba(244, 114, 182, 0.45)',
+	'rgba(167, 139, 250, 0.4)',
+	'rgba(147, 197, 253, 0.4)',
 ]
-const DAY_OF_THE_DEAD_EMOJIS = ['💀', '🌼', '🕯️', '🦋', '🏵️']
-const DAY_OF_THE_DEAD_FONT =
+const EASTER_EMOJIS = ['🥚', '🐣', '🐰', '🌷', '🌼', '🌸']
+const EASTER_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
-const DAY_OF_THE_DEAD_HALO_OPACITY = '0.5'
+const EASTER_HALO_OPACITY = '0.5'
 
-export const dayOfTheDeadEvent: SeasonalEvent = {
-	id: 'day-of-the-dead',
-	isActive: isDayOfTheDead,
-	run: launchDayOfTheDead,
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Easter centres on themes of renewal and, in Christian tradition, the
+				resurrection of Jesus.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is a movable feast, its date determined by the cycle of the moon and
+				the arrival of spring in the northern hemisphere.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				From its earliest observances, Christian calendars aligned Easter with
+				the spring season and the full moon following the equinox.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Across many cultures, older symbols of rebirth — such as eggs, blossoms,
+				and new growth — became woven into the celebration.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Sunrise services, fresh mornings, and the simple delight of egg hunts
+				carry the feeling of a world beginning again.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is a holiday that speaks gently in the language of new beginnings.
+			</Trans>
+		</p>
+	</>
+)
+
+export const easterEvent: SeasonalEvent = {
+	id: 'easter',
+	isActive: isEaster,
+	run: launchEaster,
+	details: EventDetails,
 	tileAccent: {
-		colors: ['#fef3c7', '#fdba74', '#fb7185', '#f59e0b', '#fef3c7'],
+		colors: ['#fce7f3', '#fbcfe8', '#a5b4fc', '#93c5fd', '#fce7f3'],
 	},
 }
 
-function isDayOfTheDead({ date }: SeasonalEventContext) {
+function isEaster({ date }: SeasonalEventContext) {
+	const year = date.getFullYear()
+	const easterDate = getWesternEasterDate(year)
+	if (!easterDate) {
+		return false
+	}
+
 	return (
-		date.getMonth() === DAY_OF_THE_DEAD_MONTH &&
-		DAY_OF_THE_DEAD_DAYS.has(date.getDate())
+		date.getMonth() === easterDate.month && date.getDate() === easterDate.day
 	)
 }
 
-async function launchDayOfTheDead() {
+function getWesternEasterDate(
+	year: number,
+): { month: number; day: number } | null {
+	if (!Number.isFinite(year)) {
+		return null
+	}
+
+	const a = year % 19
+	const b = Math.floor(year / 100)
+	const c = year % 100
+	const d = Math.floor(b / 4)
+	const e = b % 4
+	const f = Math.floor((b + 8) / 25)
+	const g = Math.floor((b - f + 1) / 3)
+	const h = (19 * a + b - d - g + 15) % 30
+	const i = Math.floor(c / 4)
+	const k = c % 4
+	const l = (32 + 2 * e + 2 * i - h - k) % 7
+	const m = Math.floor((a + 11 * h + 22 * l) / 451)
+	const month = Math.floor((h + l - 7 * m + 114) / 31) - 1
+	const day = ((h + l - 7 * m + 114) % 31) + 1
+
+	if (month < 0 || month > 11) {
+		return null
+	}
+
+	return { month, day }
+}
+
+async function launchEaster() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}
@@ -57,10 +142,10 @@ async function launchDayOfTheDead() {
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
-			throw new Error('Unable to create 2D context for day of the dead canvas')
+			throw new Error('Unable to create 2D context for easter canvas')
 		}
 
-		type SpiritParticle = {
+		type EasterParticle = {
 			x: number
 			y: number
 			vx: number
@@ -90,48 +175,44 @@ async function launchDayOfTheDead() {
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
-		let particles: SpiritParticle[] = []
+		let particles: EasterParticle[] = []
 		let lastTime = performance.now()
 		let overlay: HTMLDivElement | null = null
 		let styleEl: HTMLStyleElement | null = null
 		const spriteCache = new Map<string, EmojiSprite>()
 		const spriteDpr = Math.min(
 			window.devicePixelRatio || 1,
-			DAY_OF_THE_DEAD_FIELD_MAX_DPR,
+			EASTER_FIELD_MAX_DPR,
 		)
 
 		const randomEmoji = () =>
-			DAY_OF_THE_DEAD_EMOJIS[
-				Math.floor(Math.random() * DAY_OF_THE_DEAD_EMOJIS.length)
-			]
+			EASTER_EMOJIS[Math.floor(Math.random() * EASTER_EMOJIS.length)]
 		const randomGlow = () =>
-			DAY_OF_THE_DEAD_GLOW_COLORS[
-				Math.floor(Math.random() * DAY_OF_THE_DEAD_GLOW_COLORS.length)
-			]
-		const createParticle = (time: number): SpiritParticle => ({
+			EASTER_GLOW_COLORS[Math.floor(Math.random() * EASTER_GLOW_COLORS.length)]
+		const createParticle = (time: number): EasterParticle => ({
 			x: randomInRange({
-				min: -DAY_OF_THE_DEAD_FIELD_MARGIN,
-				max: width + DAY_OF_THE_DEAD_FIELD_MARGIN,
+				min: -EASTER_FIELD_MARGIN,
+				max: width + EASTER_FIELD_MARGIN,
 			}),
 			y: randomInRange({
-				min: -DAY_OF_THE_DEAD_FIELD_MARGIN,
-				max: height + DAY_OF_THE_DEAD_FIELD_MARGIN,
+				min: -EASTER_FIELD_MARGIN,
+				max: height + EASTER_FIELD_MARGIN,
 			}),
-			vx: randomInRange(DAY_OF_THE_DEAD_VELOCITY_X_RANGE),
-			vy: randomInRange(DAY_OF_THE_DEAD_VELOCITY_Y_RANGE),
-			size: randomInRange(DAY_OF_THE_DEAD_SIZE_RANGE),
+			vx: randomInRange(EASTER_VELOCITY_X_RANGE),
+			vy: randomInRange(EASTER_VELOCITY_Y_RANGE),
+			size: randomInRange(EASTER_SIZE_RANGE),
 			rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-			rotationSpeed: randomInRange(DAY_OF_THE_DEAD_ROTATION_SPEED_RANGE),
+			rotationSpeed: randomInRange(EASTER_ROTATION_SPEED_RANGE),
 			opacity: randomInRange({ min: 0.45, max: 0.85 }),
 			emoji: randomEmoji(),
-			glow: randomInRange(DAY_OF_THE_DEAD_GLOW_RANGE),
+			glow: randomInRange(EASTER_GLOW_RANGE),
 			glowColor: randomGlow(),
 			phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-			sway: randomInRange(DAY_OF_THE_DEAD_SWAY_RANGE),
-			birthTime: time + randomInRange(DAY_OF_THE_DEAD_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(DAY_OF_THE_DEAD_FADE_IN_DURATION_RANGE),
-			scaleFrom: randomInRange(DAY_OF_THE_DEAD_SCALE_RANGE),
-			hasSparkle: Math.random() < 0.25,
+			sway: randomInRange(EASTER_SWAY_RANGE),
+			birthTime: time + randomInRange(EASTER_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(EASTER_FADE_IN_DURATION_RANGE),
+			scaleFrom: randomInRange(EASTER_SCALE_RANGE),
+			hasSparkle: Math.random() < 0.22,
 			sparklePhase: randomInRange({ min: 0, max: Math.PI * 2 }),
 		})
 		const getSpriteKey = (
@@ -169,7 +250,7 @@ async function launchDayOfTheDead() {
 			}
 
 			spriteContext.scale(spriteDpr, spriteDpr)
-			spriteContext.font = `${quantizedSize}px ${DAY_OF_THE_DEAD_FONT}`
+			spriteContext.font = `${quantizedSize}px ${EASTER_FONT}`
 			spriteContext.textAlign = 'center'
 			spriteContext.textBaseline = 'middle'
 			spriteContext.shadowColor = glowColor
@@ -181,11 +262,11 @@ async function launchDayOfTheDead() {
 			return sprite
 		}
 		const resetParticles = (time: number) => {
-			particles = Array.from({ length: DAY_OF_THE_DEAD_PARTICLE_COUNT }, () =>
+			particles = Array.from({ length: EASTER_PARTICLE_COUNT }, () =>
 				createParticle(time),
 			)
 		}
-		const respawnParticle = (particle: SpiritParticle, time: number) => {
+		const respawnParticle = (particle: EasterParticle, time: number) => {
 			Object.assign(particle, createParticle(time))
 		}
 		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
@@ -195,10 +276,7 @@ async function launchDayOfTheDead() {
 			}
 		}
 		const resizeCanvas = () => {
-			const dpr = Math.min(
-				window.devicePixelRatio || 1,
-				DAY_OF_THE_DEAD_FIELD_MAX_DPR,
-			)
+			const dpr = Math.min(window.devicePixelRatio || 1, EASTER_FIELD_MAX_DPR)
 			width = window.innerWidth
 			height = window.innerHeight
 			canvas.width = Math.round(width * dpr)
@@ -207,7 +285,7 @@ async function launchDayOfTheDead() {
 			canvas.style.height = `${height}px`
 			context.setTransform(dpr, 0, 0, dpr, 0, 0)
 		}
-		const drawParticle = (particle: SpiritParticle, time: number) => {
+		const drawParticle = (particle: EasterParticle, time: number) => {
 			const lifeProgress = (time - particle.birthTime) / particle.fadeDuration
 			if (lifeProgress < 0) {
 				return
@@ -238,7 +316,7 @@ async function launchDayOfTheDead() {
 			context.restore()
 		}
 		const updateParticle = (
-			particle: SpiritParticle,
+			particle: EasterParticle,
 			delta: number,
 			time: number,
 		) => {
@@ -247,10 +325,9 @@ async function launchDayOfTheDead() {
 			}
 
 			const sway =
-				Math.sin(time * DAY_OF_THE_DEAD_SWAY_SPEED_X + particle.phase) *
-				particle.sway
+				Math.sin(time * EASTER_SWAY_SPEED_X + particle.phase) * particle.sway
 			const lift =
-				Math.cos(time * DAY_OF_THE_DEAD_SWAY_SPEED_Y + particle.phase) *
+				Math.cos(time * EASTER_SWAY_SPEED_Y + particle.phase) *
 				particle.sway *
 				0.4
 
@@ -259,10 +336,10 @@ async function launchDayOfTheDead() {
 			particle.rotation += particle.rotationSpeed * delta
 
 			if (
-				particle.x < -DAY_OF_THE_DEAD_FIELD_MARGIN ||
-				particle.x > width + DAY_OF_THE_DEAD_FIELD_MARGIN ||
-				particle.y < -DAY_OF_THE_DEAD_FIELD_MARGIN ||
-				particle.y > height + DAY_OF_THE_DEAD_FIELD_MARGIN
+				particle.x < -EASTER_FIELD_MARGIN ||
+				particle.x > width + EASTER_FIELD_MARGIN ||
+				particle.y < -EASTER_FIELD_MARGIN ||
+				particle.y > height + EASTER_FIELD_MARGIN
 			) {
 				respawnParticle(particle, time)
 			}
@@ -288,17 +365,17 @@ async function launchDayOfTheDead() {
 			}
 		}
 
-		const mountSpirits = () => {
+		const mountEaster = () => {
 			if (hasCanceled) return
 			const style = document.createElement('style')
 			const overlayNode = document.createElement('div')
 			const halo = document.createElement('div')
 
-			style.setAttribute('data-day-of-the-dead', 'overlay')
+			style.setAttribute('data-easter', 'overlay')
 			style.textContent = `
-@keyframes day-of-the-dead-halo-reveal {
+@keyframes easter-halo-reveal {
 	0% { opacity: 0; transform: translate(0, 0) scale(0.96); }
-	100% { opacity: ${DAY_OF_THE_DEAD_HALO_OPACITY}; transform: translate(0, 0) scale(1); }
+	100% { opacity: ${EASTER_HALO_OPACITY}; transform: translate(0, 0) scale(1); }
 }
 `
 
@@ -311,14 +388,13 @@ async function launchDayOfTheDead() {
 
 			halo.style.position = 'absolute'
 			halo.style.inset = '-30% 0 0 -30%'
-			halo.style.opacity = shouldAnimate ? '0' : DAY_OF_THE_DEAD_HALO_OPACITY
+			halo.style.opacity = shouldAnimate ? '0' : EASTER_HALO_OPACITY
 			halo.style.background =
-				'radial-gradient(circle at 30% 30%, rgba(251, 191, 36, 0.4), rgba(251, 146, 60, 0.18) 35%, rgba(226, 232, 240, 0) 70%)'
-			halo.style.filter = 'blur(20px)'
+				'radial-gradient(circle at 30% 30%, rgba(248, 113, 113, 0.28), rgba(244, 114, 182, 0.2) 35%, rgba(226, 232, 240, 0) 70%)'
+			halo.style.filter = 'blur(22px)'
 
 			if (shouldAnimate) {
-				halo.style.animation =
-					'day-of-the-dead-halo-reveal 4s ease-out 0.8s forwards'
+				halo.style.animation = 'easter-halo-reveal 4s ease-out 0.8s forwards'
 			}
 
 			overlayNode.appendChild(halo)
@@ -332,8 +408,8 @@ async function launchDayOfTheDead() {
 			canvas.style.inset = '0'
 			canvas.style.pointerEvents = 'none'
 			canvas.style.zIndex = '1'
-			canvas.style.opacity = DAY_OF_THE_DEAD_FIELD_OPACITY
-			canvas.style.filter = DAY_OF_THE_DEAD_FIELD_FILTER
+			canvas.style.opacity = EASTER_FIELD_OPACITY
+			canvas.style.filter = EASTER_FIELD_FILTER
 			canvas.style.mixBlendMode = 'screen'
 
 			document.body.appendChild(canvas)
@@ -349,7 +425,7 @@ async function launchDayOfTheDead() {
 			}
 		}
 
-		timeoutId = window.setTimeout(mountSpirits, DAY_OF_THE_DEAD_MOUNT_DELAY_MS)
+		timeoutId = window.setTimeout(mountEaster, EASTER_MOUNT_DELAY_MS)
 
 		return () => {
 			hasCanceled = true
@@ -371,7 +447,7 @@ async function launchDayOfTheDead() {
 			}
 		}
 	} catch (error) {
-		console.error('Failed to launch Day of the Dead event', error)
+		console.error('Failed to launch easter event', error)
 		return () => {}
 	}
 }

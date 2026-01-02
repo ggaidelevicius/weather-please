@@ -1,5 +1,6 @@
 import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
 
 const VALENTINES_MONTH = 1
 const VALENTINES_DAY = 14
@@ -33,10 +34,79 @@ const HEARTS_GRADIENTS = [
 ] as const
 const HEARTS_SHAPES = ['parametric', 'arc'] as const
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Valentine’s Day celebrates affection in many forms, from romantic love
+				to friendship and quiet acts of care.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is often marked by small gestures that simply say someone has been
+				remembered.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The holiday draws on legends of Saint Valentine and the traditions of
+				medieval courtly love.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				By the eighteenth century, handwritten notes and printed cards had
+				helped turn the day into a ritual of letters and messages.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Symbols and rituals</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Hearts, roses, and red ribbons became familiar symbols of devotion,
+				warmth, and connection.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Shared sweets, flowers, and small gifts keep the celebration intimate
+				and personal.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The oldest known Valentine is a fifteenth-century poem written from
+				imprisonment in the Tower of London.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Even today, paper hearts and quiet notes continue the tradition of
+				deliberate kindness.
+			</Trans>
+		</p>
+	</>
+)
+
 export const valentinesEvent: SeasonalEvent = {
 	id: 'valentines-day',
 	isActive: isValentinesDay,
 	run: launchValentinesHearts,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#fbcfe8', '#f9a8d4', '#f472b6', '#fb7185', '#fbcfe8'],
 	},

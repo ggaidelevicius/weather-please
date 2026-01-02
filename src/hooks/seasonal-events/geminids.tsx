@@ -1,89 +1,158 @@
 import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
 
-const LYRIDS_PEAK_DATES = new Set([
-	'2026-04-22',
-	'2026-04-23',
-	'2027-04-22',
-	'2027-04-23',
-	'2028-04-22',
-	'2028-04-23',
-	'2029-04-22',
-	'2029-04-23',
-	'2030-04-22',
-	'2030-04-23',
-	'2031-04-22',
-	'2031-04-23',
-	'2032-04-22',
-	'2032-04-23',
-	'2033-04-22',
-	'2033-04-23',
-	'2034-04-22',
-	'2034-04-23',
-	'2035-04-22',
-	'2035-04-23',
-	'2036-04-22',
-	'2036-04-23',
-	'2037-04-22',
-	'2037-04-23',
-	'2038-04-22',
-	'2038-04-23',
-	'2039-04-22',
-	'2039-04-23',
-	'2040-04-22',
-	'2040-04-23',
-	'2041-04-22',
-	'2041-04-23',
-	'2042-04-22',
-	'2042-04-23',
-	'2043-04-22',
-	'2043-04-23',
+const GEMINIDS_PEAK_DATES = new Set([
+	'2026-12-13',
+	'2027-12-13',
+	'2028-12-13',
+	'2029-12-13',
+	'2030-12-13',
+	'2031-12-13',
+	'2032-12-13',
+	'2033-12-13',
+	'2034-12-13',
+	'2035-12-13',
+	'2036-12-13',
+	'2037-12-13',
+	'2038-12-13',
+	'2039-12-13',
+	'2040-12-13',
+	'2041-12-13',
+	'2042-12-13',
+	'2043-12-13',
+	'2026-12-14',
+	'2027-12-14',
+	'2028-12-14',
+	'2029-12-14',
+	'2030-12-14',
+	'2031-12-14',
+	'2032-12-14',
+	'2033-12-14',
+	'2034-12-14',
+	'2035-12-14',
+	'2036-12-14',
+	'2037-12-14',
+	'2038-12-14',
+	'2039-12-14',
+	'2040-12-14',
+	'2041-12-14',
+	'2042-12-14',
+	'2043-12-14',
 ])
-const LYRIDS_MOUNT_DELAY_MS = 900
-const LYRIDS_OVERLAY_OPACITY = '0.78'
-const LYRIDS_OVERLAY_FILTER = 'saturate(125%)'
-const LYRIDS_MAX_DPR = 2
-const LYRIDS_METEOR_COUNT = 10
-const LYRIDS_STAR_COUNT = 140
-const LYRIDS_METEOR_LENGTH_RANGE = { min: 130, max: 240 }
-const LYRIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.2 }
-const LYRIDS_METEOR_SPEED_RANGE = { min: 480, max: 780 }
-const LYRIDS_METEOR_ANGLE_RANGE = { min: 0.26, max: 0.44 }
-const LYRIDS_METEOR_SPAWN_DELAY_RANGE = { min: 900, max: 2400 }
-const LYRIDS_METEOR_LIFETIME_RANGE = { min: 1400, max: 2300 }
-const LYRIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
-const LYRIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
-const LYRIDS_METEOR_GLOW_RANGE = { min: 12, max: 22 }
-const LYRIDS_METEOR_COLORS = [
+const GEMINIDS_MOUNT_DELAY_MS = 900
+const GEMINIDS_OVERLAY_OPACITY = '0.78'
+const GEMINIDS_OVERLAY_FILTER = 'saturate(120%)'
+const GEMINIDS_MAX_DPR = 2
+const GEMINIDS_METEOR_COUNT = 12
+const GEMINIDS_STAR_COUNT = 140
+const GEMINIDS_METEOR_LENGTH_RANGE = { min: 120, max: 230 }
+const GEMINIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.3 }
+const GEMINIDS_METEOR_SPEED_RANGE = { min: 460, max: 760 }
+const GEMINIDS_METEOR_ANGLE_RANGE = { min: 0.28, max: 0.46 }
+const GEMINIDS_METEOR_SPAWN_DELAY_RANGE = { min: 820, max: 2200 }
+const GEMINIDS_METEOR_LIFETIME_RANGE = { min: 1500, max: 2400 }
+const GEMINIDS_METEOR_SPAWN_X = { min: -0.15, max: 0.65 }
+const GEMINIDS_METEOR_SPAWN_Y = { min: -0.3, max: 0.15 }
+const GEMINIDS_METEOR_GLOW_RANGE = { min: 12, max: 22 }
+const GEMINIDS_METEOR_COLORS = [
 	'rgba(226, 232, 240, 1)',
 	'rgba(191, 219, 254, 1)',
 	'rgba(148, 163, 184, 1)',
-	'rgba(252, 211, 77, 1)',
+	'rgba(129, 140, 248, 1)',
 ]
-const LYRIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const LYRIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
-const LYRIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
-const LYRIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
-const LYRIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const LYRIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const GEMINIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
+const GEMINIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
+const GEMINIDS_STAR_OPACITY_RANGE = { min: 0.18, max: 0.55 }
+const GEMINIDS_STAR_TWINKLE_RANGE = { min: 0.0005, max: 0.0012 }
+const GEMINIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
+const GEMINIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
-export const lyridsEvent: SeasonalEvent = {
-	id: 'lyrids',
-	isActive: isLyridsPeak,
-	run: launchLyridsShower,
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Geminids are one of the strongest and most reliable meteor showers
+				of the year, appearing each December with frequent, bright meteors.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				They are especially known for their steady rates and vivid, often
+				colourful trails.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Unlike most meteor showers, the Geminids originate from the asteroid
+				3200 Phaethon rather than a comet.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Because it behaves like both an asteroid and a comet, it is sometimes
+				described as a “rock comet”.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Skywatching tips</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Find a wide view of the sky, allow your eyes time to adjust, and settle
+				in — the display often strengthens after midnight.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Whether your night air is warm or cool, a comfortable place to sit or
+				lie back makes the experience far more enjoyable.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The meteors are often bright and steady, tracing slow, colourful paths
+				across the night.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Under clear skies, the show can feel both calm and exhilarating at once.
+			</Trans>
+		</p>
+	</>
+)
+
+export const geminidsEvent: SeasonalEvent = {
+	id: 'geminids',
+	isActive: isGeminidsPeak,
+	run: launchGeminidsShower,
+	details: EventDetails,
 	tileAccent: {
-		colors: ['#e2e8f0', '#fcd34d', '#93c5fd', '#60a5fa', '#e2e8f0'],
+		colors: ['#e2e8f0', '#93c5fd', '#818cf8', '#cbd5f5', '#e2e8f0'],
 	},
 }
 
-function isLyridsPeak({ date }: SeasonalEventContext) {
+function isGeminidsPeak({ date }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
-	return LYRIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
+	return GEMINIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
 }
 
-async function launchLyridsShower() {
+async function launchGeminidsShower() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}
@@ -95,7 +164,7 @@ async function launchLyridsShower() {
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
-			throw new Error('Unable to create 2D context for lyrids canvas')
+			throw new Error('Unable to create 2D context for geminids canvas')
 		}
 
 		type Meteor = {
@@ -132,49 +201,51 @@ async function launchLyridsShower() {
 		let lastTime = performance.now()
 
 		const randomMeteorColor = () =>
-			LYRIDS_METEOR_COLORS[
-				Math.floor(Math.random() * LYRIDS_METEOR_COLORS.length)
+			GEMINIDS_METEOR_COLORS[
+				Math.floor(Math.random() * GEMINIDS_METEOR_COLORS.length)
 			]
 
 		const createStar = (time: number): Star => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: randomInRange(LYRIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(LYRIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(LYRIDS_STAR_TWINKLE_RANGE),
+			radius: randomInRange(GEMINIDS_STAR_RADIUS_RANGE),
+			opacity: randomInRange(GEMINIDS_STAR_OPACITY_RANGE),
+			twinkle: randomInRange(GEMINIDS_STAR_TWINKLE_RANGE),
 			phase: Math.random() * Math.PI * 2,
-			birthTime: time + randomInRange(LYRIDS_STAR_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(LYRIDS_STAR_FADE_IN_DURATION_RANGE),
+			birthTime: time + randomInRange(GEMINIDS_STAR_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(GEMINIDS_STAR_FADE_IN_DURATION_RANGE),
 		})
 
 		const createMeteor = (time: number): Meteor => {
-			const speed = randomInRange(LYRIDS_METEOR_SPEED_RANGE)
-			const angle = randomInRange(LYRIDS_METEOR_ANGLE_RANGE)
+			const speed = randomInRange(GEMINIDS_METEOR_SPEED_RANGE)
+			const angle = randomInRange(GEMINIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(LYRIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(LYRIDS_METEOR_SPAWN_Y),
+				x: width * randomInRange(GEMINIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(GEMINIDS_METEOR_SPAWN_Y),
 				vx: Math.cos(angle) * speed,
 				vy: Math.sin(angle) * speed,
-				length: randomInRange(LYRIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(LYRIDS_METEOR_WIDTH_RANGE),
+				length: randomInRange(GEMINIDS_METEOR_LENGTH_RANGE),
+				width: randomInRange(GEMINIDS_METEOR_WIDTH_RANGE),
 				opacity: randomInRange({ min: 0.45, max: 0.85 }),
-				glow: randomInRange(LYRIDS_METEOR_GLOW_RANGE),
+				glow: randomInRange(GEMINIDS_METEOR_GLOW_RANGE),
 				color: randomMeteorColor(),
 				age: 0,
-				lifetime: randomInRange(LYRIDS_METEOR_LIFETIME_RANGE),
-				nextSpawn: time + randomInRange(LYRIDS_METEOR_SPAWN_DELAY_RANGE),
+				lifetime: randomInRange(GEMINIDS_METEOR_LIFETIME_RANGE),
+				nextSpawn: time + randomInRange(GEMINIDS_METEOR_SPAWN_DELAY_RANGE),
 			}
 		}
 
 		const resetField = (time: number) => {
-			meteors = Array.from({ length: LYRIDS_METEOR_COUNT }, () =>
+			meteors = Array.from({ length: GEMINIDS_METEOR_COUNT }, () =>
 				createMeteor(time),
 			)
-			stars = Array.from({ length: LYRIDS_STAR_COUNT }, () => createStar(time))
+			stars = Array.from({ length: GEMINIDS_STAR_COUNT }, () =>
+				createStar(time),
+			)
 		}
 
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, LYRIDS_MAX_DPR)
+			const dpr = Math.min(window.devicePixelRatio || 1, GEMINIDS_MAX_DPR)
 			width = window.innerWidth
 			height = window.innerHeight
 			canvas.width = Math.round(width * dpr)
@@ -202,7 +273,7 @@ async function launchLyridsShower() {
 		}
 
 		const drawStars = (time: number) => {
-			context.fillStyle = LYRIDS_STAR_COLOR
+			context.fillStyle = GEMINIDS_STAR_COLOR
 			for (const star of stars) {
 				const fade = getStarFade(star, time)
 				if (fade <= 0) {
@@ -229,7 +300,7 @@ async function launchLyridsShower() {
 
 			const gradient = context.createLinearGradient(-meteor.length, 0, 0, 0)
 			gradient.addColorStop(0, 'rgba(255, 255, 255, 0)')
-			gradient.addColorStop(0.6, meteor.color.replace('1)', '0.25)'))
+			gradient.addColorStop(0.6, meteor.color.replace('1)', '0.24)'))
 			gradient.addColorStop(1, meteor.color)
 			context.strokeStyle = gradient
 			context.beginPath()
@@ -296,8 +367,8 @@ async function launchLyridsShower() {
 		overlay.style.inset = '0'
 		overlay.style.pointerEvents = 'none'
 		overlay.style.zIndex = '0'
-		overlay.style.opacity = LYRIDS_OVERLAY_OPACITY
-		overlay.style.filter = LYRIDS_OVERLAY_FILTER
+		overlay.style.opacity = GEMINIDS_OVERLAY_OPACITY
+		overlay.style.filter = GEMINIDS_OVERLAY_FILTER
 		overlay.appendChild(canvas)
 
 		const mount = () => {
@@ -311,7 +382,7 @@ async function launchLyridsShower() {
 			}
 		}
 
-		timeoutId = window.setTimeout(mount, LYRIDS_MOUNT_DELAY_MS)
+		timeoutId = window.setTimeout(mount, GEMINIDS_MOUNT_DELAY_MS)
 
 		const handleResize = () => {
 			resizeCanvas()
@@ -334,7 +405,7 @@ async function launchLyridsShower() {
 			}
 		}
 	} catch (error) {
-		console.error('Failed to launch Lyrids meteor shower', error)
+		console.error('Failed to launch Geminids meteor shower', error)
 		return () => {}
 	}
 }

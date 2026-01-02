@@ -1,5 +1,6 @@
 import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
 
 const HANUKKAH_START_DATES = new Set([
 	'2026-12-04',
@@ -55,10 +56,78 @@ const HANUKKAH_CANDLE_COLORS = [
 	{ core: 'rgba(251, 191, 36, 0.82)', mid: 'rgba(251, 191, 36, 0.4)' },
 ]
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Hanukkah is a Jewish festival of lights, observed over eight nights.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Each evening, another candle is added to the menorah, gradually building
+				the display of light.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The festival commemorates the rededication of the Second Temple in
+				Jerusalem.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				According to tradition, a small supply of oil, meant for one day, lasted
+				eight.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Traditions</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Families gather to light the menorah, sing songs, and play games such as
+				dreidel.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Foods fried in oil, including latkes and sufganiyot, reflect the central
+				symbol of the story.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				With each night, a new flame appears, forming a quiet ladder of light
+				against the dark.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Music, laughter, and shared meals give the celebration its warm and
+				playful spirit.
+			</Trans>
+		</p>
+	</>
+)
+
 export const hanukkahEvent: SeasonalEvent = {
 	id: 'hanukkah',
 	isActive: isHanukkah,
 	run: launchHanukkahGlow,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#e0f2fe', '#60a5fa', '#fbbf24', '#fde68a', '#e0f2fe'],
 	},

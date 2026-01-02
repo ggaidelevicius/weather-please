@@ -1,5 +1,6 @@
 import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
 
 const DIWALI_DATES = new Set([
 	'2026-11-08',
@@ -51,10 +52,79 @@ const DIWALI_GLOW_COLORS = [
 	'rgba(248, 250, 252, 0.25)',
 ]
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Diwali is the festival of lights, celebrating renewal, hope, and the
+				enduring triumph of light over darkness.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is observed by millions across India and by communities around the
+				world.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				For many Hindus, the festival marks the return of Rama, Sita, Lakshmana,
+				and Hanuman to Ayodhya after their long exile.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Other traditions honour Lakshmi, the goddess of prosperity and fortune,
+				while Jain and Sikh communities observe Diwali through their own sacred
+				histories.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Symbols and rituals</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Diyas and candles glow along doorways and windows, while rangoli
+				patterns bloom across thresholds in colour and light.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Families exchange sweets and gifts, clean and decorate their homes, and
+				offer prayers for health, prosperity, and a bright year ahead.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				At night, lights trace warm constellations across homes and streets,
+				turning whole cities into living lanterns.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				The air hums with music, laughter, and the quiet shimmer of celebration.
+			</Trans>
+		</p>
+	</>
+)
+
 export const diwaliEvent: SeasonalEvent = {
 	id: 'diwali',
 	isActive: isDiwali,
 	run: launchDiwaliLights,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#fde68a', '#f59e0b', '#fb7185', '#f97316', '#fde68a'],
 	},
