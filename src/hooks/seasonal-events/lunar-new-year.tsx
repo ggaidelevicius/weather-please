@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const LUNAR_NEW_YEAR_DATES = new Set([
 	'2026-02-17',
@@ -53,10 +54,79 @@ const LUNAR_GLOW_COLORS = [
 	'rgba(253, 186, 116, 0.4)',
 ]
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Lunar New Year begins with the first new moon of the lunar calendar and
+				unfolds across a festival season lasting up to fifteen days.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is marked by family reunions, travel, and the renewal of long-held
+				bonds.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Legends and customs</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Traditional stories of the monster Nian are said to have inspired the
+				use of loud sounds, firecrackers, and the colour red as symbols of
+				protection and good fortune.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Homes are carefully cleaned and decorated to clear away old luck and
+				welcome prosperity for the year ahead.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Symbols of luck</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Red envelopes, tangerines, and calligraphy couplets express wishes for
+				abundance, happiness, and fresh beginnings.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				The zodiac animal associated with the year is believed to shape its
+				character and fortunes.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Lanterns and parades transform the night into a flowing river of light.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				The season traditionally concludes with the Lantern Festival, when
+				wishes are carried upward on glowing lanterns.
+			</Trans>
+		</p>
+	</>
+)
+
 export const lunarNewYearEvent: SeasonalEvent = {
 	id: 'lunar-new-year',
 	isActive: isLunarNewYear,
 	run: launchLunarNewYear,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#f5e3c1', '#e6b26a', '#c9854a', '#8f5a3a', '#f5e3c1'],
 	},
@@ -215,13 +285,13 @@ async function launchLunarNewYear() {
 		}
 		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, LUNAR_FIELD_MAX_DPR)
 			const nextWidth = window.innerWidth
 			const nextHeight = window.innerHeight
 			const prevWidth = width
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
+			const dpr = getCanvasDpr({ width, height, maxDpr: LUNAR_FIELD_MAX_DPR })
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { getActiveSeasonalEvent, runSeasonalEvent } from './seasonal-events'
+import { isLikelySoftwareRenderer } from './seasonal-events/utils'
 import type { Hemisphere, SeasonalEventId } from './seasonal-events'
 
 type UseSeasonalEventsOptions = {
@@ -28,6 +29,9 @@ export const useSeasonalEvents = ({
 			: null
 
 	useEffect(() => {
+		if (isLikelySoftwareRenderer()) {
+			return
+		}
 		if (!activeEvent) return
 		if (triggeredEvents.current.has(activeEvent)) return
 

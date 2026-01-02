@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
 
 const TOTAL_SOLAR_ECLIPSE_DATES = new Set([
@@ -19,10 +20,79 @@ const TOTAL_SOLAR_ECLIPSE_DATES = new Set([
 ])
 const ECLIPSE_MOUNT_DELAY_MS = 900
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				A total solar eclipse occurs when the Moon moves directly in front of
+				the Sun, briefly transforming daylight into twilight.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				The phase of totality is short and can only be seen from a narrow path
+				across the Earth’s surface.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Solar eclipses have been recorded for thousands of years, inspiring awe,
+				uncertainty, and careful study.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Today, many people travel great distances to stand within the path of
+				totality.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>What it feels like</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Light shifts to a silvery tone, shadows sharpen, and temperatures may
+				drop noticeably within minutes.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Animals can grow quiet, while the horizon glows like a complete circle
+				of sunset.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder and safety</Trans>
+		</h2>
+		<p>
+			<Trans>
+				During totality, the Sun’s corona becomes visible as a delicate silver
+				crown, and a few bright stars may appear.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				For safe viewing, certified eclipse glasses must be used during all
+				phases except the brief moment of totality.
+			</Trans>
+		</p>
+	</>
+)
+
 export const totalSolarEclipseEvent: SeasonalEvent = {
 	id: 'total-solar-eclipse',
 	isActive: isTotalSolarEclipse,
 	run: launchTotalSolarEclipse,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#0f172a', '#334155', '#fbbf24', '#fde68a', '#0f172a'],
 	},

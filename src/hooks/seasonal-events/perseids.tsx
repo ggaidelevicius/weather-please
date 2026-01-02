@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { createAdaptiveDprController, randomInRange } from './utils'
 
 const PERSEIDS_PEAK_DATES = new Set([
 	'2026-08-13',
@@ -66,10 +67,81 @@ const PERSEIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
 const PERSEIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
 const PERSEIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Perseids are a bright annual meteor shower formed from debris left
+				by Comet Swift–Tuttle.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Their radiant lies in the constellation Perseus, and the shower is
+				especially prominent in the northern hemisphere, though visible
+				worldwide.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Perseids are sometimes known as the Tears of Saint Lawrence, as
+				their peak often falls near the feast day of Saint Lawrence in
+				mid-August.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Historical records of the Perseids extend back nearly two thousand
+				years, making them one of the longest observed meteor showers.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Skywatching tips</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Allow your eyes about twenty minutes to adjust, turn away from city
+				lights, and let the wide sky do the work.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				A comfortable chair or blanket is more useful than a telescope, as
+				meteors can appear anywhere overhead.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Fast and bright, the Perseids often produce spectacular fireballs that
+				leave glowing trails behind them.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Under a dark sky, it can feel as though the universe itself is writing
+				with light.
+			</Trans>
+		</p>
+	</>
+)
+
 export const perseidsEvent: SeasonalEvent = {
 	id: 'perseids',
 	isActive: isPerseidsPeak,
 	run: launchPerseidsShower,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#e0f2fe', '#7dd3fc', '#60a5fa', '#a78bfa', '#e0f2fe'],
 	},
@@ -130,6 +202,10 @@ async function launchPerseidsShower() {
 		let stars: Star[] = []
 		let lastTime = performance.now()
 
+		const dprController = createAdaptiveDprController({
+			maxDpr: PERSEIDS_MAX_DPR,
+			minScale: 0.4,
+		})
 		const randomMeteorColor = () =>
 			PERSEIDS_METEOR_COLORS[
 				Math.floor(Math.random() * PERSEIDS_METEOR_COLORS.length)
@@ -175,15 +251,34 @@ async function launchPerseidsShower() {
 		}
 
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, PERSEIDS_MAX_DPR)
-			width = window.innerWidth
-			height = window.innerHeight
+			const nextWidth = window.innerWidth
+			const nextHeight = window.innerHeight
+			const prevWidth = width
+			const prevHeight = height
+			width = nextWidth
+			height = nextHeight
+			const dpr = dprController.getDpr({ width, height })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
 			canvas.style.height = `${height}px`
 			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-			resetField(performance.now())
+			if (meteors.length === 0 && stars.length === 0) {
+				resetField(performance.now())
+				return
+			}
+			const scaleX = prevWidth > 0 ? width / prevWidth : 1
+			const scaleY = prevHeight > 0 ? height / prevHeight : 1
+			if (scaleX !== 1 || scaleY !== 1) {
+				for (const star of stars) {
+					star.x *= scaleX
+					star.y *= scaleY
+				}
+				for (const meteor of meteors) {
+					meteor.x *= scaleX
+					meteor.y *= scaleY
+				}
+			}
 		}
 
 		const getStarFade = (star: Star, time: number) => {
@@ -241,6 +336,9 @@ async function launchPerseidsShower() {
 		}
 
 		const tick = (time: number) => {
+			if (dprController.reportFrame(time)) {
+				resizeCanvas()
+			}
 			const delta = Math.min(time - lastTime, 48)
 			lastTime = time
 			context.clearRect(0, 0, width, height)

@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { createAdaptiveDprController, randomInRange } from './utils'
 
 const LYRIDS_PEAK_DATES = new Set([
 	'2026-04-22',
@@ -67,10 +68,62 @@ const LYRIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
 const LYRIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
 const LYRIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Lyrids appear each year in late April, with meteors radiating from
+				the constellation Lyra.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				They are typically a gentle shower that rewards patient skywatching.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Historical Chinese records describe displays of Lyrid meteors more than
+				two thousand six hundred years ago.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				The shower originates from Comet Thatcher, which returns to the inner
+				solar system roughly every four hundred and fifteen years.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Most years the Lyrids unfold quietly, though they sometimes surprise
+				observers with bright fireballs.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is a shower with a long memory, linking modern stargazers with
+				watchers of ancient skies.
+			</Trans>
+		</p>
+	</>
+)
+
 export const lyridsEvent: SeasonalEvent = {
 	id: 'lyrids',
 	isActive: isLyridsPeak,
 	run: launchLyridsShower,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#e2e8f0', '#fcd34d', '#93c5fd', '#60a5fa', '#e2e8f0'],
 	},
@@ -131,6 +184,10 @@ async function launchLyridsShower() {
 		let stars: Star[] = []
 		let lastTime = performance.now()
 
+		const dprController = createAdaptiveDprController({
+			maxDpr: LYRIDS_MAX_DPR,
+			minScale: 0.4,
+		})
 		const randomMeteorColor = () =>
 			LYRIDS_METEOR_COLORS[
 				Math.floor(Math.random() * LYRIDS_METEOR_COLORS.length)
@@ -174,15 +231,34 @@ async function launchLyridsShower() {
 		}
 
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, LYRIDS_MAX_DPR)
-			width = window.innerWidth
-			height = window.innerHeight
+			const nextWidth = window.innerWidth
+			const nextHeight = window.innerHeight
+			const prevWidth = width
+			const prevHeight = height
+			width = nextWidth
+			height = nextHeight
+			const dpr = dprController.getDpr({ width, height })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
 			canvas.style.height = `${height}px`
 			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-			resetField(performance.now())
+			if (meteors.length === 0 && stars.length === 0) {
+				resetField(performance.now())
+				return
+			}
+			const scaleX = prevWidth > 0 ? width / prevWidth : 1
+			const scaleY = prevHeight > 0 ? height / prevHeight : 1
+			if (scaleX !== 1 || scaleY !== 1) {
+				for (const star of stars) {
+					star.x *= scaleX
+					star.y *= scaleY
+				}
+				for (const meteor of meteors) {
+					meteor.x *= scaleX
+					meteor.y *= scaleY
+				}
+			}
 		}
 
 		const getStarFade = (star: Star, time: number) => {
@@ -240,6 +316,9 @@ async function launchLyridsShower() {
 		}
 
 		const tick = (time: number) => {
+			if (dprController.reportFrame(time)) {
+				resizeCanvas()
+			}
 			const delta = Math.min(time - lastTime, 48)
 			lastTime = time
 			context.clearRect(0, 0, width, height)

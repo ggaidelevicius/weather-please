@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { createAdaptiveDprController, randomInRange } from './utils'
 
 const ORIONIDS_PEAK_DATES = new Set([
 	'2026-10-21',
@@ -67,10 +68,63 @@ const ORIONIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
 const ORIONIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
 const ORIONIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Orionids are an annual meteor shower formed from debris left by
+				Halley’s Comet, reaching their peak in October.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Their meteors appear to radiate from the region near the constellation
+				Orion, a figure long woven into myth and storytelling.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Orionids are visible from both hemispheres and are known for
+				producing bright, fast-moving meteors.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Their peak often coincides with long, dark viewing hours, when observing
+				conditions are especially favourable.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				As Orion rises before dawn, it can feel like a spotlight for the meteors
+				that follow.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				The shower frequently delivers swift, luminous streaks that carve clean
+				lines across the night.
+			</Trans>
+		</p>
+	</>
+)
+
 export const orionidsEvent: SeasonalEvent = {
 	id: 'orionids',
 	isActive: isOrionidsPeak,
 	run: launchOrionidsShower,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#fed7aa', '#fdba74', '#fb923c', '#94a3b8', '#fed7aa'],
 	},
@@ -131,6 +185,10 @@ async function launchOrionidsShower() {
 		let stars: Star[] = []
 		let lastTime = performance.now()
 
+		const dprController = createAdaptiveDprController({
+			maxDpr: ORIONIDS_MAX_DPR,
+			minScale: 0.4,
+		})
 		const randomMeteorColor = () =>
 			ORIONIDS_METEOR_COLORS[
 				Math.floor(Math.random() * ORIONIDS_METEOR_COLORS.length)
@@ -176,15 +234,34 @@ async function launchOrionidsShower() {
 		}
 
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, ORIONIDS_MAX_DPR)
-			width = window.innerWidth
-			height = window.innerHeight
+			const nextWidth = window.innerWidth
+			const nextHeight = window.innerHeight
+			const prevWidth = width
+			const prevHeight = height
+			width = nextWidth
+			height = nextHeight
+			const dpr = dprController.getDpr({ width, height })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
 			canvas.style.height = `${height}px`
 			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-			resetField(performance.now())
+			if (meteors.length === 0 && stars.length === 0) {
+				resetField(performance.now())
+				return
+			}
+			const scaleX = prevWidth > 0 ? width / prevWidth : 1
+			const scaleY = prevHeight > 0 ? height / prevHeight : 1
+			if (scaleX !== 1 || scaleY !== 1) {
+				for (const star of stars) {
+					star.x *= scaleX
+					star.y *= scaleY
+				}
+				for (const meteor of meteors) {
+					meteor.x *= scaleX
+					meteor.y *= scaleY
+				}
+			}
 		}
 
 		const getStarFade = (star: Star, time: number) => {
@@ -242,6 +319,9 @@ async function launchOrionidsShower() {
 		}
 
 		const tick = (time: number) => {
+			if (dprController.reportFrame(time)) {
+				resizeCanvas()
+			}
 			const delta = Math.min(time - lastTime, 48)
 			lastTime = time
 			context.clearRect(0, 0, width, height)

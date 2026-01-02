@@ -1,7 +1,28 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
-const SPRING_EQUINOX_DATES_NORTHERN = new Set([
+const AUTUMN_EQUINOX_DATES_NORTHERN = new Set([
+	'2026-09-23',
+	'2027-09-23',
+	'2028-09-22',
+	'2029-09-23',
+	'2030-09-23',
+	'2031-09-23',
+	'2032-09-22',
+	'2033-09-23',
+	'2034-09-23',
+	'2035-09-23',
+	'2036-09-22',
+	'2037-09-22',
+	'2038-09-23',
+	'2039-09-23',
+	'2040-09-22',
+	'2041-09-22',
+	'2042-09-22',
+	'2043-09-23',
+])
+const AUTUMN_EQUINOX_DATES_SOUTHERN = new Set([
 	'2026-03-20',
 	'2027-03-20',
 	'2028-03-20',
@@ -21,79 +42,116 @@ const SPRING_EQUINOX_DATES_NORTHERN = new Set([
 	'2042-03-20',
 	'2043-03-20',
 ])
-const SPRING_EQUINOX_DATES_SOUTHERN = new Set([
-	'2026-09-22',
-	'2027-09-22',
-	'2028-09-22',
-	'2029-09-22',
-	'2030-09-22',
-	'2031-09-22',
-	'2032-09-22',
-	'2033-09-22',
-	'2034-09-22',
-	'2035-09-22',
-	'2036-09-22',
-	'2037-09-22',
-	'2038-09-22',
-	'2039-09-22',
-	'2040-09-22',
-	'2041-09-22',
-	'2042-09-22',
-	'2043-09-22',
-])
-const SPRING_MOUNT_DELAY_MS = 900
-const SPRING_FIELD_OPACITY = '0.7'
-const SPRING_FIELD_FILTER = 'saturate(135%)'
-const SPRING_FIELD_MAX_DPR = 2
-const SPRING_FIELD_MARGIN = 160
-const SPRING_PARTICLE_COUNT = 70
-const SPRING_FADE_IN_DELAY_RANGE = { min: 0, max: 2400 }
-const SPRING_FADE_IN_DURATION_RANGE = { min: 1000, max: 1900 }
-const SPRING_SCALE_RANGE = { min: 0.5, max: 0.9 }
-const SPRING_SIZE_RANGE = { min: 16, max: 30 }
-const SPRING_VELOCITY_X_RANGE = { min: -8, max: 8 }
-const SPRING_VELOCITY_Y_RANGE = { min: -10, max: -3 }
-const SPRING_FLOAT_VELOCITY_Y_RANGE = { min: -1.5, max: 1.5 }
-const SPRING_FLOAT_CHANCE = 0.4
-const SPRING_SWAY_RANGE = { min: 2.5, max: 8 }
-const SPRING_ROTATION_SPEED_RANGE = { min: -0.35, max: 0.35 }
-const SPRING_SWAY_SPEED_X = 0.00055
-const SPRING_SWAY_SPEED_Y = 0.00045
-const SPRING_GLOW_RANGE = { min: 6, max: 16 }
-const SPRING_EMOJIS = ['🌱', '🌿', '🍃', '🌷', '🌸']
-const SPRING_FONT =
+const AUTUMN_MOUNT_DELAY_MS = 900
+const AUTUMN_FIELD_OPACITY = '0.65'
+const AUTUMN_FIELD_FILTER = 'saturate(120%)'
+const AUTUMN_FIELD_MAX_DPR = 2
+const AUTUMN_FIELD_MARGIN = 160
+const AUTUMN_PARTICLE_COUNT = 62
+const AUTUMN_FADE_IN_DELAY_RANGE = { min: 0, max: 2400 }
+const AUTUMN_FADE_IN_DURATION_RANGE = { min: 1100, max: 2000 }
+const AUTUMN_SCALE_RANGE = { min: 0.55, max: 0.95 }
+const AUTUMN_SIZE_RANGE = { min: 18, max: 34 }
+const AUTUMN_VELOCITY_X_RANGE = { min: -12, max: 12 }
+const AUTUMN_VELOCITY_Y_RANGE = { min: 9, max: 20 }
+const AUTUMN_SWAY_RANGE = { min: 3, max: 10 }
+const AUTUMN_ROTATION_SPEED_RANGE = { min: -0.45, max: 0.45 }
+const AUTUMN_SWAY_SPEED_X = 0.00055
+const AUTUMN_SWAY_SPEED_Y = 0.00045
+const AUTUMN_GLOW_RANGE = { min: 10, max: 20 }
+const AUTUMN_EMOJIS = ['🍁', '🍂']
+const AUTUMN_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
-const SPRING_SPAWN_Y_RANGE = { min: 0.45, max: 0.9 }
-const SPRING_HAZE_OPACITY = '0.5'
-const SPRING_HAZE_GRADIENT =
-	'radial-gradient(120% 90% at 50% 100%, rgba(187, 247, 208, 0.45), rgba(52, 211, 153, 0.2) 40%, rgba(15, 23, 42, 0) 75%), radial-gradient(90% 80% at 20% 90%, rgba(251, 207, 232, 0.35), rgba(15, 23, 42, 0) 70%)'
-const SPRING_GLOW_COLORS = [
-	'rgba(167, 243, 208, 0.45)',
-	'rgba(244, 114, 182, 0.4)',
-	'rgba(147, 197, 253, 0.35)',
+const AUTUMN_SPAWN_Y_MAX_RATIO = 0.7
+const AUTUMN_HAZE_OPACITY = '0.5'
+const AUTUMN_HAZE_GRADIENT =
+	'radial-gradient(120% 85% at 18% 0%, rgba(251, 191, 36, 0.38), rgba(251, 146, 60, 0.18) 45%, rgba(15, 23, 42, 0) 75%), radial-gradient(80% 70% at 78% 20%, rgba(249, 115, 22, 0.28), rgba(15, 23, 42, 0) 70%)'
+const AUTUMN_GLOW_COLORS = [
+	'rgba(251, 191, 36, 0.5)',
+	'rgba(248, 113, 113, 0.45)',
+	'rgba(245, 158, 11, 0.42)',
+	'rgba(248, 250, 252, 0.25)',
 ]
 
-export const springEquinoxEvent: SeasonalEvent = {
-	id: 'spring-equinox',
-	isActive: isSpringEquinox,
-	run: launchSpringEquinoxGrowth,
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The autumn equinox marks a moment of near-perfect balance, when day and
+				night stand equal before the long shift toward darker evenings.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Across many ancient cultures, this point in the year was closely tied to
+				harvest celebrations, gratitude, and preparation for winter.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It has often been observed alongside lunar cycles, communal feasts, and
+				rituals honouring both abundance and change.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>A time of turning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				In many traditions, the equinox is not only about what has been
+				gathered, but about what lies ahead — a pause to take stock before the
+				quieter months arrive.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The light softens and turns golden, the air grows gentler, and the year
+				seems to pause — just for a breath.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It’s a season for noticing the small transitions: seedpods splitting,
+				leaves turning, and birds tracing long paths across the sky.
+			</Trans>
+		</p>
+	</>
+)
+
+export const autumnEquinoxEvent: SeasonalEvent = {
+	id: 'autumn-equinox',
+	isActive: isAutumnEquinox,
+	run: launchAutumnEquinoxLeaves,
+	details: EventDetails,
 	tileAccent: {
-		colors: ['#f7c9df', '#f3a6c8', '#b7e4c7', '#95d5b2', '#f7c9df'],
+		colors: ['#fed7aa', '#f97316', '#fb7185', '#facc15', '#fed7aa'],
 	},
 }
 
-function isSpringEquinox({ date, hemisphere }: SeasonalEventContext) {
+function isAutumnEquinox({ date, hemisphere }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
 	const equinoxDates =
 		hemisphere === 'southern'
-			? SPRING_EQUINOX_DATES_SOUTHERN
-			: SPRING_EQUINOX_DATES_NORTHERN
+			? AUTUMN_EQUINOX_DATES_SOUTHERN
+			: AUTUMN_EQUINOX_DATES_NORTHERN
 	return equinoxDates.has(`${year}-${month}-${day}`)
 }
 
-async function launchSpringEquinoxGrowth() {
+async function launchAutumnEquinoxLeaves() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}
@@ -107,10 +165,10 @@ async function launchSpringEquinoxGrowth() {
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
-			throw new Error('Unable to create 2D context for spring equinox canvas')
+			throw new Error('Unable to create 2D context for autumn equinox canvas')
 		}
 
-		type SproutParticle = {
+		type LeafParticle = {
 			x: number
 			y: number
 			vx: number
@@ -138,49 +196,42 @@ async function launchSpringEquinoxGrowth() {
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
-		let particles: SproutParticle[] = []
+		let particles: LeafParticle[] = []
 		let lastTime = performance.now()
 		const spriteCache = new Map<string, EmojiSprite>()
 		const spriteDpr = Math.min(
 			window.devicePixelRatio || 1,
-			SPRING_FIELD_MAX_DPR,
+			AUTUMN_FIELD_MAX_DPR,
 		)
 
 		const randomEmoji = () =>
-			SPRING_EMOJIS[Math.floor(Math.random() * SPRING_EMOJIS.length)]
+			AUTUMN_EMOJIS[Math.floor(Math.random() * AUTUMN_EMOJIS.length)]
 		const randomGlow = () =>
-			SPRING_GLOW_COLORS[Math.floor(Math.random() * SPRING_GLOW_COLORS.length)]
-		const createParticle = (time: number): SproutParticle => {
-			const vyRange =
-				Math.random() < SPRING_FLOAT_CHANCE
-					? SPRING_FLOAT_VELOCITY_Y_RANGE
-					: SPRING_VELOCITY_Y_RANGE
-
-			return {
-				x: randomInRange({
-					min: -SPRING_FIELD_MARGIN,
-					max: width + SPRING_FIELD_MARGIN,
-				}),
-				y: randomInRange({
-					min: height * SPRING_SPAWN_Y_RANGE.min,
-					max: height * SPRING_SPAWN_Y_RANGE.max,
-				}),
-				vx: randomInRange(SPRING_VELOCITY_X_RANGE),
-				vy: randomInRange(vyRange),
-				size: randomInRange(SPRING_SIZE_RANGE),
-				rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-				rotationSpeed: randomInRange(SPRING_ROTATION_SPEED_RANGE),
-				opacity: randomInRange({ min: 0.45, max: 0.85 }),
-				emoji: randomEmoji(),
-				glow: randomInRange(SPRING_GLOW_RANGE),
-				glowColor: randomGlow(),
-				phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-				sway: randomInRange(SPRING_SWAY_RANGE),
-				birthTime: time + randomInRange(SPRING_FADE_IN_DELAY_RANGE),
-				fadeDuration: randomInRange(SPRING_FADE_IN_DURATION_RANGE),
-				scaleFrom: randomInRange(SPRING_SCALE_RANGE),
-			}
-		}
+			AUTUMN_GLOW_COLORS[Math.floor(Math.random() * AUTUMN_GLOW_COLORS.length)]
+		const createParticle = (time: number): LeafParticle => ({
+			x: randomInRange({
+				min: -AUTUMN_FIELD_MARGIN,
+				max: width + AUTUMN_FIELD_MARGIN,
+			}),
+			y: randomInRange({
+				min: -AUTUMN_FIELD_MARGIN,
+				max: height * AUTUMN_SPAWN_Y_MAX_RATIO,
+			}),
+			vx: randomInRange(AUTUMN_VELOCITY_X_RANGE),
+			vy: randomInRange(AUTUMN_VELOCITY_Y_RANGE),
+			size: randomInRange(AUTUMN_SIZE_RANGE),
+			rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
+			rotationSpeed: randomInRange(AUTUMN_ROTATION_SPEED_RANGE),
+			opacity: randomInRange({ min: 0.45, max: 0.8 }),
+			emoji: randomEmoji(),
+			glow: randomInRange(AUTUMN_GLOW_RANGE),
+			glowColor: randomGlow(),
+			phase: randomInRange({ min: 0, max: Math.PI * 2 }),
+			sway: randomInRange(AUTUMN_SWAY_RANGE),
+			birthTime: time + randomInRange(AUTUMN_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(AUTUMN_FADE_IN_DURATION_RANGE),
+			scaleFrom: randomInRange(AUTUMN_SCALE_RANGE),
+		})
 		const getSpriteKey = (
 			emoji: string,
 			size: number,
@@ -218,7 +269,7 @@ async function launchSpringEquinoxGrowth() {
 
 			spriteContext.setTransform(spriteDpr, 0, 0, spriteDpr, 0, 0)
 			spriteContext.clearRect(0, 0, displaySize, displaySize)
-			spriteContext.font = `${quantizedSize}px ${SPRING_FONT}`
+			spriteContext.font = `${quantizedSize}px ${AUTUMN_FONT}`
 			spriteContext.textAlign = 'center'
 			spriteContext.textBaseline = 'middle'
 			spriteContext.shadowColor = glowColor
@@ -230,22 +281,22 @@ async function launchSpringEquinoxGrowth() {
 			return sprite
 		}
 		const resetParticles = (time: number) => {
-			particles = Array.from({ length: SPRING_PARTICLE_COUNT }, () =>
+			particles = Array.from({ length: AUTUMN_PARTICLE_COUNT }, () =>
 				createParticle(time),
 			)
 		}
-		const respawnParticle = (particle: SproutParticle, time: number) => {
+		const respawnParticle = (particle: LeafParticle, time: number) => {
 			Object.assign(particle, createParticle(time))
 		}
 		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, SPRING_FIELD_MAX_DPR)
 			const nextWidth = window.innerWidth
 			const nextHeight = window.innerHeight
 			const prevWidth = width
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
+			const dpr = getCanvasDpr({ width, height, maxDpr: AUTUMN_FIELD_MAX_DPR })
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
@@ -266,10 +317,9 @@ async function launchSpringEquinoxGrowth() {
 				particle.y = (particle.y - prevHeight / 2) * scaleY + height / 2
 
 				if (
-					particle.x < -SPRING_FIELD_MARGIN ||
-					particle.x > width + SPRING_FIELD_MARGIN ||
-					particle.y < -SPRING_FIELD_MARGIN ||
-					particle.y > height + SPRING_FIELD_MARGIN
+					particle.x < -AUTUMN_FIELD_MARGIN ||
+					particle.x > width + AUTUMN_FIELD_MARGIN ||
+					particle.y > height + AUTUMN_FIELD_MARGIN
 				) {
 					respawnParticle(particle, now)
 				}
@@ -280,7 +330,7 @@ async function launchSpringEquinoxGrowth() {
 				particle.birthTime = time - particle.fadeDuration
 			}
 		}
-		const drawParticle = (particle: SproutParticle, time: number) => {
+		const drawParticle = (particle: LeafParticle, time: number) => {
 			const lifeProgress = (time - particle.birthTime) / particle.fadeDuration
 			if (lifeProgress < 0) {
 				return
@@ -288,7 +338,7 @@ async function launchSpringEquinoxGrowth() {
 
 			const eased = easeOutCubic(Math.min(1, lifeProgress))
 			const pulse =
-				0.88 + Math.sin(time * 0.0012 + particle.phase) * particle.sway * 0.03
+				0.85 + Math.sin(time * 0.001 + particle.phase) * particle.sway * 0.03
 			const scale = particle.scaleFrom + (1 - particle.scaleFrom) * eased
 
 			context.save()
@@ -296,6 +346,9 @@ async function launchSpringEquinoxGrowth() {
 			context.rotate(particle.rotation)
 			context.scale(scale, scale)
 			context.globalAlpha = particle.opacity * eased * pulse
+			context.font = `${particle.size}px ${AUTUMN_FONT}`
+			context.textAlign = 'center'
+			context.textBaseline = 'middle'
 			const sprite = getEmojiSprite(
 				particle.emoji,
 				particle.size,
@@ -313,7 +366,7 @@ async function launchSpringEquinoxGrowth() {
 			context.restore()
 		}
 		const updateParticle = (
-			particle: SproutParticle,
+			particle: LeafParticle,
 			delta: number,
 			time: number,
 		) => {
@@ -322,9 +375,9 @@ async function launchSpringEquinoxGrowth() {
 			}
 
 			const sway =
-				Math.sin(time * SPRING_SWAY_SPEED_X + particle.phase) * particle.sway
+				Math.sin(time * AUTUMN_SWAY_SPEED_X + particle.phase) * particle.sway
 			const lift =
-				Math.cos(time * SPRING_SWAY_SPEED_Y + particle.phase) *
+				Math.cos(time * AUTUMN_SWAY_SPEED_Y + particle.phase) *
 				particle.sway *
 				0.35
 
@@ -333,10 +386,9 @@ async function launchSpringEquinoxGrowth() {
 			particle.rotation += particle.rotationSpeed * delta
 
 			if (
-				particle.x < -SPRING_FIELD_MARGIN ||
-				particle.x > width + SPRING_FIELD_MARGIN ||
-				particle.y < -SPRING_FIELD_MARGIN ||
-				particle.y > height + SPRING_FIELD_MARGIN
+				particle.x < -AUTUMN_FIELD_MARGIN ||
+				particle.x > width + AUTUMN_FIELD_MARGIN ||
+				particle.y > height + AUTUMN_FIELD_MARGIN
 			) {
 				respawnParticle(particle, time)
 			}
@@ -361,18 +413,18 @@ async function launchSpringEquinoxGrowth() {
 				drawParticle(particle, performance.now())
 			}
 		}
-		const mountGrowth = () => {
+		const mountLeaves = () => {
 			if (hasCanceled) return
 
-			style.setAttribute('data-spring-equinox', 'haze')
+			style.setAttribute('data-autumn-equinox', 'haze')
 			style.textContent = `
-@keyframes spring-equinox-haze-reveal {
-	0% { opacity: 0; transform: translate3d(0, 2%, 0) scale(1.02); }
-	100% { opacity: ${SPRING_HAZE_OPACITY}; transform: translate3d(0, 0, 0) scale(1); }
+@keyframes autumn-equinox-haze-reveal {
+	0% { opacity: 0; transform: translate3d(-2%, -2%, 0) scale(1.02); }
+	100% { opacity: ${AUTUMN_HAZE_OPACITY}; transform: translate3d(0, 0, 0) scale(1); }
 }
-@keyframes spring-equinox-haze-drift {
+@keyframes autumn-equinox-haze-drift {
 	0% { transform: translate3d(0, 0, 0) scale(1); }
-	50% { transform: translate3d(-1.5%, -1%, 0) scale(1.02); }
+	50% { transform: translate3d(1.5%, -1%, 0) scale(1.02); }
 	100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 `
@@ -385,15 +437,15 @@ async function launchSpringEquinoxGrowth() {
 			overlay.style.mixBlendMode = 'screen'
 
 			haze.style.position = 'absolute'
-			haze.style.inset = '35% -10% -30% -10%'
-			haze.style.background = SPRING_HAZE_GRADIENT
-			haze.style.opacity = shouldAnimate ? '0' : SPRING_HAZE_OPACITY
-			haze.style.filter = 'blur(24px)'
+			haze.style.inset = '-20% -10% 0 -10%'
+			haze.style.background = AUTUMN_HAZE_GRADIENT
+			haze.style.opacity = shouldAnimate ? '0' : AUTUMN_HAZE_OPACITY
+			haze.style.filter = 'blur(26px)'
 			haze.style.willChange = 'opacity, transform'
 
 			if (shouldAnimate) {
 				haze.style.animation =
-					'spring-equinox-haze-reveal 4s ease-out 0.8s forwards, spring-equinox-haze-drift 20s ease-in-out infinite 4s'
+					'autumn-equinox-haze-reveal 4.2s ease-out 0.8s forwards, autumn-equinox-haze-drift 20s ease-in-out infinite 4.2s'
 			}
 
 			overlay.appendChild(haze)
@@ -405,8 +457,8 @@ async function launchSpringEquinoxGrowth() {
 			canvas.style.inset = '0'
 			canvas.style.pointerEvents = 'none'
 			canvas.style.zIndex = '1'
-			canvas.style.opacity = SPRING_FIELD_OPACITY
-			canvas.style.filter = SPRING_FIELD_FILTER
+			canvas.style.opacity = AUTUMN_FIELD_OPACITY
+			canvas.style.filter = AUTUMN_FIELD_FILTER
 			canvas.style.mixBlendMode = 'screen'
 
 			document.body.appendChild(canvas)
@@ -421,7 +473,7 @@ async function launchSpringEquinoxGrowth() {
 			}
 		}
 
-		timeoutId = window.setTimeout(mountGrowth, SPRING_MOUNT_DELAY_MS)
+		timeoutId = window.setTimeout(mountLeaves, AUTUMN_MOUNT_DELAY_MS)
 
 		return () => {
 			hasCanceled = true
@@ -443,7 +495,7 @@ async function launchSpringEquinoxGrowth() {
 			}
 		}
 	} catch (error) {
-		console.error('Failed to launch spring equinox growth', error)
+		console.error('Failed to launch autumn equinox leaves', error)
 		return () => {}
 	}
 }

@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const DAY_OF_THE_DEAD_MONTH = 10
 const DAY_OF_THE_DEAD_DAYS = new Set([1, 2])
@@ -30,10 +31,80 @@ const DAY_OF_THE_DEAD_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
 const DAY_OF_THE_DEAD_HALO_OPACITY = '0.5'
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Day of the Dead is a celebration of life, memory, and the enduring bond
+				between the living and those who have passed.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Rather than a solemn farewell, it treats remembrance as something
+				vibrant, communal, and alive.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The tradition grows from Indigenous Mexican beliefs about death and the
+				afterlife, later blending with Catholic observances of All Saints’ and
+				All Souls’ Days.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is observed across November 1 and 2, with the first day often
+				honouring children and the second devoted to adults.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Symbols and offerings</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Marigolds, papel picado, sugar skulls, candles, and favourite foods form
+				a visual language of welcome and connection.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Ofrendas commonly include water, salt, and cherished photographs,
+				creating a space where memory feels both intimate and shared.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Cemeteries and homes glow with candlelight, colour, music, and laughter,
+				holding grief and gratitude in the same breath.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				In this tradition, memory becomes a bridge between worlds, not a wall
+				between them.
+			</Trans>
+		</p>
+	</>
+)
+
 export const dayOfTheDeadEvent: SeasonalEvent = {
 	id: 'day-of-the-dead',
 	isActive: isDayOfTheDead,
 	run: launchDayOfTheDead,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#fef3c7', '#fdba74', '#fb7185', '#f59e0b', '#fef3c7'],
 	},
@@ -195,12 +266,13 @@ async function launchDayOfTheDead() {
 			}
 		}
 		const resizeCanvas = () => {
-			const dpr = Math.min(
-				window.devicePixelRatio || 1,
-				DAY_OF_THE_DEAD_FIELD_MAX_DPR,
-			)
 			width = window.innerWidth
 			height = window.innerHeight
+			const dpr = getCanvasDpr({
+				width,
+				height,
+				maxDpr: DAY_OF_THE_DEAD_FIELD_MAX_DPR,
+			})
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

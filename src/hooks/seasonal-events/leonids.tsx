@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { createAdaptiveDprController, randomInRange } from './utils'
 
 const LEONIDS_PEAK_DATES = new Set([
 	'2026-11-17',
@@ -67,10 +68,80 @@ const LEONIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
 const LEONIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
 const LEONIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Leonids are a November meteor shower, named for their radiant in the
+				constellation Leo.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Most years the display is modest, but the shower is famous for its
+				capacity to produce rare and spectacular surprises.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Leonids are renowned for historic meteor storms, most notably in
+				1833 and 1966, when observers described the sky as seeming to rain
+				stars.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				These events played an important role in the development of scientific
+				understanding of meteor showers.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Why it can storm</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Leonids originate from Comet Tempel–Tuttle, and every few decades
+				Earth passes through especially dense streams of its debris.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				When this occurs, meteor rates can rise dramatically for a short period
+				of time.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				In most years the Leonids unfold gently, yet they always carry the
+				possibility of a sudden, breathtaking encore.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				They serve as a quiet reminder that the sky still holds the power to
+				surprise.
+			</Trans>
+		</p>
+	</>
+)
+
 export const leonidsEvent: SeasonalEvent = {
 	id: 'leonids',
 	isActive: isLeonidsPeak,
 	run: launchLeonidsShower,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#fcd34d', '#fbbf24', '#f97316', '#94a3b8', '#fcd34d'],
 	},
@@ -131,6 +202,10 @@ async function launchLeonidsShower() {
 		let stars: Star[] = []
 		let lastTime = performance.now()
 
+		const dprController = createAdaptiveDprController({
+			maxDpr: LEONIDS_MAX_DPR,
+			minScale: 0.4,
+		})
 		const randomMeteorColor = () =>
 			LEONIDS_METEOR_COLORS[
 				Math.floor(Math.random() * LEONIDS_METEOR_COLORS.length)
@@ -174,15 +249,34 @@ async function launchLeonidsShower() {
 		}
 
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, LEONIDS_MAX_DPR)
-			width = window.innerWidth
-			height = window.innerHeight
+			const nextWidth = window.innerWidth
+			const nextHeight = window.innerHeight
+			const prevWidth = width
+			const prevHeight = height
+			width = nextWidth
+			height = nextHeight
+			const dpr = dprController.getDpr({ width, height })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
 			canvas.style.height = `${height}px`
 			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-			resetField(performance.now())
+			if (meteors.length === 0 && stars.length === 0) {
+				resetField(performance.now())
+				return
+			}
+			const scaleX = prevWidth > 0 ? width / prevWidth : 1
+			const scaleY = prevHeight > 0 ? height / prevHeight : 1
+			if (scaleX !== 1 || scaleY !== 1) {
+				for (const star of stars) {
+					star.x *= scaleX
+					star.y *= scaleY
+				}
+				for (const meteor of meteors) {
+					meteor.x *= scaleX
+					meteor.y *= scaleY
+				}
+			}
 		}
 
 		const getStarFade = (star: Star, time: number) => {
@@ -240,6 +334,9 @@ async function launchLeonidsShower() {
 		}
 
 		const tick = (time: number) => {
+			if (dprController.reportFrame(time)) {
+				resizeCanvas()
+			}
 			const delta = Math.min(time - lastTime, 48)
 			lastTime = time
 			context.clearRect(0, 0, width, height)

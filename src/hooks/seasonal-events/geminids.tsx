@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { createAdaptiveDprController, randomInRange } from './utils'
 
 const GEMINIDS_PEAK_DATES = new Set([
 	'2026-12-13',
@@ -67,10 +68,78 @@ const GEMINIDS_STAR_TWINKLE_RANGE = { min: 0.0005, max: 0.0012 }
 const GEMINIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
 const GEMINIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Geminids are one of the strongest and most reliable meteor showers
+				of the year, appearing each December with frequent, bright meteors.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				They are especially known for their steady rates and vivid, often
+				colourful trails.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Unlike most meteor showers, the Geminids originate from the asteroid
+				3200 Phaethon rather than a comet.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Because it behaves like both an asteroid and a comet, it is sometimes
+				described as a “rock comet”.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Skywatching tips</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Find a wide view of the sky, allow your eyes time to adjust, and settle
+				in — the display often strengthens after midnight.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Whether your night air is warm or cool, a comfortable place to sit or
+				lie back makes the experience far more enjoyable.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The meteors are often bright and steady, tracing slow, colourful paths
+				across the night.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Under clear skies, the show can feel both calm and exhilarating at once.
+			</Trans>
+		</p>
+	</>
+)
+
 export const geminidsEvent: SeasonalEvent = {
 	id: 'geminids',
 	isActive: isGeminidsPeak,
 	run: launchGeminidsShower,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#e2e8f0', '#93c5fd', '#818cf8', '#cbd5f5', '#e2e8f0'],
 	},
@@ -131,6 +200,10 @@ async function launchGeminidsShower() {
 		let stars: Star[] = []
 		let lastTime = performance.now()
 
+		const dprController = createAdaptiveDprController({
+			maxDpr: GEMINIDS_MAX_DPR,
+			minScale: 0.4,
+		})
 		const randomMeteorColor = () =>
 			GEMINIDS_METEOR_COLORS[
 				Math.floor(Math.random() * GEMINIDS_METEOR_COLORS.length)
@@ -176,15 +249,34 @@ async function launchGeminidsShower() {
 		}
 
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, GEMINIDS_MAX_DPR)
-			width = window.innerWidth
-			height = window.innerHeight
+			const nextWidth = window.innerWidth
+			const nextHeight = window.innerHeight
+			const prevWidth = width
+			const prevHeight = height
+			width = nextWidth
+			height = nextHeight
+			const dpr = dprController.getDpr({ width, height })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
 			canvas.style.height = `${height}px`
 			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-			resetField(performance.now())
+			if (meteors.length === 0 && stars.length === 0) {
+				resetField(performance.now())
+				return
+			}
+			const scaleX = prevWidth > 0 ? width / prevWidth : 1
+			const scaleY = prevHeight > 0 ? height / prevHeight : 1
+			if (scaleX !== 1 || scaleY !== 1) {
+				for (const star of stars) {
+					star.x *= scaleX
+					star.y *= scaleY
+				}
+				for (const meteor of meteors) {
+					meteor.x *= scaleX
+					meteor.y *= scaleY
+				}
+			}
 		}
 
 		const getStarFade = (star: Star, time: number) => {
@@ -242,6 +334,9 @@ async function launchGeminidsShower() {
 		}
 
 		const tick = (time: number) => {
+			if (dprController.reportFrame(time)) {
+				resizeCanvas()
+			}
 			const delta = Math.min(time - lastTime, 48)
 			lastTime = time
 			context.clearRect(0, 0, width, height)

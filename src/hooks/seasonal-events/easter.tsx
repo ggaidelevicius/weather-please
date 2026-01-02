@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const EASTER_MOUNT_DELAY_MS = 900
 const EASTER_FIELD_OPACITY = '0.72'
@@ -28,10 +29,62 @@ const EASTER_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
 const EASTER_HALO_OPACITY = '0.5'
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Easter centres on themes of renewal and, in Christian tradition, the
+				resurrection of Jesus.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is a movable feast, its date determined by the cycle of the moon and
+				the arrival of spring in the northern hemisphere.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				From its earliest observances, Christian calendars aligned Easter with
+				the spring season and the full moon following the equinox.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Across many cultures, older symbols of rebirth — such as eggs, blossoms,
+				and new growth — became woven into the celebration.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Sunrise services, fresh mornings, and the simple delight of egg hunts
+				carry the feeling of a world beginning again.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is a holiday that speaks gently in the language of new beginnings.
+			</Trans>
+		</p>
+	</>
+)
+
 export const easterEvent: SeasonalEvent = {
 	id: 'easter',
 	isActive: isEaster,
 	run: launchEaster,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#fce7f3', '#fbcfe8', '#a5b4fc', '#93c5fd', '#fce7f3'],
 	},
@@ -223,9 +276,9 @@ async function launchEaster() {
 			}
 		}
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, EASTER_FIELD_MAX_DPR)
 			width = window.innerWidth
 			height = window.innerHeight
+			const dpr = getCanvasDpr({ width, height, maxDpr: EASTER_FIELD_MAX_DPR })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

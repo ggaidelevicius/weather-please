@@ -2,8 +2,9 @@ import { useEffect, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { AdditiveBlending, Color } from 'three'
 import type { Points, ShaderMaterial } from 'three'
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const HOLI_DATES = new Set([
 	'2026-03-04',
@@ -120,10 +121,79 @@ void main() {
 }
 `
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Holi is a joyful festival of colour, celebrated with laughter, music,
+				and shared community.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is closely associated with the arrival of spring in much of the world
+				where the tradition first formed.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Stories surrounding Holi vary by region, including the tale of Prahlad
+				and Holika, which speaks to the triumph of devotion and good over harm.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Another widely told story celebrates Krishna, whose playful exchanges of
+				colour are said to have inspired the festival’s most famous custom.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Symbols and rituals</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The night before Holi features Holika Dahan, a ceremonial bonfire that
+				symbolises the passing of winter and the renewal of life.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				On the following day, coloured powders fill the air as people cross
+				social boundaries in a shared expression of joy.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The colours draw everyone into the same bright moment, dissolving
+				distance and difference.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				For a time, streets become living paintings and the air itself seems to
+				celebrate.
+			</Trans>
+		</p>
+	</>
+)
+
 export const holiEvent: SeasonalEvent = {
 	id: 'holi',
 	isActive: isHoli,
 	run: launchHoliColors,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#fbcfe8', '#bfdbfe', '#fde68a', '#bbf7d0', '#fbcfe8'],
 	},
@@ -313,7 +383,11 @@ async function launchHoliColors() {
 
 		const { createRoot } = await import('react-dom/client')
 		const root = createRoot(container)
-		const dpr = Math.min(window.devicePixelRatio || 1, HOLI_CANVAS_MAX_DPR)
+		const dpr = getCanvasDpr({
+			width: window.innerWidth,
+			height: window.innerHeight,
+			maxDpr: HOLI_CANVAS_MAX_DPR,
+		})
 
 		const mountScene = () => {
 			if (isMounted) return

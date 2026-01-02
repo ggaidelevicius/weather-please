@@ -5,12 +5,17 @@ import {
 	DialogTitle,
 } from '@headlessui/react'
 import { Trans } from '@lingui/react/macro'
-import { IconSettings, IconShieldCheckFilled } from '@tabler/icons-react'
+import {
+	IconAlertTriangle,
+	IconSettings,
+	IconShieldCheckFilled,
+} from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 import { Alert } from './alert'
 import { IconButton } from './button'
 import { Input, Select, Switch } from './input'
 import { locales } from '../lib/i18n'
+import { isLikelySoftwareRenderer } from '../hooks/seasonal-events/utils'
 import type { Config } from '../hooks/use-config'
 import type { LocaleKey } from '../lib/i18n'
 
@@ -24,6 +29,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 	const [platformReviewLink, setPlatformReviewLink] = useState(
 		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
 	)
+	const [hasSoftwareRenderer, setHasSoftwareRenderer] = useState(false)
 	const localeKeys = Object.keys(locales) as LocaleKey[]
 
 	useEffect(() => {
@@ -32,6 +38,10 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 				'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/',
 			)
 		}
+	}, [])
+
+	useEffect(() => {
+		setHasSoftwareRenderer(isLikelySoftwareRenderer())
 	}, [])
 
 	return (
@@ -178,6 +188,15 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							checked={input.showSeasonalEvents}
 							onChange={(e) => handleChange('showSeasonalEvents', e)}
 						/>
+						{input.showSeasonalEvents && hasSoftwareRenderer && (
+							<Alert icon={IconAlertTriangle} variant="info-red">
+								<Trans>
+									Seasonal effects are disabled because your browser appears to
+									be using a software renderer. Enable hardware acceleration to
+									see these effects.
+								</Trans>
+							</Alert>
+						)}
 						{input.showSeasonalEvents && (
 							<>
 								<Switch

@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const HALLOWEEN_MONTH = 9
 const HALLOWEEN_DAY = 31
@@ -30,10 +31,79 @@ const HALLOWEEN_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
 const HALLOWEEN_MOON_OPACITY = '0.45'
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Halloween is a night shaped by costumes, stories, and a playful sense of
+				unease.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It invites friendly fear, shared laughter, and a little mischief.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The celebration grew from the ancient festival of Samhain and the later
+				observance of All Hallows’ Eve, blending seasonal rites with remembrance
+				of the dead.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Over time it evolved into a community tradition of visiting, disguises,
+				and shared treats.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Symbols and rituals</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Carved pumpkins, sweets, and playful scares echo much older customs of
+				lanterns, bonfires, and protective charms.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Costumes may be heroic, humorous, or unsettling, allowing people to step
+				briefly into different roles.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Masks invite games of identity, and lanterns turn familiar streets into
+				small theatres of light and shadow.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				The night encourages imagination to wander, as if even the moon were
+				part of the performance.
+			</Trans>
+		</p>
+	</>
+)
+
 export const halloweenEvent: SeasonalEvent = {
 	id: 'halloween',
 	isActive: isHalloween,
 	run: launchHalloweenSpirits,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#f8fafc', '#e2e8f0', '#94a3b8', '#cbd5f5', '#f8fafc'],
 	},
@@ -187,16 +257,17 @@ async function launchHalloweenSpirits() {
 		}
 		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
 		const resizeCanvas = () => {
-			const dpr = Math.min(
-				window.devicePixelRatio || 1,
-				HALLOWEEN_FIELD_MAX_DPR,
-			)
 			const nextWidth = window.innerWidth
 			const nextHeight = window.innerHeight
 			const prevWidth = width
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
+			const dpr = getCanvasDpr({
+				width,
+				height,
+				maxDpr: HALLOWEEN_FIELD_MAX_DPR,
+			})
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)

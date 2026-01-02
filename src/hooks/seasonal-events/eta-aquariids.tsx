@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { createAdaptiveDprController, randomInRange } from './utils'
 
 const ETA_AQUARIIDS_PEAK_DATES = new Set([
 	'2026-05-05',
@@ -67,10 +68,63 @@ const ETA_AQUARIIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
 const ETA_AQUARIIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
 const ETA_AQUARIIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The Eta Aquariids are a major meteor shower formed from the debris of
+				Halley’s Comet.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				They peak in early May and are especially well seen from the southern
+				hemisphere, though northern skies still catch their share of streaks.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Halley’s Comet itself returns roughly every seventy-six years, but the
+				stream of dust it leaves behind crosses Earth’s path each year.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				The shower’s radiant lies near the constellation Aquarius, rising before
+				dawn when viewing conditions are at their best.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Watching the Eta Aquariids can feel like receiving a message from a
+				distant traveller, carried on light across the dark.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				The meteors are exceptionally fast and often leave long, delicate trains
+				that linger in the sky.
+			</Trans>
+		</p>
+	</>
+)
+
 export const etaAquariidsEvent: SeasonalEvent = {
 	id: 'eta-aquariids',
 	isActive: isEtaAquariidsPeak,
 	run: launchEtaAquariidsShower,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#bae6fd', '#7dd3fc', '#60a5fa', '#3b82f6', '#bae6fd'],
 	},
@@ -131,6 +185,10 @@ async function launchEtaAquariidsShower() {
 		let stars: Star[] = []
 		let lastTime = performance.now()
 
+		const dprController = createAdaptiveDprController({
+			maxDpr: ETA_AQUARIIDS_MAX_DPR,
+			minScale: 0.4,
+		})
 		const randomMeteorColor = () =>
 			ETA_AQUARIIDS_METEOR_COLORS[
 				Math.floor(Math.random() * ETA_AQUARIIDS_METEOR_COLORS.length)
@@ -176,15 +234,34 @@ async function launchEtaAquariidsShower() {
 		}
 
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, ETA_AQUARIIDS_MAX_DPR)
-			width = window.innerWidth
-			height = window.innerHeight
+			const nextWidth = window.innerWidth
+			const nextHeight = window.innerHeight
+			const prevWidth = width
+			const prevHeight = height
+			width = nextWidth
+			height = nextHeight
+			const dpr = dprController.getDpr({ width, height })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
 			canvas.style.height = `${height}px`
 			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-			resetField(performance.now())
+			if (meteors.length === 0 && stars.length === 0) {
+				resetField(performance.now())
+				return
+			}
+			const scaleX = prevWidth > 0 ? width / prevWidth : 1
+			const scaleY = prevHeight > 0 ? height / prevHeight : 1
+			if (scaleX !== 1 || scaleY !== 1) {
+				for (const star of stars) {
+					star.x *= scaleX
+					star.y *= scaleY
+				}
+				for (const meteor of meteors) {
+					meteor.x *= scaleX
+					meteor.y *= scaleY
+				}
+			}
 		}
 
 		const getStarFade = (star: Star, time: number) => {
@@ -242,6 +319,9 @@ async function launchEtaAquariidsShower() {
 		}
 
 		const tick = (time: number) => {
+			if (dprController.reportFrame(time)) {
+				resizeCanvas()
+			}
 			const delta = Math.min(time - lastTime, 48)
 			lastTime = time
 			context.clearRect(0, 0, width, height)

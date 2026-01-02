@@ -28,6 +28,8 @@ export type SeasonalEventId =
 
 export type Hemisphere = 'northern' | 'southern'
 
+import type { ReactElement } from 'react'
+
 export type SeasonalEventContext = {
 	date: Date
 	hemisphere: Hemisphere
@@ -37,9 +39,12 @@ export type SeasonalEventTileAccent = {
 	colors: readonly string[]
 }
 
+export type SeasonalEventDetails = () => ReactElement
+
 export type SeasonalEvent = {
 	id: SeasonalEventId
 	isActive: (context: SeasonalEventContext) => boolean
 	run: () => Promise<() => void>
+	details?: SeasonalEventDetails
 	tileAccent?: SeasonalEventTileAccent
 }

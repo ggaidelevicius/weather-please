@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const WINTER_SOLSTICE_DATES_NORTHERN = new Set([
 	'2026-12-21',
@@ -69,10 +70,63 @@ const WINTER_COLORS = [
 	'#a5f3fc',
 ]
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The winter solstice marks the shortest day and longest night of the
+				year, and the turning point toward gradually longer daylight.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It signals the beginning of winter in the northern hemisphere and the
+				start of summer in the southern hemisphere.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Across many cultures, traditions such as Yule and Saturnalia developed
+				around this moment, gathering warmth, light, and community during the
+				darkest part of the year in the regions where they first formed.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Monuments and ancient sites around the world are aligned to mark the
+				solstice and the return of the Sun’s path.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				In the depth of the long night, even a single candle can feel like a
+				sunrise.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Each added minute of daylight carries the quiet promise of change.
+			</Trans>
+		</p>
+	</>
+)
+
 export const winterSolsticeEvent: SeasonalEvent = {
 	id: 'winter-solstice',
 	isActive: isWinterSolstice,
 	run: launchWinterSolstice,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#e2e8f0', '#c7d2fe', '#bae6fd', '#e0f2fe', '#e2e8f0'],
 	},
@@ -165,13 +219,13 @@ async function launchWinterSolstice() {
 		}
 		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, WINTER_FIELD_MAX_DPR)
 			const nextWidth = window.innerWidth
 			const nextHeight = window.innerHeight
 			const prevWidth = width
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
+			const dpr = getCanvasDpr({ width, height, maxDpr: WINTER_FIELD_MAX_DPR })
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)

@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const EID_AL_FITR_DATES = new Set([
 	'2026-03-20',
@@ -46,10 +47,62 @@ const EID_LANTERN_COLORS = [
 	'rgba(167, 139, 250, 0.7)',
 ]
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Eid al-Fitr marks the end of Ramadan, celebrating renewal, gratitude,
+				and the strength of shared community.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It begins with the sighting of the new moon, followed by a special
+				morning prayer.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Zakat al-Fitr, a form of charitable giving, is a central obligation of
+				the day, ensuring that all can take part in the celebration.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Families and friends gather, visit neighbours, exchange gifts, and greet
+				one another with wishes of peace.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				New clothes, sweet foods, and warm embraces turn the day into a bright
+				reunion.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is a holiday shaped by gratitude, generosity, and gentle celebration.
+			</Trans>
+		</p>
+	</>
+)
+
 export const eidAlFitrEvent: SeasonalEvent = {
 	id: 'eid-al-fitr',
 	isActive: isEidAlFitr,
 	run: launchEidAlFitrGlow,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#fef3c7', '#facc15', '#38bdf8', '#a78bfa', '#fef3c7'],
 	},
@@ -140,9 +193,9 @@ async function launchEidAlFitrGlow() {
 		}
 
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, EID_MAX_DPR)
 			width = window.innerWidth
 			height = window.innerHeight
+			const dpr = getCanvasDpr({ width, height, maxDpr: EID_MAX_DPR })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

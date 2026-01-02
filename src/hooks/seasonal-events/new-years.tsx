@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { randomInRange } from './utils'
 
 const NEW_YEARS_MONTH = 0
 const NEW_YEARS_DAY = 1
@@ -17,10 +18,65 @@ const FIREWORKS_DEFAULTS = {
 const FIREWORKS_LEFT_ORIGIN_RANGE = { min: 0.1, max: 0.3 }
 const FIREWORKS_RIGHT_ORIGIN_RANGE = { min: 0.7, max: 0.9 }
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				New Year’s Day serves as the calendar’s reset, marked by the first
+				sunrise of the year and a shared moment of looking forward.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Although many cultures follow different calendars and celebrate the new
+				year at other times, January 1 remains a widely recognised global
+				marker.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The month of January is named after Janus, the Roman god of doorways and
+				beginnings, traditionally depicted as facing both the past and the
+				future.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Over centuries of calendar reform, January 1 gradually became
+				established as the start of the year for much of the world.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				As the Earth turns, the new year arrives in a slow-moving wave that
+				travels across time zones for nearly a full day.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Fireworks, bells, and wishes seem to ride that wave, scattering light
+				and sound across the night.
+			</Trans>
+		</p>
+	</>
+)
+
 export const newYearsEvent: SeasonalEvent = {
 	id: 'new-years-day',
 	isActive: isNewYearsDay,
 	run: launchNewYearsFireworks,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#fde68a', '#f59e0b', '#60a5fa', '#a78bfa', '#fde68a'],
 	},

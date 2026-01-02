@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const EID_AL_ADHA_DATES = new Set([
 	'2026-05-27',
@@ -39,10 +40,62 @@ const EID_ADHA_EMBER_COLORS = [
 	'rgba(52, 211, 153, 0.6)',
 ]
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Eid al-Adha is one of the most important festivals in Islam, closely
+				linked to the season of the Hajj pilgrimage.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It centres on devotion, sacrifice, and the responsibility of generosity
+				toward others.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The holiday commemorates the story of Ibrahim and his willingness to
+				sacrifice in obedience to God.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Acts of charity, the sharing of food, and care for family, neighbours,
+				and those in need form the heart of the celebration.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Communities gather for prayer and meals, and households open their doors
+				in welcome.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It is a day that turns personal devotion into shared kindness.
+			</Trans>
+		</p>
+	</>
+)
+
 export const eidAlAdhaEvent: SeasonalEvent = {
 	id: 'eid-al-adha',
 	isActive: isEidAlAdha,
 	run: launchEidAlAdhaGlow,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#fef3c7', '#fbbf24', '#f59e0b', '#34d399', '#fef3c7'],
 	},
@@ -135,9 +188,9 @@ async function launchEidAlAdhaGlow() {
 		}
 
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, EID_ADHA_MAX_DPR)
 			width = window.innerWidth
 			height = window.innerHeight
+			const dpr = getCanvasDpr({ width, height, maxDpr: EID_ADHA_MAX_DPR })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

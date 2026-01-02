@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const EARTH_DAY_DATES = new Set([
 	'2026-04-22',
@@ -111,10 +112,79 @@ const EARTH_FIELD_GLOW_RANGE = {
 	flower: { min: 4, max: 12 },
 } as const
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Earth Day invites a pause to notice the planet that sustains us, and to
+				consider how we care for it.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It stands as both a celebration of the natural world and a call to
+				responsible action.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The first Earth Day, held in 1970, grew out of environmental activism
+				and nationwide teach-ins across the United States.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It has since become a global observance, often drawing attention to
+				local ecosystems, conservation efforts, and environmental challenges.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Ways to observe</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Community cleanups, tree planting, and habitat restoration are among the
+				most common activities.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Even small choices — repairing, reusing, conserving, or simply walking a
+				familiar trail — reflect its underlying spirit.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Small actions accumulate: a planted tree, a cleared shoreline, a renewed
+				path.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				It’s a quiet reminder that care for the world and a sense of wonder
+				often move together.
+			</Trans>
+		</p>
+	</>
+)
+
 export const earthDayEvent: SeasonalEvent = {
 	id: 'earth-day',
 	isActive: isEarthDay,
 	run: launchEarthDay,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#bbf7d0', '#5eead4', '#60a5fa', '#34d399', '#bbf7d0'],
 	},
@@ -174,7 +244,7 @@ async function launchEarthDay() {
 		let overlay: HTMLDivElement | null = null
 		let styleEl: HTMLStyleElement | null = null
 
-		const randomFromPool = <T>(items: readonly T[]) =>
+		const randomFromPool = <T,>(items: readonly T[]) =>
 			items[Math.floor(Math.random() * items.length)]
 		const createParticle = (time: number): Particle => {
 			const kind = randomFromPool(EARTH_FIELD_KIND_POOL)
@@ -227,13 +297,13 @@ async function launchEarthDay() {
 		}
 		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
 		const resizeCanvas = () => {
-			const dpr = Math.min(window.devicePixelRatio || 1, EARTH_FIELD_MAX_DPR)
 			const nextWidth = window.innerWidth
 			const nextHeight = window.innerHeight
 			const prevWidth = width
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
+			const dpr = getCanvasDpr({ width, height, maxDpr: EARTH_FIELD_MAX_DPR })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

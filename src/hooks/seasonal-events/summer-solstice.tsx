@@ -1,5 +1,6 @@
-import { randomInRange } from './utils'
 import type { SeasonalEvent, SeasonalEventContext } from './types'
+import { Trans } from '@lingui/react/macro'
+import { getCanvasDpr, randomInRange } from './utils'
 
 const SUMMER_SOLSTICE_DATES_NORTHERN = new Set([
 	'2026-06-21',
@@ -71,10 +72,58 @@ const SOLSTICE_POLLEN_VELOCITY_Y = { min: 6, max: 14 }
 const SOLSTICE_POLLEN_SWAY_RANGE = { min: 2, max: 10 }
 const SOLSTICE_POLLEN_GLOW_RANGE = { min: 6, max: 14 }
 
+const EventDetails = () => (
+	<>
+		<h2>
+			<Trans>Overview</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The summer solstice marks the longest day of the year, when the sun
+				reaches its highest path across the sky.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>History and meaning</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Ancient monuments such as Stonehenge are aligned with the solstice
+				sunrise, and midsummer festivals across many cultures celebrate light
+				and abundance.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				Bonfires, late gatherings, and all-night vigils have long been part of
+				welcoming this turning point of the year.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Little wonder</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Twilight lingers, insects fill the air with song, and the sky can feel
+				almost endless.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				In far northern regions, the sun may barely set at all, creating the
+				phenomenon of the midnight sun.
+			</Trans>
+		</p>
+	</>
+)
+
 export const summerSolsticeEvent: SeasonalEvent = {
 	id: 'summer-solstice',
 	isActive: isSummerSolstice,
 	run: launchSummerSolstice,
+	details: EventDetails,
 	tileAccent: {
 		colors: ['#fef3c7', '#fde68a', '#fdba74', '#f59e0b', '#fef3c7'],
 	},
@@ -169,16 +218,17 @@ async function launchSummerSolstice() {
 			Object.assign(particle, createParticle(time))
 		}
 		const resizeCanvas = () => {
-			const dpr = Math.min(
-				window.devicePixelRatio || 1,
-				SOLSTICE_POLLEN_MAX_DPR,
-			)
 			const nextWidth = window.innerWidth
 			const nextHeight = window.innerHeight
 			const prevWidth = width
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
+			const dpr = getCanvasDpr({
+				width,
+				height,
+				maxDpr: SOLSTICE_POLLEN_MAX_DPR,
+			})
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
