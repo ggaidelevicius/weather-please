@@ -29,7 +29,7 @@ export const SeasonalEventModal = ({
 		<div className="fixed inset-0 flex w-screen items-center justify-center overflow-y-auto p-6">
 			<DialogPanel
 				transition
-				className="m-auto w-full max-w-xl space-y-6 rounded-2xl bg-dark-800 p-8 transition duration-400 will-change-[transform,opacity,filter] data-closed:scale-97 data-closed:opacity-0 data-closed:blur-xs"
+				className="m-auto w-full max-w-xl space-y-6 rounded-2xl bg-dark-800 p-12 transition duration-400 will-change-[transform,opacity,filter] data-closed:scale-97 data-closed:opacity-0 data-closed:blur-xs"
 			>
 				<DialogTitle as="h1" className="text-3xl font-bold text-white">
 					{title}
