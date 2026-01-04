@@ -22,6 +22,12 @@ const HEARTS_VELOCITY_Y_RANGE = { min: -6, max: -1 }
 const HEARTS_SWAY_RANGE = { min: 2, max: 8 }
 const HEARTS_ROTATION_SPEED_RANGE = { min: -0.35, max: 0.35 }
 const HEARTS_GLOW_RANGE = { min: 16, max: 28 }
+const HEARTS_CLOUD_CHANCE = 0.33
+const HEARTS_CLOUD_SIZE_FACTOR = 1.22
+const HEARTS_CLOUD_BASE_SPAN = 34
+const HEARTS_CLOUD_FILL_RANGE = { min: 0.95, max: 1.02 }
+const HEARTS_CLOUD_JITTER_FACTOR_RANGE = { min: 0.02, max: 0.06 }
+const HEARTS_CLOUD_T_JITTER = 0.15
 const HEARTS_GRADIENTS = [
 	{ inner: '#ffe1f2', mid: '#ff8fc1', outer: '#e11d48' },
 	{ inner: '#ffd1e8', mid: '#ff6ea8', outer: '#d81b60' },
@@ -150,6 +156,10 @@ async function launchValentinesHearts() {
 			fadeDuration: number
 			scaleFrom: number
 		}
+		type HeartSeed = {
+			x: number
+			y: number
+		}
 
 		let timeoutId: number | null = null
 		let animationFrameId: number | null = null
@@ -160,20 +170,66 @@ async function launchValentinesHearts() {
 		let lastTime = performance.now()
 		let overlay: HTMLDivElement | null = null
 		let styleEl: HTMLStyleElement | null = null
+		let shouldFormHeartCloud = Math.random() < HEARTS_CLOUD_CHANCE
 
 		const randomGradient = () =>
 			HEARTS_GRADIENTS[Math.floor(Math.random() * HEARTS_GRADIENTS.length)]
 		const randomShape = () =>
 			HEARTS_SHAPES[Math.floor(Math.random() * HEARTS_SHAPES.length)]
-		const createParticle = (time: number): HeartParticle => ({
-			x: randomInRange({
-				min: -HEARTS_FIELD_MARGIN,
-				max: width + HEARTS_FIELD_MARGIN,
-			}),
-			y: randomInRange({
-				min: -HEARTS_FIELD_MARGIN,
-				max: height + HEARTS_FIELD_MARGIN,
-			}),
+		const createHeartPoint = (t: number) => {
+			const sinT = Math.sin(t)
+			const cosT = Math.cos(t)
+			return {
+				x: 16 * Math.pow(sinT, 3),
+				y: -(
+					13 * cosT -
+					5 * Math.cos(2 * t) -
+					2 * Math.cos(3 * t) -
+					Math.cos(4 * t)
+				),
+			}
+		}
+		const createHeartCloudSeeds = (): HeartSeed[] => {
+			const minDimension = Math.min(width, height)
+			const scale =
+				(minDimension * HEARTS_CLOUD_SIZE_FACTOR) / HEARTS_CLOUD_BASE_SPAN
+			const centerX = width / 2
+			const centerY = height / 2
+			const angleOffset = Math.random() * Math.PI * 2
+
+			return Array.from({ length: HEARTS_FIELD_COUNT }, (_, index) => {
+				const t =
+					angleOffset +
+					((index + Math.random() * HEARTS_CLOUD_T_JITTER) /
+						HEARTS_FIELD_COUNT) *
+						Math.PI *
+						2
+				const { x, y } = createHeartPoint(t)
+				const fill = randomInRange(HEARTS_CLOUD_FILL_RANGE)
+				const jitter =
+					minDimension * randomInRange(HEARTS_CLOUD_JITTER_FACTOR_RANGE)
+				const spreadAngle = Math.random() * Math.PI * 2
+				const spread = randomInRange({ min: 0, max: jitter })
+
+				return {
+					x: centerX + x * scale * fill + Math.cos(spreadAngle) * spread,
+					y: centerY + y * scale * fill + Math.sin(spreadAngle) * spread,
+				}
+			})
+		}
+		const createParticle = (time: number, seed?: HeartSeed): HeartParticle => ({
+			x:
+				seed?.x ??
+				randomInRange({
+					min: -HEARTS_FIELD_MARGIN,
+					max: width + HEARTS_FIELD_MARGIN,
+				}),
+			y:
+				seed?.y ??
+				randomInRange({
+					min: -HEARTS_FIELD_MARGIN,
+					max: height + HEARTS_FIELD_MARGIN,
+				}),
 			vx: randomInRange(HEARTS_VELOCITY_X_RANGE),
 			vy: randomInRange(HEARTS_VELOCITY_Y_RANGE),
 			size: randomInRange(HEARTS_SIZE_RANGE),
@@ -190,9 +246,11 @@ async function launchValentinesHearts() {
 			scaleFrom: randomInRange(HEARTS_SCALE_RANGE),
 		})
 		const resetParticles = (time: number) => {
-			particles = Array.from({ length: HEARTS_FIELD_COUNT }, () =>
-				createParticle(time),
+			const seeds = shouldFormHeartCloud ? createHeartCloudSeeds() : null
+			particles = Array.from({ length: HEARTS_FIELD_COUNT }, (_, index) =>
+				createParticle(time, seeds?.[index]),
 			)
+			shouldFormHeartCloud = false
 		}
 		const respawnParticle = (particle: HeartParticle, time: number) => {
 			Object.assign(particle, createParticle(time))
