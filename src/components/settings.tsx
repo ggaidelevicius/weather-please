@@ -177,11 +177,6 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 										checked={input.useCompactAlerts}
 										onChange={(e) => handleChange('useCompactAlerts', e)}
 									/>
-									<p className="text-sm text-dark-100">
-										<Trans>
-											Show alert icons that expand to text when clicked.
-										</Trans>
-									</p>
 								</div>
 								<Switch
 									label={<Trans>Show extreme UV alerts</Trans>}

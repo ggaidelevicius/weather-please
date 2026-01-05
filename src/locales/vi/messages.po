@@ -53,19 +53,19 @@ msgstr "{0} mph"
 #~ msgid "{label}"
 #~ msgstr "Ngôn ngữ"
 
-#: src/components/weather-alert.tsx:214
+#: src/components/weather-alert.tsx:247
 msgid "{precipitationInches} inches of precipitation expected over the next {durationHours} hours"
 msgstr "Dự kiến có {precipitationInches} inch lượng mưa trong {durationHours} giờ tới."
 
-#: src/components/weather-alert.tsx:206
+#: src/components/weather-alert.tsx:239
 msgid "{precipitationInches} inches of precipitation expected over the next hour"
 msgstr "Dự kiến có {precipitationInches} inch lượng mưa trong giờ tới."
 
-#: src/components/weather-alert.tsx:198
+#: src/components/weather-alert.tsx:231
 msgid "{precipitationMm}mm of precipitation expected over the next {durationHours} hours"
 msgstr "Dự kiến có {precipitationMm} mm lượng mưa trong {durationHours} giờ tới."
 
-#: src/components/weather-alert.tsx:191
+#: src/components/weather-alert.tsx:224
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
 msgstr "Dự kiến có {precipitationMm} mm lượng mưa trong giờ tới."
 
@@ -79,7 +79,7 @@ msgstr "<0>Đã từ chối quyền truy cập vị trí.</0> Kiểm tra cài đ
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Đã từ chối quyền truy cập vị trí.</0> Nhấp vào biểu tượng vị trí trên thanh địa chỉ và chọn \"luôn cho phép truy cập vị trí của bạn\". Sau đó nhấp nút bên dưới để thử lại."
 
-#: src/components/settings.tsx:405
+#: src/components/settings.tsx:400
 msgid "☕ Gift a coffee"
 msgstr "☕ Tặng một cốc cà phê"
 
@@ -87,11 +87,11 @@ msgstr "☕ Tặng một cốc cà phê"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Gửi phản hồi"
 
-#: src/components/settings.tsx:389
+#: src/components/settings.tsx:384
 msgid "🌟 Leave a review"
 msgstr "🌟 Để lại đánh giá"
 
-#: src/components/settings.tsx:397
+#: src/components/settings.tsx:392
 msgid "🐛 Report a bug"
 msgstr "🐛 Báo cáo lỗi"
 
@@ -99,7 +99,7 @@ msgstr "🐛 Báo cáo lỗi"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Yêu cầu tính năng"
 
-#: src/components/settings.tsx:416
+#: src/components/settings.tsx:411
 msgid "🔒 Privacy policy"
 msgstr "🔒 Chính sách bảo mật"
 
@@ -227,7 +227,7 @@ msgstr "Khi ánh sáng Mặt Trời đi qua khí quyển Trái Đất, các bư�
 msgid "As the Earth turns, the new year arrives in a slow-moving wave that travels across time zones for nearly a full day."
 msgstr "Khi Trái Đất quay, năm mới đến như một làn sóng chậm rãi đi qua các múi giờ trong gần trọn một ngày."
 
-#: src/components/settings.tsx:261
+#: src/components/settings.tsx:256
 msgid "Astronomy"
 msgstr "Thiên văn"
 
@@ -463,7 +463,7 @@ msgstr "Ngay đến hôm nay, những trái tim giấy và lời nhắn thầm l
 msgid "Evergreens, candles, bells, and stars echo a shared theme drawn from those early traditions: light enduring through the darkest part of the year in the cultures where the holiday first formed."
 msgstr "Cây xanh quanh năm, nến, chuông và những vì sao gợi lại một chủ đề chung từ các truyền thống ban đầu ấy: ánh sáng bền bỉ vượt qua phần tối nhất của năm ở những nền văn hoá nơi ngày lễ hình thành."
 
-#: src/components/weather-alert.tsx:158
+#: src/components/weather-alert.tsx:191
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
 msgstr "UV cực mạnh trong {durationOfExtremeUv} giờ tới"
 
@@ -471,11 +471,11 @@ msgstr "UV cực mạnh trong {durationOfExtremeUv} giờ tới"
 #~ msgid "Extreme UV for the next 12 hours"
 #~ msgstr "UV cực mạnh trong 12 giờ tới"
 
-#: src/components/weather-alert.tsx:162
+#: src/components/weather-alert.tsx:195
 msgid "Extreme UV for the next hour"
 msgstr "UV cực mạnh trong 1 giờ tới"
 
-#: src/components/weather-alert.tsx:149
+#: src/components/weather-alert.tsx:182
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "UV cực mạnh bắt đầu trong {timeUntilExtremeUv} giờ"
 
@@ -507,7 +507,7 @@ msgstr "Nhanh và rực rỡ, Perseids thường tạo ra những quả cầu l�
 msgid "February"
 msgstr "Tháng 2"
 
-#: src/components/settings.tsx:381
+#: src/components/settings.tsx:376
 msgid "Feedback"
 msgstr "Phản hồi"
 
@@ -559,19 +559,19 @@ msgstr "Mưa sao băng Geminid"
 msgid "General"
 msgstr "Chung"
 
-#: src/components/weather-alert.tsx:244
+#: src/components/weather-alert.tsx:277
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "Gió mạnh dự kiến trong {durationOfStrongWind} giờ tới"
 
-#: src/components/weather-alert.tsx:250
+#: src/components/weather-alert.tsx:283
 msgid "Generally strong wind for the next 24 hours"
 msgstr "Gió mạnh dự kiến trong 24 giờ tới"
 
-#: src/components/weather-alert.tsx:253
+#: src/components/weather-alert.tsx:286
 msgid "Generally strong wind for the next hour"
 msgstr "Gió mạnh dự kiến trong giờ tới"
 
-#: src/components/weather-alert.tsx:236
+#: src/components/weather-alert.tsx:269
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "Gió mạnh bắt đầu trong {timeUntilStrongWind} giờ nữa"
 
@@ -847,7 +847,7 @@ msgstr "Vĩ độ"
 msgid "Leave a review"
 msgstr "Để lại đánh giá"
 
-#: src/components/settings.tsx:408
+#: src/components/settings.tsx:403
 msgid "Legal"
 msgstr "Pháp lý"
 
@@ -919,19 +919,19 @@ msgstr "Kinh độ"
 #~ msgid "Looks like we can't grab your location info automatically."
 #~ msgstr "Có vẻ như chúng tôi không thể lấy thông tin vị trí của bạn một cách tự động."
 
-#: src/components/weather-alert.tsx:312
+#: src/components/weather-alert.tsx:345
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "Tầm nhìn kém trong {durationOfLowVisibility} giờ tới"
 
-#: src/components/weather-alert.tsx:318
+#: src/components/weather-alert.tsx:351
 msgid "Low visibility for the next 24 hours"
 msgstr "Tầm nhìn kém trong 24 giờ tới"
 
-#: src/components/weather-alert.tsx:321
+#: src/components/weather-alert.tsx:354
 msgid "Low visibility for the next hour"
 msgstr "Tầm nhìn kém trong giờ tới"
 
-#: src/components/weather-alert.tsx:306
+#: src/components/weather-alert.tsx:339
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "Tầm nhìn thấp bắt đầu trong {timeUntilLowVisibility} giờ"
 
@@ -1076,7 +1076,7 @@ msgstr "Vào ngày hôm sau, bột màu bay đầy không khí khi mọi ngườ
 msgid "Orionids Meteor Shower"
 msgstr "Mưa sao băng Orionid"
 
-#: src/components/settings.tsx:356
+#: src/components/settings.tsx:351
 msgid "Other holidays"
 msgstr "Các ngày lễ khác"
 
@@ -1157,7 +1157,7 @@ msgstr "Thay vì một lời tạm biệt trang nghiêm, nó coi việc tưởng
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "Phong bao đỏ, quýt và câu đối thư pháp gửi gắm lời chúc sung túc, hạnh phúc và những khởi đầu mới."
 
-#: src/components/settings.tsx:313
+#: src/components/settings.tsx:308
 msgid "Religious & cultural"
 msgstr "Tôn giáo & văn hóa"
 
@@ -1182,15 +1182,15 @@ msgstr "Thứ Bảy"
 #~ msgid "Save"
 #~ msgstr "Lưu"
 
-#: src/components/settings.tsx:218
+#: src/components/settings.tsx:213
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "Hiệu ứng theo mùa bị tắt vì trình duyệt của bạn có vẻ đang dùng trình kết xuất phần mềm. Hãy bật tăng tốc phần cứng để xem các hiệu ứng này."
 
-#: src/components/settings.tsx:209
+#: src/components/settings.tsx:204
 msgid "Seasonal events"
 msgstr "Sự kiện theo mùa"
 
-#: src/components/settings.tsx:233
+#: src/components/settings.tsx:228
 msgid "Seasons & nature"
 msgstr "Mùa & thiên nhiên"
 
@@ -1220,130 +1220,130 @@ msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and
 msgstr "Kẹo ngọt, hoa và những món quà nhỏ được sẻ chia khiến lễ kỷ niệm trở nên thân mật và riêng tư."
 
 #: src/components/settings.tsx:181
-msgid "Show alert icons that expand to text when clicked."
-msgstr "Hiển thị biểu tượng cảnh báo, khi nhấp vào sẽ mở rộng thành văn bản."
+#~ msgid "Show alert icons that expand to text when clicked."
+#~ msgstr "Hiển thị biểu tượng cảnh báo, khi nhấp vào sẽ mở rộng thành văn bản."
 
-#: src/components/settings.tsx:246
+#: src/components/settings.tsx:241
 msgid "Show Autumn Equinox event"
 msgstr "Hiển thị Thu phân"
 
-#: src/components/settings.tsx:351
+#: src/components/settings.tsx:346
 msgid "Show Christmas Day event"
 msgstr "Hiển thị Giáng sinh"
 
-#: src/components/settings.tsx:374
+#: src/components/settings.tsx:369
 msgid "Show Day of the Dead event"
 msgstr "Hiển thị Ngày của Người Chết"
 
-#: src/components/settings.tsx:326
+#: src/components/settings.tsx:321
 msgid "Show Diwali event"
 msgstr "Hiển thị Diwali"
 
-#: src/components/settings.tsx:256
+#: src/components/settings.tsx:251
 msgid "Show Earth Day event"
 msgstr "Hiển thị Ngày Trái Đất"
 
-#: src/components/settings.tsx:321
+#: src/components/settings.tsx:316
 msgid "Show Easter event"
 msgstr "Hiển thị Lễ Phục Sinh"
 
-#: src/components/settings.tsx:341
+#: src/components/settings.tsx:336
 msgid "Show Eid al-Adha event"
 msgstr "Hiển thị Lễ Eid al-Adha"
 
-#: src/components/settings.tsx:336
+#: src/components/settings.tsx:331
 msgid "Show Eid al-Fitr event"
 msgstr "Hiển thị Lễ Eid al-Fitr"
 
-#: src/components/settings.tsx:274
+#: src/components/settings.tsx:269
 msgid "Show Eta Aquariids meteor shower event"
 msgstr "Hiển thị mưa sao băng Eta Aquariid"
 
-#: src/components/settings.tsx:187
+#: src/components/settings.tsx:182
 msgid "Show extreme UV alerts"
 msgstr "Hiển thị cảnh báo UV cực độ"
 
-#: src/components/settings.tsx:308
+#: src/components/settings.tsx:303
 msgid "Show Geminids meteor shower event"
 msgstr "Hiển thị mưa sao băng Geminid"
 
-#: src/components/settings.tsx:369
+#: src/components/settings.tsx:364
 msgid "Show Halloween event"
 msgstr "Hiển thị Halloween"
 
-#: src/components/settings.tsx:346
+#: src/components/settings.tsx:341
 msgid "Show Hanukkah event"
 msgstr "Hiển thị Hanukkah"
 
-#: src/components/settings.tsx:192
+#: src/components/settings.tsx:187
 msgid "Show high precipitation alerts"
 msgstr "Hiển thị cảnh báo lượng mưa lớn"
 
-#: src/components/settings.tsx:331
+#: src/components/settings.tsx:326
 msgid "Show Holi event"
 msgstr "Hiển thị Holi"
 
-#: src/components/settings.tsx:284
+#: src/components/settings.tsx:279
 msgid "Show Leonids meteor shower event"
 msgstr "Hiển thị mưa sao băng Leonid"
 
-#: src/components/settings.tsx:202
+#: src/components/settings.tsx:197
 msgid "Show low visibility alerts"
 msgstr "Hiển thị cảnh báo tầm nhìn thấp"
 
-#: src/components/settings.tsx:316
+#: src/components/settings.tsx:311
 msgid "Show Lunar New Year event"
 msgstr "Hiển thị Tết Nguyên đán"
 
-#: src/components/settings.tsx:269
+#: src/components/settings.tsx:264
 msgid "Show Lyrids meteor shower event"
 msgstr "Hiển thị mưa sao băng Lyrid"
 
-#: src/components/settings.tsx:359
+#: src/components/settings.tsx:354
 msgid "Show New Year's Day event"
 msgstr "Hiển thị Tết Dương lịch"
 
-#: src/components/settings.tsx:279
+#: src/components/settings.tsx:274
 msgid "Show Orionids meteor shower event"
 msgstr "Hiển thị mưa sao băng Orionid"
 
-#: src/components/settings.tsx:303
+#: src/components/settings.tsx:298
 msgid "Show Perseids meteor shower event"
 msgstr "Hiển thị mưa sao băng Perseid"
 
-#: src/components/settings.tsx:264
+#: src/components/settings.tsx:259
 msgid "Show Quadrantids meteor shower event"
 msgstr "Hiển thị mưa sao băng Quadrantid"
 
-#: src/components/settings.tsx:212
+#: src/components/settings.tsx:207
 msgid "Show seasonal events"
 msgstr "Hiển thị sự kiện theo mùa"
 
-#: src/components/settings.tsx:228
+#: src/components/settings.tsx:223
 msgid "Show seasonal tile glow"
 msgstr "Hiển thị ánh sáng ô theo mùa"
 
-#: src/components/settings.tsx:236
+#: src/components/settings.tsx:231
 msgid "Show Spring Equinox event"
 msgstr "Hiển thị Xuân phân"
 
-#: src/components/settings.tsx:197
+#: src/components/settings.tsx:192
 msgid "Show strong wind alerts"
 msgstr "Hiển thị cảnh báo gió mạnh"
 
-#: src/components/settings.tsx:241
+#: src/components/settings.tsx:236
 msgid "Show Summer Solstice event"
 msgstr "Hiển thị Hạ chí"
 
-#: src/components/settings.tsx:296
+#: src/components/settings.tsx:291
 msgid "Show total lunar eclipse event"
 msgstr "Hiển thị nguyệt thực toàn phần"
 
-#: src/components/settings.tsx:289
+#: src/components/settings.tsx:284
 msgid "Show total solar eclipse event"
 msgstr "Hiển thị nhật thực toàn phần"
 
-#: src/components/settings.tsx:364
+#: src/components/settings.tsx:359
 msgid "Show Valentine's Day event"
 msgstr "Hiển thị Ngày Valentine"
 
@@ -1351,7 +1351,7 @@ msgstr "Hiển thị Ngày Valentine"
 msgid "Show weather alerts"
 msgstr "Hiển thị cảnh báo thời tiết"
 
-#: src/components/settings.tsx:251
+#: src/components/settings.tsx:246
 msgid "Show Winter Solstice event"
 msgstr "Hiển thị Đông chí"
 
@@ -1412,19 +1412,19 @@ msgstr "Các câu chuyện quanh Holi thay đổi theo vùng, gồm cả chuyệ
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "Gió mạnh trong 1 giờ tới"
 
-#: src/components/weather-alert.tsx:278
+#: src/components/weather-alert.tsx:311
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "Cơn gió mạnh trong {durationOfStrongWind} giờ tới"
 
-#: src/components/weather-alert.tsx:284
+#: src/components/weather-alert.tsx:317
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "Cơn gió mạnh trong 24 giờ tới"
 
-#: src/components/weather-alert.tsx:287
+#: src/components/weather-alert.tsx:320
 msgid "Strong wind gusts for the next hour"
 msgstr "Cơn gió mạnh trong 1 giờ tới"
 
-#: src/components/weather-alert.tsx:272
+#: src/components/weather-alert.tsx:305
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "Cơn gió mạnh bắt đầu sau {timeUntilStrongWind} giờ"
 

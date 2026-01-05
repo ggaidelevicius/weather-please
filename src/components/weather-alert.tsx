@@ -2,7 +2,7 @@ import { clsx } from 'clsx'
 import { Trans } from '@lingui/react/macro'
 import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
 import { motion } from 'framer-motion'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { IconProps } from '@tabler/icons-react'
 import type { ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react'
 import { Alert } from './alert'
@@ -12,8 +12,9 @@ const PRECIPITATION_ALERT_THRESHOLD_MM = 15
 const UV_WARNING_LEAD_HOURS = 3
 const COMPACT_ALERT_HEIGHT_PX = 44
 const COMPACT_COLLAPSED_WIDTH_PX = 44
-const COMPACT_TEXT_LEFT_PADDING_PX = 56
-const COMPACT_TEXT_RIGHT_PADDING_PX = 40
+const COMPACT_TEXT_LEFT_PADDING_PX = 50
+const COMPACT_TEXT_RIGHT_PADDING_PX = 36
+const COMPACT_ALERT_STORAGE_KEY = 'compactAlertExpandedKeys'
 
 type AlertIcon = ForwardRefExoticComponent<
 	IconProps & RefAttributes<SVGSVGElement>
@@ -26,6 +27,27 @@ type AlertItem = {
 	content: ReactNode
 }
 
+const getInitialExpandedAlertKeys = (useCompactAlerts: boolean) => {
+	if (!useCompactAlerts || typeof window === 'undefined') {
+		return new Set<string>()
+	}
+
+	try {
+		const stored = localStorage.getItem(COMPACT_ALERT_STORAGE_KEY)
+		if (!stored) {
+			return new Set<string>()
+		}
+		const parsed = JSON.parse(stored)
+		if (Array.isArray(parsed)) {
+			return new Set(parsed.filter((value) => typeof value === 'string'))
+		}
+		return new Set<string>()
+	} catch (error) {
+		console.error('Failed to read compact alert state', error)
+		return new Set<string>()
+	}
+}
+
 const CompactAlertButton = ({
 	alert,
 	isExpanded,
@@ -36,6 +58,8 @@ const CompactAlertButton = ({
 	onToggle: () => void
 }) => {
 	const textMeasureRef = useRef<HTMLSpanElement | null>(null)
+	const hasMountedRef = useRef(false)
+	const previousExpandedRef = useRef(isExpanded)
 	const [textWidth, setTextWidth] = useState(0)
 	const gradientClass =
 		alert.variant === 'light-red'
@@ -54,10 +78,21 @@ const CompactAlertButton = ({
 		setTextWidth((prev) => (prev === width ? prev : width))
 	})
 
+	useEffect(() => {
+		hasMountedRef.current = true
+		previousExpandedRef.current = isExpanded
+	}, [])
+
+	useEffect(() => {
+		previousExpandedRef.current = isExpanded
+	}, [isExpanded])
+
 	const expandedWidth = Math.max(
 		COMPACT_COLLAPSED_WIDTH_PX,
 		textWidth + COMPACT_TEXT_LEFT_PADDING_PX + COMPACT_TEXT_RIGHT_PADDING_PX,
 	)
+	const shouldAnimate =
+		hasMountedRef.current && previousExpandedRef.current !== isExpanded
 
 	return (
 		<motion.button
@@ -67,7 +102,11 @@ const CompactAlertButton = ({
 			animate={{
 				width: isExpanded ? expandedWidth : COMPACT_COLLAPSED_WIDTH_PX,
 			}}
-			transition={{ type: 'spring', stiffness: 360, damping: 32 }}
+			transition={
+				shouldAnimate
+					? { type: 'spring', stiffness: 360, damping: 32 }
+					: { duration: 0 }
+			}
 			onClick={onToggle}
 			className={clsx(
 				'relative flex cursor-pointer items-center overflow-hidden rounded-md text-left text-white shadow-sm transition-shadow focus:outline-2 focus:outline-offset-2 focus:outline-blue-500',
@@ -90,14 +129,14 @@ const CompactAlertButton = ({
 					x: isExpanded ? 0 : -6,
 				}}
 				transition={{ duration: 0.2 }}
-				className="absolute inset-y-0 right-0 left-0 flex items-center pr-10 pl-14 text-sm font-medium whitespace-nowrap"
+				className="absolute inset-y-0 right-0 left-0 flex items-center pr-10 pl-12 text-sm font-medium whitespace-nowrap"
 			>
 				{alert.content}
 			</motion.span>
 			<span
 				aria-hidden
 				className={clsx(
-					'pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-r',
+					'pointer-events-none absolute inset-y-0 right-0 w-10 bg-linear-to-r',
 					gradientClass,
 				)}
 			/>
@@ -135,7 +174,9 @@ export const WeatherAlert = ({
 	showPrecipitationAlerts,
 }: Readonly<AlertProps>) => {
 	// Derive alerts array directly from props
-	const [expandedAlertKey, setExpandedAlertKey] = useState<string | null>(null)
+	const [expandedAlertKeys, setExpandedAlertKeys] = useState<Set<string>>(() =>
+		getInitialExpandedAlertKeys(useCompactAlerts),
+	)
 	const alerts: AlertItem[] = []
 
 	// UV Alert
@@ -333,6 +374,26 @@ export const WeatherAlert = ({
 
 	if (alerts.length > 0) {
 		if (useCompactAlerts) {
+			const handleToggle = (key: string) => {
+				setExpandedAlertKeys((current) => {
+					const next = new Set(current)
+					if (next.has(key)) {
+						next.delete(key)
+					} else {
+						next.add(key)
+					}
+					try {
+						localStorage.setItem(
+							COMPACT_ALERT_STORAGE_KEY,
+							JSON.stringify(Array.from(next)),
+						)
+					} catch (error) {
+						console.error('Failed to persist compact alert state', error)
+					}
+					return next
+				})
+			}
+
 			return (
 				<motion.aside
 					initial={{ opacity: 0 }}
@@ -346,18 +407,14 @@ export const WeatherAlert = ({
 					exit={{ scale: 0.95, opacity: 0 }}
 					role="alert"
 					aria-live="assertive"
-					className="fixed top-0 left-0 flex w-auto flex-row flex-wrap items-start gap-2 p-3"
+					className="fixed top-0 left-0 flex w-auto flex-col items-start gap-2 p-3"
 				>
 					{alerts.map((alert) => (
 						<CompactAlertButton
 							key={alert.key}
 							alert={alert}
-							isExpanded={alert.key === expandedAlertKey}
-							onToggle={() =>
-								setExpandedAlertKey((current) =>
-									current === alert.key ? null : alert.key,
-								)
-							}
+							isExpanded={expandedAlertKeys.has(alert.key)}
+							onToggle={() => handleToggle(alert.key)}
 						/>
 					))}
 				</motion.aside>

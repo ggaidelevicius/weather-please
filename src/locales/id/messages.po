@@ -53,19 +53,19 @@ msgstr "{0} mph"
 #~ msgid "{label}"
 #~ msgstr "Bahasa"
 
-#: src/components/weather-alert.tsx:214
+#: src/components/weather-alert.tsx:247
 msgid "{precipitationInches} inches of precipitation expected over the next {durationHours} hours"
 msgstr "{precipitationInches} inci curah hujan diperkirakan dalam {durationHours} jam ke depan."
 
-#: src/components/weather-alert.tsx:206
+#: src/components/weather-alert.tsx:239
 msgid "{precipitationInches} inches of precipitation expected over the next hour"
 msgstr "{precipitationInches} inci curah hujan diperkirakan dalam satu jam ke depan."
 
-#: src/components/weather-alert.tsx:198
+#: src/components/weather-alert.tsx:231
 msgid "{precipitationMm}mm of precipitation expected over the next {durationHours} hours"
 msgstr "{precipitationMm} mm curah hujan diperkirakan dalam {durationHours} jam ke depan."
 
-#: src/components/weather-alert.tsx:191
+#: src/components/weather-alert.tsx:224
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
 msgstr "{precipitationMm} mm curah hujan diperkirakan dalam satu jam ke depan."
 
@@ -79,7 +79,7 @@ msgstr "<0>Akses lokasi ditolak.</0> Periksa pengaturan browser Anda untuk mengi
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Akses lokasi ditolak.</0> Klik ikon lokasi di bilah alamat, lalu pilih \"selalu izinkan akses ke lokasi Anda\". Kemudian klik tombol di bawah untuk mencoba lagi."
 
-#: src/components/settings.tsx:405
+#: src/components/settings.tsx:400
 msgid "☕ Gift a coffee"
 msgstr "☕ Berikan secangkir kopi"
 
@@ -87,11 +87,11 @@ msgstr "☕ Berikan secangkir kopi"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Kirim masukan"
 
-#: src/components/settings.tsx:389
+#: src/components/settings.tsx:384
 msgid "🌟 Leave a review"
 msgstr "🌟 Tinggalkan ulasan"
 
-#: src/components/settings.tsx:397
+#: src/components/settings.tsx:392
 msgid "🐛 Report a bug"
 msgstr "🐛 Laporkan bug"
 
@@ -99,7 +99,7 @@ msgstr "🐛 Laporkan bug"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Minta fitur"
 
-#: src/components/settings.tsx:416
+#: src/components/settings.tsx:411
 msgid "🔒 Privacy policy"
 msgstr "🔒 Kebijakan privasi"
 
@@ -227,7 +227,7 @@ msgstr "Saat sinar matahari melewati atmosfer Bumi, panjang gelombang biru yang 
 msgid "As the Earth turns, the new year arrives in a slow-moving wave that travels across time zones for nearly a full day."
 msgstr "Ketika Bumi berputar, tahun baru tiba dalam gelombang lambat yang melintasi zona waktu selama hampir satu hari penuh."
 
-#: src/components/settings.tsx:261
+#: src/components/settings.tsx:256
 msgid "Astronomy"
 msgstr "Astronomi"
 
@@ -463,7 +463,7 @@ msgstr "Bahkan hari ini, hati kertas dan catatan yang tenang melanjutkan tradisi
 msgid "Evergreens, candles, bells, and stars echo a shared theme drawn from those early traditions: light enduring through the darkest part of the year in the cultures where the holiday first formed."
 msgstr "Selalu hijau, lilin, lonceng, dan bintang menggema tema bersama dari tradisi awal itu: cahaya yang bertahan melalui bagian tergelap tahun di budaya tempat hari raya ini pertama kali terbentuk."
 
-#: src/components/weather-alert.tsx:158
+#: src/components/weather-alert.tsx:191
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
 msgstr "UV ekstrem untuk {durationOfExtremeUv} jam kedepan"
 
@@ -471,11 +471,11 @@ msgstr "UV ekstrem untuk {durationOfExtremeUv} jam kedepan"
 #~ msgid "Extreme UV for the next 12 hours"
 #~ msgstr "UV ekstrem untuk 12 jam kedepan"
 
-#: src/components/weather-alert.tsx:162
+#: src/components/weather-alert.tsx:195
 msgid "Extreme UV for the next hour"
 msgstr "UV ekstrem untuk jam kedepan"
 
-#: src/components/weather-alert.tsx:149
+#: src/components/weather-alert.tsx:182
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "UV ekstrem dimulai dalam {timeUntilExtremeUv} jam"
 
@@ -507,7 +507,7 @@ msgstr "Cepat dan terang, Perseid sering menghasilkan bola api spektakuler yang 
 msgid "February"
 msgstr "Februari"
 
-#: src/components/settings.tsx:381
+#: src/components/settings.tsx:376
 msgid "Feedback"
 msgstr "Masukan"
 
@@ -559,19 +559,19 @@ msgstr "Hujan meteor Geminid"
 msgid "General"
 msgstr "Umum"
 
-#: src/components/weather-alert.tsx:244
+#: src/components/weather-alert.tsx:277
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "Umumnya angin kencang selama {durationOfStrongWind} jam ke depan"
 
-#: src/components/weather-alert.tsx:250
+#: src/components/weather-alert.tsx:283
 msgid "Generally strong wind for the next 24 hours"
 msgstr "Umumnya angin kencang selama 24 jam ke depan"
 
-#: src/components/weather-alert.tsx:253
+#: src/components/weather-alert.tsx:286
 msgid "Generally strong wind for the next hour"
 msgstr "Umumnya angin kencang selama jam berikutnya"
 
-#: src/components/weather-alert.tsx:236
+#: src/components/weather-alert.tsx:269
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "Umumnya angin kencang mulai dalam {timeUntilStrongWind} jam"
 
@@ -847,7 +847,7 @@ msgstr "Lintang"
 msgid "Leave a review"
 msgstr "Tinggalkan ulasan"
 
-#: src/components/settings.tsx:408
+#: src/components/settings.tsx:403
 msgid "Legal"
 msgstr "Legal"
 
@@ -919,19 +919,19 @@ msgstr "Bujur"
 #~ msgid "Looks like we can't grab your location info automatically."
 #~ msgstr "Sepertinya kami tidak dapat mengambil info lokasi Anda secara otomatis."
 
-#: src/components/weather-alert.tsx:312
+#: src/components/weather-alert.tsx:345
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "Visibilitas rendah untuk {durationOfLowVisibility} jam ke depan"
 
-#: src/components/weather-alert.tsx:318
+#: src/components/weather-alert.tsx:351
 msgid "Low visibility for the next 24 hours"
 msgstr "Visibilitas rendah untuk 24 jam ke depan"
 
-#: src/components/weather-alert.tsx:321
+#: src/components/weather-alert.tsx:354
 msgid "Low visibility for the next hour"
 msgstr "Visibilitas rendah untuk jam ke depan"
 
-#: src/components/weather-alert.tsx:306
+#: src/components/weather-alert.tsx:339
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "Visibilitas rendah dimulai dalam {timeUntilLowVisibility} jam"
 
@@ -1076,7 +1076,7 @@ msgstr "Keesokan harinya, bubuk warna memenuhi udara saat orang-orang melampaui 
 msgid "Orionids Meteor Shower"
 msgstr "Hujan meteor Orionid"
 
-#: src/components/settings.tsx:356
+#: src/components/settings.tsx:351
 msgid "Other holidays"
 msgstr "Hari libur lainnya"
 
@@ -1157,7 +1157,7 @@ msgstr "Alih-alih perpisahan yang khidmat, tradisi ini memperlakukan mengenang s
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "Angpao merah, jeruk mandarin, dan kuplet kaligrafi menyampaikan harapan akan kelimpahan, kebahagiaan, dan awal yang segar."
 
-#: src/components/settings.tsx:313
+#: src/components/settings.tsx:308
 msgid "Religious & cultural"
 msgstr "Keagamaan & budaya"
 
@@ -1182,15 +1182,15 @@ msgstr "Sabtu"
 #~ msgid "Save"
 #~ msgstr "Simpan"
 
-#: src/components/settings.tsx:218
+#: src/components/settings.tsx:213
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "Efek musiman dinonaktifkan karena browser Anda tampaknya menggunakan renderer perangkat lunak. Aktifkan akselerasi perangkat keras untuk melihat efek ini."
 
-#: src/components/settings.tsx:209
+#: src/components/settings.tsx:204
 msgid "Seasonal events"
 msgstr "Acara musiman"
 
-#: src/components/settings.tsx:233
+#: src/components/settings.tsx:228
 msgid "Seasons & nature"
 msgstr "Musim & alam"
 
@@ -1220,130 +1220,130 @@ msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and
 msgstr "Manisan bersama, bunga, dan hadiah kecil menjaga perayaan tetap intim dan personal."
 
 #: src/components/settings.tsx:181
-msgid "Show alert icons that expand to text when clicked."
-msgstr "Tampilkan ikon peringatan yang akan berkembang menjadi teks saat diklik."
+#~ msgid "Show alert icons that expand to text when clicked."
+#~ msgstr "Tampilkan ikon peringatan yang akan berkembang menjadi teks saat diklik."
 
-#: src/components/settings.tsx:246
+#: src/components/settings.tsx:241
 msgid "Show Autumn Equinox event"
 msgstr "Tampilkan Ekuinoks musim gugur"
 
-#: src/components/settings.tsx:351
+#: src/components/settings.tsx:346
 msgid "Show Christmas Day event"
 msgstr "Tampilkan Hari Natal"
 
-#: src/components/settings.tsx:374
+#: src/components/settings.tsx:369
 msgid "Show Day of the Dead event"
 msgstr "Tampilkan Hari Orang Mati"
 
-#: src/components/settings.tsx:326
+#: src/components/settings.tsx:321
 msgid "Show Diwali event"
 msgstr "Tampilkan Diwali"
 
-#: src/components/settings.tsx:256
+#: src/components/settings.tsx:251
 msgid "Show Earth Day event"
 msgstr "Tampilkan Hari Bumi"
 
-#: src/components/settings.tsx:321
+#: src/components/settings.tsx:316
 msgid "Show Easter event"
 msgstr "Tampilkan Paskah"
 
-#: src/components/settings.tsx:341
+#: src/components/settings.tsx:336
 msgid "Show Eid al-Adha event"
 msgstr "Tampilkan Idul Adha"
 
-#: src/components/settings.tsx:336
+#: src/components/settings.tsx:331
 msgid "Show Eid al-Fitr event"
 msgstr "Tampilkan Idul Fitri"
 
-#: src/components/settings.tsx:274
+#: src/components/settings.tsx:269
 msgid "Show Eta Aquariids meteor shower event"
 msgstr "Tampilkan hujan meteor Eta Aquariid"
 
-#: src/components/settings.tsx:187
+#: src/components/settings.tsx:182
 msgid "Show extreme UV alerts"
 msgstr "Tampilkan peringatan UV ekstrem"
 
-#: src/components/settings.tsx:308
+#: src/components/settings.tsx:303
 msgid "Show Geminids meteor shower event"
 msgstr "Tampilkan hujan meteor Geminid"
 
-#: src/components/settings.tsx:369
+#: src/components/settings.tsx:364
 msgid "Show Halloween event"
 msgstr "Tampilkan Halloween"
 
-#: src/components/settings.tsx:346
+#: src/components/settings.tsx:341
 msgid "Show Hanukkah event"
 msgstr "Tampilkan Hanukkah"
 
-#: src/components/settings.tsx:192
+#: src/components/settings.tsx:187
 msgid "Show high precipitation alerts"
 msgstr "Tampilkan peringatan presipitasi tinggi"
 
-#: src/components/settings.tsx:331
+#: src/components/settings.tsx:326
 msgid "Show Holi event"
 msgstr "Tampilkan Holi"
 
-#: src/components/settings.tsx:284
+#: src/components/settings.tsx:279
 msgid "Show Leonids meteor shower event"
 msgstr "Tampilkan hujan meteor Leonid"
 
-#: src/components/settings.tsx:202
+#: src/components/settings.tsx:197
 msgid "Show low visibility alerts"
 msgstr "Tampilkan peringatan visibilitas rendah"
 
-#: src/components/settings.tsx:316
+#: src/components/settings.tsx:311
 msgid "Show Lunar New Year event"
 msgstr "Tampilkan Tahun Baru Imlek"
 
-#: src/components/settings.tsx:269
+#: src/components/settings.tsx:264
 msgid "Show Lyrids meteor shower event"
 msgstr "Tampilkan hujan meteor Lyrid"
 
-#: src/components/settings.tsx:359
+#: src/components/settings.tsx:354
 msgid "Show New Year's Day event"
 msgstr "Tampilkan Tahun Baru"
 
-#: src/components/settings.tsx:279
+#: src/components/settings.tsx:274
 msgid "Show Orionids meteor shower event"
 msgstr "Tampilkan hujan meteor Orionid"
 
-#: src/components/settings.tsx:303
+#: src/components/settings.tsx:298
 msgid "Show Perseids meteor shower event"
 msgstr "Tampilkan hujan meteor Perseid"
 
-#: src/components/settings.tsx:264
+#: src/components/settings.tsx:259
 msgid "Show Quadrantids meteor shower event"
 msgstr "Tampilkan hujan meteor Quadrantid"
 
-#: src/components/settings.tsx:212
+#: src/components/settings.tsx:207
 msgid "Show seasonal events"
 msgstr "Tampilkan acara musiman"
 
-#: src/components/settings.tsx:228
+#: src/components/settings.tsx:223
 msgid "Show seasonal tile glow"
 msgstr "Tampilkan cahaya ubin musiman"
 
-#: src/components/settings.tsx:236
+#: src/components/settings.tsx:231
 msgid "Show Spring Equinox event"
 msgstr "Tampilkan Ekuinoks musim semi"
 
-#: src/components/settings.tsx:197
+#: src/components/settings.tsx:192
 msgid "Show strong wind alerts"
 msgstr "Tampilkan peringatan angin kencang"
 
-#: src/components/settings.tsx:241
+#: src/components/settings.tsx:236
 msgid "Show Summer Solstice event"
 msgstr "Tampilkan Solstis musim panas"
 
-#: src/components/settings.tsx:296
+#: src/components/settings.tsx:291
 msgid "Show total lunar eclipse event"
 msgstr "Tampilkan gerhana bulan total"
 
-#: src/components/settings.tsx:289
+#: src/components/settings.tsx:284
 msgid "Show total solar eclipse event"
 msgstr "Tampilkan gerhana matahari total"
 
-#: src/components/settings.tsx:364
+#: src/components/settings.tsx:359
 msgid "Show Valentine's Day event"
 msgstr "Tampilkan Hari Valentine"
 
@@ -1351,7 +1351,7 @@ msgstr "Tampilkan Hari Valentine"
 msgid "Show weather alerts"
 msgstr "Tampilkan peringatan cuaca"
 
-#: src/components/settings.tsx:251
+#: src/components/settings.tsx:246
 msgid "Show Winter Solstice event"
 msgstr "Tampilkan Solstis musim dingin"
 
@@ -1412,19 +1412,19 @@ msgstr "Kisah seputar Holi berbeda-beda menurut wilayah, termasuk cerita Prahlad
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "Angin kencang untuk 1 jam ke depan"
 
-#: src/components/weather-alert.tsx:278
+#: src/components/weather-alert.tsx:311
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "Hembusan angin kencang untuk {durationOfStrongWind} jam ke depan"
 
-#: src/components/weather-alert.tsx:284
+#: src/components/weather-alert.tsx:317
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "Hembusan angin kencang untuk 24 jam ke depan"
 
-#: src/components/weather-alert.tsx:287
+#: src/components/weather-alert.tsx:320
 msgid "Strong wind gusts for the next hour"
 msgstr "Hembusan angin kencang untuk 1 jam ke depan"
 
-#: src/components/weather-alert.tsx:272
+#: src/components/weather-alert.tsx:305
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "Hembusan angin kencang dimulai dalam {timeUntilStrongWind} jam"
 
