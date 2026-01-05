@@ -5,6 +5,7 @@ import { Alert } from './alert'
 import type { Alerts } from '../hooks/use-weather'
 
 const PRECIPITATION_ALERT_THRESHOLD_MM = 15
+const UV_WARNING_LEAD_HOURS = 3
 
 interface AlertProps extends Alerts {
 	useMetric: boolean
@@ -31,22 +32,24 @@ export const WeatherAlert = ({
 
 	// UV Alert
 	if (showUvAlerts && hoursOfExtremeUv.includes(true)) {
-		const timeUntilExtremeUv = hoursOfExtremeUv.indexOf(true) + 1
+		const firstExtremeIndex = hoursOfExtremeUv.indexOf(true)
+		const timeUntilExtremeUv = firstExtremeIndex + 1
 		if (timeUntilExtremeUv > 1) {
-			alerts.push(
-				<Alert key="uvAlert" icon={IconAlertTriangle} variant="light-red">
-					<Trans>Extreme UV starting in {timeUntilExtremeUv} hours</Trans>
-				</Alert>,
-			)
+			if (timeUntilExtremeUv <= UV_WARNING_LEAD_HOURS) {
+				alerts.push(
+					<Alert key="uvAlert" icon={IconAlertTriangle} variant="light-red">
+						<Trans>Extreme UV starting in {timeUntilExtremeUv} hours</Trans>
+					</Alert>,
+				)
+			}
 		} else {
-			const durationOfExtremeUv = hoursOfExtremeUv.indexOf(false)
+			const firstEndIndex = hoursOfExtremeUv.indexOf(false)
+			const durationOfExtremeUv =
+				firstEndIndex === -1 ? hoursOfExtremeUv.length - 1 : firstEndIndex
 			alerts.push(
 				<Alert key="uvAlert" icon={IconAlertTriangle} variant="light-red">
 					{durationOfExtremeUv > 1 && (
 						<Trans>Extreme UV for the next {durationOfExtremeUv} hours</Trans>
-					)}
-					{durationOfExtremeUv < 0 && (
-						<Trans>Extreme UV for the next 12 hours</Trans>
 					)}
 					{durationOfExtremeUv === 1 && (
 						<Trans>Extreme UV for the next hour</Trans>

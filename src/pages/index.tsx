@@ -51,6 +51,7 @@ const App = () => {
 		config.lat,
 		config.lon,
 		changedLocation,
+		config.useAirQualityUvOverride,
 	)
 	const isOnboarded = Boolean(config.lat && config.lon)
 	const hemisphere = getHemisphereFromLatitude(config.lat)

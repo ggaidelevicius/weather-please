@@ -53,19 +53,19 @@ msgstr "{0} mph"
 #~ msgid "{label}"
 #~ msgstr "언어"
 
-#: src/components/weather-alert.tsx:96
+#: src/components/weather-alert.tsx:99
 msgid "{precipitationInches} inches of precipitation expected over the next {durationHours} hours"
 msgstr "앞으로 {durationHours}시간 동안 {precipitationInches}인치의 강수량이 예상됩니다."
 
-#: src/components/weather-alert.tsx:90
+#: src/components/weather-alert.tsx:93
 msgid "{precipitationInches} inches of precipitation expected over the next hour"
 msgstr "다음 1시간 동안 {precipitationInches}인치의 강수량이 예상됩니다."
 
-#: src/components/weather-alert.tsx:84
+#: src/components/weather-alert.tsx:87
 msgid "{precipitationMm}mm of precipitation expected over the next {durationHours} hours"
 msgstr "앞으로 {durationHours}시간 동안 {precipitationMm}mm의 강수량이 예상됩니다."
 
-#: src/components/weather-alert.tsx:79
+#: src/components/weather-alert.tsx:82
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
 msgstr "다음 1시간 동안 {precipitationMm}mm의 강수량이 예상됩니다."
 
@@ -79,7 +79,7 @@ msgstr "<0>위치 접근이 거부되었습니다.</0> 브라우저 설정에서
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>위치 접근이 거부되었습니다.</0> 주소 표시줄의 위치 아이콘을 클릭하고 \"항상 위치 접근 허용\"을 선택하세요. 그런 다음 아래 버튼을 클릭해 다시 시도하세요."
 
-#: src/components/settings.tsx:380
+#: src/components/settings.tsx:393
 msgid "☕ Gift a coffee"
 msgstr "☕ 커피 선물하기"
 
@@ -87,11 +87,11 @@ msgstr "☕ 커피 선물하기"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ 피드백 제출"
 
-#: src/components/settings.tsx:364
+#: src/components/settings.tsx:377
 msgid "🌟 Leave a review"
 msgstr "🌟 리뷰 남기기"
 
-#: src/components/settings.tsx:372
+#: src/components/settings.tsx:385
 msgid "🐛 Report a bug"
 msgstr "🐛 버그 신고"
 
@@ -99,7 +99,7 @@ msgstr "🐛 버그 신고"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 기능 요청"
 
-#: src/components/settings.tsx:391
+#: src/components/settings.tsx:404
 msgid "🔒 Privacy policy"
 msgstr "🔒 개인정보 처리방침"
 
@@ -227,7 +227,7 @@ msgstr "햇빛이 지구 대기를 통과할 때 짧은 파장의 푸른빛은 �
 msgid "As the Earth turns, the new year arrives in a slow-moving wave that travels across time zones for nearly a full day."
 msgstr "지구가 자전하면서 새해는 거의 하루에 걸쳐 시간대를 따라 천천히 이동하는 물결처럼 찾아옵니다."
 
-#: src/components/settings.tsx:236
+#: src/components/settings.tsx:249
 msgid "Astronomy"
 msgstr "천문학"
 
@@ -259,7 +259,7 @@ msgstr "모닥불, 늦은 모임, 밤샘 경야는 오래전부터 이 해의 �
 #~ msgid "Bug report"
 #~ msgstr "버그 보고"
 
-#: src/hooks/seasonal-events/valentines.tsx:65
+#: src/hooks/seasonal-events/valentines.tsx:71
 msgid "By the eighteenth century, handwritten notes and printed cards had helped turn the day into a ritual of letters and messages."
 msgstr "18세기에는 손글씨 쪽지와 인쇄 카드가 이 날을 편지와 메시지의 의식으로 굳히는 데 한몫했습니다."
 
@@ -451,7 +451,7 @@ msgstr "물병자리 에타 유성우"
 msgid "Even small choices — repairing, reusing, conserving, or simply walking a familiar trail — reflect its underlying spirit."
 msgstr "수리하고 재사용하고 아끼거나, 익숙한 산책로를 걷는 것 같은 작은 선택도 그 정신을 드러냅니다."
 
-#: src/hooks/seasonal-events/valentines.tsx:97
+#: src/hooks/seasonal-events/valentines.tsx:103
 msgid "Even today, paper hearts and quiet notes continue the tradition of deliberate kindness."
 msgstr "지금도 종이 하트와 조용한 쪽지는 의도적인 친절의 전통을 이어 갑니다."
 
@@ -459,19 +459,19 @@ msgstr "지금도 종이 하트와 조용한 쪽지는 의도적인 친절의 �
 msgid "Evergreens, candles, bells, and stars echo a shared theme drawn from those early traditions: light enduring through the darkest part of the year in the cultures where the holiday first formed."
 msgstr "상록수, 촛불, 종, 별은 초기 전통에서 나온 공통된 주제를 되새깁니다. 즉, 이 명절이 처음 형성된 문화권에서 한 해의 가장 어두운 때에도 빛이 이어진다는 것입니다."
 
-#: src/components/weather-alert.tsx:46
+#: src/components/weather-alert.tsx:52
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
 msgstr "다음 {durationOfExtremeUv}시간 동안 극심한 자외선"
 
 #: src/components/weather-alert.tsx:49
-msgid "Extreme UV for the next 12 hours"
-msgstr "다음 12시간 동안 극심한 자외선"
+#~ msgid "Extreme UV for the next 12 hours"
+#~ msgstr "다음 12시간 동안 극심한 자외선"
 
-#: src/components/weather-alert.tsx:52
+#: src/components/weather-alert.tsx:55
 msgid "Extreme UV for the next hour"
 msgstr "다음 1시간 동안 극심한 자외선"
 
-#: src/components/weather-alert.tsx:38
+#: src/components/weather-alert.tsx:41
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "{timeUntilExtremeUv}시간 후에 극심한 자외선이 시작됩니다"
 
@@ -503,7 +503,7 @@ msgstr "빠르고 밝은 페르세우스자리 유성우는 종종 눈부신 화
 msgid "February"
 msgstr "2월"
 
-#: src/components/settings.tsx:356
+#: src/components/settings.tsx:369
 msgid "Feedback"
 msgstr "피드백"
 
@@ -555,19 +555,19 @@ msgstr "쌍둥이자리 유성우"
 msgid "General"
 msgstr "일반"
 
-#: src/components/weather-alert.tsx:121
+#: src/components/weather-alert.tsx:124
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "다음 {durationOfStrongWind}시간 동안 일반적으로 강한 바람"
 
-#: src/components/weather-alert.tsx:126
+#: src/components/weather-alert.tsx:129
 msgid "Generally strong wind for the next 24 hours"
 msgstr "다음 24시간 동안 일반적으로 강한 바람"
 
-#: src/components/weather-alert.tsx:129
+#: src/components/weather-alert.tsx:132
 msgid "Generally strong wind for the next hour"
 msgstr "다음 1시간 동안 일반적으로 강한 바람"
 
-#: src/components/weather-alert.tsx:111
+#: src/components/weather-alert.tsx:114
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}시간 후부터 일반적으로 강한 바람 시작"
 
@@ -591,7 +591,7 @@ msgstr "하누카"
 msgid "Hanukkah is a Jewish festival of lights, observed over eight nights."
 msgstr "하누카는 8밤 동안 지키는 유대인의 빛의 축제입니다."
 
-#: src/hooks/seasonal-events/valentines.tsx:75
+#: src/hooks/seasonal-events/valentines.tsx:81
 msgid "Hearts, roses, and red ribbons became familiar symbols of devotion, warmth, and connection."
 msgstr "하트와 장미, 붉은 리본은 헌신과 따뜻함, 연결의 익숙한 상징이 됐습니다."
 
@@ -642,7 +642,7 @@ msgstr "페르세우스자리 유성우의 기록은 거의 2,000년 전까지 �
 #: src/hooks/seasonal-events/summer-solstice.tsx:88
 #: src/hooks/seasonal-events/total-lunar-eclipse.tsx:51
 #: src/hooks/seasonal-events/total-solar-eclipse.tsx:42
-#: src/hooks/seasonal-events/valentines.tsx:56
+#: src/hooks/seasonal-events/valentines.tsx:62
 #: src/hooks/seasonal-events/winter-solstice.tsx:92
 msgid "History and meaning"
 msgstr "역사와 의미"
@@ -786,7 +786,7 @@ msgstr "전 세계에서 깊이 종교적인 방식과 완전히 세속적인 �
 msgid "It is observed by millions across India and by communities around the world."
 msgstr "인도 전역과 전 세계의 공동체에서 수백만 명이 기념합니다."
 
-#: src/hooks/seasonal-events/valentines.tsx:49
+#: src/hooks/seasonal-events/valentines.tsx:55
 msgid "It is often marked by small gestures that simply say someone has been remembered."
 msgstr "누군가를 기억하고 있다는 뜻을 전하는 작은 몸짓으로 흔히 표시됩니다."
 
@@ -843,7 +843,7 @@ msgstr "위도"
 msgid "Leave a review"
 msgstr "리뷰를 남겨주세요"
 
-#: src/components/settings.tsx:383
+#: src/components/settings.tsx:396
 msgid "Legal"
 msgstr "법적"
 
@@ -894,7 +894,7 @@ msgstr "빛은 은빛 기운으로 바뀌고 그림자는 선명해지며, 기�
 #: src/hooks/seasonal-events/spring-equinox.tsx:106
 #: src/hooks/seasonal-events/summer-solstice.tsx:105
 #: src/hooks/seasonal-events/total-lunar-eclipse.tsx:84
-#: src/hooks/seasonal-events/valentines.tsx:88
+#: src/hooks/seasonal-events/valentines.tsx:94
 #: src/hooks/seasonal-events/winter-solstice.tsx:109
 msgid "Little wonder"
 msgstr "작은 경이"
@@ -915,19 +915,19 @@ msgstr "경도"
 #~ msgid "Looks like we can't grab your location info automatically."
 #~ msgstr "자동으로 위치 정보를 가져올 수 없는 것 같습니다."
 
-#: src/components/weather-alert.tsx:183
+#: src/components/weather-alert.tsx:186
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "다음 {durationOfLowVisibility} 시간 동안 저시력"
 
-#: src/components/weather-alert.tsx:188
+#: src/components/weather-alert.tsx:191
 msgid "Low visibility for the next 24 hours"
 msgstr "다음 24시간 동안 저시력"
 
-#: src/components/weather-alert.tsx:191
+#: src/components/weather-alert.tsx:194
 msgid "Low visibility for the next hour"
 msgstr "다음 1시간 동안 저시력"
 
-#: src/components/weather-alert.tsx:173
+#: src/components/weather-alert.tsx:176
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "{timeUntilLowVisibility} 시간 후 저시력 시작"
 
@@ -1072,7 +1072,7 @@ msgstr "다음 날에는 색가루가 공기 가득 퍼지며, 사람들은 사�
 msgid "Orionids Meteor Shower"
 msgstr "오리온자리 유성우"
 
-#: src/components/settings.tsx:331
+#: src/components/settings.tsx:344
 msgid "Other holidays"
 msgstr "기타 공휴일"
 
@@ -1116,7 +1116,7 @@ msgstr "흐림"
 #: src/hooks/seasonal-events/summer-solstice.tsx:78
 #: src/hooks/seasonal-events/total-lunar-eclipse.tsx:35
 #: src/hooks/seasonal-events/total-solar-eclipse.tsx:26
-#: src/hooks/seasonal-events/valentines.tsx:40
+#: src/hooks/seasonal-events/valentines.tsx:46
 #: src/hooks/seasonal-events/winter-solstice.tsx:76
 msgid "Overview"
 msgstr "개요"
@@ -1153,7 +1153,7 @@ msgstr "엄숙한 작별이라기보다, 기억을 생동감 있고 공동체적
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "붉은 봉투, 귤, 서예 대련은 풍요와 행복, 새로운 시작을 기원하는 마음을 담습니다."
 
-#: src/components/settings.tsx:288
+#: src/components/settings.tsx:301
 msgid "Religious & cultural"
 msgstr "종교 및 문화"
 
@@ -1165,7 +1165,7 @@ msgstr "버그 신고하기"
 #~ msgid "Resource usage"
 #~ msgstr "리소스 사용"
 
-#: src/pages/index.tsx:315
+#: src/pages/index.tsx:316
 msgid "Retry"
 msgstr "다시 시도"
 
@@ -1178,15 +1178,15 @@ msgstr "토요일"
 #~ msgid "Save"
 #~ msgstr "저장"
 
-#: src/components/settings.tsx:193
+#: src/components/settings.tsx:206
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "브라우저가 소프트웨어 렌더러를 사용하는 것으로 보여 계절 효과가 비활성화되었습니다. 이 효과를 보려면 하드웨어 가속을 활성화하세요."
 
-#: src/components/settings.tsx:184
+#: src/components/settings.tsx:197
 msgid "Seasonal events"
 msgstr "계절 이벤트"
 
-#: src/components/settings.tsx:208
+#: src/components/settings.tsx:221
 msgid "Seasons & nature"
 msgstr "계절과 자연"
 
@@ -1211,139 +1211,139 @@ msgstr "설정"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "익명화된 충돌 데이터 및 오류 로그 공유"
 
-#: src/hooks/seasonal-events/valentines.tsx:81
+#: src/hooks/seasonal-events/valentines.tsx:87
 msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and personal."
 msgstr "함께 나누는 달콤한 간식과 꽃, 작은 선물은 축제를 친밀하고 개인적인 것으로 유지해 줍니다."
 
-#: src/components/settings.tsx:221
+#: src/components/settings.tsx:234
 msgid "Show Autumn Equinox event"
 msgstr "추분 표시"
 
-#: src/components/settings.tsx:326
+#: src/components/settings.tsx:339
 msgid "Show Christmas Day event"
 msgstr "크리스마스 표시"
 
-#: src/components/settings.tsx:349
+#: src/components/settings.tsx:362
 msgid "Show Day of the Dead event"
 msgstr "망자의 날 표시"
 
-#: src/components/settings.tsx:301
+#: src/components/settings.tsx:314
 msgid "Show Diwali event"
 msgstr "디왈리 표시"
 
-#: src/components/settings.tsx:231
+#: src/components/settings.tsx:244
 msgid "Show Earth Day event"
 msgstr "지구의 날 표시"
 
-#: src/components/settings.tsx:296
+#: src/components/settings.tsx:309
 msgid "Show Easter event"
 msgstr "부활절 표시"
 
-#: src/components/settings.tsx:316
+#: src/components/settings.tsx:329
 msgid "Show Eid al-Adha event"
 msgstr "이드 알아드하 표시"
 
-#: src/components/settings.tsx:311
+#: src/components/settings.tsx:324
 msgid "Show Eid al-Fitr event"
 msgstr "이드 알피트르 표시"
 
-#: src/components/settings.tsx:249
+#: src/components/settings.tsx:262
 msgid "Show Eta Aquariids meteor shower event"
 msgstr "물병자리 에타 유성우 표시"
 
-#: src/components/settings.tsx:162
+#: src/components/settings.tsx:175
 msgid "Show extreme UV alerts"
 msgstr "극한의 UV 경보 표시"
 
-#: src/components/settings.tsx:283
+#: src/components/settings.tsx:296
 msgid "Show Geminids meteor shower event"
 msgstr "쌍둥이자리 유성우 표시"
 
-#: src/components/settings.tsx:344
+#: src/components/settings.tsx:357
 msgid "Show Halloween event"
 msgstr "할로윈 표시"
 
-#: src/components/settings.tsx:321
+#: src/components/settings.tsx:334
 msgid "Show Hanukkah event"
 msgstr "하누카 표시"
 
-#: src/components/settings.tsx:167
+#: src/components/settings.tsx:180
 msgid "Show high precipitation alerts"
 msgstr "강수량이 많은 경보 표시"
 
-#: src/components/settings.tsx:306
+#: src/components/settings.tsx:319
 msgid "Show Holi event"
 msgstr "홀리 표시"
 
-#: src/components/settings.tsx:259
+#: src/components/settings.tsx:272
 msgid "Show Leonids meteor shower event"
 msgstr "사자자리 유성우 표시"
 
-#: src/components/settings.tsx:177
+#: src/components/settings.tsx:190
 msgid "Show low visibility alerts"
 msgstr "저시력 경보 표시"
 
-#: src/components/settings.tsx:291
+#: src/components/settings.tsx:304
 msgid "Show Lunar New Year event"
 msgstr "음력 새해 표시"
 
-#: src/components/settings.tsx:244
+#: src/components/settings.tsx:257
 msgid "Show Lyrids meteor shower event"
 msgstr "거문고자리 유성우 표시"
 
-#: src/components/settings.tsx:334
+#: src/components/settings.tsx:347
 msgid "Show New Year's Day event"
 msgstr "새해 첫날 표시"
 
-#: src/components/settings.tsx:254
+#: src/components/settings.tsx:267
 msgid "Show Orionids meteor shower event"
 msgstr "오리온자리 유성우 표시"
 
-#: src/components/settings.tsx:278
+#: src/components/settings.tsx:291
 msgid "Show Perseids meteor shower event"
 msgstr "페르세우스자리 유성우 표시"
 
-#: src/components/settings.tsx:239
+#: src/components/settings.tsx:252
 msgid "Show Quadrantids meteor shower event"
 msgstr "사분의자리 유성우 표시"
 
-#: src/components/settings.tsx:187
+#: src/components/settings.tsx:200
 msgid "Show seasonal events"
 msgstr "계절 이벤트 표시"
 
-#: src/components/settings.tsx:203
+#: src/components/settings.tsx:216
 msgid "Show seasonal tile glow"
 msgstr "계절 타일 글로우 표시"
 
-#: src/components/settings.tsx:211
+#: src/components/settings.tsx:224
 msgid "Show Spring Equinox event"
 msgstr "춘분 표시"
 
-#: src/components/settings.tsx:172
+#: src/components/settings.tsx:185
 msgid "Show strong wind alerts"
 msgstr "강풍 경보 보이기"
 
-#: src/components/settings.tsx:216
+#: src/components/settings.tsx:229
 msgid "Show Summer Solstice event"
 msgstr "하지 표시"
 
-#: src/components/settings.tsx:271
+#: src/components/settings.tsx:284
 msgid "Show total lunar eclipse event"
 msgstr "개기월식 표시"
 
-#: src/components/settings.tsx:264
+#: src/components/settings.tsx:277
 msgid "Show total solar eclipse event"
 msgstr "개기일식 표시"
 
-#: src/components/settings.tsx:339
+#: src/components/settings.tsx:352
 msgid "Show Valentine's Day event"
 msgstr "발렌타인데이 표시"
 
-#: src/components/settings.tsx:155
+#: src/components/settings.tsx:168
 msgid "Show weather alerts"
 msgstr "날씨 경보 표시"
 
-#: src/components/settings.tsx:226
+#: src/components/settings.tsx:239
 msgid "Show Winter Solstice event"
 msgstr "동지 표시"
 
@@ -1404,19 +1404,19 @@ msgstr "홀리를 둘러싼 이야기는 지역마다 다르며, 프라흘라드
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "다음 1 시간 동안 강풍"
 
-#: src/components/weather-alert.tsx:152
+#: src/components/weather-alert.tsx:155
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "다음 {durationOfStrongWind} 시간 동안 강한 바람"
 
-#: src/components/weather-alert.tsx:157
+#: src/components/weather-alert.tsx:160
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "다음 24 시간 동안 강한 바람"
 
-#: src/components/weather-alert.tsx:160
+#: src/components/weather-alert.tsx:163
 msgid "Strong wind gusts for the next hour"
 msgstr "다음 1 시간 동안 강한 바람"
 
-#: src/components/weather-alert.tsx:142
+#: src/components/weather-alert.tsx:145
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind} 시간 후 강한 바람이 시작됩니다"
 
@@ -1448,7 +1448,7 @@ msgstr "상징과 제물"
 #: src/hooks/seasonal-events/diwali.tsx:91
 #: src/hooks/seasonal-events/halloween.tsx:69
 #: src/hooks/seasonal-events/holi.tsx:159
-#: src/hooks/seasonal-events/valentines.tsx:72
+#: src/hooks/seasonal-events/valentines.tsx:78
 msgid "Symbols and rituals"
 msgstr "상징과 의식"
 
@@ -1501,7 +1501,7 @@ msgstr "쌍둥이자리 유성우는 한 해 중 가장 강하고 믿을 만한 
 msgid "The holiday commemorates the story of Ibrahim and his willingness to sacrifice in obedience to God."
 msgstr "이 명절은 이브라힘이 하느님께 순종해 희생을 감행하려 했던 이야기를 기념합니다."
 
-#: src/hooks/seasonal-events/valentines.tsx:59
+#: src/hooks/seasonal-events/valentines.tsx:65
 msgid "The holiday draws on legends of Saint Valentine and the traditions of medieval courtly love."
 msgstr "이 명절은 성 발렌타인의 전설과 중세의 궁정 사랑 전통에서 뿌리를 찾습니다."
 
@@ -1588,7 +1588,7 @@ msgstr "홀리 전날 밤에는 홀리카 다한(Holika Dahan)이라는 의식�
 msgid "The night encourages imagination to wander, as if even the moon were part of the performance."
 msgstr "그 밤은 상상력이 떠돌도록 부추겨, 마치 달조차 공연의 일부인 듯 느끼게 합니다."
 
-#: src/hooks/seasonal-events/valentines.tsx:91
+#: src/hooks/seasonal-events/valentines.tsx:97
 msgid "The oldest known Valentine is a fifteenth-century poem written from imprisonment in the Tower of London."
 msgstr "가장 오래된 것으로 알려진 발렌타인 카드는 런던탑에 수감된 상태에서 쓰인 15세기 시입니다."
 
@@ -1777,11 +1777,15 @@ msgstr "다시 시도"
 msgid "Tuesday"
 msgstr "화요일"
 
+#: src/components/settings.tsx:161
+msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
+msgstr "Weather Please에서 제공하는 UV 지수가 지역 स्रोत보다 지속적으로 낮다면 이 옵션을 켜세요."
+
 #: src/hooks/seasonal-events/summer-solstice.tsx:108
 msgid "Twilight lingers, insects fill the air with song, and the sky can feel almost endless."
 msgstr "어스름이 길게 남고, 곤충들의 노랫소리가 공기를 채우며, 하늘은 거의 끝이 없어 보일 수 있습니다."
 
-#: src/pages/index.tsx:309
+#: src/pages/index.tsx:310
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "날씨 데이터를 가져올 수 없습니다. 인터넷 연결을 확인하고 다시 시도하세요."
 
@@ -1819,6 +1823,10 @@ msgstr "대부분의 유성우와 달리, 쌍둥이자리 유성우는 혜성이
 #~ msgid "Usability and functionality"
 #~ msgstr "사용 용이성 및 기능성"
 
+#: src/components/settings.tsx:156
+msgid "Use Global Chemistry Models (CAMS)"
+msgstr "글로벌 화학 모델(CAMS) 사용"
+
 #: src/components/settings.tsx:91
 #~ msgid "Use keyboard shortcuts"
 #~ msgstr "키보드 단축키 사용"
@@ -1832,7 +1840,7 @@ msgstr "메트릭 숫자 형식 사용"
 msgid "Valentine's Day"
 msgstr "발렌타인데이"
 
-#: src/hooks/seasonal-events/valentines.tsx:43
+#: src/hooks/seasonal-events/valentines.tsx:49
 msgid "Valentine’s Day celebrates affection in many forms, from romantic love to friendship and quiet acts of care."
 msgstr "발렌타인데이는 연애 감정부터 우정, 그리고 조용한 돌봄의 행동까지 다양한 형태의 애정을 기념합니다."
 
@@ -1856,7 +1864,7 @@ msgstr "관측 방법"
 msgid "Weather"
 msgstr "날씨"
 
-#: src/pages/index.tsx:332
+#: src/pages/index.tsx:333
 msgid "weather data provided by open-meteo"
 msgstr "날씨 데이터 제공: open-meteo"
 

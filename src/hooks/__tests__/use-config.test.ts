@@ -84,6 +84,7 @@ const mockValidConfig: Config = {
 	showEidAlAdhaEvent: true,
 	showHanukkahEvent: true,
 	showChristmasEvent: true,
+	useAirQualityUvOverride: false,
 	daysToRetrieve: '3',
 	identifier: 'day',
 	installed: 1640995200000,
@@ -138,6 +139,7 @@ describe('useConfig - Core Functionality', () => {
 			showEidAlAdhaEvent: true,
 			showHanukkahEvent: true,
 			showChristmasEvent: true,
+			useAirQualityUvOverride: false,
 			daysToRetrieve: '3',
 			identifier: 'day',
 			installed: expect.any(Number),
@@ -158,27 +160,18 @@ describe('useConfig - Core Functionality', () => {
 		})
 	})
 
-	it('migrates legacy seasonal surprise keys', async () => {
+	it('enables air quality UV override for Australia when setting is missing', async () => {
 		const legacyConfig = { ...mockValidConfig } as Record<string, unknown>
-
-		legacyConfig.showSeasonalSurprises = false
-		legacyConfig.showNewYearsSurprise = false
-		legacyConfig.showValentinesSurprise = true
-		legacyConfig.showLunarNewYearSurprise = false
-		delete legacyConfig.showSeasonalEvents
-		delete legacyConfig.showNewYearsEvent
-		delete legacyConfig.showValentinesEvent
-		delete legacyConfig.showLunarNewYearEvent
+		delete legacyConfig.useAirQualityUvOverride
+		legacyConfig.lat = '-31.8983'
+		legacyConfig.lon = '115.9436'
 
 		localStorageMock.config = JSON.stringify(legacyConfig)
 
 		const { result } = renderHook(() => useConfig())
 
 		await waitFor(() => {
-			expect(result.current.config.showSeasonalEvents).toBe(false)
-			expect(result.current.config.showNewYearsEvent).toBe(false)
-			expect(result.current.config.showValentinesEvent).toBe(true)
-			expect(result.current.config.showLunarNewYearEvent).toBe(false)
+			expect(result.current.config.useAirQualityUvOverride).toBe(true)
 		})
 	})
 

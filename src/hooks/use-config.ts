@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useState } from 'react'
 import { z } from 'zod'
 import { mergeObjects } from '../lib/helpers'
 import { changeLocalisation, locales } from '../lib/i18n'
+import { isLocationInAustralia } from '../lib/location'
 import type { LocaleKey } from '../lib/i18n'
 
 const configSchema = z.object({
@@ -50,6 +51,7 @@ const configSchema = z.object({
 	showUvAlerts: z.boolean(),
 	showVisibilityAlerts: z.boolean(),
 	showWindAlerts: z.boolean(),
+	useAirQualityUvOverride: z.boolean(),
 	useMetric: z.boolean(),
 })
 
@@ -94,6 +96,7 @@ const initialState: Config = {
 	showEidAlAdhaEvent: true,
 	showHanukkahEvent: true,
 	showChristmasEvent: true,
+	useAirQualityUvOverride: false,
 	daysToRetrieve: '3',
 	identifier: 'day',
 	installed: new Date().getTime(),
@@ -119,9 +122,22 @@ const getInitialConfig = (): Config => {
 
 		if (objectShapesMatch.success) {
 			return parsed
-		} else {
-			return mergeObjects(parsed, initialState) as Config
 		}
+
+		const merged = mergeObjects(parsed, initialState) as Config
+		const hasAirQualityOverrideKey =
+			typeof parsed === 'object' &&
+			parsed !== null &&
+			'useAirQualityUvOverride' in parsed
+
+		if (
+			!hasAirQualityOverrideKey &&
+			isLocationInAustralia(merged.lat, merged.lon)
+		) {
+			return { ...merged, useAirQualityUvOverride: true }
+		}
+
+		return merged
 	} catch {
 		console.warn('Invalid config in localStorage, using defaults')
 		return initialState
@@ -150,8 +166,19 @@ export const useConfig = () => {
 				input.lon,
 			)
 		) {
-			localStorage.setItem('config', JSON.stringify(input))
-			setConfig(input)
+			const hasStoredConfig = Boolean(localStorage.getItem('config'))
+			const shouldEnableAirQualityUv =
+				!hasStoredConfig &&
+				!input.useAirQualityUvOverride &&
+				isLocationInAustralia(input.lat, input.lon)
+			const nextConfig = shouldEnableAirQualityUv
+				? { ...input, useAirQualityUvOverride: true }
+				: input
+			localStorage.setItem('config', JSON.stringify(nextConfig))
+			setConfig(nextConfig)
+			if (shouldEnableAirQualityUv) {
+				setInput(nextConfig)
+			}
 		}
 	}, [input])
 
