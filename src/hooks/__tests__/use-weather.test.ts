@@ -71,7 +71,7 @@ describe('useWeather - Core Functionality', () => {
 	const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'
 
 	it('initializes with default state', () => {
-		const { result } = renderHook(() => useWeather('', '', false), {
+		const { result } = renderHook(() => useWeather('', '', false, false), {
 			wrapper: createWrapper(),
 		})
 
@@ -91,7 +91,7 @@ describe('useWeather - Core Functionality', () => {
 	})
 
 	it('does not fetch when lat/lon are empty', () => {
-		renderHook(() => useWeather('', '', false), {
+		renderHook(() => useWeather('', '', false, false), {
 			wrapper: createWrapper(),
 		})
 
@@ -100,7 +100,7 @@ describe('useWeather - Core Functionality', () => {
 
 	it('is loading when lat/lon are provided but no cached data', () => {
 		const { result } = renderHook(
-			() => useWeather('40.7128', '-74.0060', false),
+			() => useWeather('40.7128', '-74.0060', false, false),
 			{
 				wrapper: createWrapper(),
 			},
@@ -142,9 +142,10 @@ describe('useWeather - Core Functionality', () => {
 		localStorageMock.setItem('cachedLat', '40.7128')
 		localStorageMock.setItem('cachedLon', '-74.0060')
 		localStorageMock.setItem('cachedTimeZone', userTimeZone)
+		localStorageMock.setItem('cachedUseAirQualityUv', JSON.stringify(false))
 
 		const { result } = renderHook(
-			() => useWeather('40.7128', '-74.0060', false),
+			() => useWeather('40.7128', '-74.0060', false, false),
 			{
 				wrapper: createWrapper(),
 			},
@@ -189,9 +190,10 @@ describe('useWeather - Core Functionality', () => {
 		localStorageMock.setItem('cachedLat', '40.7128')
 		localStorageMock.setItem('cachedLon', '-74.0060')
 		localStorageMock.setItem('cachedTimeZone', userTimeZone)
+		localStorageMock.setItem('cachedUseAirQualityUv', JSON.stringify(false))
 
 		const { result } = renderHook(
-			() => useWeather('40.7128', '-74.0060', false),
+			() => useWeather('40.7128', '-74.0060', false, false),
 			{
 				wrapper: createWrapper(),
 			},
@@ -210,7 +212,7 @@ describe('useWeather - Core Functionality', () => {
 		localStorageMock.setItem('cachedLon', '-74.0060')
 
 		const { result } = renderHook(
-			() => useWeather('40.7128', '-74.0060', false),
+			() => useWeather('40.7128', '-74.0060', false, false),
 			{
 				wrapper: createWrapper(),
 			},
@@ -222,7 +224,7 @@ describe('useWeather - Core Functionality', () => {
 
 	it('forces refetch when location changes', () => {
 		const { result } = renderHook(
-			() => useWeather('40.7128', '-74.0060', true),
+			() => useWeather('40.7128', '-74.0060', true, false),
 			{
 				wrapper: createWrapper(),
 			},
@@ -241,7 +243,7 @@ describe('useWeather - Core Functionality', () => {
 		]
 
 		scenarios.forEach(({ lat, lon, expected }) => {
-			const { result } = renderHook(() => useWeather(lat, lon, false), {
+			const { result } = renderHook(() => useWeather(lat, lon, false, false), {
 				wrapper: createWrapper(),
 			})
 			expect(result.current.isLoading).toBe(expected)

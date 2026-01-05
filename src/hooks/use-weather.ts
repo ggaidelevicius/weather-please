@@ -7,6 +7,7 @@ import {
 	processPrecipitationDuration,
 	processSimpleAlert,
 } from '../lib/alert-processor'
+import { isLocationInAustralia } from '../lib/location'
 import { queryClient } from '../lib/query-client'
 
 const ALERT_HOURS_UV = 13 // 12 hours + current hour
@@ -147,6 +148,7 @@ const getCachedWeather = (
 	lat: string,
 	lon: string,
 	timeZone: string,
+	shouldUseAirQualityUv: boolean,
 ): { weatherData: Data; alertData: Alerts } | null => {
 	const cachedLat = readStorageItem({
 		key: 'cachedLat',
@@ -159,6 +161,12 @@ const getCachedWeather = (
 	const cachedTimeZone = readStorageItem({
 		key: 'cachedTimeZone',
 		schema: z.string().min(1),
+	})
+	const cachedUseAirQualityUv = readStorageItem({
+		key: 'cachedUseAirQualityUv',
+		schema: z.boolean(),
+		parse: JSON.parse,
+		normalize: (value) => JSON.stringify(value),
 	})
 	const lastUpdatedDate = readStorageItem({
 		key: 'lastUpdated',
@@ -181,15 +189,22 @@ const getCachedWeather = (
 	if (
 		!cachedLat ||
 		!cachedLon ||
+		!cachedTimeZone ||
 		!lastUpdatedDate ||
 		!storedAlerts ||
-		!storedData
+		!storedData ||
+		cachedUseAirQualityUv === null
 	) {
 		return null
 	}
 
 	// Check if coordinates match
-	if (cachedLat !== lat || cachedLon !== lon || cachedTimeZone !== timeZone) {
+	if (
+		cachedLat !== lat ||
+		cachedLon !== lon ||
+		cachedTimeZone !== timeZone ||
+		cachedUseAirQualityUv !== shouldUseAirQualityUv
+	) {
 		return null
 	}
 	const now = new Date()
@@ -364,8 +379,11 @@ export const useWeather = (
 	lat: string,
 	lon: string,
 	changedLocation: boolean,
+	useAirQualityUvOverride: boolean,
 ) => {
 	const userTimeZone = getUserTimeZone()
+	const shouldUseAirQualityUv =
+		useAirQualityUvOverride || isLocationInAustralia(lat, lon)
 	const [alertData, setAlertData] = useState<Alerts>({
 		totalPrecipitation: {
 			precipitation: {
@@ -386,12 +404,11 @@ export const useWeather = (
 	const lastHourRef = useRef(new Date().getHours())
 
 	const { error, data, refetch } = useQuery<WeatherResponse>({
-		queryKey: ['weather', lat, lon, userTimeZone],
+		queryKey: ['weather', lat, lon, userTimeZone, shouldUseAirQualityUv],
 		queryFn: async () => {
 			try {
 				const encodedTimeZone = encodeURIComponent(userTimeZone)
 				const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=${encodedTimeZone}&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=${WEATHER_FORECAST_DAYS}`
-				const airQualityUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=uv_index&timeformat=unixtime&timezone=${encodedTimeZone}&forecast_days=${AIR_QUALITY_FORECAST_DAYS}`
 
 				const response = await fetch(weatherUrl)
 
@@ -406,22 +423,25 @@ export const useWeather = (
 				}
 
 				let airQualityData: AirQualityResponse | null = null
-				try {
-					const airQualityResponse = await fetch(airQualityUrl)
+				if (shouldUseAirQualityUv) {
+					const airQualityUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=uv_index&timeformat=unixtime&timezone=${encodedTimeZone}&forecast_days=${AIR_QUALITY_FORECAST_DAYS}`
+					try {
+						const airQualityResponse = await fetch(airQualityUrl)
 
-					if (!airQualityResponse.ok) {
-						throw new Error('Air quality fetch failed')
-					}
+						if (!airQualityResponse.ok) {
+							throw new Error('Air quality fetch failed')
+						}
 
-					const airQualityJson = await airQualityResponse.json()
-					const airQualityParsed =
-						airQualityResponseSchema.safeParse(airQualityJson)
-					if (!airQualityParsed.success) {
-						throw new Error('Invalid air quality response')
+						const airQualityJson = await airQualityResponse.json()
+						const airQualityParsed =
+							airQualityResponseSchema.safeParse(airQualityJson)
+						if (!airQualityParsed.success) {
+							throw new Error('Invalid air quality response')
+						}
+						airQualityData = airQualityParsed.data
+					} catch (airQualityError) {
+						console.error('Air quality fetch error:', airQualityError)
 					}
-					airQualityData = airQualityParsed.data
-				} catch (airQualityError) {
-					console.error('Air quality fetch error:', airQualityError)
 				}
 
 				return mergeUvData({
@@ -502,11 +522,15 @@ export const useWeather = (
 			localStorage.setItem('cachedLat', lat)
 			localStorage.setItem('cachedLon', lon)
 			localStorage.setItem('cachedTimeZone', userTimeZone)
+			localStorage.setItem(
+				'cachedUseAirQualityUv',
+				JSON.stringify(shouldUseAirQualityUv),
+			)
 			localStorage.setItem('lastUpdated', now.toISOString())
 		} else if (error) {
 			console.error('Weather fetch error:', error)
 		}
-	}, [data, error, lat, lon, userTimeZone])
+	}, [data, error, lat, lon, userTimeZone, shouldUseAirQualityUv])
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -534,7 +558,12 @@ export const useWeather = (
 		if (changedLocation) {
 			setUsingCachedData(false)
 		} else {
-			const cached = getCachedWeather(lat, lon, userTimeZone)
+			const cached = getCachedWeather(
+				lat,
+				lon,
+				userTimeZone,
+				shouldUseAirQualityUv,
+			)
 			if (cached) {
 				setWeatherData(cached.weatherData)
 				setAlertData(cached.alertData)
@@ -543,7 +572,7 @@ export const useWeather = (
 			}
 			setUsingCachedData(false)
 		}
-	}, [lat, lon, changedLocation, userTimeZone])
+	}, [lat, lon, changedLocation, userTimeZone, shouldUseAirQualityUv])
 
 	const retry = () => {
 		setUsingCachedData(false)

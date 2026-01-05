@@ -151,6 +151,19 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 								},
 							]}
 						/>
+						<div className="space-y-1">
+							<Switch
+								label={<Trans>Use Global Chemistry Models (CAMS)</Trans>}
+								checked={input.useAirQualityUvOverride}
+								onChange={(e) => handleChange('useAirQualityUvOverride', e)}
+							/>
+							<p className="text-sm text-dark-100">
+								<Trans>
+									Turn this on if Weather Please's reported UV index is
+									consistently lower than local sources.
+								</Trans>
+							</p>
+						</div>
 						<Switch
 							label={<Trans>Show weather alerts</Trans>}
 							checked={input.showAlerts}
