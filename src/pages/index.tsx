@@ -284,6 +284,7 @@ const App = () => {
 					<WeatherAlert
 						{...alertData}
 						useMetric={config.useMetric}
+						useCompactAlerts={config.useCompactAlerts}
 						showUvAlerts={config.showUvAlerts}
 						showWindAlerts={config.showWindAlerts}
 						showVisibilityAlerts={config.showVisibilityAlerts}

@@ -51,6 +51,7 @@ const configSchema = z.object({
 	showUvAlerts: z.boolean(),
 	showVisibilityAlerts: z.boolean(),
 	showWindAlerts: z.boolean(),
+	useCompactAlerts: z.boolean(),
 	useAirQualityUvOverride: z.boolean(),
 	useMetric: z.boolean(),
 })
@@ -68,6 +69,7 @@ const initialState: Config = {
 	showWindAlerts: true,
 	showVisibilityAlerts: true,
 	showPrecipitationAlerts: true,
+	useCompactAlerts: true,
 	showNewYearsEvent: true,
 	showValentinesEvent: true,
 	showLunarNewYearEvent: true,
