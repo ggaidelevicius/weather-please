@@ -68,6 +68,8 @@ describe('useWeather - Core Functionality', () => {
 		localStorageMock.clear()
 	})
 
+	const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'
+
 	it('initializes with default state', () => {
 		const { result } = renderHook(() => useWeather('', '', false), {
 			wrapper: createWrapper(),
@@ -139,6 +141,7 @@ describe('useWeather - Core Functionality', () => {
 		localStorageMock.setItem('lastUpdated', lastUpdated)
 		localStorageMock.setItem('cachedLat', '40.7128')
 		localStorageMock.setItem('cachedLon', '-74.0060')
+		localStorageMock.setItem('cachedTimeZone', userTimeZone)
 
 		const { result } = renderHook(
 			() => useWeather('40.7128', '-74.0060', false),
@@ -185,6 +188,7 @@ describe('useWeather - Core Functionality', () => {
 		localStorageMock.setItem('lastUpdated', lastUpdated)
 		localStorageMock.setItem('cachedLat', '40.7128')
 		localStorageMock.setItem('cachedLon', '-74.0060')
+		localStorageMock.setItem('cachedTimeZone', userTimeZone)
 
 		const { result } = renderHook(
 			() => useWeather('40.7128', '-74.0060', false),
