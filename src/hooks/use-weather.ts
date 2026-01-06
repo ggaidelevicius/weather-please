@@ -149,7 +149,7 @@ const getCachedWeather = (
 	lon: string,
 	timeZone: string,
 	shouldUseAirQualityUv: boolean,
-): { weatherData: Data; alertData: Alerts } | null => {
+): { weatherData: Data; alertData: Alerts; lastUpdatedDate: Date } | null => {
 	const cachedLat = readStorageItem({
 		key: 'cachedLat',
 		schema: z.string().min(1),
@@ -217,6 +217,7 @@ const getCachedWeather = (
 	return {
 		weatherData: storedData,
 		alertData: storedAlerts,
+		lastUpdatedDate,
 	}
 }
 
@@ -463,6 +464,7 @@ export const useWeather = (
 		if (data) {
 			const now = new Date()
 			const currentHour = now.getHours()
+			lastHourRef.current = currentHour
 
 			const futureData = data.daily.time.map((day, i: number) => ({
 				day,
@@ -565,9 +567,17 @@ export const useWeather = (
 				shouldUseAirQualityUv,
 			)
 			if (cached) {
+				const now = new Date()
 				setWeatherData(cached.weatherData)
 				setAlertData(cached.alertData)
-				setUsingCachedData(true)
+				lastHourRef.current = cached.lastUpdatedDate.getHours()
+				const shouldRefresh =
+					now.getHours() !== cached.lastUpdatedDate.getHours() &&
+					now.getMinutes() >= CACHE_REFRESH_DELAY_MINUTE
+				setUsingCachedData(!shouldRefresh)
+				if (shouldRefresh) {
+					queryClient.invalidateQueries({ queryKey: ['weather'] })
+				}
 				return
 			}
 			setUsingCachedData(false)
