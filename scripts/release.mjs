@@ -1,11 +1,16 @@
 /* eslint-disable no-console */
-const fs = require('fs')
-const path = require('path')
-const AdmZip = require('adm-zip')
+import fs from 'fs'
+import path from 'path'
+import AdmZip from 'adm-zip'
+import { readJson, writeJson } from './lib/json.mjs'
+import { setCwdToRoot } from './lib/root.mjs'
+
+setCwdToRoot()
 
 const EXTENSION_DIR = 'extension'
 const MANIFEST_PATH = 'manifest.json'
 const PACKAGE_PATH = 'package.json'
+const EXTENSION_MANIFEST_PATH = path.join(EXTENSION_DIR, MANIFEST_PATH)
 
 const args = process.argv.slice(2)
 const releaseType = args[0]
@@ -55,38 +60,26 @@ const createZipWithContents = (zip, contentPath, zipName) => {
 	fs.renameSync(zipName, EXTENSION_DIR + '/' + zipName)
 }
 
-const addAttributesToManifest = (attributes) => {
-	const manifestContent = JSON.parse(
-		fs.readFileSync(path.join(EXTENSION_DIR, MANIFEST_PATH), 'utf-8'),
-	)
-	Object.assign(manifestContent, attributes)
-	fs.writeFileSync(
-		path.join(EXTENSION_DIR, MANIFEST_PATH),
-		JSON.stringify(manifestContent, null, 2),
-	)
+const readExtensionManifest = () =>
+	readJson({ filePath: EXTENSION_MANIFEST_PATH })
+
+const writeExtensionManifest = (manifestContent) => {
+	writeJson({ filePath: EXTENSION_MANIFEST_PATH, data: manifestContent })
 }
 
-const removeAttributesFromManifest = (attributes) => {
-	const manifestContent = JSON.parse(
-		fs.readFileSync(path.join(EXTENSION_DIR, MANIFEST_PATH), 'utf-8'),
-	)
-	attributes.forEach((attribute) => {
-		delete manifestContent[attribute]
-	})
-	fs.writeFileSync(
-		path.join(EXTENSION_DIR, MANIFEST_PATH),
-		JSON.stringify(manifestContent, null, 2),
-	)
-}
+const updateExtensionManifest = ({
+	baseManifest,
+	attributesToAdd = {},
+	attributesToRemove = [],
+}) => {
+	const nextManifest = { ...baseManifest, ...attributesToAdd }
 
-const modifyManifest = (attributesToAdd, attributesToRemove) => {
-	if (attributesToAdd && Object.keys(attributesToAdd).length > 0) {
-		addAttributesToManifest(attributesToAdd)
+	for (const attribute of attributesToRemove) {
+		delete nextManifest[attribute]
 	}
 
-	if (attributesToRemove && attributesToRemove.length > 0) {
-		removeAttributesFromManifest(attributesToRemove)
-	}
+	writeExtensionManifest(nextManifest)
+	return nextManifest
 }
 
 const processReleaseType = (releaseType) => {
@@ -98,37 +91,42 @@ const processReleaseType = (releaseType) => {
 		process.exit(1)
 	}
 
-	const manifestContent = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf-8'))
-	const packageContent = JSON.parse(fs.readFileSync(PACKAGE_PATH, 'utf-8'))
+	const manifestContent = readJson({ filePath: MANIFEST_PATH })
+	const packageContent = readJson({ filePath: PACKAGE_PATH })
 
 	const newVersion = bumpVersion(manifestContent.version, releaseType)
 
 	manifestContent.version = newVersion
 	packageContent.version = newVersion
 
-	fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifestContent, null, 2))
-	fs.writeFileSync(PACKAGE_PATH, JSON.stringify(packageContent, null, 2))
+	writeJson({ filePath: MANIFEST_PATH, data: manifestContent })
+	writeJson({ filePath: PACKAGE_PATH, data: packageContent })
 
 	console.log(
 		`Version in manifest.json and package.json updated to: ${newVersion}`,
 	)
 
-	modifyManifest({ version: newVersion }, [])
+	const extensionManifest = readExtensionManifest()
+	const baseExtensionManifest = updateExtensionManifest({
+		baseManifest: extensionManifest,
+		attributesToAdd: { version: newVersion },
+	})
 	processZipCreation(EXTENSION_DIR, newVersion, '')
 
-	modifyManifest(
-		{
+	updateExtensionManifest({
+		baseManifest: baseExtensionManifest,
+		attributesToAdd: {
 			browser_specific_settings: {
 				gecko: {
 					id: '{9282bc49-b1b4-4f46-b135-1dfe00f182c9}',
 				},
 			},
 		},
-		['background'],
-	)
+		attributesToRemove: ['background'],
+	})
 	processZipCreation(EXTENSION_DIR, newVersion, '-firefox')
 
-	modifyManifest({}, ['browser_specific_settings'])
+	writeExtensionManifest(baseExtensionManifest)
 
 	packageSource()
 	process.exit(0)

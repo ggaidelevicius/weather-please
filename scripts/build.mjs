@@ -1,16 +1,16 @@
 /* eslint-disable no-console */
-const fs = require('fs-extra')
-const glob = require('glob')
-const { execSync } = require('child_process')
-const os = require('os')
-const path = require('path')
+import fs from 'fs-extra'
+import { globSync } from 'glob'
+import path from 'path'
+import { setCwdToRoot } from './lib/root.mjs'
 
-const moveCommand = os.platform() === 'win32' ? 'move' : 'mv'
+setCwdToRoot()
+
 const sourcePath = 'out/_next'
 const destinationPath = 'out/next'
 
 try {
-	execSync(`${moveCommand} ${sourcePath} ${destinationPath}`)
+	fs.moveSync(sourcePath, destinationPath, { overwrite: true })
 	console.log('Moved _next directory to next.')
 } catch (error) {
 	console.error('Move operation failed:', error)
@@ -35,7 +35,7 @@ const main = () => {
 	}
 
 	// Replace content in HTML and JS files
-	const files = glob.sync('out/**/*.{html,js}', { nodir: true })
+	const files = globSync('out/**/*.{html,js}', { nodir: true })
 	for (const file of files) {
 		let content = fs.readFileSync(file, 'utf-8')
 		content = content.replace(/\/_next\//g, '/next/')

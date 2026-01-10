@@ -1,8 +1,8 @@
-const fs = require('fs-extra')
-const path = require('path')
-
-const srcAppPath = path.join(__dirname, 'src', 'app')
-const destAppPath = path.join(__dirname, 'src', '_app')
+import fs from 'fs-extra'
+import path from 'path'
+import { rootPath } from './lib/root.mjs'
+const srcAppPath = path.join(rootPath, 'src', 'app')
+const destAppPath = path.join(rootPath, 'src', '_app')
 
 async function renameAppDir(action) {
 	try {

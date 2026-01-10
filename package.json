@@ -1,6 +1,6 @@
 {
 	"name": "weather-please",
-	"version": "2.8.6",
+	"version": "2.8.7",
 	"description": "Savor the elegance and grace of Weather Please as it integrates flawlessly into your browser. A symphony of design and performance awaits – where weather meets artistry in the most subtle, yet captivating, manner.",
 	"private": true,
 	"author": {
@@ -21,10 +21,10 @@
 	"license": "SEE LICENSE IN LICENSE.md",
 	"scripts": {
 		"dev": "next dev",
-		"build": "node renameAppDir rename && pnpm compile && next build && node build && node renameAppDir restore",
+		"build": "node scripts/renameAppDir.mjs rename && pnpm compile && next build && node scripts/build.mjs && node scripts/renameAppDir.mjs restore",
 		"start": "next start",
 		"lint": "pnpm tsc && pnpm prettier . --write",
-		"release": "pnpm build && node release",
+		"release": "pnpm build && node scripts/release.mjs",
 		"extract": "lingui extract",
 		"compile": "lingui compile",
 		"prepare": "husky",
