@@ -182,13 +182,16 @@ export const WeatherAlert = ({
 	// UV Alert
 	if (showUvAlerts && hoursOfExtremeUv.includes(true)) {
 		const firstExtremeIndex = hoursOfExtremeUv.indexOf(true)
-		const timeUntilExtremeUv = firstExtremeIndex + 1
+		const timeUntilExtremeUv = firstExtremeIndex
 		let uvContent: ReactNode | null = null
-		if (timeUntilExtremeUv > 1) {
+		if (timeUntilExtremeUv > 0) {
 			if (timeUntilExtremeUv <= UV_WARNING_LEAD_HOURS) {
-				uvContent = (
-					<Trans>Extreme UV starting in {timeUntilExtremeUv} hours</Trans>
-				)
+				uvContent =
+					timeUntilExtremeUv === 1 ? (
+						<Trans>Extreme UV starting in 1 hour</Trans>
+					) : (
+						<Trans>Extreme UV starting in {timeUntilExtremeUv} hours</Trans>
+					)
 			}
 		} else {
 			const firstEndIndex = hoursOfExtremeUv.indexOf(false)
@@ -270,14 +273,17 @@ export const WeatherAlert = ({
 
 	// Wind Alert
 	if (showWindAlerts && hoursOfStrongWind.includes(true)) {
-		const timeUntilStrongWind = hoursOfStrongWind.indexOf(true) + 1
+		const timeUntilStrongWind = hoursOfStrongWind.indexOf(true)
 		let windContent: ReactNode | null = null
-		if (timeUntilStrongWind > 1) {
-			windContent = (
-				<Trans>
-					Generally strong wind starting in {timeUntilStrongWind} hours
-				</Trans>
-			)
+		if (timeUntilStrongWind > 0) {
+			windContent =
+				timeUntilStrongWind === 1 ? (
+					<Trans>Generally strong wind starting in 1 hour</Trans>
+				) : (
+					<Trans>
+						Generally strong wind starting in {timeUntilStrongWind} hours
+					</Trans>
+				)
 		} else {
 			const durationOfStrongWind = hoursOfStrongWind.indexOf(false)
 			if (durationOfStrongWind > 1) {
@@ -306,12 +312,17 @@ export const WeatherAlert = ({
 
 	// Wind Gust Alert
 	if (showWindAlerts && hoursOfStrongWindGusts.includes(true)) {
-		const timeUntilStrongWind = hoursOfStrongWindGusts.indexOf(true) + 1
+		const timeUntilStrongWind = hoursOfStrongWindGusts.indexOf(true)
 		let gustContent: ReactNode | null = null
-		if (timeUntilStrongWind > 1) {
-			gustContent = (
-				<Trans>Strong wind gusts starting in {timeUntilStrongWind} hours</Trans>
-			)
+		if (timeUntilStrongWind > 0) {
+			gustContent =
+				timeUntilStrongWind === 1 ? (
+					<Trans>Strong wind gusts starting in 1 hour</Trans>
+				) : (
+					<Trans>
+						Strong wind gusts starting in {timeUntilStrongWind} hours
+					</Trans>
+				)
 		} else {
 			const durationOfStrongWind = hoursOfStrongWindGusts.indexOf(false)
 			if (durationOfStrongWind > 1) {
@@ -340,12 +351,17 @@ export const WeatherAlert = ({
 
 	// Visibility Alert
 	if (showVisibilityAlerts && hoursOfLowVisibility.includes(true)) {
-		const timeUntilLowVisibility = hoursOfLowVisibility.indexOf(true) + 1
+		const timeUntilLowVisibility = hoursOfLowVisibility.indexOf(true)
 		let visibilityContent: ReactNode | null = null
-		if (timeUntilLowVisibility > 1) {
-			visibilityContent = (
-				<Trans>Low visibility starting in {timeUntilLowVisibility} hours</Trans>
-			)
+		if (timeUntilLowVisibility > 0) {
+			visibilityContent =
+				timeUntilLowVisibility === 1 ? (
+					<Trans>Low visibility starting in 1 hour</Trans>
+				) : (
+					<Trans>
+						Low visibility starting in {timeUntilLowVisibility} hours
+					</Trans>
+				)
 		} else {
 			const durationOfLowVisibility = hoursOfLowVisibility.indexOf(false)
 			if (durationOfLowVisibility > 1) {
