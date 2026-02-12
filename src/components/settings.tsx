@@ -410,12 +410,11 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						>
 							<Trans>🔒 Privacy policy</Trans>
 						</a>
-						<hr className="-mx-12 my-6 border-dark-800" />
 						<a
 							href="https://ggaidelevicius.com/?utm_source=weather_please"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="flex text-sm text-dark-300 hover:underline"
+							className="mt-2 flex text-sm text-dark-300 hover:underline"
 						>
 							ggaidelevicus.com
 						</a>
