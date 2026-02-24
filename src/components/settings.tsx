@@ -399,6 +399,14 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 						>
 							<Trans>☕ Gift a coffee</Trans>
 						</a>
+						<a
+							href="https://ggaidelevicius.com/?utm_source=weather_please"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="flex text-sm text-blue-300 hover:underline"
+						>
+							👨 ggaidelevicius.com
+						</a>
 						<h2 className="mt-14 text-2xl font-medium text-white">
 							<Trans>Legal</Trans>
 						</h2>
@@ -409,14 +417,6 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 							className="flex text-sm text-blue-300 hover:underline"
 						>
 							<Trans>🔒 Privacy policy</Trans>
-						</a>
-						<a
-							href="https://ggaidelevicius.com/?utm_source=weather_please"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="mt-2 flex text-sm text-dark-300 hover:underline"
-						>
-							ggaidelevicus.com
 						</a>
 					</DialogPanel>
 				</div>
