@@ -21,7 +21,7 @@
 	"license": "SEE LICENSE IN LICENSE.md",
 	"scripts": {
 		"dev": "next dev",
-		"build": "node scripts/renameAppDir.mjs rename && pnpm compile && next build && node scripts/build.mjs && node scripts/renameAppDir.mjs restore",
+		"build": "node scripts/build-extension.mjs",
 		"start": "next start",
 		"lint": "pnpm tsc && pnpm prettier . --write",
 		"release": "pnpm build && node scripts/release.mjs",

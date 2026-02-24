@@ -2,47 +2,30 @@
 import fs from 'fs-extra'
 import { globSync } from 'glob'
 import path from 'path'
+import { fileURLToPath } from 'url'
 import { setCwdToRoot } from './lib/root.mjs'
 
-setCwdToRoot()
+export const buildExtensionOutput = () => {
+	setCwdToRoot()
 
-const sourcePath = 'out/_next'
-const destinationPath = 'out/next'
-
-try {
+	const sourcePath = 'out/_next'
+	const destinationPath = 'out/next'
 	fs.moveSync(sourcePath, destinationPath, { overwrite: true })
 	console.log('Moved _next directory to next.')
-} catch (error) {
-	console.error('Move operation failed:', error)
-}
 
-const main = () => {
 	const extensionPath = 'extension'
-
 	fs.ensureDirSync(extensionPath)
-	if (fs.existsSync(extensionPath)) {
-		// Get a list of all files and directories in 'extensionPath'
-		const files = fs.readdirSync(extensionPath)
 
-		// Loop through all files and directories
-		for (const file of files) {
-			// Get the full path of the file/directory
-			const filePath = path.join(extensionPath, file)
-
-			// Remove the file/directory
-			fs.removeSync(filePath)
-		}
+	for (const file of fs.readdirSync(extensionPath)) {
+		fs.removeSync(path.join(extensionPath, file))
 	}
 
-	// Replace content in HTML and JS files
-	const files = globSync('out/**/*.{html,js}', { nodir: true })
-	for (const file of files) {
+	for (const file of globSync('out/**/*.{html,js}', { nodir: true })) {
 		let content = fs.readFileSync(file, 'utf-8')
 		content = content.replace(/\/_next\//g, '/next/')
 		fs.writeFileSync(file, content, 'utf-8')
 	}
 
-	// Perform related operations
 	fs.moveSync(
 		path.join('out', 'index.html'),
 		path.join(extensionPath, 'index.html'),
@@ -59,8 +42,15 @@ const main = () => {
 	console.log('Processing completed.')
 }
 
-try {
-	main()
-} catch (error) {
-	console.error('An error occurred:', error)
+const isCliInvocation =
+	process.argv[1] &&
+	path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+
+if (isCliInvocation) {
+	try {
+		buildExtensionOutput()
+	} catch (error) {
+		console.error('An error occurred:', error)
+		process.exitCode = 1
+	}
 }
