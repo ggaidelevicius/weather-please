@@ -14,21 +14,16 @@ code in this repository.
 - Organize functions top-down: exports before helpers
 - Use JSDoc for complex functions; add tags only when justified beyond type
   signature
-- Use `import type` for types, regular `import` for values, separate statements
-  even from same module
 - Prefix booleans with `is`/`has`/`can`/`should` (e.g., `isValid`, `hasData`)
   for clarity
 - Wrap all async operations in try-catch
 - Validate all FormData and user inputs with zod
 - No `any`, use proper types
-- Don't manually use useCallback or useMemo as React Compiler takes care of this
-  for us
 - Where possible, use server actions over api routes
 - Ensure that any new server-side functionality has corresponding tests written
 - Prior to handing over any completed work, run `pnpm tsc` to ensure there are
   no type errors
-- Don't create prisma migrations on the user's behalf - always prompt the user
-  to create a migration using the prisma CLI
+- Prefer `pnpm vitest run` for non-interactive test runs when validating changes
 - Commenting Guidelines
   - Execution flow: Skip comments when code is self-documenting. Keep for
     complex logic, non-obvious "why", multi-line context, or if following a
@@ -58,6 +53,21 @@ code in this repository.
 - **i18n:** Lingui
 - **Testing:** Vitest, React Testing Library
 - **Database:** Prisma with PostgreSQL
+
+---
+
+## Build and Runtime Notes
+
+- The project intentionally shares most UI code between:
+  - the browser extension build (static export)
+  - the public demo site (includes App Router server action route)
+- `pnpm build` uses `scripts/build-extension.mjs`, which temporarily renames
+  `src/app` during static export and restores it afterward. Do not manually
+  rename `src/app` unless debugging the build pipeline.
+- The extension packaging step is handled by `scripts/build.mjs` after
+  `next build`.
+- The bug-report page under `src/app/bug` is demo-site-only and is the reason
+  the App Router directory exists alongside static export output.
 
 ---
 
@@ -174,6 +184,8 @@ if (!data) return <></>
   property access.
 - Always wrap in try/catch when parsing JSON from localStorage.
 - Validate data from localStorage with Zod before using.
+- For weather caching and validation, prefer extending the helpers in
+  `src/lib/weather/cache.ts` instead of duplicating localStorage parsing logic.
 
 ```tsx
 // CORRECT
@@ -250,7 +262,21 @@ src/
   lib/           # Utility functions and shared logic
   pages/         # Next.js Pages Router pages
   locales/       # i18n translation files
+  config/        # shared config metadata (e.g. boolean setting defaults/schema)
 ```
+
+### Project-specific modules
+
+- Boolean config toggles (defaults + zod boolean schema shape + seasonal-event
+  mappings) live in `src/config/boolean-settings.ts`. Add new boolean config
+  fields there first.
+- Seasonal event enabled-set derivation is data-driven via
+  `src/hooks/seasonal-events/enabled-events.ts`.
+- `useWeather` is orchestration-only; keep fetch/parsing/cache/alert derivation
+  logic in `src/lib/weather/{api,cache,alerts,types}.ts`.
+- Locale messages are lazy-loaded through the explicit loader map in
+  `src/lib/i18n.ts` (preserves code-splitting while avoiding fragile variable
+  import paths).
 
 ### Imports
 
@@ -295,8 +321,8 @@ if (precipitation >= 15) { ... }
 ### Running tests
 
 ```bash
-pnpm test        # Run all tests
-pnpm test:watch  # Run in watch mode
+pnpm vitest run  # Run all tests (non-interactive)
+pnpm test        # Run Vitest (may be interactive/watch depending on environment)
 ```
 
 ---
@@ -316,9 +342,9 @@ pnpm test:watch  # Run in watch mode
 ### Commands
 
 ```bash
-pnpm lint        # Run TypeScript check and Prettier
-pnpm test        # Run tests
-pnpm tsc         # Type check (run before completing work)
+pnpm lint        # Run TypeScript check and Prettier (mutates files)
+pnpm vitest run  # Run tests (non-interactive)
+pnpm tsc --noEmit # Type check (safe validation)
 ```
 
 ### Prettier config
