@@ -3,7 +3,6 @@ import type { NextConfig } from 'next'
 const nextConfig: NextConfig = {
 	reactCompiler: true,
 	reactStrictMode: true,
-	turbopack: {},
 }
 
 if (process.env.VERCEL !== '1') {
