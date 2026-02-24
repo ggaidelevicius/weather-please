@@ -119,17 +119,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				The meteors are often bright and steady, tracing slow, colourful paths
-				across the night.
+				Geminid meteors move slower than most showers, which is part of what
+				makes them so striking — they linger long enough to actually follow with
+				your eyes.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Under clear skies, the show can feel both calm and exhilarating at once.
+				Some appear white, others yellow or blue-green. The colour depends on
+				the mineral composition of each grain of dust as it burns up.
 			</Trans>
 		</p>
 	</>

@@ -82,18 +82,20 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Masks invite games of identity, and lanterns turn familiar streets into
-				small theatres of light and shadow.
+				Jack-o'-lanterns were originally carved from turnips in Ireland and
+				Scotland — the pumpkin version is a North American adaptation, chosen
+				because pumpkins were bigger and easier to hollow out.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				The night encourages imagination to wander, as if even the moon were
-				part of the performance.
+				The tradition of trick-or-treating in its modern form only became
+				widespread in the 1950s, though the custom of going door to door in
+				disguise is centuries older.
 			</Trans>
 		</p>
 	</>

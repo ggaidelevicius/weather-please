@@ -81,17 +81,20 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				No special equipment is required; the Moon slowly drifts through shades
-				of copper and crimson overhead.
+				Unlike a solar eclipse, a lunar eclipse needs no special equipment — you
+				just look up. The whole event unfolds over several hours, visible to
+				anyone on the nightside of Earth.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				It is a quiet and patient spectacle that rewards unhurried attention.
+				The exact shade of red depends on what's in Earth's atmosphere at the
+				time. After major volcanic eruptions, the Moon can turn an especially
+				dark, almost brownish red.
 			</Trans>
 		</p>
 	</>

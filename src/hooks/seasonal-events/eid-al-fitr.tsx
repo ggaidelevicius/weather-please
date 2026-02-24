@@ -82,17 +82,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				New clothes, sweet foods, and warm embraces turn the day into a bright
-				reunion.
+				The first meal of Eid, eaten after a month of fasting, carries a
+				significance that's hard to overstate — it's often dates and something
+				sweet, shared before the morning prayer.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				It is a holiday shaped by gratitude, generosity, and gentle celebration.
+				In many communities, everyone wears new clothes, children receive money
+				or gifts, and doors stay open all day for visitors.
 			</Trans>
 		</p>
 	</>

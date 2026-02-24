@@ -55,18 +55,18 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				As the Earth turns, the new year arrives in a slow-moving wave that
-				travels across time zones for nearly a full day.
+				The new year doesn't arrive all at once — it rolls across the planet
+				over the course of a full day, time zone by time zone.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Fireworks, bells, and wishes seem to ride that wave, scattering light
-				and sound across the night.
+				At each boundary, fireworks go up, bells ring, and strangers count down
+				together. The same moment of anticipation, repeated twenty-four times.
 			</Trans>
 		</p>
 	</>

@@ -172,18 +172,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				The colours draw everyone into the same bright moment, dissolving
-				distance and difference.
+				Within minutes of stepping outside, everyone looks the same — drenched
+				head to toe in colour, impossible to tell apart.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				For a time, streets become living paintings and the air itself seems to
-				celebrate.
+				By midday, the streets, the walls, and every surface in sight are
+				stained in layers of pink, green, yellow, and blue. It takes days to
+				wash out.
 			</Trans>
 		</p>
 	</>

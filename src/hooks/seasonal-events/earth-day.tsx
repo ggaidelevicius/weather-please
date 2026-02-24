@@ -163,18 +163,18 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Small actions accumulate: a planted tree, a cleared shoreline, a renewed
-				path.
+				The math is oddly encouraging — the trees planted on Earth Day since
+				1970 now number in the billions.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				It’s a quiet reminder that care for the world and a sense of wonder
-				often move together.
+				Most environmental gains start small and local: a restored wetland, a
+				cleaner stretch of river, a species given just enough room to recover.
 			</Trans>
 		</p>
 	</>

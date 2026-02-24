@@ -106,18 +106,20 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				With each night, a new flame appears, forming a quiet ladder of light
-				against the dark.
+				The menorah is placed in a window or doorway so the light faces outward
+				— the tradition is specifically about making the flames visible to
+				passersby.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Music, laughter, and shared meals give the celebration its warm and
-				playful spirit.
+				Dreidel, often dismissed as a children's game, was historically used as
+				a cover for Torah study during periods when it was outlawed. Each Hebrew
+				letter on its sides forms an acronym: "A great miracle happened there."
 			</Trans>
 		</p>
 	</>

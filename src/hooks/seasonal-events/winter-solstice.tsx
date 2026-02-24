@@ -106,17 +106,20 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				In the depth of the long night, even a single candle can feel like a
-				sunrise.
+				The day after the solstice is only about a second longer — the shift is
+				imperceptible at first, then gradually accelerates through January and
+				February.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Each added minute of daylight carries the quiet promise of change.
+				Newgrange, a 5,000-year-old passage tomb in Ireland, was built so
+				precisely that sunlight floods its inner chamber for just seventeen
+				minutes around the winter solstice each year.
 			</Trans>
 		</p>
 	</>

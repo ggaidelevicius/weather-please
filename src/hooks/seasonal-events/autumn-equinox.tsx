@@ -113,18 +113,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				The light softens and turns golden, the air grows gentler, and the year
-				seems to pause — just for a breath.
+				The colour change in autumn leaves isn’t new pigment appearing — it’s
+				the green chlorophyll withdrawing, revealing yellows and oranges that
+				were there all along.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				It’s a season for noticing the small transitions: seedpods splitting,
-				leaves turning, and birds tracing long paths across the sky.
+				Meanwhile, billions of birds are mid-migration, navigating by stars,
+				magnetic fields, and landmarks passed down through generations.
 			</Trans>
 		</p>
 	</>

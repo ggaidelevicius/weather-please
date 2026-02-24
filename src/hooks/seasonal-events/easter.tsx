@@ -64,17 +64,18 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Sunrise services, fresh mornings, and the simple delight of egg hunts
-				carry the feeling of a world beginning again.
+				Sunrise services draw people outdoors before the day has fully started,
+				and egg hunts send children tearing across gardens and parks.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				It is a holiday that speaks gently in the language of new beginnings.
+				There's a reason the holiday lands in spring — it borrows heavily from
+				the season's own sense of things starting over.
 			</Trans>
 		</p>
 	</>

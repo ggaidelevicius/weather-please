@@ -75,17 +75,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Communities gather for prayer and meals, and households open their doors
-				in welcome.
+				The meat from the sacrifice is traditionally divided into three equal
+				parts: one for the family, one for friends and neighbours, and one for
+				those in need.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				It is a day that turns personal devotion into shared kindness.
+				This three-way split is central to the holiday's meaning — the act of
+				giving is built directly into the ritual itself.
 			</Trans>
 		</p>
 	</>

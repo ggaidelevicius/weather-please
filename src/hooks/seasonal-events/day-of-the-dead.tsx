@@ -83,18 +83,20 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Cemeteries and homes glow with candlelight, colour, music, and laughter,
-				holding grief and gratitude in the same breath.
+				Families spend the night in cemeteries, cleaning graves, laying marigold
+				paths, and sharing meals beside the headstones. It's social, warm, and
+				often funny — people tell stories and play music until morning.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				In this tradition, memory becomes a bridge between worlds, not a wall
-				between them.
+				The marigold paths (cempasúchil) aren't just decorative. Their strong
+				scent is believed to guide the dead back to the living world for the
+				night.
 			</Trans>
 		</p>
 	</>

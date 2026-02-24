@@ -103,18 +103,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Watching the Eta Aquariids can feel like receiving a message from a
-				distant traveller, carried on light across the dark.
+				The Eta Aquariids and the Orionids are sibling showers — both are born
+				from Halley's Comet, but Earth crosses different parts of the debris
+				trail six months apart.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				The meteors are exceptionally fast and often leave long, delicate trains
-				that linger in the sky.
+				At 66 km/s, these are among the fastest meteors you'll see. Their trails
+				can persist for several seconds after the meteor itself is gone.
 			</Trans>
 		</p>
 	</>

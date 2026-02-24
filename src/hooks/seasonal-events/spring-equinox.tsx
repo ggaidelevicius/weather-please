@@ -103,18 +103,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Across the world, daylight begins to shift in new patterns as buds rise
-				and the atmosphere carries the scent of change.
+				From this point, each day gains a few minutes of light — a shift that's
+				barely noticeable day to day, but adds up to hours within weeks.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Many people still try the playful tradition of balancing an egg on its
-				end, a quiet ritual of patience and curiosity.
+				The old tradition of balancing an egg on its end at the equinox is a
+				myth (you can do it any day of the year), but people keep trying anyway.
+				It's become its own kind of ritual.
 			</Trans>
 		</p>
 	</>

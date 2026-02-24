@@ -102,18 +102,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Twilight lingers, insects fill the air with song, and the sky can feel
-				almost endless.
+				On the longest day, twilight stretches out for hours and full darkness
+				may never arrive.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				In far northern regions, the sun may barely set at all, creating the
-				phenomenon of the midnight sun.
+				Above the Arctic Circle, the sun doesn't set at all — it traces a low
+				circle along the horizon and starts climbing again. This is the midnight
+				sun, and it lasts for weeks.
 			</Trans>
 		</p>
 	</>

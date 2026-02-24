@@ -71,18 +71,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder and safety</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				During totality, the Sun’s corona becomes visible as a delicate silver
-				crown, and a few bright stars may appear.
+				During totality, the Sun’s corona — normally invisible — appears as a
+				shimmering halo of white light. Bright stars and planets become visible
+				in the middle of the day.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				For safe viewing, certified eclipse glasses must be used during all
-				phases except the brief moment of totality.
+				Eclipse glasses are essential during all partial phases. Only during the
+				brief seconds of total coverage is it safe to look with the naked eye.
 			</Trans>
 		</p>
 	</>

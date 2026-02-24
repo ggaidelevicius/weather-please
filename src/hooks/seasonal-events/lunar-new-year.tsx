@@ -106,17 +106,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Lanterns and parades transform the night into a flowing river of light.
+				The season builds toward the Lantern Festival on the fifteenth night,
+				when thousands of lanterns are released into the sky.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				The season traditionally concludes with the Lantern Festival, when
-				wishes are carried upward on glowing lanterns.
+				Dragon and lion dances wind through streets packed with spectators,
+				firecrackers, and the smell of street food — a finale that can last well
+				past midnight.
 			</Trans>
 		</p>
 	</>

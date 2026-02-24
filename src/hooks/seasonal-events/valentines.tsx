@@ -53,8 +53,8 @@ const EventDetails = () => (
 		</p>
 		<p>
 			<Trans>
-				It is often marked by small gestures that simply say someone has been
-				remembered.
+				It's often less about grand gestures and more about letting someone know
+				they're on your mind.
 			</Trans>
 		</p>
 
@@ -91,18 +91,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				The oldest known Valentine is a fifteenth-century poem written from
-				imprisonment in the Tower of London.
+				The oldest known Valentine is a fifteenth-century poem, written from a
+				cell in the Tower of London — a love letter composed under the worst
+				possible circumstances.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Even today, paper hearts and quiet notes continue the tradition of
-				deliberate kindness.
+				Centuries later, people still reach for pen and paper when a text won't
+				do.
 			</Trans>
 		</p>
 	</>

@@ -103,18 +103,20 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				As Orion rises before dawn, it can feel like a spotlight for the meteors
-				that follow.
+				Each Orionid meteor is a tiny grain of dust shed by Halley's Comet — the
+				same object that people have been watching and recording since at least
+				240 BC.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				The shower frequently delivers swift, luminous streaks that carve clean
-				lines across the night.
+				The meteors enter the atmosphere at about 66 km/s, among the fastest of
+				any annual shower, which is why they often leave persistent glowing
+				trails.
 			</Trans>
 		</p>
 	</>

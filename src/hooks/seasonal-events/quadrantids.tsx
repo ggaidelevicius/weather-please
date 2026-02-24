@@ -119,18 +119,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Their likely parent body is the asteroid 2003 EH1, a reminder that even
-				an unassuming rock can paint the sky with light.
+				Their likely parent body, asteroid 2003 EH1, may be a dead comet — one
+				that exhausted its volatile ices and now orbits as a dark, quiet rock.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				The peak often arrives suddenly, like a secret performance unfolding
-				before dawn.
+				The Quadrantid peak is one of the narrowest of any major shower,
+				sometimes lasting only six hours. Catching it is partly a matter of luck
+				and geography.
 			</Trans>
 		</p>
 	</>

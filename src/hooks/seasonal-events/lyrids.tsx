@@ -102,18 +102,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Most years the Lyrids unfold quietly, though they sometimes surprise
-				observers with bright fireballs.
+				Chinese records from 687 BC describe "stars falling like rain" — the
+				oldest known account of the Lyrids, and one of the oldest documented
+				meteor observations of any kind.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				It is a shower with a long memory, linking modern stargazers with
-				watchers of ancient skies.
+				Comet Thatcher, the shower's parent body, won't return to the inner
+				solar system until roughly the year 2283.
 			</Trans>
 		</p>
 	</>

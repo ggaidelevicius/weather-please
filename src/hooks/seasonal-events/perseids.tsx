@@ -120,18 +120,20 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Fast and bright, the Perseids often produce spectacular fireballs that
-				leave glowing trails behind them.
+				Perseid meteors enter the atmosphere at roughly 60 km/s — fast enough
+				that the larger ones compress the air ahead of them into a bright,
+				explosive fireball.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Under a dark sky, it can feel as though the universe itself is writing
-				with light.
+				On a good night near peak, you can expect a meteor every minute or two.
+				The best rates come after midnight, when your side of the Earth faces
+				into the debris stream.
 			</Trans>
 		</p>
 	</>

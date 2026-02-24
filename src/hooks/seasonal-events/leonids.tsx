@@ -120,18 +120,20 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				In most years the Leonids unfold gently, yet they always carry the
-				possibility of a sudden, breathtaking encore.
+				In most years, the Leonids produce only 10–15 meteors per hour. But
+				during the 1966 storm, observers reported rates of thousands per minute
+				— so many that some people thought the world was ending.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				They serve as a quiet reminder that the sky still holds the power to
-				surprise.
+				The next potential Leonid storm window is in the 2030s, when Earth is
+				expected to pass through a particularly dense ribbon of Tempel–Tuttle
+				debris.
 			</Trans>
 		</p>
 	</>

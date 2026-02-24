@@ -104,17 +104,19 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				At night, lights trace warm constellations across homes and streets,
-				turning whole cities into living lanterns.
+				Seen from above, cities during Diwali are transformed — rooftops,
+				balconies, and streets are outlined in light, and the effect is visible
+				from space in satellite imagery.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				The air hums with music, laughter, and the quiet shimmer of celebration.
+				The festival is also one of the biggest shopping seasons in India, with
+				markets staying open late and fireworks continuing well past midnight.
 			</Trans>
 		</p>
 	</>

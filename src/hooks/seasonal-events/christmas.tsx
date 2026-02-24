@@ -90,17 +90,21 @@ const EventDetails = () => (
 		</p>
 
 		<h2>
-			<Trans>Little wonder</Trans>
+			<Trans>Good to know</Trans>
 		</h2>
 		<p>
 			<Trans>
-				There’s something quietly luminous about the day itself — the glow of
-				lights in windows, slow mornings, familiar songs, and tables set for
-				gathering.
+				The tradition of a decorated Christmas tree only became widespread in
+				the English-speaking world after an 1848 illustration of Queen Victoria
+				and Prince Albert’s tree was published — and went viral, by Victorian
+				standards.
 			</Trans>
 		</p>
 		<p>
-			<Trans>It’s a holiday that invites both celebration and pause.</Trans>
+			<Trans>
+				Today, an estimated 350 million real Christmas trees are grown across
+				Europe alone, most of them farmed specifically for the season.
+			</Trans>
 		</p>
 	</>
 )
