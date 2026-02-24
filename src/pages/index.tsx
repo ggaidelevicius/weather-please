@@ -13,21 +13,20 @@ import { Tile } from '../components/tile'
 import { WeatherAlert } from '../components/weather-alert'
 import { useConfig } from '../hooks/use-config'
 import { useSeasonalEvents } from '../hooks/use-seasonal-events'
+import { getEnabledSeasonalEvents } from '../hooks/seasonal-events/enabled-events'
+import { usePeriodicLocationRefresh } from '../hooks/use-periodic-location-refresh'
 import { useWeather } from '../hooks/use-weather'
 import {
 	getHemisphereFromLatitude,
 	isLikelySoftwareRenderer,
 } from '../hooks/seasonal-events/utils'
 import { messages } from '../locales/en/messages'
-import type { SeasonalEventId } from '../hooks/seasonal-events'
 
 i18n.load({
 	en: messages,
 })
 i18n.activate('en')
 
-const LOCATION_CHANGE_THRESHOLD_KM = 1
-const LOCATION_CHECK_INTERVAL_MS = 60 * 1000
 const TILE_STAGGER_DELAY_BASELINE = 0.75
 
 const GRID_COLS_CLASS = {
@@ -58,90 +57,9 @@ const App = () => {
 	const isSoftwareRenderer = isLikelySoftwareRenderer()
 	const canShowSeasonalEvents =
 		config.showSeasonalEvents && isHydrated && isOnboarded
-	const enabledSeasonalEvents = new Set<SeasonalEventId>()
+	const enabledSeasonalEvents = getEnabledSeasonalEvents(config)
 
-	if (config.showSeasonalEvents) {
-		if (config.showNewYearsEvent) {
-			enabledSeasonalEvents.add('new-years-day')
-		}
-		if (config.showValentinesEvent) {
-			enabledSeasonalEvents.add('valentines-day')
-		}
-		if (config.showLunarNewYearEvent) {
-			enabledSeasonalEvents.add('lunar-new-year')
-		}
-		if (config.showEasterEvent) {
-			enabledSeasonalEvents.add('easter')
-		}
-		if (config.showSpringEquinoxEvent) {
-			enabledSeasonalEvents.add('spring-equinox')
-		}
-		if (config.showAutumnEquinoxEvent) {
-			enabledSeasonalEvents.add('autumn-equinox')
-		}
-		if (config.showDiwaliEvent) {
-			enabledSeasonalEvents.add('diwali')
-		}
-		if (config.showHoliEvent) {
-			enabledSeasonalEvents.add('holi')
-		}
-		if (config.showEarthDayEvent) {
-			enabledSeasonalEvents.add('earth-day')
-		}
-		if (config.showSummerSolsticeEvent) {
-			enabledSeasonalEvents.add('summer-solstice')
-		}
-		if (config.showWinterSolsticeEvent) {
-			enabledSeasonalEvents.add('winter-solstice')
-		}
-		if (config.showHalloweenEvent) {
-			enabledSeasonalEvents.add('halloween')
-		}
-		if (config.showDayOfTheDeadEvent) {
-			enabledSeasonalEvents.add('day-of-the-dead')
-		}
-		if (config.showPerseidsEvent) {
-			enabledSeasonalEvents.add('perseids')
-		}
-		if (config.showQuadrantidsEvent) {
-			enabledSeasonalEvents.add('quadrantids')
-		}
-		if (config.showLyridsEvent) {
-			enabledSeasonalEvents.add('lyrids')
-		}
-		if (config.showEtaAquariidsEvent) {
-			enabledSeasonalEvents.add('eta-aquariids')
-		}
-		if (config.showOrionidsEvent) {
-			enabledSeasonalEvents.add('orionids')
-		}
-		if (config.showLeonidsEvent) {
-			enabledSeasonalEvents.add('leonids')
-		}
-		if (config.showTotalSolarEclipseEvent) {
-			enabledSeasonalEvents.add('total-solar-eclipse')
-		}
-		if (config.showTotalLunarEclipseEvent) {
-			enabledSeasonalEvents.add('total-lunar-eclipse')
-		}
-		if (config.showGeminidsEvent) {
-			enabledSeasonalEvents.add('geminids')
-		}
-		if (config.showEidAlFitrEvent) {
-			enabledSeasonalEvents.add('eid-al-fitr')
-		}
-		if (config.showEidAlAdhaEvent) {
-			enabledSeasonalEvents.add('eid-al-adha')
-		}
-		if (config.showHanukkahEvent) {
-			enabledSeasonalEvents.add('hanukkah')
-		}
-		if (config.showChristmasEvent) {
-			enabledSeasonalEvents.add('christmas-day')
-		}
-	}
-
-	const activeSeasonalEvent = useSeasonalEvents({
+	useSeasonalEvents({
 		isEnabled: config.showSeasonalEvents,
 		isHydrated,
 		isOnboarded: isHydrated && isOnboarded,
@@ -161,96 +79,15 @@ const App = () => {
 		}
 	}, [error])
 
-	/**
-	 * Periodically (every minute) checks the user's geolocation when opted in.
-	 * If the geolocation has changed from what's saved in "config", the "changedLocation" flag is set to true.
-	 */
-	useEffect(() => {
-		if (!config.periodicLocationUpdate) {
-			return
-		}
-
-		const handleLocationUpdate = () => {
-			if (!navigator.geolocation) {
-				console.error('Geolocation is not supported in this browser.')
-				return
-			}
-			navigator.geolocation.getCurrentPosition(
-				(pos) => {
-					// Calculate distance between current and new coordinates using Haversine formula
-					const calculateDistance = (
-						currentLat: number,
-						currentLon: number,
-						incomingLat: number,
-						incomingLon: number,
-					) => {
-						const R = 6371 // Earth's radius in kilometers
-
-						// Haversine formula variables:
-						const dLat = ((incomingLat - currentLat) * Math.PI) / 180 // Latitude difference in radians
-						const dLon = ((incomingLon - currentLon) * Math.PI) / 180 // Longitude difference in radians
-
-						// 'a' is the square of half the chord length between the two points
-						const a =
-							Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-							Math.cos((currentLat * Math.PI) / 180) *
-								Math.cos((incomingLat * Math.PI) / 180) *
-								Math.sin(dLon / 2) *
-								Math.sin(dLon / 2)
-
-						// 'c' is the angular distance in radians
-						const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-
-						return R * c // Distance in kilometers
-					}
-
-					const currentLat = parseFloat(config.lat)
-					const currentLon = parseFloat(config.lon)
-					const newLat = pos.coords.latitude
-					const newLon = pos.coords.longitude
-
-					// Only update if user has moved more than 1km or if we don't have coordinates yet
-					if (!config.lat || !config.lon) {
-						// First time setting coordinates
-						setChangedLocation(true)
-						updateConfig({
-							lat: newLat.toString(),
-							lon: newLon.toString(),
-						})
-					} else {
-						const distance = calculateDistance(
-							currentLat,
-							currentLon,
-							newLat,
-							newLon,
-						)
-
-						if (distance > LOCATION_CHANGE_THRESHOLD_KM) {
-							// User has moved more than threshold distance, trigger refresh
-							setChangedLocation(true)
-							updateConfig({
-								lat: newLat.toString(),
-								lon: newLon.toString(),
-							})
-						}
-						// If distance <= threshold, don't update anything to avoid unnecessary refreshes
-					}
-				},
-				(geoError) => {
-					console.error('Geolocation error:', geoError)
-				},
-			)
-		}
-
-		handleLocationUpdate()
-		const checkLocation = setInterval(() => {
-			handleLocationUpdate()
-		}, LOCATION_CHECK_INTERVAL_MS)
-
-		return () => {
-			clearInterval(checkLocation)
-		}
-	}, [config.periodicLocationUpdate, config.lat, config.lon, updateConfig])
+	usePeriodicLocationRefresh({
+		enabled: config.periodicLocationUpdate,
+		lat: config.lat,
+		lon: config.lon,
+		onLocationChange: (coords) => {
+			setChangedLocation(true)
+			updateConfig(coords)
+		},
+	})
 
 	const hasCachedData =
 		typeof window !== 'undefined' && Boolean(localStorage.getItem('data'))

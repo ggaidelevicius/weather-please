@@ -73,11 +73,32 @@ export const locales = {
 	},
 } as const satisfies Record<string, { label: string; privacy: string }>
 
-export const changeLocalisation = async (
-	locale: Extract<keyof typeof locales, string>,
-): Promise<void> => {
+export type LocaleKey = keyof typeof locales
+
+type MessageModule = {
+	messages: Record<string, string>
+}
+
+const localeMessageLoaders = {
+	bn: () => import('../locales/bn/messages.js'),
+	de: () => import('../locales/de/messages.js'),
+	en: () => import('../locales/en/messages.js'),
+	es: () => import('../locales/es/messages.js'),
+	fr: () => import('../locales/fr/messages.js'),
+	hi: () => import('../locales/hi/messages.js'),
+	id: () => import('../locales/id/messages.js'),
+	it: () => import('../locales/it/messages.js'),
+	ja: () => import('../locales/ja/messages.js'),
+	ko: () => import('../locales/ko/messages.js'),
+	lt: () => import('../locales/lt/messages.js'),
+	ru: () => import('../locales/ru/messages.js'),
+	vi: () => import('../locales/vi/messages.js'),
+	zh: () => import('../locales/zh/messages.js'),
+} as const satisfies Record<LocaleKey, () => Promise<MessageModule>>
+
+export const changeLocalisation = async (locale: LocaleKey): Promise<void> => {
 	try {
-		const { messages } = await import(`../locales/${locale}/messages`)
+		const { messages } = await localeMessageLoaders[locale]()
 		i18n.load(locale, messages)
 		i18n.activate(locale)
 	} catch (e) {
@@ -85,5 +106,3 @@ export const changeLocalisation = async (
 		console.error(`Failed to load messages: ${e}`)
 	}
 }
-
-export type LocaleKey = keyof typeof locales
