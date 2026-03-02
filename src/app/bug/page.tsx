@@ -7,11 +7,11 @@ import { IconCircleCheckFilled } from '@tabler/icons-react'
 import Form from 'next/form'
 import { useSearchParams } from 'next/navigation'
 import { Suspense, useActionState, useEffect, useId } from 'react'
-import { Button } from '../../components/button'
-import { Input, Textarea } from '../../components/input'
-import { changeLocalisation, locales } from '../../lib/i18n'
+import { Button } from '../../shared/ui/button'
+import { Input, Textarea } from '../../shared/ui/input'
+import { changeLocalisation, locales } from '../../shared/lib/i18n'
 import { submitForm } from '../actions'
-import type { LocaleKey } from '../../lib/i18n'
+import type { LocaleKey } from '../../shared/lib/i18n'
 
 const initialState = {
 	message: '',

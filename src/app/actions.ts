@@ -2,7 +2,7 @@
 
 import { headers } from 'next/headers'
 import { z } from 'zod'
-import { locales } from '../lib/i18n'
+import { locales } from '../shared/lib/i18n'
 import { enforceRateLimit } from '../lib/rate-limit'
 import { prisma } from '../lib/prisma'
 

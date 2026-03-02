@@ -23,12 +23,12 @@ msgstr ""
 #~ msgstr "{0} ইঞ্চি বৃষ্টিপাত প্রত্যাশিত আগামী ঘণ্টায়"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:552
+#: src/features/weather/ui/tile.tsx:452
 msgid "{0} km/h"
 msgstr "{0} কিমি/ঘণ্টা"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:553
+#: src/features/weather/ui/tile.tsx:453
 msgid "{0} mph"
 msgstr "{0} মাইল/ঘণ্টা"
 
@@ -53,33 +53,33 @@ msgstr "{0} মাইল/ঘণ্টা"
 #~ msgid "{label}"
 #~ msgstr "ভাষা"
 
-#: src/components/weather-alert.tsx:258
+#: src/features/weather/ui/weather-alert.tsx:259
 msgid "{precipitationInches} inches of precipitation expected over the next {durationHours} hours"
 msgstr "আগামী {durationHours} ঘণ্টায় {precipitationInches} ইঞ্চি বৃষ্টিপাত প্রত্যাশিত."
 
-#: src/components/weather-alert.tsx:250
+#: src/features/weather/ui/weather-alert.tsx:251
 msgid "{precipitationInches} inches of precipitation expected over the next hour"
 msgstr "আগামী এক ঘণ্টায় {precipitationInches} ইঞ্চি বৃষ্টিপাত প্রত্যাশিত."
 
-#: src/components/weather-alert.tsx:242
+#: src/features/weather/ui/weather-alert.tsx:243
 msgid "{precipitationMm}mm of precipitation expected over the next {durationHours} hours"
 msgstr "আগামী {durationHours} ঘণ্টায় {precipitationMm} mm বৃষ্টিপাত প্রত্যাশিত."
 
-#: src/components/weather-alert.tsx:235
+#: src/features/weather/ui/weather-alert.tsx:236
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
 msgstr "আগামী এক ঘণ্টায় {precipitationMm} mm বৃষ্টিপাত প্রত্যাশিত."
 
-#: src/components/initialisation.tsx:100
+#: src/features/settings/ui/initialisation.tsx:109
 msgid "<0>Location access denied.</0> Check your browser's settings to allow this site to access your location, then try again."
 msgstr "<0>অবস্থান অ্যাক্সেস বাতিল করা হয়েছে.</0> এই সাইটকে আপনার অবস্থান অ্যাক্সেস করতে অনুমতি দিতে ব্রাউজারের সেটিংস যাচাই করুন, তারপর আবার চেষ্টা করুন."
 
-#: src/components/initialisation.tsx:76
-#: src/components/initialisation.tsx:84
-#: src/components/initialisation.tsx:92
+#: src/features/settings/ui/initialisation.tsx:85
+#: src/features/settings/ui/initialisation.tsx:93
+#: src/features/settings/ui/initialisation.tsx:101
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>অবস্থান অ্যাক্সেস বাতিল করা হয়েছে.</0> ঠিকানাবারের অবস্থান আইকনে ক্লিক করে \"সবসময় আপনার অবস্থান অ্যাক্সেস করতে অনুমতি দিন\" নির্বাচন করুন. তারপর নিচের বোতামে ক্লিক করে আবার চেষ্টা করুন."
 
-#: src/components/settings.tsx:400
+#: src/features/settings/ui/settings.tsx:377
 msgid "☕ Gift a coffee"
 msgstr "☕ একটি কফি উপহার দিন"
 
@@ -87,11 +87,11 @@ msgstr "☕ একটি কফি উপহার দিন"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ প্রতিক্রিয়া জমা দিন"
 
-#: src/components/settings.tsx:384
+#: src/features/settings/ui/settings.tsx:361
 msgid "🌟 Leave a review"
 msgstr "🌟 একটি পর্যালোচনা ছেড়ে দিন"
 
-#: src/components/settings.tsx:392
+#: src/features/settings/ui/settings.tsx:369
 msgid "🐛 Report a bug"
 msgstr "🐛 একটি বাগ প্রতিবেদন করুন"
 
@@ -99,51 +99,51 @@ msgstr "🐛 একটি বাগ প্রতিবেদন করুন"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 একটি বৈশিষ্ট্য অনুরোধ করুন"
 
-#: src/components/settings.tsx:419
+#: src/features/settings/ui/settings.tsx:396
 msgid "🔒 Privacy policy"
 msgstr "🔒 গোপনীয়তা নীতি"
 
-#: src/hooks/seasonal-events/perseids.tsx:116
+#: src/features/seasonal-events/model/perseids.tsx:116
 msgid "A comfortable chair or blanket is more useful than a telescope, as meteors can appear anywhere overhead."
 msgstr "একটি আরামদায়ক চেয়ার বা কম্বল একটি টেলিস্কোপের চেয়ে বেশি উপযোগী, কারণ উল্কাগুলি মাথার উপর যেকোনো স্থানে দেখা দিতে পারে।"
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:105
+#: src/features/seasonal-events/model/autumn-equinox.tsx:105
 msgid "A time of turning"
 msgstr "একটি মোড় নেওয়ার সময়"
 
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:38
+#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:38
 msgid "A total lunar eclipse occurs when the Earth moves directly between the Sun and the Moon, fully shading the lunar surface."
 msgstr "পূর্ণ চন্দ্রগ্রহণ তখন ঘটে যখন পৃথিবী সরাসরি সূর্য ও চাঁদের মাঝে চলে আসে, ফলে চাঁদের পৃষ্ঠ পুরোপুরি ছায়ায় ঢেকে যায়।"
 
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:29
+#: src/features/seasonal-events/model/total-solar-eclipse.tsx:29
 msgid "A total solar eclipse occurs when the Moon moves directly in front of the Sun, briefly transforming daylight into twilight."
 msgstr "পূর্ণ সূর্যগ্রহণ তখন ঘটে যখন চাঁদ সরাসরি সূর্যের সামনে চলে আসে, সংক্ষিপ্ত সময়ের জন্য দিনের আলোকে গোধূলিতে রূপান্তরিত করে।"
 
-#: src/hooks/seasonal-events/summer-solstice.tsx:114
+#: src/features/seasonal-events/model/summer-solstice.tsx:114
 msgid "Above the Arctic Circle, the sun doesn't set at all — it traces a low circle along the horizon and starts climbing again. This is the midnight sun, and it lasts for weeks."
 msgstr "আর্কটিক বৃত্তের উপরে সূর্য একদমই অস্ত যায় না — এটি দিগন্ত বরাবর নিচু একটি বৃত্ত আঁকে এবং আবার উঠতে শুরু করে। এটিই মধ্যরাতের সূর্য, এবং এটি সপ্তাহের পর সপ্তাহ চলে।"
 
-#: src/hooks/seasonal-events/hanukkah.tsx:86
+#: src/features/seasonal-events/model/hanukkah.tsx:86
 msgid "According to tradition, a small supply of oil, meant for one day, lasted eight."
 msgstr "প্রথা অনুযায়ী, এক দিনের জন্য সংরক্ষিত অল্প পরিমাণ তেল আট দিন ধরে স্থায়ী হয়েছিল।"
 
-#: src/hooks/seasonal-events/christmas.tsx:67
+#: src/features/seasonal-events/model/christmas.tsx:67
 msgid "Across centuries and cultures, distinctive local practices emerged — from midnight services and carolling to bustling festive markets and public celebrations."
 msgstr "শতাব্দীর পর শতাব্দী ও সংস্কৃতি জুড়ে মধ্যরাতের উপাসনা ও ক্যারোল গাওয়া থেকে শুরু করে প্রাণবন্ত উৎসব বাজার ও জনসমাবেশ পর্যন্ত নানা স্বতন্ত্র স্থানীয় প্রথা গড়ে উঠেছে।"
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:92
+#: src/features/seasonal-events/model/autumn-equinox.tsx:92
 msgid "Across many ancient cultures, this point in the year was closely tied to harvest celebrations, gratitude, and preparation for winter."
 msgstr "অনেক প্রাচীন সংস্কৃতিতে বছরের এই সময়টি ফসল উৎসব, কৃতজ্ঞতা এবং শীতের প্রস্তুতির সাথে ঘনিষ্ঠভাবে যুক্ত ছিল।"
 
-#: src/hooks/seasonal-events/easter.tsx:60
+#: src/features/seasonal-events/model/easter.tsx:60
 msgid "Across many cultures, older symbols of rebirth — such as eggs, blossoms, and new growth — became woven into the celebration."
 msgstr "অনেক সংস্কৃতিতে ডিম, ফুল এবং নতুন অঙ্কুরনের মতো পুনর্জন্মের প্রাচীন প্রতীকগুলো এই উৎসবে মিশে গেছে।"
 
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:54
+#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:54
 msgid "Across many cultures, the deep red colour of the eclipsed Moon inspired myths and the name “Blood Moon”."
 msgstr "অনেক সংস্কৃতিতে গ্রাস চাঁদের গাঢ় লাল রং মিথের জন্ম দিয়েছে এবং 'রক্তচন্দ্র' নামটি দিয়েছে।"
 
-#: src/hooks/seasonal-events/winter-solstice.tsx:95
+#: src/features/seasonal-events/model/winter-solstice.tsx:95
 msgid "Across many cultures, traditions such as Yule and Saturnalia developed around this moment, gathering warmth, light, and community during the darkest part of the year in the regions where they first formed."
 msgstr "অনেক সংস্কৃতিতে ইউল ও স্যাটারনালিয়ার মতো রীতিনীতিগুলো এই সময়ের চারপাশে বিকশিত হয়েছে, যেখানে এগুলো প্রথম গড়ে উঠেছিল সেসব অঞ্চলের বছরের সবচেয়ে অন্ধকার অংশে উষ্ণতা, আলো ও সম্প্রদায়কে একত্র করেছে।"
 
@@ -151,7 +151,7 @@ msgstr "অনেক সংস্কৃতিতে ইউল ও স্যা�
 #~ msgid "Across the world, daylight begins to shift in new patterns as buds rise and the atmosphere carries the scent of change."
 #~ msgstr "বিশ্বজুড়ে, কুঁড়ি গজানো ও বাতাসে পরিবর্তনের গন্ধ ভেসে বেড়ানো সঙ্গে সঙ্গে দিনের আলো নতুন ছন্দে বদলাতে শুরু করে।"
 
-#: src/hooks/seasonal-events/eid-al-adha.tsx:71
+#: src/features/seasonal-events/model/eid-al-adha.tsx:71
 msgid "Acts of charity, the sharing of food, and care for family, neighbours, and those in need form the heart of the celebration."
 msgstr "দান, খাদ্য ভাগাভাগি এবং পরিবার, প্রতিবেশী ও দরিদ্রদের প্রতি যত্ন এই উৎসবের মূল প্রাণ।"
 
@@ -167,15 +167,15 @@ msgstr "দান, খাদ্য ভাগাভাগি এবং পরি�
 #~ msgid "Alerts"
 #~ msgstr "সতর্কীকরণ"
 
-#: src/hooks/seasonal-events/perseids.tsx:110
+#: src/features/seasonal-events/model/perseids.tsx:110
 msgid "Allow your eyes about twenty minutes to adjust, turn away from city lights, and let the wide sky do the work."
 msgstr "আপনার চোখকে প্রায় বিশ মিনিট খাপ খাইয়ে নিতে দিন, শহরের আলোর দিকে না তাকিয়ে দূরে ঘুরুন, এবং বিশাল আকাশকে তার কাজ করতে দিন।"
 
-#: src/hooks/seasonal-events/new-years.tsx:33
+#: src/features/seasonal-events/model/new-years.tsx:33
 msgid "Although many cultures follow different calendars and celebrate the new year at other times, January 1 remains a widely recognised global marker."
 msgstr "অনেক সংস্কৃতি ভিন্ন ক্যালেন্ডার অনুসরণ করে এবং বছরের অন্য সময়ে নববর্ষ উদ্‌যাপন করে, তবুও ১ জানুয়ারি বিশ্বব্যাপী একটি স্বীকৃত সূচক হিসেবে থেকে গেছে।"
 
-#: src/hooks/seasonal-events/quadrantids.tsx:99
+#: src/features/seasonal-events/model/quadrantids.tsx:99
 msgid "Although the radiant now lies within the constellation Boötes, the older name preserves a small piece of astronomical history."
 msgstr "এখন উজ্জ্বল কেন্দ্রটি বুওটিস নাক্ষত্রমণ্ডলে অবস্থান করলেও, পুরোনো নামটি জ্যোতির্বৈজ্ঞানিক ইতিহাসের একটি ছোট অংশ সংরক্ষণ করে।"
 
@@ -199,23 +199,23 @@ msgstr "এখন উজ্জ্বল কেন্দ্রটি বুওট
 #~ msgid "An error has occurred while periodically updating location. Please check the console for more details."
 #~ msgstr "নির্ধারিত সময়ে অবস্থান আপডেট করার সময় একটি ত্রুটি ঘটেছে। দয়া করে কনসোলে আরও বিস্তারিত জানার জন্য দেখুন।"
 
-#: src/hooks/seasonal-events/summer-solstice.tsx:91
+#: src/features/seasonal-events/model/summer-solstice.tsx:91
 msgid "Ancient monuments such as Stonehenge are aligned with the solstice sunrise, and midsummer festivals across many cultures celebrate light and abundance."
 msgstr "স্টোনহেঞ্জের মতো প্রাচীন স্থাপনা অয়নান্তের সূর্যোদয়ের সাথে সামঞ্জস্যপূর্ণ, এবং অনেক সংস্কৃতিতে গ্রীষ্মমধ্যের উৎসবগুলি আলো ও প্রাচুর্য উদ্‌যাপন করে।"
 
-#: src/hooks/seasonal-events/spring-equinox.tsx:93
+#: src/features/seasonal-events/model/spring-equinox.tsx:93
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "প্রাচীন পর্যবেক্ষণাগারগুলি এই বছরের মোড়গুলোকে সতর্কতার সাথে অনুসরণ করত যেন ফসল রোপনের চক্র, ক্যালেন্ডার ও ঋতু উৎসবগুলো পরিচালনা করা যায়।"
 
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:67
+#: src/features/seasonal-events/model/total-solar-eclipse.tsx:67
 msgid "Animals can grow quiet, while the horizon glows like a complete circle of sunset."
 msgstr "প্রাণীরা নিস্তব্ধ হয়ে যেতে পারে, আর দিগন্তটা যেন অস্তগামী সূর্যের সম্পূর্ণ বৃত্তের মতো জ্বলে ওঠে।"
 
-#: src/hooks/seasonal-events/holi.tsx:152
+#: src/features/seasonal-events/model/holi.tsx:152
 msgid "Another widely told story celebrates Krishna, whose playful exchanges of colour are said to have inspired the festival’s most famous custom."
 msgstr "আরও একটি বহুল প্রচলিত গল্প কৃষ্ণের উদযাপন করে, যেখানে তাঁর রঙের খেলাধুলা নাকি উৎসবের সবচেয়ে বিখ্যাত রীতিটির অনুপ্রেরণা।"
 
-#: src/components/tile.tsx:106
+#: src/features/weather/ui/tile.tsx:121
 msgid "April"
 msgstr "এপ্রিল"
 
@@ -223,7 +223,7 @@ msgstr "এপ্রিল"
 #~ msgid "As Orion rises before dawn, it can feel like a spotlight for the meteors that follow."
 #~ msgstr "ভোরের আগে ওরায়ন উঠলে, এটি যেন আসন্ন উল্কাগুলোর জন্য একটি স্পটলাইটের মতো অনুভূত হয়।"
 
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:70
+#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:70
 msgid "As sunlight passes through Earth’s atmosphere, the shorter blue wavelengths scatter away while the longer red wavelengths bend toward the Moon."
 msgstr "সূর্যালোক পৃথিবীর বায়ুমণ্ডলের মধ্য দিয়ে যেতে গেলে ছোট নীল তরঙ্গদৈর্ঘ্যগুলো বিচ্ছুরিত হয়ে দূরে সরে যায়, আর দীর্ঘ লাল তরঙ্গদৈর্ঘ্যগুলো চাঁদের দিকে বেঁকে যায়।"
 
@@ -231,15 +231,15 @@ msgstr "সূর্যালোক পৃথিবীর বায়ুমণ�
 #~ msgid "As the Earth turns, the new year arrives in a slow-moving wave that travels across time zones for nearly a full day."
 #~ msgstr "পৃথিবী ঘুরতে ঘুরতে নতুন বছর একটি ধীরগতি তরঙ্গ হিসেবে আসে, যা প্রায় পুরো এক দিন ধরে সময় অঞ্চল ধরে এগিয়ে চলে।"
 
-#: src/components/settings.tsx:256
+#: src/features/settings/ui/settings.tsx:103
 msgid "Astronomy"
 msgstr "জ্যোতির্বিজ্ঞান"
 
-#: src/hooks/seasonal-events/eta-aquariids.tsx:116
+#: src/features/seasonal-events/model/eta-aquariids.tsx:116
 msgid "At 66 km/s, these are among the fastest meteors you'll see. Their trails can persist for several seconds after the meteor itself is gone."
 msgstr "৬৬ কিমি/সেকেন্ড গতিতে, এগুলো আপনার দেখা দ্রুততম উল্কাগুলির মধ্যে একটি। উল্কাটি চলে যাওয়ার পরেও তাদের রেখা কয়েক সেকেন্ড স্থায়ী থাকতে পারে।"
 
-#: src/hooks/seasonal-events/new-years.tsx:67
+#: src/features/seasonal-events/model/new-years.tsx:67
 msgid "At each boundary, fireworks go up, bells ring, and strangers count down together. The same moment of anticipation, repeated twenty-four times."
 msgstr "প্রতিটি সীমানায় আতশবাজি ওঠে, ঘণ্টা বাজে, এবং অচেনা মানুষেরা একসঙ্গে কাউন্টডাউন করে। একই প্রতীক্ষার মুহূর্ত, চব্বিশবার পুনরাবৃত্তি।"
 
@@ -247,11 +247,11 @@ msgstr "প্রতিটি সীমানায় আতশবাজি ও
 #~ msgid "At night, lights trace warm constellations across homes and streets, turning whole cities into living lanterns."
 #~ msgstr "রাতে আলো ঘরবাড়ি ও রাস্তাজুড়ে উষ্ণ নক্ষত্রমালার মতো ছড়িয়ে পড়ে, পুরো শহরকে জীবন্ত লণ্ঠনে পরিণত করে।"
 
-#: src/components/tile.tsx:110
+#: src/features/weather/ui/tile.tsx:125
 msgid "August"
 msgstr "আগস্ট"
 
-#: src/components/tile.tsx:235
+#: src/features/weather/ui/tile.tsx:166
 msgid "Autumn Equinox"
 msgstr "শরৎ বিষুব"
 
@@ -259,11 +259,11 @@ msgstr "শরৎ বিষুব"
 #~ msgid "Based on the provided information, your location is:"
 #~ msgstr "প্রদত্ত তথ্যের উপর ভিত্তি করে, আপনার অবস্থান হলঃ"
 
-#: src/hooks/seasonal-events/geminids.tsx:99
+#: src/features/seasonal-events/model/geminids.tsx:99
 msgid "Because it behaves like both an asteroid and a comet, it is sometimes described as a “rock comet”."
 msgstr "এটি উল্কাপিণ্ড ও ধূমকেতু—দুইয়ের বৈশিষ্ট্যই দেখায় বলে একে কখনও কখনও “রক কমেট” বলা হয়।"
 
-#: src/hooks/seasonal-events/summer-solstice.tsx:98
+#: src/features/seasonal-events/model/summer-solstice.tsx:98
 msgid "Bonfires, late gatherings, and all-night vigils have long been part of welcoming this turning point of the year."
 msgstr "আগুনের আলোকশিখা, দেরি রাতের জমায়েত, আর সারারাত জেগে থাকা বহুদিন ধরেই বছরের এই মোড়কে স্বাগত জানানোর অংশ।"
 
@@ -271,11 +271,11 @@ msgstr "আগুনের আলোকশিখা, দেরি রাতে�
 #~ msgid "Bug report"
 #~ msgstr "বাগ প্রতিবেদন"
 
-#: src/hooks/seasonal-events/holi.tsx:184
+#: src/features/seasonal-events/model/holi.tsx:184
 msgid "By midday, the streets, the walls, and every surface in sight are stained in layers of pink, green, yellow, and blue. It takes days to wash out."
 msgstr "দুপুরের মধ্যে রাস্তা, দেওয়াল এবং দৃষ্টিতে আসা প্রতিটি পৃষ্ঠ গোলাপি, সবুজ, হলুদ ও নীলের স্তরে রঙিন হয়ে যায়। ধুয়ে ফেলতে কয়েক দিন লাগে।"
 
-#: src/hooks/seasonal-events/valentines.tsx:71
+#: src/features/seasonal-events/model/valentines.tsx:71
 msgid "By the eighteenth century, handwritten notes and printed cards had helped turn the day into a ritual of letters and messages."
 msgstr "আঠারো শতকের মধ্যে হাতে লেখা নোট এবং মুদ্রিত কার্ড দিবসটিকে চিঠিপত্র ও বার্তার এক আচার-অনুষ্ঠানে পরিণত করেছিল।"
 
@@ -283,7 +283,7 @@ msgstr "আঠারো শতকের মধ্যে হাতে লেখ�
 #~ msgid "Cancel"
 #~ msgstr "বাতিল"
 
-#: src/hooks/seasonal-events/halloween.tsx:72
+#: src/features/seasonal-events/model/halloween.tsx:72
 msgid "Carved pumpkins, sweets, and playful scares echo much older customs of lanterns, bonfires, and protective charms."
 msgstr "খোদাই করা কুমড়ো, মিষ্টি ও মজাদার ভয়ের উপকরণ লণ্ঠন, আগুনের মশাল ও রক্ষার তাবিজের বহু পুরোনো রীতিকে প্রতিধ্বনিত করে।"
 
@@ -295,7 +295,7 @@ msgstr "খোদাই করা কুমড়ো, মিষ্টি ও ম
 #~ msgid "Cemeteries and homes glow with candlelight, colour, music, and laughter, holding grief and gratitude in the same breath."
 #~ msgstr "কবরস্থান ও ঘরবাড়ি মোমের আলো, রং, সঙ্গীত ও হাসি-আনন্দে আলোকিত হয়, একই সাথে তারা শোক ও কৃতজ্ঞতাকে ধারণ করে।"
 
-#: src/hooks/seasonal-events/valentines.tsx:104
+#: src/features/seasonal-events/model/valentines.tsx:104
 msgid "Centuries later, people still reach for pen and paper when a text won't do."
 msgstr "শতাব্দী পরেও, যখন টেক্সট বার্তায় কাজ হয় না, মানুষ তখনও কলম ও কাগজের দিকে হাত বাড়ায়।"
 
@@ -303,27 +303,27 @@ msgstr "শতাব্দী পরেও, যখন টেক্সট বা�
 #~ msgid "Changed needs"
 #~ msgstr "প্রয়োজনীয়তা পরিবর্তন হয়েছে"
 
-#: src/hooks/seasonal-events/lyrids.tsx:108
+#: src/features/seasonal-events/model/lyrids.tsx:108
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
 msgstr "খ্রিস্টপূর্ব ৬৮৭ সালের চীনা নথিতে \"বৃষ্টির মতো তারা ঝরা\" বর্ণিত হয়েছে — এটি লিরিডসের প্রাচীনতম পরিচিত বিবরণ এবং যেকোনো ধরনের উল্কাপাতের প্রাচীনতম নথিভুক্ত পর্যবেক্ষণগুলির একটি।"
 
-#: src/components/tile.tsx:319
+#: src/features/weather/ui/tile.tsx:187
 msgid "Christmas Day"
 msgstr "বড়দিন"
 
-#: src/hooks/seasonal-events/christmas.tsx:43
+#: src/features/seasonal-events/model/christmas.tsx:43
 msgid "Christmas Day marks the celebration of the birth of Jesus, and for many people it has also become a broader season of generosity, reflection, and togetherness."
 msgstr "খ্রিস্ট জন্মদিন যিশুর জন্মের উদ্‌যাপনের দিন, এবং অনেক মানুষের জন্য এটি উদারতা, আত্মচিন্তা ও একতার আরও বিস্তৃত ঋতুতে পরিণত হয়েছে।"
 
-#: src/components/tile.tsx:62
+#: src/features/weather/ui/tile.tsx:77
 msgid "clear sky"
 msgstr "পরিষ্কার আকাশ"
 
-#: src/components/seasonal-event-modal.tsx:42
+#: src/shared/ui/seasonal-event-modal.tsx:42
 msgid "Close"
 msgstr "বন্ধ করুন"
 
-#: src/hooks/seasonal-events/lyrids.tsx:115
+#: src/features/seasonal-events/model/lyrids.tsx:115
 msgid "Comet Thatcher, the shower's parent body, won't return to the inner solar system until roughly the year 2283."
 msgstr "ধূমকেতু থ্যাচার, এই উল্কাবৃষ্টির মূল উৎস, প্রায় ২২৮৩ সাল পর্যন্ত অভ্যন্তরীণ সৌরজগতে ফিরে আসবে না।"
 
@@ -331,11 +331,11 @@ msgstr "ধূমকেতু থ্যাচার, এই উল্কাব�
 #~ msgid "Communities gather for prayer and meals, and households open their doors in welcome."
 #~ msgstr "সমাজের মানুষ প্রার্থনা ও ভোজের জন্য একত্রিত হয়, এবং পরিবারগুলো স্বাগত জানিয়ে দরজা খুলে দেয়।"
 
-#: src/hooks/seasonal-events/earth-day.tsx:153
+#: src/features/seasonal-events/model/earth-day.tsx:153
 msgid "Community cleanups, tree planting, and habitat restoration are among the most common activities."
 msgstr "সামাজিক পরিষ্কার-পরিচ্ছন্নতা, গাছ লাগানো এবং আবাসস্থল পুনর্গঠন সবচেয়ে সাধারণ কার্যক্রমগুলোর মধ্যে।"
 
-#: src/components/settings.tsx:176
+#: src/features/settings/ui/settings.tsx:45
 msgid "Compact weather alerts"
 msgstr "সংক্ষিপ্ত আবহাওয়া সতর্কতা"
 
@@ -351,43 +351,43 @@ msgstr "সংক্ষিপ্ত আবহাওয়া সতর্কত�
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "অত্যধিক মেমোরি অথবা CPU ব্যবহার করে"
 
-#: src/hooks/seasonal-events/halloween.tsx:78
+#: src/features/seasonal-events/model/halloween.tsx:78
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "পোশাক হতে পারে বীরোচিত, মজার, বা কিছুটা ভীতিকর—যাতে মানুষ অল্প সময়ের জন্য অন্য ভূমিকায় ঢুকে পড়তে পারে।"
 
-#: src/components/settings.tsx:149
+#: src/features/settings/ui/settings.tsx:287
 msgid "Date"
 msgstr "তারিখ"
 
-#: src/components/settings.tsx:145
+#: src/features/settings/ui/settings.tsx:283
 msgid "Day"
 msgstr "দিন"
 
-#: src/components/tile.tsx:295
+#: src/features/weather/ui/tile.tsx:181
 msgid "Day of the Dead"
 msgstr "মৃতদের দিবস"
 
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:40
+#: src/features/seasonal-events/model/day-of-the-dead.tsx:40
 msgid "Day of the Dead is a celebration of life, memory, and the enduring bond between the living and those who have passed."
 msgstr "মৃতদের দিবস জীবনের, স্মৃতির এবং জীবিতদের ও প্রয়াতদের মধ্যে অবিচ্ছিন্ন বন্ধনের উদ্‌যাপন।"
 
-#: src/components/tile.tsx:114
+#: src/features/weather/ui/tile.tsx:129
 msgid "December"
 msgstr "ডিসেম্বর"
 
-#: src/hooks/seasonal-events/christmas.tsx:85
+#: src/features/seasonal-events/model/christmas.tsx:85
 msgid "Decorated trees, stockings, gift-giving, and shared meals now connect people across many climates and continents in a sense of home and continuity."
 msgstr "সাজানো গাছ, স্টকিংস, উপহার দেওয়া, এবং একসাথে খাওয়া-দাওয়া এখন ... বিভিন্ন জলবায়ু ও মহাদেশজুড়ে মানুষকে ঘরের উষ্ণতা ও ধারাবাহিকতার অনুভূতিতে যুক্ত করে।"
 
-#: src/components/tile.tsx:70
+#: src/features/weather/ui/tile.tsx:85
 msgid "dense drizzle"
 msgstr "ঘন ঝরঝর বৃষ্টি"
 
-#: src/components/tile.tsx:72
+#: src/features/weather/ui/tile.tsx:87
 msgid "dense freezing drizzle"
 msgstr "ঘন হিমায়িত ঝরঝর বৃষ্টি"
 
-#: src/components/tile.tsx:67
+#: src/features/weather/ui/tile.tsx:82
 msgid "depositing rime fog"
 msgstr "রাইম কুয়াশা জমা"
 
@@ -399,15 +399,15 @@ msgstr "রাইম কুয়াশা জমা"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "ব্যবহার করা বা বোঝা কঠিন"
 
-#: src/components/tile.tsx:239
+#: src/features/weather/ui/tile.tsx:167
 msgid "Diwali"
 msgstr "দিওয়ালি"
 
-#: src/hooks/seasonal-events/diwali.tsx:61
+#: src/features/seasonal-events/model/diwali.tsx:61
 msgid "Diwali is the festival of lights, celebrating renewal, hope, and the enduring triumph of light over darkness."
 msgstr "দিওয়ালি আলোয় উৎসব, যা পুনর্নবীকরণ, আশা এবং অন্ধকারের উপর আলোর চিরস্থায়ী জয়ের উদ্‌যাপন করে।"
 
-#: src/hooks/seasonal-events/diwali.tsx:94
+#: src/features/seasonal-events/model/diwali.tsx:94
 msgid "Diyas and candles glow along doorways and windows, while rangoli patterns bloom across thresholds in colour and light."
 msgstr "দরজা ও জানালার ধার ধরে দীপ ও মোমবাতি জ্বলে, আর রং ও আলোর রাঙ্গোলি নকশা দোরের চৌকাঠে ফুটে ওঠে।"
 
@@ -419,15 +419,15 @@ msgstr "আপনি যদি মানুষ হন, তাহলে এই �
 #~ msgid "Don't save"
 #~ msgstr "সংরক্ষণ করবেন না"
 
-#: src/hooks/seasonal-events/lunar-new-year.tsx:118
+#: src/features/seasonal-events/model/lunar-new-year.tsx:118
 msgid "Dragon and lion dances wind through streets packed with spectators, firecrackers, and the smell of street food — a finale that can last well past midnight."
 msgstr "ড্রাগন ও সিংহ নাচ দর্শক, পটকা ও রাস্তার খাবারের গন্ধে ভরা রাস্তায় এঁকেবেঁকে চলে — একটি পরিসমাপ্তি যা মধ্যরাত পেরিয়ে দীর্ঘ সময় চলতে পারে।"
 
-#: src/hooks/seasonal-events/hanukkah.tsx:119
+#: src/features/seasonal-events/model/hanukkah.tsx:119
 msgid "Dreidel, often dismissed as a children's game, was historically used as a cover for Torah study during periods when it was outlawed. Each Hebrew letter on its sides forms an acronym: \"A great miracle happened there.\""
 msgstr "ড্রেইডেল, যাকে প্রায়ই শিশুদের খেলা বলে উড়িয়ে দেওয়া হয়, ঐতিহাসিকভাবে তোরাহ অধ্যয়নের আচ্ছাদন হিসেবে ব্যবহৃত হতো যখন তা নিষিদ্ধ ছিল। এর পাশের প্রতিটি হিব্রু অক্ষর একটি সংক্ষিপ্তরূপ তৈরি করে: \"সেখানে এক মহা অলৌকিক ঘটনা ঘটেছিল।\""
 
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:77
+#: src/features/seasonal-events/model/total-solar-eclipse.tsx:77
 msgid "During totality, the Sun’s corona — normally invisible — appears as a shimmering halo of white light. Bright stars and planets become visible in the middle of the day."
 msgstr "পূর্ণ গ্রহণের সময় সূর্যের করোনা — সাধারণত অদৃশ্য — সাদা আলোর ঝিলিকমারা মুকুট হিসেবে দেখা দেয়। দিনের মাঝে উজ্জ্বল তারা ও গ্রহগুলো দৃশ্যমান হয়ে ওঠে।"
 
@@ -439,47 +439,47 @@ msgstr "পূর্ণ গ্রহণের সময় সূর্যের
 #~ msgid "Each added minute of daylight carries the quiet promise of change."
 #~ msgstr "দিনের আলোতে যোগ হওয়া প্রতিটি মিনিট পরিবর্তনের নিঃশব্দ প্রতিশ্রুতি বহন করে।"
 
-#: src/hooks/seasonal-events/hanukkah.tsx:70
+#: src/features/seasonal-events/model/hanukkah.tsx:70
 msgid "Each evening, another candle is added to the menorah, gradually building the display of light."
 msgstr "প্রতিটি সন্ধ্যায় মেনোরায় আরও একটি করে মোমবাতি যোগ করা হয়, ধীরে ধীরে আলোর প্রদর্শনী তৈরি হয়।"
 
-#: src/hooks/seasonal-events/orionids.tsx:109
+#: src/features/seasonal-events/model/orionids.tsx:109
 msgid "Each Orionid meteor is a tiny grain of dust shed by Halley's Comet — the same object that people have been watching and recording since at least 240 BC."
 msgstr "প্রতিটি ওরায়োনিড উল্কা হ্যালির ধূমকেতু থেকে ঝরে পড়া একটি ক্ষুদ্র ধুলোকণা — একই বস্তু যা মানুষ অন্তত খ্রিস্টপূর্ব ২৪০ সাল থেকে দেখে আসছে এবং নথিভুক্ত করছে।"
 
-#: src/components/tile.tsx:259
+#: src/features/weather/ui/tile.tsx:169
 msgid "Earth Day"
 msgstr "পৃথিবী দিবস"
 
-#: src/hooks/seasonal-events/earth-day.tsx:121
+#: src/features/seasonal-events/model/earth-day.tsx:121
 msgid "Earth Day invites a pause to notice the planet that sustains us, and to consider how we care for it."
 msgstr "পৃথিবী দিবস আমাদের থেমে এই গ্রহটিকে লক্ষ করার এবং আমরা কীভাবে এর যত্ন নেই তা ভাবার আহ্বান জানায়, যা আমাদের টিকিয়ে রাখে।"
 
-#: src/components/tile.tsx:299
+#: src/features/weather/ui/tile.tsx:182
 msgid "Easter"
 msgstr "ইস্টার"
 
-#: src/hooks/seasonal-events/easter.tsx:38
+#: src/features/seasonal-events/model/easter.tsx:38
 msgid "Easter centres on themes of renewal and, in Christian tradition, the resurrection of Jesus."
 msgstr "ইস্টার পুনর্জাগরণের প্রসঙ্গকে কেন্দ্র করে, এবং খ্রিস্টান ঐতিহ্যে যিশুর পুনরুত্থানকে স্মরণ করে।"
 
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:84
+#: src/features/seasonal-events/model/total-solar-eclipse.tsx:84
 msgid "Eclipse glasses are essential during all partial phases. Only during the brief seconds of total coverage is it safe to look with the naked eye."
 msgstr "সমস্ত আংশিক পর্যায়ে গ্রহণ চশমা অপরিহার্য। শুধুমাত্র পূর্ণ আচ্ছাদনের সংক্ষিপ্ত কয়েক সেকেন্ডেই খালি চোখে দেখা নিরাপদ।"
 
-#: src/components/tile.tsx:311
+#: src/features/weather/ui/tile.tsx:185
 msgid "Eid al-Adha"
 msgstr "ঈদুল আজহা"
 
-#: src/hooks/seasonal-events/eid-al-adha.tsx:49
+#: src/features/seasonal-events/model/eid-al-adha.tsx:49
 msgid "Eid al-Adha is one of the most important festivals in Islam, closely linked to the season of the Hajj pilgrimage."
 msgstr "ঈদুল আজহা ইসলামের অন্যতম গুরুত্বপূর্ণ উৎসব, যা হজের মৌসুমের সঙ্গে ঘনিষ্ঠভাবে যুক্ত।"
 
-#: src/components/tile.tsx:307
+#: src/features/weather/ui/tile.tsx:184
 msgid "Eid al-Fitr"
 msgstr "ঈদুল ফিতর"
 
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:56
+#: src/features/seasonal-events/model/eid-al-fitr.tsx:56
 msgid "Eid al-Fitr marks the end of Ramadan, celebrating renewal, gratitude, and the strength of shared community."
 msgstr "ঈদুল ফিতর রমজানের সমাপ্তি চিহ্নিত করে—নবীকরণ, কৃতজ্ঞতা, এবং ভাগ করা সম্প্রদায়ের শক্তি উদযাপন করে।"
 
@@ -495,11 +495,11 @@ msgstr "ঈদুল ফিতর রমজানের সমাপ্তি �
 #~ msgid "Error submitting feedback. Try again later."
 #~ msgstr "প্রতিক্রিয়া জমা দেওয়ার সময় ত্রুটি। পরে আবার চেষ্টা করুন।"
 
-#: src/components/tile.tsx:275
+#: src/features/weather/ui/tile.tsx:176
 msgid "Eta Aquariids Meteor Shower"
 msgstr "এটা অ্যাকুয়ারিডস উল্কাবৃষ্টি"
 
-#: src/hooks/seasonal-events/earth-day.tsx:159
+#: src/features/seasonal-events/model/earth-day.tsx:159
 msgid "Even small choices — repairing, reusing, conserving, or simply walking a familiar trail — reflect its underlying spirit."
 msgstr "ছোট ছোট সিদ্ধান্তও — মেরামত করা, পুনঃব্যবহার করা, সঞ্চয় করা, অথবা শুধু চেনা পথে হাঁটা — এর অন্তর্নিহিত চেতনাকে প্রতিফলিত করে।"
 
@@ -507,11 +507,11 @@ msgstr "ছোট ছোট সিদ্ধান্তও — মেরাম�
 #~ msgid "Even today, paper hearts and quiet notes continue the tradition of deliberate kindness."
 #~ msgstr "আজও কাগজের হৃদয় আর নীরব ছোট নোটগুলো ইচ্ছাকৃত সদয়তার ঐতিহ্যকে টিকিয়ে রাখে।"
 
-#: src/hooks/seasonal-events/christmas.tsx:78
+#: src/features/seasonal-events/model/christmas.tsx:78
 msgid "Evergreens, candles, bells, and stars echo a shared theme drawn from those early traditions: light enduring through the darkest part of the year in the cultures where the holiday first formed."
 msgstr "চিরসবুজ গাছ, মোমবাতি, ঘণ্টা, আর তারা একটি যৌথ থিমকে স্মরণ করিয়ে দেয় ... যে সংস্কৃতিগুলোতে এই উৎসব প্রথম গড়ে উঠেছিল, বছরের সবচেয়ে অন্ধকার সময়ে আলো টিকে থাকার থিম।"
 
-#: src/components/weather-alert.tsx:202
+#: src/features/weather/ui/weather-alert.tsx:203
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
 msgstr "পরের {durationOfExtremeUv} ঘণ্টা ধরে আত্যধিক ইউভি"
 
@@ -519,31 +519,31 @@ msgstr "পরের {durationOfExtremeUv} ঘণ্টা ধরে আত্�
 #~ msgid "Extreme UV for the next 12 hours"
 #~ msgstr "পরের 12 ঘণ্টা ধরে আত্যধিক ইউভি"
 
-#: src/components/weather-alert.tsx:206
+#: src/features/weather/ui/weather-alert.tsx:207
 msgid "Extreme UV for the next hour"
 msgstr "পরের এক ঘণ্টা ধরে আত্যধিক ইউভি"
 
-#: src/components/weather-alert.tsx:193
+#: src/features/weather/ui/weather-alert.tsx:194
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "{timeUntilExtremeUv} ঘণ্টা পরে আত্যধিক ইউভি শুরু হবে"
 
-#: src/components/weather-alert.tsx:191
+#: src/features/weather/ui/weather-alert.tsx:192
 msgid "Extreme UV starting in 1 hour"
 msgstr "এক ঘণ্টা পরে আত্যধিক ইউভি শুরু হবে"
 
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:78
+#: src/features/seasonal-events/model/eid-al-fitr.tsx:78
 msgid "Families and friends gather, visit neighbours, exchange gifts, and greet one another with wishes of peace."
 msgstr "পরিবার ও বন্ধু-বান্ধবরা একত্রিত হয়, প্রতিবেশীদের সাথে দেখা করেন, উপহার আদান-প্রদান করেন এবং শান্তির শুভেচ্ছায় একে অপরকে অভিবাদন জানান।"
 
-#: src/hooks/seasonal-events/diwali.tsx:100
+#: src/features/seasonal-events/model/diwali.tsx:100
 msgid "Families exchange sweets and gifts, clean and decorate their homes, and offer prayers for health, prosperity, and a bright year ahead."
 msgstr "পরিবারগুলো মিষ্টি ও উপহার বিনিময় করে, তাদের বাড়ি পরিষ্কার ও সাজিয়ে তোলে এবং স্বাস্থ্য, সমৃদ্ধি ও সামনে উজ্জ্বল বছরের জন্য প্রার্থনা করে।"
 
-#: src/hooks/seasonal-events/hanukkah.tsx:96
+#: src/features/seasonal-events/model/hanukkah.tsx:96
 msgid "Families gather to light the menorah, sing songs, and play games such as dreidel."
 msgstr "পরিবারগুলো মেনোরায় আলো জ্বালাতে, গান গাইতে ও ড্রেইডেল-এর মতো খেলা খেলতে একত্রিত হয়।"
 
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:89
+#: src/features/seasonal-events/model/day-of-the-dead.tsx:89
 msgid "Families spend the night in cemeteries, cleaning graves, laying marigold paths, and sharing meals beside the headstones. It's social, warm, and often funny — people tell stories and play music until morning."
 msgstr "পরিবারগুলো রাত কবরস্থানে কাটায়, কবর পরিষ্কার করে, গাঁদার পথ বিছায় এবং সমাধিপ্রস্তরের পাশে খাবার ভাগ করে নেয়। এটি সামাজিক, উষ্ণ এবং প্রায়ই মজার — মানুষ সকাল পর্যন্ত গল্প বলে এবং সঙ্গীত বাজায়।"
 
@@ -559,11 +559,11 @@ msgstr "পরিবারগুলো রাত কবরস্থানে ক
 #~ msgid "Features don't work as expected"
 #~ msgstr "ফিচারগুলি প্রত্যাশিতভাবে কাজ করে না"
 
-#: src/components/tile.tsx:104
+#: src/features/weather/ui/tile.tsx:119
 msgid "February"
 msgstr "ফেব্রুয়ারি"
 
-#: src/components/settings.tsx:376
+#: src/features/settings/ui/settings.tsx:353
 msgid "Feedback"
 msgstr "প্রতিক্রিয়া"
 
@@ -571,7 +571,7 @@ msgstr "প্রতিক্রিয়া"
 #~ msgid "Feedback successfully submitted"
 #~ msgstr "প্রতিক্রিয়া সফলভাবে জমা হয়েছে"
 
-#: src/hooks/seasonal-events/geminids.tsx:109
+#: src/features/seasonal-events/model/geminids.tsx:109
 msgid "Find a wide view of the sky, allow your eyes time to adjust, and settle in — the display often strengthens after midnight."
 msgstr "আকাশের বিস্তৃত দৃষ্টি খোঁজ করুন, আপনার চোখকে মানিয়ে নেওয়ার সময় দিন এবং বসে থাকুন — এই প্রদর্শনী প্রায়ই মধ্যরাতের পর আরও শক্তিশালী হয়।"
 
@@ -579,7 +579,7 @@ msgstr "আকাশের বিস্তৃত দৃষ্টি খোঁজ
 #~ msgid "Fireworks, bells, and wishes seem to ride that wave, scattering light and sound across the night."
 #~ msgstr "আতশবাজি, ঘণ্টাধ্বনি ও আশাগুলো যেন সেই তরঙ্গের উপর সওয়ার হয়ে রাতে আলো ও শব্দ ছড়িয়ে দেয়।"
 
-#: src/hooks/seasonal-events/hanukkah.tsx:102
+#: src/features/seasonal-events/model/hanukkah.tsx:102
 msgid "Foods fried in oil, including latkes and sufganiyot, reflect the central symbol of the story."
 msgstr "তেলে ভাজা খাবার, যেমন লাটকা ও সুফগানিয়ত, গল্পের মূল প্রতীককে প্রতিফলিত করে।"
 
@@ -587,7 +587,7 @@ msgstr "তেলে ভাজা খাবার, যেমন লাটকা 
 #~ msgid "For a time, streets become living paintings and the air itself seems to celebrate."
 #~ msgstr "কিছু সময়ের জন্য রাস্তা জীবন্ত চিত্রকর্মে পরিণত হয় এবং বাতাস নিজেই যেন উৎসব পালন করে।"
 
-#: src/hooks/seasonal-events/diwali.tsx:77
+#: src/features/seasonal-events/model/diwali.tsx:77
 msgid "For many Hindus, the festival marks the return of Rama, Sita, Lakshmana, and Hanuman to Ayodhya after their long exile."
 msgstr "অন্য অনেক হিন্দুর কাছে এই উৎসব রাম, সীতা, লক্ষ্মণ ও হনুমানের দীর্ঘ নির্বাসন শেষে অযোধ্যায় ফিরে আসাকে চিহ্নিত করে।"
 
@@ -599,164 +599,164 @@ msgstr "অন্য অনেক হিন্দুর কাছে এই উ�
 #~ msgid "Found a better alternative"
 #~ msgstr "আরও ভাল বিকল্প পেয়েছি"
 
-#: src/components/tile.tsx:98
+#: src/features/weather/ui/tile.tsx:113
 msgid "Friday"
 msgstr "শুক্রবার"
 
-#: src/hooks/seasonal-events/easter.tsx:54
+#: src/features/seasonal-events/model/easter.tsx:54
 msgid "From its earliest observances, Christian calendars aligned Easter with the spring season and the full moon following the equinox."
 msgstr "এর প্রারম্ভিক উদ্‌যাপন থেকেই, খ্রিস্টান ক্যালেন্ডারগুলো ইস্টারকে বসন্ত ঋতু এবং বিষুবের পরের পূর্ণিমার সাথে সামঞ্জস্য করেছে।"
 
-#: src/hooks/seasonal-events/spring-equinox.tsx:109
+#: src/features/seasonal-events/model/spring-equinox.tsx:109
 msgid "From this point, each day gains a few minutes of light — a shift that's barely noticeable day to day, but adds up to hours within weeks."
 msgstr "এই বিন্দু থেকে প্রতিদিন কয়েক মিনিট বেশি আলো পাওয়া যায় — এক পরিবর্তন যা দিনে দিনে খুব একটা বোঝা যায় না, কিন্তু কয়েক সপ্তাহের মধ্যে ঘণ্টার পার্থক্যে পরিণত হয়।"
 
-#: src/hooks/seasonal-events/geminids.tsx:125
+#: src/features/seasonal-events/model/geminids.tsx:125
 msgid "Geminid meteors move slower than most showers, which is part of what makes them so striking — they linger long enough to actually follow with your eyes."
 msgstr "জেমিনিড উল্কাগুলো বেশিরভাগ বৃষ্টির চেয়ে ধীরে চলে, যা তাদের এত আকর্ষণীয় করার একটি কারণ — সেগুলো এতটা দীর্ঘস্থায়ী হয় যে আপনি সত্যিই চোখ দিয়ে অনুসরণ করতে পারেন।"
 
-#: src/components/tile.tsx:303
+#: src/features/weather/ui/tile.tsx:183
 msgid "Geminids Meteor Shower"
 msgstr "জেমিনিডস উল্কাবৃষ্টি"
 
-#: src/components/settings.tsx:76
+#: src/features/settings/ui/settings.tsx:214
 msgid "General"
 msgstr "সাধারণ"
 
-#: src/components/weather-alert.tsx:291
+#: src/features/weather/ui/weather-alert.tsx:292
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "আগামী {durationOfStrongWind} ঘণ্টা ধরে সাধারণত প্রবল বাতাস"
 
-#: src/components/weather-alert.tsx:297
+#: src/features/weather/ui/weather-alert.tsx:298
 msgid "Generally strong wind for the next 24 hours"
 msgstr "আগামী ২৪ ঘণ্টা ধরে সাধারণত প্রবল বাতাস"
 
-#: src/components/weather-alert.tsx:300
+#: src/features/weather/ui/weather-alert.tsx:301
 msgid "Generally strong wind for the next hour"
 msgstr "আগামী এক ঘণ্টা ধরে সাধারণত প্রবল বাতাস"
 
-#: src/components/weather-alert.tsx:283
+#: src/features/weather/ui/weather-alert.tsx:284
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind} ঘণ্টা পর থেকে সাধারণত প্রবল বাতাস শুরু হবে"
 
-#: src/components/weather-alert.tsx:281
+#: src/features/weather/ui/weather-alert.tsx:282
 msgid "Generally strong wind starting in 1 hour"
 msgstr "এক ঘণ্টা পর থেকে সাধারণত প্রবল বাতাস শুরু হবে"
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:116
-#: src/hooks/seasonal-events/christmas.tsx:93
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:86
-#: src/hooks/seasonal-events/diwali.tsx:107
-#: src/hooks/seasonal-events/earth-day.tsx:166
-#: src/hooks/seasonal-events/easter.tsx:67
-#: src/hooks/seasonal-events/eid-al-adha.tsx:78
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:85
-#: src/hooks/seasonal-events/eta-aquariids.tsx:106
-#: src/hooks/seasonal-events/geminids.tsx:122
-#: src/hooks/seasonal-events/halloween.tsx:85
-#: src/hooks/seasonal-events/hanukkah.tsx:109
-#: src/hooks/seasonal-events/holi.tsx:175
-#: src/hooks/seasonal-events/leonids.tsx:123
-#: src/hooks/seasonal-events/lunar-new-year.tsx:109
-#: src/hooks/seasonal-events/lyrids.tsx:105
-#: src/hooks/seasonal-events/new-years.tsx:58
-#: src/hooks/seasonal-events/orionids.tsx:106
-#: src/hooks/seasonal-events/perseids.tsx:123
-#: src/hooks/seasonal-events/quadrantids.tsx:122
-#: src/hooks/seasonal-events/spring-equinox.tsx:106
-#: src/hooks/seasonal-events/summer-solstice.tsx:105
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:84
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:74
-#: src/hooks/seasonal-events/valentines.tsx:94
-#: src/hooks/seasonal-events/winter-solstice.tsx:109
+#: src/features/seasonal-events/model/autumn-equinox.tsx:116
+#: src/features/seasonal-events/model/christmas.tsx:93
+#: src/features/seasonal-events/model/day-of-the-dead.tsx:86
+#: src/features/seasonal-events/model/diwali.tsx:107
+#: src/features/seasonal-events/model/earth-day.tsx:166
+#: src/features/seasonal-events/model/easter.tsx:67
+#: src/features/seasonal-events/model/eid-al-adha.tsx:78
+#: src/features/seasonal-events/model/eid-al-fitr.tsx:85
+#: src/features/seasonal-events/model/eta-aquariids.tsx:106
+#: src/features/seasonal-events/model/geminids.tsx:122
+#: src/features/seasonal-events/model/halloween.tsx:85
+#: src/features/seasonal-events/model/hanukkah.tsx:109
+#: src/features/seasonal-events/model/holi.tsx:175
+#: src/features/seasonal-events/model/leonids.tsx:123
+#: src/features/seasonal-events/model/lunar-new-year.tsx:109
+#: src/features/seasonal-events/model/lyrids.tsx:105
+#: src/features/seasonal-events/model/new-years.tsx:58
+#: src/features/seasonal-events/model/orionids.tsx:106
+#: src/features/seasonal-events/model/perseids.tsx:123
+#: src/features/seasonal-events/model/quadrantids.tsx:122
+#: src/features/seasonal-events/model/spring-equinox.tsx:106
+#: src/features/seasonal-events/model/summer-solstice.tsx:105
+#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:84
+#: src/features/seasonal-events/model/total-solar-eclipse.tsx:74
+#: src/features/seasonal-events/model/valentines.tsx:94
+#: src/features/seasonal-events/model/winter-solstice.tsx:109
 msgid "Good to know"
 msgstr "জেনে রাখুন"
 
-#: src/hooks/seasonal-events/eta-aquariids.tsx:93
+#: src/features/seasonal-events/model/eta-aquariids.tsx:93
 msgid "Halley’s Comet itself returns roughly every seventy-six years, but the stream of dust it leaves behind crosses Earth’s path each year."
 msgstr "হ্যালির ধূমকেতু নিজে প্রায় ছিয়াত্তর বছর পরপর ফেরে ... কিন্তু তার রেখে যাওয়া ধুলোর ধারা প্রতি বছর পৃথিবীর পথে এসে পড়ে।"
 
-#: src/components/tile.tsx:255
+#: src/features/weather/ui/tile.tsx:172
 msgid "Halloween"
 msgstr "হ্যালোইন"
 
-#: src/hooks/seasonal-events/halloween.tsx:40
+#: src/features/seasonal-events/model/halloween.tsx:40
 msgid "Halloween is a night shaped by costumes, stories, and a playful sense of unease."
 msgstr "হ্যালোউইন হলো পোশাক, গল্প, আর খেলাচ্ছলে অস্বস্তির এক রাত।"
 
-#: src/components/tile.tsx:315
+#: src/features/weather/ui/tile.tsx:186
 msgid "Hanukkah"
 msgstr "হনুক্কাহ"
 
-#: src/hooks/seasonal-events/hanukkah.tsx:65
+#: src/features/seasonal-events/model/hanukkah.tsx:65
 msgid "Hanukkah is a Jewish festival of lights, observed over eight nights."
 msgstr "হনুক্কা হলো ইহুদি আলোর উৎসব, যা আট রাত ধরে পালিত হয়।"
 
-#: src/hooks/seasonal-events/valentines.tsx:81
+#: src/features/seasonal-events/model/valentines.tsx:81
 msgid "Hearts, roses, and red ribbons became familiar symbols of devotion, warmth, and connection."
 msgstr "হৃদয়, গোলাপ ও লাল ফিতা ভক্তি, উষ্ণতা ও সংযোগের পরিচিত প্রতীক হয়ে ওঠে।"
 
-#: src/components/tile.tsx:77
+#: src/features/weather/ui/tile.tsx:92
 msgid "heavy freezing rain"
 msgstr "ভারী হিমায়িত বৃষ্টি"
 
-#: src/components/tile.tsx:75
+#: src/features/weather/ui/tile.tsx:90
 msgid "heavy rain"
 msgstr "ভারী বৃষ্টি"
 
-#: src/components/tile.tsx:86
+#: src/features/weather/ui/tile.tsx:101
 msgid "heavy snow showers"
 msgstr "ভারী তুষারঝড়"
 
-#: src/components/tile.tsx:80
+#: src/features/weather/ui/tile.tsx:95
 msgid "heavy snowfall"
 msgstr "ভারী তুষারপাত"
 
-#: src/hooks/seasonal-events/lyrids.tsx:92
+#: src/features/seasonal-events/model/lyrids.tsx:92
 msgid "Historical Chinese records describe displays of Lyrid meteors more than two thousand six hundred years ago."
 msgstr "ঐতিহাসিক চীনা নথিতে দুই হাজার ছয়শ বছরেরও বেশি আগে লিরিড উল্কাবৃষ্টির প্রদর্শনী বর্ণনা করা হয়েছে।"
 
-#: src/hooks/seasonal-events/perseids.tsx:100
+#: src/features/seasonal-events/model/perseids.tsx:100
 msgid "Historical records of the Perseids extend back nearly two thousand years, making them one of the longest observed meteor showers."
 msgstr "পারসিডসের ঐতিহাসিক নথি প্রায় দুই হাজার বছর আগ পর্যন্ত বিস্তৃত, যা তাদের দীর্ঘতম পর্যবেক্ষিত উল্কাবৃষ্টি গুলোর একটি করে তোলে।"
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:89
-#: src/hooks/seasonal-events/christmas.tsx:57
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:53
-#: src/hooks/seasonal-events/diwali.tsx:74
-#: src/hooks/seasonal-events/earth-day.tsx:134
-#: src/hooks/seasonal-events/easter.tsx:51
-#: src/hooks/seasonal-events/eid-al-adha.tsx:62
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:69
-#: src/hooks/seasonal-events/eta-aquariids.tsx:90
-#: src/hooks/seasonal-events/geminids.tsx:90
-#: src/hooks/seasonal-events/halloween.tsx:52
-#: src/hooks/seasonal-events/hanukkah.tsx:77
-#: src/hooks/seasonal-events/holi.tsx:143
-#: src/hooks/seasonal-events/leonids.tsx:90
-#: src/hooks/seasonal-events/lyrids.tsx:89
-#: src/hooks/seasonal-events/new-years.tsx:41
-#: src/hooks/seasonal-events/orionids.tsx:90
-#: src/hooks/seasonal-events/perseids.tsx:90
-#: src/hooks/seasonal-events/quadrantids.tsx:90
-#: src/hooks/seasonal-events/spring-equinox.tsx:90
-#: src/hooks/seasonal-events/summer-solstice.tsx:88
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:51
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:42
-#: src/hooks/seasonal-events/valentines.tsx:62
-#: src/hooks/seasonal-events/winter-solstice.tsx:92
+#: src/features/seasonal-events/model/autumn-equinox.tsx:89
+#: src/features/seasonal-events/model/christmas.tsx:57
+#: src/features/seasonal-events/model/day-of-the-dead.tsx:53
+#: src/features/seasonal-events/model/diwali.tsx:74
+#: src/features/seasonal-events/model/earth-day.tsx:134
+#: src/features/seasonal-events/model/easter.tsx:51
+#: src/features/seasonal-events/model/eid-al-adha.tsx:62
+#: src/features/seasonal-events/model/eid-al-fitr.tsx:69
+#: src/features/seasonal-events/model/eta-aquariids.tsx:90
+#: src/features/seasonal-events/model/geminids.tsx:90
+#: src/features/seasonal-events/model/halloween.tsx:52
+#: src/features/seasonal-events/model/hanukkah.tsx:77
+#: src/features/seasonal-events/model/holi.tsx:143
+#: src/features/seasonal-events/model/leonids.tsx:90
+#: src/features/seasonal-events/model/lyrids.tsx:89
+#: src/features/seasonal-events/model/new-years.tsx:41
+#: src/features/seasonal-events/model/orionids.tsx:90
+#: src/features/seasonal-events/model/perseids.tsx:90
+#: src/features/seasonal-events/model/quadrantids.tsx:90
+#: src/features/seasonal-events/model/spring-equinox.tsx:90
+#: src/features/seasonal-events/model/summer-solstice.tsx:88
+#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:51
+#: src/features/seasonal-events/model/total-solar-eclipse.tsx:42
+#: src/features/seasonal-events/model/valentines.tsx:62
+#: src/features/seasonal-events/model/winter-solstice.tsx:92
 msgid "History and meaning"
 msgstr "ইতিহাস ও অর্থ"
 
-#: src/components/tile.tsx:243
+#: src/features/weather/ui/tile.tsx:168
 msgid "Holi"
 msgstr "হোলি"
 
-#: src/hooks/seasonal-events/holi.tsx:130
+#: src/features/seasonal-events/model/holi.tsx:130
 msgid "Holi is a joyful festival of colour, celebrated with laughter, music, and shared community."
 msgstr "হোলি রঙের আনন্দময় উৎসব, যা হাসি, সঙ্গীত ও ভাগাভাগি করা সম্প্রদায়ের সাথে উদ্‌যাপিত হয়।"
 
-#: src/hooks/seasonal-events/lunar-new-year.tsx:86
+#: src/features/seasonal-events/model/lunar-new-year.tsx:86
 msgid "Homes are carefully cleaned and decorated to clear away old luck and welcome prosperity for the year ahead."
 msgstr "বাড়িগুলো সতর্কতার সাথে পরিষ্কার ও সাজানো হয় পুরোনো ভাগ্য দূর করে আগামী বছরের সমৃদ্ধিকে স্বাগত জানাতে।"
 
@@ -768,7 +768,7 @@ msgstr "বাড়িগুলো সতর্কতার সাথে পর
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "আমি প্রিয়ভাবে Weather Please কে আরও বেশি ভাষায় আনতে চাই।"
 
-#: src/components/settings.tsx:138
+#: src/features/settings/ui/settings.tsx:276
 msgid "Identifier"
 msgstr "পরিচয়ক"
 
@@ -780,7 +780,7 @@ msgstr "পরিচয়ক"
 #~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
 #~ msgstr "আপনার কাছে কোনও অনুবাদের অনুরোধ থাকলে, দয়া করে <0>contact@weather-please.app</0> এ যোগাযোগ করুন।"
 
-#: src/components/initialisation.tsx:156
+#: src/features/settings/ui/initialisation.tsx:165
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "আপনার ব্রাউজার অবস্থানের অনুমতি চাইলে, দয়া করে \"অনুমতি দিন\" নির্বাচন করুন।"
 
@@ -788,11 +788,11 @@ msgstr "আপনার ব্রাউজার অবস্থানের অ
 #~ msgid "In far northern regions, the sun may barely set at all, creating the phenomenon of the midnight sun."
 #~ msgstr "দূর উত্তরাঞ্চলে সূর্য প্রায় ডুবতেই নাও পারে, ফলে ‘মধ্যরাতের সূর্য’ (মিডনাইট সান) দেখা যায়।"
 
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:95
+#: src/features/seasonal-events/model/eid-al-fitr.tsx:95
 msgid "In many communities, everyone wears new clothes, children receive money or gifts, and doors stay open all day for visitors."
 msgstr "অনেক সম্প্রদায়ে সবাই নতুন পোশাক পরেন, শিশুরা অর্থ বা উপহার পায়, এবং সারা দিন অতিথিদের জন্য দরজা খোলা থাকে।"
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:108
+#: src/features/seasonal-events/model/autumn-equinox.tsx:108
 msgid "In many traditions, the equinox is not only about what has been gathered, but about what lies ahead — a pause to take stock before the quieter months arrive."
 msgstr "অনেক ঐতিহ্যে বিষুব শুধু যা সংগ্রহ হয়েছে তা নয় ... বরং সামনে কী আছে সেটিও — নিরিবিলি মাসগুলোর আগে হিসাব নেওয়ার এক বিরতি।"
 
@@ -800,7 +800,7 @@ msgstr "অনেক ঐতিহ্যে বিষুব শুধু যা �
 #~ msgid "In most years the Leonids unfold gently, yet they always carry the possibility of a sudden, breathtaking encore."
 #~ msgstr "বেশিরভাগ বছরে লিওনিডস শান্তভাবেই দেখা দেয়, তবু এতে হঠাৎ এক অসাধারণ এনকোরের সম্ভাবনা সবসময় থাকে।"
 
-#: src/hooks/seasonal-events/leonids.tsx:126
+#: src/features/seasonal-events/model/leonids.tsx:126
 msgid "In most years, the Leonids produce only 10–15 meteors per hour. But during the 1966 storm, observers reported rates of thousands per minute — so many that some people thought the world was ending."
 msgstr "বেশিরভাগ বছরে লিওনিডস প্রতি ঘণ্টায় মাত্র ১০–১৫টি উল্কা তৈরি করে। কিন্তু ১৯৬৬ সালের ঝড়ের সময় পর্যবেক্ষকরা প্রতি মিনিটে হাজার হাজার উল্কার হার জানিয়েছিলেন — এত বেশি যে কেউ কেউ ভেবেছিলেন পৃথিবীর শেষ হয়ে গেছে।"
 
@@ -822,8 +822,8 @@ msgstr "বেশিরভাগ বছরে লিওনিডস প্রত
 #~ msgid "Invalid longitude value"
 #~ msgstr "অবৈধ দ্রাঘিমাংশের মান"
 
-#: src/components/input.tsx:98
-#: src/components/input.tsx:148
+#: src/shared/ui/input.tsx:98
+#: src/shared/ui/input.tsx:148
 msgid "Invalid value. Settings will not save until this is valid."
 msgstr "অবৈধ মান। এটি বৈধ না হওয়া পর্যন্ত সেটিংস সংরক্ষিত হবে না।"
 
@@ -831,23 +831,23 @@ msgstr "অবৈধ মান। এটি বৈধ না হওয়া প
 #~ msgid "Issues after a recent update"
 #~ msgstr "সাম্প্রতিক আপডেটের পরে সমস্যা"
 
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:62
+#: src/features/seasonal-events/model/eid-al-fitr.tsx:62
 msgid "It begins with the sighting of the new moon, followed by a special morning prayer."
 msgstr "নতুন চাঁদ দেখার মাধ্যমে এটি শুরু হয়, তারপর একটি বিশেষ সকালের প্রার্থনা হয়।"
 
-#: src/hooks/seasonal-events/eid-al-adha.tsx:55
+#: src/features/seasonal-events/model/eid-al-adha.tsx:55
 msgid "It centres on devotion, sacrifice, and the responsibility of generosity toward others."
 msgstr "এটি ভক্তি, ত্যাগ এবং অন্যদের প্রতি উদারতার দায়িত্বকে কেন্দ্র করে।"
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:98
+#: src/features/seasonal-events/model/autumn-equinox.tsx:98
 msgid "It has often been observed alongside lunar cycles, communal feasts, and rituals honouring both abundance and change."
 msgstr "এটি প্রায়ই চন্দ্রচক্র, সামূহিক ভোজ ও প্রাচুর্য ও পরিবর্তনকে সম্মান জানানো রীতির সঙ্গে পালন করা হয়েছে।"
 
-#: src/hooks/seasonal-events/earth-day.tsx:143
+#: src/features/seasonal-events/model/earth-day.tsx:143
 msgid "It has since become a global observance, often drawing attention to local ecosystems, conservation efforts, and environmental challenges."
 msgstr "তখন থেকে এটি একটি বৈশ্বিক দিবস হয়ে উঠেছে, যা প্রায়ই স্থানীয় বাস্তুতন্ত্র, সংরক্ষণ প্রচেষ্টা ও পরিবেশগত চ্যালেঞ্জের প্রতি মনোযোগ আকর্ষণ করে।"
 
-#: src/hooks/seasonal-events/halloween.tsx:46
+#: src/features/seasonal-events/model/halloween.tsx:46
 msgid "It invites friendly fear, shared laughter, and a little mischief."
 msgstr "এটি আমন্ত্রণ জানায় বন্ধুত্বপূর্ণ ভয়, ভাগাভাগি করা হাসি এবং সামান্য দুষ্টুমিকে।"
 
@@ -863,7 +863,7 @@ msgstr "এটি আমন্ত্রণ জানায় বন্ধুত
 #~ msgid "It is a holiday that speaks gently in the language of new beginnings."
 #~ msgstr "এটি এমন একটি উৎসব যা নরম সুরে নতুন সূচনার ভাষায় কথা বলে।"
 
-#: src/hooks/seasonal-events/easter.tsx:44
+#: src/features/seasonal-events/model/easter.tsx:44
 msgid "It is a movable feast, its date determined by the cycle of the moon and the arrival of spring in the northern hemisphere."
 msgstr "এটি একটি পরিবর্তনশীল উৎসব, যার তারিখ নির্ধারিত হয় চাঁদের চক্র ও উত্তর গোলার্ধে বসন্তের আগমনের দ্বারা।"
 
@@ -875,23 +875,23 @@ msgstr "এটি একটি পরিবর্তনশীল উৎসব, �
 #~ msgid "It is a shower with a long memory, linking modern stargazers with watchers of ancient skies."
 #~ msgstr "এটি একটি দীর্ঘ স্মৃতি সহ উল্কাবৃষ্টি, যা আধুনিক তারা দর্শকদের প্রাচীন আকাশের পর্যবেক্ষকদের সাথে যুক্ত করে।"
 
-#: src/hooks/seasonal-events/holi.tsx:136
+#: src/features/seasonal-events/model/holi.tsx:136
 msgid "It is closely associated with the arrival of spring in much of the world where the tradition first formed."
 msgstr "যে সব অঞ্চলে এই রীতি প্রথম সৃষ্টি হয়েছিল, সেখানে এটির সঙ্গে বসন্তের আগমনের ঘনিষ্ঠ সম্পর্ক রয়েছে।"
 
-#: src/hooks/seasonal-events/lunar-new-year.tsx:69
+#: src/features/seasonal-events/model/lunar-new-year.tsx:69
 msgid "It is marked by family reunions, travel, and the renewal of long-held bonds."
 msgstr "এটি পারিবারিক পুনর্মিলন, ভ্রমণ, এবং দীর্ঘদিনের বন্ধন নতুন করে জাগানোর মাধ্যমে চিহ্নিত হয়।"
 
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:63
+#: src/features/seasonal-events/model/day-of-the-dead.tsx:63
 msgid "It is observed across November 1 and 2, with the first day often honouring children and the second devoted to adults."
 msgstr "এটি ১ ও ২ নভেম্বর জুড়ে পালন করা হয়; প্রথম দিনটি সাধারণত শিশুদের সম্মান জানায় এবং দ্বিতীয় দিনটি প্রাপ্তবয়স্কদের জন্য নিবেদিত।"
 
-#: src/hooks/seasonal-events/christmas.tsx:50
+#: src/features/seasonal-events/model/christmas.tsx:50
 msgid "It is observed around the world in both deeply religious and entirely secular ways, often blending the two."
 msgstr "এটি সারা বিশ্বে গভীর ধর্মীয় ও সম্পূর্ণ ধর্মনিরপেক্ষ উভয় উপায়ে পালিত হয়, এবং প্রায়ই এই দুটি মিশে যায়।"
 
-#: src/hooks/seasonal-events/diwali.tsx:67
+#: src/features/seasonal-events/model/diwali.tsx:67
 msgid "It is observed by millions across India and by communities around the world."
 msgstr "এটি ভারতের লক্ষ লক্ষ মানুষ এবং সারা বিশ্বের বিভিন্ন সম্প্রদায় দ্বারা পালন করা হয়।"
 
@@ -899,11 +899,11 @@ msgstr "এটি ভারতের লক্ষ লক্ষ মানুষ �
 #~ msgid "It is often marked by small gestures that simply say someone has been remembered."
 #~ msgstr "এটি প্রায়ই ছোট ছোট ইঙ্গিতের মাধ্যমে চিহ্নিত হয় যা কেবল বলে যে কেউ মনে আছে।"
 
-#: src/hooks/seasonal-events/winter-solstice.tsx:85
+#: src/features/seasonal-events/model/winter-solstice.tsx:85
 msgid "It signals the beginning of winter in the northern hemisphere and the start of summer in the southern hemisphere."
 msgstr "এটি উত্তর গোলার্ধে শীতের শুরু এবং দক্ষিণ গোলার্ধে গ্রীষ্মের সূচনার সংকেত দেয়।"
 
-#: src/hooks/seasonal-events/earth-day.tsx:127
+#: src/features/seasonal-events/model/earth-day.tsx:127
 msgid "It stands as both a celebration of the natural world and a call to responsible action."
 msgstr "এটি একই সঙ্গে প্রকৃতির উদ্‌যাপন এবং দায়িত্বশীল কর্মের আহ্বান হিসেবে দাঁড়ায়।"
 
@@ -919,23 +919,23 @@ msgstr "এটি একই সঙ্গে প্রকৃতির উদ্�
 #~ msgid "It’s a season for noticing the small transitions: seedpods splitting, leaves turning, and birds tracing long paths across the sky."
 #~ msgstr "এটি ছোট ছোট পরিবর্তন নজরে রাখার ঋতু: বীজপাত্র ফাটা, পাতা রং বদলানো এবং পাখিদের আকাশে দীর্ঘ পথ আঁকা।"
 
-#: src/hooks/seasonal-events/valentines.tsx:55
+#: src/features/seasonal-events/model/valentines.tsx:55
 msgid "It's often less about grand gestures and more about letting someone know they're on your mind."
 msgstr "এটি প্রায়ই বড় কিছু করার চেয়ে কাউকে জানানো যে সে আপনার মনে আছে সেটাই বেশি গুরুত্বপূর্ণ।"
 
-#: src/hooks/seasonal-events/halloween.tsx:88
+#: src/features/seasonal-events/model/halloween.tsx:88
 msgid "Jack-o'-lanterns were originally carved from turnips in Ireland and Scotland — the pumpkin version is a North American adaptation, chosen because pumpkins were bigger and easier to hollow out."
 msgstr "জ্যাক-ও'-লণ্ঠন মূলত আয়ারল্যান্ড ও স্কটল্যান্ডে শালগম থেকে খোদাই করা হতো — কুমড়ার সংস্করণটি উত্তর আমেরিকার অভিযোজন, যা বেছে নেওয়া হয়েছিল কারণ কুমড়া আকারে বড় এবং খালি করা সহজ ছিল।"
 
-#: src/components/tile.tsx:103
+#: src/features/weather/ui/tile.tsx:118
 msgid "January"
 msgstr "জানুয়ারি"
 
-#: src/components/tile.tsx:109
+#: src/features/weather/ui/tile.tsx:124
 msgid "July"
 msgstr "জুলাই"
 
-#: src/components/tile.tsx:108
+#: src/features/weather/ui/tile.tsx:123
 msgid "June"
 msgstr "জুন"
 
@@ -943,8 +943,8 @@ msgstr "জুন"
 #~ msgid "Lacks features I need"
 #~ msgstr "আমার প্রয়োজনীয় ফিচারগুলি নেই"
 
-#: src/components/initialisation.tsx:162
-#: src/components/settings.tsx:79
+#: src/features/settings/ui/initialisation.tsx:171
+#: src/features/settings/ui/settings.tsx:217
 msgid "Language"
 msgstr "ভাষা"
 
@@ -952,39 +952,39 @@ msgstr "ভাষা"
 #~ msgid "Lanterns and parades transform the night into a flowing river of light."
 #~ msgstr "লণ্ঠন আর শোভাযাত্রা রাতকে আলোর প্রবাহমান নদীতে বদলে দেয়।"
 
-#: src/components/settings.tsx:104
+#: src/features/settings/ui/settings.tsx:242
 msgid "Latitude"
 msgstr "অক্ষাংশ"
 
-#: src/components/review-prompt.tsx:52
+#: src/features/settings/ui/review-prompt.tsx:52
 msgid "Leave a review"
 msgstr "একটি পর্যালোচনা দিন"
 
-#: src/components/settings.tsx:411
+#: src/features/settings/ui/settings.tsx:388
 msgid "Legal"
 msgstr "আইনগত"
 
-#: src/hooks/seasonal-events/lunar-new-year.tsx:76
+#: src/features/seasonal-events/model/lunar-new-year.tsx:76
 msgid "Legends and customs"
 msgstr "কথিত কাহিনি ও প্রথা"
 
-#: src/components/tile.tsx:283
+#: src/features/weather/ui/tile.tsx:178
 msgid "Leonids Meteor Shower"
 msgstr "লিওনিডস উল্কাবৃষ্টি"
 
-#: src/components/tile.tsx:68
+#: src/features/weather/ui/tile.tsx:83
 msgid "light drizzle"
 msgstr "হালকা ঝরঝর বৃষ্টি"
 
-#: src/components/tile.tsx:71
+#: src/features/weather/ui/tile.tsx:86
 msgid "light freezing drizzle"
 msgstr "হালকা হিমায়িত ঝরঝর বৃষ্টি"
 
-#: src/components/tile.tsx:76
+#: src/features/weather/ui/tile.tsx:91
 msgid "light freezing rain"
 msgstr "হালকা হিমায়িত বৃষ্টি"
 
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:61
+#: src/features/seasonal-events/model/total-solar-eclipse.tsx:61
 msgid "Light shifts to a silvery tone, shadows sharpen, and temperatures may drop noticeably within minutes."
 msgstr "আলো রূপালি রং ধারণ করে, ছায়া তীক্ষ্ণ হয়, এবং কয়েক মিনিটের মধ্যে তাপমাত্রা উল্লেখযোগ্যভাবে কমে যেতে পারে।"
 
@@ -1024,7 +1024,7 @@ msgstr "আলো রূপালি রং ধারণ করে, ছায়
 #~ msgid "Location"
 #~ msgstr "অবস্থান"
 
-#: src/components/settings.tsx:112
+#: src/features/settings/ui/settings.tsx:250
 msgid "Longitude"
 msgstr "দ্রাঘিমাংশ"
 
@@ -1032,40 +1032,40 @@ msgstr "দ্রাঘিমাংশ"
 #~ msgid "Looks like we can't grab your location info automatically."
 #~ msgstr "মনে হচ্ছে আমরা আপনার অবস্থানের তথ্য স্বয়ংক্রিয়ভাবে পেতে পারছি না।"
 
-#: src/components/weather-alert.tsx:369
+#: src/features/weather/ui/weather-alert.tsx:370
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "পরের {durationOfLowVisibility} ঘণ্টা ধরে কম দৃশ্যতা"
 
-#: src/components/weather-alert.tsx:375
+#: src/features/weather/ui/weather-alert.tsx:376
 msgid "Low visibility for the next 24 hours"
 msgstr "পরের 24 ঘণ্টা ধরে কম দৃশ্যতা"
 
-#: src/components/weather-alert.tsx:378
+#: src/features/weather/ui/weather-alert.tsx:379
 msgid "Low visibility for the next hour"
 msgstr "পরের এক ঘণ্টা ধরে কম দৃশ্যতা"
 
-#: src/components/weather-alert.tsx:361
+#: src/features/weather/ui/weather-alert.tsx:362
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "{timeUntilLowVisibility} ঘণ্টা পরে কম দৃশ্যতা শুরু হবে"
 
-#: src/components/weather-alert.tsx:359
+#: src/features/weather/ui/weather-alert.tsx:360
 msgid "Low visibility starting in 1 hour"
 msgstr "এক ঘণ্টা পরে কম দৃশ্যতা শুরু হবে"
 
-#: src/components/tile.tsx:227
+#: src/features/weather/ui/tile.tsx:164
 msgid "Lunar New Year"
 msgstr "চন্দ্র নববর্ষ"
 
-#: src/hooks/seasonal-events/lunar-new-year.tsx:63
+#: src/features/seasonal-events/model/lunar-new-year.tsx:63
 msgid "Lunar New Year begins with the first new moon of the lunar calendar and unfolds across a festival season lasting up to fifteen days."
 msgstr "চন্দ্র নববর্ষ শুরু হয় চন্দ্রপঞ্জিকার প্রথম অমাবস্যায় এবং ... উৎসবের মৌসুম হিসেবে পনেরো দিন পর্যন্ত বিস্তৃত হতে পারে।"
 
-#: src/components/tile.tsx:271
+#: src/features/weather/ui/tile.tsx:175
 msgid "Lyrids Meteor Shower"
 msgstr "লাইরিডস উল্কাবৃষ্টি"
 
-#: src/components/tile.tsx:63
-#: src/components/tile.tsx:66
+#: src/features/weather/ui/tile.tsx:78
+#: src/features/weather/ui/tile.tsx:81
 msgid "mainly clear"
 msgstr "প্রধানভাবে পরিষ্কার"
 
@@ -1073,11 +1073,11 @@ msgstr "প্রধানভাবে পরিষ্কার"
 #~ msgid "Many people still try the playful tradition of balancing an egg on its end, a quiet ritual of patience and curiosity."
 #~ msgstr "অনেক মানুষ এখনও ডিমকে তার ডগায় দাঁড় করানোর খেলারত রীতিটি চেষ্টা করে, যা ধৈর্য ও কৌতূহলের একটি শান্ত অনুশীলন।"
 
-#: src/components/tile.tsx:105
+#: src/features/weather/ui/tile.tsx:120
 msgid "March"
 msgstr "মার্চ"
 
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:73
+#: src/features/seasonal-events/model/day-of-the-dead.tsx:73
 msgid "Marigolds, papel picado, sugar skulls, candles, and favourite foods form a visual language of welcome and connection."
 msgstr "গাঁদা ফুল, পাপেল পিকাদো, চিনির খুলি, মোমবাতি, আর প্রিয় খাবারগুলো স্বাগতম ও সংযোগের এক দৃশ্যভাষা গড়ে তোলে।"
 
@@ -1085,11 +1085,11 @@ msgstr "গাঁদা ফুল, পাপেল পিকাদো, চিন
 #~ msgid "Masks invite games of identity, and lanterns turn familiar streets into small theatres of light and shadow."
 #~ msgstr "মুখোশ পরিচয়ের খেলার আমন্ত্রণ জানায়, আর লণ্ঠন পরিচিত রাস্তা গুলোকে আলো ও ছায়ার ছোট থিয়েটারে রূপান্তরিত করে।"
 
-#: src/components/tile.tsx:107
+#: src/features/weather/ui/tile.tsx:122
 msgid "May"
 msgstr "মে"
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:126
+#: src/features/seasonal-events/model/autumn-equinox.tsx:126
 msgid "Meanwhile, billions of birds are mid-migration, navigating by stars, magnetic fields, and landmarks passed down through generations."
 msgstr "এদিকে কোটি কোটি পাখি মাঝপথে স্থানান্তরিত হচ্ছে, তারা, চৌম্বক ক্ষেত্র এবং প্রজন্মের পর প্রজন্ম ধরে চলে আসা ভূচিহ্ন দ্বারা পথ খুঁজে নিচ্ছে।"
 
@@ -1101,35 +1101,35 @@ msgstr "এদিকে কোটি কোটি পাখি মাঝপথ�
 #~ msgid "Miscellaneous"
 #~ msgstr "বিবিধ"
 
-#: src/components/tile.tsx:69
+#: src/features/weather/ui/tile.tsx:84
 msgid "moderate drizzle"
 msgstr "মধ্যম ধারের বৃষ্টি"
 
-#: src/components/tile.tsx:74
+#: src/features/weather/ui/tile.tsx:89
 msgid "moderate rain"
 msgstr "মধ্যম বৃষ্টি"
 
-#: src/components/tile.tsx:83
+#: src/features/weather/ui/tile.tsx:98
 msgid "moderate rain showers"
 msgstr "মধ্যম বৃষ্টির ঝড়"
 
-#: src/components/tile.tsx:79
+#: src/features/weather/ui/tile.tsx:94
 msgid "moderate snowfall"
 msgstr "মধ্যম তুষারপাত"
 
-#: src/components/tile.tsx:94
+#: src/features/weather/ui/tile.tsx:109
 msgid "Monday"
 msgstr "সোমবার"
 
-#: src/hooks/seasonal-events/winter-solstice.tsx:102
+#: src/features/seasonal-events/model/winter-solstice.tsx:102
 msgid "Monuments and ancient sites around the world are aligned to mark the solstice and the return of the Sun’s path."
 msgstr "বিশ্বজুড়ে স্মৃতিস্তম্ভ ও প্রাচীন স্থাপনাগুলো অয়নান্তকে চিহ্নিত করতে এবং সূর্যের পথের প্রত্যাবর্তন দেখাতে সারিবদ্ধভাবে নির্মিত।"
 
-#: src/hooks/seasonal-events/earth-day.tsx:175
+#: src/features/seasonal-events/model/earth-day.tsx:175
 msgid "Most environmental gains start small and local: a restored wetland, a cleaner stretch of river, a species given just enough room to recover."
 msgstr "বেশিরভাগ পরিবেশগত অর্জন ছোট ও স্থানীয়ভাবে শুরু হয়: একটি পুনরুদ্ধার করা জলাভূমি, নদীর একটি পরিষ্কার অংশ, একটি প্রজাতিকে ঠিক যতটুকু প্রয়োজন ততটুকু সুযোগ দেওয়া।"
 
-#: src/hooks/seasonal-events/leonids.tsx:83
+#: src/features/seasonal-events/model/leonids.tsx:83
 msgid "Most years the display is modest, but the shower is famous for its capacity to produce rare and spectacular surprises."
 msgstr "বেশিরভাগ বছরে প্রদর্শনটি সংযত, তবে এই উল্কাবৃষ্টি বিরল ও দৃষ্টিনন্দন চমক দেওয়ার ক্ষমতার জন্য বিখ্যাত।"
 
@@ -1141,7 +1141,7 @@ msgstr "বেশিরভাগ বছরে প্রদর্শনটি স
 #~ msgid "Music, laughter, and shared meals give the celebration its warm and playful spirit."
 #~ msgstr "সঙ্গীত, হাসি এবং ভাগাভাগি করা ভোজ এই উদ্‌যাপনকে তার উষ্ণ ও খেলাধুলাপূর্ণ আত্মা দেয়।"
 
-#: src/components/review-prompt.tsx:63
+#: src/features/settings/ui/review-prompt.tsx:63
 msgid "Never show this again"
 msgstr "এটি আবার দেখাবেন না"
 
@@ -1153,15 +1153,15 @@ msgstr "এটি আবার দেখাবেন না"
 #~ msgid "New tab"
 #~ msgstr "নতুন ট্যাব"
 
-#: src/components/tile.tsx:223
+#: src/features/weather/ui/tile.tsx:162
 msgid "New Year's Day"
 msgstr "নববর্ষ দিবস"
 
-#: src/hooks/seasonal-events/new-years.tsx:27
+#: src/features/seasonal-events/model/new-years.tsx:27
 msgid "New Year’s Day serves as the calendar’s reset, marked by the first sunrise of the year and a shared moment of looking forward."
 msgstr "নববর্ষ দিবস ক্যালেন্ডারের পুনরারম্ভ হিসেবে কাজ করে, বছরের প্রথম সূর্যোদয় এবং আগামীর দিকে একসঙ্গে তাকানোর মুহূর্ত দ্বারা চিহ্নিত।"
 
-#: src/hooks/seasonal-events/winter-solstice.tsx:119
+#: src/features/seasonal-events/model/winter-solstice.tsx:119
 msgid "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precisely that sunlight floods its inner chamber for just seventeen minutes around the winter solstice each year."
 msgstr "নিউগ্রেঞ্জ, আয়ারল্যান্ডের ৫,০০০ বছর পুরনো একটি করিডোর সমাধি, এতটাই নিখুঁতভাবে নির্মিত যে প্রতি বছর শীত অয়নান্তের কাছাকাছি মাত্র সতেরো মিনিটের জন্য সূর্যালোক এর অভ্যন্তরীণ কক্ষ প্লাবিত করে।"
 
@@ -1181,88 +1181,88 @@ msgstr "নিউগ্রেঞ্জ, আয়ারল্যান্ডে�
 #~ msgid "Note: This requires browser permissions"
 #~ msgstr "নোট: এর জন্য ব্রাউজারের অনুমতি প্রয়োজন"
 
-#: src/components/tile.tsx:113
+#: src/features/weather/ui/tile.tsx:128
 msgid "November"
 msgstr "নভেম্বর"
 
-#: src/components/settings.tsx:127
+#: src/features/settings/ui/settings.tsx:265
 msgid "Number of days to forecast"
 msgstr "পূর্বাভাস দেওয়ার দিনের সংখ্যা"
 
-#: src/components/tile.tsx:112
+#: src/features/weather/ui/tile.tsx:127
 msgid "October"
 msgstr "অক্টোবর"
 
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:79
+#: src/features/seasonal-events/model/day-of-the-dead.tsx:79
 msgid "Ofrendas commonly include water, salt, and cherished photographs, creating a space where memory feels both intimate and shared."
 msgstr "অফরেন্দাস সাধারণত পানি, লবণ ও প্রিয় ছবিগুলো নিয়ে গঠিত, যা এমন একটি জায়গা তৈরি করে যেখানে স্মৃতি একই সাথে অন্তরঙ্গ ও ভাগাভাগি মনে হয়।"
 
-#: src/hooks/seasonal-events/perseids.tsx:133
+#: src/features/seasonal-events/model/perseids.tsx:133
 msgid "On a good night near peak, you can expect a meteor every minute or two. The best rates come after midnight, when your side of the Earth faces into the debris stream."
 msgstr "শীর্ষের কাছাকাছি একটি ভালো রাতে আপনি প্রতি এক বা দুই মিনিটে একটি উল্কার আশা করতে পারেন। মধ্যরাতের পর সেরা হার আসে, যখন পৃথিবীর আপনার পাশটি ধ্বংসাবশেষের ধারার দিকে মুখ করে।"
 
-#: src/hooks/seasonal-events/holi.tsx:168
+#: src/features/seasonal-events/model/holi.tsx:168
 msgid "On the following day, coloured powders fill the air as people cross social boundaries in a shared expression of joy."
 msgstr "পরের দিন রঙিন গুঁড়ো বাতাস ভরে দেয়, আর মানুষ সামাজিক সীমারেখা পেরিয়ে একসাথে আনন্দ প্রকাশ করে।"
 
-#: src/hooks/seasonal-events/summer-solstice.tsx:108
+#: src/features/seasonal-events/model/summer-solstice.tsx:108
 msgid "On the longest day, twilight stretches out for hours and full darkness may never arrive."
 msgstr "বছরের দীর্ঘতম দিনে গোধূলি ঘণ্টার পর ঘণ্টা বিস্তৃত হয় এবং পূর্ণ অন্ধকার হয়তো আসেই না।"
 
-#: src/components/tile.tsx:279
+#: src/features/weather/ui/tile.tsx:177
 msgid "Orionids Meteor Shower"
 msgstr "ওরায়োনিডস উল্কাবৃষ্টি"
 
-#: src/components/settings.tsx:351
+#: src/features/settings/ui/settings.tsx:132
 msgid "Other holidays"
 msgstr "অন্যান্য উৎসব"
 
-#: src/hooks/seasonal-events/diwali.tsx:83
+#: src/features/seasonal-events/model/diwali.tsx:83
 msgid "Other traditions honour Lakshmi, the goddess of prosperity and fortune, while Jain and Sikh communities observe Diwali through their own sacred histories."
 msgstr "অন্যান্য ঐতিহ্যগুলিতে সমৃদ্ধি ও সৌভাগ্যের দেবী লক্ষ্মীর পূজা করা হয়, অন্যদিকে জৈন ও শিখ সম্প্রদায়রা তাদের নিজস্ব পবিত্র ইতিহাস অনুযায়ী দিওয়ালি পালন করে।"
 
-#: src/hooks/seasonal-events/new-years.tsx:51
+#: src/features/seasonal-events/model/new-years.tsx:51
 msgid "Over centuries of calendar reform, January 1 gradually became established as the start of the year for much of the world."
 msgstr "ক্যালেন্ডার সংস্কারের শতাব্দীগুলোর পর, ১ জানুয়ারি ধীরে ধীরে বিশ্বের বেশিরভাগ অংশে বছরের শুরু হিসেবে প্রতিষ্ঠিত হয়ে ওঠে।"
 
-#: src/hooks/seasonal-events/halloween.tsx:62
+#: src/features/seasonal-events/model/halloween.tsx:62
 msgid "Over time it evolved into a community tradition of visiting, disguises, and shared treats."
 msgstr "সময়ের সাথে এটি প্রতিবেশী বাড়ি ভ্রমণ, ছদ্মবেশ ধারণ ও মিষ্টান্ন ভাগাভাগির একটি সামাজিক রীতিতে পরিণত হয়েছে।"
 
-#: src/components/tile.tsx:65
+#: src/features/weather/ui/tile.tsx:80
 msgid "overcast"
 msgstr "মেঘাচ্ছন্ন"
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:79
-#: src/hooks/seasonal-events/christmas.tsx:40
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:37
-#: src/hooks/seasonal-events/diwali.tsx:58
-#: src/hooks/seasonal-events/earth-day.tsx:118
-#: src/hooks/seasonal-events/easter.tsx:35
-#: src/hooks/seasonal-events/eid-al-adha.tsx:46
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:53
-#: src/hooks/seasonal-events/eta-aquariids.tsx:74
-#: src/hooks/seasonal-events/geminids.tsx:74
-#: src/hooks/seasonal-events/halloween.tsx:37
-#: src/hooks/seasonal-events/hanukkah.tsx:62
-#: src/hooks/seasonal-events/holi.tsx:127
-#: src/hooks/seasonal-events/leonids.tsx:74
-#: src/hooks/seasonal-events/lunar-new-year.tsx:60
-#: src/hooks/seasonal-events/lyrids.tsx:74
-#: src/hooks/seasonal-events/new-years.tsx:24
-#: src/hooks/seasonal-events/orionids.tsx:74
-#: src/hooks/seasonal-events/perseids.tsx:73
-#: src/hooks/seasonal-events/quadrantids.tsx:74
-#: src/hooks/seasonal-events/spring-equinox.tsx:80
-#: src/hooks/seasonal-events/summer-solstice.tsx:78
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:35
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:26
-#: src/hooks/seasonal-events/valentines.tsx:46
-#: src/hooks/seasonal-events/winter-solstice.tsx:76
+#: src/features/seasonal-events/model/autumn-equinox.tsx:79
+#: src/features/seasonal-events/model/christmas.tsx:40
+#: src/features/seasonal-events/model/day-of-the-dead.tsx:37
+#: src/features/seasonal-events/model/diwali.tsx:58
+#: src/features/seasonal-events/model/earth-day.tsx:118
+#: src/features/seasonal-events/model/easter.tsx:35
+#: src/features/seasonal-events/model/eid-al-adha.tsx:46
+#: src/features/seasonal-events/model/eid-al-fitr.tsx:53
+#: src/features/seasonal-events/model/eta-aquariids.tsx:74
+#: src/features/seasonal-events/model/geminids.tsx:74
+#: src/features/seasonal-events/model/halloween.tsx:37
+#: src/features/seasonal-events/model/hanukkah.tsx:62
+#: src/features/seasonal-events/model/holi.tsx:127
+#: src/features/seasonal-events/model/leonids.tsx:74
+#: src/features/seasonal-events/model/lunar-new-year.tsx:60
+#: src/features/seasonal-events/model/lyrids.tsx:74
+#: src/features/seasonal-events/model/new-years.tsx:24
+#: src/features/seasonal-events/model/orionids.tsx:74
+#: src/features/seasonal-events/model/perseids.tsx:73
+#: src/features/seasonal-events/model/quadrantids.tsx:74
+#: src/features/seasonal-events/model/spring-equinox.tsx:80
+#: src/features/seasonal-events/model/summer-solstice.tsx:78
+#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:35
+#: src/features/seasonal-events/model/total-solar-eclipse.tsx:26
+#: src/features/seasonal-events/model/valentines.tsx:46
+#: src/features/seasonal-events/model/winter-solstice.tsx:76
 msgid "Overview"
 msgstr "সংক্ষিপ্ত পরিচিতি"
 
-#: src/components/tile.tsx:64
+#: src/features/weather/ui/tile.tsx:79
 msgid "partly cloudy"
 msgstr "আংশিকভাবে মেঘলা"
 
@@ -1270,15 +1270,15 @@ msgstr "আংশিকভাবে মেঘলা"
 #~ msgid "Performance issues"
 #~ msgstr "পারফরম্যান্স সমস্যা"
 
-#: src/components/settings.tsx:122
+#: src/features/settings/ui/settings.tsx:260
 msgid "Periodically update location automatically"
 msgstr "পূর্বনির্ধারিত সময়ে স্থান স্বয়ংক্রিয়ভাবে আপডেট করুন"
 
-#: src/hooks/seasonal-events/perseids.tsx:126
+#: src/features/seasonal-events/model/perseids.tsx:126
 msgid "Perseid meteors enter the atmosphere at roughly 60 km/s — fast enough that the larger ones compress the air ahead of them into a bright, explosive fireball."
 msgstr "পারসিড উল্কাগুলো প্রায় ৬০ কিমি/সেকেন্ড গতিতে বায়ুমণ্ডলে প্রবেশ করে — এতটাই দ্রুত যে বড় উল্কাগুলো তাদের সামনের বাতাসকে একটি উজ্জ্বল, বিস্ফোরক আগুনের গোলায় সংকুচিত করে।"
 
-#: src/components/tile.tsx:263
+#: src/features/weather/ui/tile.tsx:173
 msgid "Perseids Meteor Shower"
 msgstr "পারসিডস উল্কাবৃষ্টি"
 
@@ -1286,19 +1286,19 @@ msgstr "পারসিডস উল্কাবৃষ্টি"
 #~ msgid "Please enter it manually below."
 #~ msgstr "দয়া করে এটি নিচে ম্যানুয়ালি লিখুন।"
 
-#: src/components/tile.tsx:267
+#: src/features/weather/ui/tile.tsx:174
 msgid "Quadrantids Meteor Shower"
 msgstr "কোয়াড্রান্টিডস উল্কাবৃষ্টি"
 
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:46
+#: src/features/seasonal-events/model/day-of-the-dead.tsx:46
 msgid "Rather than a solemn farewell, it treats remembrance as something vibrant, communal, and alive."
 msgstr "গম্ভীর বিদায় নয়—এটি স্মরণকে দেখে প্রাণবন্ত, সামষ্টিক, এবং জীবন্ত কিছু হিসেবে।"
 
-#: src/hooks/seasonal-events/lunar-new-year.tsx:96
+#: src/features/seasonal-events/model/lunar-new-year.tsx:96
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "লাল খাম, কমলা/ম্যান্ডারিন, এবং ক্যালিগ্রাফির কাপলেটগুলো প্রাচুর্য, সুখ, এবং নতুন শুরুর শুভেচ্ছা প্রকাশ করে।"
 
-#: src/components/settings.tsx:308
+#: src/features/settings/ui/settings.tsx:118
 msgid "Religious & cultural"
 msgstr "ধর্মীয় ও সাংস্কৃতিক"
 
@@ -1310,11 +1310,12 @@ msgstr "একটি বাগ রিপোর্ট করুন"
 #~ msgid "Resource usage"
 #~ msgstr "সম্পদ ব্যবহার"
 
-#: src/pages/index.tsx:317
+#: src/pages/index.tsx:160
+#: src/pages/index.tsx:176
 msgid "Retry"
 msgstr "পুনরায় চেষ্টা করুন"
 
-#: src/components/tile.tsx:99
+#: src/features/weather/ui/tile.tsx:114
 msgid "Saturday"
 msgstr "শনিবার"
 
@@ -1323,15 +1324,15 @@ msgstr "শনিবার"
 #~ msgid "Save"
 #~ msgstr "সংরক্ষণ করুন"
 
-#: src/components/settings.tsx:213
+#: src/features/settings/ui/settings.tsx:323
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "আপনার ব্রাউজারটি সফটওয়্যার রেন্ডারার ব্যবহার করছে বলে মনে হওয়ায় মৌসুমি প্রভাবগুলি নিষ্ক্রিয় করা হয়েছে। এই প্রভাবগুলি দেখতে হার্ডওয়্যার অ্যাক্সিলারেশন চালু করুন।"
 
-#: src/components/settings.tsx:204
+#: src/features/settings/ui/settings.tsx:314
 msgid "Seasonal events"
 msgstr "ঋতুভিত্তিক অনুষ্ঠান"
 
-#: src/components/settings.tsx:228
+#: src/features/settings/ui/settings.tsx:92
 msgid "Seasons & nature"
 msgstr "ঋতু ও প্রকৃতি"
 
@@ -1339,20 +1340,20 @@ msgstr "ঋতু ও প্রকৃতি"
 #~ msgid "Security and privacy concerns"
 #~ msgstr "নিরাপত্তা এবং গোপনীয়তা নিয়ে উদ্বেগ"
 
-#: src/hooks/seasonal-events/diwali.tsx:110
+#: src/features/seasonal-events/model/diwali.tsx:110
 msgid "Seen from above, cities during Diwali are transformed — rooftops, balconies, and streets are outlined in light, and the effect is visible from space in satellite imagery."
 msgstr "উপর থেকে দেখলে দিওয়ালির সময় শহরগুলো রূপান্তরিত হয় — ছাদ, বারান্দা এবং রাস্তা আলোয় রেখাঙ্কিত হয়, এবং কৃত্রিম উপগ্রহের ছবিতে মহাকাশ থেকে এর প্রভাব দেখা যায়।"
 
-#: src/components/tile.tsx:111
+#: src/features/weather/ui/tile.tsx:126
 msgid "September"
 msgstr "সেপ্টেম্বর"
 
-#: src/components/initialisation.tsx:192
+#: src/features/settings/ui/initialisation.tsx:201
 msgid "Set my location"
 msgstr "আমার অবস্থান নির্ধারণ করুন"
 
-#: src/components/settings.tsx:56
-#: src/components/settings.tsx:73
+#: src/features/settings/ui/settings.tsx:194
+#: src/features/settings/ui/settings.tsx:211
 msgid "Settings"
 msgstr "সেটিংস"
 
@@ -1360,7 +1361,7 @@ msgstr "সেটিংস"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "বেনামে ক্র্যাশ ডাটা এবং ত্রুটি লগ ভাগ করুন"
 
-#: src/hooks/seasonal-events/valentines.tsx:87
+#: src/features/seasonal-events/model/valentines.tsx:87
 msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and personal."
 msgstr "ভাগাভাগি করা মিষ্টি, ফুল ও ছোট উপহার এই উদ্‌যাপনকে অন্তরঙ্গ ও ব্যক্তিগত রাখে।"
 
@@ -1368,156 +1369,160 @@ msgstr "ভাগাভাগি করা মিষ্টি, ফুল ও ছ
 #~ msgid "Show alert icons that expand to text when clicked."
 #~ msgstr "সতর্কতা আইকন দেখান, যেগুলোতে ক্লিক করলে সেগুলো টেক্সটে প্রসারিত হয়।"
 
-#: src/components/settings.tsx:241
+#: src/features/settings/ui/settings.tsx:61
 msgid "Show Autumn Equinox event"
 msgstr "শরৎ বিষুব দেখান"
 
-#: src/components/settings.tsx:346
+#: src/features/settings/ui/settings.tsx:82
 msgid "Show Christmas Day event"
 msgstr "বড়দিন দেখান"
 
-#: src/components/settings.tsx:369
+#: src/features/settings/ui/settings.tsx:86
 msgid "Show Day of the Dead event"
 msgstr "মৃতদের দিবস ইভেন্ট দেখান"
 
-#: src/components/settings.tsx:321
+#: src/features/settings/ui/settings.tsx:77
 msgid "Show Diwali event"
 msgstr "দিওয়ালি দেখান"
 
-#: src/components/settings.tsx:251
+#: src/features/settings/ui/settings.tsx:63
 msgid "Show Earth Day event"
 msgstr "পৃথিবী দিবস দেখান"
 
-#: src/components/settings.tsx:316
+#: src/features/settings/ui/settings.tsx:76
 msgid "Show Easter event"
 msgstr "ইস্টার ইভেন্ট দেখান"
 
-#: src/components/settings.tsx:336
+#: src/features/settings/ui/settings.tsx:80
 msgid "Show Eid al-Adha event"
 msgstr "ঈদুল আজহা দেখান"
 
-#: src/components/settings.tsx:331
+#: src/features/settings/ui/settings.tsx:79
 msgid "Show Eid al-Fitr event"
 msgstr "ঈদুল ফিতর দেখান"
 
-#: src/components/settings.tsx:269
+#: src/features/settings/ui/settings.tsx:67
 msgid "Show Eta Aquariids meteor shower event"
 msgstr "এটা অ্যাকুয়ারিডস উল্কাবৃষ্টি ইভেন্ট দেখান"
 
-#: src/components/settings.tsx:182
+#: src/features/settings/ui/settings.tsx:46
 msgid "Show extreme UV alerts"
 msgstr "এক্সট্রিম ইউভি সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:303
+#: src/features/settings/ui/settings.tsx:74
 msgid "Show Geminids meteor shower event"
 msgstr "জেমিনিডস উল্কাবৃষ্টি দেখান"
 
-#: src/components/settings.tsx:364
+#: src/features/settings/ui/settings.tsx:85
 msgid "Show Halloween event"
 msgstr "হ্যালোইন দেখান"
 
-#: src/components/settings.tsx:341
+#: src/features/settings/ui/settings.tsx:81
 msgid "Show Hanukkah event"
 msgstr "হনুক্কাহ দেখান"
 
-#: src/components/settings.tsx:187
+#: src/features/settings/ui/settings.tsx:49
 msgid "Show high precipitation alerts"
 msgstr "উচ্চ বৃষ্টির সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:326
+#: src/features/settings/ui/settings.tsx:78
 msgid "Show Holi event"
 msgstr "হোলি দেখান"
 
-#: src/components/settings.tsx:279
+#: src/features/settings/ui/settings.tsx:70
 msgid "Show Leonids meteor shower event"
 msgstr "লিওনিডস উল্কাবৃষ্টি ইভেন্ট দেখান"
 
-#: src/components/settings.tsx:197
+#: src/features/settings/ui/settings.tsx:54
 msgid "Show low visibility alerts"
 msgstr "নিম্ন দৃশ্যতা সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:311
+#: src/features/settings/ui/settings.tsx:75
 msgid "Show Lunar New Year event"
 msgstr "চন্দ্র নববর্ষ দেখান"
 
-#: src/components/settings.tsx:264
+#: src/features/settings/ui/settings.tsx:65
 msgid "Show Lyrids meteor shower event"
 msgstr "লাইরিডস উল্কাবৃষ্টি ইভেন্ট দেখান"
 
-#: src/components/settings.tsx:354
+#: src/features/settings/ui/settings.tsx:83
 msgid "Show New Year's Day event"
 msgstr "নববর্ষ দিবস দেখান"
 
-#: src/components/settings.tsx:274
+#: src/features/settings/ui/settings.tsx:69
 msgid "Show Orionids meteor shower event"
 msgstr "ওরায়োনিডস উল্কাবৃষ্টি ইভেন্ট দেখান"
 
-#: src/components/settings.tsx:298
+#: src/features/settings/ui/settings.tsx:73
 msgid "Show Perseids meteor shower event"
 msgstr "পারসিডস উল্কাবৃষ্টি দেখান"
 
-#: src/components/settings.tsx:259
+#: src/features/settings/ui/settings.tsx:64
 msgid "Show Quadrantids meteor shower event"
 msgstr "কোয়াড্রান্টিডস উল্কাবৃষ্টি ইভেন্ট দেখান"
 
-#: src/components/settings.tsx:207
+#: src/features/settings/ui/settings.tsx:317
 msgid "Show seasonal events"
 msgstr "ঋতুকালীন অনুষ্ঠান দেখান"
 
-#: src/components/settings.tsx:223
+#: src/features/settings/ui/settings.tsx:333
 msgid "Show seasonal tile glow"
 msgstr "ঋতুভিত্তিক টাইলের আভা দেখান"
 
-#: src/components/settings.tsx:231
+#: src/features/settings/ui/settings.tsx:59
 msgid "Show Spring Equinox event"
 msgstr "বসন্ত বিষুব দেখান"
 
-#: src/components/settings.tsx:192
+#: src/features/settings/ui/settings.tsx:51
 msgid "Show strong wind alerts"
 msgstr "শক্তিশালী বায়ু সতর্কবার্তা দেখান"
 
-#: src/components/settings.tsx:236
+#: src/features/settings/ui/settings.tsx:60
 msgid "Show Summer Solstice event"
 msgstr "গ্রীষ্ম অয়নান্ত দেখান"
 
-#: src/components/settings.tsx:291
+#: src/features/settings/ui/settings.tsx:72
 msgid "Show total lunar eclipse event"
 msgstr "পূর্ণ চন্দ্রগ্রহণ ইভেন্ট দেখান"
 
-#: src/components/settings.tsx:284
+#: src/features/settings/ui/settings.tsx:71
 msgid "Show total solar eclipse event"
 msgstr "পূর্ণ সূর্যগ্রহণ ইভেন্ট দেখান"
 
-#: src/components/settings.tsx:359
+#: src/features/settings/ui/settings.tsx:84
 msgid "Show Valentine's Day event"
 msgstr "ভ্যালেন্টাইনস ডে দেখান"
 
-#: src/components/settings.tsx:168
+#: src/features/settings/ui/settings.tsx:306
 msgid "Show weather alerts"
 msgstr "আবহাওয়া সতর্কবাণী দেখান"
 
-#: src/components/settings.tsx:246
+#: src/features/settings/ui/settings.tsx:62
 msgid "Show Winter Solstice event"
 msgstr "শীত অয়নান্ত দেখান"
 
-#: src/hooks/seasonal-events/geminids.tsx:106
-#: src/hooks/seasonal-events/perseids.tsx:107
+#: src/pages/index.tsx:170
+msgid "Showing cached weather data. Retry to refresh the latest forecast."
+msgstr "ক্যাশ করা আবহাওয়ার তথ্য দেখানো হচ্ছে। সর্বশেষ পূর্বাভাস রিফ্রেশ করতে পুনরায় চেষ্টা করুন।"
+
+#: src/features/seasonal-events/model/geminids.tsx:106
+#: src/features/seasonal-events/model/perseids.tsx:107
 msgid "Skywatching tips"
 msgstr "আকাশ পর্যবেক্ষণের টিপস"
 
-#: src/components/tile.tsx:73
+#: src/features/weather/ui/tile.tsx:88
 msgid "slight rain"
 msgstr "হালকা বৃষ্টি"
 
-#: src/components/tile.tsx:82
+#: src/features/weather/ui/tile.tsx:97
 msgid "slight rain showers"
 msgstr "হালকা বৃষ্টির ঝড়"
 
-#: src/components/tile.tsx:85
+#: src/features/weather/ui/tile.tsx:100
 msgid "slight snow showers"
 msgstr "হালকা তুষারপাত"
 
-#: src/components/tile.tsx:78
+#: src/features/weather/ui/tile.tsx:93
 msgid "slight snowfall"
 msgstr "হালকা তুষারপাত"
 
@@ -1529,23 +1534,23 @@ msgstr "হালকা তুষারপাত"
 #~ msgid "Small actions accumulate: a planted tree, a cleared shoreline, a renewed path."
 #~ msgstr "ছোট ছোট কাজ জমতে জমতে বড় হয়: একটি গাছ লাগানো, একটি তীরভূমি পরিষ্কার করা, একটি পথ নতুন করে গড়ে তোলা।"
 
-#: src/components/tile.tsx:81
+#: src/features/weather/ui/tile.tsx:96
 msgid "snow grains"
 msgstr "তুষার কণা"
 
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:45
+#: src/features/seasonal-events/model/total-solar-eclipse.tsx:45
 msgid "Solar eclipses have been recorded for thousands of years, inspiring awe, uncertainty, and careful study."
 msgstr "সূর্যগ্রহণ হাজার হাজার বছর ধরে নথিভুক্ত, আর তা বিস্ময়, অনিশ্চয়তা, এবং সতর্ক অধ্যয়নে অনুপ্রাণিত করেছে।"
 
-#: src/hooks/seasonal-events/geminids.tsx:132
+#: src/features/seasonal-events/model/geminids.tsx:132
 msgid "Some appear white, others yellow or blue-green. The colour depends on the mineral composition of each grain of dust as it burns up."
 msgstr "কিছু সাদা দেখায়, অন্যগুলো হলুদ বা নীলাভ-সবুজ। রঙ নির্ভর করে পুড়ে যাওয়ার সময় ধুলোর প্রতিটি কণার খনিজ গঠনের উপর।"
 
-#: src/components/tile.tsx:231
+#: src/features/weather/ui/tile.tsx:165
 msgid "Spring Equinox"
 msgstr "বসন্ত বিষুব"
 
-#: src/hooks/seasonal-events/holi.tsx:146
+#: src/features/seasonal-events/model/holi.tsx:146
 msgid "Stories surrounding Holi vary by region, including the tale of Prahlad and Holika, which speaks to the triumph of devotion and good over harm."
 msgstr "হোলিকে ঘিরে গল্প অঞ্চলভেদে ভিন্ন, যেমন প্রহ্লাদ ও হোলিকার কাহিনি ... যা ভক্তি ও মঙ্গলের বিজয়ের কথা বলে।"
 
@@ -1561,23 +1566,23 @@ msgstr "হোলিকে ঘিরে গল্প অঞ্চলভেদে
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "পরের এক ঘণ্টা ধরে শক্তিশালী বাতাস"
 
-#: src/components/weather-alert.tsx:330
+#: src/features/weather/ui/weather-alert.tsx:331
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "পরের {durationOfStrongWind} ঘণ্টা ধরে শক্তিশালী বাতাসের ঝড়"
 
-#: src/components/weather-alert.tsx:336
+#: src/features/weather/ui/weather-alert.tsx:337
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "পরের 24 ঘণ্টা ধরে শক্তিশালী বাতাসের ঝড়"
 
-#: src/components/weather-alert.tsx:339
+#: src/features/weather/ui/weather-alert.tsx:340
 msgid "Strong wind gusts for the next hour"
 msgstr "পরের এক ঘণ্টা ধরে শক্তিশালী বাতাসের ঝড়"
 
-#: src/components/weather-alert.tsx:322
+#: src/features/weather/ui/weather-alert.tsx:323
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind} ঘণ্টা পর শক্তিশালী বাতাসের ঝড় শুরু হবে"
 
-#: src/components/weather-alert.tsx:320
+#: src/features/weather/ui/weather-alert.tsx:321
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "এক ঘণ্টা পর শক্তিশালী বাতাসের ঝড় শুরু হবে"
 
@@ -1589,15 +1594,15 @@ msgstr "এক ঘণ্টা পর শক্তিশালী বাতা�
 msgid "Submit"
 msgstr "জমা দিন"
 
-#: src/components/tile.tsx:247
+#: src/features/weather/ui/tile.tsx:170
 msgid "Summer Solstice"
 msgstr "গ্রীষ্ম অয়নান্ত"
 
-#: src/components/tile.tsx:93
+#: src/features/weather/ui/tile.tsx:108
 msgid "Sunday"
 msgstr "রবিবার"
 
-#: src/hooks/seasonal-events/easter.tsx:70
+#: src/features/seasonal-events/model/easter.tsx:70
 msgid "Sunrise services draw people outdoors before the day has fully started, and egg hunts send children tearing across gardens and parks."
 msgstr "সূর্যোদয়ের প্রার্থনা সভা দিন পুরোপুরি শুরু হওয়ার আগেই মানুষকে বাইরে টেনে আনে, এবং ডিম খোঁজার খেলা শিশুদের বাগান ও পার্কজুড়ে ছুটতে পাঠায়।"
 
@@ -1605,19 +1610,19 @@ msgstr "সূর্যোদয়ের প্রার্থনা সভা 
 #~ msgid "Sunrise services, fresh mornings, and the simple delight of egg hunts carry the feeling of a world beginning again."
 #~ msgstr "সূর্যোদয়ের প্রার্থনা, স্নিগ্ধ সকাল, এবং ডিম খোঁজার খেলায় থাকে নতুন করে শুরু হওয়া এক জগতের অনুভূতি।"
 
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:70
+#: src/features/seasonal-events/model/day-of-the-dead.tsx:70
 msgid "Symbols and offerings"
 msgstr "প্রতীক ও নিবেদন"
 
-#: src/hooks/seasonal-events/christmas.tsx:75
-#: src/hooks/seasonal-events/diwali.tsx:91
-#: src/hooks/seasonal-events/halloween.tsx:69
-#: src/hooks/seasonal-events/holi.tsx:159
-#: src/hooks/seasonal-events/valentines.tsx:78
+#: src/features/seasonal-events/model/christmas.tsx:75
+#: src/features/seasonal-events/model/diwali.tsx:91
+#: src/features/seasonal-events/model/halloween.tsx:69
+#: src/features/seasonal-events/model/holi.tsx:159
+#: src/features/seasonal-events/model/valentines.tsx:78
 msgid "Symbols and rituals"
 msgstr "প্রতীক ও আচার"
 
-#: src/hooks/seasonal-events/lunar-new-year.tsx:93
+#: src/features/seasonal-events/model/lunar-new-year.tsx:93
 msgid "Symbols of luck"
 msgstr "সৌভাগ্যের প্রতীক"
 
@@ -1625,15 +1630,15 @@ msgstr "সৌভাগ্যের প্রতীক"
 #~ msgid "The air hums with music, laughter, and the quiet shimmer of celebration."
 #~ msgstr "বাতাসে সঙ্গীত, হাসি, আর উদযাপনের নীরব ঝিলিক মৃদু গুঞ্জন তোলে।"
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:82
+#: src/features/seasonal-events/model/autumn-equinox.tsx:82
 msgid "The autumn equinox marks a moment of near-perfect balance, when day and night stand equal before the long shift toward darker evenings."
 msgstr "শরৎ বিষুব প্রায় নিখুঁত ভারসাম্যের এক মুহূর্ত ... যখন দিনের আলো ও রাত সমান, তারপর ধীরে ধীরে গাঢ় সন্ধ্যার দিকে ঝোঁক।"
 
-#: src/hooks/seasonal-events/halloween.tsx:55
+#: src/features/seasonal-events/model/halloween.tsx:55
 msgid "The celebration grew from the ancient festival of Samhain and the later observance of All Hallows’ Eve, blending seasonal rites with remembrance of the dead."
 msgstr "উৎসবটি প্রাচীন সামহেইন থেকে বেড়ে উঠেছে এবং পরে অল হ্যালোজ’ ইভের সঙ্গে ... ঋতুর আচারকে মৃতদের স্মরণের সঙ্গে মিশিয়েছে।"
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:119
+#: src/features/seasonal-events/model/autumn-equinox.tsx:119
 msgid "The colour change in autumn leaves isn’t new pigment appearing — it’s the green chlorophyll withdrawing, revealing yellows and oranges that were there all along."
 msgstr "শরতের পাতার রং পরিবর্তন নতুন রঞ্জক দেখা দেওয়া নয় — এটি সবুজ ক্লোরোফিলের প্রস্থান, যা সর্বদাই সেখানে লুকিয়ে থাকা হলুদ ও কমলা রঙগুলো প্রকাশ করে।"
 
@@ -1641,72 +1646,72 @@ msgstr "শরতের পাতার রং পরিবর্তন নত�
 #~ msgid "The colours draw everyone into the same bright moment, dissolving distance and difference."
 #~ msgstr "রঙগুলো সবাইকে একই উজ্জ্বল মুহূর্তে টেনে আনে, দূরত্ব ও পার্থক্য গলিয়ে দেয়।"
 
-#: src/hooks/seasonal-events/winter-solstice.tsx:112
+#: src/features/seasonal-events/model/winter-solstice.tsx:112
 msgid "The day after the solstice is only about a second longer — the shift is imperceptible at first, then gradually accelerates through January and February."
 msgstr "অয়নান্তের পরদিন মাত্র প্রায় এক সেকেন্ড দীর্ঘ হয় — পরিবর্তনটি প্রথমে প্রায় টের পাওয়া যায় না, তারপর জানুয়ারি ও ফেব্রুয়ারিতে ধীরে ধীরে ত্বরান্বিত হয়।"
 
-#: src/hooks/seasonal-events/eta-aquariids.tsx:109
+#: src/features/seasonal-events/model/eta-aquariids.tsx:109
 msgid "The Eta Aquariids and the Orionids are sibling showers — both are born from Halley's Comet, but Earth crosses different parts of the debris trail six months apart."
 msgstr "এটা অ্যাকুয়ারিডস ও ওরায়োনিডস ভাই-বোন উল্কাবৃষ্টি — উভয়ই হ্যালির ধূমকেতু থেকে জন্মেছে, কিন্তু পৃথিবী ছয় মাস ব্যবধানে ধ্বংসাবশেষের পথের ভিন্ন অংশ অতিক্রম করে।"
 
-#: src/hooks/seasonal-events/eta-aquariids.tsx:77
+#: src/features/seasonal-events/model/eta-aquariids.tsx:77
 msgid "The Eta Aquariids are a major meteor shower formed from the debris of Halley’s Comet."
 msgstr "এটা অ্যাকুয়ারিডস হলো হ্যালির ধূমকেতুর ধ্বংসাবশেষ থেকে গঠিত একটি প্রধান উল্কাবৃষ্টি।"
 
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:44
+#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:44
 msgid "The event unfolds gradually, often lasting several hours from beginning to end."
 msgstr "ঘটনাটি ধীরে ধীরে ঘটে, প্রায়শই শুরু থেকে শেষ পর্যন্ত কয়েক ঘণ্টা স্থায়ী হয়।"
 
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:94
+#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:94
 msgid "The exact shade of red depends on what's in Earth's atmosphere at the time. After major volcanic eruptions, the Moon can turn an especially dark, almost brownish red."
 msgstr "লালের ঠিক কোন ছায়া হবে তা নির্ভর করে সেই সময় পৃথিবীর বায়ুমণ্ডলে কী আছে তার উপর। বড় আগ্নেয়গিরির অগ্ন্যুৎপাতের পরে চাঁদ বিশেষভাবে গাঢ়, প্রায় বাদামী লাল রঙ ধারণ করতে পারে।"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/components/tile.tsx:520
+#: src/features/weather/ui/tile.tsx:420
 msgid "The expected type of weather is {0}."
 msgstr "প্রত্যাশিত আবহাওয়ার ধরণ হলো {0}।"
 
-#: src/hooks/seasonal-events/hanukkah.tsx:80
+#: src/features/seasonal-events/model/hanukkah.tsx:80
 msgid "The festival commemorates the rededication of the Second Temple in Jerusalem."
 msgstr "উৎসবটি জেরুজালেমের দ্বিতীয় মন্দিরের পুনর্নিবেদন স্মরণ করে।"
 
-#: src/hooks/seasonal-events/diwali.tsx:117
+#: src/features/seasonal-events/model/diwali.tsx:117
 msgid "The festival is also one of the biggest shopping seasons in India, with markets staying open late and fireworks continuing well past midnight."
 msgstr "এই উৎসবটি ভারতের অন্যতম বড় কেনাকাটার মৌসুম, যেখানে বাজার রাত পর্যন্ত খোলা থাকে এবং আতশবাজি মধ্যরাত পেরিয়েও চলতে থাকে।"
 
-#: src/hooks/seasonal-events/earth-day.tsx:137
+#: src/features/seasonal-events/model/earth-day.tsx:137
 msgid "The first Earth Day, held in 1970, grew out of environmental activism and nationwide teach-ins across the United States."
 msgstr "১৯৭০ সালের প্রথম আর্থ ডে পরিবেশ আন্দোলন ও যুক্তরাষ্ট্রজুড়ে শিক্ষামূলক ‘টিচ-ইন’ থেকে ... গড়ে উঠেছিল।"
 
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:88
+#: src/features/seasonal-events/model/eid-al-fitr.tsx:88
 msgid "The first meal of Eid, eaten after a month of fasting, carries a significance that's hard to overstate — it's often dates and something sweet, shared before the morning prayer."
 msgstr "একমাস রোজার পর ঈদের প্রথম খাবার যে গুরুত্ব বহন করে তা অতিরঞ্জিত করা কঠিন — এটি প্রায়ই খেজুর ও মিষ্টি কিছু, সকালের নামাজের আগে ভাগ করে খাওয়া।"
 
-#: src/hooks/seasonal-events/geminids.tsx:77
+#: src/features/seasonal-events/model/geminids.tsx:77
 msgid "The Geminids are one of the strongest and most reliable meteor showers of the year, appearing each December with frequent, bright meteors."
 msgstr "জেমিনিডস হল বছরে সবচেয়ে শক্তিশালী ও নির্ভরযোগ্য উল্কাবৃষ্টিগুলোর একটি, যা প্রতি ডিসেম্বর ঘন ঘন উজ্জ্বল উল্কাসহ দেখা যায়।"
 
-#: src/hooks/seasonal-events/eid-al-adha.tsx:65
+#: src/features/seasonal-events/model/eid-al-adha.tsx:65
 msgid "The holiday commemorates the story of Ibrahim and his willingness to sacrifice in obedience to God."
 msgstr "এই উৎসবটি ইব্রাহিমের গল্প ও আল্লাহর আদেশ মান্য করতে তাঁর ত্যাগের প্রস্তুতি স্মরণ করে।"
 
-#: src/hooks/seasonal-events/valentines.tsx:65
+#: src/features/seasonal-events/model/valentines.tsx:65
 msgid "The holiday draws on legends of Saint Valentine and the traditions of medieval courtly love."
 msgstr "এই উৎসবটি সেন্ট ভ্যালেন্টাইনের কিংবদন্তি ও মধ্যযুগীয় রাজকীয় প্রেমের ঐতিহ্য থেকে উদ্ভূত।"
 
-#: src/hooks/seasonal-events/christmas.tsx:60
+#: src/features/seasonal-events/model/christmas.tsx:60
 msgid "The holiday we recognise today grew from early Christian tradition, layered over much older European midwinter customs tied to light, renewal, and community."
 msgstr "আজ আমরা যে উৎসবকে চিনি তা প্রাচীন খ্রিস্টান প্রথা থেকে উদ্ভূত, যার উপর আরও প্রাচীন ইউরোপীয় মধ্যশীতের আলো, পুনর্নবীকরণ ও সম্প্রদায় কেন্দ্রীক প্রথাগুলো স্তরে স্তরে যুক্ত হয়েছে।"
 
-#: src/hooks/seasonal-events/leonids.tsx:77
+#: src/features/seasonal-events/model/leonids.tsx:77
 msgid "The Leonids are a November meteor shower, named for their radiant in the constellation Leo."
 msgstr "লিওনিডস হল নভেম্বরের একটি উল্কাবৃষ্টি, যা লিও নাক্ষত্রমণ্ডলের উজ্জ্বল কেন্দ্রের নামে নামকরণ করা হয়েছে।"
 
-#: src/hooks/seasonal-events/leonids.tsx:93
+#: src/features/seasonal-events/model/leonids.tsx:93
 msgid "The Leonids are renowned for historic meteor storms, most notably in 1833 and 1966, when observers described the sky as seeming to rain stars."
 msgstr "লিওনিডস তাদের ঐতিহাসিক উল্কাবৃষ্টির জন্য পরিচিত, বিশেষত ১৮৩৩ ও ১৯৬৬ সালে, যখন পর্যবেক্ষকরা আকাশকে তারার বৃষ্টি হওয়ার মতো বলে বর্ণনা করেছিলেন।"
 
-#: src/hooks/seasonal-events/leonids.tsx:110
+#: src/features/seasonal-events/model/leonids.tsx:110
 msgid "The Leonids originate from Comet Tempel–Tuttle, and every few decades Earth passes through especially dense streams of its debris."
 msgstr "লিওনিডসের উৎপত্তি ধূমকেতু টেম্পেল–টাটল থেকে, এবং প্রতি কয়েক দশকে একবার পৃথিবী এর ধ্বংসাবশেষের ঘন স্রোতের মধ্যে দিয়ে যায়।"
 
@@ -1714,52 +1719,52 @@ msgstr "লিওনিডসের উৎপত্তি ধূমকেতু 
 #~ msgid "The light softens and turns golden, the air grows gentler, and the year seems to pause — just for a breath."
 #~ msgstr "আলো মোলায়েম হয়ে সোনালি রঙ ধারণ করে, বাতাস আরও নম্র হয়, এবং বছরটি যেন ক্ষণিকের জন্য থেমে যায় — শুধু এক শ্বাসের জন্য।"
 
-#: src/components/initialisation.tsx:114
+#: src/features/settings/ui/initialisation.tsx:123
 msgid "The location request timed out. Please check your internet connection and try again."
 msgstr "অবস্থান অনুরোধের সময় শেষ হয়ে গেছে. অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন."
 
-#: src/hooks/seasonal-events/lyrids.tsx:77
+#: src/features/seasonal-events/model/lyrids.tsx:77
 msgid "The Lyrids appear each year in late April, with meteors radiating from the constellation Lyra."
 msgstr "লাইরিডস প্রতি বছর এপ্রিলের শেষ দিকে দেখা যায়, যার উল্কাগুলি লাইরা নাক্ষত্রমণ্ডল থেকে ছড়িয়ে পড়ে।"
 
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:96
+#: src/features/seasonal-events/model/day-of-the-dead.tsx:96
 msgid "The marigold paths (cempasúchil) aren't just decorative. Their strong scent is believed to guide the dead back to the living world for the night."
 msgstr "গাঁদার পথগুলো (সেম্পাসুচিল) শুধু সাজসজ্জার জন্য নয়। এদের তীব্র সুগন্ধ মৃতদের রাতের জন্য জীবিতদের জগতে ফিরিয়ে আনার পথ দেখায় বলে বিশ্বাস করা হয়।"
 
-#: src/hooks/seasonal-events/earth-day.tsx:169
+#: src/features/seasonal-events/model/earth-day.tsx:169
 msgid "The math is oddly encouraging — the trees planted on Earth Day since 1970 now number in the billions."
 msgstr "হিসাবটা অদ্ভুতভাবে উৎসাহজনক — ১৯৭০ সাল থেকে আর্থ ডেতে লাগানো গাছের সংখ্যা এখন কোটির ঘরে।"
 
 #. placeholder {0}: Math.round(max)
-#: src/components/tile.tsx:484
+#: src/features/weather/ui/tile.tsx:384
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "সর্বাধিক তাপমাত্রা হবে {0} ডিগ্রি সেলসিয়াস।"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/components/tile.tsx:490
+#: src/features/weather/ui/tile.tsx:390
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "সর্বাধিক তাপমাত্রা হবে {0} ডিগ্রি ফারেনহাইট।"
 
 #. placeholder {0}: Math.round(uv)
-#: src/components/tile.tsx:546
+#: src/features/weather/ui/tile.tsx:446
 msgid "The maximum UV index will be {0}."
 msgstr "সর্বাধিক ইউভি সূচক হবে {0}।"
 
 #. placeholder {0}: Math.round(wind)
-#: src/components/tile.tsx:557
+#: src/features/weather/ui/tile.tsx:457
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "সর্বাধিক বায়ুর গতি হবে {0} কিলোমিটার প্রতি ঘণ্টা।"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/components/tile.tsx:563
+#: src/features/weather/ui/tile.tsx:463
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "সর্বাধিক বায়ুর গতি হবে {0} মাইল প্রতি ঘণ্টা।"
 
-#: src/hooks/seasonal-events/eid-al-adha.tsx:81
+#: src/features/seasonal-events/model/eid-al-adha.tsx:81
 msgid "The meat from the sacrifice is traditionally divided into three equal parts: one for the family, one for friends and neighbours, and one for those in need."
 msgstr "কুরবানির মাংস ঐতিহ্যগতভাবে তিনটি সমান ভাগে ভাগ করা হয়: একটি পরিবারের জন্য, একটি বন্ধু ও প্রতিবেশীদের জন্য, এবং একটি অভাবগ্রস্তদের জন্য।"
 
-#: src/hooks/seasonal-events/hanukkah.tsx:112
+#: src/features/seasonal-events/model/hanukkah.tsx:112
 msgid "The menorah is placed in a window or doorway so the light faces outward — the tradition is specifically about making the flames visible to passersby."
 msgstr "মেনোরাটি জানালা বা দরজায় রাখা হয় যাতে আলো বাইরের দিকে মুখ করে — এই ঐতিহ্যটি বিশেষভাবে পথচারীদের কাছে শিখাগুলো দৃশ্যমান করার জন্য।"
 
@@ -1771,33 +1776,33 @@ msgstr "মেনোরাটি জানালা বা দরজায় �
 #~ msgid "The meteors are often bright and steady, tracing slow, colourful paths across the night."
 #~ msgstr "উল্কাগুলো প্রায়শই উজ্জ্বল ও স্থির হয়, রাতের আকাশে ধীরে ধীরে রঙিন পথ আঁকে।"
 
-#: src/hooks/seasonal-events/orionids.tsx:116
+#: src/features/seasonal-events/model/orionids.tsx:116
 msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of any annual shower, which is why they often leave persistent glowing trails."
 msgstr "উল্কাগুলো প্রায় ৬৬ কিমি/সেকেন্ড গতিতে বায়ুমণ্ডলে প্রবেশ করে, যেকোনো বার্ষিক উল্কাবৃষ্টির দ্রুততমগুলির মধ্যে, তাই এগুলো প্রায়ই দীর্ঘস্থায়ী উজ্জ্বল রেখা রেখে যায়।"
 
 #. placeholder {0}: Math.round(min)
-#: src/components/tile.tsx:501
+#: src/features/weather/ui/tile.tsx:401
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "ন্যূনতম তাপমাত্রা হবে {0} ডিগ্রি সেলসিয়াস।"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/components/tile.tsx:507
+#: src/features/weather/ui/tile.tsx:407
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "ন্যূনতম তাপমাত্রা হবে {0} ডিগ্রি ফারেনহাইট।"
 
-#: src/hooks/seasonal-events/new-years.tsx:44
+#: src/features/seasonal-events/model/new-years.tsx:44
 msgid "The month of January is named after Janus, the Roman god of doorways and beginnings, traditionally depicted as facing both the past and the future."
 msgstr "জানুয়ারি মাসের নামকরণ হয়েছে জানুস-এর নামে, যিনি দ্বার ও সূচনার রোমান দেবতা; ঐতিহ্যগতভাবে তাঁকে অতীত ও ভবিষ্যতের দিকে দুটি মুখে দেখানো হয়।"
 
-#: src/hooks/seasonal-events/new-years.tsx:61
+#: src/features/seasonal-events/model/new-years.tsx:61
 msgid "The new year doesn't arrive all at once — it rolls across the planet over the course of a full day, time zone by time zone."
 msgstr "নতুন বছর একসাথে আসে না — এটি একটি সম্পূর্ণ দিন জুড়ে একটি সময় অঞ্চল থেকে আরেকটিতে সারা পৃথিবীতে ছড়িয়ে পড়ে।"
 
-#: src/hooks/seasonal-events/leonids.tsx:133
+#: src/features/seasonal-events/model/leonids.tsx:133
 msgid "The next potential Leonid storm window is in the 2030s, when Earth is expected to pass through a particularly dense ribbon of Tempel–Tuttle debris."
 msgstr "পরবর্তী সম্ভাব্য লিওনিড ঝড়ের সুযোগ ২০৩০-এর দশকে, যখন পৃথিবী টেম্পেল–টাটলের ধ্বংসাবশেষের বিশেষভাবে ঘন একটি ফিতার মধ্যে দিয়ে যাবে বলে আশা করা হচ্ছে।"
 
-#: src/hooks/seasonal-events/holi.tsx:162
+#: src/features/seasonal-events/model/holi.tsx:162
 msgid "The night before Holi features Holika Dahan, a ceremonial bonfire that symbolises the passing of winter and the renewal of life."
 msgstr "হোলির আগের রাতে অনুষ্ঠিত হয় হোলিকা দহন, একটি আনুষ্ঠানিক অগ্নিকুণ্ড যা শীতের প্রস্থান ও জীবনের নবায়নকে প্রতীকী করে।"
 
@@ -1805,7 +1810,7 @@ msgstr "হোলির আগের রাতে অনুষ্ঠিত হ�
 #~ msgid "The night encourages imagination to wander, as if even the moon were part of the performance."
 #~ msgstr "রাতটি কল্পনাকে দূরে ভাসতে উৎসাহ দেয়, যেন চাঁদও সেই অভিনয়ের অংশ।"
 
-#: src/hooks/seasonal-events/spring-equinox.tsx:115
+#: src/features/seasonal-events/model/spring-equinox.tsx:115
 msgid "The old tradition of balancing an egg on its end at the equinox is a myth (you can do it any day of the year), but people keep trying anyway. It's become its own kind of ritual."
 msgstr "বিষুবের দিনে ডিমকে তার মাথায় দাঁড় করানোর পুরনো ঐতিহ্যটি একটি মিথ (আপনি বছরের যেকোনো দিন এটি করতে পারেন), কিন্তু মানুষ তবুও চেষ্টা করতে থাকে। এটি নিজস্ব এক ধরনের আচারে পরিণত হয়েছে।"
 
@@ -1813,15 +1818,15 @@ msgstr "বিষুবের দিনে ডিমকে তার মাথ�
 #~ msgid "The oldest known Valentine is a fifteenth-century poem written from imprisonment in the Tower of London."
 #~ msgstr "প্রাচীনতম পরিচিত ভ্যালেন্টাইন হলো পঞ্চদশ শতাব্দীর একটি কবিতা, যা লন্ডনের টাওয়ারে বন্দিদশা থেকে লেখা।"
 
-#: src/hooks/seasonal-events/valentines.tsx:97
+#: src/features/seasonal-events/model/valentines.tsx:97
 msgid "The oldest known Valentine is a fifteenth-century poem, written from a cell in the Tower of London — a love letter composed under the worst possible circumstances."
 msgstr "প্রাচীনতম পরিচিত ভ্যালেন্টাইন হলো পঞ্চদশ শতাব্দীর একটি কবিতা, লন্ডনের টাওয়ারের একটি কক্ষ থেকে লেখা — সবচেয়ে খারাপ পরিস্থিতিতে রচিত একটি প্রেমপত্র।"
 
-#: src/hooks/seasonal-events/orionids.tsx:77
+#: src/features/seasonal-events/model/orionids.tsx:77
 msgid "The Orionids are an annual meteor shower formed from debris left by Halley’s Comet, reaching their peak in October."
 msgstr "ওরায়োনিডস হ্যালির ধূমকেতু থেকে ফেলে যাওয়া ধ্বংসাবশেষ থেকে গঠিত একটি বার্ষিক উল্কাবৃষ্টি, যার শীর্ষ অক্টোবর মাসে পৌঁছে।"
 
-#: src/hooks/seasonal-events/orionids.tsx:93
+#: src/features/seasonal-events/model/orionids.tsx:93
 msgid "The Orionids are visible from both hemispheres and are known for producing bright, fast-moving meteors."
 msgstr "ওরায়োনিডস দুই গোলার্ধ থেকেই দেখা যায় এবং উজ্জ্বল, দ্রুতগতির উল্কা তৈরির জন্য পরিচিত।"
 
@@ -1829,27 +1834,27 @@ msgstr "ওরায়োনিডস দুই গোলার্ধ থেকে
 #~ msgid "The peak often arrives suddenly, like a secret performance unfolding before dawn."
 #~ msgstr "শীর্ষ মাত্রা প্রায়ই হঠাৎ আসে, যেন ভোরের আগে এক গোপন প্রদর্শনী উন্মোচন হচ্ছে।"
 
-#: src/hooks/seasonal-events/perseids.tsx:76
+#: src/features/seasonal-events/model/perseids.tsx:76
 msgid "The Perseids are a bright annual meteor shower formed from debris left by Comet Swift–Tuttle."
 msgstr "পারসিডস একটি উজ্জ্বল বার্ষিক উল্কাবৃষ্টি, যা ধূমকেতু সুইফট–টাটলের ফেলে যাওয়া ধ্বংসাবশেষ থেকে তৈরি।"
 
-#: src/hooks/seasonal-events/perseids.tsx:93
+#: src/features/seasonal-events/model/perseids.tsx:93
 msgid "The Perseids are sometimes known as the Tears of Saint Lawrence, as their peak often falls near the feast day of Saint Lawrence in mid-August."
 msgstr "পারসেইডসকে কখনও কখনও সেন্ট লরেন্সের অশ্রু বলা হয় ... কারণ এর শিখর প্রায়ই আগস্টের মাঝামাঝি তাঁর উৎসব দিবসের কাছাকাছি পড়ে।"
 
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:35
+#: src/features/seasonal-events/model/total-solar-eclipse.tsx:35
 msgid "The phase of totality is short and can only be seen from a narrow path across the Earth’s surface."
 msgstr "পূর্ণতা পর্যায়টি সংক্ষিপ্ত এবং পৃথিবীর পৃষ্ঠের সরু একটি পথ থেকে মাত্র দেখা যায়।"
 
-#: src/hooks/seasonal-events/quadrantids.tsx:131
+#: src/features/seasonal-events/model/quadrantids.tsx:131
 msgid "The Quadrantid peak is one of the narrowest of any major shower, sometimes lasting only six hours. Catching it is partly a matter of luck and geography."
 msgstr "কোয়াড্রান্টিড শীর্ষটি যেকোনো প্রধান উল্কাবৃষ্টির মধ্যে সংকীর্ণতম, কখনও কখনও মাত্র ছয় ঘণ্টা স্থায়ী হয়। এটি দেখতে পাওয়া কিছুটা ভাগ্য এবং ভৌগোলিক অবস্থানের বিষয়।"
 
-#: src/hooks/seasonal-events/quadrantids.tsx:77
+#: src/features/seasonal-events/model/quadrantids.tsx:77
 msgid "The Quadrantids are a meteor shower that peaks in early January and is known for being brief yet often intense."
 msgstr "কোয়াড্রান্টিডস হল একটি উল্কাবৃষ্টি যা জানুয়ারি শুরুতে সর্বোচ্চতে পৌঁছে এবং স্বল্পস্থায়ী হলেও প্রায়শই তীব্র হয়।"
 
-#: src/hooks/seasonal-events/lunar-new-year.tsx:112
+#: src/features/seasonal-events/model/lunar-new-year.tsx:112
 msgid "The season builds toward the Lantern Festival on the fifteenth night, when thousands of lanterns are released into the sky."
 msgstr "এই ঋতু পনেরোতম রাতের লণ্ঠন উৎসবের দিকে ক্রমশ এগিয়ে চলে, যখন হাজার হাজার লণ্ঠন আকাশে উড়িয়ে দেওয়া হয়।"
 
@@ -1861,47 +1866,47 @@ msgstr "এই ঋতু পনেরোতম রাতের লণ্ঠন �
 #~ msgid "The shower frequently delivers swift, luminous streaks that carve clean lines across the night."
 #~ msgstr "এই উল্কাবৃষ্টি প্রায়ই দ্রুত, দীপ্তিময় রেখা সৃষ্টি করে যা রাতের আকাশে পরিষ্কার দাগ কেটে যায়।"
 
-#: src/hooks/seasonal-events/lyrids.tsx:98
+#: src/features/seasonal-events/model/lyrids.tsx:98
 msgid "The shower originates from Comet Thatcher, which returns to the inner solar system roughly every four hundred and fifteen years."
 msgstr "এই উল্কাবৃষ্টির উৎস ধূমকেতু থ্যাচার, যা প্রায় প্রতি চারশ পনের বছরে আবার অভ্যন্তরীণ সৌরজগতের কাছে ফিরে আসে।"
 
-#: src/hooks/seasonal-events/quadrantids.tsx:93
+#: src/features/seasonal-events/model/quadrantids.tsx:93
 msgid "The shower takes its name from Quadrans Muralis, a former constellation that no longer appears on modern star charts."
 msgstr "এই উল্কাবৃষ্টির নাম এসেছে কোয়াড্রান্স মুরালিস থেকে, যা একটি প্রাক্তন নাক্ষত্রমণ্ডল এবং আধুনিক তারামানে আর নেই।"
 
-#: src/hooks/seasonal-events/eta-aquariids.tsx:99
+#: src/features/seasonal-events/model/eta-aquariids.tsx:99
 msgid "The shower’s radiant lies near the constellation Aquarius, rising before dawn when viewing conditions are at their best."
 msgstr "এই উল্কাবৃষ্টির উজ্জ্বল কেন্দ্রটি কুম্ভ নক্ষত্রমণ্ডলের কাছে, যা ভোরের আগে উঠে যখন দেখার পরিস্থিতি সেরা থাকে।"
 
-#: src/hooks/seasonal-events/spring-equinox.tsx:83
+#: src/features/seasonal-events/model/spring-equinox.tsx:83
 msgid "The spring equinox marks the moment when day and night stand in near-perfect balance."
 msgstr "বসন্ত বিষুব সেই মুহূর্ত যখন দিন ও রাত প্রায় নিখুঁত ভারসাম্যে দাঁড়ায়।"
 
-#: src/hooks/seasonal-events/quadrantids.tsx:109
+#: src/features/seasonal-events/model/quadrantids.tsx:109
 msgid "The stream of debris that creates the Quadrantids is unusually narrow, so Earth passes through it quickly."
 msgstr "যে ধ্বংসাবশেষের স্রোত কোয়াড্রান্টিডস তৈরি করে তা অস্বাভাবিকভাবে সরু, তাই পৃথিবী এর মধ্যে দিয়ে দ্রুত চলে যায়।"
 
-#: src/hooks/seasonal-events/summer-solstice.tsx:81
+#: src/features/seasonal-events/model/summer-solstice.tsx:81
 msgid "The summer solstice marks the longest day of the year, when the sun reaches its highest path across the sky."
 msgstr "গ্রীষ্মকালীন অয়নান্ত বছরের সবচেয়ে দীর্ঘ দিন, যখন সূর্য আকাশে তার সর্বোচ্চ পথে ওঠে।"
 
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:56
+#: src/features/seasonal-events/model/day-of-the-dead.tsx:56
 msgid "The tradition grows from Indigenous Mexican beliefs about death and the afterlife, later blending with Catholic observances of All Saints’ and All Souls’ Days."
 msgstr "এই ঐতিহ্যটি মেক্সিকান আদিবাসীদের মৃত্যু ও পরজীবনের বিশ্বাস থেকে গড়ে উঠেছে এবং পরে ক্যাথলিকদের অল সেন্টস ও অল সোলস দিবসের প্রথার সাথে মিশে গেছে।"
 
-#: src/hooks/seasonal-events/christmas.tsx:96
+#: src/features/seasonal-events/model/christmas.tsx:96
 msgid "The tradition of a decorated Christmas tree only became widespread in the English-speaking world after an 1848 illustration of Queen Victoria and Prince Albert’s tree was published — and went viral, by Victorian standards."
 msgstr "সজ্জিত ক্রিসমাস ট্রির ঐতিহ্য ইংরেজিভাষী বিশ্বে ব্যাপকভাবে ছড়িয়ে পড়েছিল কেবল তখনই যখন ১৮৪৮ সালে রানি ভিক্টোরিয়া ও প্রিন্স অ্যালবার্টের গাছের একটি চিত্র প্রকাশিত হয় — এবং ভিক্টোরিয়ান মানদণ্ডে ভাইরাল হয়।"
 
-#: src/hooks/seasonal-events/halloween.tsx:95
+#: src/features/seasonal-events/model/halloween.tsx:95
 msgid "The tradition of trick-or-treating in its modern form only became widespread in the 1950s, though the custom of going door to door in disguise is centuries older."
 msgstr "আধুনিক রূপে ট্রিক-অর-ট্রিটিংয়ের ঐতিহ্য ১৯৫০-এর দশকেই ব্যাপকভাবে ছড়িয়ে পড়েছিল, যদিও ছদ্মবেশে দরজায় দরজায় যাওয়ার রীতিটি শতাব্দী পুরনো।"
 
-#: src/hooks/seasonal-events/winter-solstice.tsx:79
+#: src/features/seasonal-events/model/winter-solstice.tsx:79
 msgid "The winter solstice marks the shortest day and longest night of the year, and the turning point toward gradually longer daylight."
 msgstr "শীত অয়নান্ত বছরের সবচেয়ে ছোট দিন এবং দীর্ঘতম রাতকে চিহ্নিত করে, এবং ধীরে ধীরে দীর্ঘদিনের দিক পরিবর্তনের সূচনা নির্দেশ করে।"
 
-#: src/hooks/seasonal-events/lunar-new-year.tsx:102
+#: src/features/seasonal-events/model/lunar-new-year.tsx:102
 msgid "The zodiac animal associated with the year is believed to shape its character and fortunes."
 msgstr "বছরের সাথে সংশ্লিষ্ট রাশিচক্র প্রাণীটি তার চরিত্র ও ভাগ্যকে গঠন করে বলে বিশ্বাস করা হয়।"
 
@@ -1909,28 +1914,28 @@ msgstr "বছরের সাথে সংশ্লিষ্ট রাশিচ
 #~ msgid "Their likely parent body is the asteroid 2003 EH1, a reminder that even an unassuming rock can paint the sky with light."
 #~ msgstr "এদের সম্ভাব্য মূল উৎস হলো গ্রহাণু ২০০৩ EH1, যা মনে করিয়ে দেয় যে এক সাধারণ শিলাও আকাশে আলো ছড়াতে পারে।"
 
-#: src/hooks/seasonal-events/quadrantids.tsx:125
+#: src/features/seasonal-events/model/quadrantids.tsx:125
 msgid "Their likely parent body, asteroid 2003 EH1, may be a dead comet — one that exhausted its volatile ices and now orbits as a dark, quiet rock."
 msgstr "এদের সম্ভাব্য মূল উৎস, গ্রহাণু ২০০৩ EH1, হয়তো একটি মৃত ধূমকেতু — যা তার অস্থির বরফ ফুরিয়ে ফেলেছে এবং এখন একটি অন্ধকার, নিস্তব্ধ পাথর হিসেবে কক্ষপথে ঘুরছে।"
 
-#: src/hooks/seasonal-events/orionids.tsx:83
+#: src/features/seasonal-events/model/orionids.tsx:83
 msgid "Their meteors appear to radiate from the region near the constellation Orion, a figure long woven into myth and storytelling."
 msgstr "এদের উল্কাগুলো ওরায়োন নক্ষত্রমণ্ডলের কাছাকাছি অঞ্চল থেকে বিচ্ছুরিত বলে মনে হয়, যা দীর্ঘদিন ধরে মিথ ও গল্পে জড়িয়ে রয়েছে।"
 
-#: src/hooks/seasonal-events/orionids.tsx:99
+#: src/features/seasonal-events/model/orionids.tsx:99
 msgid "Their peak often coincides with long, dark viewing hours, when observing conditions are especially favourable."
 msgstr "এদের শীর্ষ প্রায়শই দীর্ঘ, অন্ধকার পর্যবেক্ষণ সময়ের সাথে মিলে যায়, যখন দেখার অবস্থা বিশেষভাবে অনুকূল হয়।"
 
-#: src/hooks/seasonal-events/perseids.tsx:82
+#: src/features/seasonal-events/model/perseids.tsx:82
 msgid "Their radiant lies in the constellation Perseus, and the shower is especially prominent in the northern hemisphere, though visible worldwide."
 msgstr "এদের উজ্জ্বল কেন্দ্র পার্সিউস নক্ষত্রমণ্ডলে, এবং এই উল্কাবৃষ্টি বিশেষ করে উত্তর গোলার্ধে দৃশ্যমান, যদিও বিশ্বব্যাপী দেখা যায়।"
 
 #. placeholder {0}: Math.round(rain)
-#: src/components/tile.tsx:577
+#: src/features/weather/ui/tile.tsx:477
 msgid "There is a {0}% chance of precipitation."
 msgstr "বৃষ্টির সম্ভাবনা {0}%।"
 
-#: src/hooks/seasonal-events/easter.tsx:76
+#: src/features/seasonal-events/model/easter.tsx:76
 msgid "There's a reason the holiday lands in spring — it borrows heavily from the season's own sense of things starting over."
 msgstr "উৎসবটি বসন্তে পড়ার একটি কারণ আছে — এটি ঋতুর নিজস্ব সূচনার অনুভূতি থেকে প্রচুর ধার করে।"
 
@@ -1938,19 +1943,19 @@ msgstr "উৎসবটি বসন্তে পড়ার একটি ক�
 #~ msgid "There’s something quietly luminous about the day itself — the glow of lights in windows, slow mornings, familiar songs, and tables set for gathering."
 #~ msgstr "দিনটির নিজস্ব একটি নীরব দীপ্তি আছে — জানালায় আলো জ্বলা, ধীর সকাল, পরিচিত গান এবং সমবেত হওয়ার জন্য সাজানো টেবিল।"
 
-#: src/hooks/seasonal-events/leonids.tsx:100
+#: src/features/seasonal-events/model/leonids.tsx:100
 msgid "These events played an important role in the development of scientific understanding of meteor showers."
 msgstr "এই ঘটনাগুলো উল্কাবৃষ্টির বৈজ্ঞানিক বোঝাপড়া বিকাশে গুরুত্বপূর্ণ ভূমিকা রেখেছে।"
 
-#: src/hooks/seasonal-events/geminids.tsx:83
+#: src/features/seasonal-events/model/geminids.tsx:83
 msgid "They are especially known for their steady rates and vivid, often colourful trails."
 msgstr "তারা তাদের স্থির হারের এবং উজ্জ্বল, প্রায়ই রঙিন রেখার জন্য বিশেষভাবে পরিচিত।"
 
-#: src/hooks/seasonal-events/lyrids.tsx:83
+#: src/features/seasonal-events/model/lyrids.tsx:83
 msgid "They are typically a gentle shower that rewards patient skywatching."
 msgstr "এগুলি সাধারণত একটি কোমল উল্কাবৃষ্টি, যা ধৈর্যশীল আকাশদর্শকদের পুরস্কৃত করে।"
 
-#: src/hooks/seasonal-events/eta-aquariids.tsx:83
+#: src/features/seasonal-events/model/eta-aquariids.tsx:83
 msgid "They peak in early May and are especially well seen from the southern hemisphere, though northern skies still catch their share of streaks."
 msgstr "এগুলোর শীর্ষ মে মাসের শুরুর দিকে এবং দক্ষিণ গোলার্ধ থেকে বিশেষভাবে ভালো দেখা যায়, যদিও উত্তর দিকের আকাশও নিজেদের অংশের রেখা ধরে।"
 
@@ -1958,31 +1963,31 @@ msgstr "এগুলোর শীর্ষ মে মাসের শুরু�
 #~ msgid "They serve as a quiet reminder that the sky still holds the power to surprise."
 #~ msgstr "এগুলি নীরবে স্মরণ করিয়ে দেয় যে আকাশ এখনও বিস্মিত করার শক্তি ধরে রেখেছে।"
 
-#: src/hooks/seasonal-events/quadrantids.tsx:115
+#: src/features/seasonal-events/model/quadrantids.tsx:115
 msgid "This makes the period of strongest activity short, but it can be especially spectacular."
 msgstr "এতে সবচেয়ে সক্রিয় সময়কালটি সংক্ষিপ্ত হয়, তবে এটি বিশেষভাবে চমকপ্রদ হতে পারে।"
 
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:77
+#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:77
 msgid "This same atmospheric filtering that produces red sunsets gives the Moon its copper and crimson tones during totality."
 msgstr "লাল সূর্যাস্ত তৈরি করা এই একই বায়ুমণ্ডলীয় পরিশোধন পূর্ণ গ্রহণে চাঁদকে তামা ও গাঢ় লালের রঙ দেয়।"
 
-#: src/hooks/seasonal-events/eid-al-adha.tsx:88
+#: src/features/seasonal-events/model/eid-al-adha.tsx:88
 msgid "This three-way split is central to the holiday's meaning — the act of giving is built directly into the ritual itself."
 msgstr "এই তিনভাগের বিভাজন উৎসবের অর্থের কেন্দ্রে — দান করার কাজটি সরাসরি আচারের মধ্যেই নির্মিত।"
 
-#: src/components/tile.tsx:87
+#: src/features/weather/ui/tile.tsx:102
 msgid "thunderstorm"
 msgstr "বজ্রপাত"
 
-#: src/components/tile.tsx:89
+#: src/features/weather/ui/tile.tsx:104
 msgid "thunderstorm with heavy hail"
 msgstr "ভারী বরফের সাথে বজ্রপাত"
 
-#: src/components/tile.tsx:88
+#: src/features/weather/ui/tile.tsx:103
 msgid "thunderstorm with slight hail"
 msgstr "হালকা বরফের সাথে বজ্রপাত"
 
-#: src/components/tile.tsx:97
+#: src/features/weather/ui/tile.tsx:112
 msgid "Thursday"
 msgstr "বৃহস্পতিবার"
 
@@ -1990,15 +1995,15 @@ msgstr "বৃহস্পতিবার"
 #~ msgid "Tiles"
 #~ msgstr "টাইলস"
 
-#: src/components/initialisation.tsx:151
+#: src/features/settings/ui/initialisation.tsx:160
 msgid "To get started, let's set your language and location."
 msgstr "শুরু করার জন্য, চলুন আপনার ভাষা এবং অবস্থান নির্ধারণ করি।"
 
-#: src/hooks/seasonal-events/christmas.tsx:104
+#: src/features/seasonal-events/model/christmas.tsx:104
 msgid "Today, an estimated 350 million real Christmas trees are grown across Europe alone, most of them farmed specifically for the season."
 msgstr "আজ, শুধু ইউরোপে প্রায় ৩৫ কোটি আসল ক্রিসমাস ট্রি জন্মানো হয়, যার বেশিরভাগ বিশেষভাবে এই মৌসুমের জন্য চাষ করা।"
 
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:51
+#: src/features/seasonal-events/model/total-solar-eclipse.tsx:51
 msgid "Today, many people travel great distances to stand within the path of totality."
 msgstr "আজও অনেক মানুষ পূর্ণগ্রহণের পথের মধ্যে দাঁড়াতে দূর দূরান্ত থেকে ভ্রমণ করে।"
 
@@ -2006,35 +2011,35 @@ msgstr "আজও অনেক মানুষ পূর্ণগ্রহণে
 #~ msgid "Too much battery usage"
 #~ msgstr "অত্যধিক ব্যাটারি ব্যবহার"
 
-#: src/components/tile.tsx:291
+#: src/features/weather/ui/tile.tsx:180
 msgid "Total Lunar Eclipse"
 msgstr "পূর্ণ চন্দ্রগ্রহণ"
 
-#: src/components/tile.tsx:287
+#: src/features/weather/ui/tile.tsx:179
 msgid "Total Solar Eclipse"
 msgstr "পূর্ণ সূর্যগ্রহণ"
 
-#: src/hooks/seasonal-events/lunar-new-year.tsx:79
+#: src/features/seasonal-events/model/lunar-new-year.tsx:79
 msgid "Traditional stories of the monster Nian are said to have inspired the use of loud sounds, firecrackers, and the colour red as symbols of protection and good fortune."
 msgstr "দানব নিয়ানকে ঘিরে প্রচলিত কাহিনিগুলো নাকি অনুপ্রাণিত করেছে ... জোর শব্দ, পটকা, এবং লাল রঙকে সুরক্ষা ও সৌভাগ্যের প্রতীক হিসেবে ব্যবহারে।"
 
-#: src/hooks/seasonal-events/hanukkah.tsx:93
+#: src/features/seasonal-events/model/hanukkah.tsx:93
 msgid "Traditions"
 msgstr "ঐতিহ্য"
 
-#: src/hooks/seasonal-events/spring-equinox.tsx:99
+#: src/features/seasonal-events/model/spring-equinox.tsx:99
 msgid "Traditions such as Nowruz continue to celebrate themes of renewal on or around the equinox."
 msgstr "নওরোজের মতো ঐতিহ্যগুলো এখনো বিষুবের দিন বা তার আশেপাশে পুনর্নবীকরণের বিষয়বস্তু উদ্‌যাপন করে।"
 
-#: src/components/initialisation.tsx:190
+#: src/features/settings/ui/initialisation.tsx:199
 msgid "Try again"
 msgstr "আবার চেষ্টা করুন"
 
-#: src/components/tile.tsx:95
+#: src/features/weather/ui/tile.tsx:110
 msgid "Tuesday"
 msgstr "মঙ্গলবার"
 
-#: src/components/settings.tsx:161
+#: src/features/settings/ui/settings.tsx:299
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "যদি Weather Please-এর প্রদত্ত UV সূচক নিয়মিতভাবে স্থানীয় উৎসগুলোর তুলনায় কম হয়, তবে এটি চালু করুন।"
 
@@ -2042,7 +2047,7 @@ msgstr "যদি Weather Please-এর প্রদত্ত UV সূচক �
 #~ msgid "Twilight lingers, insects fill the air with song, and the sky can feel almost endless."
 #~ msgstr "গোধূলি দীর্ঘ হয়, পোকামাকড় গানে বাতাস ভরে যায়, আর আকাশ যেন শেষই হয় না।"
 
-#: src/pages/index.tsx:311
+#: src/pages/index.tsx:154
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "আবহাওয়ার ডেটা আনা যায়নি. অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন."
 
@@ -2058,16 +2063,16 @@ msgstr "আবহাওয়ার ডেটা আনা যায়নি. অন�
 #~ msgid "Uninstall feedback"
 #~ msgstr "আনইনস্টল প্রতিক্রিয়া"
 
-#: src/components/tile.tsx:516
-#: src/components/tile.tsx:523
+#: src/features/weather/ui/tile.tsx:416
+#: src/features/weather/ui/tile.tsx:423
 msgid "unknown conditions"
 msgstr "অজানা অবস্থা"
 
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:87
+#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:87
 msgid "Unlike a solar eclipse, a lunar eclipse needs no special equipment — you just look up. The whole event unfolds over several hours, visible to anyone on the nightside of Earth."
 msgstr "সূর্যগ্রহণের বিপরীতে, চন্দ্রগ্রহণে কোনো বিশেষ সরঞ্জাম দরকার নেই — শুধু উপরে তাকান। পুরো ঘটনাটি কয়েক ঘণ্টায় উন্মোচিত হয়, পৃথিবীর রাতের দিকে থাকা যে কেউ দেখতে পারেন।"
 
-#: src/hooks/seasonal-events/geminids.tsx:93
+#: src/features/seasonal-events/model/geminids.tsx:93
 msgid "Unlike most meteor showers, the Geminids originate from the asteroid 3200 Phaethon rather than a comet."
 msgstr "বেশিরভাগ উল্কাবৃষ্টির মতো নয়—জেমিনিডস ধূমকেতু নয়, উল্কাপিণ্ড ৩২০০ ফায়েথন থেকে উৎপন্ন।"
 
@@ -2084,7 +2089,7 @@ msgstr "বেশিরভাগ উল্কাবৃষ্টির মতো 
 #~ msgid "Usability and functionality"
 #~ msgstr "ব্যবহার্যতা এবং কার্যকারিতা"
 
-#: src/components/settings.tsx:156
+#: src/features/settings/ui/settings.tsx:294
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "গ্লোবাল কেমিস্ট্রি মডেল (CAMS) ব্যবহার করুন"
 
@@ -2092,20 +2097,20 @@ msgstr "গ্লোবাল কেমিস্ট্রি মডেল (CAMS)
 #~ msgid "Use keyboard shortcuts"
 #~ msgstr "কীবোর্ড শর্টকাট ব্যবহার করুন"
 
-#: src/components/initialisation.tsx:173
-#: src/components/settings.tsx:90
+#: src/features/settings/ui/initialisation.tsx:182
+#: src/features/settings/ui/settings.tsx:228
 msgid "Use metric number format"
 msgstr "মেট্রিক সংখ্যা বিন্যাস ব্যবহার করুন"
 
-#: src/components/tile.tsx:322
+#: src/features/weather/ui/tile.tsx:163
 msgid "Valentine's Day"
 msgstr "ভ্যালেন্টাইনস ডে"
 
-#: src/hooks/seasonal-events/valentines.tsx:49
+#: src/features/seasonal-events/model/valentines.tsx:49
 msgid "Valentine’s Day celebrates affection in many forms, from romantic love to friendship and quiet acts of care."
 msgstr "ভ্যালেন্টাইনস ডে বহু ধরনের স্নেহকে উদ্‌যাপন করে, রোমান্টিক ভালোবাসা থেকে বন্ধুত্ব ও নিস্তব্ধ যত্নের কাজ পর্যন্ত।"
 
-#: src/components/tile.tsx:84
+#: src/features/weather/ui/tile.tsx:99
 msgid "violent rain showers"
 msgstr "তীব্র বৃষ্টির ঝড়"
 
@@ -2113,7 +2118,7 @@ msgstr "তীব্র বৃষ্টির ঝড়"
 #~ msgid "Watching the Eta Aquariids can feel like receiving a message from a distant traveller, carried on light across the dark."
 #~ msgstr "ইটা অ্যাকুয়ারিডস দেখা যেন দূর এক পথিকের বার্তা পাওয়া ... যা অন্ধকার ভেদ করে আলোয় ভেসে আসে।"
 
-#: src/hooks/seasonal-events/earth-day.tsx:150
+#: src/features/seasonal-events/model/earth-day.tsx:150
 msgid "Ways to observe"
 msgstr "পালনের উপায়"
 
@@ -2121,11 +2126,11 @@ msgstr "পালনের উপায়"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "আমরা আরও অনেক ভাষায় 'ওয়েদার প্লিজ' এনে আসতে চাই।"
 
-#: src/components/settings.tsx:95
+#: src/features/settings/ui/settings.tsx:233
 msgid "Weather"
 msgstr "আবহাওয়া"
 
-#: src/pages/index.tsx:334
+#: src/pages/index.tsx:196
 msgid "weather data provided by open-meteo"
 msgstr "আবহাওয়া তথ্য প্রদান করে open-meteo"
 
@@ -2134,43 +2139,43 @@ msgstr "আবহাওয়া তথ্য প্রদান করে open-
 #~ msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
 #~ msgstr "Weather Please অজ্ঞাতমূলক ক্র্যাশ ডেটা এবং ত্রুটি লগ সংগ্রহ করে। আপনি যেকোনো সময় সেটিংস মেনু থেকে এই ব্যবস্থাপনা থেকে বেরিয়ে আসতে পারেন।"
 
-#: src/components/tile.tsx:96
+#: src/features/weather/ui/tile.tsx:111
 msgid "Wednesday"
 msgstr "বুধবার"
 
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:58
+#: src/features/seasonal-events/model/total-solar-eclipse.tsx:58
 msgid "What it feels like"
 msgstr "কেমন অনুভূত হয়"
 
-#: src/hooks/seasonal-events/quadrantids.tsx:83
+#: src/features/seasonal-events/model/quadrantids.tsx:83
 msgid "When conditions are favourable, they produce sharp, fast-moving meteors in high numbers."
 msgstr "পরিস্থিতি অনুকূল হলে এগুলো উচ্চ সংখ্যায় তীক্ষ্ণ, দ্রুতগতির উল্কা তৈরি করে।"
 
-#: src/hooks/seasonal-events/leonids.tsx:116
+#: src/features/seasonal-events/model/leonids.tsx:116
 msgid "When this occurs, meteor rates can rise dramatically for a short period of time."
 msgstr "এমন হলে অল্প সময়ের জন্য উল্কার হার নাটকীয়ভাবে বেড়ে যেতে পারে।"
 
-#: src/hooks/seasonal-events/geminids.tsx:115
+#: src/features/seasonal-events/model/geminids.tsx:115
 msgid "Whether your night air is warm or cool, a comfortable place to sit or lie back makes the experience far more enjoyable."
 msgstr "রাতের বাতাস গরম হোক বা ঠান্ডা, বসা বা হেলান দিয়ে শোয়ার জন্য আরামদায়ক জায়গা অভিজ্ঞতাকে অনেক বেশি উপভোগ্য করে তোলে।"
 
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:60
+#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:60
 msgid "While eclipses were once viewed as omens, today they are widely appreciated as shared moments of skywatching and wonder."
 msgstr "একসময় গ্রহণকে অমঙ্গল সংকেত হিসেবে দেখা হতো ... আজ এগুলোকে আকাশদর্শন ও বিস্ময়ের ভাগ করা মুহূর্ত হিসেবে ব্যাপকভাবে উপভোগ করা হয়।"
 
-#: src/hooks/seasonal-events/leonids.tsx:107
+#: src/features/seasonal-events/model/leonids.tsx:107
 msgid "Why it can storm"
 msgstr "কেন এটি ঝড়ের সৃষ্টি করতে পারে"
 
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:67
+#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:67
 msgid "Why it turns red"
 msgstr "কেন এটি লাল হয়ে যায়"
 
-#: src/hooks/seasonal-events/quadrantids.tsx:106
+#: src/features/seasonal-events/model/quadrantids.tsx:106
 msgid "Why the peak is brief"
 msgstr "কেন শীর্ষ সময় সংক্ষিপ্ত"
 
-#: src/components/tile.tsx:251
+#: src/features/weather/ui/tile.tsx:171
 msgid "Winter Solstice"
 msgstr "শীত অয়নান্ত"
 
@@ -2178,11 +2183,11 @@ msgstr "শীত অয়নান্ত"
 #~ msgid "With each night, a new flame appears, forming a quiet ladder of light against the dark."
 #~ msgstr "প্রতি রাতে আরেকটি নতুন শিখা জ্বলে ওঠে, অন্ধকারের বিরুদ্ধে আলোর এক নীরব সিঁড়ি তৈরি করে।"
 
-#: src/hooks/seasonal-events/holi.tsx:178
+#: src/features/seasonal-events/model/holi.tsx:178
 msgid "Within minutes of stepping outside, everyone looks the same — drenched head to toe in colour, impossible to tell apart."
 msgstr "বাইরে বের হওয়ার কয়েক মিনিটের মধ্যে সবাইকে একই দেখায় — মাথা থেকে পা পর্যন্ত রঙে ভিজে, আলাদা করা অসম্ভব।"
 
-#: src/components/review-prompt.tsx:40
+#: src/features/settings/ui/review-prompt.tsx:40
 msgid "Would you like to leave a review?"
 msgstr "আপনি কি একটি পর্যালোচনা ছেড়তে চান?"
 
@@ -2198,7 +2203,7 @@ msgstr "আপনি কি একটি পর্যালোচনা ছে�
 #~ msgid "You have unsaved changes"
 #~ msgstr "আপনার অসংরক্ষিত পরিবর্তন রয়েছে"
 
-#: src/components/review-prompt.tsx:37
+#: src/features/settings/ui/review-prompt.tsx:37
 msgid "You've been using Weather Please for a while"
 msgstr "আপনি একটি সময়ের জন্য Weather Please ব্যবহার করেছেন"
 
@@ -2206,12 +2211,12 @@ msgstr "আপনি একটি সময়ের জন্য Weather Please
 msgid "Your email (optional)"
 msgstr "আপনার ইমেল (ঐচ্ছিক)"
 
-#: src/components/initialisation.tsx:178
-#: src/components/settings.tsx:98
+#: src/features/settings/ui/initialisation.tsx:187
+#: src/features/settings/ui/settings.tsx:236
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "আপনার অবস্থানের তথ্য আপনার ব্যক্তিগত ডিভাইসে নিরাপদে এবং একচেটিয়াভাবে সংরক্ষিত আছে।"
 
-#: src/components/initialisation.tsx:107
+#: src/features/settings/ui/initialisation.tsx:116
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "আপনার অবস্থান বর্তমানে উপলব্ধ নয়. অনুগ্রহ করে নিশ্চিত করুন যে আপনার ডিভাইসে অবস্থান পরিষেবা চালু আছে এবং আবার চেষ্টা করুন."
 
@@ -2219,6 +2224,6 @@ msgstr "আপনার অবস্থান বর্তমানে উপল
 msgid "Your message"
 msgstr "আপনার বার্তা"
 
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:72
+#: src/features/seasonal-events/model/eid-al-fitr.tsx:72
 msgid "Zakat al-Fitr, a form of charitable giving, is a central obligation of the day, ensuring that all can take part in the celebration."
 msgstr "যাকাতুল ফিতর, দানের একটি রূপ, দিনের একটি কেন্দ্রীয় বাধ্যবাধকতা ... যাতে সবাই উৎসবে অংশ নিতে পারে।"

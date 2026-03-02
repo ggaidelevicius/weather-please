@@ -3,23 +3,25 @@ import { Trans } from '@lingui/react/macro'
 import { IconAlertTriangle } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { Alert } from '../components/alert'
-import { Button } from '../components/button'
-import { Initialisation } from '../components/initialisation'
-import { RingLoader } from '../components/loader'
-import { ReviewPrompt } from '../components/review-prompt'
-import { Settings } from '../components/settings'
-import { Tile } from '../components/tile'
-import { WeatherAlert } from '../components/weather-alert'
-import { useConfig } from '../hooks/use-config'
-import { useSeasonalEvents } from '../hooks/use-seasonal-events'
-import { getEnabledSeasonalEvents } from '../hooks/seasonal-events/enabled-events'
-import { usePeriodicLocationRefresh } from '../hooks/use-periodic-location-refresh'
-import { useWeather } from '../hooks/use-weather'
+import { Alert } from '../shared/ui/alert'
+import { AlertVariant } from '../shared/ui/alert-variant'
+import { Button } from '../shared/ui/button'
+import { RingLoader } from '../shared/ui/loader'
+import { ReviewPrompt } from '../features/settings/ui/review-prompt'
+import { useSeasonalEvents } from '../features/seasonal-events/hooks/use-seasonal-events'
+import { getEnabledSeasonalEvents } from '../features/seasonal-events/model/enabled-events'
 import {
 	getHemisphereFromLatitude,
 	isLikelySoftwareRenderer,
-} from '../hooks/seasonal-events/utils'
+} from '../features/seasonal-events/model/utils'
+import { useConfig } from '../features/settings/hooks/use-config'
+import { Initialisation } from '../features/settings/ui/initialisation'
+import { Settings } from '../features/settings/ui/settings'
+import { useWeather } from '../features/weather/hooks/use-weather'
+import { Tile } from '../features/weather/ui/tile'
+import { WeatherAlert } from '../features/weather/ui/weather-alert'
+import { AsyncStatus } from '../shared/hooks/async-status'
+import { usePeriodicLocationRefresh } from '../features/weather/hooks/use-periodic-location-refresh'
 import { messages } from '../locales/en/messages'
 
 i18n.load({
@@ -46,12 +48,13 @@ const App = () => {
 
 	const { config, input, handleChange, updateConfig, setInput, isHydrated } =
 		useConfig()
-	const { weatherData, alertData, isLoading, error, retry } = useWeather(
-		config.lat,
-		config.lon,
-		changedLocation,
-		config.useAirQualityUvOverride,
-	)
+	const { weatherData, alertData, status, hasData, isLoading, error, retry } =
+		useWeather(
+			config.lat,
+			config.lon,
+			changedLocation,
+			config.useAirQualityUvOverride,
+		)
 	const isOnboarded = Boolean(config.lat && config.lon)
 	const hemisphere = getHemisphereFromLatitude(config.lat)
 	const isSoftwareRenderer = isLikelySoftwareRenderer()
@@ -114,6 +117,9 @@ const App = () => {
 			)
 		})
 
+	const shouldShowBlockingError = status === AsyncStatus.Error && !hasData
+	const shouldShowInlineError = status === AsyncStatus.Error && hasData
+
 	return (
 		<>
 			{config.showAlerts && (
@@ -142,9 +148,9 @@ const App = () => {
 							handleChange={handleChange}
 							pending={isHydrated && (!config?.lat || !config?.lon)}
 						/>
-						{error ? (
+						{shouldShowBlockingError ? (
 							<div className="col-span-full flex flex-col items-center justify-center gap-4">
-								<Alert icon={IconAlertTriangle} variant="info-red">
+								<Alert icon={IconAlertTriangle} variant={AlertVariant.InfoRed}>
 									<Trans>
 										Unable to fetch weather data. Please check your internet
 										connection and try again.
@@ -154,9 +160,31 @@ const App = () => {
 									<Trans>Retry</Trans>
 								</Button>
 							</div>
-						) : !isLoading ? (
-							<AnimatePresence>{tiles}</AnimatePresence>
-						) : null}
+						) : (
+							<>
+								{shouldShowInlineError && error && (
+									<div className="col-span-full">
+										<Alert
+											icon={IconAlertTriangle}
+											variant={AlertVariant.InfoRed}
+										>
+											<div className="flex items-center justify-between gap-3">
+												<span>
+													<Trans>
+														Showing cached weather data. Retry to refresh the
+														latest forecast.
+													</Trans>
+												</span>
+												<Button className="ml-auto" onClick={retry}>
+													<Trans>Retry</Trans>
+												</Button>
+											</div>
+										</Alert>
+									</div>
+								)}
+								{!isLoading ? <AnimatePresence>{tiles}</AnimatePresence> : null}
+							</>
+						)}
 					</div>
 				</motion.main>
 			</AnimatePresence>
