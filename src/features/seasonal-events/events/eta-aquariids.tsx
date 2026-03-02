@@ -2,75 +2,75 @@ import {
 	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
-} from './types'
+} from '../core/types'
+import { createAdaptiveDprController, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
-import { createAdaptiveDprController, randomInRange } from './utils'
 
-const ORIONIDS_PEAK_DATES = new Set([
-	'2026-10-21',
-	'2026-10-22',
-	'2027-10-21',
-	'2027-10-22',
-	'2028-10-21',
-	'2028-10-22',
-	'2029-10-21',
-	'2029-10-22',
-	'2030-10-21',
-	'2030-10-22',
-	'2031-10-21',
-	'2031-10-22',
-	'2032-10-21',
-	'2032-10-22',
-	'2033-10-21',
-	'2033-10-22',
-	'2034-10-21',
-	'2034-10-22',
-	'2035-10-21',
-	'2035-10-22',
-	'2036-10-21',
-	'2036-10-22',
-	'2037-10-21',
-	'2037-10-22',
-	'2038-10-21',
-	'2038-10-22',
-	'2039-10-21',
-	'2039-10-22',
-	'2040-10-21',
-	'2040-10-22',
-	'2041-10-21',
-	'2041-10-22',
-	'2042-10-21',
-	'2042-10-22',
-	'2043-10-21',
-	'2043-10-22',
+const ETA_AQUARIIDS_PEAK_DATES = new Set([
+	'2026-05-05',
+	'2026-05-06',
+	'2027-05-05',
+	'2027-05-06',
+	'2028-05-05',
+	'2028-05-06',
+	'2029-05-05',
+	'2029-05-06',
+	'2030-05-05',
+	'2030-05-06',
+	'2031-05-05',
+	'2031-05-06',
+	'2032-05-05',
+	'2032-05-06',
+	'2033-05-05',
+	'2033-05-06',
+	'2034-05-05',
+	'2034-05-06',
+	'2035-05-05',
+	'2035-05-06',
+	'2036-05-05',
+	'2036-05-06',
+	'2037-05-05',
+	'2037-05-06',
+	'2038-05-05',
+	'2038-05-06',
+	'2039-05-05',
+	'2039-05-06',
+	'2040-05-05',
+	'2040-05-06',
+	'2041-05-05',
+	'2041-05-06',
+	'2042-05-05',
+	'2042-05-06',
+	'2043-05-05',
+	'2043-05-06',
 ])
-const ORIONIDS_MOUNT_DELAY_MS = 900
-const ORIONIDS_OVERLAY_OPACITY = '0.78'
-const ORIONIDS_OVERLAY_FILTER = 'saturate(130%)'
-const ORIONIDS_MAX_DPR = 2
-const ORIONIDS_METEOR_COUNT = 11
-const ORIONIDS_STAR_COUNT = 140
-const ORIONIDS_METEOR_LENGTH_RANGE = { min: 150, max: 260 }
-const ORIONIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.4 }
-const ORIONIDS_METEOR_SPEED_RANGE = { min: 600, max: 900 }
-const ORIONIDS_METEOR_ANGLE_RANGE = { min: 0.24, max: 0.42 }
-const ORIONIDS_METEOR_SPAWN_DELAY_RANGE = { min: 760, max: 2200 }
-const ORIONIDS_METEOR_LIFETIME_RANGE = { min: 1300, max: 2100 }
-const ORIONIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
-const ORIONIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
-const ORIONIDS_METEOR_GLOW_RANGE = { min: 12, max: 24 }
-const ORIONIDS_METEOR_COLORS = [
-	'rgba(254, 215, 170, 1)',
-	'rgba(253, 186, 116, 1)',
-	'rgba(251, 146, 60, 1)',
-	'rgba(148, 163, 184, 1)',
+const ETA_AQUARIIDS_MOUNT_DELAY_MS = 900
+const ETA_AQUARIIDS_OVERLAY_OPACITY = '0.78'
+const ETA_AQUARIIDS_OVERLAY_FILTER = 'saturate(130%)'
+const ETA_AQUARIIDS_MAX_DPR = 2
+const ETA_AQUARIIDS_METEOR_COUNT = 11
+const ETA_AQUARIIDS_STAR_COUNT = 140
+const ETA_AQUARIIDS_METEOR_LENGTH_RANGE = { min: 140, max: 250 }
+const ETA_AQUARIIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.3 }
+const ETA_AQUARIIDS_METEOR_SPEED_RANGE = { min: 560, max: 860 }
+const ETA_AQUARIIDS_METEOR_ANGLE_RANGE = { min: 0.25, max: 0.42 }
+const ETA_AQUARIIDS_METEOR_SPAWN_DELAY_RANGE = { min: 760, max: 2200 }
+const ETA_AQUARIIDS_METEOR_LIFETIME_RANGE = { min: 1300, max: 2100 }
+const ETA_AQUARIIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
+const ETA_AQUARIIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
+const ETA_AQUARIIDS_METEOR_GLOW_RANGE = { min: 12, max: 24 }
+const ETA_AQUARIIDS_METEOR_COLORS = [
+	'rgba(191, 219, 254, 1)',
+	'rgba(125, 211, 252, 1)',
+	'rgba(96, 165, 250, 1)',
+	'rgba(59, 130, 246, 1)',
 ]
-const ORIONIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const ORIONIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
-const ORIONIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
-const ORIONIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
-const ORIONIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const ORIONIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const ETA_AQUARIIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
+const ETA_AQUARIIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
+const ETA_AQUARIIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
+const ETA_AQUARIIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
+const ETA_AQUARIIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
+const ETA_AQUARIIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
 const EventDetails = () => (
 	<>
@@ -79,14 +79,14 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				The Orionids are an annual meteor shower formed from debris left by
-				Halley’s Comet, reaching their peak in October.
+				The Eta Aquariids are a major meteor shower formed from the debris of
+				Halley’s Comet.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Their meteors appear to radiate from the region near the constellation
-				Orion, a figure long woven into myth and storytelling.
+				They peak in early May and are especially well seen from the southern
+				hemisphere, though northern skies still catch their share of streaks.
 			</Trans>
 		</p>
 
@@ -95,14 +95,14 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				The Orionids are visible from both hemispheres and are known for
-				producing bright, fast-moving meteors.
+				Halley’s Comet itself returns roughly every seventy-six years, but the
+				stream of dust it leaves behind crosses Earth’s path each year.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Their peak often coincides with long, dark viewing hours, when observing
-				conditions are especially favourable.
+				The shower’s radiant lies near the constellation Aquarius, rising before
+				dawn when viewing conditions are at their best.
 			</Trans>
 		</p>
 
@@ -111,39 +111,38 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				Each Orionid meteor is a tiny grain of dust shed by Halley's Comet — the
-				same object that people have been watching and recording since at least
-				240 BC.
+				The Eta Aquariids and the Orionids are sibling showers — both are born
+				from Halley's Comet, but Earth crosses different parts of the debris
+				trail six months apart.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				The meteors enter the atmosphere at about 66 km/s, among the fastest of
-				any annual shower, which is why they often leave persistent glowing
-				trails.
+				At 66 km/s, these are among the fastest meteors you'll see. Their trails
+				can persist for several seconds after the meteor itself is gone.
 			</Trans>
 		</p>
 	</>
 )
 
-export const orionidsEvent: SeasonalEvent = {
-	id: SeasonalEventId.Orionids,
-	isActive: isOrionidsPeak,
-	run: launchOrionidsShower,
+export const etaAquariidsEvent: SeasonalEvent = {
+	id: SeasonalEventId.EtaAquariids,
+	isActive: isEtaAquariidsPeak,
+	run: launchEtaAquariidsShower,
 	details: EventDetails,
 	tileAccent: {
-		colors: ['#fed7aa', '#fdba74', '#fb923c', '#94a3b8', '#fed7aa'],
+		colors: ['#bae6fd', '#7dd3fc', '#60a5fa', '#3b82f6', '#bae6fd'],
 	},
 }
 
-function isOrionidsPeak({ date }: SeasonalEventContext) {
+function isEtaAquariidsPeak({ date }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
-	return ORIONIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
+	return ETA_AQUARIIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
 }
 
-async function launchOrionidsShower() {
+async function launchEtaAquariidsShower() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}
@@ -155,7 +154,7 @@ async function launchOrionidsShower() {
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
-			throw new Error('Unable to create 2D context for orionids canvas')
+			throw new Error('Unable to create 2D context for eta aquariids canvas')
 		}
 
 		type Meteor = {
@@ -192,49 +191,49 @@ async function launchOrionidsShower() {
 		let lastTime = performance.now()
 
 		const dprController = createAdaptiveDprController({
-			maxDpr: ORIONIDS_MAX_DPR,
+			maxDpr: ETA_AQUARIIDS_MAX_DPR,
 			minScale: 0.4,
 		})
 		const randomMeteorColor = () =>
-			ORIONIDS_METEOR_COLORS[
-				Math.floor(Math.random() * ORIONIDS_METEOR_COLORS.length)
+			ETA_AQUARIIDS_METEOR_COLORS[
+				Math.floor(Math.random() * ETA_AQUARIIDS_METEOR_COLORS.length)
 			]
 
 		const createStar = (time: number): Star => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: randomInRange(ORIONIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(ORIONIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(ORIONIDS_STAR_TWINKLE_RANGE),
+			radius: randomInRange(ETA_AQUARIIDS_STAR_RADIUS_RANGE),
+			opacity: randomInRange(ETA_AQUARIIDS_STAR_OPACITY_RANGE),
+			twinkle: randomInRange(ETA_AQUARIIDS_STAR_TWINKLE_RANGE),
 			phase: Math.random() * Math.PI * 2,
-			birthTime: time + randomInRange(ORIONIDS_STAR_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(ORIONIDS_STAR_FADE_IN_DURATION_RANGE),
+			birthTime: time + randomInRange(ETA_AQUARIIDS_STAR_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(ETA_AQUARIIDS_STAR_FADE_IN_DURATION_RANGE),
 		})
 
 		const createMeteor = (time: number): Meteor => {
-			const speed = randomInRange(ORIONIDS_METEOR_SPEED_RANGE)
-			const angle = randomInRange(ORIONIDS_METEOR_ANGLE_RANGE)
+			const speed = randomInRange(ETA_AQUARIIDS_METEOR_SPEED_RANGE)
+			const angle = randomInRange(ETA_AQUARIIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(ORIONIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(ORIONIDS_METEOR_SPAWN_Y),
+				x: width * randomInRange(ETA_AQUARIIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(ETA_AQUARIIDS_METEOR_SPAWN_Y),
 				vx: Math.cos(angle) * speed,
 				vy: Math.sin(angle) * speed,
-				length: randomInRange(ORIONIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(ORIONIDS_METEOR_WIDTH_RANGE),
+				length: randomInRange(ETA_AQUARIIDS_METEOR_LENGTH_RANGE),
+				width: randomInRange(ETA_AQUARIIDS_METEOR_WIDTH_RANGE),
 				opacity: randomInRange({ min: 0.45, max: 0.85 }),
-				glow: randomInRange(ORIONIDS_METEOR_GLOW_RANGE),
+				glow: randomInRange(ETA_AQUARIIDS_METEOR_GLOW_RANGE),
 				color: randomMeteorColor(),
 				age: 0,
-				lifetime: randomInRange(ORIONIDS_METEOR_LIFETIME_RANGE),
-				nextSpawn: time + randomInRange(ORIONIDS_METEOR_SPAWN_DELAY_RANGE),
+				lifetime: randomInRange(ETA_AQUARIIDS_METEOR_LIFETIME_RANGE),
+				nextSpawn: time + randomInRange(ETA_AQUARIIDS_METEOR_SPAWN_DELAY_RANGE),
 			}
 		}
 
 		const resetField = (time: number) => {
-			meteors = Array.from({ length: ORIONIDS_METEOR_COUNT }, () =>
+			meteors = Array.from({ length: ETA_AQUARIIDS_METEOR_COUNT }, () =>
 				createMeteor(time),
 			)
-			stars = Array.from({ length: ORIONIDS_STAR_COUNT }, () =>
+			stars = Array.from({ length: ETA_AQUARIIDS_STAR_COUNT }, () =>
 				createStar(time),
 			)
 		}
@@ -287,7 +286,7 @@ async function launchOrionidsShower() {
 		}
 
 		const drawStars = (time: number) => {
-			context.fillStyle = ORIONIDS_STAR_COLOR
+			context.fillStyle = ETA_AQUARIIDS_STAR_COLOR
 			for (const star of stars) {
 				const fade = getStarFade(star, time)
 				if (fade <= 0) {
@@ -384,8 +383,8 @@ async function launchOrionidsShower() {
 		overlay.style.inset = '0'
 		overlay.style.pointerEvents = 'none'
 		overlay.style.zIndex = '0'
-		overlay.style.opacity = ORIONIDS_OVERLAY_OPACITY
-		overlay.style.filter = ORIONIDS_OVERLAY_FILTER
+		overlay.style.opacity = ETA_AQUARIIDS_OVERLAY_OPACITY
+		overlay.style.filter = ETA_AQUARIIDS_OVERLAY_FILTER
 		overlay.appendChild(canvas)
 
 		const mount = () => {
@@ -399,7 +398,7 @@ async function launchOrionidsShower() {
 			}
 		}
 
-		timeoutId = window.setTimeout(mount, ORIONIDS_MOUNT_DELAY_MS)
+		timeoutId = window.setTimeout(mount, ETA_AQUARIIDS_MOUNT_DELAY_MS)
 
 		const handleResize = () => {
 			resizeCanvas()
@@ -422,7 +421,7 @@ async function launchOrionidsShower() {
 			}
 		}
 	} catch (error) {
-		console.error('Failed to launch Orionids meteor shower', error)
+		console.error('Failed to launch Eta Aquariids meteor shower', error)
 		return () => {}
 	}
 }

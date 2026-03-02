@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { isLikelySoftwareRenderer } from '../model/utils'
-import type { Hemisphere, SeasonalEventId } from '../model/types'
+import { isLikelySoftwareRenderer } from '../core/utils'
+import type { Hemisphere, SeasonalEventId } from '../core/types'
 
 type UseSeasonalEventsOptions = {
 	isEnabled: boolean
@@ -10,13 +10,13 @@ type UseSeasonalEventsOptions = {
 	hemisphere?: Hemisphere
 }
 
-type SeasonalEventsModule = typeof import('../model/seasonal-events-module')
+type SeasonalEventsModule = typeof import('../core/seasonal-events-module')
 
 let seasonalEventsModulePromise: Promise<SeasonalEventsModule> | null = null
 
 const loadSeasonalEventsModule = () => {
 	if (!seasonalEventsModulePromise) {
-		seasonalEventsModulePromise = import('../model/seasonal-events-module')
+		seasonalEventsModulePromise = import('../core/seasonal-events-module')
 	}
 
 	return seasonalEventsModulePromise

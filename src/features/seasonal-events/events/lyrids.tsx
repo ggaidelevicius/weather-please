@@ -2,75 +2,75 @@ import {
 	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
-} from './types'
+} from '../core/types'
+import { createAdaptiveDprController, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
-import { createAdaptiveDprController, randomInRange } from './utils'
 
-const LEONIDS_PEAK_DATES = new Set([
-	'2026-11-17',
-	'2026-11-18',
-	'2027-11-17',
-	'2027-11-18',
-	'2028-11-17',
-	'2028-11-18',
-	'2029-11-17',
-	'2029-11-18',
-	'2030-11-17',
-	'2030-11-18',
-	'2031-11-17',
-	'2031-11-18',
-	'2032-11-17',
-	'2032-11-18',
-	'2033-11-17',
-	'2033-11-18',
-	'2034-11-17',
-	'2034-11-18',
-	'2035-11-17',
-	'2035-11-18',
-	'2036-11-17',
-	'2036-11-18',
-	'2037-11-17',
-	'2037-11-18',
-	'2038-11-17',
-	'2038-11-18',
-	'2039-11-17',
-	'2039-11-18',
-	'2040-11-17',
-	'2040-11-18',
-	'2041-11-17',
-	'2041-11-18',
-	'2042-11-17',
-	'2042-11-18',
-	'2043-11-17',
-	'2043-11-18',
+const LYRIDS_PEAK_DATES = new Set([
+	'2026-04-22',
+	'2026-04-23',
+	'2027-04-22',
+	'2027-04-23',
+	'2028-04-22',
+	'2028-04-23',
+	'2029-04-22',
+	'2029-04-23',
+	'2030-04-22',
+	'2030-04-23',
+	'2031-04-22',
+	'2031-04-23',
+	'2032-04-22',
+	'2032-04-23',
+	'2033-04-22',
+	'2033-04-23',
+	'2034-04-22',
+	'2034-04-23',
+	'2035-04-22',
+	'2035-04-23',
+	'2036-04-22',
+	'2036-04-23',
+	'2037-04-22',
+	'2037-04-23',
+	'2038-04-22',
+	'2038-04-23',
+	'2039-04-22',
+	'2039-04-23',
+	'2040-04-22',
+	'2040-04-23',
+	'2041-04-22',
+	'2041-04-23',
+	'2042-04-22',
+	'2042-04-23',
+	'2043-04-22',
+	'2043-04-23',
 ])
-const LEONIDS_MOUNT_DELAY_MS = 900
-const LEONIDS_OVERLAY_OPACITY = '0.78'
-const LEONIDS_OVERLAY_FILTER = 'saturate(132%)'
-const LEONIDS_MAX_DPR = 2
-const LEONIDS_METEOR_COUNT = 12
-const LEONIDS_STAR_COUNT = 140
-const LEONIDS_METEOR_LENGTH_RANGE = { min: 150, max: 260 }
-const LEONIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.4 }
-const LEONIDS_METEOR_SPEED_RANGE = { min: 620, max: 940 }
-const LEONIDS_METEOR_ANGLE_RANGE = { min: 0.24, max: 0.42 }
-const LEONIDS_METEOR_SPAWN_DELAY_RANGE = { min: 700, max: 2000 }
-const LEONIDS_METEOR_LIFETIME_RANGE = { min: 1200, max: 2000 }
-const LEONIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
-const LEONIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
-const LEONIDS_METEOR_GLOW_RANGE = { min: 12, max: 26 }
-const LEONIDS_METEOR_COLORS = [
-	'rgba(252, 211, 77, 1)',
-	'rgba(251, 191, 36, 1)',
-	'rgba(249, 115, 22, 1)',
+const LYRIDS_MOUNT_DELAY_MS = 900
+const LYRIDS_OVERLAY_OPACITY = '0.78'
+const LYRIDS_OVERLAY_FILTER = 'saturate(125%)'
+const LYRIDS_MAX_DPR = 2
+const LYRIDS_METEOR_COUNT = 10
+const LYRIDS_STAR_COUNT = 140
+const LYRIDS_METEOR_LENGTH_RANGE = { min: 130, max: 240 }
+const LYRIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.2 }
+const LYRIDS_METEOR_SPEED_RANGE = { min: 480, max: 780 }
+const LYRIDS_METEOR_ANGLE_RANGE = { min: 0.26, max: 0.44 }
+const LYRIDS_METEOR_SPAWN_DELAY_RANGE = { min: 900, max: 2400 }
+const LYRIDS_METEOR_LIFETIME_RANGE = { min: 1400, max: 2300 }
+const LYRIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
+const LYRIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
+const LYRIDS_METEOR_GLOW_RANGE = { min: 12, max: 22 }
+const LYRIDS_METEOR_COLORS = [
+	'rgba(226, 232, 240, 1)',
+	'rgba(191, 219, 254, 1)',
 	'rgba(148, 163, 184, 1)',
+	'rgba(252, 211, 77, 1)',
 ]
-const LEONIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const LEONIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
-const LEONIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
-const LEONIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
-const LEONIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const LEONIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const LYRIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
+const LYRIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
+const LYRIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
+const LYRIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
+const LYRIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
+const LYRIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
 const EventDetails = () => (
 	<>
@@ -79,14 +79,13 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				The Leonids are a November meteor shower, named for their radiant in the
-				constellation Leo.
+				The Lyrids appear each year in late April, with meteors radiating from
+				the constellation Lyra.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Most years the display is modest, but the shower is famous for its
-				capacity to produce rare and spectacular surprises.
+				They are typically a gentle shower that rewards patient skywatching.
 			</Trans>
 		</p>
 
@@ -95,31 +94,14 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				The Leonids are renowned for historic meteor storms, most notably in
-				1833 and 1966, when observers described the sky as seeming to rain
-				stars.
+				Historical Chinese records describe displays of Lyrid meteors more than
+				two thousand six hundred years ago.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				These events played an important role in the development of scientific
-				understanding of meteor showers.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Why it can storm</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The Leonids originate from Comet Tempel–Tuttle, and every few decades
-				Earth passes through especially dense streams of its debris.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				When this occurs, meteor rates can rise dramatically for a short period
-				of time.
+				The shower originates from Comet Thatcher, which returns to the inner
+				solar system roughly every four hundred and fifteen years.
 			</Trans>
 		</p>
 
@@ -128,39 +110,38 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				In most years, the Leonids produce only 10–15 meteors per hour. But
-				during the 1966 storm, observers reported rates of thousands per minute
-				— so many that some people thought the world was ending.
+				Chinese records from 687 BC describe "stars falling like rain" — the
+				oldest known account of the Lyrids, and one of the oldest documented
+				meteor observations of any kind.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				The next potential Leonid storm window is in the 2030s, when Earth is
-				expected to pass through a particularly dense ribbon of Tempel–Tuttle
-				debris.
+				Comet Thatcher, the shower's parent body, won't return to the inner
+				solar system until roughly the year 2283.
 			</Trans>
 		</p>
 	</>
 )
 
-export const leonidsEvent: SeasonalEvent = {
-	id: SeasonalEventId.Leonids,
-	isActive: isLeonidsPeak,
-	run: launchLeonidsShower,
+export const lyridsEvent: SeasonalEvent = {
+	id: SeasonalEventId.Lyrids,
+	isActive: isLyridsPeak,
+	run: launchLyridsShower,
 	details: EventDetails,
 	tileAccent: {
-		colors: ['#fcd34d', '#fbbf24', '#f97316', '#94a3b8', '#fcd34d'],
+		colors: ['#e2e8f0', '#fcd34d', '#93c5fd', '#60a5fa', '#e2e8f0'],
 	},
 }
 
-function isLeonidsPeak({ date }: SeasonalEventContext) {
+function isLyridsPeak({ date }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
-	return LEONIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
+	return LYRIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
 }
 
-async function launchLeonidsShower() {
+async function launchLyridsShower() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}
@@ -172,7 +153,7 @@ async function launchLeonidsShower() {
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
-			throw new Error('Unable to create 2D context for leonids canvas')
+			throw new Error('Unable to create 2D context for lyrids canvas')
 		}
 
 		type Meteor = {
@@ -209,49 +190,49 @@ async function launchLeonidsShower() {
 		let lastTime = performance.now()
 
 		const dprController = createAdaptiveDprController({
-			maxDpr: LEONIDS_MAX_DPR,
+			maxDpr: LYRIDS_MAX_DPR,
 			minScale: 0.4,
 		})
 		const randomMeteorColor = () =>
-			LEONIDS_METEOR_COLORS[
-				Math.floor(Math.random() * LEONIDS_METEOR_COLORS.length)
+			LYRIDS_METEOR_COLORS[
+				Math.floor(Math.random() * LYRIDS_METEOR_COLORS.length)
 			]
 
 		const createStar = (time: number): Star => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: randomInRange(LEONIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(LEONIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(LEONIDS_STAR_TWINKLE_RANGE),
+			radius: randomInRange(LYRIDS_STAR_RADIUS_RANGE),
+			opacity: randomInRange(LYRIDS_STAR_OPACITY_RANGE),
+			twinkle: randomInRange(LYRIDS_STAR_TWINKLE_RANGE),
 			phase: Math.random() * Math.PI * 2,
-			birthTime: time + randomInRange(LEONIDS_STAR_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(LEONIDS_STAR_FADE_IN_DURATION_RANGE),
+			birthTime: time + randomInRange(LYRIDS_STAR_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(LYRIDS_STAR_FADE_IN_DURATION_RANGE),
 		})
 
 		const createMeteor = (time: number): Meteor => {
-			const speed = randomInRange(LEONIDS_METEOR_SPEED_RANGE)
-			const angle = randomInRange(LEONIDS_METEOR_ANGLE_RANGE)
+			const speed = randomInRange(LYRIDS_METEOR_SPEED_RANGE)
+			const angle = randomInRange(LYRIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(LEONIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(LEONIDS_METEOR_SPAWN_Y),
+				x: width * randomInRange(LYRIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(LYRIDS_METEOR_SPAWN_Y),
 				vx: Math.cos(angle) * speed,
 				vy: Math.sin(angle) * speed,
-				length: randomInRange(LEONIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(LEONIDS_METEOR_WIDTH_RANGE),
-				opacity: randomInRange({ min: 0.45, max: 0.88 }),
-				glow: randomInRange(LEONIDS_METEOR_GLOW_RANGE),
+				length: randomInRange(LYRIDS_METEOR_LENGTH_RANGE),
+				width: randomInRange(LYRIDS_METEOR_WIDTH_RANGE),
+				opacity: randomInRange({ min: 0.45, max: 0.85 }),
+				glow: randomInRange(LYRIDS_METEOR_GLOW_RANGE),
 				color: randomMeteorColor(),
 				age: 0,
-				lifetime: randomInRange(LEONIDS_METEOR_LIFETIME_RANGE),
-				nextSpawn: time + randomInRange(LEONIDS_METEOR_SPAWN_DELAY_RANGE),
+				lifetime: randomInRange(LYRIDS_METEOR_LIFETIME_RANGE),
+				nextSpawn: time + randomInRange(LYRIDS_METEOR_SPAWN_DELAY_RANGE),
 			}
 		}
 
 		const resetField = (time: number) => {
-			meteors = Array.from({ length: LEONIDS_METEOR_COUNT }, () =>
+			meteors = Array.from({ length: LYRIDS_METEOR_COUNT }, () =>
 				createMeteor(time),
 			)
-			stars = Array.from({ length: LEONIDS_STAR_COUNT }, () => createStar(time))
+			stars = Array.from({ length: LYRIDS_STAR_COUNT }, () => createStar(time))
 		}
 
 		const resizeCanvas = () => {
@@ -302,7 +283,7 @@ async function launchLeonidsShower() {
 		}
 
 		const drawStars = (time: number) => {
-			context.fillStyle = LEONIDS_STAR_COLOR
+			context.fillStyle = LYRIDS_STAR_COLOR
 			for (const star of stars) {
 				const fade = getStarFade(star, time)
 				if (fade <= 0) {
@@ -399,8 +380,8 @@ async function launchLeonidsShower() {
 		overlay.style.inset = '0'
 		overlay.style.pointerEvents = 'none'
 		overlay.style.zIndex = '0'
-		overlay.style.opacity = LEONIDS_OVERLAY_OPACITY
-		overlay.style.filter = LEONIDS_OVERLAY_FILTER
+		overlay.style.opacity = LYRIDS_OVERLAY_OPACITY
+		overlay.style.filter = LYRIDS_OVERLAY_FILTER
 		overlay.appendChild(canvas)
 
 		const mount = () => {
@@ -414,7 +395,7 @@ async function launchLeonidsShower() {
 			}
 		}
 
-		timeoutId = window.setTimeout(mount, LEONIDS_MOUNT_DELAY_MS)
+		timeoutId = window.setTimeout(mount, LYRIDS_MOUNT_DELAY_MS)
 
 		const handleResize = () => {
 			resizeCanvas()
@@ -437,7 +418,7 @@ async function launchLeonidsShower() {
 			}
 		}
 	} catch (error) {
-		console.error('Failed to launch Leonids meteor shower', error)
+		console.error('Failed to launch Lyrids meteor shower', error)
 		return () => {}
 	}
 }

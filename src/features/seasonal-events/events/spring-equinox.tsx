@@ -1,61 +1,82 @@
 import {
+	Hemisphere,
 	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
-} from './types'
+} from '../core/types'
+import { getCanvasDpr, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
-import { getCanvasDpr, randomInRange } from './utils'
 
-const LUNAR_NEW_YEAR_DATES = new Set([
-	'2026-02-17',
-	'2027-02-06',
-	'2028-01-26',
-	'2029-02-13',
-	'2030-02-03',
-	'2031-01-23',
-	'2032-02-11',
-	'2033-01-31',
-	'2034-02-19',
-	'2035-02-08',
-	'2036-01-28',
-	'2037-02-15',
-	'2038-02-04',
-	'2039-01-24',
-	'2040-02-12',
-	'2041-02-01',
-	'2042-01-22',
-	'2043-02-10',
+const SPRING_EQUINOX_DATES_NORTHERN = new Set([
+	'2026-03-20',
+	'2027-03-20',
+	'2028-03-20',
+	'2029-03-20',
+	'2030-03-20',
+	'2031-03-20',
+	'2032-03-20',
+	'2033-03-20',
+	'2034-03-20',
+	'2035-03-20',
+	'2036-03-20',
+	'2037-03-20',
+	'2038-03-20',
+	'2039-03-20',
+	'2040-03-20',
+	'2041-03-20',
+	'2042-03-20',
+	'2043-03-20',
 ])
-const LUNAR_MOUNT_DELAY_MS = 900
-const LUNAR_FIELD_OPACITY = '0.75'
-const LUNAR_FIELD_FILTER = 'saturate(135%)'
-const LUNAR_FIELD_MAX_DPR = 2
-const LUNAR_FIELD_MARGIN = 160
-const LUNAR_PARTICLE_COUNT = 58
-const LUNAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2400 }
-const LUNAR_FADE_IN_DURATION_RANGE = { min: 1000, max: 1900 }
-const LUNAR_SCALE_RANGE = { min: 0.55, max: 0.95 }
-const LUNAR_SIZE_RANGE = { min: 18, max: 34 }
-const LUNAR_VELOCITY_X_RANGE = { min: -6, max: 6 }
-const LUNAR_VELOCITY_Y_RANGE = { min: -18, max: -8 }
-const LUNAR_FLOAT_VELOCITY_Y_RANGE = { min: -2, max: 2 }
-const LUNAR_FLOAT_CHANCE = 0.35
-const LUNAR_SWAY_RANGE = { min: 2, max: 7 }
-const LUNAR_ROTATION_SPEED_RANGE = { min: -0.3, max: 0.3 }
-const LUNAR_SWAY_SPEED_X = 0.00045
-const LUNAR_SWAY_SPEED_Y = 0.00035
-const LUNAR_GLOW_RANGE = { min: 10, max: 22 }
-const LUNAR_EMOJIS = ['🏮']
-const LUNAR_FONT =
+const SPRING_EQUINOX_DATES_SOUTHERN = new Set([
+	'2026-09-22',
+	'2027-09-22',
+	'2028-09-22',
+	'2029-09-22',
+	'2030-09-22',
+	'2031-09-22',
+	'2032-09-22',
+	'2033-09-22',
+	'2034-09-22',
+	'2035-09-22',
+	'2036-09-22',
+	'2037-09-22',
+	'2038-09-22',
+	'2039-09-22',
+	'2040-09-22',
+	'2041-09-22',
+	'2042-09-22',
+	'2043-09-22',
+])
+const SPRING_MOUNT_DELAY_MS = 900
+const SPRING_FIELD_OPACITY = '0.7'
+const SPRING_FIELD_FILTER = 'saturate(135%)'
+const SPRING_FIELD_MAX_DPR = 2
+const SPRING_FIELD_MARGIN = 160
+const SPRING_PARTICLE_COUNT = 70
+const SPRING_FADE_IN_DELAY_RANGE = { min: 0, max: 2400 }
+const SPRING_FADE_IN_DURATION_RANGE = { min: 1000, max: 1900 }
+const SPRING_SCALE_RANGE = { min: 0.5, max: 0.9 }
+const SPRING_SIZE_RANGE = { min: 16, max: 30 }
+const SPRING_VELOCITY_X_RANGE = { min: -8, max: 8 }
+const SPRING_VELOCITY_Y_RANGE = { min: -10, max: -3 }
+const SPRING_FLOAT_VELOCITY_Y_RANGE = { min: -1.5, max: 1.5 }
+const SPRING_FLOAT_CHANCE = 0.4
+const SPRING_SWAY_RANGE = { min: 2.5, max: 8 }
+const SPRING_ROTATION_SPEED_RANGE = { min: -0.35, max: 0.35 }
+const SPRING_SWAY_SPEED_X = 0.00055
+const SPRING_SWAY_SPEED_Y = 0.00045
+const SPRING_GLOW_RANGE = { min: 6, max: 16 }
+const SPRING_EMOJIS = ['🌱', '🌿', '🍃', '🌷', '🌸']
+const SPRING_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
-const LUNAR_SPAWN_Y_RANGE = { min: 0.6, max: 1.05 }
-const LUNAR_HAZE_OPACITY = '0.5'
-const LUNAR_HAZE_GRADIENT =
-	'radial-gradient(120% 90% at 50% 100%, rgba(251, 191, 36, 0.45), rgba(251, 146, 60, 0.2) 40%, rgba(15, 23, 42, 0) 75%), radial-gradient(90% 80% at 20% 90%, rgba(248, 113, 113, 0.35), rgba(15, 23, 42, 0) 70%)'
-const LUNAR_GLOW_COLORS = [
-	'rgba(251, 191, 36, 0.6)',
-	'rgba(248, 113, 113, 0.45)',
-	'rgba(253, 186, 116, 0.4)',
+const SPRING_SPAWN_Y_RANGE = { min: 0.45, max: 0.9 }
+const SPRING_HAZE_OPACITY = '0.5'
+const SPRING_HAZE_GRADIENT =
+	'radial-gradient(120% 90% at 50% 100%, rgba(187, 247, 208, 0.45), rgba(52, 211, 153, 0.2) 40%, rgba(15, 23, 42, 0) 75%), radial-gradient(90% 80% at 20% 90%, rgba(251, 207, 232, 0.35), rgba(15, 23, 42, 0) 70%)'
+const SPRING_GLOW_COLORS = [
+	'rgba(167, 243, 208, 0.45)',
+	'rgba(244, 114, 182, 0.4)',
+	'rgba(147, 197, 253, 0.35)',
 ]
 
 const EventDetails = () => (
@@ -65,47 +86,24 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				Lunar New Year begins with the first new moon of the lunar calendar and
-				unfolds across a festival season lasting up to fifteen days.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				It is marked by family reunions, travel, and the renewal of long-held
-				bonds.
+				The spring equinox marks the moment when day and night stand in
+				near-perfect balance.
 			</Trans>
 		</p>
 
 		<h2>
-			<Trans>Legends and customs</Trans>
+			<Trans>History and meaning</Trans>
 		</h2>
 		<p>
 			<Trans>
-				Traditional stories of the monster Nian are said to have inspired the
-				use of loud sounds, firecrackers, and the colour red as symbols of
-				protection and good fortune.
+				Ancient observatories carefully tracked this turning point of the year
+				to guide planting cycles, calendars, and seasonal festivals.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Homes are carefully cleaned and decorated to clear away old luck and
-				welcome prosperity for the year ahead.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Symbols of luck</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Red envelopes, tangerines, and calligraphy couplets express wishes for
-				abundance, happiness, and fresh beginnings.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				The zodiac animal associated with the year is believed to shape its
-				character and fortunes.
+				Traditions such as Nowruz continue to celebrate themes of renewal on or
+				around the equinox.
 			</Trans>
 		</p>
 
@@ -114,38 +112,42 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				The season builds toward the Lantern Festival on the fifteenth night,
-				when thousands of lanterns are released into the sky.
+				From this point, each day gains a few minutes of light — a shift that's
+				barely noticeable day to day, but adds up to hours within weeks.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Dragon and lion dances wind through streets packed with spectators,
-				firecrackers, and the smell of street food — a finale that can last well
-				past midnight.
+				The old tradition of balancing an egg on its end at the equinox is a
+				myth (you can do it any day of the year), but people keep trying anyway.
+				It's become its own kind of ritual.
 			</Trans>
 		</p>
 	</>
 )
 
-export const lunarNewYearEvent: SeasonalEvent = {
-	id: SeasonalEventId.LunarNewYear,
-	isActive: isLunarNewYear,
-	run: launchLunarNewYear,
+export const springEquinoxEvent: SeasonalEvent = {
+	id: SeasonalEventId.SpringEquinox,
+	isActive: isSpringEquinox,
+	run: launchSpringEquinoxGrowth,
 	details: EventDetails,
 	tileAccent: {
-		colors: ['#f5e3c1', '#e6b26a', '#c9854a', '#8f5a3a', '#f5e3c1'],
+		colors: ['#f7c9df', '#f3a6c8', '#b7e4c7', '#95d5b2', '#f7c9df'],
 	},
 }
 
-function isLunarNewYear({ date }: SeasonalEventContext) {
+function isSpringEquinox({ date, hemisphere }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
-	return LUNAR_NEW_YEAR_DATES.has(`${year}-${month}-${day}`)
+	const equinoxDates =
+		hemisphere === Hemisphere.Southern
+			? SPRING_EQUINOX_DATES_SOUTHERN
+			: SPRING_EQUINOX_DATES_NORTHERN
+	return equinoxDates.has(`${year}-${month}-${day}`)
 }
 
-async function launchLunarNewYear() {
+async function launchSpringEquinoxGrowth() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}
@@ -159,10 +161,10 @@ async function launchLunarNewYear() {
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
-			throw new Error('Unable to create 2D context for lunar new year canvas')
+			throw new Error('Unable to create 2D context for spring equinox canvas')
 		}
 
-		type LanternParticle = {
+		type SproutParticle = {
 			x: number
 			y: number
 			vx: number
@@ -190,47 +192,47 @@ async function launchLunarNewYear() {
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
-		let particles: LanternParticle[] = []
+		let particles: SproutParticle[] = []
 		let lastTime = performance.now()
 		const spriteCache = new Map<string, EmojiSprite>()
 		const spriteDpr = Math.min(
 			window.devicePixelRatio || 1,
-			LUNAR_FIELD_MAX_DPR,
+			SPRING_FIELD_MAX_DPR,
 		)
 
 		const randomEmoji = () =>
-			LUNAR_EMOJIS[Math.floor(Math.random() * LUNAR_EMOJIS.length)]
+			SPRING_EMOJIS[Math.floor(Math.random() * SPRING_EMOJIS.length)]
 		const randomGlow = () =>
-			LUNAR_GLOW_COLORS[Math.floor(Math.random() * LUNAR_GLOW_COLORS.length)]
-		const createParticle = (time: number): LanternParticle => {
+			SPRING_GLOW_COLORS[Math.floor(Math.random() * SPRING_GLOW_COLORS.length)]
+		const createParticle = (time: number): SproutParticle => {
 			const vyRange =
-				Math.random() < LUNAR_FLOAT_CHANCE
-					? LUNAR_FLOAT_VELOCITY_Y_RANGE
-					: LUNAR_VELOCITY_Y_RANGE
+				Math.random() < SPRING_FLOAT_CHANCE
+					? SPRING_FLOAT_VELOCITY_Y_RANGE
+					: SPRING_VELOCITY_Y_RANGE
 
 			return {
 				x: randomInRange({
-					min: -LUNAR_FIELD_MARGIN,
-					max: width + LUNAR_FIELD_MARGIN,
+					min: -SPRING_FIELD_MARGIN,
+					max: width + SPRING_FIELD_MARGIN,
 				}),
 				y: randomInRange({
-					min: height * LUNAR_SPAWN_Y_RANGE.min,
-					max: height * LUNAR_SPAWN_Y_RANGE.max,
+					min: height * SPRING_SPAWN_Y_RANGE.min,
+					max: height * SPRING_SPAWN_Y_RANGE.max,
 				}),
-				vx: randomInRange(LUNAR_VELOCITY_X_RANGE),
+				vx: randomInRange(SPRING_VELOCITY_X_RANGE),
 				vy: randomInRange(vyRange),
-				size: randomInRange(LUNAR_SIZE_RANGE),
+				size: randomInRange(SPRING_SIZE_RANGE),
 				rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-				rotationSpeed: randomInRange(LUNAR_ROTATION_SPEED_RANGE),
+				rotationSpeed: randomInRange(SPRING_ROTATION_SPEED_RANGE),
 				opacity: randomInRange({ min: 0.45, max: 0.85 }),
 				emoji: randomEmoji(),
-				glow: randomInRange(LUNAR_GLOW_RANGE),
+				glow: randomInRange(SPRING_GLOW_RANGE),
 				glowColor: randomGlow(),
 				phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-				sway: randomInRange(LUNAR_SWAY_RANGE),
-				birthTime: time + randomInRange(LUNAR_FADE_IN_DELAY_RANGE),
-				fadeDuration: randomInRange(LUNAR_FADE_IN_DURATION_RANGE),
-				scaleFrom: randomInRange(LUNAR_SCALE_RANGE),
+				sway: randomInRange(SPRING_SWAY_RANGE),
+				birthTime: time + randomInRange(SPRING_FADE_IN_DELAY_RANGE),
+				fadeDuration: randomInRange(SPRING_FADE_IN_DURATION_RANGE),
+				scaleFrom: randomInRange(SPRING_SCALE_RANGE),
 			}
 		}
 		const getSpriteKey = (
@@ -270,7 +272,7 @@ async function launchLunarNewYear() {
 
 			spriteContext.setTransform(spriteDpr, 0, 0, spriteDpr, 0, 0)
 			spriteContext.clearRect(0, 0, displaySize, displaySize)
-			spriteContext.font = `${quantizedSize}px ${LUNAR_FONT}`
+			spriteContext.font = `${quantizedSize}px ${SPRING_FONT}`
 			spriteContext.textAlign = 'center'
 			spriteContext.textBaseline = 'middle'
 			spriteContext.shadowColor = glowColor
@@ -282,11 +284,11 @@ async function launchLunarNewYear() {
 			return sprite
 		}
 		const resetParticles = (time: number) => {
-			particles = Array.from({ length: LUNAR_PARTICLE_COUNT }, () =>
+			particles = Array.from({ length: SPRING_PARTICLE_COUNT }, () =>
 				createParticle(time),
 			)
 		}
-		const respawnParticle = (particle: LanternParticle, time: number) => {
+		const respawnParticle = (particle: SproutParticle, time: number) => {
 			Object.assign(particle, createParticle(time))
 		}
 		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
@@ -297,7 +299,7 @@ async function launchLunarNewYear() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: LUNAR_FIELD_MAX_DPR })
+			const dpr = getCanvasDpr({ width, height, maxDpr: SPRING_FIELD_MAX_DPR })
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
@@ -318,10 +320,10 @@ async function launchLunarNewYear() {
 				particle.y = (particle.y - prevHeight / 2) * scaleY + height / 2
 
 				if (
-					particle.x < -LUNAR_FIELD_MARGIN ||
-					particle.x > width + LUNAR_FIELD_MARGIN ||
-					particle.y < -LUNAR_FIELD_MARGIN ||
-					particle.y > height + LUNAR_FIELD_MARGIN
+					particle.x < -SPRING_FIELD_MARGIN ||
+					particle.x > width + SPRING_FIELD_MARGIN ||
+					particle.y < -SPRING_FIELD_MARGIN ||
+					particle.y > height + SPRING_FIELD_MARGIN
 				) {
 					respawnParticle(particle, now)
 				}
@@ -332,7 +334,7 @@ async function launchLunarNewYear() {
 				particle.birthTime = time - particle.fadeDuration
 			}
 		}
-		const drawParticle = (particle: LanternParticle, time: number) => {
+		const drawParticle = (particle: SproutParticle, time: number) => {
 			const lifeProgress = (time - particle.birthTime) / particle.fadeDuration
 			if (lifeProgress < 0) {
 				return
@@ -340,7 +342,7 @@ async function launchLunarNewYear() {
 
 			const eased = easeOutCubic(Math.min(1, lifeProgress))
 			const pulse =
-				0.88 + Math.sin(time * 0.0011 + particle.phase) * particle.sway * 0.03
+				0.88 + Math.sin(time * 0.0012 + particle.phase) * particle.sway * 0.03
 			const scale = particle.scaleFrom + (1 - particle.scaleFrom) * eased
 
 			context.save()
@@ -365,7 +367,7 @@ async function launchLunarNewYear() {
 			context.restore()
 		}
 		const updateParticle = (
-			particle: LanternParticle,
+			particle: SproutParticle,
 			delta: number,
 			time: number,
 		) => {
@@ -374,9 +376,9 @@ async function launchLunarNewYear() {
 			}
 
 			const sway =
-				Math.sin(time * LUNAR_SWAY_SPEED_X + particle.phase) * particle.sway
+				Math.sin(time * SPRING_SWAY_SPEED_X + particle.phase) * particle.sway
 			const lift =
-				Math.cos(time * LUNAR_SWAY_SPEED_Y + particle.phase) *
+				Math.cos(time * SPRING_SWAY_SPEED_Y + particle.phase) *
 				particle.sway *
 				0.35
 
@@ -385,10 +387,10 @@ async function launchLunarNewYear() {
 			particle.rotation += particle.rotationSpeed * delta
 
 			if (
-				particle.x < -LUNAR_FIELD_MARGIN ||
-				particle.x > width + LUNAR_FIELD_MARGIN ||
-				particle.y < -LUNAR_FIELD_MARGIN ||
-				particle.y > height + LUNAR_FIELD_MARGIN
+				particle.x < -SPRING_FIELD_MARGIN ||
+				particle.x > width + SPRING_FIELD_MARGIN ||
+				particle.y < -SPRING_FIELD_MARGIN ||
+				particle.y > height + SPRING_FIELD_MARGIN
 			) {
 				respawnParticle(particle, time)
 			}
@@ -413,18 +415,18 @@ async function launchLunarNewYear() {
 				drawParticle(particle, performance.now())
 			}
 		}
-		const mountLanterns = () => {
+		const mountGrowth = () => {
 			if (hasCanceled) return
 
-			style.setAttribute('data-lunar-new-year', 'haze')
+			style.setAttribute('data-spring-equinox', 'haze')
 			style.textContent = `
-@keyframes lunar-new-year-haze-reveal {
+@keyframes spring-equinox-haze-reveal {
 	0% { opacity: 0; transform: translate3d(0, 2%, 0) scale(1.02); }
-	100% { opacity: ${LUNAR_HAZE_OPACITY}; transform: translate3d(0, 0, 0) scale(1); }
+	100% { opacity: ${SPRING_HAZE_OPACITY}; transform: translate3d(0, 0, 0) scale(1); }
 }
-@keyframes lunar-new-year-haze-drift {
+@keyframes spring-equinox-haze-drift {
 	0% { transform: translate3d(0, 0, 0) scale(1); }
-	50% { transform: translate3d(1.5%, -1%, 0) scale(1.02); }
+	50% { transform: translate3d(-1.5%, -1%, 0) scale(1.02); }
 	100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 `
@@ -438,14 +440,14 @@ async function launchLunarNewYear() {
 
 			haze.style.position = 'absolute'
 			haze.style.inset = '35% -10% -30% -10%'
-			haze.style.background = LUNAR_HAZE_GRADIENT
-			haze.style.opacity = shouldAnimate ? '0' : LUNAR_HAZE_OPACITY
-			haze.style.filter = 'blur(26px)'
+			haze.style.background = SPRING_HAZE_GRADIENT
+			haze.style.opacity = shouldAnimate ? '0' : SPRING_HAZE_OPACITY
+			haze.style.filter = 'blur(24px)'
 			haze.style.willChange = 'opacity, transform'
 
 			if (shouldAnimate) {
 				haze.style.animation =
-					'lunar-new-year-haze-reveal 4s ease-out 0.8s forwards, lunar-new-year-haze-drift 20s ease-in-out infinite 4s'
+					'spring-equinox-haze-reveal 4s ease-out 0.8s forwards, spring-equinox-haze-drift 20s ease-in-out infinite 4s'
 			}
 
 			overlay.appendChild(haze)
@@ -457,8 +459,8 @@ async function launchLunarNewYear() {
 			canvas.style.inset = '0'
 			canvas.style.pointerEvents = 'none'
 			canvas.style.zIndex = '1'
-			canvas.style.opacity = LUNAR_FIELD_OPACITY
-			canvas.style.filter = LUNAR_FIELD_FILTER
+			canvas.style.opacity = SPRING_FIELD_OPACITY
+			canvas.style.filter = SPRING_FIELD_FILTER
 			canvas.style.mixBlendMode = 'screen'
 
 			document.body.appendChild(canvas)
@@ -473,7 +475,7 @@ async function launchLunarNewYear() {
 			}
 		}
 
-		timeoutId = window.setTimeout(mountLanterns, LUNAR_MOUNT_DELAY_MS)
+		timeoutId = window.setTimeout(mountGrowth, SPRING_MOUNT_DELAY_MS)
 
 		return () => {
 			hasCanceled = true
@@ -495,7 +497,7 @@ async function launchLunarNewYear() {
 			}
 		}
 	} catch (error) {
-		console.error('Failed to launch lunar new year lanterns', error)
+		console.error('Failed to launch spring equinox growth', error)
 		return () => {}
 	}
 }

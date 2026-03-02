@@ -2,75 +2,75 @@ import {
 	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
-} from './types'
+} from '../core/types'
+import { createAdaptiveDprController, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
-import { createAdaptiveDprController, randomInRange } from './utils'
 
-const QUADRANTIDS_PEAK_DATES = new Set([
-	'2026-01-03',
-	'2026-01-04',
-	'2027-01-03',
-	'2027-01-04',
-	'2028-01-03',
-	'2028-01-04',
-	'2029-01-03',
-	'2029-01-04',
-	'2030-01-03',
-	'2030-01-04',
-	'2031-01-03',
-	'2031-01-04',
-	'2032-01-03',
-	'2032-01-04',
-	'2033-01-03',
-	'2033-01-04',
-	'2034-01-03',
-	'2034-01-04',
-	'2035-01-03',
-	'2035-01-04',
-	'2036-01-03',
-	'2036-01-04',
-	'2037-01-03',
-	'2037-01-04',
-	'2038-01-03',
-	'2038-01-04',
-	'2039-01-03',
-	'2039-01-04',
-	'2040-01-03',
-	'2040-01-04',
-	'2041-01-03',
-	'2041-01-04',
-	'2042-01-03',
-	'2042-01-04',
-	'2043-01-03',
-	'2043-01-04',
+const LEONIDS_PEAK_DATES = new Set([
+	'2026-11-17',
+	'2026-11-18',
+	'2027-11-17',
+	'2027-11-18',
+	'2028-11-17',
+	'2028-11-18',
+	'2029-11-17',
+	'2029-11-18',
+	'2030-11-17',
+	'2030-11-18',
+	'2031-11-17',
+	'2031-11-18',
+	'2032-11-17',
+	'2032-11-18',
+	'2033-11-17',
+	'2033-11-18',
+	'2034-11-17',
+	'2034-11-18',
+	'2035-11-17',
+	'2035-11-18',
+	'2036-11-17',
+	'2036-11-18',
+	'2037-11-17',
+	'2037-11-18',
+	'2038-11-17',
+	'2038-11-18',
+	'2039-11-17',
+	'2039-11-18',
+	'2040-11-17',
+	'2040-11-18',
+	'2041-11-17',
+	'2041-11-18',
+	'2042-11-17',
+	'2042-11-18',
+	'2043-11-17',
+	'2043-11-18',
 ])
-const QUADRANTIDS_MOUNT_DELAY_MS = 900
-const QUADRANTIDS_OVERLAY_OPACITY = '0.82'
-const QUADRANTIDS_OVERLAY_FILTER = 'saturate(135%)'
-const QUADRANTIDS_MAX_DPR = 2
-const QUADRANTIDS_METEOR_COUNT = 14
-const QUADRANTIDS_STAR_COUNT = 140
-const QUADRANTIDS_METEOR_LENGTH_RANGE = { min: 150, max: 260 }
-const QUADRANTIDS_METEOR_WIDTH_RANGE = { min: 1.1, max: 2.5 }
-const QUADRANTIDS_METEOR_SPEED_RANGE = { min: 620, max: 900 }
-const QUADRANTIDS_METEOR_ANGLE_RANGE = { min: 0.24, max: 0.4 }
-const QUADRANTIDS_METEOR_SPAWN_DELAY_RANGE = { min: 520, max: 1600 }
-const QUADRANTIDS_METEOR_LIFETIME_RANGE = { min: 1200, max: 2000 }
-const QUADRANTIDS_METEOR_SPAWN_X = { min: -0.25, max: 0.6 }
-const QUADRANTIDS_METEOR_SPAWN_Y = { min: -0.4, max: 0.15 }
-const QUADRANTIDS_METEOR_GLOW_RANGE = { min: 14, max: 26 }
-const QUADRANTIDS_METEOR_COLORS = [
-	'rgba(224, 242, 254, 1)',
-	'rgba(191, 219, 254, 1)',
-	'rgba(147, 197, 253, 1)',
-	'rgba(129, 140, 248, 1)',
+const LEONIDS_MOUNT_DELAY_MS = 900
+const LEONIDS_OVERLAY_OPACITY = '0.78'
+const LEONIDS_OVERLAY_FILTER = 'saturate(132%)'
+const LEONIDS_MAX_DPR = 2
+const LEONIDS_METEOR_COUNT = 12
+const LEONIDS_STAR_COUNT = 140
+const LEONIDS_METEOR_LENGTH_RANGE = { min: 150, max: 260 }
+const LEONIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.4 }
+const LEONIDS_METEOR_SPEED_RANGE = { min: 620, max: 940 }
+const LEONIDS_METEOR_ANGLE_RANGE = { min: 0.24, max: 0.42 }
+const LEONIDS_METEOR_SPAWN_DELAY_RANGE = { min: 700, max: 2000 }
+const LEONIDS_METEOR_LIFETIME_RANGE = { min: 1200, max: 2000 }
+const LEONIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
+const LEONIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
+const LEONIDS_METEOR_GLOW_RANGE = { min: 12, max: 26 }
+const LEONIDS_METEOR_COLORS = [
+	'rgba(252, 211, 77, 1)',
+	'rgba(251, 191, 36, 1)',
+	'rgba(249, 115, 22, 1)',
+	'rgba(148, 163, 184, 1)',
 ]
-const QUADRANTIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const QUADRANTIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.5 }
-const QUADRANTIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.6 }
-const QUADRANTIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
-const QUADRANTIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const QUADRANTIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const LEONIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
+const LEONIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
+const LEONIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
+const LEONIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
+const LEONIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
+const LEONIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
 const EventDetails = () => (
 	<>
@@ -79,14 +79,14 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				The Quadrantids are a meteor shower that peaks in early January and is
-				known for being brief yet often intense.
+				The Leonids are a November meteor shower, named for their radiant in the
+				constellation Leo.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				When conditions are favourable, they produce sharp, fast-moving meteors
-				in high numbers.
+				Most years the display is modest, but the shower is famous for its
+				capacity to produce rare and spectacular surprises.
 			</Trans>
 		</p>
 
@@ -95,30 +95,31 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				The shower takes its name from Quadrans Muralis, a former constellation
-				that no longer appears on modern star charts.
+				The Leonids are renowned for historic meteor storms, most notably in
+				1833 and 1966, when observers described the sky as seeming to rain
+				stars.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Although the radiant now lies within the constellation Boötes, the older
-				name preserves a small piece of astronomical history.
+				These events played an important role in the development of scientific
+				understanding of meteor showers.
 			</Trans>
 		</p>
 
 		<h2>
-			<Trans>Why the peak is brief</Trans>
+			<Trans>Why it can storm</Trans>
 		</h2>
 		<p>
 			<Trans>
-				The stream of debris that creates the Quadrantids is unusually narrow,
-				so Earth passes through it quickly.
+				The Leonids originate from Comet Tempel–Tuttle, and every few decades
+				Earth passes through especially dense streams of its debris.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				This makes the period of strongest activity short, but it can be
-				especially spectacular.
+				When this occurs, meteor rates can rise dramatically for a short period
+				of time.
 			</Trans>
 		</p>
 
@@ -127,38 +128,39 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				Their likely parent body, asteroid 2003 EH1, may be a dead comet — one
-				that exhausted its volatile ices and now orbits as a dark, quiet rock.
+				In most years, the Leonids produce only 10–15 meteors per hour. But
+				during the 1966 storm, observers reported rates of thousands per minute
+				— so many that some people thought the world was ending.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				The Quadrantid peak is one of the narrowest of any major shower,
-				sometimes lasting only six hours. Catching it is partly a matter of luck
-				and geography.
+				The next potential Leonid storm window is in the 2030s, when Earth is
+				expected to pass through a particularly dense ribbon of Tempel–Tuttle
+				debris.
 			</Trans>
 		</p>
 	</>
 )
 
-export const quadrantidsEvent: SeasonalEvent = {
-	id: SeasonalEventId.Quadrantids,
-	isActive: isQuadrantidsPeak,
-	run: launchQuadrantidsShower,
+export const leonidsEvent: SeasonalEvent = {
+	id: SeasonalEventId.Leonids,
+	isActive: isLeonidsPeak,
+	run: launchLeonidsShower,
 	details: EventDetails,
 	tileAccent: {
-		colors: ['#e0f2fe', '#93c5fd', '#60a5fa', '#818cf8', '#e0f2fe'],
+		colors: ['#fcd34d', '#fbbf24', '#f97316', '#94a3b8', '#fcd34d'],
 	},
 }
 
-function isQuadrantidsPeak({ date }: SeasonalEventContext) {
+function isLeonidsPeak({ date }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
-	return QUADRANTIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
+	return LEONIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
 }
 
-async function launchQuadrantidsShower() {
+async function launchLeonidsShower() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}
@@ -170,7 +172,7 @@ async function launchQuadrantidsShower() {
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
-			throw new Error('Unable to create 2D context for quadrantids canvas')
+			throw new Error('Unable to create 2D context for leonids canvas')
 		}
 
 		type Meteor = {
@@ -207,51 +209,49 @@ async function launchQuadrantidsShower() {
 		let lastTime = performance.now()
 
 		const dprController = createAdaptiveDprController({
-			maxDpr: QUADRANTIDS_MAX_DPR,
+			maxDpr: LEONIDS_MAX_DPR,
 			minScale: 0.4,
 		})
 		const randomMeteorColor = () =>
-			QUADRANTIDS_METEOR_COLORS[
-				Math.floor(Math.random() * QUADRANTIDS_METEOR_COLORS.length)
+			LEONIDS_METEOR_COLORS[
+				Math.floor(Math.random() * LEONIDS_METEOR_COLORS.length)
 			]
 
 		const createStar = (time: number): Star => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: randomInRange(QUADRANTIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(QUADRANTIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(QUADRANTIDS_STAR_TWINKLE_RANGE),
+			radius: randomInRange(LEONIDS_STAR_RADIUS_RANGE),
+			opacity: randomInRange(LEONIDS_STAR_OPACITY_RANGE),
+			twinkle: randomInRange(LEONIDS_STAR_TWINKLE_RANGE),
 			phase: Math.random() * Math.PI * 2,
-			birthTime: time + randomInRange(QUADRANTIDS_STAR_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(QUADRANTIDS_STAR_FADE_IN_DURATION_RANGE),
+			birthTime: time + randomInRange(LEONIDS_STAR_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(LEONIDS_STAR_FADE_IN_DURATION_RANGE),
 		})
 
 		const createMeteor = (time: number): Meteor => {
-			const speed = randomInRange(QUADRANTIDS_METEOR_SPEED_RANGE)
-			const angle = randomInRange(QUADRANTIDS_METEOR_ANGLE_RANGE)
+			const speed = randomInRange(LEONIDS_METEOR_SPEED_RANGE)
+			const angle = randomInRange(LEONIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(QUADRANTIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(QUADRANTIDS_METEOR_SPAWN_Y),
+				x: width * randomInRange(LEONIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(LEONIDS_METEOR_SPAWN_Y),
 				vx: Math.cos(angle) * speed,
 				vy: Math.sin(angle) * speed,
-				length: randomInRange(QUADRANTIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(QUADRANTIDS_METEOR_WIDTH_RANGE),
-				opacity: randomInRange({ min: 0.5, max: 0.92 }),
-				glow: randomInRange(QUADRANTIDS_METEOR_GLOW_RANGE),
+				length: randomInRange(LEONIDS_METEOR_LENGTH_RANGE),
+				width: randomInRange(LEONIDS_METEOR_WIDTH_RANGE),
+				opacity: randomInRange({ min: 0.45, max: 0.88 }),
+				glow: randomInRange(LEONIDS_METEOR_GLOW_RANGE),
 				color: randomMeteorColor(),
 				age: 0,
-				lifetime: randomInRange(QUADRANTIDS_METEOR_LIFETIME_RANGE),
-				nextSpawn: time + randomInRange(QUADRANTIDS_METEOR_SPAWN_DELAY_RANGE),
+				lifetime: randomInRange(LEONIDS_METEOR_LIFETIME_RANGE),
+				nextSpawn: time + randomInRange(LEONIDS_METEOR_SPAWN_DELAY_RANGE),
 			}
 		}
 
 		const resetField = (time: number) => {
-			meteors = Array.from({ length: QUADRANTIDS_METEOR_COUNT }, () =>
+			meteors = Array.from({ length: LEONIDS_METEOR_COUNT }, () =>
 				createMeteor(time),
 			)
-			stars = Array.from({ length: QUADRANTIDS_STAR_COUNT }, () =>
-				createStar(time),
-			)
+			stars = Array.from({ length: LEONIDS_STAR_COUNT }, () => createStar(time))
 		}
 
 		const resizeCanvas = () => {
@@ -302,14 +302,14 @@ async function launchQuadrantidsShower() {
 		}
 
 		const drawStars = (time: number) => {
-			context.fillStyle = QUADRANTIDS_STAR_COLOR
+			context.fillStyle = LEONIDS_STAR_COLOR
 			for (const star of stars) {
 				const fade = getStarFade(star, time)
 				if (fade <= 0) {
 					continue
 				}
 
-				const twinkle = 0.6 + 0.4 * Math.sin(time * star.twinkle + star.phase)
+				const twinkle = 0.65 + 0.35 * Math.sin(time * star.twinkle + star.phase)
 				context.globalAlpha = star.opacity * twinkle * fade
 				context.beginPath()
 				context.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
@@ -387,10 +387,10 @@ async function launchQuadrantidsShower() {
 			context.clearRect(0, 0, width, height)
 			context.globalCompositeOperation = 'lighter'
 			drawStars(now)
-			for (let i = 0; i < Math.min(5, meteors.length); i += 1) {
+			for (let i = 0; i < Math.min(4, meteors.length); i += 1) {
 				const meteor = createMeteor(now)
-				meteor.x = width * (0.18 + i * 0.14)
-				meteor.y = height * (0.18 + i * 0.09)
+				meteor.x = width * (0.2 + i * 0.15)
+				meteor.y = height * (0.22 + i * 0.1)
 				drawMeteor(meteor, meteor.opacity)
 			}
 		}
@@ -399,8 +399,8 @@ async function launchQuadrantidsShower() {
 		overlay.style.inset = '0'
 		overlay.style.pointerEvents = 'none'
 		overlay.style.zIndex = '0'
-		overlay.style.opacity = QUADRANTIDS_OVERLAY_OPACITY
-		overlay.style.filter = QUADRANTIDS_OVERLAY_FILTER
+		overlay.style.opacity = LEONIDS_OVERLAY_OPACITY
+		overlay.style.filter = LEONIDS_OVERLAY_FILTER
 		overlay.appendChild(canvas)
 
 		const mount = () => {
@@ -414,7 +414,7 @@ async function launchQuadrantidsShower() {
 			}
 		}
 
-		timeoutId = window.setTimeout(mount, QUADRANTIDS_MOUNT_DELAY_MS)
+		timeoutId = window.setTimeout(mount, LEONIDS_MOUNT_DELAY_MS)
 
 		const handleResize = () => {
 			resizeCanvas()
@@ -437,7 +437,7 @@ async function launchQuadrantidsShower() {
 			}
 		}
 	} catch (error) {
-		console.error('Failed to launch Quadrantids meteor shower', error)
+		console.error('Failed to launch Leonids meteor shower', error)
 		return () => {}
 	}
 }

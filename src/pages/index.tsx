@@ -9,11 +9,11 @@ import { Button } from '../shared/ui/button'
 import { RingLoader } from '../shared/ui/loader'
 import { ReviewPrompt } from '../features/settings/ui/review-prompt'
 import { useSeasonalEvents } from '../features/seasonal-events/hooks/use-seasonal-events'
-import { getEnabledSeasonalEvents } from '../features/seasonal-events/model/enabled-events'
+import { getEnabledSeasonalEvents } from '../features/seasonal-events/core/enabled-events'
 import {
 	getHemisphereFromLatitude,
 	isLikelySoftwareRenderer,
-} from '../features/seasonal-events/model/utils'
+} from '../features/seasonal-events/core/utils'
 import { useConfig } from '../features/settings/hooks/use-config'
 import { Initialisation } from '../features/settings/ui/initialisation'
 import { Settings } from '../features/settings/ui/settings'

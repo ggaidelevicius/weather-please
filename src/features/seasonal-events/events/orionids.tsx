@@ -2,74 +2,75 @@ import {
 	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
-} from './types'
+} from '../core/types'
+import { createAdaptiveDprController, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
-import { createAdaptiveDprController, randomInRange } from './utils'
 
-const PERSEIDS_PEAK_DATES = new Set([
-	'2026-08-13',
-	'2027-08-12',
-	'2027-08-13',
-	'2028-08-12',
-	'2028-08-13',
-	'2029-08-12',
-	'2029-08-13',
-	'2030-08-12',
-	'2030-08-13',
-	'2031-08-12',
-	'2031-08-13',
-	'2032-08-12',
-	'2032-08-13',
-	'2033-08-12',
-	'2033-08-13',
-	'2034-08-12',
-	'2034-08-13',
-	'2035-08-12',
-	'2035-08-13',
-	'2036-08-12',
-	'2036-08-13',
-	'2037-08-12',
-	'2037-08-13',
-	'2038-08-12',
-	'2038-08-13',
-	'2039-08-12',
-	'2039-08-13',
-	'2040-08-12',
-	'2040-08-13',
-	'2041-08-12',
-	'2041-08-13',
-	'2042-08-12',
-	'2042-08-13',
-	'2043-08-12',
-	'2043-08-13',
+const ORIONIDS_PEAK_DATES = new Set([
+	'2026-10-21',
+	'2026-10-22',
+	'2027-10-21',
+	'2027-10-22',
+	'2028-10-21',
+	'2028-10-22',
+	'2029-10-21',
+	'2029-10-22',
+	'2030-10-21',
+	'2030-10-22',
+	'2031-10-21',
+	'2031-10-22',
+	'2032-10-21',
+	'2032-10-22',
+	'2033-10-21',
+	'2033-10-22',
+	'2034-10-21',
+	'2034-10-22',
+	'2035-10-21',
+	'2035-10-22',
+	'2036-10-21',
+	'2036-10-22',
+	'2037-10-21',
+	'2037-10-22',
+	'2038-10-21',
+	'2038-10-22',
+	'2039-10-21',
+	'2039-10-22',
+	'2040-10-21',
+	'2040-10-22',
+	'2041-10-21',
+	'2041-10-22',
+	'2042-10-21',
+	'2042-10-22',
+	'2043-10-21',
+	'2043-10-22',
 ])
-const PERSEIDS_MOUNT_DELAY_MS = 900
-const PERSEIDS_OVERLAY_OPACITY = '0.8'
-const PERSEIDS_OVERLAY_FILTER = 'saturate(130%)'
-const PERSEIDS_MAX_DPR = 2
-const PERSEIDS_METEOR_COUNT = 12
-const PERSEIDS_STAR_COUNT = 140
-const PERSEIDS_METEOR_LENGTH_RANGE = { min: 140, max: 260 }
-const PERSEIDS_METEOR_WIDTH_RANGE = { min: 1.1, max: 2.6 }
-const PERSEIDS_METEOR_SPEED_RANGE = { min: 520, max: 820 }
-const PERSEIDS_METEOR_ANGLE_RANGE = { min: 0.25, max: 0.42 }
-const PERSEIDS_METEOR_SPAWN_DELAY_RANGE = { min: 720, max: 2000 }
-const PERSEIDS_METEOR_LIFETIME_RANGE = { min: 1400, max: 2200 }
-const PERSEIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
-const PERSEIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
-const PERSEIDS_METEOR_GLOW_RANGE = { min: 12, max: 22 }
-const PERSEIDS_METEOR_COLORS = [
-	'rgba(248, 250, 252, 1)',
-	'rgba(191, 219, 254, 1)',
-	'rgba(129, 140, 248, 1)',
-	'rgba(167, 139, 250, 1)',
+const ORIONIDS_MOUNT_DELAY_MS = 900
+const ORIONIDS_OVERLAY_OPACITY = '0.78'
+const ORIONIDS_OVERLAY_FILTER = 'saturate(130%)'
+const ORIONIDS_MAX_DPR = 2
+const ORIONIDS_METEOR_COUNT = 11
+const ORIONIDS_STAR_COUNT = 140
+const ORIONIDS_METEOR_LENGTH_RANGE = { min: 150, max: 260 }
+const ORIONIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.4 }
+const ORIONIDS_METEOR_SPEED_RANGE = { min: 600, max: 900 }
+const ORIONIDS_METEOR_ANGLE_RANGE = { min: 0.24, max: 0.42 }
+const ORIONIDS_METEOR_SPAWN_DELAY_RANGE = { min: 760, max: 2200 }
+const ORIONIDS_METEOR_LIFETIME_RANGE = { min: 1300, max: 2100 }
+const ORIONIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
+const ORIONIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
+const ORIONIDS_METEOR_GLOW_RANGE = { min: 12, max: 24 }
+const ORIONIDS_METEOR_COLORS = [
+	'rgba(254, 215, 170, 1)',
+	'rgba(253, 186, 116, 1)',
+	'rgba(251, 146, 60, 1)',
+	'rgba(148, 163, 184, 1)',
 ]
-const PERSEIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const PERSEIDS_STAR_RADIUS_RANGE = { min: 0.6, max: 1.6 }
-const PERSEIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.6 }
-const PERSEIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
-const PERSEIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const PERSEIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const ORIONIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
+const ORIONIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
+const ORIONIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
+const ORIONIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
+const ORIONIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
+const ORIONIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
 const EventDetails = () => (
 	<>
@@ -78,15 +79,14 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				The Perseids are a bright annual meteor shower formed from debris left
-				by Comet Swift–Tuttle.
+				The Orionids are an annual meteor shower formed from debris left by
+				Halley’s Comet, reaching their peak in October.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Their radiant lies in the constellation Perseus, and the shower is
-				especially prominent in the northern hemisphere, though visible
-				worldwide.
+				Their meteors appear to radiate from the region near the constellation
+				Orion, a figure long woven into myth and storytelling.
 			</Trans>
 		</p>
 
@@ -95,31 +95,14 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				The Perseids are sometimes known as the Tears of Saint Lawrence, as
-				their peak often falls near the feast day of Saint Lawrence in
-				mid-August.
+				The Orionids are visible from both hemispheres and are known for
+				producing bright, fast-moving meteors.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Historical records of the Perseids extend back nearly two thousand
-				years, making them one of the longest observed meteor showers.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Skywatching tips</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Allow your eyes about twenty minutes to adjust, turn away from city
-				lights, and let the wide sky do the work.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				A comfortable chair or blanket is more useful than a telescope, as
-				meteors can appear anywhere overhead.
+				Their peak often coincides with long, dark viewing hours, when observing
+				conditions are especially favourable.
 			</Trans>
 		</p>
 
@@ -128,39 +111,39 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				Perseid meteors enter the atmosphere at roughly 60 km/s — fast enough
-				that the larger ones compress the air ahead of them into a bright,
-				explosive fireball.
+				Each Orionid meteor is a tiny grain of dust shed by Halley's Comet — the
+				same object that people have been watching and recording since at least
+				240 BC.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				On a good night near peak, you can expect a meteor every minute or two.
-				The best rates come after midnight, when your side of the Earth faces
-				into the debris stream.
+				The meteors enter the atmosphere at about 66 km/s, among the fastest of
+				any annual shower, which is why they often leave persistent glowing
+				trails.
 			</Trans>
 		</p>
 	</>
 )
 
-export const perseidsEvent: SeasonalEvent = {
-	id: SeasonalEventId.Perseids,
-	isActive: isPerseidsPeak,
-	run: launchPerseidsShower,
+export const orionidsEvent: SeasonalEvent = {
+	id: SeasonalEventId.Orionids,
+	isActive: isOrionidsPeak,
+	run: launchOrionidsShower,
 	details: EventDetails,
 	tileAccent: {
-		colors: ['#e0f2fe', '#7dd3fc', '#60a5fa', '#a78bfa', '#e0f2fe'],
+		colors: ['#fed7aa', '#fdba74', '#fb923c', '#94a3b8', '#fed7aa'],
 	},
 }
 
-function isPerseidsPeak({ date }: SeasonalEventContext) {
+function isOrionidsPeak({ date }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
-	return PERSEIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
+	return ORIONIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
 }
 
-async function launchPerseidsShower() {
+async function launchOrionidsShower() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}
@@ -172,7 +155,7 @@ async function launchPerseidsShower() {
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
-			throw new Error('Unable to create 2D context for perseids canvas')
+			throw new Error('Unable to create 2D context for orionids canvas')
 		}
 
 		type Meteor = {
@@ -209,49 +192,49 @@ async function launchPerseidsShower() {
 		let lastTime = performance.now()
 
 		const dprController = createAdaptiveDprController({
-			maxDpr: PERSEIDS_MAX_DPR,
+			maxDpr: ORIONIDS_MAX_DPR,
 			minScale: 0.4,
 		})
 		const randomMeteorColor = () =>
-			PERSEIDS_METEOR_COLORS[
-				Math.floor(Math.random() * PERSEIDS_METEOR_COLORS.length)
+			ORIONIDS_METEOR_COLORS[
+				Math.floor(Math.random() * ORIONIDS_METEOR_COLORS.length)
 			]
 
 		const createStar = (time: number): Star => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: randomInRange(PERSEIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(PERSEIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(PERSEIDS_STAR_TWINKLE_RANGE),
+			radius: randomInRange(ORIONIDS_STAR_RADIUS_RANGE),
+			opacity: randomInRange(ORIONIDS_STAR_OPACITY_RANGE),
+			twinkle: randomInRange(ORIONIDS_STAR_TWINKLE_RANGE),
 			phase: Math.random() * Math.PI * 2,
-			birthTime: time + randomInRange(PERSEIDS_STAR_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(PERSEIDS_STAR_FADE_IN_DURATION_RANGE),
+			birthTime: time + randomInRange(ORIONIDS_STAR_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(ORIONIDS_STAR_FADE_IN_DURATION_RANGE),
 		})
 
 		const createMeteor = (time: number): Meteor => {
-			const speed = randomInRange(PERSEIDS_METEOR_SPEED_RANGE)
-			const angle = randomInRange(PERSEIDS_METEOR_ANGLE_RANGE)
+			const speed = randomInRange(ORIONIDS_METEOR_SPEED_RANGE)
+			const angle = randomInRange(ORIONIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(PERSEIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(PERSEIDS_METEOR_SPAWN_Y),
+				x: width * randomInRange(ORIONIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(ORIONIDS_METEOR_SPAWN_Y),
 				vx: Math.cos(angle) * speed,
 				vy: Math.sin(angle) * speed,
-				length: randomInRange(PERSEIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(PERSEIDS_METEOR_WIDTH_RANGE),
-				opacity: randomInRange({ min: 0.5, max: 0.9 }),
-				glow: randomInRange(PERSEIDS_METEOR_GLOW_RANGE),
+				length: randomInRange(ORIONIDS_METEOR_LENGTH_RANGE),
+				width: randomInRange(ORIONIDS_METEOR_WIDTH_RANGE),
+				opacity: randomInRange({ min: 0.45, max: 0.85 }),
+				glow: randomInRange(ORIONIDS_METEOR_GLOW_RANGE),
 				color: randomMeteorColor(),
 				age: 0,
-				lifetime: randomInRange(PERSEIDS_METEOR_LIFETIME_RANGE),
-				nextSpawn: time + randomInRange(PERSEIDS_METEOR_SPAWN_DELAY_RANGE),
+				lifetime: randomInRange(ORIONIDS_METEOR_LIFETIME_RANGE),
+				nextSpawn: time + randomInRange(ORIONIDS_METEOR_SPAWN_DELAY_RANGE),
 			}
 		}
 
 		const resetField = (time: number) => {
-			meteors = Array.from({ length: PERSEIDS_METEOR_COUNT }, () =>
+			meteors = Array.from({ length: ORIONIDS_METEOR_COUNT }, () =>
 				createMeteor(time),
 			)
-			stars = Array.from({ length: PERSEIDS_STAR_COUNT }, () =>
+			stars = Array.from({ length: ORIONIDS_STAR_COUNT }, () =>
 				createStar(time),
 			)
 		}
@@ -304,14 +287,14 @@ async function launchPerseidsShower() {
 		}
 
 		const drawStars = (time: number) => {
-			context.fillStyle = PERSEIDS_STAR_COLOR
+			context.fillStyle = ORIONIDS_STAR_COLOR
 			for (const star of stars) {
 				const fade = getStarFade(star, time)
 				if (fade <= 0) {
 					continue
 				}
 
-				const twinkle = 0.6 + 0.4 * Math.sin(time * star.twinkle + star.phase)
+				const twinkle = 0.65 + 0.35 * Math.sin(time * star.twinkle + star.phase)
 				context.globalAlpha = star.opacity * twinkle * fade
 				context.beginPath()
 				context.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
@@ -389,10 +372,10 @@ async function launchPerseidsShower() {
 			context.clearRect(0, 0, width, height)
 			context.globalCompositeOperation = 'lighter'
 			drawStars(now)
-			for (let i = 0; i < Math.min(5, meteors.length); i += 1) {
+			for (let i = 0; i < Math.min(4, meteors.length); i += 1) {
 				const meteor = createMeteor(now)
-				meteor.x = width * (0.2 + i * 0.12)
-				meteor.y = height * (0.2 + i * 0.08)
+				meteor.x = width * (0.2 + i * 0.15)
+				meteor.y = height * (0.22 + i * 0.1)
 				drawMeteor(meteor, meteor.opacity)
 			}
 		}
@@ -401,8 +384,8 @@ async function launchPerseidsShower() {
 		overlay.style.inset = '0'
 		overlay.style.pointerEvents = 'none'
 		overlay.style.zIndex = '0'
-		overlay.style.opacity = PERSEIDS_OVERLAY_OPACITY
-		overlay.style.filter = PERSEIDS_OVERLAY_FILTER
+		overlay.style.opacity = ORIONIDS_OVERLAY_OPACITY
+		overlay.style.filter = ORIONIDS_OVERLAY_FILTER
 		overlay.appendChild(canvas)
 
 		const mount = () => {
@@ -416,7 +399,7 @@ async function launchPerseidsShower() {
 			}
 		}
 
-		timeoutId = window.setTimeout(mount, PERSEIDS_MOUNT_DELAY_MS)
+		timeoutId = window.setTimeout(mount, ORIONIDS_MOUNT_DELAY_MS)
 
 		const handleResize = () => {
 			resizeCanvas()
@@ -439,7 +422,7 @@ async function launchPerseidsShower() {
 			}
 		}
 	} catch (error) {
-		console.error('Failed to launch Perseids meteor shower', error)
+		console.error('Failed to launch Orionids meteor shower', error)
 		return () => {}
 	}
 }

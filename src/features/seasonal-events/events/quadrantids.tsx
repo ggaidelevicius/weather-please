@@ -2,75 +2,75 @@ import {
 	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
-} from './types'
+} from '../core/types'
+import { createAdaptiveDprController, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
-import { createAdaptiveDprController, randomInRange } from './utils'
 
-const LYRIDS_PEAK_DATES = new Set([
-	'2026-04-22',
-	'2026-04-23',
-	'2027-04-22',
-	'2027-04-23',
-	'2028-04-22',
-	'2028-04-23',
-	'2029-04-22',
-	'2029-04-23',
-	'2030-04-22',
-	'2030-04-23',
-	'2031-04-22',
-	'2031-04-23',
-	'2032-04-22',
-	'2032-04-23',
-	'2033-04-22',
-	'2033-04-23',
-	'2034-04-22',
-	'2034-04-23',
-	'2035-04-22',
-	'2035-04-23',
-	'2036-04-22',
-	'2036-04-23',
-	'2037-04-22',
-	'2037-04-23',
-	'2038-04-22',
-	'2038-04-23',
-	'2039-04-22',
-	'2039-04-23',
-	'2040-04-22',
-	'2040-04-23',
-	'2041-04-22',
-	'2041-04-23',
-	'2042-04-22',
-	'2042-04-23',
-	'2043-04-22',
-	'2043-04-23',
+const QUADRANTIDS_PEAK_DATES = new Set([
+	'2026-01-03',
+	'2026-01-04',
+	'2027-01-03',
+	'2027-01-04',
+	'2028-01-03',
+	'2028-01-04',
+	'2029-01-03',
+	'2029-01-04',
+	'2030-01-03',
+	'2030-01-04',
+	'2031-01-03',
+	'2031-01-04',
+	'2032-01-03',
+	'2032-01-04',
+	'2033-01-03',
+	'2033-01-04',
+	'2034-01-03',
+	'2034-01-04',
+	'2035-01-03',
+	'2035-01-04',
+	'2036-01-03',
+	'2036-01-04',
+	'2037-01-03',
+	'2037-01-04',
+	'2038-01-03',
+	'2038-01-04',
+	'2039-01-03',
+	'2039-01-04',
+	'2040-01-03',
+	'2040-01-04',
+	'2041-01-03',
+	'2041-01-04',
+	'2042-01-03',
+	'2042-01-04',
+	'2043-01-03',
+	'2043-01-04',
 ])
-const LYRIDS_MOUNT_DELAY_MS = 900
-const LYRIDS_OVERLAY_OPACITY = '0.78'
-const LYRIDS_OVERLAY_FILTER = 'saturate(125%)'
-const LYRIDS_MAX_DPR = 2
-const LYRIDS_METEOR_COUNT = 10
-const LYRIDS_STAR_COUNT = 140
-const LYRIDS_METEOR_LENGTH_RANGE = { min: 130, max: 240 }
-const LYRIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.2 }
-const LYRIDS_METEOR_SPEED_RANGE = { min: 480, max: 780 }
-const LYRIDS_METEOR_ANGLE_RANGE = { min: 0.26, max: 0.44 }
-const LYRIDS_METEOR_SPAWN_DELAY_RANGE = { min: 900, max: 2400 }
-const LYRIDS_METEOR_LIFETIME_RANGE = { min: 1400, max: 2300 }
-const LYRIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
-const LYRIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
-const LYRIDS_METEOR_GLOW_RANGE = { min: 12, max: 22 }
-const LYRIDS_METEOR_COLORS = [
-	'rgba(226, 232, 240, 1)',
+const QUADRANTIDS_MOUNT_DELAY_MS = 900
+const QUADRANTIDS_OVERLAY_OPACITY = '0.82'
+const QUADRANTIDS_OVERLAY_FILTER = 'saturate(135%)'
+const QUADRANTIDS_MAX_DPR = 2
+const QUADRANTIDS_METEOR_COUNT = 14
+const QUADRANTIDS_STAR_COUNT = 140
+const QUADRANTIDS_METEOR_LENGTH_RANGE = { min: 150, max: 260 }
+const QUADRANTIDS_METEOR_WIDTH_RANGE = { min: 1.1, max: 2.5 }
+const QUADRANTIDS_METEOR_SPEED_RANGE = { min: 620, max: 900 }
+const QUADRANTIDS_METEOR_ANGLE_RANGE = { min: 0.24, max: 0.4 }
+const QUADRANTIDS_METEOR_SPAWN_DELAY_RANGE = { min: 520, max: 1600 }
+const QUADRANTIDS_METEOR_LIFETIME_RANGE = { min: 1200, max: 2000 }
+const QUADRANTIDS_METEOR_SPAWN_X = { min: -0.25, max: 0.6 }
+const QUADRANTIDS_METEOR_SPAWN_Y = { min: -0.4, max: 0.15 }
+const QUADRANTIDS_METEOR_GLOW_RANGE = { min: 14, max: 26 }
+const QUADRANTIDS_METEOR_COLORS = [
+	'rgba(224, 242, 254, 1)',
 	'rgba(191, 219, 254, 1)',
-	'rgba(148, 163, 184, 1)',
-	'rgba(252, 211, 77, 1)',
+	'rgba(147, 197, 253, 1)',
+	'rgba(129, 140, 248, 1)',
 ]
-const LYRIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const LYRIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
-const LYRIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
-const LYRIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
-const LYRIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const LYRIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const QUADRANTIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
+const QUADRANTIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.5 }
+const QUADRANTIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.6 }
+const QUADRANTIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
+const QUADRANTIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
+const QUADRANTIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
 const EventDetails = () => (
 	<>
@@ -79,13 +79,14 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				The Lyrids appear each year in late April, with meteors radiating from
-				the constellation Lyra.
+				The Quadrantids are a meteor shower that peaks in early January and is
+				known for being brief yet often intense.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				They are typically a gentle shower that rewards patient skywatching.
+				When conditions are favourable, they produce sharp, fast-moving meteors
+				in high numbers.
 			</Trans>
 		</p>
 
@@ -94,14 +95,30 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				Historical Chinese records describe displays of Lyrid meteors more than
-				two thousand six hundred years ago.
+				The shower takes its name from Quadrans Muralis, a former constellation
+				that no longer appears on modern star charts.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				The shower originates from Comet Thatcher, which returns to the inner
-				solar system roughly every four hundred and fifteen years.
+				Although the radiant now lies within the constellation Boötes, the older
+				name preserves a small piece of astronomical history.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Why the peak is brief</Trans>
+		</h2>
+		<p>
+			<Trans>
+				The stream of debris that creates the Quadrantids is unusually narrow,
+				so Earth passes through it quickly.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				This makes the period of strongest activity short, but it can be
+				especially spectacular.
 			</Trans>
 		</p>
 
@@ -110,38 +127,38 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				Chinese records from 687 BC describe "stars falling like rain" — the
-				oldest known account of the Lyrids, and one of the oldest documented
-				meteor observations of any kind.
+				Their likely parent body, asteroid 2003 EH1, may be a dead comet — one
+				that exhausted its volatile ices and now orbits as a dark, quiet rock.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Comet Thatcher, the shower's parent body, won't return to the inner
-				solar system until roughly the year 2283.
+				The Quadrantid peak is one of the narrowest of any major shower,
+				sometimes lasting only six hours. Catching it is partly a matter of luck
+				and geography.
 			</Trans>
 		</p>
 	</>
 )
 
-export const lyridsEvent: SeasonalEvent = {
-	id: SeasonalEventId.Lyrids,
-	isActive: isLyridsPeak,
-	run: launchLyridsShower,
+export const quadrantidsEvent: SeasonalEvent = {
+	id: SeasonalEventId.Quadrantids,
+	isActive: isQuadrantidsPeak,
+	run: launchQuadrantidsShower,
 	details: EventDetails,
 	tileAccent: {
-		colors: ['#e2e8f0', '#fcd34d', '#93c5fd', '#60a5fa', '#e2e8f0'],
+		colors: ['#e0f2fe', '#93c5fd', '#60a5fa', '#818cf8', '#e0f2fe'],
 	},
 }
 
-function isLyridsPeak({ date }: SeasonalEventContext) {
+function isQuadrantidsPeak({ date }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
-	return LYRIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
+	return QUADRANTIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
 }
 
-async function launchLyridsShower() {
+async function launchQuadrantidsShower() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}
@@ -153,7 +170,7 @@ async function launchLyridsShower() {
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
-			throw new Error('Unable to create 2D context for lyrids canvas')
+			throw new Error('Unable to create 2D context for quadrantids canvas')
 		}
 
 		type Meteor = {
@@ -190,49 +207,51 @@ async function launchLyridsShower() {
 		let lastTime = performance.now()
 
 		const dprController = createAdaptiveDprController({
-			maxDpr: LYRIDS_MAX_DPR,
+			maxDpr: QUADRANTIDS_MAX_DPR,
 			minScale: 0.4,
 		})
 		const randomMeteorColor = () =>
-			LYRIDS_METEOR_COLORS[
-				Math.floor(Math.random() * LYRIDS_METEOR_COLORS.length)
+			QUADRANTIDS_METEOR_COLORS[
+				Math.floor(Math.random() * QUADRANTIDS_METEOR_COLORS.length)
 			]
 
 		const createStar = (time: number): Star => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: randomInRange(LYRIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(LYRIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(LYRIDS_STAR_TWINKLE_RANGE),
+			radius: randomInRange(QUADRANTIDS_STAR_RADIUS_RANGE),
+			opacity: randomInRange(QUADRANTIDS_STAR_OPACITY_RANGE),
+			twinkle: randomInRange(QUADRANTIDS_STAR_TWINKLE_RANGE),
 			phase: Math.random() * Math.PI * 2,
-			birthTime: time + randomInRange(LYRIDS_STAR_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(LYRIDS_STAR_FADE_IN_DURATION_RANGE),
+			birthTime: time + randomInRange(QUADRANTIDS_STAR_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(QUADRANTIDS_STAR_FADE_IN_DURATION_RANGE),
 		})
 
 		const createMeteor = (time: number): Meteor => {
-			const speed = randomInRange(LYRIDS_METEOR_SPEED_RANGE)
-			const angle = randomInRange(LYRIDS_METEOR_ANGLE_RANGE)
+			const speed = randomInRange(QUADRANTIDS_METEOR_SPEED_RANGE)
+			const angle = randomInRange(QUADRANTIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(LYRIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(LYRIDS_METEOR_SPAWN_Y),
+				x: width * randomInRange(QUADRANTIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(QUADRANTIDS_METEOR_SPAWN_Y),
 				vx: Math.cos(angle) * speed,
 				vy: Math.sin(angle) * speed,
-				length: randomInRange(LYRIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(LYRIDS_METEOR_WIDTH_RANGE),
-				opacity: randomInRange({ min: 0.45, max: 0.85 }),
-				glow: randomInRange(LYRIDS_METEOR_GLOW_RANGE),
+				length: randomInRange(QUADRANTIDS_METEOR_LENGTH_RANGE),
+				width: randomInRange(QUADRANTIDS_METEOR_WIDTH_RANGE),
+				opacity: randomInRange({ min: 0.5, max: 0.92 }),
+				glow: randomInRange(QUADRANTIDS_METEOR_GLOW_RANGE),
 				color: randomMeteorColor(),
 				age: 0,
-				lifetime: randomInRange(LYRIDS_METEOR_LIFETIME_RANGE),
-				nextSpawn: time + randomInRange(LYRIDS_METEOR_SPAWN_DELAY_RANGE),
+				lifetime: randomInRange(QUADRANTIDS_METEOR_LIFETIME_RANGE),
+				nextSpawn: time + randomInRange(QUADRANTIDS_METEOR_SPAWN_DELAY_RANGE),
 			}
 		}
 
 		const resetField = (time: number) => {
-			meteors = Array.from({ length: LYRIDS_METEOR_COUNT }, () =>
+			meteors = Array.from({ length: QUADRANTIDS_METEOR_COUNT }, () =>
 				createMeteor(time),
 			)
-			stars = Array.from({ length: LYRIDS_STAR_COUNT }, () => createStar(time))
+			stars = Array.from({ length: QUADRANTIDS_STAR_COUNT }, () =>
+				createStar(time),
+			)
 		}
 
 		const resizeCanvas = () => {
@@ -283,14 +302,14 @@ async function launchLyridsShower() {
 		}
 
 		const drawStars = (time: number) => {
-			context.fillStyle = LYRIDS_STAR_COLOR
+			context.fillStyle = QUADRANTIDS_STAR_COLOR
 			for (const star of stars) {
 				const fade = getStarFade(star, time)
 				if (fade <= 0) {
 					continue
 				}
 
-				const twinkle = 0.65 + 0.35 * Math.sin(time * star.twinkle + star.phase)
+				const twinkle = 0.6 + 0.4 * Math.sin(time * star.twinkle + star.phase)
 				context.globalAlpha = star.opacity * twinkle * fade
 				context.beginPath()
 				context.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
@@ -368,10 +387,10 @@ async function launchLyridsShower() {
 			context.clearRect(0, 0, width, height)
 			context.globalCompositeOperation = 'lighter'
 			drawStars(now)
-			for (let i = 0; i < Math.min(4, meteors.length); i += 1) {
+			for (let i = 0; i < Math.min(5, meteors.length); i += 1) {
 				const meteor = createMeteor(now)
-				meteor.x = width * (0.2 + i * 0.15)
-				meteor.y = height * (0.22 + i * 0.1)
+				meteor.x = width * (0.18 + i * 0.14)
+				meteor.y = height * (0.18 + i * 0.09)
 				drawMeteor(meteor, meteor.opacity)
 			}
 		}
@@ -380,8 +399,8 @@ async function launchLyridsShower() {
 		overlay.style.inset = '0'
 		overlay.style.pointerEvents = 'none'
 		overlay.style.zIndex = '0'
-		overlay.style.opacity = LYRIDS_OVERLAY_OPACITY
-		overlay.style.filter = LYRIDS_OVERLAY_FILTER
+		overlay.style.opacity = QUADRANTIDS_OVERLAY_OPACITY
+		overlay.style.filter = QUADRANTIDS_OVERLAY_FILTER
 		overlay.appendChild(canvas)
 
 		const mount = () => {
@@ -395,7 +414,7 @@ async function launchLyridsShower() {
 			}
 		}
 
-		timeoutId = window.setTimeout(mount, LYRIDS_MOUNT_DELAY_MS)
+		timeoutId = window.setTimeout(mount, QUADRANTIDS_MOUNT_DELAY_MS)
 
 		const handleResize = () => {
 			resizeCanvas()
@@ -418,7 +437,7 @@ async function launchLyridsShower() {
 			}
 		}
 	} catch (error) {
-		console.error('Failed to launch Lyrids meteor shower', error)
+		console.error('Failed to launch Quadrantids meteor shower', error)
 		return () => {}
 	}
 }

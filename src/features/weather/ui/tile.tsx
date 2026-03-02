@@ -20,23 +20,23 @@ import {
 	ShowerRain,
 	Snow,
 	Thunderstorm,
-} from '../assets/images/weather-icons'
+} from '../images/weather-icons'
 import { SeasonalEventModal } from '../../../shared/ui/seasonal-event-modal'
 import { TileIdentifier } from '../../settings/model/tile-identifier'
 import type { StaticImageData } from 'next/image'
 import type { ReactElement } from 'react'
-import { Hemisphere, SeasonalEventId } from '../../seasonal-events/model/types'
-import type { SeasonalEvent } from '../../seasonal-events/model/types'
+import { Hemisphere, SeasonalEventId } from '../../seasonal-events/core/types'
+import type { SeasonalEvent } from '../../seasonal-events/core/types'
 
 type SeasonalEventsModule =
-	typeof import('../../seasonal-events/model/seasonal-events-module')
+	typeof import('../../seasonal-events/core/seasonal-events-module')
 
 let seasonalEventsModulePromise: Promise<SeasonalEventsModule> | null = null
 
 const loadSeasonalEventsModule = () => {
 	if (!seasonalEventsModulePromise) {
 		seasonalEventsModulePromise =
-			import('../../seasonal-events/model/seasonal-events-module')
+			import('../../seasonal-events/core/seasonal-events-module')
 	}
 
 	return seasonalEventsModulePromise

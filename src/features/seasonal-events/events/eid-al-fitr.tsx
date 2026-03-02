@@ -2,9 +2,9 @@ import {
 	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
-} from './types'
+} from '../core/types'
+import { getCanvasDpr, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
-import { getCanvasDpr, randomInRange } from './utils'
 
 const EID_AL_FITR_DATES = new Set([
 	'2026-03-20',

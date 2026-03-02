@@ -2,75 +2,74 @@ import {
 	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
-} from './types'
+} from '../core/types'
+import { createAdaptiveDprController, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
-import { createAdaptiveDprController, randomInRange } from './utils'
 
-const ETA_AQUARIIDS_PEAK_DATES = new Set([
-	'2026-05-05',
-	'2026-05-06',
-	'2027-05-05',
-	'2027-05-06',
-	'2028-05-05',
-	'2028-05-06',
-	'2029-05-05',
-	'2029-05-06',
-	'2030-05-05',
-	'2030-05-06',
-	'2031-05-05',
-	'2031-05-06',
-	'2032-05-05',
-	'2032-05-06',
-	'2033-05-05',
-	'2033-05-06',
-	'2034-05-05',
-	'2034-05-06',
-	'2035-05-05',
-	'2035-05-06',
-	'2036-05-05',
-	'2036-05-06',
-	'2037-05-05',
-	'2037-05-06',
-	'2038-05-05',
-	'2038-05-06',
-	'2039-05-05',
-	'2039-05-06',
-	'2040-05-05',
-	'2040-05-06',
-	'2041-05-05',
-	'2041-05-06',
-	'2042-05-05',
-	'2042-05-06',
-	'2043-05-05',
-	'2043-05-06',
+const PERSEIDS_PEAK_DATES = new Set([
+	'2026-08-13',
+	'2027-08-12',
+	'2027-08-13',
+	'2028-08-12',
+	'2028-08-13',
+	'2029-08-12',
+	'2029-08-13',
+	'2030-08-12',
+	'2030-08-13',
+	'2031-08-12',
+	'2031-08-13',
+	'2032-08-12',
+	'2032-08-13',
+	'2033-08-12',
+	'2033-08-13',
+	'2034-08-12',
+	'2034-08-13',
+	'2035-08-12',
+	'2035-08-13',
+	'2036-08-12',
+	'2036-08-13',
+	'2037-08-12',
+	'2037-08-13',
+	'2038-08-12',
+	'2038-08-13',
+	'2039-08-12',
+	'2039-08-13',
+	'2040-08-12',
+	'2040-08-13',
+	'2041-08-12',
+	'2041-08-13',
+	'2042-08-12',
+	'2042-08-13',
+	'2043-08-12',
+	'2043-08-13',
 ])
-const ETA_AQUARIIDS_MOUNT_DELAY_MS = 900
-const ETA_AQUARIIDS_OVERLAY_OPACITY = '0.78'
-const ETA_AQUARIIDS_OVERLAY_FILTER = 'saturate(130%)'
-const ETA_AQUARIIDS_MAX_DPR = 2
-const ETA_AQUARIIDS_METEOR_COUNT = 11
-const ETA_AQUARIIDS_STAR_COUNT = 140
-const ETA_AQUARIIDS_METEOR_LENGTH_RANGE = { min: 140, max: 250 }
-const ETA_AQUARIIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.3 }
-const ETA_AQUARIIDS_METEOR_SPEED_RANGE = { min: 560, max: 860 }
-const ETA_AQUARIIDS_METEOR_ANGLE_RANGE = { min: 0.25, max: 0.42 }
-const ETA_AQUARIIDS_METEOR_SPAWN_DELAY_RANGE = { min: 760, max: 2200 }
-const ETA_AQUARIIDS_METEOR_LIFETIME_RANGE = { min: 1300, max: 2100 }
-const ETA_AQUARIIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
-const ETA_AQUARIIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
-const ETA_AQUARIIDS_METEOR_GLOW_RANGE = { min: 12, max: 24 }
-const ETA_AQUARIIDS_METEOR_COLORS = [
+const PERSEIDS_MOUNT_DELAY_MS = 900
+const PERSEIDS_OVERLAY_OPACITY = '0.8'
+const PERSEIDS_OVERLAY_FILTER = 'saturate(130%)'
+const PERSEIDS_MAX_DPR = 2
+const PERSEIDS_METEOR_COUNT = 12
+const PERSEIDS_STAR_COUNT = 140
+const PERSEIDS_METEOR_LENGTH_RANGE = { min: 140, max: 260 }
+const PERSEIDS_METEOR_WIDTH_RANGE = { min: 1.1, max: 2.6 }
+const PERSEIDS_METEOR_SPEED_RANGE = { min: 520, max: 820 }
+const PERSEIDS_METEOR_ANGLE_RANGE = { min: 0.25, max: 0.42 }
+const PERSEIDS_METEOR_SPAWN_DELAY_RANGE = { min: 720, max: 2000 }
+const PERSEIDS_METEOR_LIFETIME_RANGE = { min: 1400, max: 2200 }
+const PERSEIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
+const PERSEIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
+const PERSEIDS_METEOR_GLOW_RANGE = { min: 12, max: 22 }
+const PERSEIDS_METEOR_COLORS = [
+	'rgba(248, 250, 252, 1)',
 	'rgba(191, 219, 254, 1)',
-	'rgba(125, 211, 252, 1)',
-	'rgba(96, 165, 250, 1)',
-	'rgba(59, 130, 246, 1)',
+	'rgba(129, 140, 248, 1)',
+	'rgba(167, 139, 250, 1)',
 ]
-const ETA_AQUARIIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const ETA_AQUARIIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
-const ETA_AQUARIIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
-const ETA_AQUARIIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
-const ETA_AQUARIIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const ETA_AQUARIIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const PERSEIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
+const PERSEIDS_STAR_RADIUS_RANGE = { min: 0.6, max: 1.6 }
+const PERSEIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.6 }
+const PERSEIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
+const PERSEIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
+const PERSEIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
 
 const EventDetails = () => (
 	<>
@@ -79,14 +78,15 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				The Eta Aquariids are a major meteor shower formed from the debris of
-				Halley’s Comet.
+				The Perseids are a bright annual meteor shower formed from debris left
+				by Comet Swift–Tuttle.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				They peak in early May and are especially well seen from the southern
-				hemisphere, though northern skies still catch their share of streaks.
+				Their radiant lies in the constellation Perseus, and the shower is
+				especially prominent in the northern hemisphere, though visible
+				worldwide.
 			</Trans>
 		</p>
 
@@ -95,14 +95,31 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				Halley’s Comet itself returns roughly every seventy-six years, but the
-				stream of dust it leaves behind crosses Earth’s path each year.
+				The Perseids are sometimes known as the Tears of Saint Lawrence, as
+				their peak often falls near the feast day of Saint Lawrence in
+				mid-August.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				The shower’s radiant lies near the constellation Aquarius, rising before
-				dawn when viewing conditions are at their best.
+				Historical records of the Perseids extend back nearly two thousand
+				years, making them one of the longest observed meteor showers.
+			</Trans>
+		</p>
+
+		<h2>
+			<Trans>Skywatching tips</Trans>
+		</h2>
+		<p>
+			<Trans>
+				Allow your eyes about twenty minutes to adjust, turn away from city
+				lights, and let the wide sky do the work.
+			</Trans>
+		</p>
+		<p>
+			<Trans>
+				A comfortable chair or blanket is more useful than a telescope, as
+				meteors can appear anywhere overhead.
 			</Trans>
 		</p>
 
@@ -111,38 +128,39 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				The Eta Aquariids and the Orionids are sibling showers — both are born
-				from Halley's Comet, but Earth crosses different parts of the debris
-				trail six months apart.
+				Perseid meteors enter the atmosphere at roughly 60 km/s — fast enough
+				that the larger ones compress the air ahead of them into a bright,
+				explosive fireball.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				At 66 km/s, these are among the fastest meteors you'll see. Their trails
-				can persist for several seconds after the meteor itself is gone.
+				On a good night near peak, you can expect a meteor every minute or two.
+				The best rates come after midnight, when your side of the Earth faces
+				into the debris stream.
 			</Trans>
 		</p>
 	</>
 )
 
-export const etaAquariidsEvent: SeasonalEvent = {
-	id: SeasonalEventId.EtaAquariids,
-	isActive: isEtaAquariidsPeak,
-	run: launchEtaAquariidsShower,
+export const perseidsEvent: SeasonalEvent = {
+	id: SeasonalEventId.Perseids,
+	isActive: isPerseidsPeak,
+	run: launchPerseidsShower,
 	details: EventDetails,
 	tileAccent: {
-		colors: ['#bae6fd', '#7dd3fc', '#60a5fa', '#3b82f6', '#bae6fd'],
+		colors: ['#e0f2fe', '#7dd3fc', '#60a5fa', '#a78bfa', '#e0f2fe'],
 	},
 }
 
-function isEtaAquariidsPeak({ date }: SeasonalEventContext) {
+function isPerseidsPeak({ date }: SeasonalEventContext) {
 	const year = date.getFullYear()
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
-	return ETA_AQUARIIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
+	return PERSEIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
 }
 
-async function launchEtaAquariidsShower() {
+async function launchPerseidsShower() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}
@@ -154,7 +172,7 @@ async function launchEtaAquariidsShower() {
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
-			throw new Error('Unable to create 2D context for eta aquariids canvas')
+			throw new Error('Unable to create 2D context for perseids canvas')
 		}
 
 		type Meteor = {
@@ -191,49 +209,49 @@ async function launchEtaAquariidsShower() {
 		let lastTime = performance.now()
 
 		const dprController = createAdaptiveDprController({
-			maxDpr: ETA_AQUARIIDS_MAX_DPR,
+			maxDpr: PERSEIDS_MAX_DPR,
 			minScale: 0.4,
 		})
 		const randomMeteorColor = () =>
-			ETA_AQUARIIDS_METEOR_COLORS[
-				Math.floor(Math.random() * ETA_AQUARIIDS_METEOR_COLORS.length)
+			PERSEIDS_METEOR_COLORS[
+				Math.floor(Math.random() * PERSEIDS_METEOR_COLORS.length)
 			]
 
 		const createStar = (time: number): Star => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: randomInRange(ETA_AQUARIIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(ETA_AQUARIIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(ETA_AQUARIIDS_STAR_TWINKLE_RANGE),
+			radius: randomInRange(PERSEIDS_STAR_RADIUS_RANGE),
+			opacity: randomInRange(PERSEIDS_STAR_OPACITY_RANGE),
+			twinkle: randomInRange(PERSEIDS_STAR_TWINKLE_RANGE),
 			phase: Math.random() * Math.PI * 2,
-			birthTime: time + randomInRange(ETA_AQUARIIDS_STAR_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(ETA_AQUARIIDS_STAR_FADE_IN_DURATION_RANGE),
+			birthTime: time + randomInRange(PERSEIDS_STAR_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(PERSEIDS_STAR_FADE_IN_DURATION_RANGE),
 		})
 
 		const createMeteor = (time: number): Meteor => {
-			const speed = randomInRange(ETA_AQUARIIDS_METEOR_SPEED_RANGE)
-			const angle = randomInRange(ETA_AQUARIIDS_METEOR_ANGLE_RANGE)
+			const speed = randomInRange(PERSEIDS_METEOR_SPEED_RANGE)
+			const angle = randomInRange(PERSEIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(ETA_AQUARIIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(ETA_AQUARIIDS_METEOR_SPAWN_Y),
+				x: width * randomInRange(PERSEIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(PERSEIDS_METEOR_SPAWN_Y),
 				vx: Math.cos(angle) * speed,
 				vy: Math.sin(angle) * speed,
-				length: randomInRange(ETA_AQUARIIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(ETA_AQUARIIDS_METEOR_WIDTH_RANGE),
-				opacity: randomInRange({ min: 0.45, max: 0.85 }),
-				glow: randomInRange(ETA_AQUARIIDS_METEOR_GLOW_RANGE),
+				length: randomInRange(PERSEIDS_METEOR_LENGTH_RANGE),
+				width: randomInRange(PERSEIDS_METEOR_WIDTH_RANGE),
+				opacity: randomInRange({ min: 0.5, max: 0.9 }),
+				glow: randomInRange(PERSEIDS_METEOR_GLOW_RANGE),
 				color: randomMeteorColor(),
 				age: 0,
-				lifetime: randomInRange(ETA_AQUARIIDS_METEOR_LIFETIME_RANGE),
-				nextSpawn: time + randomInRange(ETA_AQUARIIDS_METEOR_SPAWN_DELAY_RANGE),
+				lifetime: randomInRange(PERSEIDS_METEOR_LIFETIME_RANGE),
+				nextSpawn: time + randomInRange(PERSEIDS_METEOR_SPAWN_DELAY_RANGE),
 			}
 		}
 
 		const resetField = (time: number) => {
-			meteors = Array.from({ length: ETA_AQUARIIDS_METEOR_COUNT }, () =>
+			meteors = Array.from({ length: PERSEIDS_METEOR_COUNT }, () =>
 				createMeteor(time),
 			)
-			stars = Array.from({ length: ETA_AQUARIIDS_STAR_COUNT }, () =>
+			stars = Array.from({ length: PERSEIDS_STAR_COUNT }, () =>
 				createStar(time),
 			)
 		}
@@ -286,14 +304,14 @@ async function launchEtaAquariidsShower() {
 		}
 
 		const drawStars = (time: number) => {
-			context.fillStyle = ETA_AQUARIIDS_STAR_COLOR
+			context.fillStyle = PERSEIDS_STAR_COLOR
 			for (const star of stars) {
 				const fade = getStarFade(star, time)
 				if (fade <= 0) {
 					continue
 				}
 
-				const twinkle = 0.65 + 0.35 * Math.sin(time * star.twinkle + star.phase)
+				const twinkle = 0.6 + 0.4 * Math.sin(time * star.twinkle + star.phase)
 				context.globalAlpha = star.opacity * twinkle * fade
 				context.beginPath()
 				context.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
@@ -371,10 +389,10 @@ async function launchEtaAquariidsShower() {
 			context.clearRect(0, 0, width, height)
 			context.globalCompositeOperation = 'lighter'
 			drawStars(now)
-			for (let i = 0; i < Math.min(4, meteors.length); i += 1) {
+			for (let i = 0; i < Math.min(5, meteors.length); i += 1) {
 				const meteor = createMeteor(now)
-				meteor.x = width * (0.2 + i * 0.15)
-				meteor.y = height * (0.22 + i * 0.1)
+				meteor.x = width * (0.2 + i * 0.12)
+				meteor.y = height * (0.2 + i * 0.08)
 				drawMeteor(meteor, meteor.opacity)
 			}
 		}
@@ -383,8 +401,8 @@ async function launchEtaAquariidsShower() {
 		overlay.style.inset = '0'
 		overlay.style.pointerEvents = 'none'
 		overlay.style.zIndex = '0'
-		overlay.style.opacity = ETA_AQUARIIDS_OVERLAY_OPACITY
-		overlay.style.filter = ETA_AQUARIIDS_OVERLAY_FILTER
+		overlay.style.opacity = PERSEIDS_OVERLAY_OPACITY
+		overlay.style.filter = PERSEIDS_OVERLAY_FILTER
 		overlay.appendChild(canvas)
 
 		const mount = () => {
@@ -398,7 +416,7 @@ async function launchEtaAquariidsShower() {
 			}
 		}
 
-		timeoutId = window.setTimeout(mount, ETA_AQUARIIDS_MOUNT_DELAY_MS)
+		timeoutId = window.setTimeout(mount, PERSEIDS_MOUNT_DELAY_MS)
 
 		const handleResize = () => {
 			resizeCanvas()
@@ -421,7 +439,7 @@ async function launchEtaAquariidsShower() {
 			}
 		}
 	} catch (error) {
-		console.error('Failed to launch Eta Aquariids meteor shower', error)
+		console.error('Failed to launch Perseids meteor shower', error)
 		return () => {}
 	}
 }

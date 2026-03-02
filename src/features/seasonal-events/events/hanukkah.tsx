@@ -2,9 +2,9 @@ import {
 	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
-} from './types'
+} from '../core/types'
+import { getCanvasDpr, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
-import { getCanvasDpr, randomInRange } from './utils'
 
 const HANUKKAH_START_DATES = new Set([
 	'2026-12-04',

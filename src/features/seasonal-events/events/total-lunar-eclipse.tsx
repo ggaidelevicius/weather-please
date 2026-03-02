@@ -1,9 +1,9 @@
-import { Trans } from '@lingui/react/macro'
 import {
 	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
-} from './types'
+} from '../core/types'
+import { Trans } from '@lingui/react/macro'
 
 const TOTAL_LUNAR_ECLIPSE_DATES = new Set([
 	'2026-03-03',

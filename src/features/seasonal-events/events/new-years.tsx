@@ -2,9 +2,9 @@ import {
 	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
-} from './types'
+} from '../core/types'
+import { randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
-import { randomInRange } from './utils'
 
 const NEW_YEARS_MONTH = 0
 const NEW_YEARS_DAY = 1

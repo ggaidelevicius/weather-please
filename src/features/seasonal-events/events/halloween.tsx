@@ -2,9 +2,9 @@ import {
 	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
-} from './types'
+} from '../core/types'
+import { getCanvasDpr, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
-import { getCanvasDpr, randomInRange } from './utils'
 
 const HALLOWEEN_MONTH = 9
 const HALLOWEEN_DAY = 31

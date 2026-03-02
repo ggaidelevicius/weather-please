@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { SeasonalEventId } from '../../seasonal-events/model/types'
+import { SeasonalEventId } from '../../seasonal-events/core/types'
 
 enum BooleanSettingCategory {
 	General = 'general',
