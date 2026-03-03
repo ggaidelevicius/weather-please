@@ -209,8 +209,49 @@ async function launchTotalLunarEclipse() {
 				inset: 20%;
 				border-radius: 9999px;
 				--eclipse-layer-opacity: 0.95;
-				background: radial-gradient(circle at 35% 35%, rgba(220, 38, 38, 0.96), rgba(127, 29, 29, 0.98));
-				box-shadow: 0 0 30px rgba(185, 28, 28, 0.6);
+				background:
+					radial-gradient(circle at 28% 26%, rgba(254, 226, 226, 0.3) 0%, rgba(220, 38, 38, 0) 34%),
+					radial-gradient(circle at 66% 70%, rgba(69, 10, 10, 0.35) 0%, rgba(127, 29, 29, 0) 44%),
+					radial-gradient(circle at 52% 48%, rgba(220, 38, 38, 0.97) 0%, rgba(127, 29, 29, 0.98) 70%, rgba(69, 10, 10, 1) 100%);
+				box-shadow:
+					0 0 30px rgba(185, 28, 28, 0.6),
+					inset 18px -20px 34px rgba(69, 10, 10, 0.42),
+					inset -10px 12px 22px rgba(254, 226, 226, 0.1);
+				overflow: hidden;
+			}
+			.wp-lunar-eclipse-moon::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				border-radius: inherit;
+				background:
+					radial-gradient(ellipse at 30% 38%, rgba(69, 10, 10, 0.48) 0%, rgba(69, 10, 10, 0) 34%),
+					radial-gradient(ellipse at 67% 36%, rgba(69, 10, 10, 0.35) 0%, rgba(69, 10, 10, 0) 28%),
+					radial-gradient(ellipse at 47% 58%, rgba(69, 10, 10, 0.42) 0%, rgba(69, 10, 10, 0) 30%),
+					radial-gradient(ellipse at 74% 68%, rgba(69, 10, 10, 0.28) 0%, rgba(69, 10, 10, 0) 24%),
+					radial-gradient(ellipse at 36% 74%, rgba(69, 10, 10, 0.26) 0%, rgba(69, 10, 10, 0) 22%);
+				mix-blend-mode: multiply;
+				filter: blur(0.3px);
+				opacity: 0.74;
+			}
+			.wp-lunar-eclipse-moon::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				border-radius: inherit;
+				background:
+					radial-gradient(circle at 26% 24%, rgba(254, 226, 226, 0.08) 0%, rgba(127, 29, 29, 0) 4.8%),
+					radial-gradient(circle at 38% 30%, rgba(254, 226, 226, 0.06) 0%, rgba(127, 29, 29, 0) 4.2%),
+					radial-gradient(circle at 62% 26%, rgba(254, 226, 226, 0.05) 0%, rgba(127, 29, 29, 0) 4.6%),
+					radial-gradient(circle at 72% 42%, rgba(254, 226, 226, 0.06) 0%, rgba(127, 29, 29, 0) 4.4%),
+					radial-gradient(circle at 44% 52%, rgba(254, 226, 226, 0.06) 0%, rgba(127, 29, 29, 0) 4.4%),
+					radial-gradient(circle at 56% 66%, rgba(254, 226, 226, 0.05) 0%, rgba(127, 29, 29, 0) 4.6%),
+					radial-gradient(circle at 30% 68%, rgba(254, 226, 226, 0.06) 0%, rgba(127, 29, 29, 0) 4.2%),
+					radial-gradient(circle at 78% 72%, rgba(254, 226, 226, 0.05) 0%, rgba(127, 29, 29, 0) 4.6%),
+					radial-gradient(circle at 80% 50%, rgba(2, 6, 23, 0.28) 0%, rgba(2, 6, 23, 0) 22%);
+				filter: saturate(110%) blur(1.2px);
+				mix-blend-mode: soft-light;
+				opacity: 0.34;
 			}
 			.wp-lunar-eclipse-haze {
 				position: absolute;
