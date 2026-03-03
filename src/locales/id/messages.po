@@ -23,12 +23,12 @@ msgstr ""
 #~ msgstr "{0} inci presipitasi diharapkan selama jam berikutnya"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:452
+#: src/features/weather/ui/tile.tsx:485
 msgid "{0} km/h"
 msgstr "{0} km/j"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:453
+#: src/features/weather/ui/tile.tsx:486
 msgid "{0} mph"
 msgstr "{0} mph"
 
@@ -79,7 +79,7 @@ msgstr "<0>Akses lokasi ditolak.</0> Periksa pengaturan browser Anda untuk mengi
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Akses lokasi ditolak.</0> Klik ikon lokasi di bilah alamat, lalu pilih \"selalu izinkan akses ke lokasi Anda\". Kemudian klik tombol di bawah untuk mencoba lagi."
 
-#: src/features/settings/ui/settings.tsx:377
+#: src/features/settings/ui/settings.tsx:378
 msgid "☕ Gift a coffee"
 msgstr "☕ Berikan secangkir kopi"
 
@@ -87,11 +87,11 @@ msgstr "☕ Berikan secangkir kopi"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Kirim masukan"
 
-#: src/features/settings/ui/settings.tsx:361
+#: src/features/settings/ui/settings.tsx:362
 msgid "🌟 Leave a review"
 msgstr "🌟 Tinggalkan ulasan"
 
-#: src/features/settings/ui/settings.tsx:369
+#: src/features/settings/ui/settings.tsx:370
 msgid "🐛 Report a bug"
 msgstr "🐛 Laporkan bug"
 
@@ -99,51 +99,51 @@ msgstr "🐛 Laporkan bug"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Minta fitur"
 
-#: src/features/settings/ui/settings.tsx:396
+#: src/features/settings/ui/settings.tsx:397
 msgid "🔒 Privacy policy"
 msgstr "🔒 Kebijakan privasi"
 
-#: src/features/seasonal-events/model/perseids.tsx:116
+#: src/features/seasonal-events/events/perseids.tsx:120
 msgid "A comfortable chair or blanket is more useful than a telescope, as meteors can appear anywhere overhead."
 msgstr "Kursi yang nyaman atau selimut lebih berguna daripada teleskop, karena meteor bisa muncul di mana saja di atas kepala."
 
-#: src/features/seasonal-events/model/autumn-equinox.tsx:105
+#: src/features/seasonal-events/events/autumn-equinox.tsx:110
 msgid "A time of turning"
 msgstr "Saat peralihan"
 
-#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:38
+#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:42
 msgid "A total lunar eclipse occurs when the Earth moves directly between the Sun and the Moon, fully shading the lunar surface."
 msgstr "Gerhana Bulan total terjadi ketika Bumi bergerak tepat di antara Matahari dan Bulan, sehingga permukaan Bulan tertutupi sepenuhnya."
 
-#: src/features/seasonal-events/model/total-solar-eclipse.tsx:29
+#: src/features/seasonal-events/events/total-solar-eclipse.tsx:33
 msgid "A total solar eclipse occurs when the Moon moves directly in front of the Sun, briefly transforming daylight into twilight."
 msgstr "Gerhana Matahari total terjadi ketika Bulan bergerak tepat di depan Matahari, sejenak mengubah siang menjadi senja."
 
-#: src/features/seasonal-events/model/summer-solstice.tsx:114
+#: src/features/seasonal-events/events/summer-solstice.tsx:119
 msgid "Above the Arctic Circle, the sun doesn't set at all — it traces a low circle along the horizon and starts climbing again. This is the midnight sun, and it lasts for weeks."
 msgstr "Di atas Lingkaran Arktik, matahari tidak terbenam sama sekali — ia membentuk lingkaran rendah di sepanjang cakrawala dan mulai naik kembali. Inilah matahari tengah malam, dan ia berlangsung selama berminggu-minggu."
 
-#: src/features/seasonal-events/model/hanukkah.tsx:86
+#: src/features/seasonal-events/events/hanukkah.tsx:90
 msgid "According to tradition, a small supply of oil, meant for one day, lasted eight."
 msgstr "Menurut tradisi, persediaan minyak kecil yang seharusnya cukup untuk satu hari bertahan selama delapan hari."
 
-#: src/features/seasonal-events/model/christmas.tsx:67
+#: src/features/seasonal-events/events/christmas.tsx:71
 msgid "Across centuries and cultures, distinctive local practices emerged — from midnight services and carolling to bustling festive markets and public celebrations."
 msgstr "Selama berabad-abad dan lintas budaya, praktik lokal yang khas berkembang — dari misa tengah malam dan nyanyian Natal hingga pasar meriah dan perayaan publik."
 
-#: src/features/seasonal-events/model/autumn-equinox.tsx:92
+#: src/features/seasonal-events/events/autumn-equinox.tsx:97
 msgid "Across many ancient cultures, this point in the year was closely tied to harvest celebrations, gratitude, and preparation for winter."
 msgstr "Dalam banyak budaya kuno, titik ini dalam setahun terkait erat dengan perayaan panen, rasa syukur, dan persiapan menghadapi musim dingin."
 
-#: src/features/seasonal-events/model/easter.tsx:60
+#: src/features/seasonal-events/events/easter.tsx:64
 msgid "Across many cultures, older symbols of rebirth — such as eggs, blossoms, and new growth — became woven into the celebration."
 msgstr "Di banyak budaya, simbol-simbol kelahiran kembali yang lebih tua — seperti telur, bunga, dan tunas baru — terjalin ke dalam perayaan."
 
-#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:54
+#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:58
 msgid "Across many cultures, the deep red colour of the eclipsed Moon inspired myths and the name “Blood Moon”."
 msgstr "Di banyak budaya, warna merah tua Bulan yang sedang mengalami gerhana menginspirasi mitos dan sebutan “Bulan Darah”."
 
-#: src/features/seasonal-events/model/winter-solstice.tsx:95
+#: src/features/seasonal-events/events/winter-solstice.tsx:100
 msgid "Across many cultures, traditions such as Yule and Saturnalia developed around this moment, gathering warmth, light, and community during the darkest part of the year in the regions where they first formed."
 msgstr "Di banyak budaya, tradisi seperti Yule dan Saturnalia berkembang di sekitar momen ini, mengumpulkan kehangatan, cahaya, dan kebersamaan pada bagian tergelap tahun di wilayah tempat tradisi itu pertama kali terbentuk."
 
@@ -151,7 +151,7 @@ msgstr "Di banyak budaya, tradisi seperti Yule dan Saturnalia berkembang di seki
 #~ msgid "Across the world, daylight begins to shift in new patterns as buds rise and the atmosphere carries the scent of change."
 #~ msgstr "Di seluruh dunia, siang hari mulai bergeser dalam pola baru saat kuncup bermunculan dan udara membawa aroma perubahan."
 
-#: src/features/seasonal-events/model/eid-al-adha.tsx:71
+#: src/features/seasonal-events/events/eid-al-adha.tsx:75
 msgid "Acts of charity, the sharing of food, and care for family, neighbours, and those in need form the heart of the celebration."
 msgstr "Tindakan amal, berbagi makanan, serta kepedulian pada keluarga, tetangga, dan mereka yang membutuhkan menjadi inti perayaan."
 
@@ -167,15 +167,15 @@ msgstr "Tindakan amal, berbagi makanan, serta kepedulian pada keluarga, tetangga
 #~ msgid "Alerts"
 #~ msgstr "Peringatan"
 
-#: src/features/seasonal-events/model/perseids.tsx:110
+#: src/features/seasonal-events/events/perseids.tsx:114
 msgid "Allow your eyes about twenty minutes to adjust, turn away from city lights, and let the wide sky do the work."
 msgstr "Berikan mata Anda sekitar dua puluh menit untuk menyesuaikan diri, jauhi lampu kota, dan biarkan langit luas yang bekerja."
 
-#: src/features/seasonal-events/model/new-years.tsx:33
+#: src/features/seasonal-events/events/new-years.tsx:37
 msgid "Although many cultures follow different calendars and celebrate the new year at other times, January 1 remains a widely recognised global marker."
 msgstr "Walau banyak budaya mengikuti kalender berbeda dan merayakan tahun baru pada waktu lain, 1 Januari tetap menjadi penanda global yang dikenal luas."
 
-#: src/features/seasonal-events/model/quadrantids.tsx:99
+#: src/features/seasonal-events/events/quadrantids.tsx:103
 msgid "Although the radiant now lies within the constellation Boötes, the older name preserves a small piece of astronomical history."
 msgstr "Meski titik radian kini berada di rasi bintang Boötes, nama lamanya menyimpan sepotong kecil sejarah astronomi."
 
@@ -199,23 +199,23 @@ msgstr "Meski titik radian kini berada di rasi bintang Boötes, nama lamanya men
 #~ msgid "An error has occurred while periodically updating location. Please check the console for more details."
 #~ msgstr "Terjadi kesalahan saat memperbarui lokasi secara berkala. Silakan periksa konsol untuk detail lebih lanjut."
 
-#: src/features/seasonal-events/model/summer-solstice.tsx:91
+#: src/features/seasonal-events/events/summer-solstice.tsx:96
 msgid "Ancient monuments such as Stonehenge are aligned with the solstice sunrise, and midsummer festivals across many cultures celebrate light and abundance."
 msgstr "Monumen kuno seperti Stonehenge disejajarkan dengan matahari terbit saat solstis, dan festival pertengahan musim panas di banyak budaya merayakan cahaya dan kelimpahan."
 
-#: src/features/seasonal-events/model/spring-equinox.tsx:93
+#: src/features/seasonal-events/events/spring-equinox.tsx:98
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "Observatorium kuno dengan cermat melacak titik balik tahun ini untuk memandu siklus tanam, kalender, dan festival musiman."
 
-#: src/features/seasonal-events/model/total-solar-eclipse.tsx:67
+#: src/features/seasonal-events/events/total-solar-eclipse.tsx:71
 msgid "Animals can grow quiet, while the horizon glows like a complete circle of sunset."
 msgstr "Hewan bisa menjadi lebih tenang, sementara cakrawala bersinar seperti lingkaran senja yang utuh."
 
-#: src/features/seasonal-events/model/holi.tsx:152
+#: src/features/seasonal-events/events/holi.tsx:219
 msgid "Another widely told story celebrates Krishna, whose playful exchanges of colour are said to have inspired the festival’s most famous custom."
 msgstr "Kisah lain yang banyak diceritakan merayakan Krishna, yang pertukaran warna yang jenaka konon menginspirasi kebiasaan paling terkenal dari festival ini."
 
-#: src/features/weather/ui/tile.tsx:121
+#: src/features/weather/ui/tile.tsx:122
 msgid "April"
 msgstr "April"
 
@@ -223,7 +223,7 @@ msgstr "April"
 #~ msgid "As Orion rises before dawn, it can feel like a spotlight for the meteors that follow."
 #~ msgstr "Saat Orion terbit sebelum fajar, rasanya seperti sorotan bagi meteor-meteor yang mengikuti."
 
-#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:70
+#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:74
 msgid "As sunlight passes through Earth’s atmosphere, the shorter blue wavelengths scatter away while the longer red wavelengths bend toward the Moon."
 msgstr "Saat sinar matahari melewati atmosfer Bumi, panjang gelombang biru yang lebih pendek tersebar, sementara panjang gelombang merah yang lebih panjang dibelokkan menuju Bulan."
 
@@ -231,15 +231,15 @@ msgstr "Saat sinar matahari melewati atmosfer Bumi, panjang gelombang biru yang 
 #~ msgid "As the Earth turns, the new year arrives in a slow-moving wave that travels across time zones for nearly a full day."
 #~ msgstr "Ketika Bumi berputar, tahun baru tiba dalam gelombang lambat yang melintasi zona waktu selama hampir satu hari penuh."
 
-#: src/features/settings/ui/settings.tsx:103
+#: src/features/settings/ui/settings.tsx:111
 msgid "Astronomy"
 msgstr "Astronomi"
 
-#: src/features/seasonal-events/model/eta-aquariids.tsx:116
+#: src/features/seasonal-events/events/eta-aquariids.tsx:120
 msgid "At 66 km/s, these are among the fastest meteors you'll see. Their trails can persist for several seconds after the meteor itself is gone."
 msgstr "Dengan kecepatan 66 km/s, ini termasuk meteor tercepat yang akan Anda lihat. Ekornya dapat bertahan selama beberapa detik setelah meteornya sendiri menghilang."
 
-#: src/features/seasonal-events/model/new-years.tsx:67
+#: src/features/seasonal-events/events/new-years.tsx:71
 msgid "At each boundary, fireworks go up, bells ring, and strangers count down together. The same moment of anticipation, repeated twenty-four times."
 msgstr "Di setiap perbatasan, kembang api meluncur, lonceng berbunyi, dan orang-orang asing menghitung mundur bersama. Momen antisipasi yang sama, diulang dua puluh empat kali."
 
@@ -247,11 +247,11 @@ msgstr "Di setiap perbatasan, kembang api meluncur, lonceng berbunyi, dan orang-
 #~ msgid "At night, lights trace warm constellations across homes and streets, turning whole cities into living lanterns."
 #~ msgstr "Di malam hari, cahaya membentuk rasi hangat di atas rumah dan jalan, mengubah seluruh kota menjadi lentera hidup."
 
-#: src/features/weather/ui/tile.tsx:125
+#: src/features/weather/ui/tile.tsx:126
 msgid "August"
 msgstr "Agustus"
 
-#: src/features/weather/ui/tile.tsx:166
+#: src/features/weather/ui/tile.tsx:167
 msgid "Autumn Equinox"
 msgstr "Ekuinoks musim gugur"
 
@@ -259,11 +259,11 @@ msgstr "Ekuinoks musim gugur"
 #~ msgid "Based on the provided information, your location is:"
 #~ msgstr "Berdasarkan informasi yang diberikan, lokasi Anda adalah:"
 
-#: src/features/seasonal-events/model/geminids.tsx:99
+#: src/features/seasonal-events/events/geminids.tsx:103
 msgid "Because it behaves like both an asteroid and a comet, it is sometimes described as a “rock comet”."
 msgstr "Karena perilakunya seperti asteroid sekaligus komet, ia kadang disebut sebagai “komet batu”."
 
-#: src/features/seasonal-events/model/summer-solstice.tsx:98
+#: src/features/seasonal-events/events/summer-solstice.tsx:103
 msgid "Bonfires, late gatherings, and all-night vigils have long been part of welcoming this turning point of the year."
 msgstr "Api unggun, pertemuan larut malam, dan berjaga semalaman sejak lama menjadi bagian dari menyambut titik balik tahun ini."
 
@@ -271,11 +271,11 @@ msgstr "Api unggun, pertemuan larut malam, dan berjaga semalaman sejak lama menj
 #~ msgid "Bug report"
 #~ msgstr "Laporan bug"
 
-#: src/features/seasonal-events/model/holi.tsx:184
+#: src/features/seasonal-events/events/holi.tsx:251
 msgid "By midday, the streets, the walls, and every surface in sight are stained in layers of pink, green, yellow, and blue. It takes days to wash out."
 msgstr "Menjelang siang, jalanan, tembok, dan setiap permukaan yang terlihat dipenuhi lapisan warna merah muda, hijau, kuning, dan biru. Butuh berhari-hari untuk membersihkannya."
 
-#: src/features/seasonal-events/model/valentines.tsx:71
+#: src/features/seasonal-events/events/valentines.tsx:75
 msgid "By the eighteenth century, handwritten notes and printed cards had helped turn the day into a ritual of letters and messages."
 msgstr "Pada abad kedelapan belas, catatan tulisan tangan dan kartu cetak membantu menjadikan hari itu sebagai ritual surat dan pesan."
 
@@ -283,7 +283,7 @@ msgstr "Pada abad kedelapan belas, catatan tulisan tangan dan kartu cetak memban
 #~ msgid "Cancel"
 #~ msgstr "Batal"
 
-#: src/features/seasonal-events/model/halloween.tsx:72
+#: src/features/seasonal-events/events/halloween.tsx:76
 msgid "Carved pumpkins, sweets, and playful scares echo much older customs of lanterns, bonfires, and protective charms."
 msgstr "Labu ukir, manisan, dan kejutan yang jenaka menggema kebiasaan yang jauh lebih tua tentang lentera, api unggun, dan jimat pelindung."
 
@@ -295,7 +295,7 @@ msgstr "Labu ukir, manisan, dan kejutan yang jenaka menggema kebiasaan yang jauh
 #~ msgid "Cemeteries and homes glow with candlelight, colour, music, and laughter, holding grief and gratitude in the same breath."
 #~ msgstr "Pemakaman dan rumah bercahaya oleh lilin, warna, musik, dan tawa, menampung duka dan rasa syukur dalam satu tarikan napas."
 
-#: src/features/seasonal-events/model/valentines.tsx:104
+#: src/features/seasonal-events/events/valentines.tsx:108
 msgid "Centuries later, people still reach for pen and paper when a text won't do."
 msgstr "Berabad-abad kemudian, orang masih meraih pena dan kertas ketika pesan teks tidak cukup."
 
@@ -303,27 +303,27 @@ msgstr "Berabad-abad kemudian, orang masih meraih pena dan kertas ketika pesan t
 #~ msgid "Changed needs"
 #~ msgstr "Kebutuhan berubah"
 
-#: src/features/seasonal-events/model/lyrids.tsx:108
+#: src/features/seasonal-events/events/lyrids.tsx:112
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
 msgstr "Catatan Tiongkok dari tahun 687 SM menggambarkan \"bintang-bintang jatuh seperti hujan\" — laporan tertua yang diketahui tentang Lyrid, dan salah satu pengamatan meteor tertua yang pernah didokumentasikan."
 
-#: src/features/weather/ui/tile.tsx:187
+#: src/features/weather/ui/tile.tsx:188
 msgid "Christmas Day"
 msgstr "Hari Natal"
 
-#: src/features/seasonal-events/model/christmas.tsx:43
+#: src/features/seasonal-events/events/christmas.tsx:47
 msgid "Christmas Day marks the celebration of the birth of Jesus, and for many people it has also become a broader season of generosity, reflection, and togetherness."
 msgstr "Hari Natal menandai perayaan kelahiran Yesus, dan bagi banyak orang juga telah menjadi musim yang lebih luas tentang kemurahan hati, refleksi, dan kebersamaan."
 
-#: src/features/weather/ui/tile.tsx:77
+#: src/features/weather/ui/tile.tsx:78
 msgid "clear sky"
 msgstr "langit cerah"
 
-#: src/shared/ui/seasonal-event-modal.tsx:42
+#: src/shared/ui/seasonal-event-modal.tsx:51
 msgid "Close"
 msgstr "Tutup"
 
-#: src/features/seasonal-events/model/lyrids.tsx:115
+#: src/features/seasonal-events/events/lyrids.tsx:119
 msgid "Comet Thatcher, the shower's parent body, won't return to the inner solar system until roughly the year 2283."
 msgstr "Komet Thatcher, benda induk hujan meteor ini, tidak akan kembali ke tata surya bagian dalam hingga sekitar tahun 2283."
 
@@ -331,7 +331,7 @@ msgstr "Komet Thatcher, benda induk hujan meteor ini, tidak akan kembali ke tata
 #~ msgid "Communities gather for prayer and meals, and households open their doors in welcome."
 #~ msgstr "Komunitas berkumpul untuk berdoa dan makan bersama, dan rumah tangga membuka pintu mereka untuk menyambut."
 
-#: src/features/seasonal-events/model/earth-day.tsx:153
+#: src/features/seasonal-events/events/earth-day.tsx:157
 msgid "Community cleanups, tree planting, and habitat restoration are among the most common activities."
 msgstr "Aksi bersih-bersih komunitas, penanaman pohon, dan pemulihan habitat termasuk kegiatan yang paling umum."
 
@@ -351,43 +351,43 @@ msgstr "Peringatan cuaca ringkas"
 #~ msgid "Consumes too much memory or CPU"
 #~ msgstr "Menggunakan terlalu banyak memori atau CPU"
 
-#: src/features/seasonal-events/model/halloween.tsx:78
+#: src/features/seasonal-events/events/halloween.tsx:82
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "Kostum bisa heroik, lucu, atau menyeramkan, memungkinkan orang sejenak memasuki peran yang berbeda."
 
-#: src/features/settings/ui/settings.tsx:287
+#: src/features/settings/ui/settings.tsx:288
 msgid "Date"
 msgstr "Tanggal"
 
-#: src/features/settings/ui/settings.tsx:283
+#: src/features/settings/ui/settings.tsx:284
 msgid "Day"
 msgstr "Hari"
 
-#: src/features/weather/ui/tile.tsx:181
+#: src/features/weather/ui/tile.tsx:182
 msgid "Day of the Dead"
 msgstr "Hari Orang Mati"
 
-#: src/features/seasonal-events/model/day-of-the-dead.tsx:40
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:44
 msgid "Day of the Dead is a celebration of life, memory, and the enduring bond between the living and those who have passed."
 msgstr "Hari Orang Mati adalah perayaan kehidupan, ingatan, dan ikatan yang bertahan antara yang hidup dan mereka yang telah tiada."
 
-#: src/features/weather/ui/tile.tsx:129
+#: src/features/weather/ui/tile.tsx:130
 msgid "December"
 msgstr "Desember"
 
-#: src/features/seasonal-events/model/christmas.tsx:85
+#: src/features/seasonal-events/events/christmas.tsx:89
 msgid "Decorated trees, stockings, gift-giving, and shared meals now connect people across many climates and continents in a sense of home and continuity."
 msgstr "Pohon berhias, kaus kaki Natal, pemberian hadiah, dan makan bersama kini menghubungkan orang-orang di banyak iklim dan benua dalam rasa rumah dan kesinambungan."
 
-#: src/features/weather/ui/tile.tsx:85
+#: src/features/weather/ui/tile.tsx:86
 msgid "dense drizzle"
 msgstr "gerimis pekat"
 
-#: src/features/weather/ui/tile.tsx:87
+#: src/features/weather/ui/tile.tsx:88
 msgid "dense freezing drizzle"
 msgstr "gerimis beku pekat"
 
-#: src/features/weather/ui/tile.tsx:82
+#: src/features/weather/ui/tile.tsx:83
 msgid "depositing rime fog"
 msgstr "kabut membeku"
 
@@ -399,15 +399,15 @@ msgstr "kabut membeku"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "Sulit untuk digunakan atau dipahami"
 
-#: src/features/weather/ui/tile.tsx:167
+#: src/features/weather/ui/tile.tsx:168
 msgid "Diwali"
 msgstr "Diwali"
 
-#: src/features/seasonal-events/model/diwali.tsx:61
+#: src/features/seasonal-events/events/diwali.tsx:65
 msgid "Diwali is the festival of lights, celebrating renewal, hope, and the enduring triumph of light over darkness."
 msgstr "Diwali adalah festival cahaya, merayakan pembaruan, harapan, dan kemenangan cahaya atas kegelapan yang terus bertahan."
 
-#: src/features/seasonal-events/model/diwali.tsx:94
+#: src/features/seasonal-events/events/diwali.tsx:98
 msgid "Diyas and candles glow along doorways and windows, while rangoli patterns bloom across thresholds in colour and light."
 msgstr "Diyas dan lilin bersinar di sepanjang pintu dan jendela, sementara pola rangoli bermekaran di ambang rumah dalam warna dan cahaya."
 
@@ -419,15 +419,15 @@ msgstr "Jangan isi kolom ini jika Anda manusia"
 #~ msgid "Don't save"
 #~ msgstr "Jangan simpan"
 
-#: src/features/seasonal-events/model/lunar-new-year.tsx:118
+#: src/features/seasonal-events/events/lunar-new-year.tsx:122
 msgid "Dragon and lion dances wind through streets packed with spectators, firecrackers, and the smell of street food — a finale that can last well past midnight."
 msgstr "Tari naga dan singa meliuk-liuk di jalanan yang penuh penonton, petasan, dan aroma makanan jalanan — sebuah penutup yang bisa berlangsung hingga jauh melewati tengah malam."
 
-#: src/features/seasonal-events/model/hanukkah.tsx:119
+#: src/features/seasonal-events/events/hanukkah.tsx:123
 msgid "Dreidel, often dismissed as a children's game, was historically used as a cover for Torah study during periods when it was outlawed. Each Hebrew letter on its sides forms an acronym: \"A great miracle happened there.\""
 msgstr "Dreidel, yang sering dianggap hanya permainan anak-anak, secara historis digunakan sebagai kedok untuk mempelajari Taurat selama periode ketika hal itu dilarang. Setiap huruf Ibrani di sisinya membentuk akronim: \"Keajaiban besar terjadi di sana.\""
 
-#: src/features/seasonal-events/model/total-solar-eclipse.tsx:77
+#: src/features/seasonal-events/events/total-solar-eclipse.tsx:81
 msgid "During totality, the Sun’s corona — normally invisible — appears as a shimmering halo of white light. Bright stars and planets become visible in the middle of the day."
 msgstr "Selama totalitas, korona Matahari — yang biasanya tidak terlihat — muncul sebagai lingkaran cahaya putih yang berkilauan. Bintang-bintang terang dan planet-planet menjadi terlihat di tengah hari."
 
@@ -439,47 +439,47 @@ msgstr "Selama totalitas, korona Matahari — yang biasanya tidak terlihat — m
 #~ msgid "Each added minute of daylight carries the quiet promise of change."
 #~ msgstr "Setiap tambahan menit cahaya siang membawa janji perubahan yang tenang."
 
-#: src/features/seasonal-events/model/hanukkah.tsx:70
+#: src/features/seasonal-events/events/hanukkah.tsx:74
 msgid "Each evening, another candle is added to the menorah, gradually building the display of light."
 msgstr "Setiap malam, satu lilin lagi ditambahkan ke menorah, perlahan membangun tampilan cahaya."
 
-#: src/features/seasonal-events/model/orionids.tsx:109
+#: src/features/seasonal-events/events/orionids.tsx:113
 msgid "Each Orionid meteor is a tiny grain of dust shed by Halley's Comet — the same object that people have been watching and recording since at least 240 BC."
 msgstr "Setiap meteor Orionid adalah butiran debu kecil yang ditinggalkan oleh Komet Halley — objek yang sama yang telah diamati dan dicatat orang sejak setidaknya tahun 240 SM."
 
-#: src/features/weather/ui/tile.tsx:169
+#: src/features/weather/ui/tile.tsx:170
 msgid "Earth Day"
 msgstr "Hari Bumi"
 
-#: src/features/seasonal-events/model/earth-day.tsx:121
+#: src/features/seasonal-events/events/earth-day.tsx:125
 msgid "Earth Day invites a pause to notice the planet that sustains us, and to consider how we care for it."
 msgstr "Hari Bumi mengajak berhenti sejenak untuk memperhatikan planet yang menopang kita, dan mempertimbangkan bagaimana kita merawatnya."
 
-#: src/features/weather/ui/tile.tsx:182
+#: src/features/weather/ui/tile.tsx:183
 msgid "Easter"
 msgstr "Paskah"
 
-#: src/features/seasonal-events/model/easter.tsx:38
+#: src/features/seasonal-events/events/easter.tsx:42
 msgid "Easter centres on themes of renewal and, in Christian tradition, the resurrection of Jesus."
 msgstr "Paskah berpusat pada tema pembaruan dan, dalam tradisi Kristen, kebangkitan Yesus."
 
-#: src/features/seasonal-events/model/total-solar-eclipse.tsx:84
+#: src/features/seasonal-events/events/total-solar-eclipse.tsx:88
 msgid "Eclipse glasses are essential during all partial phases. Only during the brief seconds of total coverage is it safe to look with the naked eye."
 msgstr "Kacamata gerhana sangat penting selama semua fase parsial. Hanya selama beberapa detik singkat saat cakupan total sajalah aman untuk melihat dengan mata telanjang."
 
-#: src/features/weather/ui/tile.tsx:185
+#: src/features/weather/ui/tile.tsx:186
 msgid "Eid al-Adha"
 msgstr "Idul Adha"
 
-#: src/features/seasonal-events/model/eid-al-adha.tsx:49
+#: src/features/seasonal-events/events/eid-al-adha.tsx:53
 msgid "Eid al-Adha is one of the most important festivals in Islam, closely linked to the season of the Hajj pilgrimage."
 msgstr "Idul Adha adalah salah satu festival terpenting dalam Islam, yang terkait erat dengan musim ibadah haji."
 
-#: src/features/weather/ui/tile.tsx:184
+#: src/features/weather/ui/tile.tsx:185
 msgid "Eid al-Fitr"
 msgstr "Idul Fitri"
 
-#: src/features/seasonal-events/model/eid-al-fitr.tsx:56
+#: src/features/seasonal-events/events/eid-al-fitr.tsx:60
 msgid "Eid al-Fitr marks the end of Ramadan, celebrating renewal, gratitude, and the strength of shared community."
 msgstr "Idul Fitri menandai berakhirnya Ramadan, merayakan pembaruan, rasa syukur, dan kekuatan komunitas bersama."
 
@@ -495,11 +495,11 @@ msgstr "Idul Fitri menandai berakhirnya Ramadan, merayakan pembaruan, rasa syuku
 #~ msgid "Error submitting feedback. Try again later."
 #~ msgstr "Kesalahan mengirimkan masukan. Coba lagi nanti."
 
-#: src/features/weather/ui/tile.tsx:176
+#: src/features/weather/ui/tile.tsx:177
 msgid "Eta Aquariids Meteor Shower"
 msgstr "Hujan meteor Eta Aquariid"
 
-#: src/features/seasonal-events/model/earth-day.tsx:159
+#: src/features/seasonal-events/events/earth-day.tsx:163
 msgid "Even small choices — repairing, reusing, conserving, or simply walking a familiar trail — reflect its underlying spirit."
 msgstr "Bahkan pilihan kecil — memperbaiki, menggunakan kembali, menghemat, atau sekadar berjalan di jalur yang familiar — mencerminkan semangat dasarnya."
 
@@ -507,7 +507,7 @@ msgstr "Bahkan pilihan kecil — memperbaiki, menggunakan kembali, menghemat, at
 #~ msgid "Even today, paper hearts and quiet notes continue the tradition of deliberate kindness."
 #~ msgstr "Bahkan hari ini, hati kertas dan catatan yang tenang melanjutkan tradisi kebaikan yang disengaja."
 
-#: src/features/seasonal-events/model/christmas.tsx:78
+#: src/features/seasonal-events/events/christmas.tsx:82
 msgid "Evergreens, candles, bells, and stars echo a shared theme drawn from those early traditions: light enduring through the darkest part of the year in the cultures where the holiday first formed."
 msgstr "Selalu hijau, lilin, lonceng, dan bintang menggema tema bersama dari tradisi awal itu: cahaya yang bertahan melalui bagian tergelap tahun di budaya tempat hari raya ini pertama kali terbentuk."
 
@@ -531,19 +531,19 @@ msgstr "UV ekstrem dimulai dalam {timeUntilExtremeUv} jam"
 msgid "Extreme UV starting in 1 hour"
 msgstr "UV ekstrem dimulai dalam 1 jam"
 
-#: src/features/seasonal-events/model/eid-al-fitr.tsx:78
+#: src/features/seasonal-events/events/eid-al-fitr.tsx:82
 msgid "Families and friends gather, visit neighbours, exchange gifts, and greet one another with wishes of peace."
 msgstr "Keluarga dan teman berkumpul, mengunjungi tetangga, bertukar hadiah, dan saling menyapa dengan harapan damai."
 
-#: src/features/seasonal-events/model/diwali.tsx:100
+#: src/features/seasonal-events/events/diwali.tsx:104
 msgid "Families exchange sweets and gifts, clean and decorate their homes, and offer prayers for health, prosperity, and a bright year ahead."
 msgstr "Keluarga saling bertukar manisan dan hadiah, membersihkan dan menghias rumah, serta memanjatkan doa untuk kesehatan, kemakmuran, dan tahun yang cerah di depan."
 
-#: src/features/seasonal-events/model/hanukkah.tsx:96
+#: src/features/seasonal-events/events/hanukkah.tsx:100
 msgid "Families gather to light the menorah, sing songs, and play games such as dreidel."
 msgstr "Keluarga berkumpul untuk menyalakan menorah, bernyanyi, dan bermain permainan seperti dreidel."
 
-#: src/features/seasonal-events/model/day-of-the-dead.tsx:89
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:93
 msgid "Families spend the night in cemeteries, cleaning graves, laying marigold paths, and sharing meals beside the headstones. It's social, warm, and often funny — people tell stories and play music until morning."
 msgstr "Keluarga-keluarga menghabiskan malam di pemakaman, membersihkan makam, menabur jalan bunga marigold, dan berbagi makanan di samping nisan. Suasananya sosial, hangat, dan seringkali lucu — orang-orang bercerita dan bermain musik hingga pagi."
 
@@ -559,11 +559,11 @@ msgstr "Keluarga-keluarga menghabiskan malam di pemakaman, membersihkan makam, m
 #~ msgid "Features don't work as expected"
 #~ msgstr "Fitur tidak bekerja sesuai harapan"
 
-#: src/features/weather/ui/tile.tsx:119
+#: src/features/weather/ui/tile.tsx:120
 msgid "February"
 msgstr "Februari"
 
-#: src/features/settings/ui/settings.tsx:353
+#: src/features/settings/ui/settings.tsx:354
 msgid "Feedback"
 msgstr "Masukan"
 
@@ -571,7 +571,7 @@ msgstr "Masukan"
 #~ msgid "Feedback successfully submitted"
 #~ msgstr "Masukan berhasil dikirim"
 
-#: src/features/seasonal-events/model/geminids.tsx:109
+#: src/features/seasonal-events/events/geminids.tsx:113
 msgid "Find a wide view of the sky, allow your eyes time to adjust, and settle in — the display often strengthens after midnight."
 msgstr "Cari pandangan langit yang luas, beri mata Anda waktu untuk menyesuaikan diri, dan bersantailah — pertunjukan sering menguat setelah tengah malam."
 
@@ -579,7 +579,7 @@ msgstr "Cari pandangan langit yang luas, beri mata Anda waktu untuk menyesuaikan
 #~ msgid "Fireworks, bells, and wishes seem to ride that wave, scattering light and sound across the night."
 #~ msgstr "Kembang api, lonceng, dan harapan seolah menumpang gelombang itu, menyebarkan cahaya dan suara ke sepanjang malam."
 
-#: src/features/seasonal-events/model/hanukkah.tsx:102
+#: src/features/seasonal-events/events/hanukkah.tsx:106
 msgid "Foods fried in oil, including latkes and sufganiyot, reflect the central symbol of the story."
 msgstr "Makanan yang digoreng dalam minyak, termasuk latkes dan sufganiyot, mencerminkan simbol utama dari kisahnya."
 
@@ -587,7 +587,7 @@ msgstr "Makanan yang digoreng dalam minyak, termasuk latkes dan sufganiyot, menc
 #~ msgid "For a time, streets become living paintings and the air itself seems to celebrate."
 #~ msgstr "Untuk sementara, jalanan menjadi lukisan hidup dan udara itu sendiri seakan merayakan."
 
-#: src/features/seasonal-events/model/diwali.tsx:77
+#: src/features/seasonal-events/events/diwali.tsx:81
 msgid "For many Hindus, the festival marks the return of Rama, Sita, Lakshmana, and Hanuman to Ayodhya after their long exile."
 msgstr "Bagi banyak umat Hindu, festival ini menandai kembalinya Rama, Sita, Lakshmana, dan Hanuman ke Ayodhya setelah pengasingan panjang mereka."
 
@@ -599,27 +599,27 @@ msgstr "Bagi banyak umat Hindu, festival ini menandai kembalinya Rama, Sita, Lak
 #~ msgid "Found a better alternative"
 #~ msgstr "Menemukan alternatif yang lebih baik"
 
-#: src/features/weather/ui/tile.tsx:113
+#: src/features/weather/ui/tile.tsx:114
 msgid "Friday"
 msgstr "Jumat"
 
-#: src/features/seasonal-events/model/easter.tsx:54
+#: src/features/seasonal-events/events/easter.tsx:58
 msgid "From its earliest observances, Christian calendars aligned Easter with the spring season and the full moon following the equinox."
 msgstr "Sejak pengamatan paling awal, kalender Kristen menyelaraskan Paskah dengan musim semi dan bulan purnama setelah ekuinoks."
 
-#: src/features/seasonal-events/model/spring-equinox.tsx:109
+#: src/features/seasonal-events/events/spring-equinox.tsx:114
 msgid "From this point, each day gains a few minutes of light — a shift that's barely noticeable day to day, but adds up to hours within weeks."
 msgstr "Dari titik ini, setiap hari mendapatkan beberapa menit cahaya ekstra — perubahan yang hampir tidak terasa dari hari ke hari, namun terakumulasi menjadi berjam-jam dalam beberapa minggu."
 
-#: src/features/seasonal-events/model/geminids.tsx:125
+#: src/features/seasonal-events/events/geminids.tsx:129
 msgid "Geminid meteors move slower than most showers, which is part of what makes them so striking — they linger long enough to actually follow with your eyes."
 msgstr "Meteor Geminid bergerak lebih lambat dari kebanyakan hujan meteor, yang menjadi salah satu alasan mengapa mereka begitu mencolok — mereka bertahan cukup lama sehingga Anda bisa benar-benar mengikutinya dengan mata."
 
-#: src/features/weather/ui/tile.tsx:183
+#: src/features/weather/ui/tile.tsx:184
 msgid "Geminids Meteor Shower"
 msgstr "Hujan meteor Geminid"
 
-#: src/features/settings/ui/settings.tsx:214
+#: src/features/settings/ui/settings.tsx:215
 msgid "General"
 msgstr "Umum"
 
@@ -643,120 +643,120 @@ msgstr "Umumnya angin kencang mulai dalam {timeUntilStrongWind} jam"
 msgid "Generally strong wind starting in 1 hour"
 msgstr "Umumnya angin kencang mulai dalam 1 jam"
 
-#: src/features/seasonal-events/model/autumn-equinox.tsx:116
-#: src/features/seasonal-events/model/christmas.tsx:93
-#: src/features/seasonal-events/model/day-of-the-dead.tsx:86
-#: src/features/seasonal-events/model/diwali.tsx:107
-#: src/features/seasonal-events/model/earth-day.tsx:166
-#: src/features/seasonal-events/model/easter.tsx:67
-#: src/features/seasonal-events/model/eid-al-adha.tsx:78
-#: src/features/seasonal-events/model/eid-al-fitr.tsx:85
-#: src/features/seasonal-events/model/eta-aquariids.tsx:106
-#: src/features/seasonal-events/model/geminids.tsx:122
-#: src/features/seasonal-events/model/halloween.tsx:85
-#: src/features/seasonal-events/model/hanukkah.tsx:109
-#: src/features/seasonal-events/model/holi.tsx:175
-#: src/features/seasonal-events/model/leonids.tsx:123
-#: src/features/seasonal-events/model/lunar-new-year.tsx:109
-#: src/features/seasonal-events/model/lyrids.tsx:105
-#: src/features/seasonal-events/model/new-years.tsx:58
-#: src/features/seasonal-events/model/orionids.tsx:106
-#: src/features/seasonal-events/model/perseids.tsx:123
-#: src/features/seasonal-events/model/quadrantids.tsx:122
-#: src/features/seasonal-events/model/spring-equinox.tsx:106
-#: src/features/seasonal-events/model/summer-solstice.tsx:105
-#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:84
-#: src/features/seasonal-events/model/total-solar-eclipse.tsx:74
-#: src/features/seasonal-events/model/valentines.tsx:94
-#: src/features/seasonal-events/model/winter-solstice.tsx:109
+#: src/features/seasonal-events/events/autumn-equinox.tsx:121
+#: src/features/seasonal-events/events/christmas.tsx:97
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:90
+#: src/features/seasonal-events/events/diwali.tsx:111
+#: src/features/seasonal-events/events/earth-day.tsx:170
+#: src/features/seasonal-events/events/easter.tsx:71
+#: src/features/seasonal-events/events/eid-al-adha.tsx:82
+#: src/features/seasonal-events/events/eid-al-fitr.tsx:89
+#: src/features/seasonal-events/events/eta-aquariids.tsx:110
+#: src/features/seasonal-events/events/geminids.tsx:126
+#: src/features/seasonal-events/events/halloween.tsx:89
+#: src/features/seasonal-events/events/hanukkah.tsx:113
+#: src/features/seasonal-events/events/holi.tsx:242
+#: src/features/seasonal-events/events/leonids.tsx:127
+#: src/features/seasonal-events/events/lunar-new-year.tsx:113
+#: src/features/seasonal-events/events/lyrids.tsx:109
+#: src/features/seasonal-events/events/new-years.tsx:62
+#: src/features/seasonal-events/events/orionids.tsx:110
+#: src/features/seasonal-events/events/perseids.tsx:127
+#: src/features/seasonal-events/events/quadrantids.tsx:126
+#: src/features/seasonal-events/events/spring-equinox.tsx:111
+#: src/features/seasonal-events/events/summer-solstice.tsx:110
+#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:88
+#: src/features/seasonal-events/events/total-solar-eclipse.tsx:78
+#: src/features/seasonal-events/events/valentines.tsx:98
+#: src/features/seasonal-events/events/winter-solstice.tsx:114
 msgid "Good to know"
 msgstr "Baik untuk diketahui"
 
-#: src/features/seasonal-events/model/eta-aquariids.tsx:93
+#: src/features/seasonal-events/events/eta-aquariids.tsx:97
 msgid "Halley’s Comet itself returns roughly every seventy-six years, but the stream of dust it leaves behind crosses Earth’s path each year."
 msgstr "Komet Halley sendiri kembali kira-kira setiap tujuh puluh enam tahun, tetapi aliran debu yang ditinggalkannya melintasi jalur Bumi setiap tahun."
 
-#: src/features/weather/ui/tile.tsx:172
+#: src/features/weather/ui/tile.tsx:173
 msgid "Halloween"
 msgstr "Halloween"
 
-#: src/features/seasonal-events/model/halloween.tsx:40
+#: src/features/seasonal-events/events/halloween.tsx:44
 msgid "Halloween is a night shaped by costumes, stories, and a playful sense of unease."
 msgstr "Halloween adalah malam yang dibentuk oleh kostum, cerita, dan rasa tidak nyaman yang menyenangkan."
 
-#: src/features/weather/ui/tile.tsx:186
+#: src/features/weather/ui/tile.tsx:187
 msgid "Hanukkah"
 msgstr "Hanukkah"
 
-#: src/features/seasonal-events/model/hanukkah.tsx:65
+#: src/features/seasonal-events/events/hanukkah.tsx:69
 msgid "Hanukkah is a Jewish festival of lights, observed over eight nights."
 msgstr "Hanukkah adalah festival cahaya dalam tradisi Yahudi, yang dirayakan selama delapan malam."
 
-#: src/features/seasonal-events/model/valentines.tsx:81
+#: src/features/seasonal-events/events/valentines.tsx:85
 msgid "Hearts, roses, and red ribbons became familiar symbols of devotion, warmth, and connection."
 msgstr "Hati, mawar, dan pita merah menjadi simbol yang akrab untuk pengabdian, kehangatan, dan kedekatan."
 
-#: src/features/weather/ui/tile.tsx:92
+#: src/features/weather/ui/tile.tsx:93
 msgid "heavy freezing rain"
 msgstr "hujan beku lebat"
 
-#: src/features/weather/ui/tile.tsx:90
+#: src/features/weather/ui/tile.tsx:91
 msgid "heavy rain"
 msgstr "hujan lebat"
 
-#: src/features/weather/ui/tile.tsx:101
+#: src/features/weather/ui/tile.tsx:102
 msgid "heavy snow showers"
 msgstr "hujan salju lebat"
 
-#: src/features/weather/ui/tile.tsx:95
+#: src/features/weather/ui/tile.tsx:96
 msgid "heavy snowfall"
 msgstr "salju lebat"
 
-#: src/features/seasonal-events/model/lyrids.tsx:92
+#: src/features/seasonal-events/events/lyrids.tsx:96
 msgid "Historical Chinese records describe displays of Lyrid meteors more than two thousand six hundred years ago."
 msgstr "Catatan sejarah Tiongkok menggambarkan pertunjukan meteor Lyrid lebih dari dua ribu enam ratus tahun lalu."
 
-#: src/features/seasonal-events/model/perseids.tsx:100
+#: src/features/seasonal-events/events/perseids.tsx:104
 msgid "Historical records of the Perseids extend back nearly two thousand years, making them one of the longest observed meteor showers."
 msgstr "Catatan sejarah tentang Perseid membentang hampir dua ribu tahun, menjadikannya salah satu hujan meteor yang paling lama diamati."
 
-#: src/features/seasonal-events/model/autumn-equinox.tsx:89
-#: src/features/seasonal-events/model/christmas.tsx:57
-#: src/features/seasonal-events/model/day-of-the-dead.tsx:53
-#: src/features/seasonal-events/model/diwali.tsx:74
-#: src/features/seasonal-events/model/earth-day.tsx:134
-#: src/features/seasonal-events/model/easter.tsx:51
-#: src/features/seasonal-events/model/eid-al-adha.tsx:62
-#: src/features/seasonal-events/model/eid-al-fitr.tsx:69
-#: src/features/seasonal-events/model/eta-aquariids.tsx:90
-#: src/features/seasonal-events/model/geminids.tsx:90
-#: src/features/seasonal-events/model/halloween.tsx:52
-#: src/features/seasonal-events/model/hanukkah.tsx:77
-#: src/features/seasonal-events/model/holi.tsx:143
-#: src/features/seasonal-events/model/leonids.tsx:90
-#: src/features/seasonal-events/model/lyrids.tsx:89
-#: src/features/seasonal-events/model/new-years.tsx:41
-#: src/features/seasonal-events/model/orionids.tsx:90
-#: src/features/seasonal-events/model/perseids.tsx:90
-#: src/features/seasonal-events/model/quadrantids.tsx:90
-#: src/features/seasonal-events/model/spring-equinox.tsx:90
-#: src/features/seasonal-events/model/summer-solstice.tsx:88
-#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:51
-#: src/features/seasonal-events/model/total-solar-eclipse.tsx:42
-#: src/features/seasonal-events/model/valentines.tsx:62
-#: src/features/seasonal-events/model/winter-solstice.tsx:92
+#: src/features/seasonal-events/events/autumn-equinox.tsx:94
+#: src/features/seasonal-events/events/christmas.tsx:61
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:57
+#: src/features/seasonal-events/events/diwali.tsx:78
+#: src/features/seasonal-events/events/earth-day.tsx:138
+#: src/features/seasonal-events/events/easter.tsx:55
+#: src/features/seasonal-events/events/eid-al-adha.tsx:66
+#: src/features/seasonal-events/events/eid-al-fitr.tsx:73
+#: src/features/seasonal-events/events/eta-aquariids.tsx:94
+#: src/features/seasonal-events/events/geminids.tsx:94
+#: src/features/seasonal-events/events/halloween.tsx:56
+#: src/features/seasonal-events/events/hanukkah.tsx:81
+#: src/features/seasonal-events/events/holi.tsx:210
+#: src/features/seasonal-events/events/leonids.tsx:94
+#: src/features/seasonal-events/events/lyrids.tsx:93
+#: src/features/seasonal-events/events/new-years.tsx:45
+#: src/features/seasonal-events/events/orionids.tsx:94
+#: src/features/seasonal-events/events/perseids.tsx:94
+#: src/features/seasonal-events/events/quadrantids.tsx:94
+#: src/features/seasonal-events/events/spring-equinox.tsx:95
+#: src/features/seasonal-events/events/summer-solstice.tsx:93
+#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:55
+#: src/features/seasonal-events/events/total-solar-eclipse.tsx:46
+#: src/features/seasonal-events/events/valentines.tsx:66
+#: src/features/seasonal-events/events/winter-solstice.tsx:97
 msgid "History and meaning"
 msgstr "Sejarah dan makna"
 
-#: src/features/weather/ui/tile.tsx:168
+#: src/features/weather/ui/tile.tsx:169
 msgid "Holi"
 msgstr "Holi"
 
-#: src/features/seasonal-events/model/holi.tsx:130
+#: src/features/seasonal-events/events/holi.tsx:197
 msgid "Holi is a joyful festival of colour, celebrated with laughter, music, and shared community."
 msgstr "Holi adalah festival warna yang penuh sukacita, dirayakan dengan tawa, musik, dan kebersamaan."
 
-#: src/features/seasonal-events/model/lunar-new-year.tsx:86
+#: src/features/seasonal-events/events/lunar-new-year.tsx:90
 msgid "Homes are carefully cleaned and decorated to clear away old luck and welcome prosperity for the year ahead."
 msgstr "Rumah dibersihkan dan dihias dengan saksama untuk menyapu pergi keberuntungan lama dan menyambut kemakmuran untuk tahun yang akan datang."
 
@@ -768,7 +768,7 @@ msgstr "Rumah dibersihkan dan dihias dengan saksama untuk menyapu pergi keberunt
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "Saya ingin membawa Weather Please ke lebih banyak bahasa."
 
-#: src/features/settings/ui/settings.tsx:276
+#: src/features/settings/ui/settings.tsx:277
 msgid "Identifier"
 msgstr "Pengenal"
 
@@ -788,11 +788,11 @@ msgstr "Jika browser Anda meminta izin lokasi, silakan pilih \"izinkan\"."
 #~ msgid "In far northern regions, the sun may barely set at all, creating the phenomenon of the midnight sun."
 #~ msgstr "Di wilayah utara yang jauh, matahari mungkin nyaris tidak terbenam sama sekali, menciptakan fenomena matahari tengah malam."
 
-#: src/features/seasonal-events/model/eid-al-fitr.tsx:95
+#: src/features/seasonal-events/events/eid-al-fitr.tsx:99
 msgid "In many communities, everyone wears new clothes, children receive money or gifts, and doors stay open all day for visitors."
 msgstr "Di banyak komunitas, semua orang mengenakan pakaian baru, anak-anak menerima uang atau hadiah, dan pintu tetap terbuka sepanjang hari untuk para tamu."
 
-#: src/features/seasonal-events/model/autumn-equinox.tsx:108
+#: src/features/seasonal-events/events/autumn-equinox.tsx:113
 msgid "In many traditions, the equinox is not only about what has been gathered, but about what lies ahead — a pause to take stock before the quieter months arrive."
 msgstr "Dalam banyak tradisi, ekuinoks bukan hanya tentang apa yang telah dipanen, tetapi juga tentang apa yang menanti — jeda untuk menilai sebelum bulan-bulan yang lebih tenang tiba."
 
@@ -800,7 +800,7 @@ msgstr "Dalam banyak tradisi, ekuinoks bukan hanya tentang apa yang telah dipane
 #~ msgid "In most years the Leonids unfold gently, yet they always carry the possibility of a sudden, breathtaking encore."
 #~ msgstr "Pada kebanyakan tahun Leonid berlangsung lembut, namun selalu membawa kemungkinan encore yang mendadak dan menakjubkan."
 
-#: src/features/seasonal-events/model/leonids.tsx:126
+#: src/features/seasonal-events/events/leonids.tsx:130
 msgid "In most years, the Leonids produce only 10–15 meteors per hour. But during the 1966 storm, observers reported rates of thousands per minute — so many that some people thought the world was ending."
 msgstr "Di sebagian besar tahun, Leonid hanya menghasilkan 10–15 meteor per jam. Namun selama badai tahun 1966, para pengamat melaporkan tingkat ribuan per menit — begitu banyak sehingga beberapa orang mengira dunia akan berakhir."
 
@@ -831,23 +831,23 @@ msgstr "Nilai tidak valid. Pengaturan tidak akan disimpan sampai nilai ini valid
 #~ msgid "Issues after a recent update"
 #~ msgstr "Masalah setelah pembaruan terbaru"
 
-#: src/features/seasonal-events/model/eid-al-fitr.tsx:62
+#: src/features/seasonal-events/events/eid-al-fitr.tsx:66
 msgid "It begins with the sighting of the new moon, followed by a special morning prayer."
 msgstr "Ini dimulai dengan terlihatnya bulan baru, diikuti dengan salat pagi khusus."
 
-#: src/features/seasonal-events/model/eid-al-adha.tsx:55
+#: src/features/seasonal-events/events/eid-al-adha.tsx:59
 msgid "It centres on devotion, sacrifice, and the responsibility of generosity toward others."
 msgstr "Ini berpusat pada pengabdian, pengorbanan, dan tanggung jawab untuk berderma kepada orang lain."
 
-#: src/features/seasonal-events/model/autumn-equinox.tsx:98
+#: src/features/seasonal-events/events/autumn-equinox.tsx:103
 msgid "It has often been observed alongside lunar cycles, communal feasts, and rituals honouring both abundance and change."
 msgstr "Ini sering diamati bersama siklus bulan, jamuan komunal, dan ritual yang menghormati kelimpahan sekaligus perubahan."
 
-#: src/features/seasonal-events/model/earth-day.tsx:143
+#: src/features/seasonal-events/events/earth-day.tsx:147
 msgid "It has since become a global observance, often drawing attention to local ecosystems, conservation efforts, and environmental challenges."
 msgstr "Sejak itu, ini menjadi peringatan global, sering menarik perhatian pada ekosistem setempat, upaya konservasi, dan tantangan lingkungan."
 
-#: src/features/seasonal-events/model/halloween.tsx:46
+#: src/features/seasonal-events/events/halloween.tsx:50
 msgid "It invites friendly fear, shared laughter, and a little mischief."
 msgstr "Ini mengundang rasa takut yang ramah, tawa bersama, dan sedikit kenakalan."
 
@@ -863,7 +863,7 @@ msgstr "Ini mengundang rasa takut yang ramah, tawa bersama, dan sedikit kenakala
 #~ msgid "It is a holiday that speaks gently in the language of new beginnings."
 #~ msgstr "Ini adalah hari libur yang berbicara lembut dalam bahasa awal yang baru."
 
-#: src/features/seasonal-events/model/easter.tsx:44
+#: src/features/seasonal-events/events/easter.tsx:48
 msgid "It is a movable feast, its date determined by the cycle of the moon and the arrival of spring in the northern hemisphere."
 msgstr "Ini adalah perayaan yang tanggalnya berubah-ubah, ditentukan oleh siklus bulan dan datangnya musim semi di belahan bumi utara."
 
@@ -875,23 +875,23 @@ msgstr "Ini adalah perayaan yang tanggalnya berubah-ubah, ditentukan oleh siklus
 #~ msgid "It is a shower with a long memory, linking modern stargazers with watchers of ancient skies."
 #~ msgstr "Ini adalah hujan meteor dengan ingatan panjang, menghubungkan pengamat modern dengan para penatap langit pada zaman kuno."
 
-#: src/features/seasonal-events/model/holi.tsx:136
+#: src/features/seasonal-events/events/holi.tsx:203
 msgid "It is closely associated with the arrival of spring in much of the world where the tradition first formed."
 msgstr "Ini berkaitan erat dengan datangnya musim semi di banyak wilayah tempat tradisi ini pertama kali terbentuk."
 
-#: src/features/seasonal-events/model/lunar-new-year.tsx:69
+#: src/features/seasonal-events/events/lunar-new-year.tsx:73
 msgid "It is marked by family reunions, travel, and the renewal of long-held bonds."
 msgstr "Ini ditandai dengan reuni keluarga, perjalanan, dan pembaruan ikatan yang telah lama terjalin."
 
-#: src/features/seasonal-events/model/day-of-the-dead.tsx:63
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:67
 msgid "It is observed across November 1 and 2, with the first day often honouring children and the second devoted to adults."
 msgstr "Ini diamati sepanjang 1 dan 2 November, dengan hari pertama sering menghormati anak-anak dan hari kedua ditujukan untuk orang dewasa."
 
-#: src/features/seasonal-events/model/christmas.tsx:50
+#: src/features/seasonal-events/events/christmas.tsx:54
 msgid "It is observed around the world in both deeply religious and entirely secular ways, often blending the two."
 msgstr "Ini diamati di seluruh dunia, baik secara sangat religius maupun sepenuhnya sekuler, sering kali memadukan keduanya."
 
-#: src/features/seasonal-events/model/diwali.tsx:67
+#: src/features/seasonal-events/events/diwali.tsx:71
 msgid "It is observed by millions across India and by communities around the world."
 msgstr "Ini dirayakan oleh jutaan orang di seluruh India dan oleh komunitas di seluruh dunia."
 
@@ -899,11 +899,11 @@ msgstr "Ini dirayakan oleh jutaan orang di seluruh India dan oleh komunitas di s
 #~ msgid "It is often marked by small gestures that simply say someone has been remembered."
 #~ msgstr "Ini sering ditandai dengan gestur kecil yang sekadar mengatakan bahwa seseorang diingat."
 
-#: src/features/seasonal-events/model/winter-solstice.tsx:85
+#: src/features/seasonal-events/events/winter-solstice.tsx:90
 msgid "It signals the beginning of winter in the northern hemisphere and the start of summer in the southern hemisphere."
 msgstr "Ini menandai awal musim dingin di belahan bumi utara dan awal musim panas di belahan bumi selatan."
 
-#: src/features/seasonal-events/model/earth-day.tsx:127
+#: src/features/seasonal-events/events/earth-day.tsx:131
 msgid "It stands as both a celebration of the natural world and a call to responsible action."
 msgstr "Ini berdiri sebagai perayaan dunia alami sekaligus seruan untuk bertindak secara bertanggung jawab."
 
@@ -919,23 +919,23 @@ msgstr "Ini berdiri sebagai perayaan dunia alami sekaligus seruan untuk bertinda
 #~ msgid "It’s a season for noticing the small transitions: seedpods splitting, leaves turning, and birds tracing long paths across the sky."
 #~ msgstr "Ini adalah musim untuk memperhatikan transisi kecil: polong benih yang pecah, daun yang berubah, dan burung-burung yang menorehkan jalur panjang di langit."
 
-#: src/features/seasonal-events/model/valentines.tsx:55
+#: src/features/seasonal-events/events/valentines.tsx:59
 msgid "It's often less about grand gestures and more about letting someone know they're on your mind."
 msgstr "Ini sering kali bukan tentang isyarat besar, melainkan tentang memberi tahu seseorang bahwa Anda memikirkan mereka."
 
-#: src/features/seasonal-events/model/halloween.tsx:88
+#: src/features/seasonal-events/events/halloween.tsx:92
 msgid "Jack-o'-lanterns were originally carved from turnips in Ireland and Scotland — the pumpkin version is a North American adaptation, chosen because pumpkins were bigger and easier to hollow out."
 msgstr "Jack-o'-lantern awalnya diukir dari lobak di Irlandia dan Skotlandia — versi labu adalah adaptasi Amerika Utara, dipilih karena labu lebih besar dan lebih mudah dikosongkan."
 
-#: src/features/weather/ui/tile.tsx:118
+#: src/features/weather/ui/tile.tsx:119
 msgid "January"
 msgstr "Januari"
 
-#: src/features/weather/ui/tile.tsx:124
+#: src/features/weather/ui/tile.tsx:125
 msgid "July"
 msgstr "Juli"
 
-#: src/features/weather/ui/tile.tsx:123
+#: src/features/weather/ui/tile.tsx:124
 msgid "June"
 msgstr "Juni"
 
@@ -944,7 +944,7 @@ msgstr "Juni"
 #~ msgstr "Kekurangan fitur yang saya butuhkan"
 
 #: src/features/settings/ui/initialisation.tsx:171
-#: src/features/settings/ui/settings.tsx:217
+#: src/features/settings/ui/settings.tsx:218
 msgid "Language"
 msgstr "Bahasa"
 
@@ -952,7 +952,7 @@ msgstr "Bahasa"
 #~ msgid "Lanterns and parades transform the night into a flowing river of light."
 #~ msgstr "Lentera dan pawai mengubah malam menjadi sungai cahaya yang mengalir."
 
-#: src/features/settings/ui/settings.tsx:242
+#: src/features/settings/ui/settings.tsx:243
 msgid "Latitude"
 msgstr "Lintang"
 
@@ -960,31 +960,31 @@ msgstr "Lintang"
 msgid "Leave a review"
 msgstr "Tinggalkan ulasan"
 
-#: src/features/settings/ui/settings.tsx:388
+#: src/features/settings/ui/settings.tsx:389
 msgid "Legal"
 msgstr "Legal"
 
-#: src/features/seasonal-events/model/lunar-new-year.tsx:76
+#: src/features/seasonal-events/events/lunar-new-year.tsx:80
 msgid "Legends and customs"
 msgstr "Legenda dan tradisi"
 
-#: src/features/weather/ui/tile.tsx:178
+#: src/features/weather/ui/tile.tsx:179
 msgid "Leonids Meteor Shower"
 msgstr "Hujan meteor Leonid"
 
-#: src/features/weather/ui/tile.tsx:83
+#: src/features/weather/ui/tile.tsx:84
 msgid "light drizzle"
 msgstr "gerimis ringan"
 
-#: src/features/weather/ui/tile.tsx:86
+#: src/features/weather/ui/tile.tsx:87
 msgid "light freezing drizzle"
 msgstr "gerimis beku ringan"
 
-#: src/features/weather/ui/tile.tsx:91
+#: src/features/weather/ui/tile.tsx:92
 msgid "light freezing rain"
 msgstr "hujan beku ringan"
 
-#: src/features/seasonal-events/model/total-solar-eclipse.tsx:61
+#: src/features/seasonal-events/events/total-solar-eclipse.tsx:65
 msgid "Light shifts to a silvery tone, shadows sharpen, and temperatures may drop noticeably within minutes."
 msgstr "Cahaya berubah menjadi nuansa keperakan, bayangan menajam, dan suhu dapat turun terasa dalam hitungan menit."
 
@@ -1024,7 +1024,7 @@ msgstr "Cahaya berubah menjadi nuansa keperakan, bayangan menajam, dan suhu dapa
 #~ msgid "Location"
 #~ msgstr "Lokasi"
 
-#: src/features/settings/ui/settings.tsx:250
+#: src/features/settings/ui/settings.tsx:251
 msgid "Longitude"
 msgstr "Bujur"
 
@@ -1052,20 +1052,20 @@ msgstr "Visibilitas rendah dimulai dalam {timeUntilLowVisibility} jam"
 msgid "Low visibility starting in 1 hour"
 msgstr "Visibilitas rendah dimulai dalam 1 jam"
 
-#: src/features/weather/ui/tile.tsx:164
+#: src/features/weather/ui/tile.tsx:165
 msgid "Lunar New Year"
 msgstr "Tahun Baru Imlek"
 
-#: src/features/seasonal-events/model/lunar-new-year.tsx:63
+#: src/features/seasonal-events/events/lunar-new-year.tsx:67
 msgid "Lunar New Year begins with the first new moon of the lunar calendar and unfolds across a festival season lasting up to fifteen days."
 msgstr "Tahun Baru Imlek dimulai dengan bulan baru pertama dalam kalender lunar dan berlangsung sebagai musim festival hingga lima belas hari."
 
-#: src/features/weather/ui/tile.tsx:175
+#: src/features/weather/ui/tile.tsx:176
 msgid "Lyrids Meteor Shower"
 msgstr "Hujan meteor Lyrid"
 
-#: src/features/weather/ui/tile.tsx:78
-#: src/features/weather/ui/tile.tsx:81
+#: src/features/weather/ui/tile.tsx:79
+#: src/features/weather/ui/tile.tsx:82
 msgid "mainly clear"
 msgstr "sebagian besar cerah"
 
@@ -1073,11 +1073,11 @@ msgstr "sebagian besar cerah"
 #~ msgid "Many people still try the playful tradition of balancing an egg on its end, a quiet ritual of patience and curiosity."
 #~ msgstr "Banyak orang masih mencoba tradisi bermain-main menyeimbangkan telur di ujungnya, sebuah ritual sunyi tentang kesabaran dan rasa ingin tahu."
 
-#: src/features/weather/ui/tile.tsx:120
+#: src/features/weather/ui/tile.tsx:121
 msgid "March"
 msgstr "Maret"
 
-#: src/features/seasonal-events/model/day-of-the-dead.tsx:73
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:77
 msgid "Marigolds, papel picado, sugar skulls, candles, and favourite foods form a visual language of welcome and connection."
 msgstr "Bunga marigold, papel picado, tengkorak gula, lilin, dan makanan favorit membentuk bahasa visual tentang sambutan dan keterhubungan."
 
@@ -1085,11 +1085,11 @@ msgstr "Bunga marigold, papel picado, tengkorak gula, lilin, dan makanan favorit
 #~ msgid "Masks invite games of identity, and lanterns turn familiar streets into small theatres of light and shadow."
 #~ msgstr "Topeng mengundang permainan identitas, dan lentera mengubah jalan yang familiar menjadi teater kecil cahaya dan bayangan."
 
-#: src/features/weather/ui/tile.tsx:122
+#: src/features/weather/ui/tile.tsx:123
 msgid "May"
 msgstr "Mei"
 
-#: src/features/seasonal-events/model/autumn-equinox.tsx:126
+#: src/features/seasonal-events/events/autumn-equinox.tsx:131
 msgid "Meanwhile, billions of birds are mid-migration, navigating by stars, magnetic fields, and landmarks passed down through generations."
 msgstr "Sementara itu, miliaran burung sedang dalam proses migrasi, menavigasi menggunakan bintang, medan magnet, dan penanda yang diwariskan dari generasi ke generasi."
 
@@ -1101,35 +1101,35 @@ msgstr "Sementara itu, miliaran burung sedang dalam proses migrasi, menavigasi m
 #~ msgid "Miscellaneous"
 #~ msgstr "Lain-lain"
 
-#: src/features/weather/ui/tile.tsx:84
+#: src/features/weather/ui/tile.tsx:85
 msgid "moderate drizzle"
 msgstr "gerimis sedang"
 
-#: src/features/weather/ui/tile.tsx:89
+#: src/features/weather/ui/tile.tsx:90
 msgid "moderate rain"
 msgstr "hujan sedang"
 
-#: src/features/weather/ui/tile.tsx:98
+#: src/features/weather/ui/tile.tsx:99
 msgid "moderate rain showers"
 msgstr "hujan gerimis sedang"
 
-#: src/features/weather/ui/tile.tsx:94
+#: src/features/weather/ui/tile.tsx:95
 msgid "moderate snowfall"
 msgstr "salju lebat sedang"
 
-#: src/features/weather/ui/tile.tsx:109
+#: src/features/weather/ui/tile.tsx:110
 msgid "Monday"
 msgstr "Senin"
 
-#: src/features/seasonal-events/model/winter-solstice.tsx:102
+#: src/features/seasonal-events/events/winter-solstice.tsx:107
 msgid "Monuments and ancient sites around the world are aligned to mark the solstice and the return of the Sun’s path."
 msgstr "Monumen dan situs kuno di seluruh dunia disejajarkan untuk menandai solstis dan kembalinya lintasan Matahari."
 
-#: src/features/seasonal-events/model/earth-day.tsx:175
+#: src/features/seasonal-events/events/earth-day.tsx:179
 msgid "Most environmental gains start small and local: a restored wetland, a cleaner stretch of river, a species given just enough room to recover."
 msgstr "Sebagian besar kemajuan lingkungan dimulai dari skala kecil dan lokal: lahan basah yang dipulihkan, sungai yang lebih bersih, spesies yang diberi ruang yang cukup untuk pulih."
 
-#: src/features/seasonal-events/model/leonids.tsx:83
+#: src/features/seasonal-events/events/leonids.tsx:87
 msgid "Most years the display is modest, but the shower is famous for its capacity to produce rare and spectacular surprises."
 msgstr "Pada kebanyakan tahun, pertunjukannya sederhana, tetapi hujan meteor ini terkenal karena kemampuannya menghadirkan kejutan langka yang spektakuler."
 
@@ -1153,15 +1153,15 @@ msgstr "Jangan tampilkan ini lagi"
 #~ msgid "New tab"
 #~ msgstr "Tab baru"
 
-#: src/features/weather/ui/tile.tsx:162
+#: src/features/weather/ui/tile.tsx:163
 msgid "New Year's Day"
 msgstr "Tahun Baru"
 
-#: src/features/seasonal-events/model/new-years.tsx:27
+#: src/features/seasonal-events/events/new-years.tsx:31
 msgid "New Year’s Day serves as the calendar’s reset, marked by the first sunrise of the year and a shared moment of looking forward."
 msgstr "Hari Tahun Baru berfungsi sebagai reset kalender, ditandai oleh matahari terbit pertama tahun ini dan momen bersama untuk menatap ke depan."
 
-#: src/features/seasonal-events/model/winter-solstice.tsx:119
+#: src/features/seasonal-events/events/winter-solstice.tsx:124
 msgid "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precisely that sunlight floods its inner chamber for just seventeen minutes around the winter solstice each year."
 msgstr "Newgrange, makam lorong berusia 5.000 tahun di Irlandia, dibangun dengan sangat presisi sehingga sinar matahari membanjiri ruang dalamnya hanya selama tujuh belas menit sekitar titik balik matahari musim dingin setiap tahunnya."
 
@@ -1181,88 +1181,88 @@ msgstr "Newgrange, makam lorong berusia 5.000 tahun di Irlandia, dibangun dengan
 #~ msgid "Note: This requires browser permissions"
 #~ msgstr "Catatan: Ini memerlukan izin peramban"
 
-#: src/features/weather/ui/tile.tsx:128
+#: src/features/weather/ui/tile.tsx:129
 msgid "November"
 msgstr "November"
 
-#: src/features/settings/ui/settings.tsx:265
+#: src/features/settings/ui/settings.tsx:266
 msgid "Number of days to forecast"
 msgstr "Jumlah hari untuk ramalan"
 
-#: src/features/weather/ui/tile.tsx:127
+#: src/features/weather/ui/tile.tsx:128
 msgid "October"
 msgstr "Oktober"
 
-#: src/features/seasonal-events/model/day-of-the-dead.tsx:79
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:83
 msgid "Ofrendas commonly include water, salt, and cherished photographs, creating a space where memory feels both intimate and shared."
 msgstr "Ofrenda biasanya mencakup air, garam, dan foto-foto yang disayang, menciptakan ruang di mana ingatan terasa intim sekaligus dibagikan."
 
-#: src/features/seasonal-events/model/perseids.tsx:133
+#: src/features/seasonal-events/events/perseids.tsx:137
 msgid "On a good night near peak, you can expect a meteor every minute or two. The best rates come after midnight, when your side of the Earth faces into the debris stream."
 msgstr "Pada malam yang cerah mendekati puncak, Anda bisa mengharapkan satu meteor setiap satu atau dua menit. Tingkat terbaik terjadi setelah tengah malam, ketika sisi Bumi Anda menghadap ke aliran puing-puing."
 
-#: src/features/seasonal-events/model/holi.tsx:168
+#: src/features/seasonal-events/events/holi.tsx:235
 msgid "On the following day, coloured powders fill the air as people cross social boundaries in a shared expression of joy."
 msgstr "Keesokan harinya, bubuk warna memenuhi udara saat orang-orang melampaui batas sosial dalam ungkapan sukacita bersama."
 
-#: src/features/seasonal-events/model/summer-solstice.tsx:108
+#: src/features/seasonal-events/events/summer-solstice.tsx:113
 msgid "On the longest day, twilight stretches out for hours and full darkness may never arrive."
 msgstr "Pada hari terpanjang, senja berlangsung selama berjam-jam dan kegelapan penuh mungkin tidak pernah tiba."
 
-#: src/features/weather/ui/tile.tsx:177
+#: src/features/weather/ui/tile.tsx:178
 msgid "Orionids Meteor Shower"
 msgstr "Hujan meteor Orionid"
 
-#: src/features/settings/ui/settings.tsx:132
+#: src/features/settings/ui/settings.tsx:140
 msgid "Other holidays"
 msgstr "Hari libur lainnya"
 
-#: src/features/seasonal-events/model/diwali.tsx:83
+#: src/features/seasonal-events/events/diwali.tsx:87
 msgid "Other traditions honour Lakshmi, the goddess of prosperity and fortune, while Jain and Sikh communities observe Diwali through their own sacred histories."
 msgstr "Tradisi lain menghormati Lakshmi, dewi kemakmuran dan keberuntungan, sementara komunitas Jain dan Sikh mengamati Diwali melalui sejarah suci mereka sendiri."
 
-#: src/features/seasonal-events/model/new-years.tsx:51
+#: src/features/seasonal-events/events/new-years.tsx:55
 msgid "Over centuries of calendar reform, January 1 gradually became established as the start of the year for much of the world."
 msgstr "Selama berabad-abad reformasi kalender, 1 Januari perlahan menjadi mapan sebagai awal tahun bagi sebagian besar dunia."
 
-#: src/features/seasonal-events/model/halloween.tsx:62
+#: src/features/seasonal-events/events/halloween.tsx:66
 msgid "Over time it evolved into a community tradition of visiting, disguises, and shared treats."
 msgstr "Seiring waktu, itu berkembang menjadi tradisi komunitas berupa kunjungan, penyamaran, dan berbagi kudapan."
 
-#: src/features/weather/ui/tile.tsx:80
+#: src/features/weather/ui/tile.tsx:81
 msgid "overcast"
 msgstr "berawan"
 
-#: src/features/seasonal-events/model/autumn-equinox.tsx:79
-#: src/features/seasonal-events/model/christmas.tsx:40
-#: src/features/seasonal-events/model/day-of-the-dead.tsx:37
-#: src/features/seasonal-events/model/diwali.tsx:58
-#: src/features/seasonal-events/model/earth-day.tsx:118
-#: src/features/seasonal-events/model/easter.tsx:35
-#: src/features/seasonal-events/model/eid-al-adha.tsx:46
-#: src/features/seasonal-events/model/eid-al-fitr.tsx:53
-#: src/features/seasonal-events/model/eta-aquariids.tsx:74
-#: src/features/seasonal-events/model/geminids.tsx:74
-#: src/features/seasonal-events/model/halloween.tsx:37
-#: src/features/seasonal-events/model/hanukkah.tsx:62
-#: src/features/seasonal-events/model/holi.tsx:127
-#: src/features/seasonal-events/model/leonids.tsx:74
-#: src/features/seasonal-events/model/lunar-new-year.tsx:60
-#: src/features/seasonal-events/model/lyrids.tsx:74
-#: src/features/seasonal-events/model/new-years.tsx:24
-#: src/features/seasonal-events/model/orionids.tsx:74
-#: src/features/seasonal-events/model/perseids.tsx:73
-#: src/features/seasonal-events/model/quadrantids.tsx:74
-#: src/features/seasonal-events/model/spring-equinox.tsx:80
-#: src/features/seasonal-events/model/summer-solstice.tsx:78
-#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:35
-#: src/features/seasonal-events/model/total-solar-eclipse.tsx:26
-#: src/features/seasonal-events/model/valentines.tsx:46
-#: src/features/seasonal-events/model/winter-solstice.tsx:76
+#: src/features/seasonal-events/events/autumn-equinox.tsx:84
+#: src/features/seasonal-events/events/christmas.tsx:44
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:41
+#: src/features/seasonal-events/events/diwali.tsx:62
+#: src/features/seasonal-events/events/earth-day.tsx:122
+#: src/features/seasonal-events/events/easter.tsx:39
+#: src/features/seasonal-events/events/eid-al-adha.tsx:50
+#: src/features/seasonal-events/events/eid-al-fitr.tsx:57
+#: src/features/seasonal-events/events/eta-aquariids.tsx:78
+#: src/features/seasonal-events/events/geminids.tsx:78
+#: src/features/seasonal-events/events/halloween.tsx:41
+#: src/features/seasonal-events/events/hanukkah.tsx:66
+#: src/features/seasonal-events/events/holi.tsx:194
+#: src/features/seasonal-events/events/leonids.tsx:78
+#: src/features/seasonal-events/events/lunar-new-year.tsx:64
+#: src/features/seasonal-events/events/lyrids.tsx:78
+#: src/features/seasonal-events/events/new-years.tsx:28
+#: src/features/seasonal-events/events/orionids.tsx:78
+#: src/features/seasonal-events/events/perseids.tsx:77
+#: src/features/seasonal-events/events/quadrantids.tsx:78
+#: src/features/seasonal-events/events/spring-equinox.tsx:85
+#: src/features/seasonal-events/events/summer-solstice.tsx:83
+#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:39
+#: src/features/seasonal-events/events/total-solar-eclipse.tsx:30
+#: src/features/seasonal-events/events/valentines.tsx:50
+#: src/features/seasonal-events/events/winter-solstice.tsx:81
 msgid "Overview"
 msgstr "Ikhtisar"
 
-#: src/features/weather/ui/tile.tsx:79
+#: src/features/weather/ui/tile.tsx:80
 msgid "partly cloudy"
 msgstr "sebagian berawan"
 
@@ -1270,15 +1270,15 @@ msgstr "sebagian berawan"
 #~ msgid "Performance issues"
 #~ msgstr "Masalah kinerja"
 
-#: src/features/settings/ui/settings.tsx:260
+#: src/features/settings/ui/settings.tsx:261
 msgid "Periodically update location automatically"
 msgstr "Secara berkala perbarui lokasi secara otomatis"
 
-#: src/features/seasonal-events/model/perseids.tsx:126
+#: src/features/seasonal-events/events/perseids.tsx:130
 msgid "Perseid meteors enter the atmosphere at roughly 60 km/s — fast enough that the larger ones compress the air ahead of them into a bright, explosive fireball."
 msgstr "Meteor Perseid memasuki atmosfer dengan kecepatan sekitar 60 km/s — cukup cepat sehingga yang lebih besar menekan udara di depannya menjadi bola api yang terang dan eksplosif."
 
-#: src/features/weather/ui/tile.tsx:173
+#: src/features/weather/ui/tile.tsx:174
 msgid "Perseids Meteor Shower"
 msgstr "Hujan meteor Perseid"
 
@@ -1286,19 +1286,19 @@ msgstr "Hujan meteor Perseid"
 #~ msgid "Please enter it manually below."
 #~ msgstr "Silakan masukkan secara manual di bawah ini."
 
-#: src/features/weather/ui/tile.tsx:174
+#: src/features/weather/ui/tile.tsx:175
 msgid "Quadrantids Meteor Shower"
 msgstr "Hujan meteor Quadrantid"
 
-#: src/features/seasonal-events/model/day-of-the-dead.tsx:46
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:50
 msgid "Rather than a solemn farewell, it treats remembrance as something vibrant, communal, and alive."
 msgstr "Alih-alih perpisahan yang khidmat, tradisi ini memperlakukan mengenang sebagai sesuatu yang hidup, komunal, dan penuh warna."
 
-#: src/features/seasonal-events/model/lunar-new-year.tsx:96
+#: src/features/seasonal-events/events/lunar-new-year.tsx:100
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "Angpao merah, jeruk mandarin, dan kuplet kaligrafi menyampaikan harapan akan kelimpahan, kebahagiaan, dan awal yang segar."
 
-#: src/features/settings/ui/settings.tsx:118
+#: src/features/settings/ui/settings.tsx:126
 msgid "Religious & cultural"
 msgstr "Keagamaan & budaya"
 
@@ -1310,12 +1310,12 @@ msgstr "Laporkan bug"
 #~ msgid "Resource usage"
 #~ msgstr "Penggunaan sumber daya"
 
-#: src/pages/index.tsx:160
-#: src/pages/index.tsx:176
+#: src/pages/index.tsx:171
+#: src/pages/index.tsx:190
 msgid "Retry"
 msgstr "Coba lagi"
 
-#: src/features/weather/ui/tile.tsx:114
+#: src/features/weather/ui/tile.tsx:115
 msgid "Saturday"
 msgstr "Sabtu"
 
@@ -1324,15 +1324,15 @@ msgstr "Sabtu"
 #~ msgid "Save"
 #~ msgstr "Simpan"
 
-#: src/features/settings/ui/settings.tsx:323
+#: src/features/settings/ui/settings.tsx:324
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "Efek musiman dinonaktifkan karena browser Anda tampaknya menggunakan renderer perangkat lunak. Aktifkan akselerasi perangkat keras untuk melihat efek ini."
 
-#: src/features/settings/ui/settings.tsx:314
+#: src/features/settings/ui/settings.tsx:315
 msgid "Seasonal events"
 msgstr "Acara musiman"
 
-#: src/features/settings/ui/settings.tsx:92
+#: src/features/settings/ui/settings.tsx:100
 msgid "Seasons & nature"
 msgstr "Musim & alam"
 
@@ -1340,11 +1340,11 @@ msgstr "Musim & alam"
 #~ msgid "Security and privacy concerns"
 #~ msgstr "Kekhawatiran tentang keamanan dan privasi"
 
-#: src/features/seasonal-events/model/diwali.tsx:110
+#: src/features/seasonal-events/events/diwali.tsx:114
 msgid "Seen from above, cities during Diwali are transformed — rooftops, balconies, and streets are outlined in light, and the effect is visible from space in satellite imagery."
 msgstr "Dilihat dari atas, kota-kota selama Diwali bertransformasi — atap, balkon, dan jalanan digariskan cahaya, dan efeknya terlihat dari luar angkasa dalam citra satelit."
 
-#: src/features/weather/ui/tile.tsx:126
+#: src/features/weather/ui/tile.tsx:127
 msgid "September"
 msgstr "September"
 
@@ -1352,8 +1352,8 @@ msgstr "September"
 msgid "Set my location"
 msgstr "Atur lokasi saya"
 
-#: src/features/settings/ui/settings.tsx:194
-#: src/features/settings/ui/settings.tsx:211
+#: src/features/settings/ui/settings.tsx:195
+#: src/features/settings/ui/settings.tsx:212
 msgid "Settings"
 msgstr "Pengaturan"
 
@@ -1361,7 +1361,7 @@ msgstr "Pengaturan"
 #~ msgid "Share anonymised crash data and error logs"
 #~ msgstr "Bagikan data kecelakaan dan log kesalahan yang di-anonimkan"
 
-#: src/features/seasonal-events/model/valentines.tsx:87
+#: src/features/seasonal-events/events/valentines.tsx:91
 msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and personal."
 msgstr "Manisan bersama, bunga, dan hadiah kecil menjaga perayaan tetap intim dan personal."
 
@@ -1373,15 +1373,15 @@ msgstr "Manisan bersama, bunga, dan hadiah kecil menjaga perayaan tetap intim da
 msgid "Show Autumn Equinox event"
 msgstr "Tampilkan Ekuinoks musim gugur"
 
-#: src/features/settings/ui/settings.tsx:82
+#: src/features/settings/ui/settings.tsx:88
 msgid "Show Christmas Day event"
 msgstr "Tampilkan Hari Natal"
 
-#: src/features/settings/ui/settings.tsx:86
+#: src/features/settings/ui/settings.tsx:94
 msgid "Show Day of the Dead event"
 msgstr "Tampilkan Hari Orang Mati"
 
-#: src/features/settings/ui/settings.tsx:77
+#: src/features/settings/ui/settings.tsx:83
 msgid "Show Diwali event"
 msgstr "Tampilkan Diwali"
 
@@ -1389,19 +1389,19 @@ msgstr "Tampilkan Diwali"
 msgid "Show Earth Day event"
 msgstr "Tampilkan Hari Bumi"
 
-#: src/features/settings/ui/settings.tsx:76
+#: src/features/settings/ui/settings.tsx:82
 msgid "Show Easter event"
 msgstr "Tampilkan Paskah"
 
-#: src/features/settings/ui/settings.tsx:80
+#: src/features/settings/ui/settings.tsx:86
 msgid "Show Eid al-Adha event"
 msgstr "Tampilkan Idul Adha"
 
-#: src/features/settings/ui/settings.tsx:79
+#: src/features/settings/ui/settings.tsx:85
 msgid "Show Eid al-Fitr event"
 msgstr "Tampilkan Idul Fitri"
 
-#: src/features/settings/ui/settings.tsx:67
+#: src/features/settings/ui/settings.tsx:69
 msgid "Show Eta Aquariids meteor shower event"
 msgstr "Tampilkan hujan meteor Eta Aquariid"
 
@@ -1409,15 +1409,15 @@ msgstr "Tampilkan hujan meteor Eta Aquariid"
 msgid "Show extreme UV alerts"
 msgstr "Tampilkan peringatan UV ekstrem"
 
-#: src/features/settings/ui/settings.tsx:74
+#: src/features/settings/ui/settings.tsx:80
 msgid "Show Geminids meteor shower event"
 msgstr "Tampilkan hujan meteor Geminid"
 
-#: src/features/settings/ui/settings.tsx:85
+#: src/features/settings/ui/settings.tsx:93
 msgid "Show Halloween event"
 msgstr "Tampilkan Halloween"
 
-#: src/features/settings/ui/settings.tsx:81
+#: src/features/settings/ui/settings.tsx:87
 msgid "Show Hanukkah event"
 msgstr "Tampilkan Hanukkah"
 
@@ -1425,11 +1425,11 @@ msgstr "Tampilkan Hanukkah"
 msgid "Show high precipitation alerts"
 msgstr "Tampilkan peringatan presipitasi tinggi"
 
-#: src/features/settings/ui/settings.tsx:78
+#: src/features/settings/ui/settings.tsx:84
 msgid "Show Holi event"
 msgstr "Tampilkan Holi"
 
-#: src/features/settings/ui/settings.tsx:70
+#: src/features/settings/ui/settings.tsx:72
 msgid "Show Leonids meteor shower event"
 msgstr "Tampilkan hujan meteor Leonid"
 
@@ -1437,35 +1437,35 @@ msgstr "Tampilkan hujan meteor Leonid"
 msgid "Show low visibility alerts"
 msgstr "Tampilkan peringatan visibilitas rendah"
 
-#: src/features/settings/ui/settings.tsx:75
+#: src/features/settings/ui/settings.tsx:81
 msgid "Show Lunar New Year event"
 msgstr "Tampilkan Tahun Baru Imlek"
 
-#: src/features/settings/ui/settings.tsx:65
+#: src/features/settings/ui/settings.tsx:67
 msgid "Show Lyrids meteor shower event"
 msgstr "Tampilkan hujan meteor Lyrid"
 
-#: src/features/settings/ui/settings.tsx:83
+#: src/features/settings/ui/settings.tsx:89
 msgid "Show New Year's Day event"
 msgstr "Tampilkan Tahun Baru"
 
-#: src/features/settings/ui/settings.tsx:69
+#: src/features/settings/ui/settings.tsx:71
 msgid "Show Orionids meteor shower event"
 msgstr "Tampilkan hujan meteor Orionid"
 
-#: src/features/settings/ui/settings.tsx:73
+#: src/features/settings/ui/settings.tsx:79
 msgid "Show Perseids meteor shower event"
 msgstr "Tampilkan hujan meteor Perseid"
 
-#: src/features/settings/ui/settings.tsx:64
+#: src/features/settings/ui/settings.tsx:65
 msgid "Show Quadrantids meteor shower event"
 msgstr "Tampilkan hujan meteor Quadrantid"
 
-#: src/features/settings/ui/settings.tsx:317
+#: src/features/settings/ui/settings.tsx:318
 msgid "Show seasonal events"
 msgstr "Tampilkan acara musiman"
 
-#: src/features/settings/ui/settings.tsx:333
+#: src/features/settings/ui/settings.tsx:334
 msgid "Show seasonal tile glow"
 msgstr "Tampilkan cahaya ubin musiman"
 
@@ -1481,19 +1481,23 @@ msgstr "Tampilkan peringatan angin kencang"
 msgid "Show Summer Solstice event"
 msgstr "Tampilkan Solstis musim panas"
 
-#: src/features/settings/ui/settings.tsx:72
+#: src/features/weather/ui/tile.tsx:525
+msgid "Show this event"
+msgstr "Tampilkan acara ini"
+
+#: src/features/settings/ui/settings.tsx:77
 msgid "Show total lunar eclipse event"
 msgstr "Tampilkan gerhana bulan total"
 
-#: src/features/settings/ui/settings.tsx:71
+#: src/features/settings/ui/settings.tsx:74
 msgid "Show total solar eclipse event"
 msgstr "Tampilkan gerhana matahari total"
 
-#: src/features/settings/ui/settings.tsx:84
+#: src/features/settings/ui/settings.tsx:91
 msgid "Show Valentine's Day event"
 msgstr "Tampilkan Hari Valentine"
 
-#: src/features/settings/ui/settings.tsx:306
+#: src/features/settings/ui/settings.tsx:307
 msgid "Show weather alerts"
 msgstr "Tampilkan peringatan cuaca"
 
@@ -1501,28 +1505,28 @@ msgstr "Tampilkan peringatan cuaca"
 msgid "Show Winter Solstice event"
 msgstr "Tampilkan Solstis musim dingin"
 
-#: src/pages/index.tsx:170
+#: src/pages/index.tsx:184
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Menampilkan data cuaca yang tersimpan di cache. Coba lagi untuk memperbarui prakiraan terbaru."
 
-#: src/features/seasonal-events/model/geminids.tsx:106
-#: src/features/seasonal-events/model/perseids.tsx:107
+#: src/features/seasonal-events/events/geminids.tsx:110
+#: src/features/seasonal-events/events/perseids.tsx:111
 msgid "Skywatching tips"
 msgstr "Tips mengamati langit"
 
-#: src/features/weather/ui/tile.tsx:88
+#: src/features/weather/ui/tile.tsx:89
 msgid "slight rain"
 msgstr "hujan ringan"
 
-#: src/features/weather/ui/tile.tsx:97
+#: src/features/weather/ui/tile.tsx:98
 msgid "slight rain showers"
 msgstr "hujan gerimis ringan"
 
-#: src/features/weather/ui/tile.tsx:100
+#: src/features/weather/ui/tile.tsx:101
 msgid "slight snow showers"
 msgstr "hujan salju ringan"
 
-#: src/features/weather/ui/tile.tsx:93
+#: src/features/weather/ui/tile.tsx:94
 msgid "slight snowfall"
 msgstr "salju ringan"
 
@@ -1534,23 +1538,23 @@ msgstr "salju ringan"
 #~ msgid "Small actions accumulate: a planted tree, a cleared shoreline, a renewed path."
 #~ msgstr "Tindakan kecil terakumulasi: satu pohon yang ditanam, garis pantai yang dibersihkan, jalur yang diperbarui."
 
-#: src/features/weather/ui/tile.tsx:96
+#: src/features/weather/ui/tile.tsx:97
 msgid "snow grains"
 msgstr "butiran salju"
 
-#: src/features/seasonal-events/model/total-solar-eclipse.tsx:45
+#: src/features/seasonal-events/events/total-solar-eclipse.tsx:49
 msgid "Solar eclipses have been recorded for thousands of years, inspiring awe, uncertainty, and careful study."
 msgstr "Gerhana Matahari telah dicatat selama ribuan tahun, menginspirasi kekaguman, ketidakpastian, dan kajian yang teliti."
 
-#: src/features/seasonal-events/model/geminids.tsx:132
+#: src/features/seasonal-events/events/geminids.tsx:136
 msgid "Some appear white, others yellow or blue-green. The colour depends on the mineral composition of each grain of dust as it burns up."
 msgstr "Beberapa tampak putih, yang lain kuning atau hijau kebiruan. Warnanya bergantung pada komposisi mineral setiap butiran debu saat terbakar."
 
-#: src/features/weather/ui/tile.tsx:165
+#: src/features/weather/ui/tile.tsx:166
 msgid "Spring Equinox"
 msgstr "Ekuinoks musim semi"
 
-#: src/features/seasonal-events/model/holi.tsx:146
+#: src/features/seasonal-events/events/holi.tsx:213
 msgid "Stories surrounding Holi vary by region, including the tale of Prahlad and Holika, which speaks to the triumph of devotion and good over harm."
 msgstr "Kisah seputar Holi berbeda-beda menurut wilayah, termasuk cerita Prahlad dan Holika, yang berbicara tentang kemenangan pengabdian dan kebaikan atas bahaya."
 
@@ -1594,15 +1598,15 @@ msgstr "Hembusan angin kencang dimulai dalam 1 jam"
 msgid "Submit"
 msgstr "Kirim"
 
-#: src/features/weather/ui/tile.tsx:170
+#: src/features/weather/ui/tile.tsx:171
 msgid "Summer Solstice"
 msgstr "Solstis musim panas"
 
-#: src/features/weather/ui/tile.tsx:108
+#: src/features/weather/ui/tile.tsx:109
 msgid "Sunday"
 msgstr "Minggu"
 
-#: src/features/seasonal-events/model/easter.tsx:70
+#: src/features/seasonal-events/events/easter.tsx:74
 msgid "Sunrise services draw people outdoors before the day has fully started, and egg hunts send children tearing across gardens and parks."
 msgstr "Kebaktian fajar mengajak orang ke luar ruangan sebelum hari benar-benar dimulai, dan perburuan telur membuat anak-anak berlarian di taman dan kebun."
 
@@ -1610,19 +1614,19 @@ msgstr "Kebaktian fajar mengajak orang ke luar ruangan sebelum hari benar-benar 
 #~ msgid "Sunrise services, fresh mornings, and the simple delight of egg hunts carry the feeling of a world beginning again."
 #~ msgstr "Ibadah saat matahari terbit, pagi yang segar, dan kegembiraan sederhana berburu telur membawa rasa seakan dunia dimulai kembali."
 
-#: src/features/seasonal-events/model/day-of-the-dead.tsx:70
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:74
 msgid "Symbols and offerings"
 msgstr "Simbol dan persembahan"
 
-#: src/features/seasonal-events/model/christmas.tsx:75
-#: src/features/seasonal-events/model/diwali.tsx:91
-#: src/features/seasonal-events/model/halloween.tsx:69
-#: src/features/seasonal-events/model/holi.tsx:159
-#: src/features/seasonal-events/model/valentines.tsx:78
+#: src/features/seasonal-events/events/christmas.tsx:79
+#: src/features/seasonal-events/events/diwali.tsx:95
+#: src/features/seasonal-events/events/halloween.tsx:73
+#: src/features/seasonal-events/events/holi.tsx:226
+#: src/features/seasonal-events/events/valentines.tsx:82
 msgid "Symbols and rituals"
 msgstr "Simbol dan ritual"
 
-#: src/features/seasonal-events/model/lunar-new-year.tsx:93
+#: src/features/seasonal-events/events/lunar-new-year.tsx:97
 msgid "Symbols of luck"
 msgstr "Simbol keberuntungan"
 
@@ -1630,15 +1634,15 @@ msgstr "Simbol keberuntungan"
 #~ msgid "The air hums with music, laughter, and the quiet shimmer of celebration."
 #~ msgstr "Udara berdengung oleh musik, tawa, dan kilau perayaan yang lembut."
 
-#: src/features/seasonal-events/model/autumn-equinox.tsx:82
+#: src/features/seasonal-events/events/autumn-equinox.tsx:87
 msgid "The autumn equinox marks a moment of near-perfect balance, when day and night stand equal before the long shift toward darker evenings."
 msgstr "Ekuinoks musim gugur menandai momen keseimbangan nyaris sempurna, ketika siang dan malam sama panjang sebelum pergeseran panjang menuju malam yang lebih gelap."
 
-#: src/features/seasonal-events/model/halloween.tsx:55
+#: src/features/seasonal-events/events/halloween.tsx:59
 msgid "The celebration grew from the ancient festival of Samhain and the later observance of All Hallows’ Eve, blending seasonal rites with remembrance of the dead."
 msgstr "Perayaan ini tumbuh dari festival kuno Samhain dan pengamatan kemudian pada All Hallows’ Eve, memadukan ritus musiman dengan peringatan terhadap mereka yang telah meninggal."
 
-#: src/features/seasonal-events/model/autumn-equinox.tsx:119
+#: src/features/seasonal-events/events/autumn-equinox.tsx:124
 msgid "The colour change in autumn leaves isn’t new pigment appearing — it’s the green chlorophyll withdrawing, revealing yellows and oranges that were there all along."
 msgstr "Perubahan warna daun musim gugur bukan karena munculnya pigmen baru — melainkan klorofil hijau yang menarik diri, mengungkapkan warna kuning dan oranye yang sudah ada sejak awal."
 
@@ -1646,72 +1650,72 @@ msgstr "Perubahan warna daun musim gugur bukan karena munculnya pigmen baru — 
 #~ msgid "The colours draw everyone into the same bright moment, dissolving distance and difference."
 #~ msgstr "Warna-warna menarik semua orang ke momen cerah yang sama, meluruhkan jarak dan perbedaan."
 
-#: src/features/seasonal-events/model/winter-solstice.tsx:112
+#: src/features/seasonal-events/events/winter-solstice.tsx:117
 msgid "The day after the solstice is only about a second longer — the shift is imperceptible at first, then gradually accelerates through January and February."
 msgstr "Hari setelah titik balik matahari hanya sekitar satu detik lebih panjang — perubahan ini awalnya tidak terasa, lalu semakin cepat sepanjang Januari dan Februari."
 
-#: src/features/seasonal-events/model/eta-aquariids.tsx:109
+#: src/features/seasonal-events/events/eta-aquariids.tsx:113
 msgid "The Eta Aquariids and the Orionids are sibling showers — both are born from Halley's Comet, but Earth crosses different parts of the debris trail six months apart."
 msgstr "Eta Aquariid dan Orionid adalah hujan meteor bersaudara — keduanya berasal dari Komet Halley, tetapi Bumi melintasi bagian yang berbeda dari jejak puing-puing dengan jarak enam bulan."
 
-#: src/features/seasonal-events/model/eta-aquariids.tsx:77
+#: src/features/seasonal-events/events/eta-aquariids.tsx:81
 msgid "The Eta Aquariids are a major meteor shower formed from the debris of Halley’s Comet."
 msgstr "Eta Aquariid adalah hujan meteor besar yang terbentuk dari puing-puing Komet Halley."
 
-#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:44
+#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:48
 msgid "The event unfolds gradually, often lasting several hours from beginning to end."
 msgstr "Peristiwanya berlangsung bertahap, sering kali memakan waktu beberapa jam dari awal hingga akhir."
 
-#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:94
+#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:98
 msgid "The exact shade of red depends on what's in Earth's atmosphere at the time. After major volcanic eruptions, the Moon can turn an especially dark, almost brownish red."
 msgstr "Nuansa merah yang tepat bergantung pada apa yang ada di atmosfer Bumi saat itu. Setelah letusan gunung berapi besar, Bulan bisa berubah menjadi merah yang sangat gelap, hampir kecokelatan."
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:420
+#: src/features/weather/ui/tile.tsx:453
 msgid "The expected type of weather is {0}."
 msgstr "Tipe cuaca yang diharapkan adalah {0}."
 
-#: src/features/seasonal-events/model/hanukkah.tsx:80
+#: src/features/seasonal-events/events/hanukkah.tsx:84
 msgid "The festival commemorates the rededication of the Second Temple in Jerusalem."
 msgstr "Festival ini memperingati penyucian kembali Bait Suci Kedua di Yerusalem."
 
-#: src/features/seasonal-events/model/diwali.tsx:117
+#: src/features/seasonal-events/events/diwali.tsx:121
 msgid "The festival is also one of the biggest shopping seasons in India, with markets staying open late and fireworks continuing well past midnight."
 msgstr "Festival ini juga merupakan salah satu musim belanja terbesar di India, dengan pasar yang tetap buka hingga larut malam dan kembang api yang terus berlangsung jauh melewati tengah malam."
 
-#: src/features/seasonal-events/model/earth-day.tsx:137
+#: src/features/seasonal-events/events/earth-day.tsx:141
 msgid "The first Earth Day, held in 1970, grew out of environmental activism and nationwide teach-ins across the United States."
 msgstr "Hari Bumi pertama, yang diadakan pada 1970, tumbuh dari aktivisme lingkungan dan teach-in nasional di seluruh Amerika Serikat."
 
-#: src/features/seasonal-events/model/eid-al-fitr.tsx:88
+#: src/features/seasonal-events/events/eid-al-fitr.tsx:92
 msgid "The first meal of Eid, eaten after a month of fasting, carries a significance that's hard to overstate — it's often dates and something sweet, shared before the morning prayer."
 msgstr "Makanan pertama Idul Fitri, yang dimakan setelah sebulan berpuasa, memiliki makna yang sulit dilebih-lebihkan — sering kali berupa kurma dan sesuatu yang manis, dibagikan sebelum salat subuh."
 
-#: src/features/seasonal-events/model/geminids.tsx:77
+#: src/features/seasonal-events/events/geminids.tsx:81
 msgid "The Geminids are one of the strongest and most reliable meteor showers of the year, appearing each December with frequent, bright meteors."
 msgstr "Geminid adalah salah satu hujan meteor terkuat dan paling andal sepanjang tahun, muncul setiap Desember dengan meteor yang sering dan terang."
 
-#: src/features/seasonal-events/model/eid-al-adha.tsx:65
+#: src/features/seasonal-events/events/eid-al-adha.tsx:69
 msgid "The holiday commemorates the story of Ibrahim and his willingness to sacrifice in obedience to God."
 msgstr "Hari libur ini memperingati kisah Ibrahim dan kesediaannya untuk berkorban sebagai bentuk ketaatan kepada Tuhan."
 
-#: src/features/seasonal-events/model/valentines.tsx:65
+#: src/features/seasonal-events/events/valentines.tsx:69
 msgid "The holiday draws on legends of Saint Valentine and the traditions of medieval courtly love."
 msgstr "Hari libur ini mengambil dari legenda Santo Valentinus dan tradisi cinta istana pada Abad Pertengahan."
 
-#: src/features/seasonal-events/model/christmas.tsx:60
+#: src/features/seasonal-events/events/christmas.tsx:64
 msgid "The holiday we recognise today grew from early Christian tradition, layered over much older European midwinter customs tied to light, renewal, and community."
 msgstr "Hari libur yang kita kenal sekarang tumbuh dari tradisi Kristen awal, berlapis di atas kebiasaan pertengahan musim dingin Eropa yang jauh lebih tua yang terkait dengan cahaya, pembaruan, dan komunitas."
 
-#: src/features/seasonal-events/model/leonids.tsx:77
+#: src/features/seasonal-events/events/leonids.tsx:81
 msgid "The Leonids are a November meteor shower, named for their radiant in the constellation Leo."
 msgstr "Leonid adalah hujan meteor bulan November, dinamai dari titik randiannya di rasi bintang Leo."
 
-#: src/features/seasonal-events/model/leonids.tsx:93
+#: src/features/seasonal-events/events/leonids.tsx:97
 msgid "The Leonids are renowned for historic meteor storms, most notably in 1833 and 1966, when observers described the sky as seeming to rain stars."
 msgstr "Leonid terkenal karena badai meteor bersejarah, terutama pada 1833 dan 1966, ketika pengamat menggambarkan langit seakan hujan bintang."
 
-#: src/features/seasonal-events/model/leonids.tsx:110
+#: src/features/seasonal-events/events/leonids.tsx:114
 msgid "The Leonids originate from Comet Tempel–Tuttle, and every few decades Earth passes through especially dense streams of its debris."
 msgstr "Leonid berasal dari Komet Tempel–Tuttle, dan setiap beberapa dekade Bumi melewati aliran puing-puingnya yang sangat padat."
 
@@ -1723,48 +1727,48 @@ msgstr "Leonid berasal dari Komet Tempel–Tuttle, dan setiap beberapa dekade Bu
 msgid "The location request timed out. Please check your internet connection and try again."
 msgstr "Permintaan lokasi kehabisan waktu. Periksa koneksi internet Anda dan coba lagi."
 
-#: src/features/seasonal-events/model/lyrids.tsx:77
+#: src/features/seasonal-events/events/lyrids.tsx:81
 msgid "The Lyrids appear each year in late April, with meteors radiating from the constellation Lyra."
 msgstr "Lyrid muncul setiap tahun pada akhir April, dengan meteor yang memancar dari rasi bintang Lyra."
 
-#: src/features/seasonal-events/model/day-of-the-dead.tsx:96
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:100
 msgid "The marigold paths (cempasúchil) aren't just decorative. Their strong scent is believed to guide the dead back to the living world for the night."
 msgstr "Jalur bunga marigold (cempasúchil) bukan sekadar dekorasi. Aromanya yang kuat diyakini dapat memandu arwah orang yang telah meninggal kembali ke dunia orang hidup untuk semalam."
 
-#: src/features/seasonal-events/model/earth-day.tsx:169
+#: src/features/seasonal-events/events/earth-day.tsx:173
 msgid "The math is oddly encouraging — the trees planted on Earth Day since 1970 now number in the billions."
 msgstr "Angkanya ternyata sangat menggembirakan — pohon-pohon yang ditanam sejak Hari Bumi 1970 kini berjumlah miliaran."
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:384
+#: src/features/weather/ui/tile.tsx:417
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "Suhu maksimum akan mencapai {0} derajat celsius."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:390
+#: src/features/weather/ui/tile.tsx:423
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "Suhu maksimum akan mencapai {0} derajat fahrenheit."
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:446
+#: src/features/weather/ui/tile.tsx:479
 msgid "The maximum UV index will be {0}."
 msgstr "Indeks UV maksimum akan mencapai {0}."
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:457
+#: src/features/weather/ui/tile.tsx:490
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "Kecepatan angin maksimum akan mencapai {0} kilometer per jam."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:463
+#: src/features/weather/ui/tile.tsx:496
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "Kecepatan angin maksimum akan mencapai {0} mil per jam."
 
-#: src/features/seasonal-events/model/eid-al-adha.tsx:81
+#: src/features/seasonal-events/events/eid-al-adha.tsx:85
 msgid "The meat from the sacrifice is traditionally divided into three equal parts: one for the family, one for friends and neighbours, and one for those in need."
 msgstr "Daging dari hewan kurban secara tradisional dibagi menjadi tiga bagian yang sama: satu untuk keluarga, satu untuk teman dan tetangga, dan satu untuk mereka yang membutuhkan."
 
-#: src/features/seasonal-events/model/hanukkah.tsx:112
+#: src/features/seasonal-events/events/hanukkah.tsx:116
 msgid "The menorah is placed in a window or doorway so the light faces outward — the tradition is specifically about making the flames visible to passersby."
 msgstr "Menorah ditempatkan di jendela atau pintu masuk sehingga cahayanya menghadap keluar — tradisi ini secara khusus bertujuan agar nyala api terlihat oleh orang yang lewat."
 
@@ -1776,33 +1780,33 @@ msgstr "Menorah ditempatkan di jendela atau pintu masuk sehingga cahayanya mengh
 #~ msgid "The meteors are often bright and steady, tracing slow, colourful paths across the night."
 #~ msgstr "Meteor-meteornya sering terang dan stabil, menorehkan jalur lambat yang berwarna-warni di malam hari."
 
-#: src/features/seasonal-events/model/orionids.tsx:116
+#: src/features/seasonal-events/events/orionids.tsx:120
 msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of any annual shower, which is why they often leave persistent glowing trails."
 msgstr "Meteor-meteor memasuki atmosfer dengan kecepatan sekitar 66 km/s, termasuk yang tercepat dari hujan meteor tahunan mana pun, itulah mengapa mereka sering meninggalkan jejak cahaya yang bertahan lama."
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:401
+#: src/features/weather/ui/tile.tsx:434
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "Suhu minimum akan mencapai {0} derajat celsius."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:407
+#: src/features/weather/ui/tile.tsx:440
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "Suhu minimum akan mencapai {0} derajat fahrenheit."
 
-#: src/features/seasonal-events/model/new-years.tsx:44
+#: src/features/seasonal-events/events/new-years.tsx:48
 msgid "The month of January is named after Janus, the Roman god of doorways and beginnings, traditionally depicted as facing both the past and the future."
 msgstr "Bulan Januari dinamai dari Janus, dewa Romawi untuk pintu dan permulaan, yang secara tradisional digambarkan menghadap masa lalu dan masa depan."
 
-#: src/features/seasonal-events/model/new-years.tsx:61
+#: src/features/seasonal-events/events/new-years.tsx:65
 msgid "The new year doesn't arrive all at once — it rolls across the planet over the course of a full day, time zone by time zone."
 msgstr "Tahun baru tidak datang sekaligus — ia bergulir melintasi planet ini dalam kurun waktu satu hari penuh, satu zona waktu demi zona waktu."
 
-#: src/features/seasonal-events/model/leonids.tsx:133
+#: src/features/seasonal-events/events/leonids.tsx:137
 msgid "The next potential Leonid storm window is in the 2030s, when Earth is expected to pass through a particularly dense ribbon of Tempel–Tuttle debris."
 msgstr "Jendela badai Leonid potensial berikutnya adalah pada tahun 2030-an, ketika Bumi diperkirakan akan melewati pita puing-puing Tempel–Tuttle yang sangat padat."
 
-#: src/features/seasonal-events/model/holi.tsx:162
+#: src/features/seasonal-events/events/holi.tsx:229
 msgid "The night before Holi features Holika Dahan, a ceremonial bonfire that symbolises the passing of winter and the renewal of life."
 msgstr "Malam sebelum Holi menampilkan Holika Dahan, api unggun seremonial yang melambangkan berlalunya musim dingin dan pembaruan hidup."
 
@@ -1810,7 +1814,7 @@ msgstr "Malam sebelum Holi menampilkan Holika Dahan, api unggun seremonial yang 
 #~ msgid "The night encourages imagination to wander, as if even the moon were part of the performance."
 #~ msgstr "Malam mendorong imajinasi mengembara, seolah bahkan bulan pun menjadi bagian dari pertunjukan."
 
-#: src/features/seasonal-events/model/spring-equinox.tsx:115
+#: src/features/seasonal-events/events/spring-equinox.tsx:120
 msgid "The old tradition of balancing an egg on its end at the equinox is a myth (you can do it any day of the year), but people keep trying anyway. It's become its own kind of ritual."
 msgstr "Tradisi lama menyeimbangkan telur pada ujungnya saat ekuinoks adalah mitos (Anda bisa melakukannya kapan saja sepanjang tahun), tetapi orang-orang tetap mencobanya. Ini telah menjadi ritualnya sendiri."
 
@@ -1818,15 +1822,15 @@ msgstr "Tradisi lama menyeimbangkan telur pada ujungnya saat ekuinoks adalah mit
 #~ msgid "The oldest known Valentine is a fifteenth-century poem written from imprisonment in the Tower of London."
 #~ msgstr "Valentin tertua yang diketahui adalah sebuah puisi abad ke-15 yang ditulis dari dalam penjara di Menara London."
 
-#: src/features/seasonal-events/model/valentines.tsx:97
+#: src/features/seasonal-events/events/valentines.tsx:101
 msgid "The oldest known Valentine is a fifteenth-century poem, written from a cell in the Tower of London — a love letter composed under the worst possible circumstances."
 msgstr "Valentine tertua yang diketahui adalah sebuah puisi dari abad kelima belas, ditulis dari sebuah sel di Menara London — surat cinta yang digubah dalam keadaan terburuk yang mungkin."
 
-#: src/features/seasonal-events/model/orionids.tsx:77
+#: src/features/seasonal-events/events/orionids.tsx:81
 msgid "The Orionids are an annual meteor shower formed from debris left by Halley’s Comet, reaching their peak in October."
 msgstr "Orionid adalah hujan meteor tahunan yang terbentuk dari puing-puing Komet Halley, mencapai puncaknya pada Oktober."
 
-#: src/features/seasonal-events/model/orionids.tsx:93
+#: src/features/seasonal-events/events/orionids.tsx:97
 msgid "The Orionids are visible from both hemispheres and are known for producing bright, fast-moving meteors."
 msgstr "Orionid terlihat dari kedua belahan bumi dan dikenal menghasilkan meteor yang terang dan cepat."
 
@@ -1834,27 +1838,27 @@ msgstr "Orionid terlihat dari kedua belahan bumi dan dikenal menghasilkan meteor
 #~ msgid "The peak often arrives suddenly, like a secret performance unfolding before dawn."
 #~ msgstr "Puncaknya sering datang tiba-tiba, seperti pertunjukan rahasia yang terbuka menjelang fajar."
 
-#: src/features/seasonal-events/model/perseids.tsx:76
+#: src/features/seasonal-events/events/perseids.tsx:80
 msgid "The Perseids are a bright annual meteor shower formed from debris left by Comet Swift–Tuttle."
 msgstr "Perseid adalah hujan meteor tahunan yang cerah yang terbentuk dari puing-puing yang ditinggalkan Komet Swift–Tuttle."
 
-#: src/features/seasonal-events/model/perseids.tsx:93
+#: src/features/seasonal-events/events/perseids.tsx:97
 msgid "The Perseids are sometimes known as the Tears of Saint Lawrence, as their peak often falls near the feast day of Saint Lawrence in mid-August."
 msgstr "Perseid kadang dikenal sebagai Air Mata Santo Laurensius, karena puncaknya sering jatuh dekat hari raya Santo Laurensius pada pertengahan Agustus."
 
-#: src/features/seasonal-events/model/total-solar-eclipse.tsx:35
+#: src/features/seasonal-events/events/total-solar-eclipse.tsx:39
 msgid "The phase of totality is short and can only be seen from a narrow path across the Earth’s surface."
 msgstr "Fase totalitas singkat dan hanya dapat dilihat dari jalur sempit di permukaan Bumi."
 
-#: src/features/seasonal-events/model/quadrantids.tsx:131
+#: src/features/seasonal-events/events/quadrantids.tsx:135
 msgid "The Quadrantid peak is one of the narrowest of any major shower, sometimes lasting only six hours. Catching it is partly a matter of luck and geography."
 msgstr "Puncak Quadrantid adalah salah satu yang tersempit dari setiap hujan meteor besar, kadang hanya berlangsung selama enam jam. Menyaksikannya sebagian merupakan soal keberuntungan dan geografi."
 
-#: src/features/seasonal-events/model/quadrantids.tsx:77
+#: src/features/seasonal-events/events/quadrantids.tsx:81
 msgid "The Quadrantids are a meteor shower that peaks in early January and is known for being brief yet often intense."
 msgstr "Quadrantid adalah hujan meteor yang memuncak pada awal Januari dan dikenal singkat namun sering kali intens."
 
-#: src/features/seasonal-events/model/lunar-new-year.tsx:112
+#: src/features/seasonal-events/events/lunar-new-year.tsx:116
 msgid "The season builds toward the Lantern Festival on the fifteenth night, when thousands of lanterns are released into the sky."
 msgstr "Musim ini menuju puncaknya pada Festival Lentera di malam kelima belas, ketika ribuan lentera dilepaskan ke langit."
 
@@ -1866,47 +1870,47 @@ msgstr "Musim ini menuju puncaknya pada Festival Lentera di malam kelima belas, 
 #~ msgid "The shower frequently delivers swift, luminous streaks that carve clean lines across the night."
 #~ msgstr "Hujan meteor ini sering menghadirkan garis-garis cepat dan bercahaya yang mengukir garis bersih di malam hari."
 
-#: src/features/seasonal-events/model/lyrids.tsx:98
+#: src/features/seasonal-events/events/lyrids.tsx:102
 msgid "The shower originates from Comet Thatcher, which returns to the inner solar system roughly every four hundred and fifteen years."
 msgstr "Hujan meteor ini berasal dari Komet Thatcher, yang kembali ke tata surya bagian dalam kira-kira setiap empat ratus lima belas tahun."
 
-#: src/features/seasonal-events/model/quadrantids.tsx:93
+#: src/features/seasonal-events/events/quadrantids.tsx:97
 msgid "The shower takes its name from Quadrans Muralis, a former constellation that no longer appears on modern star charts."
 msgstr "Hujan meteor ini mengambil namanya dari Quadrans Muralis, sebuah rasi bintang lama yang tidak lagi muncul pada peta bintang modern."
 
-#: src/features/seasonal-events/model/eta-aquariids.tsx:99
+#: src/features/seasonal-events/events/eta-aquariids.tsx:103
 msgid "The shower’s radiant lies near the constellation Aquarius, rising before dawn when viewing conditions are at their best."
 msgstr "Titik radiannya berada dekat rasi bintang Aquarius, terbit sebelum fajar ketika kondisi pengamatan berada pada titik terbaiknya."
 
-#: src/features/seasonal-events/model/spring-equinox.tsx:83
+#: src/features/seasonal-events/events/spring-equinox.tsx:88
 msgid "The spring equinox marks the moment when day and night stand in near-perfect balance."
 msgstr "Ekuinoks musim semi menandai momen ketika siang dan malam berada dalam keseimbangan nyaris sempurna."
 
-#: src/features/seasonal-events/model/quadrantids.tsx:109
+#: src/features/seasonal-events/events/quadrantids.tsx:113
 msgid "The stream of debris that creates the Quadrantids is unusually narrow, so Earth passes through it quickly."
 msgstr "Aliran puing-puing yang membentuk Quadrantid luar biasa sempit, sehingga Bumi melintasinya dengan cepat."
 
-#: src/features/seasonal-events/model/summer-solstice.tsx:81
+#: src/features/seasonal-events/events/summer-solstice.tsx:86
 msgid "The summer solstice marks the longest day of the year, when the sun reaches its highest path across the sky."
 msgstr "Solstis musim panas menandai hari terpanjang dalam setahun, ketika Matahari mencapai lintasan tertingginya melintasi langit."
 
-#: src/features/seasonal-events/model/day-of-the-dead.tsx:56
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:60
 msgid "The tradition grows from Indigenous Mexican beliefs about death and the afterlife, later blending with Catholic observances of All Saints’ and All Souls’ Days."
 msgstr "Tradisi ini berakar dari kepercayaan masyarakat adat Meksiko tentang kematian dan alam baka, lalu berpadu dengan pengamatan Katolik pada Hari Semua Orang Kudus dan Hari Arwah."
 
-#: src/features/seasonal-events/model/christmas.tsx:96
+#: src/features/seasonal-events/events/christmas.tsx:100
 msgid "The tradition of a decorated Christmas tree only became widespread in the English-speaking world after an 1848 illustration of Queen Victoria and Prince Albert’s tree was published — and went viral, by Victorian standards."
 msgstr "Tradisi pohon Natal berhias baru menjadi luas di dunia berbahasa Inggris setelah ilustrasi tahun 1848 tentang pohon Ratu Victoria dan Pangeran Albert diterbitkan — dan menjadi viral, menurut standar Victoria."
 
-#: src/features/seasonal-events/model/halloween.tsx:95
+#: src/features/seasonal-events/events/halloween.tsx:99
 msgid "The tradition of trick-or-treating in its modern form only became widespread in the 1950s, though the custom of going door to door in disguise is centuries older."
 msgstr "Tradisi trick-or-treat dalam bentuknya yang modern baru menjadi luas pada tahun 1950-an, meskipun kebiasaan berkeliling dari pintu ke pintu dengan menyamar sudah berusia berabad-abad."
 
-#: src/features/seasonal-events/model/winter-solstice.tsx:79
+#: src/features/seasonal-events/events/winter-solstice.tsx:84
 msgid "The winter solstice marks the shortest day and longest night of the year, and the turning point toward gradually longer daylight."
 msgstr "Solstis musim dingin menandai hari terpendek dan malam terpanjang dalam setahun, serta titik balik menuju siang yang perlahan semakin panjang."
 
-#: src/features/seasonal-events/model/lunar-new-year.tsx:102
+#: src/features/seasonal-events/events/lunar-new-year.tsx:106
 msgid "The zodiac animal associated with the year is believed to shape its character and fortunes."
 msgstr "Hewan zodiak yang terkait dengan tahun tersebut dipercaya membentuk karakter dan peruntungannya."
 
@@ -1914,28 +1918,28 @@ msgstr "Hewan zodiak yang terkait dengan tahun tersebut dipercaya membentuk kara
 #~ msgid "Their likely parent body is the asteroid 2003 EH1, a reminder that even an unassuming rock can paint the sky with light."
 #~ msgstr "Induk yang paling mungkin adalah asteroid 2003 EH1, pengingat bahwa bahkan batu yang tampak biasa dapat melukis langit dengan cahaya."
 
-#: src/features/seasonal-events/model/quadrantids.tsx:125
+#: src/features/seasonal-events/events/quadrantids.tsx:129
 msgid "Their likely parent body, asteroid 2003 EH1, may be a dead comet — one that exhausted its volatile ices and now orbits as a dark, quiet rock."
 msgstr "Benda induk mereka yang kemungkinan besar adalah asteroid 2003 EH1, mungkin merupakan komet mati — satu yang telah menghabiskan esnya yang mudah menguap dan kini mengorbit sebagai batu yang gelap dan diam."
 
-#: src/features/seasonal-events/model/orionids.tsx:83
+#: src/features/seasonal-events/events/orionids.tsx:87
 msgid "Their meteors appear to radiate from the region near the constellation Orion, a figure long woven into myth and storytelling."
 msgstr "Meteor-meteornya tampak memancar dari wilayah dekat rasi bintang Orion, sosok yang sejak lama terjalin dalam mitos dan cerita."
 
-#: src/features/seasonal-events/model/orionids.tsx:99
+#: src/features/seasonal-events/events/orionids.tsx:103
 msgid "Their peak often coincides with long, dark viewing hours, when observing conditions are especially favourable."
 msgstr "Puncaknya sering bertepatan dengan jam pengamatan yang panjang dan gelap, ketika kondisi observasi sangat menguntungkan."
 
-#: src/features/seasonal-events/model/perseids.tsx:82
+#: src/features/seasonal-events/events/perseids.tsx:86
 msgid "Their radiant lies in the constellation Perseus, and the shower is especially prominent in the northern hemisphere, though visible worldwide."
 msgstr "Titik radiannya berada di rasi bintang Perseus, dan hujan meteor ini sangat menonjol di belahan bumi utara, meski terlihat di seluruh dunia."
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:477
+#: src/features/weather/ui/tile.tsx:510
 msgid "There is a {0}% chance of precipitation."
 msgstr "Ada kemungkinan {0}% akan terjadi presipitasi."
 
-#: src/features/seasonal-events/model/easter.tsx:76
+#: src/features/seasonal-events/events/easter.tsx:80
 msgid "There's a reason the holiday lands in spring — it borrows heavily from the season's own sense of things starting over."
 msgstr "Ada alasan mengapa hari raya ini jatuh di musim semi — ia banyak meminjam dari nuansa musim itu sendiri tentang segala sesuatu yang dimulai kembali."
 
@@ -1943,19 +1947,19 @@ msgstr "Ada alasan mengapa hari raya ini jatuh di musim semi — ia banyak memin
 #~ msgid "There’s something quietly luminous about the day itself — the glow of lights in windows, slow mornings, familiar songs, and tables set for gathering."
 #~ msgstr "Ada sesuatu yang berkilau tenang pada hari itu sendiri — cahaya lampu di jendela, pagi yang lambat, lagu-lagu yang akrab, dan meja yang disiapkan untuk berkumpul."
 
-#: src/features/seasonal-events/model/leonids.tsx:100
+#: src/features/seasonal-events/events/leonids.tsx:104
 msgid "These events played an important role in the development of scientific understanding of meteor showers."
 msgstr "Peristiwa-peristiwa ini memainkan peran penting dalam perkembangan pemahaman ilmiah tentang hujan meteor."
 
-#: src/features/seasonal-events/model/geminids.tsx:83
+#: src/features/seasonal-events/events/geminids.tsx:87
 msgid "They are especially known for their steady rates and vivid, often colourful trails."
 msgstr "Mereka terutama dikenal karena laju yang stabil dan jejak yang jelas, sering kali berwarna."
 
-#: src/features/seasonal-events/model/lyrids.tsx:83
+#: src/features/seasonal-events/events/lyrids.tsx:87
 msgid "They are typically a gentle shower that rewards patient skywatching."
 msgstr "Mereka biasanya merupakan hujan meteor yang lembut yang menghargai pengamatan langit dengan sabar."
 
-#: src/features/seasonal-events/model/eta-aquariids.tsx:83
+#: src/features/seasonal-events/events/eta-aquariids.tsx:87
 msgid "They peak in early May and are especially well seen from the southern hemisphere, though northern skies still catch their share of streaks."
 msgstr "Mereka memuncak pada awal Mei dan paling baik terlihat dari belahan bumi selatan, meski langit utara tetap kebagian garis-garisnya."
 
@@ -1963,31 +1967,31 @@ msgstr "Mereka memuncak pada awal Mei dan paling baik terlihat dari belahan bumi
 #~ msgid "They serve as a quiet reminder that the sky still holds the power to surprise."
 #~ msgstr "Mereka menjadi pengingat sunyi bahwa langit masih punya kemampuan untuk mengejutkan."
 
-#: src/features/seasonal-events/model/quadrantids.tsx:115
+#: src/features/seasonal-events/events/quadrantids.tsx:119
 msgid "This makes the period of strongest activity short, but it can be especially spectacular."
 msgstr "Ini membuat periode aktivitas terkuat menjadi singkat, tetapi bisa sangat spektakuler."
 
-#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:77
+#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:81
 msgid "This same atmospheric filtering that produces red sunsets gives the Moon its copper and crimson tones during totality."
 msgstr "Penyaringan atmosfer yang sama yang menghasilkan matahari terbenam merah memberi Bulan nuansa tembaga dan merah tua selama totalitas."
 
-#: src/features/seasonal-events/model/eid-al-adha.tsx:88
+#: src/features/seasonal-events/events/eid-al-adha.tsx:92
 msgid "This three-way split is central to the holiday's meaning — the act of giving is built directly into the ritual itself."
 msgstr "Pembagian tiga cara ini merupakan inti dari makna hari raya — tindakan memberi dibangun langsung ke dalam ritual itu sendiri."
 
-#: src/features/weather/ui/tile.tsx:102
+#: src/features/weather/ui/tile.tsx:103
 msgid "thunderstorm"
 msgstr "badai petir"
 
-#: src/features/weather/ui/tile.tsx:104
+#: src/features/weather/ui/tile.tsx:105
 msgid "thunderstorm with heavy hail"
 msgstr "badai petir dengan hujan es yang lebat"
 
-#: src/features/weather/ui/tile.tsx:103
+#: src/features/weather/ui/tile.tsx:104
 msgid "thunderstorm with slight hail"
 msgstr "badai petir dengan hujan es ringan"
 
-#: src/features/weather/ui/tile.tsx:112
+#: src/features/weather/ui/tile.tsx:113
 msgid "Thursday"
 msgstr "Kamis"
 
@@ -1999,11 +2003,11 @@ msgstr "Kamis"
 msgid "To get started, let's set your language and location."
 msgstr "Untuk memulai, mari atur bahasa dan lokasi Anda."
 
-#: src/features/seasonal-events/model/christmas.tsx:104
+#: src/features/seasonal-events/events/christmas.tsx:108
 msgid "Today, an estimated 350 million real Christmas trees are grown across Europe alone, most of them farmed specifically for the season."
 msgstr "Saat ini, diperkirakan 350 juta pohon Natal nyata ditanam di seluruh Eropa saja, sebagian besar dibudidayakan khusus untuk musim ini."
 
-#: src/features/seasonal-events/model/total-solar-eclipse.tsx:51
+#: src/features/seasonal-events/events/total-solar-eclipse.tsx:55
 msgid "Today, many people travel great distances to stand within the path of totality."
 msgstr "Saat ini, banyak orang menempuh perjalanan jauh untuk berdiri di dalam jalur totalitas."
 
@@ -2011,23 +2015,23 @@ msgstr "Saat ini, banyak orang menempuh perjalanan jauh untuk berdiri di dalam j
 #~ msgid "Too much battery usage"
 #~ msgstr "Penggunaan baterai terlalu banyak"
 
-#: src/features/weather/ui/tile.tsx:180
+#: src/features/weather/ui/tile.tsx:181
 msgid "Total Lunar Eclipse"
 msgstr "Gerhana Bulan Total"
 
-#: src/features/weather/ui/tile.tsx:179
+#: src/features/weather/ui/tile.tsx:180
 msgid "Total Solar Eclipse"
 msgstr "Gerhana Matahari Total"
 
-#: src/features/seasonal-events/model/lunar-new-year.tsx:79
+#: src/features/seasonal-events/events/lunar-new-year.tsx:83
 msgid "Traditional stories of the monster Nian are said to have inspired the use of loud sounds, firecrackers, and the colour red as symbols of protection and good fortune."
 msgstr "Kisah tradisional tentang monster Nian konon menginspirasi penggunaan suara keras, petasan, dan warna merah sebagai simbol perlindungan dan keberuntungan."
 
-#: src/features/seasonal-events/model/hanukkah.tsx:93
+#: src/features/seasonal-events/events/hanukkah.tsx:97
 msgid "Traditions"
 msgstr "Tradisi"
 
-#: src/features/seasonal-events/model/spring-equinox.tsx:99
+#: src/features/seasonal-events/events/spring-equinox.tsx:104
 msgid "Traditions such as Nowruz continue to celebrate themes of renewal on or around the equinox."
 msgstr "Tradisi seperti Nowruz terus merayakan tema pembaruan pada atau sekitar waktu ekuinoks."
 
@@ -2035,11 +2039,11 @@ msgstr "Tradisi seperti Nowruz terus merayakan tema pembaruan pada atau sekitar 
 msgid "Try again"
 msgstr "Coba lagi"
 
-#: src/features/weather/ui/tile.tsx:110
+#: src/features/weather/ui/tile.tsx:111
 msgid "Tuesday"
 msgstr "Selasa"
 
-#: src/features/settings/ui/settings.tsx:299
+#: src/features/settings/ui/settings.tsx:300
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Aktifkan ini jika indeks UV yang dilaporkan Weather Please secara konsisten lebih rendah daripada sumber lokal."
 
@@ -2047,7 +2051,7 @@ msgstr "Aktifkan ini jika indeks UV yang dilaporkan Weather Please secara konsis
 #~ msgid "Twilight lingers, insects fill the air with song, and the sky can feel almost endless."
 #~ msgstr "Senja bertahan, serangga memenuhi udara dengan nyanyian, dan langit bisa terasa hampir tak berujung."
 
-#: src/pages/index.tsx:154
+#: src/pages/index.tsx:165
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Tidak dapat mengambil data cuaca. Periksa koneksi internet Anda dan coba lagi."
 
@@ -2063,16 +2067,16 @@ msgstr "Tidak dapat mengambil data cuaca. Periksa koneksi internet Anda dan coba
 #~ msgid "Uninstall feedback"
 #~ msgstr "Umpan balik penghapusan"
 
-#: src/features/weather/ui/tile.tsx:416
-#: src/features/weather/ui/tile.tsx:423
+#: src/features/weather/ui/tile.tsx:449
+#: src/features/weather/ui/tile.tsx:456
 msgid "unknown conditions"
 msgstr "kondisi tidak diketahui"
 
-#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:87
+#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:91
 msgid "Unlike a solar eclipse, a lunar eclipse needs no special equipment — you just look up. The whole event unfolds over several hours, visible to anyone on the nightside of Earth."
 msgstr "Tidak seperti gerhana matahari, gerhana bulan tidak memerlukan peralatan khusus — Anda cukup melihat ke atas. Seluruh peristiwa berlangsung selama beberapa jam, terlihat oleh siapa saja yang berada di sisi malam Bumi."
 
-#: src/features/seasonal-events/model/geminids.tsx:93
+#: src/features/seasonal-events/events/geminids.tsx:97
 msgid "Unlike most meteor showers, the Geminids originate from the asteroid 3200 Phaethon rather than a comet."
 msgstr "Tidak seperti kebanyakan hujan meteor, Geminid berasal dari asteroid 3200 Phaethon, bukan dari komet."
 
@@ -2089,7 +2093,7 @@ msgstr "Tidak seperti kebanyakan hujan meteor, Geminid berasal dari asteroid 320
 #~ msgid "Usability and functionality"
 #~ msgstr "Kegunaan dan fungsionalitas"
 
-#: src/features/settings/ui/settings.tsx:294
+#: src/features/settings/ui/settings.tsx:295
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "Gunakan Model Kimia Global (CAMS)"
 
@@ -2098,19 +2102,19 @@ msgstr "Gunakan Model Kimia Global (CAMS)"
 #~ msgstr "Gunakan pintasan keyboard"
 
 #: src/features/settings/ui/initialisation.tsx:182
-#: src/features/settings/ui/settings.tsx:228
+#: src/features/settings/ui/settings.tsx:229
 msgid "Use metric number format"
 msgstr "Gunakan format nomor metrik"
 
-#: src/features/weather/ui/tile.tsx:163
+#: src/features/weather/ui/tile.tsx:164
 msgid "Valentine's Day"
 msgstr "Hari Valentine"
 
-#: src/features/seasonal-events/model/valentines.tsx:49
+#: src/features/seasonal-events/events/valentines.tsx:53
 msgid "Valentine’s Day celebrates affection in many forms, from romantic love to friendship and quiet acts of care."
 msgstr "Hari Valentine merayakan kasih sayang dalam banyak bentuk, dari cinta romantis hingga persahabatan dan tindakan kepedulian yang sunyi."
 
-#: src/features/weather/ui/tile.tsx:99
+#: src/features/weather/ui/tile.tsx:100
 msgid "violent rain showers"
 msgstr "hujan deras"
 
@@ -2118,7 +2122,7 @@ msgstr "hujan deras"
 #~ msgid "Watching the Eta Aquariids can feel like receiving a message from a distant traveller, carried on light across the dark."
 #~ msgstr "Menyaksikan Eta Aquariid bisa terasa seperti menerima pesan dari seorang pengelana jauh, dibawa oleh cahaya melintasi gelap."
 
-#: src/features/seasonal-events/model/earth-day.tsx:150
+#: src/features/seasonal-events/events/earth-day.tsx:154
 msgid "Ways to observe"
 msgstr "Cara mengamati"
 
@@ -2126,11 +2130,11 @@ msgstr "Cara mengamati"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "Kami ingin membawa Weather Please ke lebih banyak bahasa."
 
-#: src/features/settings/ui/settings.tsx:233
+#: src/features/settings/ui/settings.tsx:234
 msgid "Weather"
 msgstr "Cuaca"
 
-#: src/pages/index.tsx:196
+#: src/pages/index.tsx:210
 msgid "weather data provided by open-meteo"
 msgstr "data cuaca disediakan oleh open-meteo"
 
@@ -2139,43 +2143,43 @@ msgstr "data cuaca disediakan oleh open-meteo"
 #~ msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
 #~ msgstr "Weather Please mengumpulkan data kecelakaan anonim dan log kesalahan. Anda dapat memilih keluar dari ini kapan saja melalui menu pengaturan."
 
-#: src/features/weather/ui/tile.tsx:111
+#: src/features/weather/ui/tile.tsx:112
 msgid "Wednesday"
 msgstr "Rabu"
 
-#: src/features/seasonal-events/model/total-solar-eclipse.tsx:58
+#: src/features/seasonal-events/events/total-solar-eclipse.tsx:62
 msgid "What it feels like"
 msgstr "Seperti apa rasanya"
 
-#: src/features/seasonal-events/model/quadrantids.tsx:83
+#: src/features/seasonal-events/events/quadrantids.tsx:87
 msgid "When conditions are favourable, they produce sharp, fast-moving meteors in high numbers."
 msgstr "Ketika kondisinya mendukung, mereka menghasilkan meteor yang tajam, cepat, dan jumlahnya tinggi."
 
-#: src/features/seasonal-events/model/leonids.tsx:116
+#: src/features/seasonal-events/events/leonids.tsx:120
 msgid "When this occurs, meteor rates can rise dramatically for a short period of time."
 msgstr "Saat ini terjadi, laju meteor dapat meningkat drastis untuk periode waktu yang singkat."
 
-#: src/features/seasonal-events/model/geminids.tsx:115
+#: src/features/seasonal-events/events/geminids.tsx:119
 msgid "Whether your night air is warm or cool, a comfortable place to sit or lie back makes the experience far more enjoyable."
 msgstr "Entah udara malam Anda hangat atau sejuk, tempat yang nyaman untuk duduk atau berbaring membuat pengalaman jauh lebih menyenangkan."
 
-#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:60
+#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:64
 msgid "While eclipses were once viewed as omens, today they are widely appreciated as shared moments of skywatching and wonder."
 msgstr "Jika dulu gerhana dipandang sebagai pertanda, kini gerhana banyak diapresiasi sebagai momen bersama untuk mengamati langit dan merasakan takjub."
 
-#: src/features/seasonal-events/model/leonids.tsx:107
+#: src/features/seasonal-events/events/leonids.tsx:111
 msgid "Why it can storm"
 msgstr "Mengapa bisa menjadi badai"
 
-#: src/features/seasonal-events/model/total-lunar-eclipse.tsx:67
+#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:71
 msgid "Why it turns red"
 msgstr "Mengapa berubah merah"
 
-#: src/features/seasonal-events/model/quadrantids.tsx:106
+#: src/features/seasonal-events/events/quadrantids.tsx:110
 msgid "Why the peak is brief"
 msgstr "Mengapa puncaknya singkat"
 
-#: src/features/weather/ui/tile.tsx:171
+#: src/features/weather/ui/tile.tsx:172
 msgid "Winter Solstice"
 msgstr "Solstis musim dingin"
 
@@ -2183,7 +2187,7 @@ msgstr "Solstis musim dingin"
 #~ msgid "With each night, a new flame appears, forming a quiet ladder of light against the dark."
 #~ msgstr "Setiap malam, nyala baru muncul, membentuk tangga cahaya yang sunyi melawan gelap."
 
-#: src/features/seasonal-events/model/holi.tsx:178
+#: src/features/seasonal-events/events/holi.tsx:245
 msgid "Within minutes of stepping outside, everyone looks the same — drenched head to toe in colour, impossible to tell apart."
 msgstr "Dalam hitungan menit setelah keluar, semua orang terlihat sama — dibasahi warna dari kepala hingga kaki, mustahil untuk dibedakan."
 
@@ -2212,7 +2216,7 @@ msgid "Your email (optional)"
 msgstr "Email Anda (opsional)"
 
 #: src/features/settings/ui/initialisation.tsx:187
-#: src/features/settings/ui/settings.tsx:236
+#: src/features/settings/ui/settings.tsx:237
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Data lokasi Anda disimpan dengan aman secara eksklusif di perangkat pribadi Anda."
 
@@ -2224,6 +2228,6 @@ msgstr "Lokasi Anda saat ini tidak tersedia. Pastikan layanan lokasi di perangka
 msgid "Your message"
 msgstr "Pesan Anda"
 
-#: src/features/seasonal-events/model/eid-al-fitr.tsx:72
+#: src/features/seasonal-events/events/eid-al-fitr.tsx:76
 msgid "Zakat al-Fitr, a form of charitable giving, is a central obligation of the day, ensuring that all can take part in the celebration."
 msgstr "Zakat al-Fitr, bentuk sedekah, merupakan kewajiban utama pada hari itu, memastikan semua orang dapat ikut serta dalam perayaan."

@@ -32,7 +32,7 @@ const main = async () => {
 		await renameAppDir('rename')
 		renamed = true
 
-		runCommand(pnpmCommand, ['compile'])
+		runCommand(pnpmCommand, ['lingui', 'compile'])
 		runCommand(pnpmCommand, ['exec', 'next', 'build'])
 		buildExtensionOutput()
 	} finally {
