@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/react/macro'
+import { Switch as HeadlessSwitch } from '@headlessui/react'
 import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
 import {
 	animate,
@@ -213,7 +214,34 @@ interface TileProps {
 	showSeasonalTileGlow: boolean
 	enabledSeasonalEvents?: Set<SeasonalEventId>
 	hemisphere: Hemisphere
+	isSeasonalEventEnabled: (eventId: SeasonalEventId) => boolean
+	onToggleSeasonalEvent: (eventId: SeasonalEventId, enabled: boolean) => void
 }
+
+interface HeaderSwitchProps {
+	label: ReactElement
+	isEnabled: boolean
+	onToggle: (enabled: boolean) => void
+}
+
+const HeaderSwitch = ({
+	label,
+	isEnabled,
+	onToggle,
+}: Readonly<HeaderSwitchProps>) => (
+	<div className="flex items-center gap-1.5">
+		<span className="text-xs font-medium whitespace-nowrap text-dark-300">
+			{label}
+		</span>
+		<HeadlessSwitch
+			checked={isEnabled}
+			onChange={onToggle}
+			className="group inline-flex h-5 w-9 items-center rounded-full bg-dark-500/80 transition-[background-color] select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-checked:bg-blue-600/85"
+		>
+			<span className="size-3 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-5" />
+		</HeadlessSwitch>
+	</div>
+)
 
 export const Tile = ({
 	day,
@@ -231,6 +259,8 @@ export const Tile = ({
 	showSeasonalTileGlow,
 	enabledSeasonalEvents,
 	hemisphere,
+	isSeasonalEventEnabled,
+	onToggleSeasonalEvent,
 }: Readonly<TileProps>) => {
 	const tileDate = new Date(day * 1000)
 	const dayDescriptor = days[tileDate.getDay()]
@@ -286,6 +316,9 @@ export const Tile = ({
 			? (seasonalEvent.tileAccent ?? null)
 			: null
 	const seasonalBadgeId = seasonalEvent ? seasonalEvent.id : null
+	const isCurrentSeasonalEventEnabled = seasonalBadgeId
+		? isSeasonalEventEnabled(seasonalBadgeId)
+		: false
 	const EventDetails = seasonalEvent?.details ?? DefaultSeasonalEventDetails
 	const [isEventOpen, setIsEventOpen] = useState(false)
 	const borderAngle = useMotionValue(0)
@@ -486,6 +519,17 @@ export const Tile = ({
 					isOpen={isEventOpen}
 					onClose={() => setIsEventOpen(false)}
 					title={renderSeasonalLabel(seasonalBadgeId)}
+					quickHeaderActions={
+						<div className="flex flex-wrap justify-end gap-1.5">
+							<HeaderSwitch
+								label={<Trans>Show this event</Trans>}
+								isEnabled={isCurrentSeasonalEventEnabled}
+								onToggle={(enabled) =>
+									onToggleSeasonalEvent(seasonalBadgeId, enabled)
+								}
+							/>
+						</div>
+					}
 				>
 					<EventDetails />
 				</SeasonalEventModal>

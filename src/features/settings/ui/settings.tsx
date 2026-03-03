@@ -16,7 +16,10 @@ import { AlertVariant } from '../../../shared/ui/alert-variant'
 import { IconButton } from '../../../shared/ui/button'
 import { Input, Select, Switch } from '../../../shared/ui/input'
 import { SeasonalEventId } from '../../seasonal-events/core/types'
-import { SEASONAL_EVENT_BOOLEAN_SETTINGS } from '../model/boolean-settings'
+import {
+	SEASONAL_EVENT_TOGGLE_KEY_BY_ID,
+	type SeasonalEventToggleKey,
+} from '../model/seasonal-event-toggle-map'
 import { TileIdentifier } from '../model/tile-identifier'
 import { isLikelySoftwareRenderer } from '../../seasonal-events/core/utils'
 import { locales } from '../../../shared/lib/i18n'
@@ -26,9 +29,6 @@ import type { LocaleKey } from '../../../shared/lib/i18n'
 type BooleanConfigKey = {
 	[K in keyof Config]: Config[K] extends boolean ? K : never
 }[keyof Config]
-
-type SeasonalEventToggleKey =
-	(typeof SEASONAL_EVENT_BOOLEAN_SETTINGS)[number]['key']
 
 type SwitchDefinition<K extends BooleanConfigKey = BooleanConfigKey> = {
 	key: K
@@ -146,13 +146,6 @@ const SEASONAL_EVENT_SECTIONS = [
 		],
 	},
 ] as const satisfies ReadonlyArray<SeasonalEventSection>
-
-const SEASONAL_EVENT_KEY_BY_ID = Object.fromEntries(
-	SEASONAL_EVENT_BOOLEAN_SETTINGS.map((setting) => [
-		setting.seasonalEventId,
-		setting.key,
-	]),
-) as Record<SeasonalEventId, SeasonalEventToggleKey>
 
 interface SettingsProps {
 	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
@@ -349,7 +342,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 										</h3>
 										{section.eventIds.map((eventId) =>
 											renderBooleanSwitch({
-												key: SEASONAL_EVENT_KEY_BY_ID[eventId],
+												key: SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId],
 												label: SEASONAL_EVENT_LABELS[eventId],
 											}),
 										)}

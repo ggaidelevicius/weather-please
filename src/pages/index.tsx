@@ -10,11 +10,13 @@ import { RingLoader } from '../shared/ui/loader'
 import { ReviewPrompt } from '../features/settings/ui/review-prompt'
 import { useSeasonalEvents } from '../features/seasonal-events/hooks/use-seasonal-events'
 import { getEnabledSeasonalEvents } from '../features/seasonal-events/core/enabled-events'
+import { SeasonalEventId } from '../features/seasonal-events/core/types'
 import {
 	getHemisphereFromLatitude,
 	isLikelySoftwareRenderer,
 } from '../features/seasonal-events/core/utils'
 import { useConfig } from '../features/settings/hooks/use-config'
+import { SEASONAL_EVENT_TOGGLE_KEY_BY_ID } from '../features/settings/model/seasonal-event-toggle-map'
 import { Initialisation } from '../features/settings/ui/initialisation'
 import { Settings } from '../features/settings/ui/settings'
 import { useWeather } from '../features/weather/hooks/use-weather'
@@ -95,6 +97,13 @@ const App = () => {
 	const hasCachedData =
 		typeof window !== 'undefined' && Boolean(localStorage.getItem('data'))
 
+	const isSeasonalEventEnabled = (eventId: SeasonalEventId) =>
+		input[SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId]]
+
+	const toggleSeasonalEvent = (eventId: SeasonalEventId, enabled: boolean) => {
+		handleChange(SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId], enabled)
+	}
+
 	const tiles = weatherData
 		.slice(0, parseInt(config.daysToRetrieve))
 		.map((day, index) => {
@@ -113,6 +122,8 @@ const App = () => {
 					}
 					enabledSeasonalEvents={enabledSeasonalEvents}
 					hemisphere={hemisphere}
+					isSeasonalEventEnabled={isSeasonalEventEnabled}
+					onToggleSeasonalEvent={toggleSeasonalEvent}
 				/>
 			)
 		})
