@@ -42,7 +42,15 @@ const HOLI_REVEAL_SPREAD = 3.6
 const HOLI_REVEAL_MIN_DURATION = 0.55
 const HOLI_REVEAL_MAX_DURATION = 1.35
 const HOLI_REVEAL_END_TIME = HOLI_REVEAL_SPREAD + HOLI_REVEAL_MAX_DURATION + 0.6
-const HOLI_MORPH_SPEED = 0.06
+const HOLI_MORPH_SPEED = 0.03
+const HOLI_RING_CYCLE_SECONDS = 13.5
+const HOLI_RING_WIDTH = 0.28
+const HOLI_RING_MAX_RADIUS = 2.35
+const HOLI_RING2_CYCLE_SECONDS = 20.0
+const HOLI_RING2_WIDTH = 0.42
+const HOLI_RING2_MAX_RADIUS = 2.35
+const HOLI_COLOR_DRIFT_SPEED = 0.03
+const HOLI_WARM_CORE = 'vec3(1.0, 0.96, 0.88)'
 const HOLI_PALETTE = [
 	'#ff5a1f',
 	'#ff3b30',
@@ -57,6 +65,7 @@ const HOLI_PALETTE = [
 const HOLI_VERTEX_SHADER = `
 attribute float aScale;
 attribute vec3 aColor;
+attribute vec3 aColor2;
 attribute float aSeed;
 attribute vec3 aLotus;
 attribute vec3 aMandala;
@@ -65,14 +74,22 @@ uniform float uTime;
 uniform float uSize;
 uniform float uMorph;
 uniform float uAttract;
+uniform float uRingCycle;
+uniform float uRingWidth;
+uniform float uRingMaxRadius;
+uniform float uRing2Cycle;
+uniform float uRing2Width;
+uniform float uRing2MaxRadius;
 
 varying vec3 vColor;
 varying float vAlpha;
+varying float vRing;
+varying float vRadialNorm;
 
 void main() {
-	vColor = aColor;
+	float colorDrift = 0.5 + 0.5 * sin(uTime * ${HOLI_COLOR_DRIFT_SPEED} + aSeed * 6.2831);
+	vColor = mix(aColor, aColor2, colorDrift);
 
-	float pulse = 0.75 + 0.25 * sin(uTime * 0.6 + aSeed * 6.2831);
 	float revealSeed = fract(
 		sin(aSeed * 91.345 + aScale * 47.113) * 43758.5453
 	);
@@ -92,13 +109,54 @@ void main() {
 	);
 	vec3 target = mix(aLotus, aMandala, uMorph);
 	vec3 pos = mix(position, target, uAttract);
-	pos.x += sin(uTime * 0.22 + aSeed * 5.1) * 0.04;
-	pos.y += cos(uTime * 0.26 + aSeed * 4.3) * 0.04;
-	pos.z += sin(uTime * 0.18 + aSeed * 3.7) * 0.02;
+	pos.x += sin(uTime * 0.14 + aSeed * 5.1) * 0.022
+		+ sin(uTime * 0.09 + aSeed * 7.3) * 0.013;
+	pos.y += cos(uTime * 0.16 + aSeed * 4.3) * 0.022
+		+ cos(uTime * 0.07 + aSeed * 9.1) * 0.013;
+	pos.z += sin(uTime * 0.12 + aSeed * 3.7) * 0.012
+		+ sin(uTime * 0.06 + aSeed * 11.7) * 0.007;
+	float radialDist = length(pos.xy);
+
+	float ringPhase = fract(uTime / uRingCycle);
+	float ringStartOffset = uRingWidth * 1.8;
+	float ringTravel = uRingMaxRadius + ringStartOffset;
+	float ringFront = -ringStartOffset + ringPhase * ringTravel;
+	float ringCore = exp(-pow((radialDist - ringFront) / uRingWidth, 2.0));
+	float ringTrail = exp(
+		-pow((radialDist - ringFront) / (uRingWidth * 1.6), 2.0)
+	);
+	float ringBody = ringCore + ringTrail * 0.2;
+	float ringEnv = smoothstep(0.0, 0.06, ringPhase)
+		* (1.0 - smoothstep(0.90, 1.0, ringPhase));
+	float ring1 = clamp(ringBody * ringEnv, 0.0, 1.0);
+
+	float ring2Phase = fract(uTime / uRing2Cycle);
+	float ring2StartOffset = uRing2Width * 1.8;
+	float ring2Travel = uRing2MaxRadius + ring2StartOffset;
+	float ring2Front = -ring2StartOffset + ring2Phase * ring2Travel;
+	float ring2Core = exp(-pow((radialDist - ring2Front) / uRing2Width, 2.0));
+	float ring2Trail = exp(
+		-pow((radialDist - ring2Front) / (uRing2Width * 1.6), 2.0)
+	);
+	float ring2Body = ring2Core + ring2Trail * 0.2;
+	float ring2Env = smoothstep(0.0, 0.06, ring2Phase)
+		* (1.0 - smoothstep(0.90, 1.0, ring2Phase));
+	float ring2 = clamp(ring2Body * ring2Env, 0.0, 1.0);
+
+	vRing = clamp(ring1 + ring2 * 0.6, 0.0, 1.0);
+
+	float radialNorm = clamp(
+		radialDist / max(uRingMaxRadius, 0.001),
+		0.0,
+		1.0
+	);
+	vRadialNorm = radialNorm;
+	float basePulse = 0.54 + 0.08 * sin(uTime * 0.24 + aSeed * 11.13);
+	float pulse = clamp(basePulse + vRing * 0.28, 0.0, 1.0);
 
 	vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
 	gl_Position = projectionMatrix * mvPosition;
-	gl_PointSize = uSize * aScale * pulse / -mvPosition.z;
+	gl_PointSize = uSize * aScale * pulse * (1.0 + vRing * 0.15) / -mvPosition.z;
 	vAlpha = pulse * reveal;
 }
 `
@@ -108,17 +166,22 @@ precision highp float;
 
 varying vec3 vColor;
 varying float vAlpha;
+varying float vRing;
+varying float vRadialNorm;
 
 void main() {
 	vec2 uv = gl_PointCoord - vec2(0.5);
 	float dist = length(uv);
 	float glow = exp(-dist * dist * 12.0);
 	float core = exp(-dist * dist * 42.0);
-	float alpha = glow;
+	float ringBoost = smoothstep(0.0, 1.0, vRing);
+	float alpha = glow * (0.74 + ringBoost * 0.18);
 	vec3 color = min(vColor * 1.25, 1.0);
 	vec3 luma = vec3(dot(color, vec3(0.2126, 0.7152, 0.0722)));
-	color = clamp(mix(luma, color, 1.35), 0.0, 1.0);
-	color = mix(color, vec3(1.0), core * 0.08);
+	float edgeDesat = smoothstep(0.4, 1.0, vRadialNorm);
+	color = clamp(mix(luma, color, 1.35 - edgeDesat * 0.45), 0.0, 1.0);
+	color = min(color * (1.0 + ringBoost * 0.14), 1.0);
+	color = mix(color, ${HOLI_WARM_CORE}, core * (0.06 + ringBoost * 0.04));
 	gl_FragColor = vec4(color, alpha * vAlpha * 0.75);
 
 	if (gl_FragColor.a < 0.003) discard;
@@ -214,6 +277,7 @@ function isHoli({ date }: SeasonalEventContext) {
 type HoliAttributes = {
 	positions: Float32Array
 	colors: Float32Array
+	colors2: Float32Array
 	scales: Float32Array
 	seeds: Float32Array
 	lotusTargets: Float32Array
@@ -232,6 +296,7 @@ const HoliParticles = ({ isAnimated }: HoliParticlesProps) => {
 	if (!attributes.current) {
 		const positions = new Float32Array(HOLI_PARTICLE_COUNT * 3)
 		const colors = new Float32Array(HOLI_PARTICLE_COUNT * 3)
+		const colors2 = new Float32Array(HOLI_PARTICLE_COUNT * 3)
 		const scales = new Float32Array(HOLI_PARTICLE_COUNT)
 		const seeds = new Float32Array(HOLI_PARTICLE_COUNT)
 		const lotusTargets = new Float32Array(HOLI_PARTICLE_COUNT * 3)
@@ -279,6 +344,10 @@ const HoliParticles = ({ isAnimated }: HoliParticlesProps) => {
 			colors[i3] = shade.r
 			colors[i3 + 1] = shade.g
 			colors[i3 + 2] = shade.b
+			const shade2 = palette[Math.floor(Math.random() * palette.length)]
+			colors2[i3] = shade2.r
+			colors2[i3 + 1] = shade2.g
+			colors2[i3 + 2] = shade2.b
 			seeds[i] = seed
 			scales[i] = randomInRange(HOLI_SCALE_RANGE)
 		}
@@ -286,6 +355,7 @@ const HoliParticles = ({ isAnimated }: HoliParticlesProps) => {
 		attributes.current = {
 			positions,
 			colors,
+			colors2,
 			scales,
 			seeds,
 			lotusTargets,
@@ -302,8 +372,8 @@ const HoliParticles = ({ isAnimated }: HoliParticlesProps) => {
 		material.uniforms.uTime.value = clock.getElapsedTime()
 		material.uniforms.uMorph.value =
 			Math.sin(clock.getElapsedTime() * HOLI_MORPH_SPEED) * 0.5 + 0.5
-		points.rotation.y = clock.getElapsedTime() * 0.002
-		points.rotation.x = clock.getElapsedTime() * 0.0015
+		points.rotation.y = clock.getElapsedTime() * 0.00075
+		points.rotation.x = clock.getElapsedTime() * 0.00055
 	})
 
 	const uniforms = useRef({
@@ -311,6 +381,12 @@ const HoliParticles = ({ isAnimated }: HoliParticlesProps) => {
 		uSize: { value: HOLI_POINT_SIZE },
 		uMorph: { value: 0 },
 		uAttract: { value: HOLI_SHAPE_ATTRACT },
+		uRingCycle: { value: HOLI_RING_CYCLE_SECONDS },
+		uRingWidth: { value: HOLI_RING_WIDTH },
+		uRingMaxRadius: { value: HOLI_RING_MAX_RADIUS },
+		uRing2Cycle: { value: HOLI_RING2_CYCLE_SECONDS },
+		uRing2Width: { value: HOLI_RING2_WIDTH },
+		uRing2MaxRadius: { value: HOLI_RING2_MAX_RADIUS },
 	})
 
 	useEffect(() => {
@@ -335,6 +411,10 @@ const HoliParticles = ({ isAnimated }: HoliParticlesProps) => {
 				<bufferAttribute
 					attach="attributes-aColor"
 					args={[attributes.current.colors, 3]}
+				/>
+				<bufferAttribute
+					attach="attributes-aColor2"
+					args={[attributes.current.colors2, 3]}
 				/>
 				<bufferAttribute
 					attach="attributes-aScale"
