@@ -166,6 +166,11 @@ async function launchTotalSolarEclipse() {
 			.wp-eclipse-overlay.is-visible .wp-eclipse-layer {
 				transform: scale(1);
 			}
+			.wp-eclipse-overlay.no-motion .wp-eclipse-corona,
+			.wp-eclipse-overlay.no-motion .wp-eclipse-glow,
+			.wp-eclipse-overlay.no-motion .wp-eclipse-corona::before {
+				animation: none !important;
+			}
 			.wp-eclipse-backdrop {
 				position: absolute;
 				inset: 0;
@@ -185,6 +190,38 @@ async function launchTotalSolarEclipse() {
 				filter: blur(12px);
 				mix-blend-mode: screen;
 				animation: eclipse-corona-pulse 6s ease-in-out infinite;
+				overflow: hidden;
+			}
+			.wp-eclipse-corona::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				border-radius: inherit;
+				background: conic-gradient(
+					from 18deg,
+					rgba(251, 191, 36, 0.18),
+					rgba(226, 232, 240, 0.04) 18%,
+					rgba(251, 191, 36, 0.14) 32%,
+					rgba(226, 232, 240, 0.03) 48%,
+					rgba(251, 191, 36, 0.16) 63%,
+					rgba(226, 232, 240, 0.03) 78%,
+					rgba(251, 191, 36, 0.14)
+				);
+				filter: blur(14px);
+				opacity: 0.42;
+				animation: eclipse-glow-spin 70s linear infinite reverse;
+			}
+			.wp-eclipse-corona::after {
+				content: '';
+				position: absolute;
+				inset: 8%;
+				border-radius: inherit;
+				background:
+					radial-gradient(ellipse at 22% 36%, rgba(251, 191, 36, 0.18) 0%, rgba(15, 23, 42, 0) 24%),
+					radial-gradient(ellipse at 74% 30%, rgba(251, 191, 36, 0.16) 0%, rgba(15, 23, 42, 0) 22%),
+					radial-gradient(ellipse at 62% 74%, rgba(251, 191, 36, 0.15) 0%, rgba(15, 23, 42, 0) 26%);
+				filter: blur(10px);
+				opacity: 0.32;
 			}
 			.wp-eclipse-glow {
 				position: absolute;
@@ -209,7 +246,25 @@ async function launchTotalSolarEclipse() {
 				border-radius: 9999px;
 				--eclipse-layer-opacity: 0.95;
 				background: radial-gradient(circle at 35% 35%, rgba(15, 23, 42, 0.98), rgba(2, 6, 23, 0.98));
-				box-shadow: 0 0 35px rgba(2, 6, 23, 0.65);
+				box-shadow:
+					0 0 35px rgba(2, 6, 23, 0.65),
+					inset 10px -14px 26px rgba(2, 6, 23, 0.45),
+					inset -6px 10px 18px rgba(148, 163, 184, 0.05);
+				overflow: hidden;
+			}
+			.wp-eclipse-moon::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				border-radius: inherit;
+				background:
+					radial-gradient(ellipse at 30% 38%, rgba(71, 85, 105, 0.2) 0%, rgba(2, 6, 23, 0) 34%),
+					radial-gradient(ellipse at 68% 34%, rgba(71, 85, 105, 0.16) 0%, rgba(2, 6, 23, 0) 28%),
+					radial-gradient(ellipse at 46% 64%, rgba(71, 85, 105, 0.14) 0%, rgba(2, 6, 23, 0) 30%),
+					radial-gradient(ellipse at 74% 70%, rgba(71, 85, 105, 0.12) 0%, rgba(2, 6, 23, 0) 24%);
+				mix-blend-mode: soft-light;
+				filter: blur(0.6px);
+				opacity: 0.28;
 			}
 			@keyframes eclipse-corona-pulse {
 				0%, 100% { transform: scale(0.98); }
@@ -231,6 +286,7 @@ async function launchTotalSolarEclipse() {
 		moon.className = 'wp-eclipse-moon wp-eclipse-layer wp-eclipse-layer--moon'
 
 		if (!shouldAnimate) {
+			overlay.classList.add('no-motion')
 			corona.style.animation = 'none'
 			glow.style.animation = 'none'
 		}
