@@ -4,7 +4,6 @@ import {
 	ClampToEdgeWrapping,
 	LinearFilter,
 	Mesh,
-	NearestFilter,
 	PlaneGeometry,
 	RepeatWrapping,
 	Scene,
@@ -44,10 +43,6 @@ const BLACK_HOLE_CANVAS_FILTER = 'saturate(115%) contrast(105%)'
 const CAM_ANGULAR_VELOCITY = 0.002
 // Accretion disk rotation speed multiplier (1.0 = shader default)
 const DISK_ROTATION_SPEED = 0.05
-// Set true to enable interactive camera controls for positioning.
-// Open the browser console — values are logged every ~2 seconds.
-// Once you have the desired position, hardcode the values below and set this to false.
-const CAM_DEBUG_CONTROLS = false
 
 const BLACK_HOLE_VERTEX_SHADER = `
 void main() {
@@ -300,9 +295,10 @@ async function launchBlackHoleEvent() {
 		const container = document.createElement('div')
 		container.style.position = 'fixed'
 		container.style.inset = '0'
-		container.style.pointerEvents = CAM_DEBUG_CONTROLS ? 'auto' : 'none'
+		container.style.pointerEvents = 'none'
 		container.style.zIndex = '0'
-		container.style.opacity = BLACK_HOLE_CANVAS_OPACITY
+		container.style.opacity = '0'
+		container.style.transition = 'opacity 1.8s ease-in'
 		container.style.filter = BLACK_HOLE_CANVAS_FILTER
 		container.style.mixBlendMode = 'screen'
 
@@ -323,9 +319,7 @@ async function launchBlackHoleEvent() {
 		renderer.autoClear = false
 		renderer.domElement.style.position = 'absolute'
 		renderer.domElement.style.inset = '0'
-		renderer.domElement.style.pointerEvents = CAM_DEBUG_CONTROLS
-			? 'auto'
-			: 'none'
+		renderer.domElement.style.pointerEvents = 'none'
 		container.appendChild(renderer.domElement)
 
 		const scene = new Scene()
@@ -354,14 +348,11 @@ async function launchBlackHoleEvent() {
 
 		// Load textures
 		const textureLoader = new TextureLoader()
-		const loadTex = (
-			url: string,
-			filter: typeof NearestFilter | typeof LinearFilter,
-		) =>
+		const loadTex = (url: string) =>
 			new Promise<ReturnType<TextureLoader['load']>>((resolve) => {
 				textureLoader.load(url, (tex) => {
-					tex.magFilter = filter
-					tex.minFilter = filter
+					tex.magFilter = LinearFilter
+					tex.minFilter = LinearFilter
 					tex.wrapS = ClampToEdgeWrapping
 					tex.wrapT = ClampToEdgeWrapping
 					resolve(tex)
@@ -380,9 +371,9 @@ async function launchBlackHoleEvent() {
 			})
 
 		const [bgTexture, starTexture, diskTexture] = await Promise.all([
-			loadTex(milkywayData.src, LinearFilter),
+			loadTex(milkywayData.src),
 			loadRepeatTex(starNoiseData.src),
-			loadTex(accretionDiskData.src, LinearFilter),
+			loadTex(accretionDiskData.src),
 		])
 
 		// Camera nearly in the disk plane (y=0), looking directly at the BH (origin).
@@ -393,70 +384,6 @@ async function launchBlackHoleEvent() {
 		const REF_CAM_DIR = new Vector3(0, -0.0499, -0.9988)
 		const REF_CAM_UP = new Vector3(0, 1, 0)
 		const THETA_INITIAL = Math.atan2(REF_CAM_POS.x, REF_CAM_POS.z)
-
-		// Free-look debug camera (only used when CAM_DEBUG_CONTROLS = true).
-		// Left-drag: look around. Right-drag: strafe. Scroll: move forward/back.
-		const debugPos = REF_CAM_POS.clone()
-		let debugYaw = Math.atan2(REF_CAM_DIR.x, REF_CAM_DIR.z)
-		let debugPitch = Math.asin(
-			Math.max(-1, Math.min(1, REF_CAM_DIR.y / REF_CAM_DIR.length())),
-		)
-		let debugFov = 60
-		let debugDragButton = -1
-		let debugLastX = 0
-		let debugLastY = 0
-
-		const getDebugDir = () =>
-			new Vector3(
-				Math.sin(debugYaw) * Math.cos(debugPitch),
-				Math.sin(debugPitch),
-				Math.cos(debugYaw) * Math.cos(debugPitch),
-			)
-
-		const onDebugPointerDown = (e: PointerEvent) => {
-			debugDragButton = e.button
-			debugLastX = e.clientX
-			debugLastY = e.clientY
-		}
-		const onDebugPointerUp = () => {
-			debugDragButton = -1
-		}
-		const onDebugPointerMove = (e: PointerEvent) => {
-			if (debugDragButton === -1) return
-			const dx = e.clientX - debugLastX
-			const dy = e.clientY - debugLastY
-			debugLastX = e.clientX
-			debugLastY = e.clientY
-			if (debugDragButton === 0) {
-				// Left-drag: look around
-				debugYaw -= dx * 0.003
-				debugPitch = Math.max(
-					-Math.PI / 2 + 0.01,
-					Math.min(Math.PI / 2 - 0.01, debugPitch - dy * 0.003),
-				)
-			} else if (debugDragButton === 2) {
-				// Right-drag: strafe
-				const dir = getDebugDir()
-				const right = new Vector3()
-					.crossVectors(dir, new Vector3(0, 1, 0))
-					.normalize()
-				debugPos.addScaledVector(right, dx * 0.01)
-				debugPos.y -= dy * 0.01
-			}
-		}
-		const onDebugWheel = (e: WheelEvent) => {
-			e.preventDefault()
-			debugPos.addScaledVector(getDebugDir(), -e.deltaY * 0.01)
-		}
-
-		if (CAM_DEBUG_CONTROLS) {
-			renderer.domElement.addEventListener('pointerdown', onDebugPointerDown)
-			window.addEventListener('pointerup', onDebugPointerUp)
-			window.addEventListener('pointermove', onDebugPointerMove)
-			renderer.domElement.addEventListener('wheel', onDebugWheel, {
-				passive: false,
-			})
-		}
 
 		const uniforms = {
 			time: { value: 0.0 },
@@ -494,9 +421,7 @@ async function launchBlackHoleEvent() {
 			)
 		}
 
-		if (!CAM_DEBUG_CONTROLS) {
-			updateCamera(THETA_INITIAL)
-		}
+		updateCamera(THETA_INITIAL)
 
 		const material = new ShaderMaterial({
 			uniforms,
@@ -511,7 +436,6 @@ async function launchBlackHoleEvent() {
 		let lastTime = 0
 		let isMounted = false
 		let timeoutId: number | null = null
-		let debugLogFrame = 0
 
 		const animate = (now: number) => {
 			const delta = lastTime === 0 ? 0 : (now - lastTime) / 1000
@@ -525,37 +449,7 @@ async function launchBlackHoleEvent() {
 			composer.setSize(w, h)
 			uniforms.resolution.value.set(w * dpr, h * dpr)
 
-			if (CAM_DEBUG_CONTROLS) {
-				const dir = getDebugDir()
-				const right = new Vector3()
-					.crossVectors(dir, new Vector3(0, 1, 0))
-					.normalize()
-				const up = new Vector3().crossVectors(right, dir).normalize()
-				uniforms.cam_pos.value.copy(debugPos)
-				uniforms.cam_dir.value.copy(dir)
-				uniforms.cam_up.value.copy(up)
-				uniforms.fov.value = debugFov
-				if (shouldAnimate) uniforms.time.value += delta * DISK_ROTATION_SPEED
-
-				// Log camera state to console every ~2 seconds
-				debugLogFrame++
-				if (debugLogFrame % 120 === 0) {
-					const p = debugPos
-					const d = dir
-					const u = up
-					console.log('[BH cam]')
-					console.log(
-						`cam_pos: (${p.x.toFixed(4)}, ${p.y.toFixed(4)}, ${p.z.toFixed(4)})`,
-					)
-					console.log(
-						`cam_dir: (${d.x.toFixed(4)}, ${d.y.toFixed(4)}, ${d.z.toFixed(4)})`,
-					)
-					console.log(
-						`cam_up:  (${u.x.toFixed(4)}, ${u.y.toFixed(4)}, ${u.z.toFixed(4)})`,
-					)
-					console.log(`fov:     ${debugFov.toFixed(2)}`)
-				}
-			} else if (shouldAnimate) {
+			if (shouldAnimate) {
 				uniforms.time.value += delta * DISK_ROTATION_SPEED
 				theta += CAM_ANGULAR_VELOCITY * delta
 				updateCamera(theta)
@@ -569,6 +463,13 @@ async function launchBlackHoleEvent() {
 			if (isMounted) return
 			isMounted = true
 			document.body.appendChild(container)
+			// Double-rAF ensures the browser paints opacity:0 before transitioning.
+			// A single rAF batches both style changes into the same frame.
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => {
+					container.style.opacity = BLACK_HOLE_CANVAS_OPACITY
+				})
+			})
 			animFrameId = requestAnimationFrame(animate)
 		}
 
@@ -577,15 +478,6 @@ async function launchBlackHoleEvent() {
 		return () => {
 			if (timeoutId !== null) window.clearTimeout(timeoutId)
 			if (animFrameId !== null) cancelAnimationFrame(animFrameId)
-			if (CAM_DEBUG_CONTROLS) {
-				renderer.domElement.removeEventListener(
-					'pointerdown',
-					onDebugPointerDown,
-				)
-				window.removeEventListener('pointerup', onDebugPointerUp)
-				window.removeEventListener('pointermove', onDebugPointerMove)
-				renderer.domElement.removeEventListener('wheel', onDebugWheel)
-			}
 			renderer.dispose()
 			material.dispose()
 			mesh.geometry.dispose()
