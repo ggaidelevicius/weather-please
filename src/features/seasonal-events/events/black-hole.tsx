@@ -450,7 +450,10 @@ async function launchBlackHoleEvent() {
 			uniforms.resolution.value.set(w * dpr, h * dpr)
 
 			if (shouldAnimate) {
-				uniforms.time.value += delta * DISK_ROTATION_SPEED
+				// Wrap time into [0, 2π] to prevent float precision loss in the
+				// shader — large time values cause phi - time to lose mantissa bits.
+				uniforms.time.value =
+					(uniforms.time.value + delta * DISK_ROTATION_SPEED) % (Math.PI * 2)
 				theta += CAM_ANGULAR_VELOCITY * delta
 				updateCamera(theta)
 			}
