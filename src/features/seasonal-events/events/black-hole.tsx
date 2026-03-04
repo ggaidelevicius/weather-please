@@ -6,6 +6,7 @@ import {
 	Mesh,
 	NearestFilter,
 	PlaneGeometry,
+	RepeatWrapping,
 	Scene,
 	ShaderMaterial,
 	TextureLoader,
@@ -41,6 +42,12 @@ const BLACK_HOLE_CANVAS_OPACITY = '0.94'
 const BLACK_HOLE_CANVAS_FILTER = 'saturate(115%) contrast(105%)'
 // Slow orbit angular velocity (rad/s)
 const CAM_ANGULAR_VELOCITY = 0.002
+// Accretion disk rotation speed multiplier (1.0 = shader default)
+const DISK_ROTATION_SPEED = 0.05
+// Set true to enable interactive camera controls for positioning.
+// Open the browser console — values are logged every ~2 seconds.
+// Once you have the desired position, hardcode the values below and set this to false.
+const CAM_DEBUG_CONTROLS = false
 
 const BLACK_HOLE_VERTEX_SHADER = `
 void main() {
@@ -172,6 +179,9 @@ void main() {
 				vec4 disk_color = texture2D(disk_texture, tex_coord) / disk_doppler_factor;
 				float disk_alpha = clamp(dot(disk_color, disk_color) / 4.5, 0.0, 1.0);
 				disk_alpha /= pow(max(disk_doppler_factor, 0.15), 3.0);
+				// Soft fade at inner and outer radial edges to avoid hard borders.
+				float t = (r - DISK_IN) / DISK_WIDTH;
+				disk_alpha *= smoothstep(0.0, 0.08, t) * smoothstep(1.0, 0.75, t);
 				color += vec4(disk_color) * disk_alpha;
 			}
 		}
@@ -180,12 +190,12 @@ void main() {
 	if (distance > 1.0) {
 		ray_dir = normalize(point - oldpoint);
 		vec2 tex_coord = to_spherical(ray_dir);
-		vec4 star_color = texture2D(star_texture, tex_coord);
+		vec4 star_color = texture2D(star_texture, tex_coord * 2.0);
 		if (star_color.g > 0.0) {
 			float star_temperature = MIN_TEMPERATURE + TEMPERATURE_RANGE * star_color.r;
-			color += vec4(temp_to_color(star_temperature), 1.0) * star_color.g;
+			color += vec4(temp_to_color(star_temperature), 1.0) * star_color.g * 0.033;
 		}
-		color += texture2D(bg_texture, tex_coord) * 0.01;
+		color += texture2D(bg_texture, tex_coord) * 0.004;
 	}
 
 	gl_FragColor = color;
@@ -290,7 +300,7 @@ async function launchBlackHoleEvent() {
 		const container = document.createElement('div')
 		container.style.position = 'fixed'
 		container.style.inset = '0'
-		container.style.pointerEvents = 'none'
+		container.style.pointerEvents = CAM_DEBUG_CONTROLS ? 'auto' : 'none'
 		container.style.zIndex = '0'
 		container.style.opacity = BLACK_HOLE_CANVAS_OPACITY
 		container.style.filter = BLACK_HOLE_CANVAS_FILTER
@@ -313,7 +323,9 @@ async function launchBlackHoleEvent() {
 		renderer.autoClear = false
 		renderer.domElement.style.position = 'absolute'
 		renderer.domElement.style.inset = '0'
-		renderer.domElement.style.pointerEvents = 'none'
+		renderer.domElement.style.pointerEvents = CAM_DEBUG_CONTROLS
+			? 'auto'
+			: 'none'
 		container.appendChild(renderer.domElement)
 
 		const scene = new Scene()
@@ -356,27 +368,106 @@ async function launchBlackHoleEvent() {
 				})
 			})
 
+		const loadRepeatTex = (url: string) =>
+			new Promise<ReturnType<TextureLoader['load']>>((resolve) => {
+				textureLoader.load(url, (tex) => {
+					tex.magFilter = LinearFilter
+					tex.minFilter = LinearFilter
+					tex.wrapS = RepeatWrapping
+					tex.wrapT = RepeatWrapping
+					resolve(tex)
+				})
+			})
+
 		const [bgTexture, starTexture, diskTexture] = await Promise.all([
-			loadTex(milkywayData.src, NearestFilter),
-			loadTex(starNoiseData.src, LinearFilter),
+			loadTex(milkywayData.src, LinearFilter),
+			loadRepeatTex(starNoiseData.src),
 			loadTex(accretionDiskData.src, LinearFilter),
 		])
 
-		// Exact camera state extracted from the reference demo at the desired composition.
-		// The orbit animates by rotating all three vectors around the y-axis, which
-		// keeps the BH at a fixed screen position as the camera slowly circles.
-		const REF_CAM_POS = new Vector3(5.317, 0.27, 3.09)
-		const REF_CAM_DIR = new Vector3(-0.9955, 0.0114, 0.0945)
-		const REF_CAM_UP = new Vector3(0.0872, 0.9962, 0.0)
+		// Camera nearly in the disk plane (y=0), looking directly at the BH (origin).
+		// Small y elevation gives the Interstellar-style horizontal disk sweep.
+		// cam_dir = normalize(-cam_pos) so BH is always centered.
+		// cam_up = (0,1,0) keeps the disk horizontal. Orbit rotates around y-axis.
+		const REF_CAM_POS = new Vector3(0, 0.5, 8)
+		const REF_CAM_DIR = new Vector3(0, -0.0499, -0.9988)
+		const REF_CAM_UP = new Vector3(0, 1, 0)
 		const THETA_INITIAL = Math.atan2(REF_CAM_POS.x, REF_CAM_POS.z)
+
+		// Free-look debug camera (only used when CAM_DEBUG_CONTROLS = true).
+		// Left-drag: look around. Right-drag: strafe. Scroll: move forward/back.
+		const debugPos = REF_CAM_POS.clone()
+		let debugYaw = Math.atan2(REF_CAM_DIR.x, REF_CAM_DIR.z)
+		let debugPitch = Math.asin(
+			Math.max(-1, Math.min(1, REF_CAM_DIR.y / REF_CAM_DIR.length())),
+		)
+		let debugFov = 60
+		let debugDragButton = -1
+		let debugLastX = 0
+		let debugLastY = 0
+
+		const getDebugDir = () =>
+			new Vector3(
+				Math.sin(debugYaw) * Math.cos(debugPitch),
+				Math.sin(debugPitch),
+				Math.cos(debugYaw) * Math.cos(debugPitch),
+			)
+
+		const onDebugPointerDown = (e: PointerEvent) => {
+			debugDragButton = e.button
+			debugLastX = e.clientX
+			debugLastY = e.clientY
+		}
+		const onDebugPointerUp = () => {
+			debugDragButton = -1
+		}
+		const onDebugPointerMove = (e: PointerEvent) => {
+			if (debugDragButton === -1) return
+			const dx = e.clientX - debugLastX
+			const dy = e.clientY - debugLastY
+			debugLastX = e.clientX
+			debugLastY = e.clientY
+			if (debugDragButton === 0) {
+				// Left-drag: look around
+				debugYaw -= dx * 0.003
+				debugPitch = Math.max(
+					-Math.PI / 2 + 0.01,
+					Math.min(Math.PI / 2 - 0.01, debugPitch - dy * 0.003),
+				)
+			} else if (debugDragButton === 2) {
+				// Right-drag: strafe
+				const dir = getDebugDir()
+				const right = new Vector3()
+					.crossVectors(dir, new Vector3(0, 1, 0))
+					.normalize()
+				debugPos.addScaledVector(right, dx * 0.01)
+				debugPos.y -= dy * 0.01
+			}
+		}
+		const onDebugWheel = (e: WheelEvent) => {
+			e.preventDefault()
+			debugPos.addScaledVector(getDebugDir(), -e.deltaY * 0.01)
+		}
+
+		if (CAM_DEBUG_CONTROLS) {
+			renderer.domElement.addEventListener('pointerdown', onDebugPointerDown)
+			window.addEventListener('pointerup', onDebugPointerUp)
+			window.addEventListener('pointermove', onDebugPointerMove)
+			renderer.domElement.addEventListener('wheel', onDebugWheel, {
+				passive: false,
+			})
+		}
 
 		const uniforms = {
 			time: { value: 0.0 },
-			resolution: { value: new Vector2(window.innerWidth, window.innerHeight) },
+			// Resolution must be in physical pixels (CSS * DPR) to match gl_FragCoord.
+			resolution: {
+				value: new Vector2(window.innerWidth * dpr, window.innerHeight * dpr),
+			},
 			cam_pos: { value: new Vector3() },
 			cam_dir: { value: new Vector3() },
 			cam_up: { value: new Vector3() },
-			fov: { value: 60.0 },
+			fov: { value: 70.0 },
 			bg_texture: { value: bgTexture },
 			star_texture: { value: starTexture },
 			disk_texture: { value: diskTexture },
@@ -403,7 +494,9 @@ async function launchBlackHoleEvent() {
 			)
 		}
 
-		updateCamera(THETA_INITIAL)
+		if (!CAM_DEBUG_CONTROLS) {
+			updateCamera(THETA_INITIAL)
+		}
 
 		const material = new ShaderMaterial({
 			uniforms,
@@ -418,6 +511,7 @@ async function launchBlackHoleEvent() {
 		let lastTime = 0
 		let isMounted = false
 		let timeoutId: number | null = null
+		let debugLogFrame = 0
 
 		const animate = (now: number) => {
 			const delta = lastTime === 0 ? 0 : (now - lastTime) / 1000
@@ -426,11 +520,43 @@ async function launchBlackHoleEvent() {
 			const w = window.innerWidth
 			const h = window.innerHeight
 			renderer.setSize(w, h)
-			composer.setSize(w * dpr, h * dpr)
-			uniforms.resolution.value.set(w, h)
+			// Pass CSS pixels — EffectComposer internally multiplies by its stored
+			// pixelRatio (= dpr). Passing w*dpr here would double-apply the scale.
+			composer.setSize(w, h)
+			uniforms.resolution.value.set(w * dpr, h * dpr)
 
-			if (shouldAnimate) {
-				uniforms.time.value += delta
+			if (CAM_DEBUG_CONTROLS) {
+				const dir = getDebugDir()
+				const right = new Vector3()
+					.crossVectors(dir, new Vector3(0, 1, 0))
+					.normalize()
+				const up = new Vector3().crossVectors(right, dir).normalize()
+				uniforms.cam_pos.value.copy(debugPos)
+				uniforms.cam_dir.value.copy(dir)
+				uniforms.cam_up.value.copy(up)
+				uniforms.fov.value = debugFov
+				if (shouldAnimate) uniforms.time.value += delta * DISK_ROTATION_SPEED
+
+				// Log camera state to console every ~2 seconds
+				debugLogFrame++
+				if (debugLogFrame % 120 === 0) {
+					const p = debugPos
+					const d = dir
+					const u = up
+					console.log('[BH cam]')
+					console.log(
+						`cam_pos: (${p.x.toFixed(4)}, ${p.y.toFixed(4)}, ${p.z.toFixed(4)})`,
+					)
+					console.log(
+						`cam_dir: (${d.x.toFixed(4)}, ${d.y.toFixed(4)}, ${d.z.toFixed(4)})`,
+					)
+					console.log(
+						`cam_up:  (${u.x.toFixed(4)}, ${u.y.toFixed(4)}, ${u.z.toFixed(4)})`,
+					)
+					console.log(`fov:     ${debugFov.toFixed(2)}`)
+				}
+			} else if (shouldAnimate) {
+				uniforms.time.value += delta * DISK_ROTATION_SPEED
 				theta += CAM_ANGULAR_VELOCITY * delta
 				updateCamera(theta)
 			}
@@ -451,6 +577,15 @@ async function launchBlackHoleEvent() {
 		return () => {
 			if (timeoutId !== null) window.clearTimeout(timeoutId)
 			if (animFrameId !== null) cancelAnimationFrame(animFrameId)
+			if (CAM_DEBUG_CONTROLS) {
+				renderer.domElement.removeEventListener(
+					'pointerdown',
+					onDebugPointerDown,
+				)
+				window.removeEventListener('pointerup', onDebugPointerUp)
+				window.removeEventListener('pointermove', onDebugPointerMove)
+				renderer.domElement.removeEventListener('wheel', onDebugWheel)
+			}
 			renderer.dispose()
 			material.dispose()
 			mesh.geometry.dispose()
