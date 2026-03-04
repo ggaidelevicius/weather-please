@@ -39,8 +39,6 @@ const BLACK_HOLE_MOUNT_DELAY_MS = 900
 const BLACK_HOLE_CANVAS_MAX_DPR = 1.2
 const BLACK_HOLE_CANVAS_OPACITY = '0.94'
 const BLACK_HOLE_CANVAS_FILTER = 'saturate(115%) contrast(105%)'
-// Slow orbit angular velocity (rad/s)
-const CAM_ANGULAR_VELOCITY = 0.002
 // Accretion disk rotation speed multiplier (1.0 = shader default)
 const DISK_ROTATION_SPEED = 0.05
 
@@ -432,7 +430,6 @@ async function launchBlackHoleEvent() {
 		scene.add(mesh)
 
 		let animFrameId: number | null = null
-		let theta = THETA_INITIAL
 		let lastTime = 0
 		let isMounted = false
 		let timeoutId: number | null = null
@@ -454,8 +451,6 @@ async function launchBlackHoleEvent() {
 				// shader — large time values cause phi - time to lose mantissa bits.
 				uniforms.time.value =
 					(uniforms.time.value + delta * DISK_ROTATION_SPEED) % (Math.PI * 2)
-				theta += CAM_ANGULAR_VELOCITY * delta
-				updateCamera(theta)
 			}
 
 			composer.render()
