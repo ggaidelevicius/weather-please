@@ -86,6 +86,7 @@ const mockValidConfig: Config = {
 	showEidAlAdhaEvent: true,
 	showHanukkahEvent: true,
 	showChristmasEvent: true,
+	showEventHorizonDayEvent: true,
 	useAirQualityUvOverride: false,
 	daysToRetrieve: '3',
 	identifier: TileIdentifier.Day,

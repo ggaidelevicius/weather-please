@@ -24,6 +24,7 @@ import { eidAlAdhaEvent } from '../events/eid-al-adha'
 import { hanukkahEvent } from '../events/hanukkah'
 import { christmasEvent } from '../events/christmas'
 import { easterEvent } from '../events/easter'
+import { blackHoleEvent } from '../events/black-hole'
 import {
 	Hemisphere,
 	SeasonalEventId,
@@ -58,6 +59,7 @@ const seasonalEvents: SeasonalEvent[] = [
 	perseidsEvent,
 	quadrantidsEvent,
 	geminidsEvent,
+	blackHoleEvent,
 ]
 const seasonalEventMap = new Map<SeasonalEventId, SeasonalEvent>(
 	seasonalEvents.map((event) => [event.id, event]),

@@ -25,6 +25,7 @@ export enum SeasonalEventId {
 	EidAlAdha = 'eid-al-adha',
 	Hanukkah = 'hanukkah',
 	ChristmasDay = 'christmas-day',
+	EventHorizonDay = 'event-horizon-day',
 }
 
 export enum Hemisphere {

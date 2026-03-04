@@ -157,6 +157,7 @@ const SEASONAL_EMOJI_BY_EVENT: Record<SeasonalEventId, string> = {
 	[SeasonalEventId.EidAlAdha]: '🕋',
 	[SeasonalEventId.Hanukkah]: '🕎',
 	[SeasonalEventId.ChristmasDay]: '🎄',
+	[SeasonalEventId.EventHorizonDay]: '🕳️',
 }
 
 const SEASONAL_LABEL_BY_EVENT: Record<SeasonalEventId, ReactElement> = {
@@ -186,6 +187,7 @@ const SEASONAL_LABEL_BY_EVENT: Record<SeasonalEventId, ReactElement> = {
 	[SeasonalEventId.EidAlAdha]: <Trans>Eid al-Adha</Trans>,
 	[SeasonalEventId.Hanukkah]: <Trans>Hanukkah</Trans>,
 	[SeasonalEventId.ChristmasDay]: <Trans>Christmas Day</Trans>,
+	[SeasonalEventId.EventHorizonDay]: <Trans>Event Horizon Day</Trans>,
 }
 
 const getSeasonalEmoji = (eventId: SeasonalEventId) =>

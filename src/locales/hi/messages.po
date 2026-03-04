@@ -23,12 +23,12 @@ msgstr ""
 #~ msgstr "अगले घंटे में {0} इंच वर्षा की उम्मीद"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:485
+#: src/features/weather/ui/tile.tsx:487
 msgid "{0} km/h"
 msgstr "{0} किमी/घंटा"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:486
+#: src/features/weather/ui/tile.tsx:488
 msgid "{0} mph"
 msgstr "{0} मील प्रति घंटा"
 
@@ -79,7 +79,7 @@ msgstr "<0>लोकेशन एक्सेस अस्वीकृत.</0> �
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>लोकेशन एक्सेस अस्वीकृत.</0> एड्रेस बार में लोकेशन आइकन पर क्लिक करें और \"हमेशा आपकी लोकेशन तक पहुंच की अनुमति दें\" चुनें. फिर नीचे दिए गए बटन पर क्लिक करके दोबारा कोशिश करें."
 
-#: src/features/settings/ui/settings.tsx:378
+#: src/features/settings/ui/settings.tsx:382
 msgid "☕ Gift a coffee"
 msgstr "☕ कॉफ़ी का उपहार दें"
 
@@ -87,11 +87,11 @@ msgstr "☕ कॉफ़ी का उपहार दें"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ प्रतिसाद जमा करें"
 
-#: src/features/settings/ui/settings.tsx:362
+#: src/features/settings/ui/settings.tsx:366
 msgid "🌟 Leave a review"
 msgstr "🌟 समीक्षा छोड़ें"
 
-#: src/features/settings/ui/settings.tsx:370
+#: src/features/settings/ui/settings.tsx:374
 msgid "🐛 Report a bug"
 msgstr "🐛 एक बग रिपोर्ट करें"
 
@@ -99,7 +99,7 @@ msgstr "🐛 एक बग रिपोर्ट करें"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 एक सुविधा का अनुरोध करें"
 
-#: src/features/settings/ui/settings.tsx:397
+#: src/features/settings/ui/settings.tsx:401
 msgid "🔒 Privacy policy"
 msgstr "🔒 गोपनीयता नीति"
 
@@ -231,7 +231,7 @@ msgstr "जब सूरज की रोशनी पृथ्वी के व
 #~ msgid "As the Earth turns, the new year arrives in a slow-moving wave that travels across time zones for nearly a full day."
 #~ msgstr "जैसे-जैसे पृथ्वी घूमती है, नया साल एक धीमी लहर की तरह आता है, जो लगभग पूरे एक दिन तक समय क्षेत्रों के पार यात्रा करती है।"
 
-#: src/features/settings/ui/settings.tsx:111
+#: src/features/settings/ui/settings.tsx:114
 msgid "Astronomy"
 msgstr "खगोल विज्ञान"
 
@@ -251,13 +251,17 @@ msgstr "हर सीमा पर आतिशबाज़ी होती ह�
 msgid "August"
 msgstr "अगस्त"
 
-#: src/features/weather/ui/tile.tsx:167
+#: src/features/weather/ui/tile.tsx:168
 msgid "Autumn Equinox"
 msgstr "शरद विषुव"
 
 #: src/components/settings/index.tsx:194
 #~ msgid "Based on the provided information, your location is:"
 #~ msgstr "प्रदान की गई जानकारी के आधार पर, आपका स्थान है:"
+
+#: src/features/seasonal-events/events/black-hole.tsx:228
+msgid "Because gravity bends light paths, parts of the disk appear warped and wrapped above and below the black hole."
+msgstr "क्योंकि गुरुत्वाकर्षण प्रकाश के पथों को मोड़ता है, डिस्क के कुछ हिस्से विकृत दिखाई देते हैं और कृष्ण विवर के ऊपर और नीचे लिपटे हुए नजर आते हैं।"
 
 #: src/features/seasonal-events/events/geminids.tsx:103
 msgid "Because it behaves like both an asteroid and a comet, it is sometimes described as a “rock comet”."
@@ -307,7 +311,7 @@ msgstr "सदियों बाद भी, जब कोई संदेश �
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
 msgstr "687 ईसा पूर्व के चीनी अभिलेखों में \"वर्षा की तरह गिरते तारों\" का वर्णन है — यह लायरिड्स का सबसे पुराना ज्ञात विवरण है, और किसी भी प्रकार की सबसे पुरानी दर्ज उल्का-प्रेक्षणों में से एक।"
 
-#: src/features/weather/ui/tile.tsx:188
+#: src/features/weather/ui/tile.tsx:189
 msgid "Christmas Day"
 msgstr "क्रिसमस दिवस"
 
@@ -355,15 +359,15 @@ msgstr "संक्षिप्त मौसम चेतावनियाँ"
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "वेशभूषाएँ वीर, हास्यपूर्ण, या डरावनी हो सकती हैं, जिससे लोग थोड़ी देर के लिए अलग भूमिकाएँ जी सकते हैं।"
 
-#: src/features/settings/ui/settings.tsx:288
+#: src/features/settings/ui/settings.tsx:292
 msgid "Date"
 msgstr "तारीख़"
 
-#: src/features/settings/ui/settings.tsx:284
+#: src/features/settings/ui/settings.tsx:288
 msgid "Day"
 msgstr "दिन"
 
-#: src/features/weather/ui/tile.tsx:182
+#: src/features/weather/ui/tile.tsx:183
 msgid "Day of the Dead"
 msgstr "मृतकों का दिन"
 
@@ -399,7 +403,7 @@ msgstr "राइम कोहरा जमा हो रहा है"
 #~ msgid "Difficult to use or understand"
 #~ msgstr "उपयोग करना या समझना कठिन"
 
-#: src/features/weather/ui/tile.tsx:168
+#: src/features/weather/ui/tile.tsx:169
 msgid "Diwali"
 msgstr "दीवाली"
 
@@ -447,7 +451,7 @@ msgstr "हर शाम, मेनोराह में एक और मो�
 msgid "Each Orionid meteor is a tiny grain of dust shed by Halley's Comet — the same object that people have been watching and recording since at least 240 BC."
 msgstr "प्रत्येक ओरियोनिड उल्का हैली के धूमकेतु द्वारा छोड़ा गया धूल का एक छोटा कण है — वही पिंड जिसे लोग कम से कम 240 ईसा पूर्व से देखते और दर्ज करते आ रहे हैं।"
 
-#: src/features/weather/ui/tile.tsx:170
+#: src/features/weather/ui/tile.tsx:171
 msgid "Earth Day"
 msgstr "पृथ्वी दिवस"
 
@@ -455,7 +459,7 @@ msgstr "पृथ्वी दिवस"
 msgid "Earth Day invites a pause to notice the planet that sustains us, and to consider how we care for it."
 msgstr "अर्थ डे हमें उस ग्रह को देखने के लिए ठहरने का निमंत्रण देता है जो हमें सहारा देता है, और यह सोचने का कि हम उसकी देखभाल कैसे करते हैं।"
 
-#: src/features/weather/ui/tile.tsx:183
+#: src/features/weather/ui/tile.tsx:184
 msgid "Easter"
 msgstr "ईस्टर"
 
@@ -467,7 +471,7 @@ msgstr "ईस्टर नवीकरण के विषयों पर क�
 msgid "Eclipse glasses are essential during all partial phases. Only during the brief seconds of total coverage is it safe to look with the naked eye."
 msgstr "सभी आंशिक चरणों के दौरान ग्रहण चश्मा ज़रूरी है। केवल पूर्ण आच्छादन के संक्षिप्त सेकंडों के दौरान ही नंगी आँखों से देखना सुरक्षित है।"
 
-#: src/features/weather/ui/tile.tsx:186
+#: src/features/weather/ui/tile.tsx:187
 msgid "Eid al-Adha"
 msgstr "ईद-उल-अज़हा"
 
@@ -475,7 +479,7 @@ msgstr "ईद-उल-अज़हा"
 msgid "Eid al-Adha is one of the most important festivals in Islam, closely linked to the season of the Hajj pilgrimage."
 msgstr "ईद-उल-अज़हा इस्लाम के सबसे महत्वपूर्ण त्योहारों में से एक है, और हज यात्रा के मौसम से निकटता से जुड़ी है।"
 
-#: src/features/weather/ui/tile.tsx:185
+#: src/features/weather/ui/tile.tsx:186
 msgid "Eid al-Fitr"
 msgstr "ईद-उल-फ़ितर"
 
@@ -495,7 +499,7 @@ msgstr "ईद-उल-फ़ितर रमज़ान के अंत को
 #~ msgid "Error submitting feedback. Try again later."
 #~ msgstr "प्रतिसाद सबमिट करते समय त्रुटि। बाद में पुनः प्रयास करें।"
 
-#: src/features/weather/ui/tile.tsx:177
+#: src/features/weather/ui/tile.tsx:178
 msgid "Eta Aquariids Meteor Shower"
 msgstr "इटा अक्वैरिड्स उल्का वर्षा"
 
@@ -506,6 +510,14 @@ msgstr "छोटे-छोटे चयन भी — मरम्मत कर
 #: src/hooks/seasonal-events/valentines.tsx:103
 #~ msgid "Even today, paper hearts and quiet notes continue the tradition of deliberate kindness."
 #~ msgstr "आज भी, कागज़ी दिल और शांत संदेश सोच-समझकर किए गए स्नेह की परंपरा को आगे बढ़ाते हैं।"
+
+#: src/features/weather/ui/tile.tsx:190
+msgid "Event Horizon Day"
+msgstr "इवेंट हॉरिज़ॉन दिवस"
+
+#: src/features/seasonal-events/events/black-hole.tsx:206
+msgid "Event Horizon Day highlights the first direct image of a black hole, captured in 2019 by the Event Horizon Telescope collaboration."
+msgstr "इवेंट हॉरिज़ॉन दिवस एक कृष्ण विवर की पहली प्रत्यक्ष छवि को उजागर करता है, जिसे 2019 में Event Horizon Telescope सहयोग द्वारा कैप्चर किया गया था।"
 
 #: src/features/seasonal-events/events/christmas.tsx:82
 msgid "Evergreens, candles, bells, and stars echo a shared theme drawn from those early traditions: light enduring through the darkest part of the year in the cultures where the holiday first formed."
@@ -563,7 +575,7 @@ msgstr "परिवार कब्रिस्तानों में रा
 msgid "February"
 msgstr "फ़रवरी"
 
-#: src/features/settings/ui/settings.tsx:354
+#: src/features/settings/ui/settings.tsx:358
 msgid "Feedback"
 msgstr "प्रतिक्रिया"
 
@@ -615,11 +627,11 @@ msgstr "इस बिंदु से, हर दिन कुछ मिनट �
 msgid "Geminid meteors move slower than most showers, which is part of what makes them so striking — they linger long enough to actually follow with your eyes."
 msgstr "जेमिनिड उल्काएँ अधिकांश वर्षाओं से धीमी चलती हैं, जो उन्हें इतना प्रभावशाली बनाती है — वे इतनी देर तक टिकती हैं कि आप उन्हें आँखों से वास्तव में देख सकें।"
 
-#: src/features/weather/ui/tile.tsx:184
+#: src/features/weather/ui/tile.tsx:185
 msgid "Geminids Meteor Shower"
 msgstr "जेमिनिड्स उल्का वर्षा"
 
-#: src/features/settings/ui/settings.tsx:215
+#: src/features/settings/ui/settings.tsx:219
 msgid "General"
 msgstr "सामान्य"
 
@@ -644,6 +656,7 @@ msgid "Generally strong wind starting in 1 hour"
 msgstr "आम तौर पर तेज हवा एक घंटे में शुरू होगी"
 
 #: src/features/seasonal-events/events/autumn-equinox.tsx:121
+#: src/features/seasonal-events/events/black-hole.tsx:252
 #: src/features/seasonal-events/events/christmas.tsx:97
 #: src/features/seasonal-events/events/day-of-the-dead.tsx:90
 #: src/features/seasonal-events/events/diwali.tsx:111
@@ -676,7 +689,7 @@ msgstr "जानना अच्छा है"
 msgid "Halley’s Comet itself returns roughly every seventy-six years, but the stream of dust it leaves behind crosses Earth’s path each year."
 msgstr "हैली का धूमकेतु खुद लगभग हर छिहत्तर साल में लौटता है, लेकिन उसके छोड़े धूल-कणों की धारा हर साल पृथ्वी की कक्षा को काटती है।"
 
-#: src/features/weather/ui/tile.tsx:173
+#: src/features/weather/ui/tile.tsx:174
 msgid "Halloween"
 msgstr "हैलोवीन"
 
@@ -684,7 +697,7 @@ msgstr "हैलोवीन"
 msgid "Halloween is a night shaped by costumes, stories, and a playful sense of unease."
 msgstr "हैलोवीन वेशभूषाओं, कहानियों, और हल्की-सी बेचैनी के खेल-खिलवाड़ से गढ़ी हुई रात है।"
 
-#: src/features/weather/ui/tile.tsx:187
+#: src/features/weather/ui/tile.tsx:188
 msgid "Hanukkah"
 msgstr "हनुक्का"
 
@@ -748,7 +761,7 @@ msgstr "पर्सीड्स के ऐतिहासिक अभिले
 msgid "History and meaning"
 msgstr "इतिहास और अर्थ"
 
-#: src/features/weather/ui/tile.tsx:169
+#: src/features/weather/ui/tile.tsx:170
 msgid "Holi"
 msgstr "होली"
 
@@ -768,7 +781,7 @@ msgstr "घर सावधानी से साफ़ किए जाते 
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "मुझे Weather Please को और अधिक भाषाओं में लाना पसंद होगा।"
 
-#: src/features/settings/ui/settings.tsx:277
+#: src/features/settings/ui/settings.tsx:281
 msgid "Identifier"
 msgstr "पहचानकर्ता"
 
@@ -830,6 +843,10 @@ msgstr "अमान्य मान। जब तक यह मान्य न
 #: src/pages/feedback/index.tsx:324
 #~ msgid "Issues after a recent update"
 #~ msgstr "हाल के अपडेट के बाद समस्याएं"
+
+#: src/features/seasonal-events/events/black-hole.tsx:245
+msgid "It also opened a new era of black-hole imaging, with continued work on sharper reconstructions and time-varying dynamics."
+msgstr "इसने कृष्ण विवर इमेजिंग के एक नए युग की भी शुरुआत की, जिसमें तेज पुनर्निर्माण और समय-परिवर्तनशील गतिकी पर निरंतर काम जारी है।"
 
 #: src/features/seasonal-events/events/eid-al-fitr.tsx:66
 msgid "It begins with the sighting of the new moon, followed by a special morning prayer."
@@ -899,6 +916,10 @@ msgstr "इसे भारत भर में और दुनिया भर
 #~ msgid "It is often marked by small gestures that simply say someone has been remembered."
 #~ msgstr "इसे अक्सर छोटे-छोटे इशारों से मनाया जाता है, जो बस इतना कहते हैं कि किसी को याद किया गया है।"
 
+#: src/features/seasonal-events/events/black-hole.tsx:212
+msgid "It represents a major milestone in astronomy, combining global cooperation, radio interferometry, and years of data processing."
+msgstr "यह खगोल विज्ञान में एक प्रमुख मील का पत्थर है, जो वैश्विक सहयोग, रेडियो इंटरफेरोमेट्री और वर्षों के डेटा प्रसंस्करण को जोड़ता है।"
+
 #: src/features/seasonal-events/events/winter-solstice.tsx:90
 msgid "It signals the beginning of winter in the northern hemisphere and the start of summer in the southern hemisphere."
 msgstr "यह उत्तरी गोलार्ध में सर्दियों की शुरुआत और दक्षिणी गोलार्ध में गर्मियों की शुरुआत का संकेत देता है।"
@@ -944,7 +965,7 @@ msgstr "जून"
 #~ msgstr "मुझे जरूरत की सुविधाएँ नहीं हैं"
 
 #: src/features/settings/ui/initialisation.tsx:171
-#: src/features/settings/ui/settings.tsx:218
+#: src/features/settings/ui/settings.tsx:222
 msgid "Language"
 msgstr "भाषा"
 
@@ -952,7 +973,7 @@ msgstr "भाषा"
 #~ msgid "Lanterns and parades transform the night into a flowing river of light."
 #~ msgstr "लालटेन और परेड रात को रोशनी की बहती हुई नदी में बदल देते हैं।"
 
-#: src/features/settings/ui/settings.tsx:243
+#: src/features/settings/ui/settings.tsx:247
 msgid "Latitude"
 msgstr "अक्षांश"
 
@@ -960,7 +981,7 @@ msgstr "अक्षांश"
 msgid "Leave a review"
 msgstr "समीक्षा छोड़ें"
 
-#: src/features/settings/ui/settings.tsx:389
+#: src/features/settings/ui/settings.tsx:393
 msgid "Legal"
 msgstr "कानूनी"
 
@@ -968,7 +989,7 @@ msgstr "कानूनी"
 msgid "Legends and customs"
 msgstr "किंवदंतियाँ और रीतियाँ"
 
-#: src/features/weather/ui/tile.tsx:179
+#: src/features/weather/ui/tile.tsx:180
 msgid "Leonids Meteor Shower"
 msgstr "लियोनिड्स उल्का वर्षा"
 
@@ -1024,7 +1045,7 @@ msgstr "रोशनी चाँदी-सी टोन में बदलत�
 #~ msgid "Location"
 #~ msgstr "स्थान"
 
-#: src/features/settings/ui/settings.tsx:251
+#: src/features/settings/ui/settings.tsx:255
 msgid "Longitude"
 msgstr "देशांतर"
 
@@ -1052,7 +1073,7 @@ msgstr "{timeUntilLowVisibility} घंटों में कम दृश्�
 msgid "Low visibility starting in 1 hour"
 msgstr "एक घंटे में कम दृश्यता शुरू होगी"
 
-#: src/features/weather/ui/tile.tsx:165
+#: src/features/weather/ui/tile.tsx:166
 msgid "Lunar New Year"
 msgstr "चंद्र नववर्ष"
 
@@ -1060,7 +1081,7 @@ msgstr "चंद्र नववर्ष"
 msgid "Lunar New Year begins with the first new moon of the lunar calendar and unfolds across a festival season lasting up to fifteen days."
 msgstr "चंद्र नववर्ष चंद्र कैलेंडर के पहले नए चाँद से शुरू होता है और पंद्रह दिनों तक चलने वाले उत्सव-ऋतु में फैलता है।"
 
-#: src/features/weather/ui/tile.tsx:176
+#: src/features/weather/ui/tile.tsx:177
 msgid "Lyrids Meteor Shower"
 msgstr "लाइरिड्स उल्का वर्षा"
 
@@ -1153,7 +1174,7 @@ msgstr "इसे फिर से न दिखाएं"
 #~ msgid "New tab"
 #~ msgstr "नया टैब"
 
-#: src/features/weather/ui/tile.tsx:163
+#: src/features/weather/ui/tile.tsx:164
 msgid "New Year's Day"
 msgstr "नववर्ष दिवस"
 
@@ -1185,7 +1206,7 @@ msgstr "न्यूग्रेंज, आयरलैंड में 5,000 �
 msgid "November"
 msgstr "नवं"
 
-#: src/features/settings/ui/settings.tsx:266
+#: src/features/settings/ui/settings.tsx:270
 msgid "Number of days to forecast"
 msgstr "भविष्यवाणी के लिए दिनों की संख्या"
 
@@ -1209,11 +1230,11 @@ msgstr "अगले दिन, रंग-बिरंगे पाउडर ह
 msgid "On the longest day, twilight stretches out for hours and full darkness may never arrive."
 msgstr "सबसे लंबे दिन पर, संध्याकाल घंटों तक फैला रहता है और पूर्ण अंधेरा कभी नहीं आ सकता।"
 
-#: src/features/weather/ui/tile.tsx:178
+#: src/features/weather/ui/tile.tsx:179
 msgid "Orionids Meteor Shower"
 msgstr "ओरायनिड्स उल्का वर्षा"
 
-#: src/features/settings/ui/settings.tsx:140
+#: src/features/settings/ui/settings.tsx:144
 msgid "Other holidays"
 msgstr "अन्य त्योहार"
 
@@ -1234,6 +1255,7 @@ msgid "overcast"
 msgstr "धूमिल"
 
 #: src/features/seasonal-events/events/autumn-equinox.tsx:84
+#: src/features/seasonal-events/events/black-hole.tsx:203
 #: src/features/seasonal-events/events/christmas.tsx:44
 #: src/features/seasonal-events/events/day-of-the-dead.tsx:41
 #: src/features/seasonal-events/events/diwali.tsx:62
@@ -1270,7 +1292,7 @@ msgstr "आंशिक रूप से बादल"
 #~ msgid "Performance issues"
 #~ msgstr "प्रदर्शन समस्याएं"
 
-#: src/features/settings/ui/settings.tsx:261
+#: src/features/settings/ui/settings.tsx:265
 msgid "Periodically update location automatically"
 msgstr "स्थान को स्वचालित रूप से आवधिक रूप से अपडेट करें"
 
@@ -1278,7 +1300,7 @@ msgstr "स्थान को स्वचालित रूप से आव�
 msgid "Perseid meteors enter the atmosphere at roughly 60 km/s — fast enough that the larger ones compress the air ahead of them into a bright, explosive fireball."
 msgstr "पर्सिड उल्काएँ लगभग 60 km/s की गति से वायुमंडल में प्रवेश करती हैं — इतनी तेज़ कि बड़ी वाली अपने सामने की हवा को एक चमकीले, विस्फोटक आग के गोले में संकुचित कर देती हैं।"
 
-#: src/features/weather/ui/tile.tsx:174
+#: src/features/weather/ui/tile.tsx:175
 msgid "Perseids Meteor Shower"
 msgstr "पर्सीड्स उल्का वर्षा"
 
@@ -1286,7 +1308,7 @@ msgstr "पर्सीड्स उल्का वर्षा"
 #~ msgid "Please enter it manually below."
 #~ msgstr "कृपया इसे नीचे स्वयं दर्ज करें।"
 
-#: src/features/weather/ui/tile.tsx:175
+#: src/features/weather/ui/tile.tsx:176
 msgid "Quadrantids Meteor Shower"
 msgstr "क्वाड्रेंटिड्स उल्का वर्षा"
 
@@ -1298,7 +1320,7 @@ msgstr "गंभीर विदाई के बजाय, यह स्मर
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "लाल लिफ़ाफ़े, कीनू, और सुलेख वाले दोहे प्रचुरता, खुशी, और नए आरंभों की कामनाएँ व्यक्त करते हैं।"
 
-#: src/features/settings/ui/settings.tsx:126
+#: src/features/settings/ui/settings.tsx:130
 msgid "Religious & cultural"
 msgstr "धार्मिक और सांस्कृतिक"
 
@@ -1324,15 +1346,15 @@ msgstr "शनिवार"
 #~ msgid "Save"
 #~ msgstr "सेव"
 
-#: src/features/settings/ui/settings.tsx:324
+#: src/features/settings/ui/settings.tsx:328
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "आपका ब्राउज़र संभवतः सॉफ़्टवेयर रेंडरर का उपयोग कर रहा है, इसलिए मौसमी प्रभाव अक्षम हैं। इन प्रभावों को देखने के लिए हार्डवेयर एक्सेलेरेशन सक्षम करें।"
 
-#: src/features/settings/ui/settings.tsx:315
+#: src/features/settings/ui/settings.tsx:319
 msgid "Seasonal events"
 msgstr "मौसमी आयोजन"
 
-#: src/features/settings/ui/settings.tsx:100
+#: src/features/settings/ui/settings.tsx:103
 msgid "Seasons & nature"
 msgstr "ऋतु और प्रकृति"
 
@@ -1352,8 +1374,8 @@ msgstr "सितंबर"
 msgid "Set my location"
 msgstr "मेरा स्थान निर्धारित करें"
 
-#: src/features/settings/ui/settings.tsx:195
-#: src/features/settings/ui/settings.tsx:212
+#: src/features/settings/ui/settings.tsx:199
+#: src/features/settings/ui/settings.tsx:216
 msgid "Settings"
 msgstr "सेटिंग्स"
 
@@ -1377,7 +1399,7 @@ msgstr "शरद विषुव दिखाएँ"
 msgid "Show Christmas Day event"
 msgstr "क्रिसमस दिवस दिखाएँ"
 
-#: src/features/settings/ui/settings.tsx:94
+#: src/features/settings/ui/settings.tsx:97
 msgid "Show Day of the Dead event"
 msgstr "मृतकों का दिन इवेंट दिखाएँ"
 
@@ -1405,6 +1427,10 @@ msgstr "ईद-उल-फ़ितर दिखाएँ"
 msgid "Show Eta Aquariids meteor shower event"
 msgstr "इटा अक्वैरिड्स उल्का वर्षा इवेंट दिखाएँ"
 
+#: src/features/settings/ui/settings.tsx:90
+msgid "Show Event Horizon Day event"
+msgstr "इवेंट हॉरिज़ॉन दिवस इवेंट दिखाएं"
+
 #: src/features/settings/ui/settings.tsx:46
 msgid "Show extreme UV alerts"
 msgstr "अत्यधिक UV चेतावनियाँ दिखाएं"
@@ -1413,7 +1439,7 @@ msgstr "अत्यधिक UV चेतावनियाँ दिखाए�
 msgid "Show Geminids meteor shower event"
 msgstr "जेमिनिड्स उल्का वर्षा दिखाएँ"
 
-#: src/features/settings/ui/settings.tsx:93
+#: src/features/settings/ui/settings.tsx:96
 msgid "Show Halloween event"
 msgstr "हैलोवीन दिखाएँ"
 
@@ -1445,7 +1471,7 @@ msgstr "चंद्र नववर्ष दिखाएँ"
 msgid "Show Lyrids meteor shower event"
 msgstr "लाइरिड्स उल्का वर्षा इवेंट दिखाएँ"
 
-#: src/features/settings/ui/settings.tsx:89
+#: src/features/settings/ui/settings.tsx:92
 msgid "Show New Year's Day event"
 msgstr "नववर्ष दिवस दिखाएँ"
 
@@ -1461,11 +1487,11 @@ msgstr "पर्सीड्स उल्का वर्षा दिखाए
 msgid "Show Quadrantids meteor shower event"
 msgstr "क्वाड्रेंटिड्स उल्का वर्षा इवेंट दिखाएँ"
 
-#: src/features/settings/ui/settings.tsx:318
+#: src/features/settings/ui/settings.tsx:322
 msgid "Show seasonal events"
 msgstr "मौसमी कार्यक्रम दिखाएं"
 
-#: src/features/settings/ui/settings.tsx:334
+#: src/features/settings/ui/settings.tsx:338
 msgid "Show seasonal tile glow"
 msgstr "मौसमी टाइल चमक दिखाएँ"
 
@@ -1481,7 +1507,7 @@ msgstr "मजबूत हवा की चेतावनियाँ दि�
 msgid "Show Summer Solstice event"
 msgstr "ग्रीष्म अयनांत दिखाएँ"
 
-#: src/features/weather/ui/tile.tsx:525
+#: src/features/weather/ui/tile.tsx:527
 msgid "Show this event"
 msgstr "यह इवेंट दिखाएँ"
 
@@ -1493,11 +1519,11 @@ msgstr "पूर्ण चंद्र ग्रहण इवेंट दि�
 msgid "Show total solar eclipse event"
 msgstr "पूर्ण सूर्य ग्रहण इवेंट दिखाएँ"
 
-#: src/features/settings/ui/settings.tsx:91
+#: src/features/settings/ui/settings.tsx:94
 msgid "Show Valentine's Day event"
 msgstr "वेलेंटाइन दिवस दिखाएँ"
 
-#: src/features/settings/ui/settings.tsx:307
+#: src/features/settings/ui/settings.tsx:311
 msgid "Show weather alerts"
 msgstr "मौसम चेतावनियाँ दिखाएं"
 
@@ -1550,7 +1576,7 @@ msgstr "सूर्यग्रहण हजारों वर्षों स
 msgid "Some appear white, others yellow or blue-green. The colour depends on the mineral composition of each grain of dust as it burns up."
 msgstr "कुछ सफ़ेद दिखती हैं, अन्य पीली या नीली-हरी। रंग प्रत्येक धूल कण की खनिज संरचना पर निर्भर करता है जब वह जलती है।"
 
-#: src/features/weather/ui/tile.tsx:166
+#: src/features/weather/ui/tile.tsx:167
 msgid "Spring Equinox"
 msgstr "वसंत विषुव"
 
@@ -1598,7 +1624,7 @@ msgstr "एक घंटे में मजबूत हवा के झों
 msgid "Submit"
 msgstr "सबमिट करें"
 
-#: src/features/weather/ui/tile.tsx:171
+#: src/features/weather/ui/tile.tsx:172
 msgid "Summer Solstice"
 msgstr "ग्रीष्म अयनांत"
 
@@ -1650,6 +1676,10 @@ msgstr "शरद ऋतु की पत्तियों में रंग 
 #~ msgid "The colours draw everyone into the same bright moment, dissolving distance and difference."
 #~ msgstr "रंग सबको उसी उज्ज्वल क्षण में खींच लाते हैं, दूरी और भेद को घुला देते हुए।"
 
+#: src/features/seasonal-events/events/black-hole.tsx:222
+msgid "The dark center is the event horizon silhouette, while the bright ring is light from superheated material in the accretion flow around it."
+msgstr "अंधकारमय केंद्र इवेंट हॉरिज़ॉन की छाया है, जबकि चमकदार वलय इसके चारों ओर अभिवृद्धि प्रवाह में अति-गर्म सामग्री से आने वाला प्रकाश है।"
+
 #: src/features/seasonal-events/events/winter-solstice.tsx:117
 msgid "The day after the solstice is only about a second longer — the shift is imperceptible at first, then gradually accelerates through January and February."
 msgstr "अयनांत के बाद का दिन केवल लगभग एक सेकंड लंबा होता है — यह बदलाव पहले तो अगोचर है, फिर जनवरी और फरवरी में धीरे-धीरे तेज़ होता है।"
@@ -1671,7 +1701,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "लाल का सटीक रंग उस समय पृथ्वी के वायुमंडल में क्या है उस पर निर्भर करता है। बड़े ज्वालामुखी विस्फोटों के बाद, चंद्रमा विशेष रूप से गहरे, लगभग भूरे-लाल रंग में बदल सकता है।"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:453
+#: src/features/weather/ui/tile.tsx:455
 msgid "The expected type of weather is {0}."
 msgstr "अपेक्षित मौसम की प्रकार {0} है।"
 
@@ -1740,27 +1770,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "गणना अजीब तरह से उत्साहजनक है — 1970 से पृथ्वी दिवस पर लगाए गए पेड़ अब अरबों में हैं।"
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:417
+#: src/features/weather/ui/tile.tsx:419
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "अधिकतम तापमान {0} डिग्री सेल्सियस होगा।"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:423
+#: src/features/weather/ui/tile.tsx:425
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "अधिकतम तापमान {0} डिग्री फारेनहाइट होगा।"
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:479
+#: src/features/weather/ui/tile.tsx:481
 msgid "The maximum UV index will be {0}."
 msgstr "अधिकतम यूवी सूचकांक {0} होगा।"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:490
+#: src/features/weather/ui/tile.tsx:492
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "अधिकतम वायु गति {0} किलोमीटर प्रति घंटा होगी।"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:496
+#: src/features/weather/ui/tile.tsx:498
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "अधिकतम वायु गति {0} मील प्रति घंटा होगी।"
 
@@ -1785,12 +1815,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "उल्काएँ लगभग 66 km/s की गति से वायुमंडल में प्रवेश करती हैं, किसी भी वार्षिक वर्षा में सबसे तेज़ में से एक, यही कारण है कि वे अक्सर लंबे समय तक चमकती पूँछें छोड़ती हैं।"
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:434
+#: src/features/weather/ui/tile.tsx:436
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "न्यूनतम तापमान {0} डिग्री सेल्सियस होगा।"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:440
+#: src/features/weather/ui/tile.tsx:442
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "न्यूनतम तापमान {0} डिग्री फारेनहाइट होगा।"
 
@@ -1825,6 +1855,10 @@ msgstr "विषुव पर अंडे को उसके सिरे प
 #: src/features/seasonal-events/events/valentines.tsx:101
 msgid "The oldest known Valentine is a fifteenth-century poem, written from a cell in the Tower of London — a love letter composed under the worst possible circumstances."
 msgstr "सबसे पुराना ज्ञात वैलेंटाइन पंद्रहवीं सदी की एक कविता है, जो लंदन के टॉवर की एक कोठरी से लिखी गई थी — सबसे बुरी संभव परिस्थितियों में लिखा गया एक प्रेम पत्र।"
+
+#: src/features/seasonal-events/events/black-hole.tsx:255
+msgid "The original image was not a conventional photograph. It was computed from synchronized radio data recorded by observatories around Earth."
+msgstr "मूल छवि एक पारंपरिक फोटोग्राफ नहीं थी। इसे पृथ्वी के चारों ओर वेधशालाओं द्वारा रिकॉर्ड किए गए समकालिक रेडियो डेटा से गणना की गई थी।"
 
 #: src/features/seasonal-events/events/orionids.tsx:81
 msgid "The Orionids are an annual meteor shower formed from debris left by Halley’s Comet, reaching their peak in October."
@@ -1894,6 +1928,10 @@ msgstr "क्वाड्रैंटिड्स बनाने वाली 
 msgid "The summer solstice marks the longest day of the year, when the sun reaches its highest path across the sky."
 msgstr "ग्रीष्म अयनांत वर्ष का सबसे लंबा दिन है, जब सूर्य आकाश में अपनी सबसे ऊँची राह पर पहुँचता है।"
 
+#: src/features/seasonal-events/events/black-hole.tsx:261
+msgid "The target was M87*, a black hole with a mass of billions of Suns, located about 55 million light-years away."
+msgstr "लक्ष्य M87* था, एक कृष्ण विवर जिसका द्रव्यमान अरबों सूर्यों के बराबर है, जो लगभग 55 मिलियन प्रकाश-वर्ष दूर स्थित है।"
+
 #: src/features/seasonal-events/events/day-of-the-dead.tsx:60
 msgid "The tradition grows from Indigenous Mexican beliefs about death and the afterlife, later blending with Catholic observances of All Saints’ and All Souls’ Days."
 msgstr "यह परंपरा मृतकों के बारे में स्वदेशी मैक्सिकन मान्यताओं से बढ़ी, और ऑल सेंट्स व ऑल सोल्स डेज़ के कैथोलिक अनुष्ठानों के साथ मिल गई।"
@@ -1935,7 +1973,7 @@ msgid "Their radiant lies in the constellation Perseus, and the shower is especi
 msgstr "इनका रेडिएंट पर्सियस तारामंडल में है, और यह वर्षा उत्तरी गोलार्ध में अधिक प्रमुख होती है, हालांकि दुनिया भर से दिखाई देती है।"
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:510
+#: src/features/weather/ui/tile.tsx:512
 msgid "There is a {0}% chance of precipitation."
 msgstr "वर्षा की {0}% संभावना है।"
 
@@ -1970,6 +2008,10 @@ msgstr "ये मई की शुरुआत में चरम पर ह�
 #: src/features/seasonal-events/events/quadrantids.tsx:119
 msgid "This makes the period of strongest activity short, but it can be especially spectacular."
 msgstr "इससे सबसे मजबूत गतिविधि की अवधि छोटी होती है, लेकिन यह विशेष रूप से शानदार हो सकती है।"
+
+#: src/features/seasonal-events/events/black-hole.tsx:238
+msgid "This observation gave direct visual evidence of extreme spacetime curvature near a supermassive black hole and strongly matched the predictions of general relativity."
+msgstr "इस अवलोकन ने एक महाकाय कृष्ण विवर के पास अत्यधिक स्पेसटाइम वक्रता का प्रत्यक्ष दृश्य प्रमाण दिया और सामान्य सापेक्षता की भविष्यवाणियों से दृढ़ता से मेल खाया।"
 
 #: src/features/seasonal-events/events/total-lunar-eclipse.tsx:81
 msgid "This same atmospheric filtering that produces red sunsets gives the Moon its copper and crimson tones during totality."
@@ -2015,11 +2057,11 @@ msgstr "आज, बहुत से लोग पूर्णता के प�
 #~ msgid "Too much battery usage"
 #~ msgstr "बहुत अधिक बैटरी का उपयोग"
 
-#: src/features/weather/ui/tile.tsx:181
+#: src/features/weather/ui/tile.tsx:182
 msgid "Total Lunar Eclipse"
 msgstr "पूर्ण चंद्र ग्रहण"
 
-#: src/features/weather/ui/tile.tsx:180
+#: src/features/weather/ui/tile.tsx:181
 msgid "Total Solar Eclipse"
 msgstr "पूर्ण सूर्य ग्रहण"
 
@@ -2043,7 +2085,7 @@ msgstr "दोबारा कोशिश करें"
 msgid "Tuesday"
 msgstr "मंगलवार"
 
-#: src/features/settings/ui/settings.tsx:300
+#: src/features/settings/ui/settings.tsx:304
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "यदि Weather Please द्वारा बताया गया UV सूचकांक स्थानीय स्रोतों की तुलना में लगातार कम हो, तो इसे चालू करें।"
 
@@ -2067,8 +2109,8 @@ msgstr "मौसम डेटा प्राप्त नहीं हो स�
 #~ msgid "Uninstall feedback"
 #~ msgstr "अनइंस्टॉल प्रतिक्रिया"
 
-#: src/features/weather/ui/tile.tsx:449
-#: src/features/weather/ui/tile.tsx:456
+#: src/features/weather/ui/tile.tsx:451
+#: src/features/weather/ui/tile.tsx:458
 msgid "unknown conditions"
 msgstr "अज्ञात स्थितियाँ"
 
@@ -2093,7 +2135,7 @@ msgstr "अधिकांश उल्का-वर्षाओं के व�
 #~ msgid "Usability and functionality"
 #~ msgstr "उपयोगिता और कार्यक्षमता"
 
-#: src/features/settings/ui/settings.tsx:295
+#: src/features/settings/ui/settings.tsx:299
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "वैश्विक रसायन मॉडल (CAMS) का उपयोग करें"
 
@@ -2102,11 +2144,11 @@ msgstr "वैश्विक रसायन मॉडल (CAMS) का उप�
 #~ msgstr "कीबोर्ड शॉर्टकट का उपयोग करें"
 
 #: src/features/settings/ui/initialisation.tsx:182
-#: src/features/settings/ui/settings.tsx:229
+#: src/features/settings/ui/settings.tsx:233
 msgid "Use metric number format"
 msgstr "मेट्रिक संख्या प्रारूप का उपयोग करें"
 
-#: src/features/weather/ui/tile.tsx:164
+#: src/features/weather/ui/tile.tsx:165
 msgid "Valentine's Day"
 msgstr "वेलेंटाइन दिवस"
 
@@ -2130,7 +2172,7 @@ msgstr "देखने के तरीके"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "हम चाहेंगे कि 'Weather Please' को और अधिक भाषाओं में लाया जाए।"
 
-#: src/features/settings/ui/settings.tsx:234
+#: src/features/settings/ui/settings.tsx:238
 msgid "Weather"
 msgstr "मौसम"
 
@@ -2150,6 +2192,10 @@ msgstr "बुधवार"
 #: src/features/seasonal-events/events/total-solar-eclipse.tsx:62
 msgid "What it feels like"
 msgstr "कैसा लगता है"
+
+#: src/features/seasonal-events/events/black-hole.tsx:219
+msgid "What you are seeing"
+msgstr "आप जो देख रहे हैं"
 
 #: src/features/seasonal-events/events/quadrantids.tsx:87
 msgid "When conditions are favourable, they produce sharp, fast-moving meteors in high numbers."
@@ -2171,6 +2217,10 @@ msgstr "जबकि ग्रहणों को कभी अपशकुन �
 msgid "Why it can storm"
 msgstr "तूफ़ान क्यों आ सकता है"
 
+#: src/features/seasonal-events/events/black-hole.tsx:235
+msgid "Why it matters"
+msgstr "यह क्यों मायने रखता है"
+
 #: src/features/seasonal-events/events/total-lunar-eclipse.tsx:71
 msgid "Why it turns red"
 msgstr "यह लाल क्यों हो जाता है"
@@ -2179,7 +2229,7 @@ msgstr "यह लाल क्यों हो जाता है"
 msgid "Why the peak is brief"
 msgstr "चरम संक्षिप्त क्यों होता है"
 
-#: src/features/weather/ui/tile.tsx:172
+#: src/features/weather/ui/tile.tsx:173
 msgid "Winter Solstice"
 msgstr "शीत अयनांत"
 
@@ -2216,7 +2266,7 @@ msgid "Your email (optional)"
 msgstr "आपका ईमेल (वैकल्पिक)"
 
 #: src/features/settings/ui/initialisation.tsx:187
-#: src/features/settings/ui/settings.tsx:237
+#: src/features/settings/ui/settings.tsx:241
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "आपका स्थान डेटा आपके व्यक्तिगत उपकरण पर सुरक्षित रूप से और केवल संग्रहीत किया जाता है।"
 
