@@ -86,6 +86,9 @@ const SEASONAL_EVENT_LABELS = {
 	[SeasonalEventId.EidAlAdha]: <Trans>Show Eid al-Adha event</Trans>,
 	[SeasonalEventId.Hanukkah]: <Trans>Show Hanukkah event</Trans>,
 	[SeasonalEventId.ChristmasDay]: <Trans>Show Christmas Day event</Trans>,
+	[SeasonalEventId.EventHorizonDay]: (
+		<Trans>Show Event Horizon Day event</Trans>
+	),
 	[SeasonalEventId.NewYearsDay]: <Trans>Show New Year&apos;s Day event</Trans>,
 	[SeasonalEventId.ValentinesDay]: (
 		<Trans>Show Valentine&apos;s Day event</Trans>
@@ -119,6 +122,7 @@ const SEASONAL_EVENT_SECTIONS = [
 			SeasonalEventId.TotalLunarEclipse,
 			SeasonalEventId.Perseids,
 			SeasonalEventId.Geminids,
+			SeasonalEventId.EventHorizonDay,
 		],
 	},
 	{

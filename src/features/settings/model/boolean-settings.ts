@@ -234,6 +234,12 @@ export const BOOLEAN_SETTINGS = [
 		category: BooleanSettingCategory.SeasonalEvent,
 		seasonalEventId: SeasonalEventId.ChristmasDay,
 	},
+	{
+		key: 'showEventHorizonDayEvent',
+		defaultValue: true,
+		category: BooleanSettingCategory.SeasonalEvent,
+		seasonalEventId: SeasonalEventId.EventHorizonDay,
+	},
 ] as const satisfies ReadonlyArray<BooleanSettingDefinition>
 
 type ObjectFromEntries<

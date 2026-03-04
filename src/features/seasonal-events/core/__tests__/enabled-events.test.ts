@@ -35,6 +35,7 @@ const createConfig = (
 	showEidAlAdhaEvent: false,
 	showHanukkahEvent: false,
 	showChristmasEvent: false,
+	showEventHorizonDayEvent: false,
 	...overrides,
 })
 
