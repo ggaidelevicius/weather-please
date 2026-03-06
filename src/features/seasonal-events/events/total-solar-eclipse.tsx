@@ -4,6 +4,7 @@ import {
 	type SeasonalEventContext,
 } from '../core/types'
 import { Trans } from '@lingui/react/macro'
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const TOTAL_SOLAR_ECLIPSE_DATES = new Set([
 	'2026-08-12',
@@ -118,6 +119,9 @@ async function launchTotalSolarEclipse() {
 
 		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
 			.matches
+		const animationController = createSettingsModalAnimationController({
+			shouldAnimate,
+		})
 		const style = document.createElement('style')
 		const overlay = document.createElement('div')
 		const backdrop = document.createElement('div')
@@ -303,7 +307,7 @@ async function launchTotalSolarEclipse() {
 		const mount = () => {
 			document.head.appendChild(style)
 			document.body.appendChild(overlay)
-			requestAnimationFrame(() => {
+			animationController.requestAnimationFrame(() => {
 				overlay.getBoundingClientRect()
 				overlay.classList.add('is-visible')
 			})
@@ -312,6 +316,7 @@ async function launchTotalSolarEclipse() {
 		timeoutId = window.setTimeout(mount, ECLIPSE_MOUNT_DELAY_MS)
 
 		return () => {
+			animationController.dispose()
 			if (timeoutId !== null) {
 				window.clearTimeout(timeoutId)
 			}

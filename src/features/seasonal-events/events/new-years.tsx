@@ -5,6 +5,7 @@ import {
 } from '../core/types'
 import { randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const NEW_YEARS_MONTH = 0
 const NEW_YEARS_DAY = 1
@@ -92,16 +93,17 @@ function isNewYearsDay({ date }: SeasonalEventContext) {
 
 async function launchNewYearsFireworks() {
 	const { default: confetti } = await import('canvas-confetti')
+	const animationController = createSettingsModalAnimationController()
 	let intervalId: number | null = null
 
 	const animationEnd = Date.now() + FIREWORKS_DURATION_MS
 
-	intervalId = window.setInterval(() => {
+	intervalId = animationController.setInterval(() => {
 		const timeLeft = animationEnd - Date.now()
 
 		if (timeLeft <= 0) {
 			if (intervalId !== null) {
-				window.clearInterval(intervalId)
+				animationController.clearInterval(intervalId)
 				intervalId = null
 			}
 			return
@@ -131,8 +133,9 @@ async function launchNewYearsFireworks() {
 	}, FIREWORKS_INTERVAL_MS)
 
 	return () => {
+		animationController.dispose()
 		if (intervalId !== null) {
-			window.clearInterval(intervalId)
+			animationController.clearInterval(intervalId)
 		}
 	}
 }

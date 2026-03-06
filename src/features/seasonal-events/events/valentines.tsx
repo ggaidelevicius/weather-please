@@ -5,6 +5,7 @@ import {
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const VALENTINES_MONTH = 1
 const VALENTINES_DAY = 14
@@ -137,6 +138,9 @@ async function launchValentinesHearts() {
 
 		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
 			.matches
+		const animationController = createSettingsModalAnimationController({
+			shouldAnimate,
+		})
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
@@ -423,7 +427,7 @@ async function launchValentinesHearts() {
 				drawParticle(particle, time)
 			}
 
-			animationFrameId = window.requestAnimationFrame(renderFrame)
+			animationFrameId = animationController.requestAnimationFrame(renderFrame)
 		}
 		const drawStaticFrame = () => {
 			revealParticles(performance.now())
@@ -487,7 +491,8 @@ async function launchValentinesHearts() {
 
 			if (shouldAnimate) {
 				lastTime = performance.now()
-				animationFrameId = window.requestAnimationFrame(renderFrame)
+				animationFrameId =
+					animationController.requestAnimationFrame(renderFrame)
 			} else {
 				drawStaticFrame()
 			}
@@ -496,12 +501,13 @@ async function launchValentinesHearts() {
 		timeoutId = window.setTimeout(mountHearts, HEARTS_MOUNT_DELAY_MS)
 
 		return () => {
+			animationController.dispose()
 			hasCanceled = true
 			if (timeoutId !== null) {
 				window.clearTimeout(timeoutId)
 			}
 			if (animationFrameId !== null) {
-				window.cancelAnimationFrame(animationFrameId)
+				animationController.cancelAnimationFrame(animationFrameId)
 			}
 			window.removeEventListener('resize', resizeCanvas)
 			if (document.body.contains(canvas)) {

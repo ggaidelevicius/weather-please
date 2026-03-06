@@ -18,6 +18,10 @@ import {
 	type SeasonalEvent,
 	type SeasonalEventContext,
 } from '../core/types'
+import {
+	isSettingsModalOpen,
+	onSettingsModalStateChange,
+} from '../../../shared/lib/settings-modal-state'
 import milkywayData from '../assets/milkyway.jpg'
 import accretionDiskData from '../assets/accretion_disk.png'
 import starNoiseData from '../assets/star_noise.png'
@@ -289,6 +293,7 @@ async function launchBlackHoleEvent() {
 
 		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
 			.matches
+		let isPausedForModal = shouldAnimate && isSettingsModalOpen()
 
 		const container = document.createElement('div')
 		container.style.position = 'fixed'
@@ -435,6 +440,11 @@ async function launchBlackHoleEvent() {
 		let timeoutId: number | null = null
 
 		const animate = (now: number) => {
+			if (isPausedForModal) {
+				animFrameId = null
+				return
+			}
+
 			const delta = lastTime === 0 ? 0 : (now - lastTime) / 1000
 			lastTime = now
 
@@ -457,6 +467,36 @@ async function launchBlackHoleEvent() {
 			animFrameId = requestAnimationFrame(animate)
 		}
 
+		const pauseAnimation = () => {
+			if (animFrameId !== null) {
+				cancelAnimationFrame(animFrameId)
+				animFrameId = null
+			}
+		}
+
+		const resumeAnimation = () => {
+			if (!shouldAnimate || !isMounted || animFrameId !== null) {
+				return
+			}
+			lastTime = 0
+			animFrameId = requestAnimationFrame(animate)
+		}
+
+		const unsubscribeModalState = onSettingsModalStateChange((isOpen) => {
+			if (!shouldAnimate) {
+				return
+			}
+
+			isPausedForModal = isOpen
+
+			if (isOpen) {
+				pauseAnimation()
+				return
+			}
+
+			resumeAnimation()
+		})
+
 		const mount = () => {
 			if (isMounted) return
 			isMounted = true
@@ -468,7 +508,8 @@ async function launchBlackHoleEvent() {
 					container.style.opacity = BLACK_HOLE_CANVAS_OPACITY
 				})
 			})
-			animFrameId = requestAnimationFrame(animate)
+			composer.render()
+			resumeAnimation()
 		}
 
 		timeoutId = window.setTimeout(mount, BLACK_HOLE_MOUNT_DELAY_MS)
@@ -476,6 +517,7 @@ async function launchBlackHoleEvent() {
 		return () => {
 			if (timeoutId !== null) window.clearTimeout(timeoutId)
 			if (animFrameId !== null) cancelAnimationFrame(animFrameId)
+			unsubscribeModalState()
 			renderer.dispose()
 			material.dispose()
 			mesh.geometry.dispose()

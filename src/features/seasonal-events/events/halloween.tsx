@@ -5,6 +5,7 @@ import {
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const HALLOWEEN_MONTH = 9
 const HALLOWEEN_DAY = 31
@@ -127,6 +128,9 @@ async function launchHalloweenSpirits() {
 
 		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
 			.matches
+		const animationController = createSettingsModalAnimationController({
+			shouldAnimate,
+		})
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
@@ -413,7 +417,7 @@ async function launchHalloweenSpirits() {
 				drawParticle(particle, time)
 			}
 
-			animationFrameId = window.requestAnimationFrame(renderFrame)
+			animationFrameId = animationController.requestAnimationFrame(renderFrame)
 		}
 		const drawStaticFrame = () => {
 			revealParticles(performance.now())
@@ -477,7 +481,8 @@ async function launchHalloweenSpirits() {
 
 			if (shouldAnimate) {
 				lastTime = performance.now()
-				animationFrameId = window.requestAnimationFrame(renderFrame)
+				animationFrameId =
+					animationController.requestAnimationFrame(renderFrame)
 			} else {
 				drawStaticFrame()
 			}
@@ -486,12 +491,13 @@ async function launchHalloweenSpirits() {
 		timeoutId = window.setTimeout(mountSpirits, HALLOWEEN_MOUNT_DELAY_MS)
 
 		return () => {
+			animationController.dispose()
 			hasCanceled = true
 			if (timeoutId !== null) {
 				window.clearTimeout(timeoutId)
 			}
 			if (animationFrameId !== null) {
-				window.cancelAnimationFrame(animationFrameId)
+				animationController.cancelAnimationFrame(animationFrameId)
 			}
 			window.removeEventListener('resize', resizeCanvas)
 			if (document.body.contains(canvas)) {

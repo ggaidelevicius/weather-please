@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { AdditiveBlending, Color } from 'three'
 import type { Points, ShaderMaterial } from 'three'
@@ -9,6 +9,10 @@ import {
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
+import {
+	isSettingsModalOpen,
+	onSettingsModalStateChange,
+} from '../../../shared/lib/settings-modal-state'
 
 const HOLI_DATES = new Set([
 	'2026-03-04',
@@ -446,6 +450,41 @@ const HoliParticles = ({ isAnimated }: HoliParticlesProps) => {
 	)
 }
 
+type HoliCanvasSceneProps = Readonly<{
+	shouldAnimate: boolean
+	dpr: number
+}>
+
+const HoliCanvasScene = ({ shouldAnimate, dpr }: HoliCanvasSceneProps) => {
+	const [isModalOpen, setIsModalOpen] = useState(
+		() => shouldAnimate && isSettingsModalOpen(),
+	)
+
+	useEffect(() => {
+		if (!shouldAnimate) {
+			return
+		}
+
+		return onSettingsModalStateChange((isOpen) => {
+			setIsModalOpen(isOpen)
+		})
+	}, [shouldAnimate])
+
+	const isAnimated = shouldAnimate && !isModalOpen
+
+	return (
+		<Canvas
+			camera={{ position: [0, 0, 2.5], fov: 60 }}
+			dpr={dpr}
+			gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
+			frameloop={isAnimated ? 'always' : 'demand'}
+			style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
+		>
+			<HoliParticles isAnimated={isAnimated} />
+		</Canvas>
+	)
+}
+
 async function launchHoliColors() {
 	try {
 		if (typeof window === 'undefined') {
@@ -478,17 +517,7 @@ async function launchHoliColors() {
 			if (isMounted) return
 			isMounted = true
 			document.body.appendChild(container)
-			root.render(
-				<Canvas
-					camera={{ position: [0, 0, 2.5], fov: 60 }}
-					dpr={dpr}
-					gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
-					frameloop={shouldAnimate ? 'always' : 'demand'}
-					style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
-				>
-					<HoliParticles isAnimated={shouldAnimate} />
-				</Canvas>,
-			)
+			root.render(<HoliCanvasScene shouldAnimate={shouldAnimate} dpr={dpr} />)
 		}
 
 		timeoutId = window.setTimeout(mountScene, HOLI_MOUNT_DELAY_MS)

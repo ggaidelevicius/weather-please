@@ -23,6 +23,7 @@ import {
 import { TileIdentifier } from '../model/tile-identifier'
 import { isLikelySoftwareRenderer } from '../../seasonal-events/core/utils'
 import { locales } from '../../../shared/lib/i18n'
+import { setSettingsModalOpenState } from '../../../shared/lib/settings-modal-state'
 import type { Config } from '../hooks/use-config'
 import type { LocaleKey } from '../../../shared/lib/i18n'
 
@@ -175,6 +176,17 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 	useEffect(() => {
 		setHasSoftwareRenderer(isLikelySoftwareRenderer())
 	}, [])
+
+	useEffect(() => {
+		setSettingsModalOpenState(isOpen)
+	}, [isOpen])
+
+	useEffect(
+		() => () => {
+			setSettingsModalOpenState(false)
+		},
+		[],
+	)
 
 	const renderBooleanSwitch = <K extends BooleanConfigKey>(
 		switchDefinition: SwitchDefinition<K>,

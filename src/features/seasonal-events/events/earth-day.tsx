@@ -5,6 +5,7 @@ import {
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const EARTH_DAY_DATES = new Set([
 	'2026-04-22',
@@ -209,6 +210,9 @@ async function launchEarthDay() {
 
 		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
 			.matches
+		const animationController = createSettingsModalAnimationController({
+			shouldAnimate,
+		})
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
 		if (!context) {
@@ -497,7 +501,7 @@ async function launchEarthDay() {
 				drawParticle(particle, time)
 			}
 
-			animationFrameId = window.requestAnimationFrame(renderFrame)
+			animationFrameId = animationController.requestAnimationFrame(renderFrame)
 		}
 
 		const drawStaticFrame = () => {
@@ -561,7 +565,8 @@ async function launchEarthDay() {
 
 			if (shouldAnimate) {
 				lastTime = performance.now()
-				animationFrameId = window.requestAnimationFrame(renderFrame)
+				animationFrameId =
+					animationController.requestAnimationFrame(renderFrame)
 			} else {
 				drawStaticFrame()
 			}
@@ -570,12 +575,13 @@ async function launchEarthDay() {
 		timeoutId = window.setTimeout(mountField, EARTH_FIELD_MOUNT_DELAY_MS)
 
 		return () => {
+			animationController.dispose()
 			hasCanceled = true
 			if (timeoutId !== null) {
 				window.clearTimeout(timeoutId)
 			}
 			if (animationFrameId !== null) {
-				window.cancelAnimationFrame(animationFrameId)
+				animationController.cancelAnimationFrame(animationFrameId)
 			}
 			window.removeEventListener('resize', resizeCanvas)
 			if (document.body.contains(canvas)) {

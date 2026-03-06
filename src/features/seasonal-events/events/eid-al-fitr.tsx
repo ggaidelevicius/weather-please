@@ -5,6 +5,7 @@ import {
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const EID_AL_FITR_DATES = new Set([
 	'2026-03-20',
@@ -129,6 +130,9 @@ async function launchEidAlFitrGlow() {
 
 		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
 			.matches
+		const animationController = createSettingsModalAnimationController({
+			shouldAnimate,
+		})
 		const overlay = document.createElement('div')
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
@@ -319,7 +323,7 @@ async function launchEidAlFitrGlow() {
 			}
 
 			if (shouldAnimate) {
-				animationFrameId = window.requestAnimationFrame(tick)
+				animationFrameId = animationController.requestAnimationFrame(tick)
 			}
 		}
 
@@ -351,7 +355,7 @@ async function launchEidAlFitrGlow() {
 			sceneFadeStart = performance.now() + EID_SCENE_FADE_DELAY_MS
 			if (shouldAnimate) {
 				lastTime = performance.now()
-				animationFrameId = window.requestAnimationFrame(tick)
+				animationFrameId = animationController.requestAnimationFrame(tick)
 			} else {
 				drawStatic()
 			}
@@ -368,11 +372,12 @@ async function launchEidAlFitrGlow() {
 		window.addEventListener('resize', handleResize)
 
 		return () => {
+			animationController.dispose()
 			if (timeoutId !== null) {
 				window.clearTimeout(timeoutId)
 			}
 			if (animationFrameId !== null) {
-				window.cancelAnimationFrame(animationFrameId)
+				animationController.cancelAnimationFrame(animationFrameId)
 			}
 			window.removeEventListener('resize', handleResize)
 			if (overlay.parentElement) {

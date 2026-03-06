@@ -5,6 +5,7 @@ import {
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const HANUKKAH_START_DATES = new Set([
 	'2026-12-04',
@@ -154,6 +155,9 @@ async function launchHanukkahGlow() {
 
 		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
 			.matches
+		const animationController = createSettingsModalAnimationController({
+			shouldAnimate,
+		})
 		const overlay = document.createElement('div')
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
@@ -443,7 +447,7 @@ async function launchHanukkahGlow() {
 			}
 
 			if (shouldAnimate) {
-				animationFrameId = window.requestAnimationFrame(tick)
+				animationFrameId = animationController.requestAnimationFrame(tick)
 			}
 		}
 
@@ -475,7 +479,7 @@ async function launchHanukkahGlow() {
 			sceneFadeStart = performance.now() + HANUKKAH_SCENE_FADE_DELAY_MS
 			if (shouldAnimate) {
 				lastTime = performance.now()
-				animationFrameId = window.requestAnimationFrame(tick)
+				animationFrameId = animationController.requestAnimationFrame(tick)
 			} else {
 				drawStatic()
 			}
@@ -492,11 +496,12 @@ async function launchHanukkahGlow() {
 		window.addEventListener('resize', handleResize)
 
 		return () => {
+			animationController.dispose()
 			if (timeoutId !== null) {
 				window.clearTimeout(timeoutId)
 			}
 			if (animationFrameId !== null) {
-				window.cancelAnimationFrame(animationFrameId)
+				animationController.cancelAnimationFrame(animationFrameId)
 			}
 			window.removeEventListener('resize', handleResize)
 			if (overlay.parentElement) {

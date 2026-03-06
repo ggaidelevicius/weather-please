@@ -5,6 +5,7 @@ import {
 } from '../core/types'
 import { createAdaptiveDprController, randomInRange } from '../core/utils'
 import { Trans } from '@lingui/react/macro'
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const PERSEIDS_PEAK_DATES = new Set([
 	'2026-08-13',
@@ -168,6 +169,9 @@ async function launchPerseidsShower() {
 
 		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
 			.matches
+		const animationController = createSettingsModalAnimationController({
+			shouldAnimate,
+		})
 		const overlay = document.createElement('div')
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
@@ -380,7 +384,7 @@ async function launchPerseidsShower() {
 			}
 
 			if (shouldAnimate) {
-				animationFrameId = window.requestAnimationFrame(tick)
+				animationFrameId = animationController.requestAnimationFrame(tick)
 			}
 		}
 
@@ -410,7 +414,7 @@ async function launchPerseidsShower() {
 			resizeCanvas()
 			if (shouldAnimate) {
 				lastTime = performance.now()
-				animationFrameId = window.requestAnimationFrame(tick)
+				animationFrameId = animationController.requestAnimationFrame(tick)
 			} else {
 				drawStatic()
 			}
@@ -427,11 +431,12 @@ async function launchPerseidsShower() {
 		window.addEventListener('resize', handleResize)
 
 		return () => {
+			animationController.dispose()
 			if (timeoutId !== null) {
 				window.clearTimeout(timeoutId)
 			}
 			if (animationFrameId !== null) {
-				window.cancelAnimationFrame(animationFrameId)
+				animationController.cancelAnimationFrame(animationFrameId)
 			}
 			window.removeEventListener('resize', handleResize)
 			if (overlay.parentElement) {
