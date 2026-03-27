@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const DIWALI_DATES = new Set([
 	'2026-11-08',
@@ -33,17 +34,17 @@ const DIWALI_FIELD_FILTER = 'saturate(130%)'
 const DIWALI_FIELD_MAX_DPR = 2
 const DIWALI_FIELD_MARGIN = 150
 const DIWALI_PARTICLE_COUNT = 54
-const DIWALI_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const DIWALI_FADE_IN_DURATION_RANGE = { min: 1100, max: 1900 }
-const DIWALI_SCALE_RANGE = { min: 0.55, max: 0.95 }
-const DIWALI_SIZE_RANGE = { min: 18, max: 32 }
-const DIWALI_VELOCITY_X_RANGE = { min: -7, max: 7 }
-const DIWALI_VELOCITY_Y_RANGE = { min: -4, max: 6 }
-const DIWALI_SWAY_RANGE = { min: 2.5, max: 9 }
-const DIWALI_ROTATION_SPEED_RANGE = { min: -0.28, max: 0.28 }
+const DIWALI_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+const DIWALI_FADE_IN_DURATION_RANGE = { max: 1900, min: 1100 }
+const DIWALI_SCALE_RANGE = { max: 0.95, min: 0.55 }
+const DIWALI_SIZE_RANGE = { max: 32, min: 18 }
+const DIWALI_VELOCITY_X_RANGE = { max: 7, min: -7 }
+const DIWALI_VELOCITY_Y_RANGE = { max: 6, min: -4 }
+const DIWALI_SWAY_RANGE = { max: 9, min: 2.5 }
+const DIWALI_ROTATION_SPEED_RANGE = { max: 0.28, min: -0.28 }
 const DIWALI_SWAY_SPEED_X = 0.00055
 const DIWALI_SWAY_SPEED_Y = 0.0005
-const DIWALI_GLOW_RANGE = { min: 10, max: 20 }
+const DIWALI_GLOW_RANGE = { max: 20, min: 10 }
 const DIWALI_EMOJIS = ['🪔', '✨']
 const DIWALI_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
@@ -128,10 +129,10 @@ const EventDetails = () => (
 )
 
 export const diwaliEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.Diwali,
 	isActive: isDiwali,
 	run: launchDiwaliLights,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#fde68a', '#f59e0b', '#fb7185', '#f97316', '#fde68a'],
 	},
@@ -165,30 +166,30 @@ async function launchDiwaliLights() {
 		}
 
 		type LightParticle = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			size: number
-			rotation: number
-			rotationSpeed: number
-			opacity: number
+			birthTime: number
 			emoji: string
+			fadeDuration: number
 			glow: number
 			glowColor: string
+			opacity: number
 			phase: number
-			sway: number
-			birthTime: number
-			fadeDuration: number
+			rotation: number
+			rotationSpeed: number
 			scaleFrom: number
+			size: number
+			sway: number
+			vx: number
+			vy: number
+			x: number
+			y: number
 		}
 		type EmojiSprite = {
 			canvas: HTMLCanvasElement
 			displaySize: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
@@ -205,28 +206,28 @@ async function launchDiwaliLights() {
 		const randomGlow = () =>
 			DIWALI_GLOW_COLORS[Math.floor(Math.random() * DIWALI_GLOW_COLORS.length)]
 		const createParticle = (time: number): LightParticle => ({
-			x: randomInRange({
-				min: -DIWALI_FIELD_MARGIN,
-				max: width + DIWALI_FIELD_MARGIN,
-			}),
-			y: randomInRange({
-				min: -DIWALI_FIELD_MARGIN,
-				max: height + DIWALI_FIELD_MARGIN,
-			}),
-			vx: randomInRange(DIWALI_VELOCITY_X_RANGE),
-			vy: randomInRange(DIWALI_VELOCITY_Y_RANGE),
-			size: randomInRange(DIWALI_SIZE_RANGE),
-			rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-			rotationSpeed: randomInRange(DIWALI_ROTATION_SPEED_RANGE),
-			opacity: randomInRange({ min: 0.45, max: 0.8 }),
+			birthTime: time + randomInRange(DIWALI_FADE_IN_DELAY_RANGE),
 			emoji: randomEmoji(),
+			fadeDuration: randomInRange(DIWALI_FADE_IN_DURATION_RANGE),
 			glow: randomInRange(DIWALI_GLOW_RANGE),
 			glowColor: randomGlow(),
-			phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-			sway: randomInRange(DIWALI_SWAY_RANGE),
-			birthTime: time + randomInRange(DIWALI_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(DIWALI_FADE_IN_DURATION_RANGE),
+			opacity: randomInRange({ max: 0.8, min: 0.45 }),
+			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotationSpeed: randomInRange(DIWALI_ROTATION_SPEED_RANGE),
 			scaleFrom: randomInRange(DIWALI_SCALE_RANGE),
+			size: randomInRange(DIWALI_SIZE_RANGE),
+			sway: randomInRange(DIWALI_SWAY_RANGE),
+			vx: randomInRange(DIWALI_VELOCITY_X_RANGE),
+			vy: randomInRange(DIWALI_VELOCITY_Y_RANGE),
+			x: randomInRange({
+				max: width + DIWALI_FIELD_MARGIN,
+				min: -DIWALI_FIELD_MARGIN,
+			}),
+			y: randomInRange({
+				max: height + DIWALI_FIELD_MARGIN,
+				min: -DIWALI_FIELD_MARGIN,
+			}),
 		})
 		const getSpriteKey = (
 			emoji: string,
@@ -292,7 +293,7 @@ async function launchDiwaliLights() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: DIWALI_FIELD_MAX_DPR })
+			const dpr = getCanvasDpr({ height, maxDpr: DIWALI_FIELD_MAX_DPR, width })
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)

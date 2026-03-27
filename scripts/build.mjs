@@ -1,8 +1,8 @@
-/* eslint-disable no-console */
 import fs from 'fs-extra'
 import { globSync } from 'glob'
 import path from 'path'
 import { fileURLToPath } from 'url'
+
 import { setCwdToRoot } from './lib/root.mjs'
 
 export const buildExtensionOutput = () => {

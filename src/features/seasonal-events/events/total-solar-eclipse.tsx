@@ -1,10 +1,11 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const TOTAL_SOLAR_ECLIPSE_DATES = new Set([
 	'2026-08-12',
@@ -95,10 +96,10 @@ const EventDetails = () => (
 )
 
 export const totalSolarEclipseEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.TotalSolarEclipse,
 	isActive: isTotalSolarEclipse,
 	run: launchTotalSolarEclipse,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#0f172a', '#334155', '#fbbf24', '#fde68a', '#0f172a'],
 	},
@@ -302,7 +303,7 @@ async function launchTotalSolarEclipse() {
 		overlay.appendChild(backdrop)
 		overlay.appendChild(container)
 
-		let timeoutId: number | null = null
+		let timeoutId: null | number = null
 
 		const mount = () => {
 			document.head.appendChild(style)

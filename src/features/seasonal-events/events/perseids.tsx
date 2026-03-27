@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { createAdaptiveDprController, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const PERSEIDS_PEAK_DATES = new Set([
 	'2026-08-13',
@@ -50,15 +51,15 @@ const PERSEIDS_OVERLAY_FILTER = 'saturate(130%)'
 const PERSEIDS_MAX_DPR = 2
 const PERSEIDS_METEOR_COUNT = 12
 const PERSEIDS_STAR_COUNT = 140
-const PERSEIDS_METEOR_LENGTH_RANGE = { min: 140, max: 260 }
-const PERSEIDS_METEOR_WIDTH_RANGE = { min: 1.1, max: 2.6 }
-const PERSEIDS_METEOR_SPEED_RANGE = { min: 520, max: 820 }
-const PERSEIDS_METEOR_ANGLE_RANGE = { min: 0.25, max: 0.42 }
-const PERSEIDS_METEOR_SPAWN_DELAY_RANGE = { min: 720, max: 2000 }
-const PERSEIDS_METEOR_LIFETIME_RANGE = { min: 1400, max: 2200 }
-const PERSEIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
-const PERSEIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
-const PERSEIDS_METEOR_GLOW_RANGE = { min: 12, max: 22 }
+const PERSEIDS_METEOR_LENGTH_RANGE = { max: 260, min: 140 }
+const PERSEIDS_METEOR_WIDTH_RANGE = { max: 2.6, min: 1.1 }
+const PERSEIDS_METEOR_SPEED_RANGE = { max: 820, min: 520 }
+const PERSEIDS_METEOR_ANGLE_RANGE = { max: 0.42, min: 0.25 }
+const PERSEIDS_METEOR_SPAWN_DELAY_RANGE = { max: 2000, min: 720 }
+const PERSEIDS_METEOR_LIFETIME_RANGE = { max: 2200, min: 1400 }
+const PERSEIDS_METEOR_SPAWN_X = { max: 0.6, min: -0.2 }
+const PERSEIDS_METEOR_SPAWN_Y = { max: 0.2, min: -0.35 }
+const PERSEIDS_METEOR_GLOW_RANGE = { max: 22, min: 12 }
 const PERSEIDS_METEOR_COLORS = [
 	'rgba(248, 250, 252, 1)',
 	'rgba(191, 219, 254, 1)',
@@ -66,11 +67,11 @@ const PERSEIDS_METEOR_COLORS = [
 	'rgba(167, 139, 250, 1)',
 ]
 const PERSEIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const PERSEIDS_STAR_RADIUS_RANGE = { min: 0.6, max: 1.6 }
-const PERSEIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.6 }
-const PERSEIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
-const PERSEIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const PERSEIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const PERSEIDS_STAR_RADIUS_RANGE = { max: 1.6, min: 0.6 }
+const PERSEIDS_STAR_OPACITY_RANGE = { max: 0.6, min: 0.2 }
+const PERSEIDS_STAR_TWINKLE_RANGE = { max: 0.0014, min: 0.0006 }
+const PERSEIDS_STAR_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+const PERSEIDS_STAR_FADE_IN_DURATION_RANGE = { max: 2200, min: 1200 }
 
 const EventDetails = () => (
 	<>
@@ -145,10 +146,10 @@ const EventDetails = () => (
 )
 
 export const perseidsEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.Perseids,
 	isActive: isPerseidsPeak,
 	run: launchPerseidsShower,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#e0f2fe', '#7dd3fc', '#60a5fa', '#a78bfa', '#e0f2fe'],
 	},
@@ -180,32 +181,32 @@ async function launchPerseidsShower() {
 		}
 
 		type Meteor = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			length: number
-			width: number
-			opacity: number
-			glow: number
-			color: string
 			age: number
+			color: string
+			glow: number
+			length: number
 			lifetime: number
 			nextSpawn: number
-		}
-		type Star = {
+			opacity: number
+			vx: number
+			vy: number
+			width: number
 			x: number
 			y: number
-			radius: number
-			opacity: number
-			twinkle: number
-			phase: number
+		}
+		type Star = {
 			birthTime: number
 			fadeDuration: number
+			opacity: number
+			phase: number
+			radius: number
+			twinkle: number
+			x: number
+			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let width = window.innerWidth
 		let height = window.innerHeight
 		let meteors: Meteor[] = []
@@ -222,32 +223,32 @@ async function launchPerseidsShower() {
 			]
 
 		const createStar = (time: number): Star => ({
-			x: Math.random() * width,
-			y: Math.random() * height,
-			radius: randomInRange(PERSEIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(PERSEIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(PERSEIDS_STAR_TWINKLE_RANGE),
-			phase: Math.random() * Math.PI * 2,
 			birthTime: time + randomInRange(PERSEIDS_STAR_FADE_IN_DELAY_RANGE),
 			fadeDuration: randomInRange(PERSEIDS_STAR_FADE_IN_DURATION_RANGE),
+			opacity: randomInRange(PERSEIDS_STAR_OPACITY_RANGE),
+			phase: Math.random() * Math.PI * 2,
+			radius: randomInRange(PERSEIDS_STAR_RADIUS_RANGE),
+			twinkle: randomInRange(PERSEIDS_STAR_TWINKLE_RANGE),
+			x: Math.random() * width,
+			y: Math.random() * height,
 		})
 
 		const createMeteor = (time: number): Meteor => {
 			const speed = randomInRange(PERSEIDS_METEOR_SPEED_RANGE)
 			const angle = randomInRange(PERSEIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(PERSEIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(PERSEIDS_METEOR_SPAWN_Y),
-				vx: Math.cos(angle) * speed,
-				vy: Math.sin(angle) * speed,
-				length: randomInRange(PERSEIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(PERSEIDS_METEOR_WIDTH_RANGE),
-				opacity: randomInRange({ min: 0.5, max: 0.9 }),
-				glow: randomInRange(PERSEIDS_METEOR_GLOW_RANGE),
-				color: randomMeteorColor(),
 				age: 0,
+				color: randomMeteorColor(),
+				glow: randomInRange(PERSEIDS_METEOR_GLOW_RANGE),
+				length: randomInRange(PERSEIDS_METEOR_LENGTH_RANGE),
 				lifetime: randomInRange(PERSEIDS_METEOR_LIFETIME_RANGE),
 				nextSpawn: time + randomInRange(PERSEIDS_METEOR_SPAWN_DELAY_RANGE),
+				opacity: randomInRange({ max: 0.9, min: 0.5 }),
+				vx: Math.cos(angle) * speed,
+				vy: Math.sin(angle) * speed,
+				width: randomInRange(PERSEIDS_METEOR_WIDTH_RANGE),
+				x: width * randomInRange(PERSEIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(PERSEIDS_METEOR_SPAWN_Y),
 			}
 		}
 
@@ -267,7 +268,7 @@ async function launchPerseidsShower() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = dprController.getDpr({ width, height })
+			const dpr = dprController.getDpr({ height, width })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

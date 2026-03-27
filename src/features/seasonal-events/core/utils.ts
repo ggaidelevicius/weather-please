@@ -1,11 +1,7 @@
 import { Hemisphere } from './types'
 
-export function randomInRange({ min, max }: { min: number; max: number }) {
-	return Math.random() * (max - min) + min
-}
-
 export function getHemisphereFromLatitude(
-	latitude: number | string | null | undefined,
+	latitude: null | number | string | undefined,
 ): Hemisphere {
 	if (latitude === null || latitude === undefined) {
 		return Hemisphere.Northern
@@ -21,56 +17,36 @@ export function getHemisphereFromLatitude(
 	return numericLatitude < 0 ? Hemisphere.Southern : Hemisphere.Northern
 }
 
-const DEFAULT_CANVAS_MAX_PIXELS = 8_000_000
-
-export function getCanvasDpr({
-	width,
-	height,
-	maxDpr,
-	maxPixels = DEFAULT_CANVAS_MAX_PIXELS,
-}: {
-	width: number
-	height: number
-	maxDpr: number
-	maxPixels?: number
-}) {
-	const devicePixelRatio =
-		typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1
-	const safeWidth = Math.max(width, 1)
-	const safeHeight = Math.max(height, 1)
-	const pixelBudgetDpr = Math.sqrt(maxPixels / (safeWidth * safeHeight))
-
-	if (!Number.isFinite(pixelBudgetDpr)) {
-		return Math.min(maxDpr, devicePixelRatio)
-	}
-
-	return Math.min(maxDpr, devicePixelRatio, pixelBudgetDpr)
+export function randomInRange({ max, min }: { max: number; min: number }) {
+	return Math.random() * (max - min) + min
 }
 
+const DEFAULT_CANVAS_MAX_PIXELS = 8_000_000
+
 export function createAdaptiveDprController({
+	cooldownMs = 1500,
+	fastFps = 58,
 	maxDpr,
 	minScale = 0.6,
-	slowFps = 50,
-	fastFps = 58,
 	sampleCount = 30,
-	cooldownMs = 1500,
+	slowFps = 50,
 	step = 0.1,
 }: {
+	cooldownMs?: number
+	fastFps?: number
 	maxDpr: number
 	minScale?: number
-	slowFps?: number
-	fastFps?: number
 	sampleCount?: number
-	cooldownMs?: number
+	slowFps?: number
 	step?: number
 }) {
 	let scale = 1
-	let lastFrameTime: number | null = null
+	let lastFrameTime: null | number = null
 	let lastAdjustment = 0
 	const samples: number[] = []
 
-	const getDpr = ({ width, height }: { width: number; height: number }) =>
-		getCanvasDpr({ width, height, maxDpr: maxDpr * scale })
+	const getDpr = ({ height, width }: { height: number; width: number }) =>
+		getCanvasDpr({ height, maxDpr: maxDpr * scale, width })
 
 	const reportFrame = (time: number) => {
 		if (lastFrameTime === null) {
@@ -115,6 +91,30 @@ export function createAdaptiveDprController({
 	return { getDpr, reportFrame }
 }
 
+export function getCanvasDpr({
+	height,
+	maxDpr,
+	maxPixels = DEFAULT_CANVAS_MAX_PIXELS,
+	width,
+}: {
+	height: number
+	maxDpr: number
+	maxPixels?: number
+	width: number
+}) {
+	const devicePixelRatio =
+		typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1
+	const safeWidth = Math.max(width, 1)
+	const safeHeight = Math.max(height, 1)
+	const pixelBudgetDpr = Math.sqrt(maxPixels / (safeWidth * safeHeight))
+
+	if (!Number.isFinite(pixelBudgetDpr)) {
+		return Math.min(maxDpr, devicePixelRatio)
+	}
+
+	return Math.min(maxDpr, devicePixelRatio, pixelBudgetDpr)
+}
+
 const SOFTWARE_RENDERER_HINTS = [
 	'swiftshader',
 	'llvmpipe',
@@ -157,8 +157,8 @@ const getWebglRendererInfo = () => {
 }
 
 const isWebglContext = (
-	context: RenderingContext | null,
-): context is WebGLRenderingContext | WebGL2RenderingContext =>
+	context: null | RenderingContext,
+): context is WebGL2RenderingContext | WebGLRenderingContext =>
 	Boolean(
 		context &&
 		'getExtension' in context &&

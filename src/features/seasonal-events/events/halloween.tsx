@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const HALLOWEEN_MONTH = 9
 const HALLOWEEN_DAY = 31
@@ -15,17 +16,17 @@ const HALLOWEEN_FIELD_FILTER = 'saturate(120%)'
 const HALLOWEEN_FIELD_MAX_DPR = 2
 const HALLOWEEN_FIELD_MARGIN = 160
 const HALLOWEEN_PARTICLE_COUNT = 72
-const HALLOWEEN_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const HALLOWEEN_FADE_IN_DURATION_RANGE = { min: 900, max: 1600 }
-const HALLOWEEN_SCALE_RANGE = { min: 0.45, max: 0.85 }
-const HALLOWEEN_SIZE_RANGE = { min: 18, max: 34 }
-const HALLOWEEN_VELOCITY_X_RANGE = { min: -10, max: 10 }
-const HALLOWEEN_VELOCITY_Y_RANGE = { min: -8, max: 9 }
-const HALLOWEEN_SWAY_RANGE = { min: 2.5, max: 9 }
-const HALLOWEEN_ROTATION_SPEED_RANGE = { min: -0.35, max: 0.35 }
+const HALLOWEEN_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+const HALLOWEEN_FADE_IN_DURATION_RANGE = { max: 1600, min: 900 }
+const HALLOWEEN_SCALE_RANGE = { max: 0.85, min: 0.45 }
+const HALLOWEEN_SIZE_RANGE = { max: 34, min: 18 }
+const HALLOWEEN_VELOCITY_X_RANGE = { max: 10, min: -10 }
+const HALLOWEEN_VELOCITY_Y_RANGE = { max: 9, min: -8 }
+const HALLOWEEN_SWAY_RANGE = { max: 9, min: 2.5 }
+const HALLOWEEN_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
 const HALLOWEEN_SWAY_SPEED_X = 0.0006
 const HALLOWEEN_SWAY_SPEED_Y = 0.0005
-const HALLOWEEN_GLOW_RANGE = { min: 8, max: 18 }
+const HALLOWEEN_GLOW_RANGE = { max: 18, min: 8 }
 const HALLOWEEN_GLOW_COLORS = [
 	'rgba(251, 146, 60, 0.5)',
 	'rgba(168, 85, 247, 0.45)',
@@ -91,7 +92,7 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				Jack-o'-lanterns were originally carved from turnips in Ireland and
+				Jack-o&apos;-lanterns were originally carved from turnips in Ireland and
 				Scotland — the pumpkin version is a North American adaptation, chosen
 				because pumpkins were bigger and easier to hollow out.
 			</Trans>
@@ -107,10 +108,10 @@ const EventDetails = () => (
 )
 
 export const halloweenEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.Halloween,
 	isActive: isHalloween,
 	run: launchHalloweenSpirits,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#f8fafc', '#e2e8f0', '#94a3b8', '#cbd5f5', '#f8fafc'],
 	},
@@ -138,32 +139,32 @@ async function launchHalloweenSpirits() {
 		}
 
 		type GhostParticle = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			size: number
-			rotation: number
-			rotationSpeed: number
-			opacity: number
+			birthTime: number
 			emoji: string
+			fadeDuration: number
 			glow: number
 			glowColor: string
-			phase: number
-			sway: number
-			birthTime: number
-			fadeDuration: number
-			scaleFrom: number
 			hasSparkle: boolean
+			opacity: number
+			phase: number
+			rotation: number
+			rotationSpeed: number
+			scaleFrom: number
+			size: number
 			sparklePhase: number
+			sway: number
+			vx: number
+			vy: number
+			x: number
+			y: number
 		}
 		type EmojiSprite = {
 			canvas: HTMLCanvasElement
 			displaySize: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
@@ -184,30 +185,30 @@ async function launchHalloweenSpirits() {
 				Math.floor(Math.random() * HALLOWEEN_GLOW_COLORS.length)
 			]
 		const createParticle = (time: number): GhostParticle => ({
-			x: randomInRange({
-				min: -HALLOWEEN_FIELD_MARGIN,
-				max: width + HALLOWEEN_FIELD_MARGIN,
-			}),
-			y: randomInRange({
-				min: -HALLOWEEN_FIELD_MARGIN,
-				max: height + HALLOWEEN_FIELD_MARGIN,
-			}),
-			vx: randomInRange(HALLOWEEN_VELOCITY_X_RANGE),
-			vy: randomInRange(HALLOWEEN_VELOCITY_Y_RANGE),
-			size: randomInRange(HALLOWEEN_SIZE_RANGE),
-			rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-			rotationSpeed: randomInRange(HALLOWEEN_ROTATION_SPEED_RANGE),
-			opacity: randomInRange({ min: 0.45, max: 0.85 }),
+			birthTime: time + randomInRange(HALLOWEEN_FADE_IN_DELAY_RANGE),
 			emoji: randomEmoji(),
+			fadeDuration: randomInRange(HALLOWEEN_FADE_IN_DURATION_RANGE),
 			glow: randomInRange(HALLOWEEN_GLOW_RANGE),
 			glowColor: randomGlow(),
-			phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-			sway: randomInRange(HALLOWEEN_SWAY_RANGE),
-			birthTime: time + randomInRange(HALLOWEEN_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(HALLOWEEN_FADE_IN_DURATION_RANGE),
-			scaleFrom: randomInRange(HALLOWEEN_SCALE_RANGE),
 			hasSparkle: Math.random() < 0.22,
-			sparklePhase: randomInRange({ min: 0, max: Math.PI * 2 }),
+			opacity: randomInRange({ max: 0.85, min: 0.45 }),
+			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotationSpeed: randomInRange(HALLOWEEN_ROTATION_SPEED_RANGE),
+			scaleFrom: randomInRange(HALLOWEEN_SCALE_RANGE),
+			size: randomInRange(HALLOWEEN_SIZE_RANGE),
+			sparklePhase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			sway: randomInRange(HALLOWEEN_SWAY_RANGE),
+			vx: randomInRange(HALLOWEEN_VELOCITY_X_RANGE),
+			vy: randomInRange(HALLOWEEN_VELOCITY_Y_RANGE),
+			x: randomInRange({
+				max: width + HALLOWEEN_FIELD_MARGIN,
+				min: -HALLOWEEN_FIELD_MARGIN,
+			}),
+			y: randomInRange({
+				max: height + HALLOWEEN_FIELD_MARGIN,
+				min: -HALLOWEEN_FIELD_MARGIN,
+			}),
 		})
 		const getSpriteKey = (
 			emoji: string,
@@ -274,9 +275,9 @@ async function launchHalloweenSpirits() {
 			width = nextWidth
 			height = nextHeight
 			const dpr = getCanvasDpr({
-				width,
 				height,
 				maxDpr: HALLOWEEN_FIELD_MAX_DPR,
+				width,
 			})
 
 			canvas.width = Math.round(width * dpr)

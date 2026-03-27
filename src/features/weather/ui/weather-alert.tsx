@@ -1,16 +1,20 @@
-import { clsx } from 'clsx'
-import { Trans } from '@lingui/react/macro'
-import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
-import { motion } from 'framer-motion'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { IconProps } from '@tabler/icons-react'
 import type { ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react'
+
+import { Trans } from '@lingui/react/macro'
+import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
+import { clsx } from 'clsx'
+import { motion } from 'framer-motion'
+import { useLayoutEffect, useRef, useState } from 'react'
+
+import type { Alerts } from '../model/types'
+
 import { Alert } from '../../../shared/ui/alert'
 import { AlertVariant } from '../../../shared/ui/alert-variant'
-import type { Alerts } from '../model/types'
 
 const PRECIPITATION_ALERT_THRESHOLD_MM = 15
 const UV_WARNING_LEAD_HOURS = 3
+const FULL_DAY_HOURS = 24
 const COMPACT_ALERT_HEIGHT_PX = 44
 const COMPACT_COLLAPSED_WIDTH_PX = 44
 const COMPACT_TEXT_LEFT_PADDING_PX = 50
@@ -22,10 +26,10 @@ type AlertIcon = ForwardRefExoticComponent<
 >
 
 type AlertItem = {
-	key: string
-	icon: AlertIcon
-	variant: AlertVariant
 	content: ReactNode
+	icon: AlertIcon
+	key: string
+	variant: AlertVariant
 }
 
 const getInitialExpandedAlertKeys = (useCompactAlerts: boolean) => {
@@ -59,14 +63,12 @@ const CompactAlertButton = ({
 	onToggle: () => void
 }) => {
 	const textMeasureRef = useRef<HTMLSpanElement | null>(null)
-	const hasMountedRef = useRef(false)
-	const previousExpandedRef = useRef(isExpanded)
 	const [textWidth, setTextWidth] = useState(0)
 	const gradientClass =
 		alert.variant === AlertVariant.LightRed
-			? 'from-transparent to-red-500/75'
+			? 'from-transparent to-red-500/95'
 			: alert.variant === AlertVariant.LightBlue
-				? 'from-transparent to-blue-500/75'
+				? 'from-transparent to-blue-500/95'
 				: 'from-transparent to-blue-700'
 
 	useLayoutEffect(() => {
@@ -77,60 +79,45 @@ const CompactAlertButton = ({
 			textMeasureRef.current.getBoundingClientRect().width,
 		)
 		setTextWidth((prev) => (prev === width ? prev : width))
-	})
-
-	useEffect(() => {
-		hasMountedRef.current = true
-		previousExpandedRef.current = isExpanded
-	}, [])
-
-	useEffect(() => {
-		previousExpandedRef.current = isExpanded
-	}, [isExpanded])
+	}, [alert.content])
 
 	const expandedWidth = Math.max(
 		COMPACT_COLLAPSED_WIDTH_PX,
 		textWidth + COMPACT_TEXT_LEFT_PADDING_PX + COMPACT_TEXT_RIGHT_PADDING_PX,
 	)
-	const shouldAnimate =
-		hasMountedRef.current && previousExpandedRef.current !== isExpanded
 
 	return (
 		<motion.button
-			type="button"
-			aria-expanded={isExpanded}
-			initial={false}
 			animate={{
 				width: isExpanded ? expandedWidth : COMPACT_COLLAPSED_WIDTH_PX,
 			}}
-			transition={
-				shouldAnimate
-					? { type: 'spring', stiffness: 360, damping: 32 }
-					: { duration: 0 }
-			}
-			onClick={onToggle}
+			aria-expanded={isExpanded}
 			className={clsx(
 				'relative flex cursor-pointer items-center overflow-hidden rounded-md text-left text-white shadow-sm transition-shadow focus:outline-2 focus:outline-offset-2 focus:outline-blue-500',
 				alert.variant === AlertVariant.LightRed
-					? 'bg-red-500/75 font-medium select-none'
+					? 'bg-red-500/95 font-medium select-none'
 					: alert.variant === AlertVariant.LightBlue
-						? 'bg-blue-500/75 font-medium select-none'
+						? 'bg-blue-500/95 font-medium select-none'
 						: 'bg-linear-to-tl from-blue-700 to-blue-500',
 				'h-11 max-w-[calc(100vw-1.5rem)]',
 			)}
+			initial={false}
+			onClick={onToggle}
 			style={{ height: COMPACT_ALERT_HEIGHT_PX }}
+			transition={{ damping: 32, stiffness: 360, type: 'spring' }}
+			type="button"
 		>
 			<span className="relative z-10 flex h-11 w-11 items-center justify-center">
-				<alert.icon size={24} strokeWidth={1.5} aria-hidden />
+				<alert.icon aria-hidden size={24} strokeWidth={1.5} />
 			</span>
 			<motion.span
-				initial={false}
 				animate={{
 					opacity: isExpanded ? 1 : 0,
 					x: isExpanded ? 0 : -6,
 				}}
-				transition={{ duration: 0.2 }}
 				className="absolute inset-y-0 right-0 left-0 flex items-center pr-10 pl-12 text-sm font-medium whitespace-nowrap"
+				initial={false}
+				transition={{ duration: 0.2 }}
 			>
 				{alert.content}
 			</motion.span>
@@ -142,9 +129,9 @@ const CompactAlertButton = ({
 				)}
 			/>
 			<span
-				ref={textMeasureRef}
 				aria-hidden
 				className="pointer-events-none absolute top-0 left-0 text-sm font-medium whitespace-nowrap opacity-0"
+				ref={textMeasureRef}
 			>
 				{alert.content}
 			</span>
@@ -153,26 +140,26 @@ const CompactAlertButton = ({
 }
 
 interface AlertProps extends Alerts {
-	useMetric: boolean
-	showUvAlerts: boolean
-	showWindAlerts: boolean
-	showVisibilityAlerts: boolean
 	showPrecipitationAlerts: boolean
+	showUvAlerts: boolean
+	showVisibilityAlerts: boolean
+	showWindAlerts: boolean
 	useCompactAlerts: boolean
+	useMetric: boolean
 }
 
 export const WeatherAlert = ({
-	totalPrecipitation,
 	hoursOfExtremeUv,
+	hoursOfLowVisibility,
 	hoursOfStrongWind,
 	hoursOfStrongWindGusts,
-	hoursOfLowVisibility,
-	useMetric,
-	useCompactAlerts,
-	showUvAlerts,
-	showWindAlerts,
-	showVisibilityAlerts,
 	showPrecipitationAlerts,
+	showUvAlerts,
+	showVisibilityAlerts,
+	showWindAlerts,
+	totalPrecipitation,
+	useCompactAlerts,
+	useMetric,
 }: Readonly<AlertProps>) => {
 	// Derive alerts array directly from props
 	const [expandedAlertKeys, setExpandedAlertKeys] = useState<Set<string>>(() =>
@@ -184,7 +171,7 @@ export const WeatherAlert = ({
 	if (showUvAlerts && hoursOfExtremeUv.includes(true)) {
 		const firstExtremeIndex = hoursOfExtremeUv.indexOf(true)
 		const timeUntilExtremeUv = firstExtremeIndex
-		let uvContent: ReactNode | null = null
+		let uvContent: null | ReactNode = null
 		if (timeUntilExtremeUv > 0) {
 			if (timeUntilExtremeUv <= UV_WARNING_LEAD_HOURS) {
 				uvContent =
@@ -209,10 +196,10 @@ export const WeatherAlert = ({
 		}
 		if (uvContent) {
 			alerts.push({
-				key: 'uvAlert',
-				icon: IconAlertTriangle,
-				variant: AlertVariant.LightRed,
 				content: uvContent,
+				icon: IconAlertTriangle,
+				key: 'uvAlert',
+				variant: AlertVariant.LightRed,
 			})
 		}
 	}
@@ -222,7 +209,7 @@ export const WeatherAlert = ({
 		showPrecipitationAlerts &&
 		totalPrecipitation.precipitation.value >= PRECIPITATION_ALERT_THRESHOLD_MM
 	) {
-		const { precipitation, duration } = totalPrecipitation
+		const { duration, precipitation } = totalPrecipitation
 		// Compute duration once: indexOf(false) gives the index of the first false,
 		// which represents when the precipitation period ends
 		const firstEndIndex = duration.indexOf(false)
@@ -230,7 +217,7 @@ export const WeatherAlert = ({
 		const precipitationMm = precipitation.value.toFixed(1)
 		const precipitationInches = (precipitation.value / 25.4).toFixed(1)
 
-		let precipitationContent: ReactNode | null = null
+		let precipitationContent: null | ReactNode = null
 		if (useMetric && durationHours === 1) {
 			precipitationContent = (
 				<Trans>
@@ -238,7 +225,14 @@ export const WeatherAlert = ({
 				</Trans>
 			)
 		}
-		if (useMetric && durationHours > 1) {
+		if (useMetric && durationHours >= FULL_DAY_HOURS) {
+			precipitationContent = (
+				<Trans>
+					{precipitationMm}mm of precipitation expected over the next 24 hours
+				</Trans>
+			)
+		}
+		if (useMetric && durationHours > 1 && durationHours < FULL_DAY_HOURS) {
 			precipitationContent = (
 				<Trans>
 					{precipitationMm}mm of precipitation expected over the next{' '}
@@ -254,7 +248,15 @@ export const WeatherAlert = ({
 				</Trans>
 			)
 		}
-		if (!useMetric && durationHours > 1) {
+		if (!useMetric && durationHours >= FULL_DAY_HOURS) {
+			precipitationContent = (
+				<Trans>
+					{precipitationInches} inches of precipitation expected over the next
+					24 hours
+				</Trans>
+			)
+		}
+		if (!useMetric && durationHours > 1 && durationHours < FULL_DAY_HOURS) {
 			precipitationContent = (
 				<Trans>
 					{precipitationInches} inches of precipitation expected over the next{' '}
@@ -264,10 +266,10 @@ export const WeatherAlert = ({
 		}
 		if (precipitationContent) {
 			alerts.push({
-				key: 'precipitationAlert',
-				icon: IconInfoCircle,
-				variant: AlertVariant.LightBlue,
 				content: precipitationContent,
+				icon: IconInfoCircle,
+				key: 'precipitationAlert',
+				variant: AlertVariant.LightBlue,
 			})
 		}
 	}
@@ -275,7 +277,7 @@ export const WeatherAlert = ({
 	// Wind Alert
 	if (showWindAlerts && hoursOfStrongWind.includes(true)) {
 		const timeUntilStrongWind = hoursOfStrongWind.indexOf(true)
-		let windContent: ReactNode | null = null
+		let windContent: null | ReactNode = null
 		if (timeUntilStrongWind > 0) {
 			windContent =
 				timeUntilStrongWind === 1 ? (
@@ -287,14 +289,14 @@ export const WeatherAlert = ({
 				)
 		} else {
 			const durationOfStrongWind = hoursOfStrongWind.indexOf(false)
-			if (durationOfStrongWind > 1) {
+			if (durationOfStrongWind > 1 && durationOfStrongWind < FULL_DAY_HOURS) {
 				windContent = (
 					<Trans>
 						Generally strong wind for the next {durationOfStrongWind} hours
 					</Trans>
 				)
 			}
-			if (durationOfStrongWind < 0) {
+			if (durationOfStrongWind < 0 || durationOfStrongWind >= FULL_DAY_HOURS) {
 				windContent = <Trans>Generally strong wind for the next 24 hours</Trans>
 			}
 			if (durationOfStrongWind === 1) {
@@ -303,10 +305,10 @@ export const WeatherAlert = ({
 		}
 		if (windContent) {
 			alerts.push({
-				key: 'windAlert',
-				icon: IconInfoCircle,
-				variant: AlertVariant.LightBlue,
 				content: windContent,
+				icon: IconInfoCircle,
+				key: 'windAlert',
+				variant: AlertVariant.LightBlue,
 			})
 		}
 	}
@@ -314,7 +316,7 @@ export const WeatherAlert = ({
 	// Wind Gust Alert
 	if (showWindAlerts && hoursOfStrongWindGusts.includes(true)) {
 		const timeUntilStrongWind = hoursOfStrongWindGusts.indexOf(true)
-		let gustContent: ReactNode | null = null
+		let gustContent: null | ReactNode = null
 		if (timeUntilStrongWind > 0) {
 			gustContent =
 				timeUntilStrongWind === 1 ? (
@@ -326,14 +328,14 @@ export const WeatherAlert = ({
 				)
 		} else {
 			const durationOfStrongWind = hoursOfStrongWindGusts.indexOf(false)
-			if (durationOfStrongWind > 1) {
+			if (durationOfStrongWind > 1 && durationOfStrongWind < FULL_DAY_HOURS) {
 				gustContent = (
 					<Trans>
 						Strong wind gusts for the next {durationOfStrongWind} hours
 					</Trans>
 				)
 			}
-			if (durationOfStrongWind < 0) {
+			if (durationOfStrongWind < 0 || durationOfStrongWind >= FULL_DAY_HOURS) {
 				gustContent = <Trans>Strong wind gusts for the next 24 hours</Trans>
 			}
 			if (durationOfStrongWind === 1) {
@@ -342,10 +344,10 @@ export const WeatherAlert = ({
 		}
 		if (gustContent) {
 			alerts.push({
-				key: 'gustAlert',
-				icon: IconInfoCircle,
-				variant: AlertVariant.LightBlue,
 				content: gustContent,
+				icon: IconInfoCircle,
+				key: 'gustAlert',
+				variant: AlertVariant.LightBlue,
 			})
 		}
 	}
@@ -353,7 +355,7 @@ export const WeatherAlert = ({
 	// Visibility Alert
 	if (showVisibilityAlerts && hoursOfLowVisibility.includes(true)) {
 		const timeUntilLowVisibility = hoursOfLowVisibility.indexOf(true)
-		let visibilityContent: ReactNode | null = null
+		let visibilityContent: null | ReactNode = null
 		if (timeUntilLowVisibility > 0) {
 			visibilityContent =
 				timeUntilLowVisibility === 1 ? (
@@ -365,14 +367,20 @@ export const WeatherAlert = ({
 				)
 		} else {
 			const durationOfLowVisibility = hoursOfLowVisibility.indexOf(false)
-			if (durationOfLowVisibility > 1) {
+			if (
+				durationOfLowVisibility > 1 &&
+				durationOfLowVisibility < FULL_DAY_HOURS
+			) {
 				visibilityContent = (
 					<Trans>
 						Low visibility for the next {durationOfLowVisibility} hours
 					</Trans>
 				)
 			}
-			if (durationOfLowVisibility < 0) {
+			if (
+				durationOfLowVisibility < 0 ||
+				durationOfLowVisibility >= FULL_DAY_HOURS
+			) {
 				visibilityContent = <Trans>Low visibility for the next 24 hours</Trans>
 			}
 			if (durationOfLowVisibility === 1) {
@@ -381,10 +389,10 @@ export const WeatherAlert = ({
 		}
 		if (visibilityContent) {
 			alerts.push({
-				key: 'visibilityAlert',
-				icon: IconInfoCircle,
-				variant: AlertVariant.LightBlue,
 				content: visibilityContent,
+				icon: IconInfoCircle,
+				key: 'visibilityAlert',
+				variant: AlertVariant.LightBlue,
 			})
 		}
 	}
@@ -413,24 +421,24 @@ export const WeatherAlert = ({
 
 			return (
 				<motion.aside
-					initial={{ opacity: 0 }}
 					animate={{
 						opacity: 1,
 						transition: {
-							type: 'spring',
 							duration: 2,
+							type: 'spring',
 						},
 					}}
-					exit={{ scale: 0.95, opacity: 0 }}
-					role="alert"
 					aria-live="assertive"
-					className="fixed top-0 left-0 flex w-auto flex-col items-start gap-2 p-3"
+					className="fixed top-0 left-0 z-2 flex w-auto flex-col items-start gap-2 p-3"
+					exit={{ opacity: 0, scale: 0.95 }}
+					initial={{ opacity: 0 }}
+					role="alert"
 				>
 					{alerts.map((alert) => (
 						<CompactAlertButton
-							key={alert.key}
 							alert={alert}
 							isExpanded={expandedAlertKeys.has(alert.key)}
+							key={alert.key}
 							onToggle={() => handleToggle(alert.key)}
 						/>
 					))}
@@ -440,22 +448,22 @@ export const WeatherAlert = ({
 
 		return (
 			<motion.aside
-				initial={{ opacity: 0 }}
 				animate={{
-					scale: 1,
 					opacity: 1,
+					scale: 1,
 					transition: {
-						type: 'spring',
 						duration: 2,
+						type: 'spring',
 					},
 				}}
-				exit={{ scale: 0.95, opacity: 0 }}
-				role="alert"
 				aria-live="assertive"
-				className="fixed top-0 left-0 flex w-full flex-col"
+				className="fixed top-0 left-0 z-2 flex w-full flex-col"
+				exit={{ opacity: 0, scale: 0.95 }}
+				initial={{ opacity: 0 }}
+				role="alert"
 			>
 				{alerts.map((alert) => (
-					<Alert key={alert.key} icon={alert.icon} variant={alert.variant}>
+					<Alert icon={alert.icon} key={alert.key} variant={alert.variant}>
 						{alert.content}
 					</Alert>
 				))}

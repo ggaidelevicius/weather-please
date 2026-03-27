@@ -1,12 +1,13 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
 	Hemisphere,
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const WINTER_SOLSTICE_DATES_NORTHERN = new Set([
 	'2026-12-21',
@@ -54,16 +55,16 @@ const WINTER_FIELD_FILTER = 'saturate(115%)'
 const WINTER_FIELD_MAX_DPR = 2
 const WINTER_FIELD_MARGIN = 150
 const WINTER_PARTICLE_COUNT = 90
-const WINTER_FADE_IN_DELAY_RANGE = { min: 0, max: 2600 }
-const WINTER_FADE_IN_DURATION_RANGE = { min: 1200, max: 2100 }
-const WINTER_SIZE_RANGE = { min: 4, max: 11 }
-const WINTER_VELOCITY_X_RANGE = { min: -6, max: 6 }
-const WINTER_VELOCITY_Y_RANGE = { min: -5, max: 5 }
-const WINTER_SWAY_RANGE = { min: 1.5, max: 6 }
-const WINTER_ROTATION_SPEED_RANGE = { min: -0.25, max: 0.25 }
+const WINTER_FADE_IN_DELAY_RANGE = { max: 2600, min: 0 }
+const WINTER_FADE_IN_DURATION_RANGE = { max: 2100, min: 1200 }
+const WINTER_SIZE_RANGE = { max: 11, min: 4 }
+const WINTER_VELOCITY_X_RANGE = { max: 6, min: -6 }
+const WINTER_VELOCITY_Y_RANGE = { max: 5, min: -5 }
+const WINTER_SWAY_RANGE = { max: 6, min: 1.5 }
+const WINTER_ROTATION_SPEED_RANGE = { max: 0.25, min: -0.25 }
 const WINTER_SWAY_SPEED_X = 0.00045
 const WINTER_SWAY_SPEED_Y = 0.0004
-const WINTER_GLOW_RANGE = { min: 6, max: 14 }
+const WINTER_GLOW_RANGE = { max: 14, min: 6 }
 const WINTER_AURORA_OPACITY = '0.55'
 const WINTER_AURORA_GRADIENT =
 	'radial-gradient(120% 80% at 15% 0%, rgba(59, 130, 246, 0.3), rgba(14, 116, 144, 0.12) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(129, 140, 248, 0.22), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(52, 211, 153, 0.18), rgba(15, 23, 42, 0) 70%)'
@@ -132,10 +133,10 @@ const EventDetails = () => (
 )
 
 export const winterSolsticeEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.WinterSolstice,
 	isActive: isWinterSolstice,
 	run: launchWinterSolstice,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#e2e8f0', '#c7d2fe', '#bae6fd', '#e0f2fe', '#e2e8f0'],
 	},
@@ -173,24 +174,24 @@ async function launchWinterSolstice() {
 		}
 
 		type Particle = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			size: number
-			opacity: number
-			color: string
-			glow: number
-			phase: number
-			sway: number
 			birthTime: number
+			color: string
 			fadeDuration: number
+			glow: number
+			opacity: number
+			phase: number
 			rotation: number
 			rotationSpeed: number
+			size: number
+			sway: number
+			vx: number
+			vy: number
+			x: number
+			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
@@ -200,26 +201,26 @@ async function launchWinterSolstice() {
 		const randomColor = () =>
 			WINTER_COLORS[Math.floor(Math.random() * WINTER_COLORS.length)]
 		const createParticle = (time: number): Particle => ({
-			x: randomInRange({
-				min: -WINTER_FIELD_MARGIN,
-				max: width + WINTER_FIELD_MARGIN,
-			}),
-			y: randomInRange({
-				min: -WINTER_FIELD_MARGIN,
-				max: height + WINTER_FIELD_MARGIN,
-			}),
+			birthTime: time + randomInRange(WINTER_FADE_IN_DELAY_RANGE),
+			color: randomColor(),
+			fadeDuration: randomInRange(WINTER_FADE_IN_DURATION_RANGE),
+			glow: randomInRange(WINTER_GLOW_RANGE),
+			opacity: randomInRange({ max: 0.7, min: 0.35 }),
+			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotationSpeed: randomInRange(WINTER_ROTATION_SPEED_RANGE),
+			size: randomInRange(WINTER_SIZE_RANGE),
+			sway: randomInRange(WINTER_SWAY_RANGE),
 			vx: randomInRange(WINTER_VELOCITY_X_RANGE),
 			vy: randomInRange(WINTER_VELOCITY_Y_RANGE),
-			size: randomInRange(WINTER_SIZE_RANGE),
-			opacity: randomInRange({ min: 0.35, max: 0.7 }),
-			color: randomColor(),
-			glow: randomInRange(WINTER_GLOW_RANGE),
-			phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-			sway: randomInRange(WINTER_SWAY_RANGE),
-			birthTime: time + randomInRange(WINTER_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(WINTER_FADE_IN_DURATION_RANGE),
-			rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-			rotationSpeed: randomInRange(WINTER_ROTATION_SPEED_RANGE),
+			x: randomInRange({
+				max: width + WINTER_FIELD_MARGIN,
+				min: -WINTER_FIELD_MARGIN,
+			}),
+			y: randomInRange({
+				max: height + WINTER_FIELD_MARGIN,
+				min: -WINTER_FIELD_MARGIN,
+			}),
 		})
 		const resetParticles = (time: number) => {
 			particles = Array.from({ length: WINTER_PARTICLE_COUNT }, () =>
@@ -237,7 +238,7 @@ async function launchWinterSolstice() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: WINTER_FIELD_MAX_DPR })
+			const dpr = getCanvasDpr({ height, maxDpr: WINTER_FIELD_MAX_DPR, width })
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)

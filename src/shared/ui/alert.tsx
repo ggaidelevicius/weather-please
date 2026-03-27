@@ -1,7 +1,9 @@
-import { clsx } from 'clsx'
-import { AlertVariant } from './alert-variant'
 import type { IconProps } from '@tabler/icons-react'
 import type { ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react'
+
+import { clsx } from 'clsx'
+
+import { AlertVariant } from './alert-variant'
 
 interface AlertProps {
 	children: ReactNode
@@ -19,15 +21,15 @@ export const Alert = ({
 			className={clsx(
 				'flex flex-row items-center justify-center gap-4 p-4 text-white',
 				variant === AlertVariant.LightBlue
-					? 'bg-blue-500/75 font-medium select-none'
+					? 'bg-blue-500/95 font-medium select-none'
 					: variant === AlertVariant.LightRed
-						? 'bg-red-500/75 font-medium select-none'
+						? 'bg-red-500/95 font-medium select-none'
 						: variant === AlertVariant.InfoRed
 							? 'w-full rounded-lg bg-linear-to-tl from-red-700 to-red-500'
 							: 'w-full rounded-lg bg-linear-to-tl from-blue-700 to-blue-500',
 			)}
 		>
-			<Icon size={30} strokeWidth={1.5} aria-hidden />
+			<Icon aria-hidden size={30} strokeWidth={1.5} />
 			<span
 				className={
 					variant && variant !== AlertVariant.InfoRed

@@ -1,12 +1,13 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
 	Hemisphere,
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const AUTUMN_EQUINOX_DATES_NORTHERN = new Set([
 	'2026-09-23',
@@ -54,17 +55,17 @@ const AUTUMN_FIELD_FILTER = 'saturate(120%)'
 const AUTUMN_FIELD_MAX_DPR = 2
 const AUTUMN_FIELD_MARGIN = 160
 const AUTUMN_PARTICLE_COUNT = 62
-const AUTUMN_FADE_IN_DELAY_RANGE = { min: 0, max: 2400 }
-const AUTUMN_FADE_IN_DURATION_RANGE = { min: 1100, max: 2000 }
-const AUTUMN_SCALE_RANGE = { min: 0.55, max: 0.95 }
-const AUTUMN_SIZE_RANGE = { min: 18, max: 34 }
-const AUTUMN_VELOCITY_X_RANGE = { min: -12, max: 12 }
-const AUTUMN_VELOCITY_Y_RANGE = { min: 9, max: 20 }
-const AUTUMN_SWAY_RANGE = { min: 3, max: 10 }
-const AUTUMN_ROTATION_SPEED_RANGE = { min: -0.45, max: 0.45 }
+const AUTUMN_FADE_IN_DELAY_RANGE = { max: 2400, min: 0 }
+const AUTUMN_FADE_IN_DURATION_RANGE = { max: 2000, min: 1100 }
+const AUTUMN_SCALE_RANGE = { max: 0.95, min: 0.55 }
+const AUTUMN_SIZE_RANGE = { max: 34, min: 18 }
+const AUTUMN_VELOCITY_X_RANGE = { max: 12, min: -12 }
+const AUTUMN_VELOCITY_Y_RANGE = { max: 20, min: 9 }
+const AUTUMN_SWAY_RANGE = { max: 10, min: 3 }
+const AUTUMN_ROTATION_SPEED_RANGE = { max: 0.45, min: -0.45 }
 const AUTUMN_SWAY_SPEED_X = 0.00055
 const AUTUMN_SWAY_SPEED_Y = 0.00045
-const AUTUMN_GLOW_RANGE = { min: 10, max: 20 }
+const AUTUMN_GLOW_RANGE = { max: 20, min: 10 }
 const AUTUMN_EMOJIS = ['🍁', '🍂']
 const AUTUMN_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
@@ -138,10 +139,10 @@ const EventDetails = () => (
 )
 
 export const autumnEquinoxEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.AutumnEquinox,
 	isActive: isAutumnEquinox,
 	run: launchAutumnEquinoxLeaves,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#fed7aa', '#f97316', '#fb7185', '#facc15', '#fed7aa'],
 	},
@@ -179,30 +180,30 @@ async function launchAutumnEquinoxLeaves() {
 		}
 
 		type LeafParticle = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			size: number
-			rotation: number
-			rotationSpeed: number
-			opacity: number
+			birthTime: number
 			emoji: string
+			fadeDuration: number
 			glow: number
 			glowColor: string
+			opacity: number
 			phase: number
-			sway: number
-			birthTime: number
-			fadeDuration: number
+			rotation: number
+			rotationSpeed: number
 			scaleFrom: number
+			size: number
+			sway: number
+			vx: number
+			vy: number
+			x: number
+			y: number
 		}
 		type EmojiSprite = {
 			canvas: HTMLCanvasElement
 			displaySize: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
@@ -219,28 +220,28 @@ async function launchAutumnEquinoxLeaves() {
 		const randomGlow = () =>
 			AUTUMN_GLOW_COLORS[Math.floor(Math.random() * AUTUMN_GLOW_COLORS.length)]
 		const createParticle = (time: number): LeafParticle => ({
-			x: randomInRange({
-				min: -AUTUMN_FIELD_MARGIN,
-				max: width + AUTUMN_FIELD_MARGIN,
-			}),
-			y: randomInRange({
-				min: -AUTUMN_FIELD_MARGIN,
-				max: height * AUTUMN_SPAWN_Y_MAX_RATIO,
-			}),
-			vx: randomInRange(AUTUMN_VELOCITY_X_RANGE),
-			vy: randomInRange(AUTUMN_VELOCITY_Y_RANGE),
-			size: randomInRange(AUTUMN_SIZE_RANGE),
-			rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-			rotationSpeed: randomInRange(AUTUMN_ROTATION_SPEED_RANGE),
-			opacity: randomInRange({ min: 0.45, max: 0.8 }),
+			birthTime: time + randomInRange(AUTUMN_FADE_IN_DELAY_RANGE),
 			emoji: randomEmoji(),
+			fadeDuration: randomInRange(AUTUMN_FADE_IN_DURATION_RANGE),
 			glow: randomInRange(AUTUMN_GLOW_RANGE),
 			glowColor: randomGlow(),
-			phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-			sway: randomInRange(AUTUMN_SWAY_RANGE),
-			birthTime: time + randomInRange(AUTUMN_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(AUTUMN_FADE_IN_DURATION_RANGE),
+			opacity: randomInRange({ max: 0.8, min: 0.45 }),
+			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotationSpeed: randomInRange(AUTUMN_ROTATION_SPEED_RANGE),
 			scaleFrom: randomInRange(AUTUMN_SCALE_RANGE),
+			size: randomInRange(AUTUMN_SIZE_RANGE),
+			sway: randomInRange(AUTUMN_SWAY_RANGE),
+			vx: randomInRange(AUTUMN_VELOCITY_X_RANGE),
+			vy: randomInRange(AUTUMN_VELOCITY_Y_RANGE),
+			x: randomInRange({
+				max: width + AUTUMN_FIELD_MARGIN,
+				min: -AUTUMN_FIELD_MARGIN,
+			}),
+			y: randomInRange({
+				max: height * AUTUMN_SPAWN_Y_MAX_RATIO,
+				min: -AUTUMN_FIELD_MARGIN,
+			}),
 		})
 		const getSpriteKey = (
 			emoji: string,
@@ -306,7 +307,7 @@ async function launchAutumnEquinoxLeaves() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: AUTUMN_FIELD_MAX_DPR })
+			const dpr = getCanvasDpr({ height, maxDpr: AUTUMN_FIELD_MAX_DPR, width })
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)

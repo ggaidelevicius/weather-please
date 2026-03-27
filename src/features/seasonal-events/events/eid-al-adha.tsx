@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const EID_AL_ADHA_DATES = new Set([
 	'2026-05-27',
@@ -25,16 +26,16 @@ const EID_ADHA_OVERLAY_OPACITY = '0.72'
 const EID_ADHA_OVERLAY_FILTER = 'saturate(120%)'
 const EID_ADHA_MAX_DPR = 2
 const EID_ADHA_STAR_COUNT = 140
-const EID_ADHA_STAR_RADIUS_RANGE = { min: 0.5, max: 1.5 }
-const EID_ADHA_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
-const EID_ADHA_STAR_TWINKLE_RANGE = { min: 0.0005, max: 0.0013 }
+const EID_ADHA_STAR_RADIUS_RANGE = { max: 1.5, min: 0.5 }
+const EID_ADHA_STAR_OPACITY_RANGE = { max: 0.55, min: 0.2 }
+const EID_ADHA_STAR_TWINKLE_RANGE = { max: 0.0013, min: 0.0005 }
 const EID_ADHA_EMBER_COUNT = 26
-const EID_ADHA_EMBER_SIZE_RANGE = { min: 6, max: 14 }
-const EID_ADHA_EMBER_SPEED_RANGE = { min: 8, max: 18 }
-const EID_ADHA_EMBER_SWAY_RANGE = { min: 6, max: 16 }
-const EID_ADHA_EMBER_OPACITY_RANGE = { min: 0.35, max: 0.75 }
-const EID_ADHA_EMBER_FADE_IN_DELAY_RANGE = { min: 0, max: 2000 }
-const EID_ADHA_EMBER_FADE_IN_DURATION_RANGE = { min: 1100, max: 2200 }
+const EID_ADHA_EMBER_SIZE_RANGE = { max: 14, min: 6 }
+const EID_ADHA_EMBER_SPEED_RANGE = { max: 18, min: 8 }
+const EID_ADHA_EMBER_SWAY_RANGE = { max: 16, min: 6 }
+const EID_ADHA_EMBER_OPACITY_RANGE = { max: 0.75, min: 0.35 }
+const EID_ADHA_EMBER_FADE_IN_DELAY_RANGE = { max: 2000, min: 0 }
+const EID_ADHA_EMBER_FADE_IN_DURATION_RANGE = { max: 2200, min: 1100 }
 const EID_ADHA_SCENE_FADE_DELAY_MS = 300
 const EID_ADHA_SCENE_FADE_DURATION_MS = 1400
 const EID_ADHA_EMBER_COLORS = [
@@ -91,18 +92,18 @@ const EventDetails = () => (
 		</p>
 		<p>
 			<Trans>
-				This three-way split is central to the holiday's meaning — the act of
-				giving is built directly into the ritual itself.
+				This three-way split is central to the holiday&apos;s meaning — the act
+				of giving is built directly into the ritual itself.
 			</Trans>
 		</p>
 	</>
 )
 
 export const eidAlAdhaEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.EidAlAdha,
 	isActive: isEidAlAdha,
 	run: launchEidAlAdhaGlow,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#fef3c7', '#fbbf24', '#f59e0b', '#34d399', '#fef3c7'],
 	},
@@ -134,28 +135,28 @@ async function launchEidAlAdhaGlow() {
 		}
 
 		type Star = {
+			opacity: number
+			phase: number
+			radius: number
+			twinkle: number
 			x: number
 			y: number
-			radius: number
-			opacity: number
-			twinkle: number
-			phase: number
 		}
 		type Ember = {
 			baseX: number
-			y: number
-			vy: number
-			size: number
-			opacity: number
-			color: string
-			sway: number
-			phase: number
 			birthTime: number
+			color: string
 			fadeDuration: number
+			opacity: number
+			phase: number
+			size: number
+			sway: number
+			vy: number
+			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let width = window.innerWidth
 		let height = window.innerHeight
 		let stars: Star[] = []
@@ -169,25 +170,25 @@ async function launchEidAlAdhaGlow() {
 			]
 
 		const createStar = (): Star => ({
+			opacity: randomInRange(EID_ADHA_STAR_OPACITY_RANGE),
+			phase: Math.random() * Math.PI * 2,
+			radius: randomInRange(EID_ADHA_STAR_RADIUS_RANGE),
+			twinkle: randomInRange(EID_ADHA_STAR_TWINKLE_RANGE),
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: randomInRange(EID_ADHA_STAR_RADIUS_RANGE),
-			opacity: randomInRange(EID_ADHA_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(EID_ADHA_STAR_TWINKLE_RANGE),
-			phase: Math.random() * Math.PI * 2,
 		})
 
 		const createEmber = (time: number): Ember => ({
 			baseX: Math.random() * width,
-			y: height + Math.random() * height * 0.35,
-			vy: randomInRange(EID_ADHA_EMBER_SPEED_RANGE),
-			size: randomInRange(EID_ADHA_EMBER_SIZE_RANGE),
-			opacity: randomInRange(EID_ADHA_EMBER_OPACITY_RANGE),
-			color: randomEmberColor(),
-			sway: randomInRange(EID_ADHA_EMBER_SWAY_RANGE),
-			phase: Math.random() * Math.PI * 2,
 			birthTime: time + randomInRange(EID_ADHA_EMBER_FADE_IN_DELAY_RANGE),
+			color: randomEmberColor(),
 			fadeDuration: randomInRange(EID_ADHA_EMBER_FADE_IN_DURATION_RANGE),
+			opacity: randomInRange(EID_ADHA_EMBER_OPACITY_RANGE),
+			phase: Math.random() * Math.PI * 2,
+			size: randomInRange(EID_ADHA_EMBER_SIZE_RANGE),
+			sway: randomInRange(EID_ADHA_EMBER_SWAY_RANGE),
+			vy: randomInRange(EID_ADHA_EMBER_SPEED_RANGE),
+			y: height + Math.random() * height * 0.35,
 		})
 
 		const resetField = (time: number) => {
@@ -200,7 +201,7 @@ async function launchEidAlAdhaGlow() {
 		const resizeCanvas = () => {
 			width = window.innerWidth
 			height = window.innerHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: EID_ADHA_MAX_DPR })
+			const dpr = getCanvasDpr({ height, maxDpr: EID_ADHA_MAX_DPR, width })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

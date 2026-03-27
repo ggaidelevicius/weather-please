@@ -1,10 +1,11 @@
 import { z } from 'zod'
+
 import {
-	CACHE_VALIDITY_MS,
-	alertSchema,
-	dataSchema,
 	type Alerts,
+	alertSchema,
+	CACHE_VALIDITY_MS,
 	type Data,
+	dataSchema,
 } from './types'
 
 const LEGACY_LAST_UPDATED_PATTERN = /^\d{4}-\d{1,2}-\d{1,2}-\d{1,2}$/
@@ -22,15 +23,15 @@ const lastUpdatedSchema = z.union([
 
 const readStorageItem = <T>({
 	key,
-	schema,
-	parse,
 	normalize,
+	parse,
+	schema,
 }: {
 	key: string
-	schema: z.ZodType<T>
-	parse?: (value: string) => unknown
 	normalize?: (value: T) => string
-}): T | null => {
+	parse?: (value: string) => unknown
+	schema: z.ZodType<T>
+}): null | T => {
 	const raw = localStorage.getItem(key)
 	if (!raw) {
 		return null
@@ -63,23 +64,23 @@ const readStorageItem = <T>({
 }
 
 export type CachedWeather = {
-	weatherData: Data
 	alertData: Alerts
 	lastUpdatedDate: Date
+	weatherData: Data
 }
 
 type CacheIdentity = {
 	lat: string
 	lon: string
-	timeZone: string
 	shouldUseAirQualityUv: boolean
+	timeZone: string
 }
 
 export const getCachedWeather = ({
 	lat,
 	lon,
-	timeZone,
 	shouldUseAirQualityUv,
+	timeZone,
 }: CacheIdentity): CachedWeather | null => {
 	const cachedLat = readStorageItem({
 		key: 'cachedLat',
@@ -95,26 +96,26 @@ export const getCachedWeather = ({
 	})
 	const cachedUseAirQualityUv = readStorageItem({
 		key: 'cachedUseAirQualityUv',
-		schema: z.boolean(),
-		parse: JSON.parse,
 		normalize: (value) => JSON.stringify(value),
+		parse: JSON.parse,
+		schema: z.boolean(),
 	})
 	const lastUpdatedDate = readStorageItem({
 		key: 'lastUpdated',
-		schema: lastUpdatedSchema,
 		normalize: (value) => value.toISOString(),
+		schema: lastUpdatedSchema,
 	})
 	const storedAlerts = readStorageItem({
 		key: 'alerts',
-		schema: alertSchema,
-		parse: JSON.parse,
 		normalize: (value) => JSON.stringify(value),
+		parse: JSON.parse,
+		schema: alertSchema,
 	})
 	const storedData = readStorageItem({
 		key: 'data',
-		schema: dataSchema,
-		parse: JSON.parse,
 		normalize: (value) => JSON.stringify(value),
+		parse: JSON.parse,
+		schema: dataSchema,
 	})
 
 	if (
@@ -144,24 +145,24 @@ export const getCachedWeather = ({
 	}
 
 	return {
-		weatherData: storedData,
 		alertData: storedAlerts,
 		lastUpdatedDate,
+		weatherData: storedData,
 	}
 }
 
 export const writeCachedWeather = ({
-	weatherData,
 	alertData,
+	lastUpdatedDate,
 	lat,
 	lon,
-	timeZone,
 	shouldUseAirQualityUv,
-	lastUpdatedDate,
+	timeZone,
+	weatherData,
 }: CacheIdentity & {
-	weatherData: Data
 	alertData: Alerts
 	lastUpdatedDate: Date
+	weatherData: Data
 }) => {
 	localStorage.setItem('data', JSON.stringify(weatherData))
 	localStorage.setItem('alerts', JSON.stringify(alertData))

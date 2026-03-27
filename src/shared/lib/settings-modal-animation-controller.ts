@@ -80,12 +80,12 @@ export const createSettingsModalAnimationController = ({
 }: ControllerOptions = {}) => {
 	if (typeof window === 'undefined') {
 		return {
-			requestAnimationFrame: (_callback: FrameRequestCallback) => 0,
-			cancelAnimationFrame: (_id: number) => {},
-			setInterval: (_handler: IntervalHandler, _ms: number) => 0,
-			clearInterval: (_id: number) => {},
-			isPaused: () => false,
+			cancelAnimationFrame: () => {},
+			clearInterval: () => {},
 			dispose: () => {},
+			isPaused: () => false,
+			requestAnimationFrame: () => 0,
+			setInterval: () => 0,
 		}
 	}
 
@@ -165,11 +165,11 @@ export const createSettingsModalAnimationController = ({
 	}
 
 	return {
-		requestAnimationFrame,
 		cancelAnimationFrame,
-		setInterval,
 		clearInterval,
-		isPaused: () => isPaused,
 		dispose,
+		isPaused: () => isPaused,
+		requestAnimationFrame,
+		setInterval,
 	}
 }

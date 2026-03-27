@@ -1,5 +1,6 @@
+import { describe, expect, it } from 'vitest'
+
 import { locales } from '../i18n'
-import { describe, it, expect } from 'vitest'
 
 describe('i18n', () => {
 	describe('locales', () => {

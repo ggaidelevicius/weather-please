@@ -1,18 +1,19 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+	images: { qualities: [100] },
 	reactCompiler: true,
-	reactStrictMode: true,
 }
 
 if (process.env.VERCEL !== '1') {
 	Object.assign(nextConfig, {
-		output: 'export',
 		assetPrefix: '.',
 		images: {
+			qualities: [100],
 			unoptimized: true,
 		},
+		output: 'export',
 	} as NextConfig)
 }
 
-module.exports = nextConfig
+export default nextConfig

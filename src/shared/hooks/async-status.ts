@@ -1,8 +1,8 @@
 export enum AsyncStatus {
+	Error = 'error',
 	Idle = 'idle',
 	Loading = 'loading',
 	Success = 'success',
-	Error = 'error',
 }
 
 export const isLoadingStatus = (status: AsyncStatus) =>

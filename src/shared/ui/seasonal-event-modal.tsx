@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react'
+
 import {
 	Dialog,
 	DialogBackdrop,
@@ -5,33 +7,33 @@ import {
 	DialogTitle,
 } from '@headlessui/react'
 import { Trans } from '@lingui/react/macro'
+
 import { Button } from './button'
-import type { ReactNode } from 'react'
 
 interface SeasonalEventModalProps {
+	children: ReactNode
 	isOpen: boolean
 	onClose: () => void
-	title: ReactNode
-	children: ReactNode
 	quickHeaderActions?: ReactNode
+	title: ReactNode
 }
 
 export const SeasonalEventModal = ({
+	children,
 	isOpen,
 	onClose,
-	title,
-	children,
 	quickHeaderActions,
+	title,
 }: Readonly<SeasonalEventModalProps>) => (
-	<Dialog open={isOpen} onClose={onClose} className="relative z-50">
+	<Dialog className="relative z-50" onClose={onClose} open={isOpen}>
 		<DialogBackdrop
-			transition
 			className="fixed inset-0 bg-black/60 backdrop-blur-lg transition duration-300 will-change-[backdrop-filter,background-color] data-closed:opacity-0"
+			transition
 		/>
 		<div className="fixed inset-0 flex w-screen items-center justify-center overflow-y-auto p-6">
 			<DialogPanel
-				transition
 				className="m-auto w-full max-w-xl space-y-6 rounded-2xl bg-dark-800 p-12 transition duration-400 will-change-[transform,opacity,filter] data-closed:scale-97 data-closed:opacity-0 data-closed:blur-xs"
+				transition
 			>
 				<div className="flex items-start justify-between gap-3">
 					<DialogTitle as="h1" className="text-3xl font-bold text-white">

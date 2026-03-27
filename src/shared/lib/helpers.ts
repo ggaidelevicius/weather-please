@@ -11,6 +11,6 @@
 export const mergeObjects = <T extends object, U extends object>(
 	targetObj: T,
 	sourceObj: U,
-): T & Omit<U, keyof T> => {
+): Omit<U, keyof T> & T => {
 	return { ...sourceObj, ...targetObj }
 }

@@ -1,6 +1,7 @@
 import fs from 'fs-extra'
 import path from 'path'
 import { fileURLToPath } from 'url'
+
 import { rootPath } from './lib/root.mjs'
 
 const srcAppPath = path.join(rootPath, 'src', 'app')

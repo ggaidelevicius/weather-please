@@ -1,8 +1,9 @@
 import { headers } from 'next/headers'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { submitForm } from '../actions'
-import { enforceRateLimit } from '../../lib/rate-limit'
+
 import { prisma } from '../../lib/prisma'
+import { enforceRateLimit } from '../../lib/rate-limit'
+import { submitForm } from '../actions'
 
 vi.mock('next/headers', () => ({
 	headers: vi.fn(),
@@ -22,14 +23,14 @@ vi.mock('../../lib/prisma', () => ({
 
 const createFormData = ({
 	email,
-	message = 'Hello there',
-	locale = 'en',
 	honeypotValue = '',
+	locale = 'en',
+	message = 'Hello there',
 }: {
 	email?: string
-	message?: string
-	locale?: string
 	honeypotValue?: string
+	locale?: string
+	message?: string
 } = {}) => {
 	const formData = new FormData()
 	formData.set('message', message)
@@ -54,14 +55,14 @@ describe('submitForm', () => {
 		)
 		vi.mocked(enforceRateLimit).mockResolvedValue({ ok: true })
 		vi.mocked(prisma.formSubmission.create).mockResolvedValue({
-			id: 1,
-			email: null,
-			message: 'Hello there',
-			locale: 'en',
 			createdAt: new Date(),
-			userAgent: 'vitest',
-			referrerUrl: 'https://weather-please.app/bug',
+			email: null,
+			id: 1,
 			ipSubmittedFrom: '127.0.0.1',
+			locale: 'en',
+			message: 'Hello there',
+			referrerUrl: 'https://weather-please.app/bug',
+			userAgent: 'vitest',
 		})
 	})
 
@@ -104,8 +105,8 @@ describe('submitForm', () => {
 		expect(prisma.formSubmission.create).toHaveBeenCalledWith(
 			expect.objectContaining({
 				data: expect.objectContaining({
-					message: 'Hello there',
 					locale: 'en',
+					message: 'Hello there',
 					userAgent: 'vitest',
 				}),
 			}),

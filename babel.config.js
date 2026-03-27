@@ -1,4 +1,2 @@
-module.exports = {
-	presets: ['next/babel'],
-	plugins: ['macros'],
-}
+export const plugins = ['macros']
+export const presets = ['next/babel']

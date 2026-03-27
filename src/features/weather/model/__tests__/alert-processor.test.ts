@@ -1,10 +1,11 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
+
 import {
-	processSimpleAlert,
-	processPrecipitationAlert,
-	processPrecipitationDuration,
 	ALERT_CONDITIONS,
 	type AlertCondition,
+	processPrecipitationAlert,
+	processPrecipitationDuration,
+	processSimpleAlert,
 } from '../alert-processor'
 
 describe('Alert Processor', () => {
@@ -12,9 +13,9 @@ describe('Alert Processor', () => {
 		it('processes greater than or equal conditions correctly', () => {
 			const data = [5, 10, 15, 20, 25]
 			const condition: AlertCondition = {
-				threshold: 15,
 				comparison: 'gte',
 				hours: 5,
+				threshold: 15,
 			}
 
 			const result = processSimpleAlert(data, condition)
@@ -25,9 +26,9 @@ describe('Alert Processor', () => {
 		it('processes less than or equal conditions correctly', () => {
 			const data = [5, 10, 15, 20, 25]
 			const condition: AlertCondition = {
-				threshold: 15,
 				comparison: 'lte',
 				hours: 5,
+				threshold: 15,
 			}
 
 			const result = processSimpleAlert(data, condition)
@@ -38,9 +39,9 @@ describe('Alert Processor', () => {
 		it('processes equal conditions correctly', () => {
 			const data = [5, 10, 15, 20, 15]
 			const condition: AlertCondition = {
-				threshold: 15,
 				comparison: 'eq',
 				hours: 5,
+				threshold: 15,
 			}
 
 			const result = processSimpleAlert(data, condition)
@@ -51,9 +52,9 @@ describe('Alert Processor', () => {
 		it('limits results to specified hours', () => {
 			const data = [5, 10, 15, 20, 25, 30, 35]
 			const condition: AlertCondition = {
-				threshold: 15,
 				comparison: 'gte',
 				hours: 3,
+				threshold: 15,
 			}
 
 			const result = processSimpleAlert(data, condition)
@@ -65,9 +66,9 @@ describe('Alert Processor', () => {
 		it('handles empty data array', () => {
 			const data: number[] = []
 			const condition: AlertCondition = {
-				threshold: 15,
 				comparison: 'gte',
 				hours: 5,
+				threshold: 15,
 			}
 
 			const result = processSimpleAlert(data, condition)
@@ -78,9 +79,9 @@ describe('Alert Processor', () => {
 		it('handles invalid comparison type', () => {
 			const data = [5, 10, 15, 20, 25]
 			const condition: AlertCondition = {
-				threshold: 15,
 				comparison: 'invalid' as AlertCondition['comparison'],
 				hours: 5,
+				threshold: 15,
 			}
 
 			const result = processSimpleAlert(data, condition)
@@ -96,8 +97,8 @@ describe('Alert Processor', () => {
 			const result = processPrecipitationAlert(data)
 
 			expect(result).toEqual({
-				value: 15,
 				flag: false,
+				value: 15,
 				zeroCount: 0,
 			})
 		})
@@ -108,8 +109,8 @@ describe('Alert Processor', () => {
 			const result = processPrecipitationAlert(data)
 
 			expect(result).toEqual({
-				value: 3,
 				flag: true,
+				value: 3,
 				zeroCount: 3,
 			})
 		})
@@ -128,8 +129,8 @@ describe('Alert Processor', () => {
 			const result = processPrecipitationAlert(data)
 
 			expect(result).toEqual({
-				value: 3,
 				flag: false,
+				value: 3,
 				zeroCount: 2, // Current implementation keeps zeroCount for last zeros
 			})
 		})
@@ -149,8 +150,8 @@ describe('Alert Processor', () => {
 			const result = processPrecipitationAlert(data)
 
 			expect(result).toEqual({
-				value: 25,
 				flag: false,
+				value: 25,
 				zeroCount: 0,
 			})
 		})
@@ -244,33 +245,33 @@ describe('Alert Processor', () => {
 	describe('ALERT_CONDITIONS', () => {
 		it('contains correct extreme UV condition', () => {
 			expect(ALERT_CONDITIONS.extremeUv).toEqual({
-				threshold: 11,
 				comparison: 'gte',
 				hours: 13,
+				threshold: 11,
 			})
 		})
 
 		it('contains correct strong wind condition', () => {
 			expect(ALERT_CONDITIONS.strongWind).toEqual({
-				threshold: 60,
 				comparison: 'gte',
 				hours: 25,
+				threshold: 60,
 			})
 		})
 
 		it('contains correct strong wind gusts condition', () => {
 			expect(ALERT_CONDITIONS.strongWindGusts).toEqual({
-				threshold: 80,
 				comparison: 'gte',
 				hours: 25,
+				threshold: 80,
 			})
 		})
 
 		it('contains correct low visibility condition', () => {
 			expect(ALERT_CONDITIONS.lowVisibility).toEqual({
-				threshold: 200,
 				comparison: 'lte',
 				hours: 25,
+				threshold: 200,
 			})
 		})
 	})

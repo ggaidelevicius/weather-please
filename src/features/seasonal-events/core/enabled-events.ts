@@ -1,14 +1,15 @@
-import { SEASONAL_EVENT_BOOLEAN_SETTINGS } from '../../settings/model/boolean-settings'
 import type { Config } from '../../settings/hooks/use-config'
 import type { SeasonalEventId } from './types'
 
-type SeasonalEventToggleKey =
-	(typeof SEASONAL_EVENT_BOOLEAN_SETTINGS)[number]['key']
+import { SEASONAL_EVENT_BOOLEAN_SETTINGS } from '../../settings/model/boolean-settings'
 
 export type SeasonalEventSettings = Pick<
 	Config,
 	'showSeasonalEvents' | SeasonalEventToggleKey
 >
+
+type SeasonalEventToggleKey =
+	(typeof SEASONAL_EVENT_BOOLEAN_SETTINGS)[number]['key']
 
 export const getEnabledSeasonalEvents = (
 	config: SeasonalEventSettings,

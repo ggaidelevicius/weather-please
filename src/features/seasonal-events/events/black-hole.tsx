@@ -13,18 +13,19 @@ import {
 	Vector3,
 	WebGLRenderer,
 } from 'three'
-import {
-	SeasonalEventId,
-	type SeasonalEvent,
-	type SeasonalEventContext,
-} from '../core/types'
+
 import {
 	isSettingsModalOpen,
 	onSettingsModalStateChange,
 } from '../../../shared/lib/settings-modal-state'
-import milkywayData from '../assets/milkyway.jpg'
 import accretionDiskData from '../assets/accretion_disk.png'
+import milkywayData from '../assets/milkyway.jpg'
 import starNoiseData from '../assets/star_noise.png'
+import {
+	type SeasonalEvent,
+	type SeasonalEventContext,
+	SeasonalEventId,
+} from '../core/types'
 
 const EVENT_HORIZON_DAY_DATES = new Set([
 	'2026-04-10',
@@ -269,10 +270,10 @@ const EventDetails = () => (
 )
 
 export const blackHoleEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.EventHorizonDay,
 	isActive: isEventHorizonDay,
 	run: launchBlackHoleEvent,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#020617', '#1e293b', '#f97316', '#f8fafc', '#020617'],
 	},
@@ -312,8 +313,8 @@ async function launchBlackHoleEvent() {
 
 		// Vanilla Three.js — no React Three Fiber so we can use EffectComposer/bloom
 		const renderer = new WebGLRenderer({
-			antialias: true,
 			alpha: true,
+			antialias: true,
 			powerPreference: 'low-power',
 		})
 		renderer.setClearColor(0x000000, 0)
@@ -389,18 +390,18 @@ async function launchBlackHoleEvent() {
 		const THETA_INITIAL = Math.atan2(REF_CAM_POS.x, REF_CAM_POS.z)
 
 		const uniforms = {
-			time: { value: 0.0 },
+			bg_texture: { value: bgTexture },
+			cam_dir: { value: new Vector3() },
+			cam_pos: { value: new Vector3() },
+			cam_up: { value: new Vector3() },
+			disk_texture: { value: diskTexture },
+			fov: { value: 70.0 },
 			// Resolution must be in physical pixels (CSS * DPR) to match gl_FragCoord.
 			resolution: {
 				value: new Vector2(window.innerWidth * dpr, window.innerHeight * dpr),
 			},
-			cam_pos: { value: new Vector3() },
-			cam_dir: { value: new Vector3() },
-			cam_up: { value: new Vector3() },
-			fov: { value: 70.0 },
-			bg_texture: { value: bgTexture },
 			star_texture: { value: starTexture },
-			disk_texture: { value: diskTexture },
+			time: { value: 0.0 },
 		}
 
 		const updateCamera = (theta: number) => {
@@ -427,17 +428,17 @@ async function launchBlackHoleEvent() {
 		updateCamera(THETA_INITIAL)
 
 		const material = new ShaderMaterial({
+			fragmentShader: BLACK_HOLE_FRAGMENT_SHADER,
 			uniforms,
 			vertexShader: BLACK_HOLE_VERTEX_SHADER,
-			fragmentShader: BLACK_HOLE_FRAGMENT_SHADER,
 		})
 		const mesh = new Mesh(new PlaneGeometry(2, 2), material)
 		scene.add(mesh)
 
-		let animFrameId: number | null = null
+		let animFrameId: null | number = null
 		let lastTime = 0
 		let isMounted = false
-		let timeoutId: number | null = null
+		let timeoutId: null | number = null
 
 		const animate = (now: number) => {
 			if (isPausedForModal) {

@@ -1,34 +1,34 @@
-import { lunarNewYearEvent } from '../events/lunar-new-year'
-import { newYearsEvent } from '../events/new-years'
-import { springEquinoxEvent } from '../events/spring-equinox'
 import { autumnEquinoxEvent } from '../events/autumn-equinox'
-import { diwaliEvent } from '../events/diwali'
-import { holiEvent } from '../events/holi'
-import { summerSolsticeEvent } from '../events/summer-solstice'
-import { winterSolsticeEvent } from '../events/winter-solstice'
-import { valentinesEvent } from '../events/valentines'
-import { earthDayEvent } from '../events/earth-day'
-import { halloweenEvent } from '../events/halloween'
+import { blackHoleEvent } from '../events/black-hole'
+import { christmasEvent } from '../events/christmas'
 import { dayOfTheDeadEvent } from '../events/day-of-the-dead'
-import { lyridsEvent } from '../events/lyrids'
+import { diwaliEvent } from '../events/diwali'
+import { earthDayEvent } from '../events/earth-day'
+import { easterEvent } from '../events/easter'
+import { eidAlAdhaEvent } from '../events/eid-al-adha'
+import { eidAlFitrEvent } from '../events/eid-al-fitr'
 import { etaAquariidsEvent } from '../events/eta-aquariids'
-import { orionidsEvent } from '../events/orionids'
+import { geminidsEvent } from '../events/geminids'
+import { halloweenEvent } from '../events/halloween'
+import { hanukkahEvent } from '../events/hanukkah'
+import { holiEvent } from '../events/holi'
 import { leonidsEvent } from '../events/leonids'
-import { totalSolarEclipseEvent } from '../events/total-solar-eclipse'
-import { totalLunarEclipseEvent } from '../events/total-lunar-eclipse'
+import { lunarNewYearEvent } from '../events/lunar-new-year'
+import { lyridsEvent } from '../events/lyrids'
+import { newYearsEvent } from '../events/new-years'
+import { orionidsEvent } from '../events/orionids'
 import { perseidsEvent } from '../events/perseids'
 import { quadrantidsEvent } from '../events/quadrantids'
-import { geminidsEvent } from '../events/geminids'
-import { eidAlFitrEvent } from '../events/eid-al-fitr'
-import { eidAlAdhaEvent } from '../events/eid-al-adha'
-import { hanukkahEvent } from '../events/hanukkah'
-import { christmasEvent } from '../events/christmas'
-import { easterEvent } from '../events/easter'
-import { blackHoleEvent } from '../events/black-hole'
+import { springEquinoxEvent } from '../events/spring-equinox'
+import { summerSolsticeEvent } from '../events/summer-solstice'
+import { totalLunarEclipseEvent } from '../events/total-lunar-eclipse'
+import { totalSolarEclipseEvent } from '../events/total-solar-eclipse'
+import { valentinesEvent } from '../events/valentines'
+import { winterSolsticeEvent } from '../events/winter-solstice'
 import {
 	Hemisphere,
-	SeasonalEventId,
 	type SeasonalEvent,
+	SeasonalEventId,
 	type SeasonalEventTileAccent,
 } from './types'
 
@@ -72,7 +72,7 @@ export const getSeasonalEventForDate = (params: {
 	date: Date
 	enabledEvents?: Set<SeasonalEventId>
 	hemisphere?: Hemisphere
-}): SeasonalEvent | null => {
+}): null | SeasonalEvent => {
 	const { date, enabledEvents, hemisphere = Hemisphere.Northern } = params
 
 	for (const event of seasonalEvents) {
@@ -91,7 +91,7 @@ export const getActiveSeasonalEvent = (params: {
 	date: Date
 	enabledEvents?: Set<SeasonalEventId>
 	hemisphere?: Hemisphere
-}): SeasonalEventId | null => {
+}): null | SeasonalEventId => {
 	const event = getSeasonalEventForDate(params)
 	return event ? event.id : null
 }
@@ -110,7 +110,7 @@ export const getSeasonalTileAccent = (params: {
 	date: Date
 	enabledEvents?: Set<SeasonalEventId>
 	hemisphere?: Hemisphere
-}): SeasonalEventTileAccent | null => {
+}): null | SeasonalEventTileAccent => {
 	const event = getSeasonalEventForDate(params)
 	return event?.tileAccent ?? null
 }

@@ -7,11 +7,13 @@ import { IconCircleCheckFilled } from '@tabler/icons-react'
 import Form from 'next/form'
 import { useSearchParams } from 'next/navigation'
 import { Suspense, useActionState, useEffect, useId } from 'react'
+
+import type { LocaleKey } from '../../shared/lib/i18n'
+
+import { changeLocalisation, locales } from '../../shared/lib/i18n'
 import { Button } from '../../shared/ui/button'
 import { Input, Textarea } from '../../shared/ui/input'
-import { changeLocalisation, locales } from '../../shared/lib/i18n'
 import { submitForm } from '../actions'
-import type { LocaleKey } from '../../shared/lib/i18n'
 
 const initialState = {
 	message: '',
@@ -64,26 +66,26 @@ const ContactForm = () => {
 							required
 						/>
 						<div className="absolute top-auto -left-2500 h-px w-px overflow-hidden">
-							<label htmlFor={id} className="sr-only">
+							<label className="sr-only" htmlFor={id}>
 								<Trans>Do not fill this field if you are human</Trans>
 							</label>
 							<input
-								type="text"
-								name={id}
-								id={id}
 								autoComplete="off"
+								id={id}
+								name={id}
 								tabIndex={-1}
+								type="text"
 							/>
 						</div>
-						<input type="hidden" name="locale" value={locale} />
-						<input type="hidden" name="validation" value={id} />
-						<Button type="submit" disabled={pending}>
+						<input name="locale" type="hidden" value={locale} />
+						<input name="validation" type="hidden" value={id} />
+						<Button disabled={pending} type="submit">
 							<Trans>Submit</Trans>
 						</Button>
 					</>
 				) : (
 					<h1 className="flex items-end justify-center text-center text-4xl font-bold text-white">
-						<IconCircleCheckFilled size={36} aria-hidden className="mr-2" />
+						<IconCircleCheckFilled aria-hidden className="mr-2" size={36} />
 						{state.message}
 					</h1>
 				)}

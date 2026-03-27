@@ -1,29 +1,30 @@
-import { prisma } from './prisma'
 import type { Prisma } from '../generated/prisma/client'
+
+import { prisma } from './prisma'
+
+export type RateLimitResult = { ok: false; retryAfter: number } | { ok: true }
+
+type RateLimitOptions = {
+	headers: Headers
+	scope: RateLimitScope
+}
+
+type RateLimitRule = {
+	maxRequests: number
+	windowMs: number
+}
 
 type RateLimitScope = 'server-action'
 
-type RateLimitRule = {
-	windowMs: number
-	maxRequests: number
-}
-
-export type RateLimitResult = { ok: true } | { ok: false; retryAfter: number }
-
-type RateLimitOptions = {
-	scope: RateLimitScope
-	headers: Headers
-}
-
 const RATE_LIMIT_RULES: Record<RateLimitScope, RateLimitRule> = {
 	'server-action': {
+		maxRequests: 5,
 		// Server action limiter for form submissions
 		windowMs: 60 * 60 * 1000, // 1 hour
-		maxRequests: 5,
 	},
 }
 
-const getClientIdentifier = (headers: Headers): string | null => {
+const getClientIdentifier = (headers: Headers): null | string => {
 	const forwardedFor = headers.get('x-forwarded-for')
 	if (forwardedFor) {
 		const [ip] = forwardedFor.split(',')
@@ -35,9 +36,9 @@ const getClientIdentifier = (headers: Headers): string | null => {
 }
 
 const buildRateLimitKey = ({
-	scope,
 	headers,
-}: RateLimitOptions): string | null => {
+	scope,
+}: RateLimitOptions): null | string => {
 	const ip = getClientIdentifier(headers)
 	if (!ip) {
 		return null
@@ -67,19 +68,19 @@ export const enforceRateLimit = async (
 				// Count requests in the current window
 				const recentCount = await tx.rateLimitEntry.count({
 					where: {
-						key,
 						createdAt: { gte: windowStart },
+						key,
 					},
 				})
 
 				if (recentCount >= rule.maxRequests) {
 					// Find the oldest entry in the window to calculate retry time
 					const oldestEntry = await tx.rateLimitEntry.findFirst({
-						where: {
-							key,
-							createdAt: { gte: windowStart },
-						},
 						orderBy: { createdAt: 'asc' },
+						where: {
+							createdAt: { gte: windowStart },
+							key,
+						},
 					})
 
 					const retryAfter = oldestEntry

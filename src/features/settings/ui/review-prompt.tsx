@@ -1,8 +1,10 @@
-import { Trans } from '@lingui/react/macro'
-import { useEffect, useState } from 'react'
-import { Button } from '../../../shared/ui/button'
-import type { Config } from '../hooks/use-config'
 import type { Dispatch, SetStateAction } from 'react'
+
+import { Trans } from '@lingui/react/macro'
+
+import type { Config } from '../hooks/use-config'
+
+import { Button } from '../../../shared/ui/button'
 
 interface ReviewPromptProps {
 	config: Config
@@ -15,17 +17,11 @@ export const ReviewPrompt = ({
 	config,
 	setInput,
 }: Readonly<ReviewPromptProps>) => {
-	const [platformReviewLink, setPlatformReviewLink] = useState(
-		'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews',
-	)
-
-	useEffect(() => {
-		if (navigator.userAgent.toLowerCase().includes('firefox/')) {
-			setPlatformReviewLink(
-				'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/',
-			)
-		}
-	}, [])
+	const platformReviewLink =
+		typeof navigator !== 'undefined' &&
+		navigator.userAgent.toLowerCase().includes('firefox/')
+			? 'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/'
+			: 'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews'
 
 	if (
 		!config.displayedReviewPrompt &&
@@ -52,13 +48,13 @@ export const ReviewPrompt = ({
 						<Trans>Leave a review</Trans>
 					</Button>
 					<Button
-						secondary
 						onClick={() =>
 							setInput((prev) => ({
 								...prev,
 								displayedReviewPrompt: true,
 							}))
 						}
+						secondary
 					>
 						<Trans>Never show this again</Trans>
 					</Button>

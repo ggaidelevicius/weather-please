@@ -1,32 +1,33 @@
-import {
-	Description,
-	Field,
-	Input as HeadlessInput,
-	Label,
-	Select as HeadlessSelect,
-	Switch as HeadlessSwitch,
-	Textarea as HeadlessTextarea,
-} from '@headlessui/react'
-import { Trans } from '@lingui/react/macro'
-import { IconChevronDown } from '@tabler/icons-react'
 import type {
 	ChangeEventHandler,
 	ComponentPropsWithoutRef,
 	ReactNode,
 } from 'react'
 
+import {
+	Description,
+	Field,
+	Input as HeadlessInput,
+	Select as HeadlessSelect,
+	Switch as HeadlessSwitch,
+	Textarea as HeadlessTextarea,
+	Label,
+} from '@headlessui/react'
+import { Trans } from '@lingui/react/macro'
+import { IconChevronDown } from '@tabler/icons-react'
+
 interface SelectProps {
 	label: ReactNode
-	value: string
-	options: { value: string; label: ReactNode }[]
 	onChange: ChangeEventHandler<HTMLSelectElement>
+	options: { label: ReactNode; value: string }[]
+	value: string
 }
 
 export const Select = ({
 	label,
-	value,
 	onChange,
 	options,
+	value,
 }: Readonly<
 	Omit<ComponentPropsWithoutRef<'select'>, 'onChange' | 'value'> & SelectProps
 >) => (
@@ -35,8 +36,8 @@ export const Select = ({
 		<div className="relative mt-2">
 			<HeadlessSelect
 				className="block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm"
-				value={value}
 				onChange={onChange}
+				value={value}
 			>
 				{options.map((option) => (
 					<option key={option.value} value={option.value}>
@@ -45,8 +46,8 @@ export const Select = ({
 				))}
 			</HeadlessSelect>
 			<IconChevronDown
-				className="group pointer-events-none absolute top-2.5 right-2.5 size-4 stroke-white/60"
 				aria-hidden="true"
+				className="group pointer-events-none absolute top-2.5 right-2.5 size-4 stroke-white/60"
 			/>
 		</div>
 	</Field>
@@ -54,44 +55,44 @@ export const Select = ({
 
 interface BaseInputProps {
 	label: ReactNode
-	validation?: boolean
 	required?: boolean
+	validation?: boolean
 }
 
 interface ControlledInputProps extends BaseInputProps {
-	value: string
-	onChange: ChangeEventHandler<HTMLInputElement>
 	name?: undefined
+	onChange: ChangeEventHandler<HTMLInputElement>
 	type?: undefined
+	value: string
 }
 
 interface UncontrolledInputProps extends BaseInputProps {
-	value?: undefined
-	onChange?: undefined
 	name: string
+	onChange?: undefined
 	type?: 'email'
+	value?: undefined
 }
 
 export const Input = ({
 	label,
-	value,
-	onChange,
-	validation,
 	name,
-	type,
+	onChange,
 	required,
+	type,
+	validation,
+	value,
 }: Readonly<ControlledInputProps | UncontrolledInputProps>) => {
 	return (
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessInput
 				className="mt-2 block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm"
-				value={value}
-				onChange={onChange}
 				invalid={validation === false}
 				name={name}
-				type={type}
+				onChange={onChange}
 				required={required}
+				type={type}
+				value={value}
 			/>
 			{validation === false && (
 				<Description className="mt-2 text-sm text-red-400">
@@ -110,38 +111,38 @@ interface BaseTextareaProps {
 }
 
 interface ControlledTextareaProps extends BaseTextareaProps {
-	value: string
-	onChange: ChangeEventHandler<HTMLTextAreaElement>
 	name?: undefined
+	onChange: ChangeEventHandler<HTMLTextAreaElement>
 	required: undefined
+	value: string
 }
 
 interface UncontrolledTextareaProps extends BaseTextareaProps {
-	value?: undefined
-	onChange?: undefined
 	name: string
+	onChange?: undefined
 	required?: boolean
+	value?: undefined
 }
 
 export const Textarea = ({
 	label,
-	value,
-	onChange,
-	validation,
 	name,
+	onChange,
 	required,
+	validation,
+	value,
 }: Readonly<ControlledTextareaProps | UncontrolledTextareaProps>) => {
 	return (
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessTextarea
 				className="mt-2 block w-full resize-none appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm"
-				value={value}
-				onChange={onChange}
 				invalid={validation === false}
 				name={name}
-				rows={4}
+				onChange={onChange}
 				required={required}
+				rows={4}
+				value={value}
 			/>
 			{validation === false && (
 				<Description className="mt-2 text-sm text-red-400">
@@ -155,25 +156,25 @@ export const Textarea = ({
 }
 
 interface SwitchProps {
-	label: ReactNode
 	checked: boolean
-	onChange: (e: boolean) => void
 	description?: string
+	label: ReactNode
+	onChange: (e: boolean) => void
 }
 
 export const Switch = ({
-	label,
 	checked,
-	onChange,
 	description,
+	label,
+	onChange,
 }: Readonly<SwitchProps>) => {
 	return (
 		<Field>
 			<Label className="block text-sm font-medium text-white">{label}</Label>
 			<HeadlessSwitch
 				checked={checked}
-				onChange={onChange}
 				className="group mt-2 inline-flex h-6 w-11 items-center rounded-full bg-dark-500 transition-[background-color] select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-checked:bg-blue-600"
+				onChange={onChange}
 			>
 				<span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-6" />
 			</HeadlessSwitch>

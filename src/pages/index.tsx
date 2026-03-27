@@ -3,28 +3,29 @@ import { Trans } from '@lingui/react/macro'
 import { IconAlertTriangle } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { Alert } from '../shared/ui/alert'
-import { AlertVariant } from '../shared/ui/alert-variant'
-import { Button } from '../shared/ui/button'
-import { RingLoader } from '../shared/ui/loader'
-import { ReviewPrompt } from '../features/settings/ui/review-prompt'
-import { useSeasonalEvents } from '../features/seasonal-events/hooks/use-seasonal-events'
+
 import { getEnabledSeasonalEvents } from '../features/seasonal-events/core/enabled-events'
 import { SeasonalEventId } from '../features/seasonal-events/core/types'
 import {
 	getHemisphereFromLatitude,
 	isLikelySoftwareRenderer,
 } from '../features/seasonal-events/core/utils'
+import { useSeasonalEvents } from '../features/seasonal-events/hooks/use-seasonal-events'
 import { useConfig } from '../features/settings/hooks/use-config'
 import { SEASONAL_EVENT_TOGGLE_KEY_BY_ID } from '../features/settings/model/seasonal-event-toggle-map'
 import { Initialisation } from '../features/settings/ui/initialisation'
+import { ReviewPrompt } from '../features/settings/ui/review-prompt'
 import { Settings } from '../features/settings/ui/settings'
+import { usePeriodicLocationRefresh } from '../features/weather/hooks/use-periodic-location-refresh'
 import { useWeather } from '../features/weather/hooks/use-weather'
 import { Tile } from '../features/weather/ui/tile'
 import { WeatherAlert } from '../features/weather/ui/weather-alert'
-import { AsyncStatus } from '../shared/hooks/async-status'
-import { usePeriodicLocationRefresh } from '../features/weather/hooks/use-periodic-location-refresh'
 import { messages } from '../locales/en/messages'
+import { AsyncStatus } from '../shared/hooks/async-status'
+import { Alert } from '../shared/ui/alert'
+import { AlertVariant } from '../shared/ui/alert-variant'
+import { Button } from '../shared/ui/button'
+import { RingLoader } from '../shared/ui/loader'
 
 i18n.load({
 	en: messages,
@@ -46,15 +47,15 @@ const GRID_COLS_CLASS = {
 } as const
 
 const App = () => {
-	const [changedLocation, setChangedLocation] = useState<boolean>(false)
+	const [locationChangeToken, setLocationChangeToken] = useState(0)
 
-	const { config, input, handleChange, updateConfig, setInput, isHydrated } =
+	const { config, handleChange, input, isHydrated, setInput, updateConfig } =
 		useConfig()
-	const { weatherData, alertData, status, hasData, isLoading, error, retry } =
+	const { alertData, error, hasData, isLoading, retry, status, weatherData } =
 		useWeather(
 			config.lat,
 			config.lon,
-			changedLocation,
+			locationChangeToken,
 			config.useAirQualityUvOverride,
 		)
 	const isOnboarded = Boolean(config.lat && config.lon)
@@ -65,18 +66,12 @@ const App = () => {
 	const enabledSeasonalEvents = getEnabledSeasonalEvents(config)
 
 	useSeasonalEvents({
+		enabledEvents: enabledSeasonalEvents,
+		hemisphere,
 		isEnabled: config.showSeasonalEvents,
 		isHydrated,
 		isOnboarded: isHydrated && isOnboarded,
-		enabledEvents: enabledSeasonalEvents,
-		hemisphere,
 	})
-
-	useEffect(() => {
-		if (changedLocation) {
-			setChangedLocation(false)
-		}
-	}, [changedLocation])
 
 	useEffect(() => {
 		if (error) {
@@ -89,7 +84,7 @@ const App = () => {
 		lat: config.lat,
 		lon: config.lon,
 		onLocationChange: (coords) => {
-			setChangedLocation(true)
+			setLocationChangeToken((current) => current + 1)
 			updateConfig(coords)
 		},
 	})
@@ -111,19 +106,19 @@ const App = () => {
 			return (
 				<Tile
 					{...day}
-					key={day.day}
-					index={index}
 					delayBaseline={delayBaseline}
-					useMetric={config.useMetric}
+					enabledSeasonalEvents={enabledSeasonalEvents}
+					hemisphere={hemisphere}
 					identifier={config.identifier}
+					index={index}
+					isSeasonalEventEnabled={isSeasonalEventEnabled}
+					key={day.day}
+					onToggleSeasonalEvent={toggleSeasonalEvent}
 					showSeasonalEvents={canShowSeasonalEvents}
 					showSeasonalTileGlow={
 						config.showSeasonalTileGlow && !isSoftwareRenderer
 					}
-					enabledSeasonalEvents={enabledSeasonalEvents}
-					hemisphere={hemisphere}
-					isSeasonalEventEnabled={isSeasonalEventEnabled}
-					onToggleSeasonalEvent={toggleSeasonalEvent}
+					useMetric={config.useMetric}
 				/>
 			)
 		})
@@ -137,12 +132,12 @@ const App = () => {
 				<AnimatePresence>
 					<WeatherAlert
 						{...alertData}
-						useMetric={config.useMetric}
-						useCompactAlerts={config.useCompactAlerts}
-						showUvAlerts={config.showUvAlerts}
-						showWindAlerts={config.showWindAlerts}
-						showVisibilityAlerts={config.showVisibilityAlerts}
 						showPrecipitationAlerts={config.showPrecipitationAlerts}
+						showUvAlerts={config.showUvAlerts}
+						showVisibilityAlerts={config.showVisibilityAlerts}
+						showWindAlerts={config.showWindAlerts}
+						useCompactAlerts={config.useCompactAlerts}
+						useMetric={config.useMetric}
 					/>
 				</AnimatePresence>
 			)}
@@ -154,10 +149,10 @@ const App = () => {
 						className={`relative z-10 grid h-full w-full grid-cols-1 gap-5 ${GRID_COLS_CLASS[config.daysToRetrieve as keyof typeof GRID_COLS_CLASS] ?? ''}`}
 					>
 						<Initialisation
-							setInput={setInput}
-							input={input}
 							handleChange={handleChange}
+							input={input}
 							pending={isHydrated && (!config?.lat || !config?.lon)}
+							setInput={setInput}
 						/>
 						{shouldShowBlockingError ? (
 							<div className="col-span-full flex flex-col items-center justify-center gap-4">
@@ -202,10 +197,10 @@ const App = () => {
 
 			<div className="fixed bottom-4 left-4 flex flex-col items-start gap-2">
 				<a
-					href="https://open-meteo.com/"
-					target="_blank"
-					rel="noopener noreferrer"
 					className="text-xs text-dark-300 hover:underline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500"
+					href="https://open-meteo.com/"
+					rel="noopener noreferrer"
+					target="_blank"
 				>
 					<Trans>weather data provided by open-meteo</Trans>
 				</a>

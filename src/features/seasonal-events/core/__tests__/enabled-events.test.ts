@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+
 import {
 	getEnabledSeasonalEvents,
 	type SeasonalEventSettings,
@@ -8,34 +9,34 @@ import { SeasonalEventId } from '../types'
 const createConfig = (
 	overrides: Partial<SeasonalEventSettings> = {},
 ): SeasonalEventSettings => ({
-	showSeasonalEvents: true,
-	showNewYearsEvent: false,
-	showValentinesEvent: false,
-	showLunarNewYearEvent: false,
-	showEasterEvent: false,
-	showSpringEquinoxEvent: false,
 	showAutumnEquinoxEvent: false,
-	showDiwaliEvent: false,
-	showHoliEvent: false,
-	showEarthDayEvent: false,
-	showSummerSolsticeEvent: false,
-	showWinterSolsticeEvent: false,
-	showHalloweenEvent: false,
+	showChristmasEvent: false,
 	showDayOfTheDeadEvent: false,
+	showDiwaliEvent: false,
+	showEarthDayEvent: false,
+	showEasterEvent: false,
+	showEidAlAdhaEvent: false,
+	showEidAlFitrEvent: false,
+	showEtaAquariidsEvent: false,
+	showEventHorizonDayEvent: false,
+	showGeminidsEvent: false,
+	showHalloweenEvent: false,
+	showHanukkahEvent: false,
+	showHoliEvent: false,
+	showLeonidsEvent: false,
+	showLunarNewYearEvent: false,
+	showLyridsEvent: false,
+	showNewYearsEvent: false,
+	showOrionidsEvent: false,
 	showPerseidsEvent: false,
 	showQuadrantidsEvent: false,
-	showLyridsEvent: false,
-	showEtaAquariidsEvent: false,
-	showOrionidsEvent: false,
-	showLeonidsEvent: false,
-	showTotalSolarEclipseEvent: false,
+	showSeasonalEvents: true,
+	showSpringEquinoxEvent: false,
+	showSummerSolsticeEvent: false,
 	showTotalLunarEclipseEvent: false,
-	showGeminidsEvent: false,
-	showEidAlFitrEvent: false,
-	showEidAlAdhaEvent: false,
-	showHanukkahEvent: false,
-	showChristmasEvent: false,
-	showEventHorizonDayEvent: false,
+	showTotalSolarEclipseEvent: false,
+	showValentinesEvent: false,
+	showWinterSolsticeEvent: false,
 	...overrides,
 })
 
@@ -43,9 +44,9 @@ describe('getEnabledSeasonalEvents', () => {
 	it('returns an empty set when seasonal events are disabled globally', () => {
 		const enabledEvents = getEnabledSeasonalEvents(
 			createConfig({
-				showSeasonalEvents: false,
-				showNewYearsEvent: true,
 				showChristmasEvent: true,
+				showNewYearsEvent: true,
+				showSeasonalEvents: false,
 			}),
 		)
 
@@ -55,17 +56,17 @@ describe('getEnabledSeasonalEvents', () => {
 	it('returns only enabled event ids', () => {
 		const enabledEvents = getEnabledSeasonalEvents(
 			createConfig({
-				showNewYearsEvent: true,
 				showChristmasEvent: true,
 				showHoliEvent: true,
+				showNewYearsEvent: true,
 			}),
 		)
 
 		expect(enabledEvents).toEqual(
 			new Set([
-				SeasonalEventId.NewYearsDay,
-				SeasonalEventId.Holi,
 				SeasonalEventId.ChristmasDay,
+				SeasonalEventId.Holi,
+				SeasonalEventId.NewYearsDay,
 			]),
 		)
 	})

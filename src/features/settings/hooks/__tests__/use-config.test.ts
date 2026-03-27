@@ -1,19 +1,13 @@
-import { renderHook, act, waitFor } from '@testing-library/react'
+import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { useConfig, type Config } from '../use-config'
+
 import { TileIdentifier } from '../../model/tile-identifier'
+import { type Config, useConfig } from '../use-config'
 
 // Mock localStorage
 const localStorageMock = (() => {
 	let store: Record<string, string> = {}
 	return {
-		getItem: (key: string) => store[key] || null,
-		setItem: (key: string, value: string) => {
-			store[key] = value
-		},
-		removeItem: (key: string) => {
-			delete store[key]
-		},
 		clear: () => {
 			store = {}
 		},
@@ -22,6 +16,13 @@ const localStorageMock = (() => {
 		},
 		set config(value: string) {
 			store.config = value
+		},
+		getItem: (key: string) => store[key] || null,
+		removeItem: (key: string) => {
+			delete store[key]
+		},
+		setItem: (key: string, value: string) => {
+			store[key] = value
 		},
 	}
 })()
@@ -34,10 +35,10 @@ Object.defineProperty(window, 'localStorage', {
 vi.mock('../../../../shared/lib/i18n', () => ({
 	changeLocalisation: vi.fn(),
 	locales: {
+		de: 'German',
 		en: 'English',
 		es: 'Spanish',
 		fr: 'French',
-		de: 'German',
 	},
 }))
 
@@ -47,51 +48,51 @@ vi.mock('../../../../shared/lib/helpers', () => ({
 }))
 
 const mockValidConfig: Config = {
+	daysToRetrieve: '3',
+	displayedReviewPrompt: false,
+	identifier: TileIdentifier.Day,
+	installed: 1640995200000,
 	lang: 'en',
 	lat: '40.7128',
 	lon: '-74.0060',
 	periodicLocationUpdate: false,
-	useMetric: true,
 	showAlerts: true,
-	showUvAlerts: true,
-	showWindAlerts: true,
-	showVisibilityAlerts: true,
-	showPrecipitationAlerts: true,
-	useCompactAlerts: true,
-	showNewYearsEvent: true,
-	showValentinesEvent: true,
+	showAutumnEquinoxEvent: true,
+	showChristmasEvent: true,
+	showDayOfTheDeadEvent: true,
+	showDiwaliEvent: true,
+	showEarthDayEvent: true,
+	showEasterEvent: true,
+	showEidAlAdhaEvent: true,
+	showEidAlFitrEvent: true,
+	showEtaAquariidsEvent: true,
+	showEventHorizonDayEvent: true,
+	showGeminidsEvent: true,
+	showHalloweenEvent: true,
+	showHanukkahEvent: true,
+	showHoliEvent: true,
+	showLeonidsEvent: true,
 	showLunarNewYearEvent: true,
+	showLyridsEvent: true,
+	showNewYearsEvent: true,
+	showOrionidsEvent: true,
+	showPerseidsEvent: true,
+	showPrecipitationAlerts: true,
+	showQuadrantidsEvent: true,
 	showSeasonalEvents: true,
 	showSeasonalTileGlow: true,
-	showEarthDayEvent: true,
 	showSpringEquinoxEvent: true,
-	showAutumnEquinoxEvent: true,
-	showDiwaliEvent: true,
-	showHoliEvent: true,
 	showSummerSolsticeEvent: true,
-	showWinterSolsticeEvent: true,
-	showHalloweenEvent: true,
-	showPerseidsEvent: true,
-	showQuadrantidsEvent: true,
-	showLyridsEvent: true,
-	showEtaAquariidsEvent: true,
-	showOrionidsEvent: true,
-	showLeonidsEvent: true,
-	showTotalSolarEclipseEvent: true,
 	showTotalLunarEclipseEvent: true,
-	showDayOfTheDeadEvent: true,
-	showEasterEvent: true,
-	showGeminidsEvent: true,
-	showEidAlFitrEvent: true,
-	showEidAlAdhaEvent: true,
-	showHanukkahEvent: true,
-	showChristmasEvent: true,
-	showEventHorizonDayEvent: true,
+	showTotalSolarEclipseEvent: true,
+	showUvAlerts: true,
+	showValentinesEvent: true,
+	showVisibilityAlerts: true,
+	showWindAlerts: true,
+	showWinterSolsticeEvent: true,
 	useAirQualityUvOverride: false,
-	daysToRetrieve: '3',
-	identifier: TileIdentifier.Day,
-	installed: 1640995200000,
-	displayedReviewPrompt: false,
+	useCompactAlerts: true,
+	useMetric: true,
 }
 
 describe('useConfig - Core Functionality', () => {
@@ -104,50 +105,51 @@ describe('useConfig - Core Functionality', () => {
 		const { result } = renderHook(() => useConfig())
 
 		expect(result.current.config).toEqual({
+			daysToRetrieve: '3',
+			displayedReviewPrompt: false,
+			identifier: TileIdentifier.Day,
+			installed: expect.any(Number),
 			lang: 'en',
 			lat: '',
 			lon: '',
 			periodicLocationUpdate: false,
-			useMetric: true,
 			showAlerts: true,
-			showUvAlerts: true,
-			showWindAlerts: true,
-			showVisibilityAlerts: true,
-			showPrecipitationAlerts: true,
-			useCompactAlerts: true,
-			showNewYearsEvent: true,
-			showValentinesEvent: true,
+			showAutumnEquinoxEvent: true,
+			showChristmasEvent: true,
+			showDayOfTheDeadEvent: true,
+			showDiwaliEvent: true,
+			showEarthDayEvent: true,
+			showEasterEvent: true,
+			showEidAlAdhaEvent: true,
+			showEidAlFitrEvent: true,
+			showEtaAquariidsEvent: true,
+			showEventHorizonDayEvent: true,
+			showGeminidsEvent: true,
+			showHalloweenEvent: true,
+			showHanukkahEvent: true,
+			showHoliEvent: true,
+			showLeonidsEvent: true,
 			showLunarNewYearEvent: true,
+			showLyridsEvent: true,
+			showNewYearsEvent: true,
+			showOrionidsEvent: true,
+			showPerseidsEvent: true,
+			showPrecipitationAlerts: true,
+			showQuadrantidsEvent: true,
 			showSeasonalEvents: true,
 			showSeasonalTileGlow: true,
-			showEarthDayEvent: true,
 			showSpringEquinoxEvent: true,
-			showAutumnEquinoxEvent: true,
-			showDiwaliEvent: true,
-			showHoliEvent: true,
 			showSummerSolsticeEvent: true,
-			showWinterSolsticeEvent: true,
-			showHalloweenEvent: true,
-			showPerseidsEvent: true,
-			showQuadrantidsEvent: true,
-			showLyridsEvent: true,
-			showEtaAquariidsEvent: true,
-			showOrionidsEvent: true,
-			showLeonidsEvent: true,
-			showTotalSolarEclipseEvent: true,
 			showTotalLunarEclipseEvent: true,
-			showDayOfTheDeadEvent: true,
-			showEasterEvent: true,
-			showGeminidsEvent: true,
-			showEidAlFitrEvent: true,
-			showEidAlAdhaEvent: true,
-			showHanukkahEvent: true,
-			showChristmasEvent: true,
+			showTotalSolarEclipseEvent: true,
+			showUvAlerts: true,
+			showValentinesEvent: true,
+			showVisibilityAlerts: true,
+			showWindAlerts: true,
+			showWinterSolsticeEvent: true,
 			useAirQualityUvOverride: false,
-			daysToRetrieve: '3',
-			identifier: TileIdentifier.Day,
-			installed: expect.any(Number),
-			displayedReviewPrompt: false,
+			useCompactAlerts: true,
+			useMetric: true,
 		})
 
 		expect(result.current.input).toEqual(result.current.config)

@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { createAdaptiveDprController, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const LYRIDS_PEAK_DATES = new Set([
 	'2026-04-22',
@@ -51,15 +52,15 @@ const LYRIDS_OVERLAY_FILTER = 'saturate(125%)'
 const LYRIDS_MAX_DPR = 2
 const LYRIDS_METEOR_COUNT = 10
 const LYRIDS_STAR_COUNT = 140
-const LYRIDS_METEOR_LENGTH_RANGE = { min: 130, max: 240 }
-const LYRIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.2 }
-const LYRIDS_METEOR_SPEED_RANGE = { min: 480, max: 780 }
-const LYRIDS_METEOR_ANGLE_RANGE = { min: 0.26, max: 0.44 }
-const LYRIDS_METEOR_SPAWN_DELAY_RANGE = { min: 900, max: 2400 }
-const LYRIDS_METEOR_LIFETIME_RANGE = { min: 1400, max: 2300 }
-const LYRIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
-const LYRIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
-const LYRIDS_METEOR_GLOW_RANGE = { min: 12, max: 22 }
+const LYRIDS_METEOR_LENGTH_RANGE = { max: 240, min: 130 }
+const LYRIDS_METEOR_WIDTH_RANGE = { max: 2.2, min: 1 }
+const LYRIDS_METEOR_SPEED_RANGE = { max: 780, min: 480 }
+const LYRIDS_METEOR_ANGLE_RANGE = { max: 0.44, min: 0.26 }
+const LYRIDS_METEOR_SPAWN_DELAY_RANGE = { max: 2400, min: 900 }
+const LYRIDS_METEOR_LIFETIME_RANGE = { max: 2300, min: 1400 }
+const LYRIDS_METEOR_SPAWN_X = { max: 0.6, min: -0.2 }
+const LYRIDS_METEOR_SPAWN_Y = { max: 0.2, min: -0.35 }
+const LYRIDS_METEOR_GLOW_RANGE = { max: 22, min: 12 }
 const LYRIDS_METEOR_COLORS = [
 	'rgba(226, 232, 240, 1)',
 	'rgba(191, 219, 254, 1)',
@@ -67,11 +68,11 @@ const LYRIDS_METEOR_COLORS = [
 	'rgba(252, 211, 77, 1)',
 ]
 const LYRIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const LYRIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
-const LYRIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
-const LYRIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
-const LYRIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const LYRIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const LYRIDS_STAR_RADIUS_RANGE = { max: 1.4, min: 0.5 }
+const LYRIDS_STAR_OPACITY_RANGE = { max: 0.55, min: 0.2 }
+const LYRIDS_STAR_TWINKLE_RANGE = { max: 0.0014, min: 0.0006 }
+const LYRIDS_STAR_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+const LYRIDS_STAR_FADE_IN_DURATION_RANGE = { max: 2200, min: 1200 }
 
 const EventDetails = () => (
 	<>
@@ -111,25 +112,25 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				Chinese records from 687 BC describe "stars falling like rain" — the
-				oldest known account of the Lyrids, and one of the oldest documented
-				meteor observations of any kind.
+				Chinese records from 687 BC describe &quot;stars falling like rain&quot;
+				— the oldest known account of the Lyrids, and one of the oldest
+				documented meteor observations of any kind.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				Comet Thatcher, the shower's parent body, won't return to the inner
-				solar system until roughly the year 2283.
+				Comet Thatcher, the shower&apos;s parent body, won&apos;t return to the
+				inner solar system until roughly the year 2283.
 			</Trans>
 		</p>
 	</>
 )
 
 export const lyridsEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.Lyrids,
 	isActive: isLyridsPeak,
 	run: launchLyridsShower,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#e2e8f0', '#fcd34d', '#93c5fd', '#60a5fa', '#e2e8f0'],
 	},
@@ -161,32 +162,32 @@ async function launchLyridsShower() {
 		}
 
 		type Meteor = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			length: number
-			width: number
-			opacity: number
-			glow: number
-			color: string
 			age: number
+			color: string
+			glow: number
+			length: number
 			lifetime: number
 			nextSpawn: number
-		}
-		type Star = {
+			opacity: number
+			vx: number
+			vy: number
+			width: number
 			x: number
 			y: number
-			radius: number
-			opacity: number
-			twinkle: number
-			phase: number
+		}
+		type Star = {
 			birthTime: number
 			fadeDuration: number
+			opacity: number
+			phase: number
+			radius: number
+			twinkle: number
+			x: number
+			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let width = window.innerWidth
 		let height = window.innerHeight
 		let meteors: Meteor[] = []
@@ -203,32 +204,32 @@ async function launchLyridsShower() {
 			]
 
 		const createStar = (time: number): Star => ({
-			x: Math.random() * width,
-			y: Math.random() * height,
-			radius: randomInRange(LYRIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(LYRIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(LYRIDS_STAR_TWINKLE_RANGE),
-			phase: Math.random() * Math.PI * 2,
 			birthTime: time + randomInRange(LYRIDS_STAR_FADE_IN_DELAY_RANGE),
 			fadeDuration: randomInRange(LYRIDS_STAR_FADE_IN_DURATION_RANGE),
+			opacity: randomInRange(LYRIDS_STAR_OPACITY_RANGE),
+			phase: Math.random() * Math.PI * 2,
+			radius: randomInRange(LYRIDS_STAR_RADIUS_RANGE),
+			twinkle: randomInRange(LYRIDS_STAR_TWINKLE_RANGE),
+			x: Math.random() * width,
+			y: Math.random() * height,
 		})
 
 		const createMeteor = (time: number): Meteor => {
 			const speed = randomInRange(LYRIDS_METEOR_SPEED_RANGE)
 			const angle = randomInRange(LYRIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(LYRIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(LYRIDS_METEOR_SPAWN_Y),
-				vx: Math.cos(angle) * speed,
-				vy: Math.sin(angle) * speed,
-				length: randomInRange(LYRIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(LYRIDS_METEOR_WIDTH_RANGE),
-				opacity: randomInRange({ min: 0.45, max: 0.85 }),
-				glow: randomInRange(LYRIDS_METEOR_GLOW_RANGE),
-				color: randomMeteorColor(),
 				age: 0,
+				color: randomMeteorColor(),
+				glow: randomInRange(LYRIDS_METEOR_GLOW_RANGE),
+				length: randomInRange(LYRIDS_METEOR_LENGTH_RANGE),
 				lifetime: randomInRange(LYRIDS_METEOR_LIFETIME_RANGE),
 				nextSpawn: time + randomInRange(LYRIDS_METEOR_SPAWN_DELAY_RANGE),
+				opacity: randomInRange({ max: 0.85, min: 0.45 }),
+				vx: Math.cos(angle) * speed,
+				vy: Math.sin(angle) * speed,
+				width: randomInRange(LYRIDS_METEOR_WIDTH_RANGE),
+				x: width * randomInRange(LYRIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(LYRIDS_METEOR_SPAWN_Y),
 			}
 		}
 
@@ -246,7 +247,7 @@ async function launchLyridsShower() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = dprController.getDpr({ width, height })
+			const dpr = dprController.getDpr({ height, width })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

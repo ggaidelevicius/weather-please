@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
-import { isLikelySoftwareRenderer } from '../core/utils'
+
 import type { Hemisphere, SeasonalEventId } from '../core/types'
 
-type UseSeasonalEventsOptions = {
-	isEnabled: boolean
-	isHydrated?: boolean
-	isOnboarded?: boolean
-	enabledEvents?: Set<SeasonalEventId>
-	hemisphere?: Hemisphere
-}
+import { isLikelySoftwareRenderer } from '../core/utils'
 
 type SeasonalEventsModule = typeof import('../core/seasonal-events-module')
 
-let seasonalEventsModulePromise: Promise<SeasonalEventsModule> | null = null
+type UseSeasonalEventsOptions = {
+	enabledEvents?: Set<SeasonalEventId>
+	hemisphere?: Hemisphere
+	isEnabled: boolean
+	isHydrated?: boolean
+	isOnboarded?: boolean
+}
+
+let seasonalEventsModulePromise: null | Promise<SeasonalEventsModule> = null
 
 const loadSeasonalEventsModule = () => {
 	if (!seasonalEventsModulePromise) {
@@ -23,20 +25,21 @@ const loadSeasonalEventsModule = () => {
 }
 
 export const useSeasonalEvents = ({
+	enabledEvents,
+	hemisphere,
 	isEnabled,
 	isHydrated = true,
 	isOnboarded = true,
-	enabledEvents,
-	hemisphere,
 }: Readonly<UseSeasonalEventsOptions>) => {
 	const triggeredEvents = useRef<Set<SeasonalEventId>>(new Set())
 	const [dateKey, setDateKey] = useState(() => getDateKey(new Date()))
 	const activeDate = getDateFromKey(dateKey)
-	const [activeEvent, setActiveEvent] = useState<SeasonalEventId | null>(null)
+	const [activeEvent, setActiveEvent] = useState<null | SeasonalEventId>(null)
+	const shouldResolveActiveEvent = isHydrated && isEnabled && isOnboarded
+	const effectiveActiveEvent = shouldResolveActiveEvent ? activeEvent : null
 
 	useEffect(() => {
-		if (!isHydrated || !isEnabled || !isOnboarded) {
-			setActiveEvent(null)
+		if (!shouldResolveActiveEvent) {
 			return
 		}
 
@@ -65,23 +68,14 @@ export const useSeasonalEvents = ({
 		return () => {
 			hasCanceled = true
 		}
-	}, [
-		activeDate,
-		enabledEvents,
-		hemisphere,
-		isEnabled,
-		isHydrated,
-		isOnboarded,
-	])
+	}, [activeDate, enabledEvents, hemisphere, shouldResolveActiveEvent])
 
 	useEffect(() => {
-		if (!isHydrated || !isEnabled || !isOnboarded) {
+		if (!shouldResolveActiveEvent) {
 			return
 		}
 
-		setDateKey(getDateKey(new Date()))
-
-		let timeoutId: ReturnType<typeof setTimeout> | null = null
+		let timeoutId: null | ReturnType<typeof setTimeout> = null
 
 		const scheduleNextTick = () => {
 			const now = new Date()
@@ -102,20 +96,20 @@ export const useSeasonalEvents = ({
 				clearTimeout(timeoutId)
 			}
 		}
-	}, [isEnabled, isHydrated, isOnboarded])
+	}, [shouldResolveActiveEvent])
 
 	useEffect(() => {
 		if (isLikelySoftwareRenderer()) {
 			return
 		}
-		if (!activeEvent) {
+		if (!effectiveActiveEvent) {
 			return
 		}
-		if (triggeredEvents.current.has(activeEvent)) {
+		if (triggeredEvents.current.has(effectiveActiveEvent)) {
 			return
 		}
 
-		triggeredEvents.current.add(activeEvent)
+		triggeredEvents.current.add(effectiveActiveEvent)
 
 		let cleanup = () => {}
 		let hasCanceled = false
@@ -123,7 +117,8 @@ export const useSeasonalEvents = ({
 		const runEvent = async () => {
 			try {
 				const seasonalEvents = await loadSeasonalEventsModule()
-				const nextCleanup = await seasonalEvents.runSeasonalEvent(activeEvent)
+				const nextCleanup =
+					await seasonalEvents.runSeasonalEvent(effectiveActiveEvent)
 
 				if (hasCanceled) {
 					nextCleanup()
@@ -142,9 +137,9 @@ export const useSeasonalEvents = ({
 			hasCanceled = true
 			cleanup()
 		}
-	}, [activeEvent])
+	}, [effectiveActiveEvent])
 
-	return activeEvent
+	return effectiveActiveEvent
 }
 
 const getDateKey = (date: Date) =>

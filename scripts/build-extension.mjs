@@ -1,8 +1,8 @@
-/* eslint-disable no-console */
 import { spawnSync } from 'child_process'
+
+import { buildExtensionOutput } from './build.mjs'
 import { setCwdToRoot } from './lib/root.mjs'
 import { renameAppDir } from './renameAppDir.mjs'
-import { buildExtensionOutput } from './build.mjs'
 
 setCwdToRoot()
 
@@ -10,8 +10,8 @@ const pnpmCommand = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm'
 
 const runCommand = (command, args) => {
 	const result = spawnSync(command, args, {
-		stdio: 'inherit',
 		cwd: process.cwd(),
+		stdio: 'inherit',
 	})
 
 	if (result.error) {

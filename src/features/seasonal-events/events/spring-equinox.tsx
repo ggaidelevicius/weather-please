@@ -1,12 +1,13 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
 	Hemisphere,
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const SPRING_EQUINOX_DATES_NORTHERN = new Set([
 	'2026-03-20',
@@ -54,23 +55,23 @@ const SPRING_FIELD_FILTER = 'saturate(135%)'
 const SPRING_FIELD_MAX_DPR = 2
 const SPRING_FIELD_MARGIN = 160
 const SPRING_PARTICLE_COUNT = 70
-const SPRING_FADE_IN_DELAY_RANGE = { min: 0, max: 2400 }
-const SPRING_FADE_IN_DURATION_RANGE = { min: 1000, max: 1900 }
-const SPRING_SCALE_RANGE = { min: 0.5, max: 0.9 }
-const SPRING_SIZE_RANGE = { min: 16, max: 30 }
-const SPRING_VELOCITY_X_RANGE = { min: -8, max: 8 }
-const SPRING_VELOCITY_Y_RANGE = { min: -10, max: -3 }
-const SPRING_FLOAT_VELOCITY_Y_RANGE = { min: -1.5, max: 1.5 }
+const SPRING_FADE_IN_DELAY_RANGE = { max: 2400, min: 0 }
+const SPRING_FADE_IN_DURATION_RANGE = { max: 1900, min: 1000 }
+const SPRING_SCALE_RANGE = { max: 0.9, min: 0.5 }
+const SPRING_SIZE_RANGE = { max: 30, min: 16 }
+const SPRING_VELOCITY_X_RANGE = { max: 8, min: -8 }
+const SPRING_VELOCITY_Y_RANGE = { max: -3, min: -10 }
+const SPRING_FLOAT_VELOCITY_Y_RANGE = { max: 1.5, min: -1.5 }
 const SPRING_FLOAT_CHANCE = 0.4
-const SPRING_SWAY_RANGE = { min: 2.5, max: 8 }
-const SPRING_ROTATION_SPEED_RANGE = { min: -0.35, max: 0.35 }
+const SPRING_SWAY_RANGE = { max: 8, min: 2.5 }
+const SPRING_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
 const SPRING_SWAY_SPEED_X = 0.00055
 const SPRING_SWAY_SPEED_Y = 0.00045
-const SPRING_GLOW_RANGE = { min: 6, max: 16 }
+const SPRING_GLOW_RANGE = { max: 16, min: 6 }
 const SPRING_EMOJIS = ['🌱', '🌿', '🍃', '🌷', '🌸']
 const SPRING_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
-const SPRING_SPAWN_Y_RANGE = { min: 0.45, max: 0.9 }
+const SPRING_SPAWN_Y_RANGE = { max: 0.9, min: 0.45 }
 const SPRING_HAZE_OPACITY = '0.5'
 const SPRING_HAZE_GRADIENT =
 	'radial-gradient(120% 90% at 50% 100%, rgba(187, 247, 208, 0.45), rgba(52, 211, 153, 0.2) 40%, rgba(15, 23, 42, 0) 75%), radial-gradient(90% 80% at 20% 90%, rgba(251, 207, 232, 0.35), rgba(15, 23, 42, 0) 70%)'
@@ -113,25 +114,26 @@ const EventDetails = () => (
 		</h2>
 		<p>
 			<Trans>
-				From this point, each day gains a few minutes of light — a shift that's
-				barely noticeable day to day, but adds up to hours within weeks.
+				From this point, each day gains a few minutes of light — a shift
+				that&apos;s barely noticeable day to day, but adds up to hours within
+				weeks.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
 				The old tradition of balancing an egg on its end at the equinox is a
 				myth (you can do it any day of the year), but people keep trying anyway.
-				It's become its own kind of ritual.
+				It&apos;s become its own kind of ritual.
 			</Trans>
 		</p>
 	</>
 )
 
 export const springEquinoxEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.SpringEquinox,
 	isActive: isSpringEquinox,
 	run: launchSpringEquinoxGrowth,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#f7c9df', '#f3a6c8', '#b7e4c7', '#95d5b2', '#f7c9df'],
 	},
@@ -169,30 +171,30 @@ async function launchSpringEquinoxGrowth() {
 		}
 
 		type SproutParticle = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			size: number
-			rotation: number
-			rotationSpeed: number
-			opacity: number
+			birthTime: number
 			emoji: string
+			fadeDuration: number
 			glow: number
 			glowColor: string
+			opacity: number
 			phase: number
-			sway: number
-			birthTime: number
-			fadeDuration: number
+			rotation: number
+			rotationSpeed: number
 			scaleFrom: number
+			size: number
+			sway: number
+			vx: number
+			vy: number
+			x: number
+			y: number
 		}
 		type EmojiSprite = {
 			canvas: HTMLCanvasElement
 			displaySize: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
@@ -215,28 +217,28 @@ async function launchSpringEquinoxGrowth() {
 					: SPRING_VELOCITY_Y_RANGE
 
 			return {
-				x: randomInRange({
-					min: -SPRING_FIELD_MARGIN,
-					max: width + SPRING_FIELD_MARGIN,
-				}),
-				y: randomInRange({
-					min: height * SPRING_SPAWN_Y_RANGE.min,
-					max: height * SPRING_SPAWN_Y_RANGE.max,
-				}),
-				vx: randomInRange(SPRING_VELOCITY_X_RANGE),
-				vy: randomInRange(vyRange),
-				size: randomInRange(SPRING_SIZE_RANGE),
-				rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-				rotationSpeed: randomInRange(SPRING_ROTATION_SPEED_RANGE),
-				opacity: randomInRange({ min: 0.45, max: 0.85 }),
+				birthTime: time + randomInRange(SPRING_FADE_IN_DELAY_RANGE),
 				emoji: randomEmoji(),
+				fadeDuration: randomInRange(SPRING_FADE_IN_DURATION_RANGE),
 				glow: randomInRange(SPRING_GLOW_RANGE),
 				glowColor: randomGlow(),
-				phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-				sway: randomInRange(SPRING_SWAY_RANGE),
-				birthTime: time + randomInRange(SPRING_FADE_IN_DELAY_RANGE),
-				fadeDuration: randomInRange(SPRING_FADE_IN_DURATION_RANGE),
+				opacity: randomInRange({ max: 0.85, min: 0.45 }),
+				phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+				rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
+				rotationSpeed: randomInRange(SPRING_ROTATION_SPEED_RANGE),
 				scaleFrom: randomInRange(SPRING_SCALE_RANGE),
+				size: randomInRange(SPRING_SIZE_RANGE),
+				sway: randomInRange(SPRING_SWAY_RANGE),
+				vx: randomInRange(SPRING_VELOCITY_X_RANGE),
+				vy: randomInRange(vyRange),
+				x: randomInRange({
+					max: width + SPRING_FIELD_MARGIN,
+					min: -SPRING_FIELD_MARGIN,
+				}),
+				y: randomInRange({
+					max: height * SPRING_SPAWN_Y_RANGE.max,
+					min: height * SPRING_SPAWN_Y_RANGE.min,
+				}),
 			}
 		}
 		const getSpriteKey = (
@@ -303,7 +305,7 @@ async function launchSpringEquinoxGrowth() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: SPRING_FIELD_MAX_DPR })
+			const dpr = getCanvasDpr({ height, maxDpr: SPRING_FIELD_MAX_DPR, width })
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)

@@ -2,9 +2,10 @@
 
 import { headers } from 'next/headers'
 import { z } from 'zod'
-import { locales } from '../shared/lib/i18n'
-import { enforceRateLimit } from '../lib/rate-limit'
+
 import { prisma } from '../lib/prisma'
+import { enforceRateLimit } from '../lib/rate-limit'
+import { locales } from '../shared/lib/i18n'
 
 const localeKeys = Object.keys(locales) as [
 	keyof typeof locales,
@@ -13,8 +14,8 @@ const localeKeys = Object.keys(locales) as [
 
 const formSchema = z.object({
 	email: z.string().email().optional(),
-	message: z.string().nonempty(),
 	locale: z.enum(localeKeys),
+	message: z.string().nonempty(),
 })
 
 export const submitForm = async (
@@ -38,8 +39,8 @@ export const submitForm = async (
 	let rateLimitResult
 	try {
 		rateLimitResult = await enforceRateLimit({
-			scope: 'server-action',
 			headers: requestHeaders,
+			scope: 'server-action',
 		})
 	} catch (error) {
 		console.error('Rate limit check failed:', error)
@@ -74,14 +75,14 @@ export const submitForm = async (
 
 	const rawFormData = {
 		email: formData.get('email') || undefined,
-		message: formData.get('message'),
 		locale: formData.get('locale'),
+		message: formData.get('message'),
 	}
 
 	const result = formSchema.safeParse({
 		email: rawFormData.email,
-		message: rawFormData.message,
 		locale: rawFormData.locale,
+		message: rawFormData.message,
 	})
 
 	if (!result.success) {
@@ -101,11 +102,11 @@ export const submitForm = async (
 		await prisma.formSubmission.create({
 			data: {
 				email: result.data.email,
-				message: result.data.message,
-				locale: result.data.locale,
-				userAgent: userAgent,
-				referrerUrl: referrerUrl,
 				ipSubmittedFrom: ip,
+				locale: result.data.locale,
+				message: result.data.message,
+				referrerUrl: referrerUrl,
+				userAgent: userAgent,
 			},
 		})
 

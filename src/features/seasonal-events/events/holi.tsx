@@ -1,18 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { AdditiveBlending, Color } from 'three'
 import type { Points, ShaderMaterial } from 'three'
-import {
-	SeasonalEventId,
-	type SeasonalEvent,
-	type SeasonalEventContext,
-} from '../core/types'
-import { getCanvasDpr, randomInRange } from '../core/utils'
+
 import { Trans } from '@lingui/react/macro'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { useEffect, useRef, useState } from 'react'
+import { AdditiveBlending, Color } from 'three'
+
 import {
 	isSettingsModalOpen,
 	onSettingsModalStateChange,
 } from '../../../shared/lib/settings-modal-state'
+import {
+	type SeasonalEvent,
+	type SeasonalEventContext,
+	SeasonalEventId,
+} from '../core/types'
+import { getCanvasDpr, randomInRange } from '../core/utils'
 
 const HOLI_DATES = new Set([
 	'2026-03-04',
@@ -33,9 +35,9 @@ const HOLI_CANVAS_FILTER = 'saturate(175%)'
 const HOLI_CANVAS_MAX_DPR = 1.6
 const HOLI_PARTICLE_COUNT = 11000
 const HOLI_POINT_SIZE = 46
-const HOLI_RADIUS_RANGE = { min: 0.2, max: 1.95 }
-const HOLI_JITTER_RANGE = { min: 0.02, max: 0.08 }
-const HOLI_SCALE_RANGE = { min: 0.35, max: 0.85 }
+const HOLI_RADIUS_RANGE = { max: 1.95, min: 0.2 }
+const HOLI_JITTER_RANGE = { max: 0.08, min: 0.02 }
+const HOLI_SCALE_RANGE = { max: 0.85, min: 0.35 }
 const HOLI_SHAPE_ATTRACT = 0.86
 const HOLI_SHAPE_DEPTH = 0.22
 const HOLI_LOTUS_SCALE = 1.35
@@ -262,13 +264,94 @@ const EventDetails = () => (
 )
 
 export const holiEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.Holi,
 	isActive: isHoli,
 	run: launchHoliColors,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#fbcfe8', '#bfdbfe', '#fde68a', '#bbf7d0', '#fbcfe8'],
 	},
+}
+
+type HoliAttributes = {
+	colors: Float32Array
+	colors2: Float32Array
+	lotusTargets: Float32Array
+	mandalaTargets: Float32Array
+	positions: Float32Array
+	scales: Float32Array
+	seeds: Float32Array
+}
+
+type HoliParticlesProps = Readonly<{
+	isAnimated: boolean
+}>
+
+const createHoliAttributes = (): HoliAttributes => {
+	const positions = new Float32Array(HOLI_PARTICLE_COUNT * 3)
+	const colors = new Float32Array(HOLI_PARTICLE_COUNT * 3)
+	const colors2 = new Float32Array(HOLI_PARTICLE_COUNT * 3)
+	const scales = new Float32Array(HOLI_PARTICLE_COUNT)
+	const seeds = new Float32Array(HOLI_PARTICLE_COUNT)
+	const lotusTargets = new Float32Array(HOLI_PARTICLE_COUNT * 3)
+	const mandalaTargets = new Float32Array(HOLI_PARTICLE_COUNT * 3)
+	const palette = HOLI_PALETTE.map((shade) => new Color(shade))
+
+	for (let i = 0; i < HOLI_PARTICLE_COUNT; i += 1) {
+		const i3 = i * 3
+		const seed = Math.random()
+		const theta = seed * Math.PI * 2
+		const radial = Math.pow(Math.random(), 0.55)
+		const depth = (Math.random() - 0.5) * HOLI_SHAPE_DEPTH
+		const radiusRange = HOLI_RADIUS_RANGE.max - HOLI_RADIUS_RANGE.min
+		const radius =
+			Math.pow(Math.random(), 1.15) * radiusRange + HOLI_RADIUS_RANGE.min
+		const phi = Math.acos(2 * Math.random() - 1)
+		const jitter = randomInRange(HOLI_JITTER_RANGE)
+
+		positions[i3] =
+			radius * Math.sin(phi) * Math.cos(theta) + (Math.random() - 0.5) * jitter
+		positions[i3 + 1] =
+			radius * Math.sin(phi) * Math.sin(theta) + (Math.random() - 0.5) * jitter
+		positions[i3 + 2] = radius * Math.cos(phi) + (Math.random() - 0.5) * jitter
+
+		const lotusWave = Math.sin(theta * HOLI_LOTUS_PETALS) * 0.5 + 0.5
+		const lotusRadius = HOLI_LOTUS_SCALE * radial * (0.55 + lotusWave * 0.5)
+		lotusTargets[i3] = lotusRadius * Math.cos(theta)
+		lotusTargets[i3 + 1] = lotusRadius * Math.sin(theta)
+		lotusTargets[i3 + 2] = depth * 0.55
+
+		const mandalaWave = Math.pow(
+			Math.abs(Math.cos(theta * HOLI_MANDALA_SPOKES)),
+			2.1,
+		)
+		const mandalaRadius =
+			HOLI_MANDALA_SCALE * radial * (0.35 + mandalaWave * 0.95)
+		mandalaTargets[i3] = mandalaRadius * Math.cos(theta)
+		mandalaTargets[i3 + 1] = mandalaRadius * Math.sin(theta)
+		mandalaTargets[i3 + 2] = depth * 1.1
+
+		const shade = palette[Math.floor(Math.random() * palette.length)]
+		colors[i3] = shade.r
+		colors[i3 + 1] = shade.g
+		colors[i3 + 2] = shade.b
+		const shade2 = palette[Math.floor(Math.random() * palette.length)]
+		colors2[i3] = shade2.r
+		colors2[i3 + 1] = shade2.g
+		colors2[i3 + 2] = shade2.b
+		seeds[i] = seed
+		scales[i] = randomInRange(HOLI_SCALE_RANGE)
+	}
+
+	return {
+		colors,
+		colors2,
+		lotusTargets,
+		mandalaTargets,
+		positions,
+		scales,
+		seeds,
+	}
 }
 
 function isHoli({ date }: SeasonalEventContext) {
@@ -278,94 +361,10 @@ function isHoli({ date }: SeasonalEventContext) {
 	return HOLI_DATES.has(`${year}-${month}-${day}`)
 }
 
-type HoliAttributes = {
-	positions: Float32Array
-	colors: Float32Array
-	colors2: Float32Array
-	scales: Float32Array
-	seeds: Float32Array
-	lotusTargets: Float32Array
-	mandalaTargets: Float32Array
-}
-
-type HoliParticlesProps = Readonly<{
-	isAnimated: boolean
-}>
-
 const HoliParticles = ({ isAnimated }: HoliParticlesProps) => {
-	const pointsRef = useRef<Points | null>(null)
-	const materialRef = useRef<ShaderMaterial | null>(null)
-	const attributes = useRef<HoliAttributes | null>(null)
-
-	if (!attributes.current) {
-		const positions = new Float32Array(HOLI_PARTICLE_COUNT * 3)
-		const colors = new Float32Array(HOLI_PARTICLE_COUNT * 3)
-		const colors2 = new Float32Array(HOLI_PARTICLE_COUNT * 3)
-		const scales = new Float32Array(HOLI_PARTICLE_COUNT)
-		const seeds = new Float32Array(HOLI_PARTICLE_COUNT)
-		const lotusTargets = new Float32Array(HOLI_PARTICLE_COUNT * 3)
-		const mandalaTargets = new Float32Array(HOLI_PARTICLE_COUNT * 3)
-		const palette = HOLI_PALETTE.map((shade) => new Color(shade))
-
-		for (let i = 0; i < HOLI_PARTICLE_COUNT; i += 1) {
-			const i3 = i * 3
-			const seed = Math.random()
-			const theta = seed * Math.PI * 2
-			const radial = Math.pow(Math.random(), 0.55)
-			const depth = (Math.random() - 0.5) * HOLI_SHAPE_DEPTH
-			const radiusRange = HOLI_RADIUS_RANGE.max - HOLI_RADIUS_RANGE.min
-			const radius =
-				Math.pow(Math.random(), 1.15) * radiusRange + HOLI_RADIUS_RANGE.min
-			const phi = Math.acos(2 * Math.random() - 1)
-			const jitter = randomInRange(HOLI_JITTER_RANGE)
-
-			positions[i3] =
-				radius * Math.sin(phi) * Math.cos(theta) +
-				(Math.random() - 0.5) * jitter
-			positions[i3 + 1] =
-				radius * Math.sin(phi) * Math.sin(theta) +
-				(Math.random() - 0.5) * jitter
-			positions[i3 + 2] =
-				radius * Math.cos(phi) + (Math.random() - 0.5) * jitter
-
-			const lotusWave = Math.sin(theta * HOLI_LOTUS_PETALS) * 0.5 + 0.5
-			const lotusRadius = HOLI_LOTUS_SCALE * radial * (0.55 + lotusWave * 0.5)
-			lotusTargets[i3] = lotusRadius * Math.cos(theta)
-			lotusTargets[i3 + 1] = lotusRadius * Math.sin(theta)
-			lotusTargets[i3 + 2] = depth * 0.55
-
-			const mandalaWave = Math.pow(
-				Math.abs(Math.cos(theta * HOLI_MANDALA_SPOKES)),
-				2.1,
-			)
-			const mandalaRadius =
-				HOLI_MANDALA_SCALE * radial * (0.35 + mandalaWave * 0.95)
-			mandalaTargets[i3] = mandalaRadius * Math.cos(theta)
-			mandalaTargets[i3 + 1] = mandalaRadius * Math.sin(theta)
-			mandalaTargets[i3 + 2] = depth * 1.1
-
-			const shade = palette[Math.floor(Math.random() * palette.length)]
-			colors[i3] = shade.r
-			colors[i3 + 1] = shade.g
-			colors[i3 + 2] = shade.b
-			const shade2 = palette[Math.floor(Math.random() * palette.length)]
-			colors2[i3] = shade2.r
-			colors2[i3 + 1] = shade2.g
-			colors2[i3 + 2] = shade2.b
-			seeds[i] = seed
-			scales[i] = randomInRange(HOLI_SCALE_RANGE)
-		}
-
-		attributes.current = {
-			positions,
-			colors,
-			colors2,
-			scales,
-			seeds,
-			lotusTargets,
-			mandalaTargets,
-		}
-	}
+	const pointsRef = useRef<null | Points>(null)
+	const materialRef = useRef<null | ShaderMaterial>(null)
+	const [attributes] = useState(createHoliAttributes)
 
 	useFrame(({ clock }) => {
 		if (!isAnimated) return
@@ -380,18 +379,18 @@ const HoliParticles = ({ isAnimated }: HoliParticlesProps) => {
 		points.rotation.x = clock.getElapsedTime() * 0.00055
 	})
 
-	const uniforms = useRef({
-		uTime: { value: 0 },
-		uSize: { value: HOLI_POINT_SIZE },
-		uMorph: { value: 0 },
+	const [uniforms] = useState(() => ({
 		uAttract: { value: HOLI_SHAPE_ATTRACT },
-		uRingCycle: { value: HOLI_RING_CYCLE_SECONDS },
-		uRingWidth: { value: HOLI_RING_WIDTH },
-		uRingMaxRadius: { value: HOLI_RING_MAX_RADIUS },
+		uMorph: { value: 0 },
 		uRing2Cycle: { value: HOLI_RING2_CYCLE_SECONDS },
-		uRing2Width: { value: HOLI_RING2_WIDTH },
 		uRing2MaxRadius: { value: HOLI_RING2_MAX_RADIUS },
-	})
+		uRing2Width: { value: HOLI_RING2_WIDTH },
+		uRingCycle: { value: HOLI_RING_CYCLE_SECONDS },
+		uRingMaxRadius: { value: HOLI_RING_MAX_RADIUS },
+		uRingWidth: { value: HOLI_RING_WIDTH },
+		uSize: { value: HOLI_POINT_SIZE },
+		uTime: { value: 0 },
+	}))
 
 	useEffect(() => {
 		if (isAnimated) return
@@ -401,61 +400,57 @@ const HoliParticles = ({ isAnimated }: HoliParticlesProps) => {
 		}
 	}, [isAnimated])
 
-	if (!attributes.current) {
-		return null
-	}
-
 	return (
 		<points ref={pointsRef}>
 			<bufferGeometry>
 				<bufferAttribute
+					args={[attributes.positions, 3]}
 					attach="attributes-position"
-					args={[attributes.current.positions, 3]}
 				/>
 				<bufferAttribute
+					args={[attributes.colors, 3]}
 					attach="attributes-aColor"
-					args={[attributes.current.colors, 3]}
 				/>
 				<bufferAttribute
+					args={[attributes.colors2, 3]}
 					attach="attributes-aColor2"
-					args={[attributes.current.colors2, 3]}
 				/>
 				<bufferAttribute
+					args={[attributes.scales, 1]}
 					attach="attributes-aScale"
-					args={[attributes.current.scales, 1]}
 				/>
 				<bufferAttribute
+					args={[attributes.seeds, 1]}
 					attach="attributes-aSeed"
-					args={[attributes.current.seeds, 1]}
 				/>
 				<bufferAttribute
+					args={[attributes.lotusTargets, 3]}
 					attach="attributes-aLotus"
-					args={[attributes.current.lotusTargets, 3]}
 				/>
 				<bufferAttribute
+					args={[attributes.mandalaTargets, 3]}
 					attach="attributes-aMandala"
-					args={[attributes.current.mandalaTargets, 3]}
 				/>
 			</bufferGeometry>
 			<shaderMaterial
+				blending={AdditiveBlending}
+				depthWrite={false}
+				fragmentShader={HOLI_FRAGMENT_SHADER}
 				ref={materialRef}
 				transparent
-				depthWrite={false}
-				blending={AdditiveBlending}
-				uniforms={uniforms.current}
+				uniforms={uniforms}
 				vertexShader={HOLI_VERTEX_SHADER}
-				fragmentShader={HOLI_FRAGMENT_SHADER}
 			/>
 		</points>
 	)
 }
 
 type HoliCanvasSceneProps = Readonly<{
-	shouldAnimate: boolean
 	dpr: number
+	shouldAnimate: boolean
 }>
 
-const HoliCanvasScene = ({ shouldAnimate, dpr }: HoliCanvasSceneProps) => {
+const HoliCanvasScene = ({ dpr, shouldAnimate }: HoliCanvasSceneProps) => {
 	const [isModalOpen, setIsModalOpen] = useState(
 		() => shouldAnimate && isSettingsModalOpen(),
 	)
@@ -474,11 +469,11 @@ const HoliCanvasScene = ({ shouldAnimate, dpr }: HoliCanvasSceneProps) => {
 
 	return (
 		<Canvas
-			camera={{ position: [0, 0, 2.5], fov: 60 }}
+			camera={{ fov: 60, position: [0, 0, 2.5] }}
 			dpr={dpr}
-			gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
 			frameloop={isAnimated ? 'always' : 'demand'}
-			style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
+			gl={{ alpha: true, antialias: true, powerPreference: 'low-power' }}
+			style={{ inset: 0, pointerEvents: 'none', position: 'absolute' }}
 		>
 			<HoliParticles isAnimated={isAnimated} />
 		</Canvas>
@@ -502,22 +497,22 @@ async function launchHoliColors() {
 		container.style.filter = HOLI_CANVAS_FILTER
 		container.style.mixBlendMode = 'screen'
 
-		let timeoutId: number | null = null
+		let timeoutId: null | number = null
 		let isMounted = false
 
 		const { createRoot } = await import('react-dom/client')
 		const root = createRoot(container)
 		const dpr = getCanvasDpr({
-			width: window.innerWidth,
 			height: window.innerHeight,
 			maxDpr: HOLI_CANVAS_MAX_DPR,
+			width: window.innerWidth,
 		})
 
 		const mountScene = () => {
 			if (isMounted) return
 			isMounted = true
 			document.body.appendChild(container)
-			root.render(<HoliCanvasScene shouldAnimate={shouldAnimate} dpr={dpr} />)
+			root.render(<HoliCanvasScene dpr={dpr} shouldAnimate={shouldAnimate} />)
 		}
 
 		timeoutId = window.setTimeout(mountScene, HOLI_MOUNT_DELAY_MS)

@@ -1,9 +1,10 @@
 import { z } from 'zod'
+
 import { isAbortError } from '../model/error-names'
 import {
 	AIR_QUALITY_FORECAST_DAYS,
-	WEATHER_FORECAST_DAYS,
 	type Data,
+	WEATHER_FORECAST_DAYS,
 } from '../model/types'
 
 const SECONDS_PER_HOUR = 60 * 60
@@ -12,21 +13,21 @@ const SECONDS_PER_DAY = 24 * SECONDS_PER_HOUR
 const weatherResponseSchema = z
 	.object({
 		daily: z.object({
-			time: z.array(z.number()).min(1),
-			weathercode: z.array(z.number()).min(1),
+			precipitation_probability_max: z.array(z.number()).min(1),
 			temperature_2m_max: z.array(z.number()).min(1),
 			temperature_2m_min: z.array(z.number()).min(1),
+			time: z.array(z.number()).min(1),
 			uv_index_max: z.array(z.number()).min(1),
-			precipitation_probability_max: z.array(z.number()).min(1),
+			weathercode: z.array(z.number()).min(1),
 			windspeed_10m_max: z.array(z.number()).min(1),
 		}),
 		hourly: z.object({
-			time: z.array(z.number()).min(1),
 			precipitation: z.array(z.number()).min(1),
+			time: z.array(z.number()).min(1),
 			uv_index: z.array(z.number()).min(1),
-			windspeed_10m: z.array(z.number()).min(1),
 			visibility: z.array(z.number()).min(1),
 			windgusts_10m: z.array(z.number()).min(1),
+			windspeed_10m: z.array(z.number()).min(1),
 		}),
 	})
 	.loose()
@@ -60,7 +61,7 @@ const buildAirQualityUvByDay = ({
 }: {
 	dailyTimes: number[]
 	hourlyTimes: number[]
-	hourlyUv: Array<number | null>
+	hourlyUv: Array<null | number>
 }): Map<number, number> => {
 	const dailyUvByDay = new Map<number, number>()
 	if (dailyTimes.length === 0 || hourlyTimes.length === 0) {
@@ -100,15 +101,15 @@ const buildAirQualityUvByDay = ({
 }
 
 const mergeHourlyUv = ({
-	weatherTimes,
-	weatherUv,
 	airQualityTimes,
 	airQualityUv,
+	weatherTimes,
+	weatherUv,
 }: {
+	airQualityTimes: number[]
+	airQualityUv: Array<null | number>
 	weatherTimes: number[]
 	weatherUv: number[]
-	airQualityTimes: number[]
-	airQualityUv: Array<number | null>
 }): number[] => {
 	if (airQualityUv.length === 0) {
 		return weatherUv
@@ -151,11 +152,11 @@ const mergeHourlyUv = ({
 }
 
 const mergeUvData = ({
-	weather,
 	airQuality,
+	weather,
 }: {
-	weather: WeatherResponse
 	airQuality: AirQualityResponse | null
+	weather: WeatherResponse
 }): WeatherResponse => {
 	if (!airQuality) {
 		return weather
@@ -180,10 +181,10 @@ const mergeUvData = ({
 	})
 
 	const mergedHourlyUv = mergeHourlyUv({
-		weatherTimes: weather.hourly.time,
-		weatherUv: weather.hourly.uv_index,
 		airQualityTimes,
 		airQualityUv: airQuality.hourly.uv_index,
+		weatherTimes: weather.hourly.time,
+		weatherUv: weather.hourly.uv_index,
 	})
 
 	return {
@@ -202,15 +203,15 @@ const mergeUvData = ({
 export const fetchWeatherResponse = async ({
 	lat,
 	lon,
-	timeZone,
 	shouldUseAirQualityUv,
 	signal,
+	timeZone,
 }: {
 	lat: string
 	lon: string
-	timeZone: string
 	shouldUseAirQualityUv: boolean
 	signal?: AbortSignal
+	timeZone: string
 }): Promise<WeatherResponse> => {
 	try {
 		const encodedTimeZone = encodeURIComponent(timeZone)
@@ -254,8 +255,8 @@ export const fetchWeatherResponse = async ({
 		}
 
 		return mergeUvData({
-			weather: parsed.data,
 			airQuality: airQualityData,
+			weather: parsed.data,
 		})
 	} catch (fetchError) {
 		if (isAbortError(fetchError)) {
@@ -270,10 +271,10 @@ export const fetchWeatherResponse = async ({
 export const mapWeatherResponseToForecastData = (data: WeatherResponse): Data =>
 	data.daily.time.map((day, index) => ({
 		day,
+		description: data.daily.weathercode[index],
 		max: data.daily.temperature_2m_max[index],
 		min: data.daily.temperature_2m_min[index],
-		description: data.daily.weathercode[index],
+		rain: data.daily.precipitation_probability_max[index],
 		uv: data.daily.uv_index_max[index],
 		wind: data.daily.windspeed_10m_max[index],
-		rain: data.daily.precipitation_probability_max[index],
 	}))

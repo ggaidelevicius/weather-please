@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const DAY_OF_THE_DEAD_MONTH = 10
 const DAY_OF_THE_DEAD_DAYS = new Set([1, 2])
@@ -15,17 +16,17 @@ const DAY_OF_THE_DEAD_FIELD_FILTER = 'saturate(130%)'
 const DAY_OF_THE_DEAD_FIELD_MAX_DPR = 2
 const DAY_OF_THE_DEAD_FIELD_MARGIN = 160
 const DAY_OF_THE_DEAD_PARTICLE_COUNT = 70
-const DAY_OF_THE_DEAD_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const DAY_OF_THE_DEAD_FADE_IN_DURATION_RANGE = { min: 1000, max: 1900 }
-const DAY_OF_THE_DEAD_SCALE_RANGE = { min: 0.45, max: 0.85 }
-const DAY_OF_THE_DEAD_SIZE_RANGE = { min: 18, max: 32 }
-const DAY_OF_THE_DEAD_VELOCITY_X_RANGE = { min: -9, max: 9 }
-const DAY_OF_THE_DEAD_VELOCITY_Y_RANGE = { min: -6, max: 8 }
-const DAY_OF_THE_DEAD_SWAY_RANGE = { min: 2.5, max: 8 }
-const DAY_OF_THE_DEAD_ROTATION_SPEED_RANGE = { min: -0.35, max: 0.35 }
+const DAY_OF_THE_DEAD_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+const DAY_OF_THE_DEAD_FADE_IN_DURATION_RANGE = { max: 1900, min: 1000 }
+const DAY_OF_THE_DEAD_SCALE_RANGE = { max: 0.85, min: 0.45 }
+const DAY_OF_THE_DEAD_SIZE_RANGE = { max: 32, min: 18 }
+const DAY_OF_THE_DEAD_VELOCITY_X_RANGE = { max: 9, min: -9 }
+const DAY_OF_THE_DEAD_VELOCITY_Y_RANGE = { max: 8, min: -6 }
+const DAY_OF_THE_DEAD_SWAY_RANGE = { max: 8, min: 2.5 }
+const DAY_OF_THE_DEAD_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
 const DAY_OF_THE_DEAD_SWAY_SPEED_X = 0.00055
 const DAY_OF_THE_DEAD_SWAY_SPEED_Y = 0.00045
-const DAY_OF_THE_DEAD_GLOW_RANGE = { min: 6, max: 16 }
+const DAY_OF_THE_DEAD_GLOW_RANGE = { max: 16, min: 6 }
 const DAY_OF_THE_DEAD_GLOW_COLORS = [
 	'rgba(251, 146, 60, 0.5)',
 	'rgba(248, 113, 113, 0.45)',
@@ -93,25 +94,25 @@ const EventDetails = () => (
 		<p>
 			<Trans>
 				Families spend the night in cemeteries, cleaning graves, laying marigold
-				paths, and sharing meals beside the headstones. It's social, warm, and
-				often funny — people tell stories and play music until morning.
+				paths, and sharing meals beside the headstones. It&apos;s social, warm,
+				and often funny — people tell stories and play music until morning.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				The marigold paths (cempasúchil) aren't just decorative. Their strong
-				scent is believed to guide the dead back to the living world for the
-				night.
+				The marigold paths (cempasúchil) aren&apos;t just decorative. Their
+				strong scent is believed to guide the dead back to the living world for
+				the night.
 			</Trans>
 		</p>
 	</>
 )
 
 export const dayOfTheDeadEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.DayOfTheDead,
 	isActive: isDayOfTheDead,
 	run: launchDayOfTheDead,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#fef3c7', '#fdba74', '#fb7185', '#f59e0b', '#fef3c7'],
 	},
@@ -142,32 +143,32 @@ async function launchDayOfTheDead() {
 		}
 
 		type SpiritParticle = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			size: number
-			rotation: number
-			rotationSpeed: number
-			opacity: number
+			birthTime: number
 			emoji: string
+			fadeDuration: number
 			glow: number
 			glowColor: string
-			phase: number
-			sway: number
-			birthTime: number
-			fadeDuration: number
-			scaleFrom: number
 			hasSparkle: boolean
+			opacity: number
+			phase: number
+			rotation: number
+			rotationSpeed: number
+			scaleFrom: number
+			size: number
 			sparklePhase: number
+			sway: number
+			vx: number
+			vy: number
+			x: number
+			y: number
 		}
 		type EmojiSprite = {
 			canvas: HTMLCanvasElement
 			displaySize: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
@@ -190,30 +191,30 @@ async function launchDayOfTheDead() {
 				Math.floor(Math.random() * DAY_OF_THE_DEAD_GLOW_COLORS.length)
 			]
 		const createParticle = (time: number): SpiritParticle => ({
-			x: randomInRange({
-				min: -DAY_OF_THE_DEAD_FIELD_MARGIN,
-				max: width + DAY_OF_THE_DEAD_FIELD_MARGIN,
-			}),
-			y: randomInRange({
-				min: -DAY_OF_THE_DEAD_FIELD_MARGIN,
-				max: height + DAY_OF_THE_DEAD_FIELD_MARGIN,
-			}),
-			vx: randomInRange(DAY_OF_THE_DEAD_VELOCITY_X_RANGE),
-			vy: randomInRange(DAY_OF_THE_DEAD_VELOCITY_Y_RANGE),
-			size: randomInRange(DAY_OF_THE_DEAD_SIZE_RANGE),
-			rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-			rotationSpeed: randomInRange(DAY_OF_THE_DEAD_ROTATION_SPEED_RANGE),
-			opacity: randomInRange({ min: 0.45, max: 0.85 }),
+			birthTime: time + randomInRange(DAY_OF_THE_DEAD_FADE_IN_DELAY_RANGE),
 			emoji: randomEmoji(),
+			fadeDuration: randomInRange(DAY_OF_THE_DEAD_FADE_IN_DURATION_RANGE),
 			glow: randomInRange(DAY_OF_THE_DEAD_GLOW_RANGE),
 			glowColor: randomGlow(),
-			phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-			sway: randomInRange(DAY_OF_THE_DEAD_SWAY_RANGE),
-			birthTime: time + randomInRange(DAY_OF_THE_DEAD_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(DAY_OF_THE_DEAD_FADE_IN_DURATION_RANGE),
-			scaleFrom: randomInRange(DAY_OF_THE_DEAD_SCALE_RANGE),
 			hasSparkle: Math.random() < 0.25,
-			sparklePhase: randomInRange({ min: 0, max: Math.PI * 2 }),
+			opacity: randomInRange({ max: 0.85, min: 0.45 }),
+			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotationSpeed: randomInRange(DAY_OF_THE_DEAD_ROTATION_SPEED_RANGE),
+			scaleFrom: randomInRange(DAY_OF_THE_DEAD_SCALE_RANGE),
+			size: randomInRange(DAY_OF_THE_DEAD_SIZE_RANGE),
+			sparklePhase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			sway: randomInRange(DAY_OF_THE_DEAD_SWAY_RANGE),
+			vx: randomInRange(DAY_OF_THE_DEAD_VELOCITY_X_RANGE),
+			vy: randomInRange(DAY_OF_THE_DEAD_VELOCITY_Y_RANGE),
+			x: randomInRange({
+				max: width + DAY_OF_THE_DEAD_FIELD_MARGIN,
+				min: -DAY_OF_THE_DEAD_FIELD_MARGIN,
+			}),
+			y: randomInRange({
+				max: height + DAY_OF_THE_DEAD_FIELD_MARGIN,
+				min: -DAY_OF_THE_DEAD_FIELD_MARGIN,
+			}),
 		})
 		const getSpriteKey = (
 			emoji: string,
@@ -279,9 +280,9 @@ async function launchDayOfTheDead() {
 			width = window.innerWidth
 			height = window.innerHeight
 			const dpr = getCanvasDpr({
-				width,
 				height,
 				maxDpr: DAY_OF_THE_DEAD_FIELD_MAX_DPR,
+				width,
 			})
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)

@@ -1,7 +1,7 @@
-/* eslint-disable no-console */
+import AdmZip from 'adm-zip'
 import fs from 'fs'
 import path from 'path'
-import AdmZip from 'adm-zip'
+
 import { readJson, writeJson } from './lib/json.mjs'
 import { setCwdToRoot } from './lib/root.mjs'
 
@@ -64,13 +64,13 @@ const readExtensionManifest = () =>
 	readJson({ filePath: EXTENSION_MANIFEST_PATH })
 
 const writeExtensionManifest = (manifestContent) => {
-	writeJson({ filePath: EXTENSION_MANIFEST_PATH, data: manifestContent })
+	writeJson({ data: manifestContent, filePath: EXTENSION_MANIFEST_PATH })
 }
 
 const updateExtensionManifest = ({
-	baseManifest,
 	attributesToAdd = {},
 	attributesToRemove = [],
+	baseManifest,
 }) => {
 	const nextManifest = { ...baseManifest, ...attributesToAdd }
 
@@ -99,8 +99,8 @@ const processReleaseType = (releaseType) => {
 	manifestContent.version = newVersion
 	packageContent.version = newVersion
 
-	writeJson({ filePath: MANIFEST_PATH, data: manifestContent })
-	writeJson({ filePath: PACKAGE_PATH, data: packageContent })
+	writeJson({ data: manifestContent, filePath: MANIFEST_PATH })
+	writeJson({ data: packageContent, filePath: PACKAGE_PATH })
 
 	console.log(
 		`Version in manifest.json and package.json updated to: ${newVersion}`,
@@ -108,13 +108,12 @@ const processReleaseType = (releaseType) => {
 
 	const extensionManifest = readExtensionManifest()
 	const baseExtensionManifest = updateExtensionManifest({
-		baseManifest: extensionManifest,
 		attributesToAdd: { version: newVersion },
+		baseManifest: extensionManifest,
 	})
 	processZipCreation(EXTENSION_DIR, newVersion, '')
 
 	updateExtensionManifest({
-		baseManifest: baseExtensionManifest,
 		attributesToAdd: {
 			browser_specific_settings: {
 				gecko: {
@@ -123,6 +122,7 @@ const processReleaseType = (releaseType) => {
 			},
 		},
 		attributesToRemove: ['background'],
+		baseManifest: baseExtensionManifest,
 	})
 	processZipCreation(EXTENSION_DIR, newVersion, '-firefox')
 

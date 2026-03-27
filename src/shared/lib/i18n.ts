@@ -102,7 +102,6 @@ export const changeLocalisation = async (locale: LocaleKey): Promise<void> => {
 		i18n.load(locale, messages)
 		i18n.activate(locale)
 	} catch (e) {
-		// eslint-disable-next-line no-console
 		console.error(`Failed to load messages: ${e}`)
 	}
 }

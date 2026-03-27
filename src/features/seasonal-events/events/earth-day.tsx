@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const EARTH_DAY_DATES = new Set([
 	'2026-04-22',
@@ -36,9 +37,9 @@ const EARTH_FIELD_MARGIN = 140
 const EARTH_GLOW_OPACITY = '0.35'
 const EARTH_GLOW_GRADIENT =
 	'radial-gradient(120% 90% at 50% 100%, rgba(34, 197, 94, 0.35), rgba(16, 185, 129, 0.18) 45%, rgba(15, 23, 42, 0) 75%)'
-const EARTH_FIELD_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const EARTH_FIELD_FADE_IN_DURATION_RANGE = { min: 900, max: 1600 }
-const EARTH_FIELD_SCALE_RANGE = { min: 0.4, max: 0.75 }
+const EARTH_FIELD_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+const EARTH_FIELD_FADE_IN_DURATION_RANGE = { max: 1600, min: 900 }
+const EARTH_FIELD_SCALE_RANGE = { max: 0.75, min: 0.4 }
 const EARTH_FIELD_KIND_POOL = [
 	'leaf',
 	'leaf',
@@ -54,8 +55,6 @@ const EARTH_FIELD_KIND_POOL = [
 	'flower',
 ] as const
 const EARTH_FIELD_COLORS = {
-	leaf: ['#4ade80', '#22c55e', '#86efac'],
-	sprout: ['#34d399', '#2dd4bf', '#a7f3d0'],
 	drop: ['#7dd3fc', '#38bdf8', '#60a5fa'],
 	flower: [
 		'#fde68a',
@@ -75,6 +74,8 @@ const EARTH_FIELD_COLORS = {
 		'#f472b6',
 		'#d946ef',
 	],
+	leaf: ['#4ade80', '#22c55e', '#86efac'],
+	sprout: ['#34d399', '#2dd4bf', '#a7f3d0'],
 } as const
 const EARTH_FLOWER_GRADIENTS = [
 	{ inner: '#fbcfe8', mid: '#f472b6', outer: '#fb7185' },
@@ -99,22 +100,22 @@ const EARTH_FLOWER_GRADIENTS = [
 ] as const
 const EARTH_FLOWER_CENTER_COLORS = ['#fef3c7', '#fde68a', '#facc15'] as const
 const EARTH_FIELD_SIZE_RANGE = {
-	leaf: { min: 12, max: 26 },
-	sprout: { min: 10, max: 22 },
-	drop: { min: 10, max: 20 },
-	flower: { min: 12, max: 22 },
+	drop: { max: 20, min: 10 },
+	flower: { max: 22, min: 12 },
+	leaf: { max: 26, min: 12 },
+	sprout: { max: 22, min: 10 },
 } as const
 const EARTH_FIELD_VELOCITY = {
-	leaf: { x: { min: -14, max: 14 }, y: { min: -10, max: -2 } },
-	sprout: { x: { min: -10, max: 10 }, y: { min: -8, max: -1 } },
-	drop: { x: { min: -8, max: 8 }, y: { min: -4, max: 6 } },
-	flower: { x: { min: -8, max: 8 }, y: { min: -6, max: 3 } },
+	drop: { x: { max: 8, min: -8 }, y: { max: 6, min: -4 } },
+	flower: { x: { max: 8, min: -8 }, y: { max: 3, min: -6 } },
+	leaf: { x: { max: 14, min: -14 }, y: { max: -2, min: -10 } },
+	sprout: { x: { max: 10, min: -10 }, y: { max: -1, min: -8 } },
 } as const
 const EARTH_FIELD_GLOW_RANGE = {
-	leaf: { min: 6, max: 14 },
-	sprout: { min: 6, max: 12 },
-	drop: { min: 4, max: 10 },
-	flower: { min: 4, max: 12 },
+	drop: { max: 10, min: 4 },
+	flower: { max: 12, min: 4 },
+	leaf: { max: 14, min: 6 },
+	sprout: { max: 12, min: 6 },
 } as const
 
 const EventDetails = () => (
@@ -186,10 +187,10 @@ const EventDetails = () => (
 )
 
 export const earthDayEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.EarthDay,
 	isActive: isEarthDay,
 	run: launchEarthDay,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#bbf7d0', '#5eead4', '#60a5fa', '#34d399', '#bbf7d0'],
 	},
@@ -221,29 +222,29 @@ async function launchEarthDay() {
 
 		type ParticleKind = (typeof EARTH_FIELD_KIND_POOL)[number]
 		type Particle = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			size: number
+			birthTime: number
+			color: string
+			fadeDuration: number
+			flowerCenter?: (typeof EARTH_FLOWER_CENTER_COLORS)[number]
+			flowerPetal?: (typeof EARTH_FLOWER_GRADIENTS)[number]
+			glow: number
+			kind: ParticleKind
+			opacity: number
+			phase: number
+			pulse: number
 			rotation: number
 			rotationSpeed: number
-			opacity: number
-			kind: ParticleKind
-			color: string
-			glow: number
-			phase: number
-			sway: number
-			pulse: number
-			birthTime: number
-			fadeDuration: number
 			scaleFrom: number
-			flowerPetal?: (typeof EARTH_FLOWER_GRADIENTS)[number]
-			flowerCenter?: (typeof EARTH_FLOWER_CENTER_COLORS)[number]
+			size: number
+			sway: number
+			vx: number
+			vy: number
+			x: number
+			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
@@ -268,31 +269,31 @@ async function launchEarthDay() {
 					: undefined
 
 			return {
-				x: randomInRange({
-					min: -EARTH_FIELD_MARGIN,
-					max: width + EARTH_FIELD_MARGIN,
-				}),
-				y: randomInRange({
-					min: -EARTH_FIELD_MARGIN,
-					max: height + EARTH_FIELD_MARGIN,
-				}),
+				birthTime: time + randomInRange(EARTH_FIELD_FADE_IN_DELAY_RANGE),
+				color,
+				fadeDuration: randomInRange(EARTH_FIELD_FADE_IN_DURATION_RANGE),
+				flowerCenter,
+				flowerPetal,
+				glow: randomInRange(glowRange),
+				kind,
+				opacity: randomInRange({ max: 0.85, min: 0.45 }),
+				phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+				pulse: randomInRange({ max: 0.28, min: 0.12 }),
+				rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
+				rotationSpeed: randomInRange({ max: 0.5, min: -0.5 }),
+				scaleFrom: randomInRange(EARTH_FIELD_SCALE_RANGE),
+				size: randomInRange(sizeRange),
+				sway: randomInRange({ max: 6, min: 1.5 }),
 				vx: randomInRange(velocity.x),
 				vy: randomInRange(velocity.y),
-				size: randomInRange(sizeRange),
-				rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-				rotationSpeed: randomInRange({ min: -0.5, max: 0.5 }),
-				opacity: randomInRange({ min: 0.45, max: 0.85 }),
-				kind,
-				color,
-				glow: randomInRange(glowRange),
-				phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-				sway: randomInRange({ min: 1.5, max: 6 }),
-				pulse: randomInRange({ min: 0.12, max: 0.28 }),
-				birthTime: time + randomInRange(EARTH_FIELD_FADE_IN_DELAY_RANGE),
-				fadeDuration: randomInRange(EARTH_FIELD_FADE_IN_DURATION_RANGE),
-				scaleFrom: randomInRange(EARTH_FIELD_SCALE_RANGE),
-				flowerPetal,
-				flowerCenter,
+				x: randomInRange({
+					max: width + EARTH_FIELD_MARGIN,
+					min: -EARTH_FIELD_MARGIN,
+				}),
+				y: randomInRange({
+					max: height + EARTH_FIELD_MARGIN,
+					min: -EARTH_FIELD_MARGIN,
+				}),
 			}
 		}
 		const resetParticles = (time: number) => {
@@ -311,7 +312,7 @@ async function launchEarthDay() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: EARTH_FIELD_MAX_DPR })
+			const dpr = getCanvasDpr({ height, maxDpr: EARTH_FIELD_MAX_DPR, width })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
@@ -447,17 +448,17 @@ async function launchEarthDay() {
 			context.shadowBlur = particle.glow
 
 			switch (particle.kind) {
-				case 'leaf':
-					drawLeaf(particle.size)
-					break
-				case 'sprout':
-					drawSprout(particle.size)
-					break
 				case 'drop':
 					drawDrop(particle.size)
 					break
 				case 'flower':
 					drawFlower(particle.size, particle.flowerPetal, particle.flowerCenter)
+					break
+				case 'leaf':
+					drawLeaf(particle.size)
+					break
+				case 'sprout':
+					drawSprout(particle.size)
 					break
 			}
 

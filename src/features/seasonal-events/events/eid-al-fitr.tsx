@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const EID_AL_FITR_DATES = new Set([
 	'2026-03-20',
@@ -33,16 +34,16 @@ const EID_OVERLAY_OPACITY = '0.75'
 const EID_OVERLAY_FILTER = 'saturate(125%)'
 const EID_MAX_DPR = 2
 const EID_STAR_COUNT = 140
-const EID_STAR_RADIUS_RANGE = { min: 0.5, max: 1.6 }
-const EID_STAR_OPACITY_RANGE = { min: 0.18, max: 0.55 }
-const EID_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0015 }
+const EID_STAR_RADIUS_RANGE = { max: 1.6, min: 0.5 }
+const EID_STAR_OPACITY_RANGE = { max: 0.55, min: 0.18 }
+const EID_STAR_TWINKLE_RANGE = { max: 0.0015, min: 0.0006 }
 const EID_LANTERN_COUNT = 22
-const EID_LANTERN_SIZE_RANGE = { min: 18, max: 36 }
-const EID_LANTERN_SPEED_RANGE = { min: 8, max: 20 }
-const EID_LANTERN_SWAY_RANGE = { min: 4, max: 14 }
-const EID_LANTERN_OPACITY_RANGE = { min: 0.35, max: 0.75 }
-const EID_LANTERN_FADE_IN_DELAY_RANGE = { min: 0, max: 1800 }
-const EID_LANTERN_FADE_IN_DURATION_RANGE = { min: 1000, max: 2000 }
+const EID_LANTERN_SIZE_RANGE = { max: 36, min: 18 }
+const EID_LANTERN_SPEED_RANGE = { max: 20, min: 8 }
+const EID_LANTERN_SWAY_RANGE = { max: 14, min: 4 }
+const EID_LANTERN_OPACITY_RANGE = { max: 0.75, min: 0.35 }
+const EID_LANTERN_FADE_IN_DELAY_RANGE = { max: 1800, min: 0 }
+const EID_LANTERN_FADE_IN_DURATION_RANGE = { max: 2000, min: 1000 }
 const EID_SCENE_FADE_DELAY_MS = 300
 const EID_SCENE_FADE_DURATION_MS = 1400
 const EID_LANTERN_COLORS = [
@@ -92,8 +93,8 @@ const EventDetails = () => (
 		<p>
 			<Trans>
 				The first meal of Eid, eaten after a month of fasting, carries a
-				significance that's hard to overstate — it's often dates and something
-				sweet, shared before the morning prayer.
+				significance that&apos;s hard to overstate — it&apos;s often dates and
+				something sweet, shared before the morning prayer.
 			</Trans>
 		</p>
 		<p>
@@ -106,10 +107,10 @@ const EventDetails = () => (
 )
 
 export const eidAlFitrEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.EidAlFitr,
 	isActive: isEidAlFitr,
 	run: launchEidAlFitrGlow,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#fef3c7', '#facc15', '#38bdf8', '#a78bfa', '#fef3c7'],
 	},
@@ -141,28 +142,28 @@ async function launchEidAlFitrGlow() {
 		}
 
 		type Star = {
+			opacity: number
+			phase: number
+			radius: number
+			twinkle: number
 			x: number
 			y: number
-			radius: number
-			opacity: number
-			twinkle: number
-			phase: number
 		}
 		type Lantern = {
 			baseX: number
-			y: number
-			vy: number
-			size: number
-			opacity: number
-			color: string
-			sway: number
-			phase: number
 			birthTime: number
+			color: string
 			fadeDuration: number
+			opacity: number
+			phase: number
+			size: number
+			sway: number
+			vy: number
+			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let width = window.innerWidth
 		let height = window.innerHeight
 		let stars: Star[] = []
@@ -174,25 +175,25 @@ async function launchEidAlFitrGlow() {
 			EID_LANTERN_COLORS[Math.floor(Math.random() * EID_LANTERN_COLORS.length)]
 
 		const createStar = (): Star => ({
+			opacity: randomInRange(EID_STAR_OPACITY_RANGE),
+			phase: Math.random() * Math.PI * 2,
+			radius: randomInRange(EID_STAR_RADIUS_RANGE),
+			twinkle: randomInRange(EID_STAR_TWINKLE_RANGE),
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: randomInRange(EID_STAR_RADIUS_RANGE),
-			opacity: randomInRange(EID_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(EID_STAR_TWINKLE_RANGE),
-			phase: Math.random() * Math.PI * 2,
 		})
 
 		const createLantern = (time: number): Lantern => ({
 			baseX: Math.random() * width,
-			y: height + Math.random() * height * 0.3,
-			vy: randomInRange(EID_LANTERN_SPEED_RANGE),
-			size: randomInRange(EID_LANTERN_SIZE_RANGE),
-			opacity: randomInRange(EID_LANTERN_OPACITY_RANGE),
-			color: randomLanternColor(),
-			sway: randomInRange(EID_LANTERN_SWAY_RANGE),
-			phase: Math.random() * Math.PI * 2,
 			birthTime: time + randomInRange(EID_LANTERN_FADE_IN_DELAY_RANGE),
+			color: randomLanternColor(),
 			fadeDuration: randomInRange(EID_LANTERN_FADE_IN_DURATION_RANGE),
+			opacity: randomInRange(EID_LANTERN_OPACITY_RANGE),
+			phase: Math.random() * Math.PI * 2,
+			size: randomInRange(EID_LANTERN_SIZE_RANGE),
+			sway: randomInRange(EID_LANTERN_SWAY_RANGE),
+			vy: randomInRange(EID_LANTERN_SPEED_RANGE),
+			y: height + Math.random() * height * 0.3,
 		})
 
 		const resetField = (time: number) => {
@@ -205,7 +206,7 @@ async function launchEidAlFitrGlow() {
 		const resizeCanvas = () => {
 			width = window.innerWidth
 			height = window.innerHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: EID_MAX_DPR })
+			const dpr = getCanvasDpr({ height, maxDpr: EID_MAX_DPR, width })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

@@ -1,10 +1,11 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const TOTAL_LUNAR_ECLIPSE_DATES = new Set([
 	'2026-03-03',
@@ -97,19 +98,19 @@ const EventDetails = () => (
 		</p>
 		<p>
 			<Trans>
-				The exact shade of red depends on what's in Earth's atmosphere at the
-				time. After major volcanic eruptions, the Moon can turn an especially
-				dark, almost brownish red.
+				The exact shade of red depends on what&apos;s in Earth&apos;s atmosphere
+				at the time. After major volcanic eruptions, the Moon can turn an
+				especially dark, almost brownish red.
 			</Trans>
 		</p>
 	</>
 )
 
 export const totalLunarEclipseEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.TotalLunarEclipse,
 	isActive: isTotalLunarEclipse,
 	run: launchTotalLunarEclipse,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#1f2937', '#7f1d1d', '#ef4444', '#fca5a5', '#1f2937'],
 	},
@@ -294,7 +295,7 @@ async function launchTotalLunarEclipse() {
 		overlay.appendChild(backdrop)
 		overlay.appendChild(container)
 
-		let timeoutId: number | null = null
+		let timeoutId: null | number = null
 
 		const mount = () => {
 			document.head.appendChild(style)

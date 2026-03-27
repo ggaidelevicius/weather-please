@@ -1,6 +1,7 @@
-import { enforceRateLimit } from '../rate-limit'
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { prisma } from '../prisma'
+import { enforceRateLimit } from '../rate-limit'
 
 // Mock Prisma
 vi.mock('../prisma', () => ({
@@ -13,7 +14,6 @@ vi.mock('../prisma', () => ({
 }))
 
 describe('enforceRateLimit', () => {
-	const mockHeaders = new Headers()
 	let testCounter = 0
 
 	beforeEach(() => {
@@ -39,8 +39,8 @@ describe('enforceRateLimit', () => {
 		vi.mocked(prisma.$transaction).mockResolvedValueOnce({ ok: true })
 
 		const result = await enforceRateLimit({
-			scope: 'server-action',
 			headers,
+			scope: 'server-action',
 		})
 
 		expect(result.ok).toBe(true)
@@ -56,8 +56,8 @@ describe('enforceRateLimit', () => {
 		})
 
 		const result = await enforceRateLimit({
-			scope: 'server-action',
 			headers,
+			scope: 'server-action',
 		})
 
 		expect(result.ok).toBe(false)
@@ -71,8 +71,8 @@ describe('enforceRateLimit', () => {
 		vi.mocked(prisma.$transaction).mockResolvedValueOnce({ ok: true })
 
 		await enforceRateLimit({
-			scope: 'server-action',
 			headers,
+			scope: 'server-action',
 		})
 
 		// Verify the transaction was called (which means IP was parsed)
@@ -83,8 +83,8 @@ describe('enforceRateLimit', () => {
 		const headers = new Headers() // No IP headers
 
 		const result = await enforceRateLimit({
-			scope: 'server-action',
 			headers,
+			scope: 'server-action',
 		})
 
 		expect(result.ok).toBe(false)
@@ -100,8 +100,8 @@ describe('enforceRateLimit', () => {
 		)
 
 		const result = await enforceRateLimit({
-			scope: 'server-action',
 			headers,
+			scope: 'server-action',
 		})
 
 		expect(result.ok).toBe(false)
@@ -115,8 +115,8 @@ describe('enforceRateLimit', () => {
 		vi.mocked(prisma.$transaction).mockResolvedValueOnce({ ok: true })
 
 		await enforceRateLimit({
-			scope: 'server-action',
 			headers,
+			scope: 'server-action',
 		})
 
 		expect(prisma.$transaction).toHaveBeenCalled()
@@ -129,8 +129,8 @@ describe('enforceRateLimit', () => {
 		vi.mocked(prisma.$transaction).mockResolvedValueOnce({ ok: true })
 
 		await enforceRateLimit({
-			scope: 'server-action',
 			headers,
+			scope: 'server-action',
 		})
 
 		expect(prisma.$transaction).toHaveBeenCalled()
@@ -145,8 +145,8 @@ describe('enforceRateLimit', () => {
 		vi.mocked(prisma.$transaction).mockResolvedValueOnce({ ok: true })
 
 		await enforceRateLimit({
-			scope: 'server-action',
 			headers,
+			scope: 'server-action',
 		})
 
 		// The key should be based on the first IP in x-forwarded-for

@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const LUNAR_NEW_YEAR_DATES = new Set([
 	'2026-02-17',
@@ -33,23 +34,23 @@ const LUNAR_FIELD_FILTER = 'saturate(135%)'
 const LUNAR_FIELD_MAX_DPR = 2
 const LUNAR_FIELD_MARGIN = 160
 const LUNAR_PARTICLE_COUNT = 58
-const LUNAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2400 }
-const LUNAR_FADE_IN_DURATION_RANGE = { min: 1000, max: 1900 }
-const LUNAR_SCALE_RANGE = { min: 0.55, max: 0.95 }
-const LUNAR_SIZE_RANGE = { min: 18, max: 34 }
-const LUNAR_VELOCITY_X_RANGE = { min: -6, max: 6 }
-const LUNAR_VELOCITY_Y_RANGE = { min: -18, max: -8 }
-const LUNAR_FLOAT_VELOCITY_Y_RANGE = { min: -2, max: 2 }
+const LUNAR_FADE_IN_DELAY_RANGE = { max: 2400, min: 0 }
+const LUNAR_FADE_IN_DURATION_RANGE = { max: 1900, min: 1000 }
+const LUNAR_SCALE_RANGE = { max: 0.95, min: 0.55 }
+const LUNAR_SIZE_RANGE = { max: 34, min: 18 }
+const LUNAR_VELOCITY_X_RANGE = { max: 6, min: -6 }
+const LUNAR_VELOCITY_Y_RANGE = { max: -8, min: -18 }
+const LUNAR_FLOAT_VELOCITY_Y_RANGE = { max: 2, min: -2 }
 const LUNAR_FLOAT_CHANCE = 0.35
-const LUNAR_SWAY_RANGE = { min: 2, max: 7 }
-const LUNAR_ROTATION_SPEED_RANGE = { min: -0.3, max: 0.3 }
+const LUNAR_SWAY_RANGE = { max: 7, min: 2 }
+const LUNAR_ROTATION_SPEED_RANGE = { max: 0.3, min: -0.3 }
 const LUNAR_SWAY_SPEED_X = 0.00045
 const LUNAR_SWAY_SPEED_Y = 0.00035
-const LUNAR_GLOW_RANGE = { min: 10, max: 22 }
+const LUNAR_GLOW_RANGE = { max: 22, min: 10 }
 const LUNAR_EMOJIS = ['🏮']
 const LUNAR_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
-const LUNAR_SPAWN_Y_RANGE = { min: 0.6, max: 1.05 }
+const LUNAR_SPAWN_Y_RANGE = { max: 1.05, min: 0.6 }
 const LUNAR_HAZE_OPACITY = '0.5'
 const LUNAR_HAZE_GRADIENT =
 	'radial-gradient(120% 90% at 50% 100%, rgba(251, 191, 36, 0.45), rgba(251, 146, 60, 0.2) 40%, rgba(15, 23, 42, 0) 75%), radial-gradient(90% 80% at 20% 90%, rgba(248, 113, 113, 0.35), rgba(15, 23, 42, 0) 70%)'
@@ -130,10 +131,10 @@ const EventDetails = () => (
 )
 
 export const lunarNewYearEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.LunarNewYear,
 	isActive: isLunarNewYear,
 	run: launchLunarNewYear,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#f5e3c1', '#e6b26a', '#c9854a', '#8f5a3a', '#f5e3c1'],
 	},
@@ -167,30 +168,30 @@ async function launchLunarNewYear() {
 		}
 
 		type LanternParticle = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			size: number
-			rotation: number
-			rotationSpeed: number
-			opacity: number
+			birthTime: number
 			emoji: string
+			fadeDuration: number
 			glow: number
 			glowColor: string
+			opacity: number
 			phase: number
-			sway: number
-			birthTime: number
-			fadeDuration: number
+			rotation: number
+			rotationSpeed: number
 			scaleFrom: number
+			size: number
+			sway: number
+			vx: number
+			vy: number
+			x: number
+			y: number
 		}
 		type EmojiSprite = {
 			canvas: HTMLCanvasElement
 			displaySize: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
@@ -213,28 +214,28 @@ async function launchLunarNewYear() {
 					: LUNAR_VELOCITY_Y_RANGE
 
 			return {
-				x: randomInRange({
-					min: -LUNAR_FIELD_MARGIN,
-					max: width + LUNAR_FIELD_MARGIN,
-				}),
-				y: randomInRange({
-					min: height * LUNAR_SPAWN_Y_RANGE.min,
-					max: height * LUNAR_SPAWN_Y_RANGE.max,
-				}),
-				vx: randomInRange(LUNAR_VELOCITY_X_RANGE),
-				vy: randomInRange(vyRange),
-				size: randomInRange(LUNAR_SIZE_RANGE),
-				rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-				rotationSpeed: randomInRange(LUNAR_ROTATION_SPEED_RANGE),
-				opacity: randomInRange({ min: 0.45, max: 0.85 }),
+				birthTime: time + randomInRange(LUNAR_FADE_IN_DELAY_RANGE),
 				emoji: randomEmoji(),
+				fadeDuration: randomInRange(LUNAR_FADE_IN_DURATION_RANGE),
 				glow: randomInRange(LUNAR_GLOW_RANGE),
 				glowColor: randomGlow(),
-				phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-				sway: randomInRange(LUNAR_SWAY_RANGE),
-				birthTime: time + randomInRange(LUNAR_FADE_IN_DELAY_RANGE),
-				fadeDuration: randomInRange(LUNAR_FADE_IN_DURATION_RANGE),
+				opacity: randomInRange({ max: 0.85, min: 0.45 }),
+				phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+				rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
+				rotationSpeed: randomInRange(LUNAR_ROTATION_SPEED_RANGE),
 				scaleFrom: randomInRange(LUNAR_SCALE_RANGE),
+				size: randomInRange(LUNAR_SIZE_RANGE),
+				sway: randomInRange(LUNAR_SWAY_RANGE),
+				vx: randomInRange(LUNAR_VELOCITY_X_RANGE),
+				vy: randomInRange(vyRange),
+				x: randomInRange({
+					max: width + LUNAR_FIELD_MARGIN,
+					min: -LUNAR_FIELD_MARGIN,
+				}),
+				y: randomInRange({
+					max: height * LUNAR_SPAWN_Y_RANGE.max,
+					min: height * LUNAR_SPAWN_Y_RANGE.min,
+				}),
 			}
 		}
 		const getSpriteKey = (
@@ -301,7 +302,7 @@ async function launchLunarNewYear() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: LUNAR_FIELD_MAX_DPR })
+			const dpr = getCanvasDpr({ height, maxDpr: LUNAR_FIELD_MAX_DPR, width })
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)

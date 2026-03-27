@@ -1,12 +1,12 @@
 export interface AlertCondition {
-	threshold: number
-	comparison: 'gte' | 'lte' | 'eq'
+	comparison: 'eq' | 'gte' | 'lte'
 	hours: number
+	threshold: number
 }
 
 export interface PrecipitationData {
-	value: number
 	flag: boolean
+	value: number
 	zeroCount: number
 }
 
@@ -14,16 +14,16 @@ export const processSimpleAlert = (
 	data: number[],
 	condition: AlertCondition,
 ): boolean[] => {
-	const { threshold, comparison, hours } = condition
+	const { comparison, hours, threshold } = condition
 
 	return data.slice(0, hours).map((value) => {
 		switch (comparison) {
+			case 'eq':
+				return value === threshold
 			case 'gte':
 				return value >= threshold
 			case 'lte':
 				return value <= threshold
-			case 'eq':
-				return value === threshold
 			default:
 				return false
 		}
@@ -43,14 +43,14 @@ export const processPrecipitationAlert = (
 					return { ...acc, flag: true }
 				}
 				return {
-					value: acc.value,
 					flag: false,
+					value: acc.value,
 					zeroCount: acc.zeroCount + 1,
 				}
 			}
-			return { value: acc.value + current, flag: false, zeroCount: 0 }
+			return { flag: false, value: acc.value + current, zeroCount: 0 }
 		},
-		{ value: 0, flag: false, zeroCount: 0 },
+		{ flag: false, value: 0, zeroCount: 0 },
 	)
 }
 
@@ -84,8 +84,8 @@ export const processPrecipitationDuration = (
 }
 
 export const ALERT_CONDITIONS = {
-	extremeUv: { threshold: 11, comparison: 'gte' as const, hours: 13 },
-	strongWind: { threshold: 60, comparison: 'gte' as const, hours: 25 },
-	strongWindGusts: { threshold: 80, comparison: 'gte' as const, hours: 25 },
-	lowVisibility: { threshold: 200, comparison: 'lte' as const, hours: 25 },
+	extremeUv: { comparison: 'gte' as const, hours: 13, threshold: 11 },
+	lowVisibility: { comparison: 'lte' as const, hours: 25, threshold: 200 },
+	strongWind: { comparison: 'gte' as const, hours: 25, threshold: 60 },
+	strongWindGusts: { comparison: 'gte' as const, hours: 25, threshold: 80 },
 } as const

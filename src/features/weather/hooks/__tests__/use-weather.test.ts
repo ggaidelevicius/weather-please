@@ -1,17 +1,17 @@
 import { renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { useWeather } from '../use-weather'
 
 // Mock localStorage
 const localStorageMock = (() => {
 	let store: Record<string, string> = {}
 	return {
-		getItem: (key: string) => store[key] || null,
-		setItem: (key: string, value: string) => {
-			store[key] = value
+		get alerts() {
+			return store.alerts || ''
 		},
-		removeItem: (key: string) => {
-			delete store[key]
+		set alerts(value: string) {
+			store.alerts = value
 		},
 		clear: () => {
 			store = {}
@@ -22,17 +22,18 @@ const localStorageMock = (() => {
 		set data(value: string) {
 			store.data = value
 		},
-		get alerts() {
-			return store.alerts || ''
-		},
-		set alerts(value: string) {
-			store.alerts = value
-		},
+		getItem: (key: string) => store[key] || null,
 		get lastUpdated() {
 			return store.lastUpdated || ''
 		},
 		set lastUpdated(value: string) {
 			store.lastUpdated = value
+		},
+		removeItem: (key: string) => {
+			delete store[key]
+		},
+		setItem: (key: string, value: string) => {
+			store[key] = value
 		},
 	}
 })()
@@ -55,32 +56,32 @@ describe('useWeather - Core Functionality', () => {
 	const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'
 
 	it('initializes with default state', () => {
-		const { result } = renderHook(() => useWeather('', '', false, false))
+		const { result } = renderHook(() => useWeather('', '', 0, false))
 
 		expect(result.current.weatherData).toEqual([])
 		expect(result.current.alertData).toEqual({
-			totalPrecipitation: {
-				precipitation: { value: 0, flag: false, zeroCount: 0 },
-				duration: Array(25).fill(false),
-			},
 			hoursOfExtremeUv: Array(13).fill(false),
-			hoursOfStrongWind: Array(25).fill(false),
 			hoursOfLowVisibility: Array(25).fill(false),
+			hoursOfStrongWind: Array(25).fill(false),
 			hoursOfStrongWindGusts: Array(25).fill(false),
+			totalPrecipitation: {
+				duration: Array(25).fill(false),
+				precipitation: { flag: false, value: 0, zeroCount: 0 },
+			},
 		})
 		expect(result.current.isLoading).toBe(true)
 		expect(result.current.error).toBeNull()
 	})
 
 	it('does not fetch when lat/lon are empty', () => {
-		renderHook(() => useWeather('', '', false, false))
+		renderHook(() => useWeather('', '', 0, false))
 
 		expect(fetchMock).not.toHaveBeenCalled()
 	})
 
 	it('is loading when lat/lon are provided but no cached data', () => {
 		const { result } = renderHook(() =>
-			useWeather('40.7128', '-74.0060', false, false),
+			useWeather('40.7128', '-74.0060', 0, false),
 		)
 
 		expect(result.current.isLoading).toBe(true)
@@ -91,24 +92,24 @@ describe('useWeather - Core Functionality', () => {
 		const cachedData = [
 			{
 				day: now.getTime(),
+				description: 1,
 				max: 30,
 				min: 20,
-				description: 1,
+				rain: 10,
 				uv: 9,
 				wind: 15,
-				rain: 10,
 			},
 		]
 
 		const cachedAlerts = {
-			totalPrecipitation: {
-				precipitation: { value: 5, flag: false, zeroCount: 0 },
-				duration: Array(25).fill(true),
-			},
 			hoursOfExtremeUv: Array(13).fill(true),
-			hoursOfStrongWind: Array(25).fill(false),
 			hoursOfLowVisibility: Array(25).fill(false),
+			hoursOfStrongWind: Array(25).fill(false),
 			hoursOfStrongWindGusts: Array(25).fill(false),
+			totalPrecipitation: {
+				duration: Array(25).fill(true),
+				precipitation: { flag: false, value: 5, zeroCount: 0 },
+			},
 		}
 
 		const lastUpdated = now.toISOString()
@@ -122,7 +123,7 @@ describe('useWeather - Core Functionality', () => {
 		localStorageMock.setItem('cachedUseAirQualityUv', JSON.stringify(false))
 
 		const { result } = renderHook(() =>
-			useWeather('40.7128', '-74.0060', false, false),
+			useWeather('40.7128', '-74.0060', 0, false),
 		)
 
 		expect(result.current.weatherData).toEqual(cachedData)
@@ -136,24 +137,24 @@ describe('useWeather - Core Functionality', () => {
 		const cachedData = [
 			{
 				day: now.getTime(),
+				description: 1,
 				max: 30,
 				min: 20,
-				description: 1,
+				rain: 10,
 				uv: 9,
 				wind: 15,
-				rain: 10,
 			},
 		]
 
 		const cachedAlerts = {
-			totalPrecipitation: {
-				precipitation: { value: 5, flag: false, zeroCount: 0 },
-				duration: Array(25).fill(true),
-			},
 			hoursOfExtremeUv: Array(13).fill(true),
-			hoursOfStrongWind: Array(25).fill(false),
 			hoursOfLowVisibility: Array(25).fill(false),
+			hoursOfStrongWind: Array(25).fill(false),
 			hoursOfStrongWindGusts: Array(25).fill(false),
+			totalPrecipitation: {
+				duration: Array(25).fill(true),
+				precipitation: { flag: false, value: 5, zeroCount: 0 },
+			},
 		}
 
 		const lastUpdated = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`
@@ -167,7 +168,7 @@ describe('useWeather - Core Functionality', () => {
 		localStorageMock.setItem('cachedUseAirQualityUv', JSON.stringify(false))
 
 		const { result } = renderHook(() =>
-			useWeather('40.7128', '-74.0060', false, false),
+			useWeather('40.7128', '-74.0060', 0, false),
 		)
 
 		expect(result.current.weatherData).toEqual(cachedData)
@@ -183,7 +184,7 @@ describe('useWeather - Core Functionality', () => {
 		localStorageMock.setItem('cachedLon', '-74.0060')
 
 		const { result } = renderHook(() =>
-			useWeather('40.7128', '-74.0060', false, false),
+			useWeather('40.7128', '-74.0060', 0, false),
 		)
 
 		expect(result.current.weatherData).toEqual([])
@@ -192,7 +193,7 @@ describe('useWeather - Core Functionality', () => {
 
 	it('forces refetch when location changes', () => {
 		const { result } = renderHook(() =>
-			useWeather('40.7128', '-74.0060', true, false),
+			useWeather('40.7128', '-74.0060', 1, false),
 		)
 
 		expect(result.current.isLoading).toBe(true)
@@ -201,14 +202,14 @@ describe('useWeather - Core Functionality', () => {
 
 	it('returns proper loading state based on parameters', () => {
 		const scenarios = [
-			{ lat: '', lon: '', expected: true },
-			{ lat: '40.7128', lon: '', expected: true },
-			{ lat: '', lon: '-74.0060', expected: true },
-			{ lat: '40.7128', lon: '-74.0060', expected: true }, // true because no cached data
+			{ expected: true, lat: '', lon: '' },
+			{ expected: true, lat: '40.7128', lon: '' },
+			{ expected: true, lat: '', lon: '-74.0060' },
+			{ expected: true, lat: '40.7128', lon: '-74.0060' }, // true because no cached data
 		]
 
-		scenarios.forEach(({ lat, lon, expected }) => {
-			const { result } = renderHook(() => useWeather(lat, lon, false, false))
+		scenarios.forEach(({ expected, lat, lon }) => {
+			const { result } = renderHook(() => useWeather(lat, lon, 0, false))
 			expect(result.current.isLoading).toBe(expected)
 		})
 	})

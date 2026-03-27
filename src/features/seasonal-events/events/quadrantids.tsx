@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { createAdaptiveDprController, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const QUADRANTIDS_PEAK_DATES = new Set([
 	'2026-01-03',
@@ -51,15 +52,15 @@ const QUADRANTIDS_OVERLAY_FILTER = 'saturate(135%)'
 const QUADRANTIDS_MAX_DPR = 2
 const QUADRANTIDS_METEOR_COUNT = 14
 const QUADRANTIDS_STAR_COUNT = 140
-const QUADRANTIDS_METEOR_LENGTH_RANGE = { min: 150, max: 260 }
-const QUADRANTIDS_METEOR_WIDTH_RANGE = { min: 1.1, max: 2.5 }
-const QUADRANTIDS_METEOR_SPEED_RANGE = { min: 620, max: 900 }
-const QUADRANTIDS_METEOR_ANGLE_RANGE = { min: 0.24, max: 0.4 }
-const QUADRANTIDS_METEOR_SPAWN_DELAY_RANGE = { min: 520, max: 1600 }
-const QUADRANTIDS_METEOR_LIFETIME_RANGE = { min: 1200, max: 2000 }
-const QUADRANTIDS_METEOR_SPAWN_X = { min: -0.25, max: 0.6 }
-const QUADRANTIDS_METEOR_SPAWN_Y = { min: -0.4, max: 0.15 }
-const QUADRANTIDS_METEOR_GLOW_RANGE = { min: 14, max: 26 }
+const QUADRANTIDS_METEOR_LENGTH_RANGE = { max: 260, min: 150 }
+const QUADRANTIDS_METEOR_WIDTH_RANGE = { max: 2.5, min: 1.1 }
+const QUADRANTIDS_METEOR_SPEED_RANGE = { max: 900, min: 620 }
+const QUADRANTIDS_METEOR_ANGLE_RANGE = { max: 0.4, min: 0.24 }
+const QUADRANTIDS_METEOR_SPAWN_DELAY_RANGE = { max: 1600, min: 520 }
+const QUADRANTIDS_METEOR_LIFETIME_RANGE = { max: 2000, min: 1200 }
+const QUADRANTIDS_METEOR_SPAWN_X = { max: 0.6, min: -0.25 }
+const QUADRANTIDS_METEOR_SPAWN_Y = { max: 0.15, min: -0.4 }
+const QUADRANTIDS_METEOR_GLOW_RANGE = { max: 26, min: 14 }
 const QUADRANTIDS_METEOR_COLORS = [
 	'rgba(224, 242, 254, 1)',
 	'rgba(191, 219, 254, 1)',
@@ -67,11 +68,11 @@ const QUADRANTIDS_METEOR_COLORS = [
 	'rgba(129, 140, 248, 1)',
 ]
 const QUADRANTIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const QUADRANTIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.5 }
-const QUADRANTIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.6 }
-const QUADRANTIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
-const QUADRANTIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const QUADRANTIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const QUADRANTIDS_STAR_RADIUS_RANGE = { max: 1.5, min: 0.5 }
+const QUADRANTIDS_STAR_OPACITY_RANGE = { max: 0.6, min: 0.2 }
+const QUADRANTIDS_STAR_TWINKLE_RANGE = { max: 0.0014, min: 0.0006 }
+const QUADRANTIDS_STAR_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+const QUADRANTIDS_STAR_FADE_IN_DURATION_RANGE = { max: 2200, min: 1200 }
 
 const EventDetails = () => (
 	<>
@@ -143,10 +144,10 @@ const EventDetails = () => (
 )
 
 export const quadrantidsEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.Quadrantids,
 	isActive: isQuadrantidsPeak,
 	run: launchQuadrantidsShower,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#e0f2fe', '#93c5fd', '#60a5fa', '#818cf8', '#e0f2fe'],
 	},
@@ -178,32 +179,32 @@ async function launchQuadrantidsShower() {
 		}
 
 		type Meteor = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			length: number
-			width: number
-			opacity: number
-			glow: number
-			color: string
 			age: number
+			color: string
+			glow: number
+			length: number
 			lifetime: number
 			nextSpawn: number
-		}
-		type Star = {
+			opacity: number
+			vx: number
+			vy: number
+			width: number
 			x: number
 			y: number
-			radius: number
-			opacity: number
-			twinkle: number
-			phase: number
+		}
+		type Star = {
 			birthTime: number
 			fadeDuration: number
+			opacity: number
+			phase: number
+			radius: number
+			twinkle: number
+			x: number
+			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let width = window.innerWidth
 		let height = window.innerHeight
 		let meteors: Meteor[] = []
@@ -220,32 +221,32 @@ async function launchQuadrantidsShower() {
 			]
 
 		const createStar = (time: number): Star => ({
-			x: Math.random() * width,
-			y: Math.random() * height,
-			radius: randomInRange(QUADRANTIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(QUADRANTIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(QUADRANTIDS_STAR_TWINKLE_RANGE),
-			phase: Math.random() * Math.PI * 2,
 			birthTime: time + randomInRange(QUADRANTIDS_STAR_FADE_IN_DELAY_RANGE),
 			fadeDuration: randomInRange(QUADRANTIDS_STAR_FADE_IN_DURATION_RANGE),
+			opacity: randomInRange(QUADRANTIDS_STAR_OPACITY_RANGE),
+			phase: Math.random() * Math.PI * 2,
+			radius: randomInRange(QUADRANTIDS_STAR_RADIUS_RANGE),
+			twinkle: randomInRange(QUADRANTIDS_STAR_TWINKLE_RANGE),
+			x: Math.random() * width,
+			y: Math.random() * height,
 		})
 
 		const createMeteor = (time: number): Meteor => {
 			const speed = randomInRange(QUADRANTIDS_METEOR_SPEED_RANGE)
 			const angle = randomInRange(QUADRANTIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(QUADRANTIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(QUADRANTIDS_METEOR_SPAWN_Y),
-				vx: Math.cos(angle) * speed,
-				vy: Math.sin(angle) * speed,
-				length: randomInRange(QUADRANTIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(QUADRANTIDS_METEOR_WIDTH_RANGE),
-				opacity: randomInRange({ min: 0.5, max: 0.92 }),
-				glow: randomInRange(QUADRANTIDS_METEOR_GLOW_RANGE),
-				color: randomMeteorColor(),
 				age: 0,
+				color: randomMeteorColor(),
+				glow: randomInRange(QUADRANTIDS_METEOR_GLOW_RANGE),
+				length: randomInRange(QUADRANTIDS_METEOR_LENGTH_RANGE),
 				lifetime: randomInRange(QUADRANTIDS_METEOR_LIFETIME_RANGE),
 				nextSpawn: time + randomInRange(QUADRANTIDS_METEOR_SPAWN_DELAY_RANGE),
+				opacity: randomInRange({ max: 0.92, min: 0.5 }),
+				vx: Math.cos(angle) * speed,
+				vy: Math.sin(angle) * speed,
+				width: randomInRange(QUADRANTIDS_METEOR_WIDTH_RANGE),
+				x: width * randomInRange(QUADRANTIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(QUADRANTIDS_METEOR_SPAWN_Y),
 			}
 		}
 
@@ -265,7 +266,7 @@ async function launchQuadrantidsShower() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = dprController.getDpr({ width, height })
+			const dpr = dprController.getDpr({ height, width })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

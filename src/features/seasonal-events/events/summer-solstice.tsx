@@ -1,12 +1,13 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
 	Hemisphere,
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const SUMMER_SOLSTICE_DATES_NORTHERN = new Set([
 	'2026-06-21',
@@ -54,8 +55,8 @@ const SOLSTICE_POLLEN_OPACITY = '0.55'
 const SOLSTICE_POLLEN_FILTER = 'saturate(125%)'
 const SOLSTICE_POLLEN_MAX_DPR = 2
 const SOLSTICE_POLLEN_MARGIN = 120
-const SOLSTICE_POLLEN_FADE_IN_DELAY_RANGE = { min: 0, max: 2400 }
-const SOLSTICE_POLLEN_FADE_IN_DURATION_RANGE = { min: 1000, max: 1800 }
+const SOLSTICE_POLLEN_FADE_IN_DELAY_RANGE = { max: 2400, min: 0 }
+const SOLSTICE_POLLEN_FADE_IN_DURATION_RANGE = { max: 1800, min: 1000 }
 const SOLSTICE_WASH_OPACITY = '0.5'
 const SOLSTICE_HALO_OPACITY = '0.65'
 const SOLSTICE_POLLEN_COLORS = [
@@ -72,11 +73,11 @@ const SOLSTICE_POLLEN_COLORS = [
 	'#f97316',
 	'#fef9c3',
 ]
-const SOLSTICE_POLLEN_SIZE_RANGE = { min: 6, max: 16 }
-const SOLSTICE_POLLEN_VELOCITY_X = { min: -6, max: 6 }
-const SOLSTICE_POLLEN_VELOCITY_Y = { min: 6, max: 14 }
-const SOLSTICE_POLLEN_SWAY_RANGE = { min: 2, max: 10 }
-const SOLSTICE_POLLEN_GLOW_RANGE = { min: 6, max: 14 }
+const SOLSTICE_POLLEN_SIZE_RANGE = { max: 16, min: 6 }
+const SOLSTICE_POLLEN_VELOCITY_X = { max: 6, min: -6 }
+const SOLSTICE_POLLEN_VELOCITY_Y = { max: 14, min: 6 }
+const SOLSTICE_POLLEN_SWAY_RANGE = { max: 10, min: 2 }
+const SOLSTICE_POLLEN_GLOW_RANGE = { max: 14, min: 6 }
 
 const EventDetails = () => (
 	<>
@@ -118,19 +119,19 @@ const EventDetails = () => (
 		</p>
 		<p>
 			<Trans>
-				Above the Arctic Circle, the sun doesn't set at all — it traces a low
-				circle along the horizon and starts climbing again. This is the midnight
-				sun, and it lasts for weeks.
+				Above the Arctic Circle, the sun doesn&apos;t set at all — it traces a
+				low circle along the horizon and starts climbing again. This is the
+				midnight sun, and it lasts for weeks.
 			</Trans>
 		</p>
 	</>
 )
 
 export const summerSolsticeEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.SummerSolstice,
 	isActive: isSummerSolstice,
 	run: launchSummerSolstice,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#fef3c7', '#fde68a', '#fdba74', '#f59e0b', '#fef3c7'],
 	},
@@ -169,24 +170,24 @@ async function launchSummerSolstice() {
 		}
 
 		type Particle = {
-			x: number
-			y: number
+			birthTime: number
+			color: string
+			fadeDuration: number
+			glow: number
+			hasSparkle: boolean
+			opacity: number
+			phase: number
+			size: number
+			sparklePhase: number
+			sway: number
 			vx: number
 			vy: number
-			size: number
-			opacity: number
-			color: string
-			glow: number
-			phase: number
-			sway: number
-			birthTime: number
-			fadeDuration: number
-			hasSparkle: boolean
-			sparklePhase: number
+			x: number
+			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
@@ -198,26 +199,26 @@ async function launchSummerSolstice() {
 				Math.floor(Math.random() * SOLSTICE_POLLEN_COLORS.length)
 			]
 		const createParticle = (time: number): Particle => ({
-			x: randomInRange({
-				min: -SOLSTICE_POLLEN_MARGIN,
-				max: width + SOLSTICE_POLLEN_MARGIN,
-			}),
-			y: randomInRange({
-				min: -SOLSTICE_POLLEN_MARGIN,
-				max: height + SOLSTICE_POLLEN_MARGIN,
-			}),
+			birthTime: time + randomInRange(SOLSTICE_POLLEN_FADE_IN_DELAY_RANGE),
+			color: randomColor(),
+			fadeDuration: randomInRange(SOLSTICE_POLLEN_FADE_IN_DURATION_RANGE),
+			glow: randomInRange(SOLSTICE_POLLEN_GLOW_RANGE),
+			hasSparkle: Math.random() < 0.25,
+			opacity: randomInRange({ max: 0.75, min: 0.35 }),
+			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			size: randomInRange(SOLSTICE_POLLEN_SIZE_RANGE),
+			sparklePhase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			sway: randomInRange(SOLSTICE_POLLEN_SWAY_RANGE),
 			vx: randomInRange(SOLSTICE_POLLEN_VELOCITY_X),
 			vy: randomInRange(SOLSTICE_POLLEN_VELOCITY_Y),
-			size: randomInRange(SOLSTICE_POLLEN_SIZE_RANGE),
-			opacity: randomInRange({ min: 0.35, max: 0.75 }),
-			color: randomColor(),
-			glow: randomInRange(SOLSTICE_POLLEN_GLOW_RANGE),
-			phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-			sway: randomInRange(SOLSTICE_POLLEN_SWAY_RANGE),
-			birthTime: time + randomInRange(SOLSTICE_POLLEN_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(SOLSTICE_POLLEN_FADE_IN_DURATION_RANGE),
-			hasSparkle: Math.random() < 0.25,
-			sparklePhase: randomInRange({ min: 0, max: Math.PI * 2 }),
+			x: randomInRange({
+				max: width + SOLSTICE_POLLEN_MARGIN,
+				min: -SOLSTICE_POLLEN_MARGIN,
+			}),
+			y: randomInRange({
+				max: height + SOLSTICE_POLLEN_MARGIN,
+				min: -SOLSTICE_POLLEN_MARGIN,
+			}),
 		})
 		const resetParticles = (time: number) => {
 			particles = Array.from({ length: SOLSTICE_POLLEN_COUNT }, () =>
@@ -235,9 +236,9 @@ async function launchSummerSolstice() {
 			width = nextWidth
 			height = nextHeight
 			const dpr = getCanvasDpr({
-				width,
 				height,
 				maxDpr: SOLSTICE_POLLEN_MAX_DPR,
+				width,
 			})
 
 			canvas.width = Math.round(width * dpr)

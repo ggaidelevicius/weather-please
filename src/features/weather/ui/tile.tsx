@@ -1,5 +1,8 @@
-import { Trans } from '@lingui/react/macro'
+import type { StaticImageData } from 'next/image'
+import type { ReactElement } from 'react'
+
 import { Switch as HeadlessSwitch } from '@headlessui/react'
+import { Trans } from '@lingui/react/macro'
 import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
 import {
 	animate,
@@ -9,6 +12,12 @@ import {
 } from 'framer-motion'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+
+import type { SeasonalEvent } from '../../seasonal-events/core/types'
+
+import { SeasonalEventModal } from '../../../shared/ui/seasonal-event-modal'
+import { Hemisphere, SeasonalEventId } from '../../seasonal-events/core/types'
+import { TileIdentifier } from '../../settings/model/tile-identifier'
 import {
 	BrokenClouds,
 	ClearSky,
@@ -22,17 +31,11 @@ import {
 	Snow,
 	Thunderstorm,
 } from '../images/weather-icons'
-import { SeasonalEventModal } from '../../../shared/ui/seasonal-event-modal'
-import { TileIdentifier } from '../../settings/model/tile-identifier'
-import type { StaticImageData } from 'next/image'
-import type { ReactElement } from 'react'
-import { Hemisphere, SeasonalEventId } from '../../seasonal-events/core/types'
-import type { SeasonalEvent } from '../../seasonal-events/core/types'
 
 type SeasonalEventsModule =
 	typeof import('../../seasonal-events/core/seasonal-events-module')
 
-let seasonalEventsModulePromise: Promise<SeasonalEventsModule> | null = null
+let seasonalEventsModulePromise: null | Promise<SeasonalEventsModule> = null
 
 const loadSeasonalEventsModule = () => {
 	if (!seasonalEventsModulePromise) {
@@ -131,63 +134,63 @@ const months = [
 ]
 
 const SEASONAL_EMOJI_BY_EVENT: Record<SeasonalEventId, string> = {
-	[SeasonalEventId.NewYearsDay]: '🎆',
-	[SeasonalEventId.ValentinesDay]: '❤',
-	[SeasonalEventId.LunarNewYear]: '🧧',
-	[SeasonalEventId.SpringEquinox]: '🌸',
 	[SeasonalEventId.AutumnEquinox]: '🍂',
+	[SeasonalEventId.ChristmasDay]: '🎄',
+	[SeasonalEventId.DayOfTheDead]: '💀',
 	[SeasonalEventId.Diwali]: '🪔',
-	[SeasonalEventId.Holi]: '🎨',
 	[SeasonalEventId.EarthDay]: '🌍',
-	[SeasonalEventId.SummerSolstice]: '🌞',
-	[SeasonalEventId.WinterSolstice]: '❄️',
+	[SeasonalEventId.Easter]: '🐣',
+	[SeasonalEventId.EidAlAdha]: '🕋',
+	[SeasonalEventId.EidAlFitr]: '🌙',
+	[SeasonalEventId.EtaAquariids]: '💧',
+	[SeasonalEventId.EventHorizonDay]: '🕳️',
+	[SeasonalEventId.Geminids]: '🌠',
 	[SeasonalEventId.Halloween]: '🎃',
+	[SeasonalEventId.Hanukkah]: '🕎',
+	[SeasonalEventId.Holi]: '🎨',
+	[SeasonalEventId.Leonids]: '🦁',
+	[SeasonalEventId.LunarNewYear]: '🧧',
+	[SeasonalEventId.Lyrids]: '✨',
+	[SeasonalEventId.NewYearsDay]: '🎆',
+	[SeasonalEventId.Orionids]: '🔥',
 	[SeasonalEventId.Perseids]: '☄️',
 	[SeasonalEventId.Quadrantids]: '💫',
-	[SeasonalEventId.Lyrids]: '✨',
-	[SeasonalEventId.EtaAquariids]: '💧',
-	[SeasonalEventId.Orionids]: '🔥',
-	[SeasonalEventId.Leonids]: '🦁',
-	[SeasonalEventId.TotalSolarEclipse]: '🌑',
+	[SeasonalEventId.SpringEquinox]: '🌸',
+	[SeasonalEventId.SummerSolstice]: '🌞',
 	[SeasonalEventId.TotalLunarEclipse]: '🌕',
-	[SeasonalEventId.DayOfTheDead]: '💀',
-	[SeasonalEventId.Easter]: '🐣',
-	[SeasonalEventId.Geminids]: '🌠',
-	[SeasonalEventId.EidAlFitr]: '🌙',
-	[SeasonalEventId.EidAlAdha]: '🕋',
-	[SeasonalEventId.Hanukkah]: '🕎',
-	[SeasonalEventId.ChristmasDay]: '🎄',
-	[SeasonalEventId.EventHorizonDay]: '🕳️',
+	[SeasonalEventId.TotalSolarEclipse]: '🌑',
+	[SeasonalEventId.ValentinesDay]: '❤',
+	[SeasonalEventId.WinterSolstice]: '❄️',
 }
 
 const SEASONAL_LABEL_BY_EVENT: Record<SeasonalEventId, ReactElement> = {
-	[SeasonalEventId.NewYearsDay]: <Trans>New Year&apos;s Day</Trans>,
-	[SeasonalEventId.ValentinesDay]: <Trans>Valentine&apos;s Day</Trans>,
-	[SeasonalEventId.LunarNewYear]: <Trans>Lunar New Year</Trans>,
-	[SeasonalEventId.SpringEquinox]: <Trans>Spring Equinox</Trans>,
 	[SeasonalEventId.AutumnEquinox]: <Trans>Autumn Equinox</Trans>,
+	[SeasonalEventId.ChristmasDay]: <Trans>Christmas Day</Trans>,
+	[SeasonalEventId.DayOfTheDead]: <Trans>Day of the Dead</Trans>,
 	[SeasonalEventId.Diwali]: <Trans>Diwali</Trans>,
-	[SeasonalEventId.Holi]: <Trans>Holi</Trans>,
 	[SeasonalEventId.EarthDay]: <Trans>Earth Day</Trans>,
-	[SeasonalEventId.SummerSolstice]: <Trans>Summer Solstice</Trans>,
-	[SeasonalEventId.WinterSolstice]: <Trans>Winter Solstice</Trans>,
+	[SeasonalEventId.Easter]: <Trans>Easter</Trans>,
+	[SeasonalEventId.EidAlAdha]: <Trans>Eid al-Adha</Trans>,
+	[SeasonalEventId.EidAlFitr]: <Trans>Eid al-Fitr</Trans>,
+	[SeasonalEventId.EtaAquariids]: <Trans>Eta Aquariids Meteor Shower</Trans>,
+	[SeasonalEventId.EventHorizonDay]: <Trans>Event Horizon Day</Trans>,
+	[SeasonalEventId.Geminids]: <Trans>Geminids Meteor Shower</Trans>,
 	[SeasonalEventId.Halloween]: <Trans>Halloween</Trans>,
+	[SeasonalEventId.Hanukkah]: <Trans>Hanukkah</Trans>,
+	[SeasonalEventId.Holi]: <Trans>Holi</Trans>,
+	[SeasonalEventId.Leonids]: <Trans>Leonids Meteor Shower</Trans>,
+	[SeasonalEventId.LunarNewYear]: <Trans>Lunar New Year</Trans>,
+	[SeasonalEventId.Lyrids]: <Trans>Lyrids Meteor Shower</Trans>,
+	[SeasonalEventId.NewYearsDay]: <Trans>New Year&apos;s Day</Trans>,
+	[SeasonalEventId.Orionids]: <Trans>Orionids Meteor Shower</Trans>,
 	[SeasonalEventId.Perseids]: <Trans>Perseids Meteor Shower</Trans>,
 	[SeasonalEventId.Quadrantids]: <Trans>Quadrantids Meteor Shower</Trans>,
-	[SeasonalEventId.Lyrids]: <Trans>Lyrids Meteor Shower</Trans>,
-	[SeasonalEventId.EtaAquariids]: <Trans>Eta Aquariids Meteor Shower</Trans>,
-	[SeasonalEventId.Orionids]: <Trans>Orionids Meteor Shower</Trans>,
-	[SeasonalEventId.Leonids]: <Trans>Leonids Meteor Shower</Trans>,
-	[SeasonalEventId.TotalSolarEclipse]: <Trans>Total Solar Eclipse</Trans>,
+	[SeasonalEventId.SpringEquinox]: <Trans>Spring Equinox</Trans>,
+	[SeasonalEventId.SummerSolstice]: <Trans>Summer Solstice</Trans>,
 	[SeasonalEventId.TotalLunarEclipse]: <Trans>Total Lunar Eclipse</Trans>,
-	[SeasonalEventId.DayOfTheDead]: <Trans>Day of the Dead</Trans>,
-	[SeasonalEventId.Easter]: <Trans>Easter</Trans>,
-	[SeasonalEventId.Geminids]: <Trans>Geminids Meteor Shower</Trans>,
-	[SeasonalEventId.EidAlFitr]: <Trans>Eid al-Fitr</Trans>,
-	[SeasonalEventId.EidAlAdha]: <Trans>Eid al-Adha</Trans>,
-	[SeasonalEventId.Hanukkah]: <Trans>Hanukkah</Trans>,
-	[SeasonalEventId.ChristmasDay]: <Trans>Christmas Day</Trans>,
-	[SeasonalEventId.EventHorizonDay]: <Trans>Event Horizon Day</Trans>,
+	[SeasonalEventId.TotalSolarEclipse]: <Trans>Total Solar Eclipse</Trans>,
+	[SeasonalEventId.ValentinesDay]: <Trans>Valentine&apos;s Day</Trans>,
+	[SeasonalEventId.WinterSolstice]: <Trans>Winter Solstice</Trans>,
 }
 
 const getSeasonalEmoji = (eventId: SeasonalEventId) =>
@@ -200,35 +203,35 @@ const DefaultSeasonalEventDetails = () => (
 	<p>Details for this event are coming soon.</p>
 )
 
-interface TileProps {
-	day: number
-	max: number
-	min: number
-	description: number
-	wind: number
-	rain: number
-	uv: number
-	useMetric: boolean
-	identifier: TileIdentifier
-	index: number
-	delayBaseline: number
-	showSeasonalEvents: boolean
-	showSeasonalTileGlow: boolean
-	enabledSeasonalEvents?: Set<SeasonalEventId>
-	hemisphere: Hemisphere
-	isSeasonalEventEnabled: (eventId: SeasonalEventId) => boolean
-	onToggleSeasonalEvent: (eventId: SeasonalEventId, enabled: boolean) => void
-}
-
 interface HeaderSwitchProps {
-	label: ReactElement
 	isEnabled: boolean
+	label: ReactElement
 	onToggle: (enabled: boolean) => void
 }
 
+interface TileProps {
+	day: number
+	delayBaseline: number
+	description: number
+	enabledSeasonalEvents?: Set<SeasonalEventId>
+	hemisphere: Hemisphere
+	identifier: TileIdentifier
+	index: number
+	isSeasonalEventEnabled: (eventId: SeasonalEventId) => boolean
+	max: number
+	min: number
+	onToggleSeasonalEvent: (eventId: SeasonalEventId, enabled: boolean) => void
+	rain: number
+	showSeasonalEvents: boolean
+	showSeasonalTileGlow: boolean
+	useMetric: boolean
+	uv: number
+	wind: number
+}
+
 const HeaderSwitch = ({
-	label,
 	isEnabled,
+	label,
 	onToggle,
 }: Readonly<HeaderSwitchProps>) => (
 	<div className="flex items-center gap-1.5">
@@ -237,8 +240,8 @@ const HeaderSwitch = ({
 		</span>
 		<HeadlessSwitch
 			checked={isEnabled}
-			onChange={onToggle}
 			className="group inline-flex h-5 w-9 items-center rounded-full bg-dark-500/80 transition-[background-color] select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-checked:bg-blue-600/85"
+			onChange={onToggle}
 		>
 			<span className="size-3 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-5" />
 		</HeadlessSwitch>
@@ -247,22 +250,22 @@ const HeaderSwitch = ({
 
 export const Tile = ({
 	day,
-	max,
-	min,
-	description,
-	wind,
-	rain,
-	uv,
-	useMetric,
-	identifier,
-	index,
 	delayBaseline,
-	showSeasonalEvents,
-	showSeasonalTileGlow,
+	description,
 	enabledSeasonalEvents,
 	hemisphere,
+	identifier,
+	index,
 	isSeasonalEventEnabled,
+	max,
+	min,
 	onToggleSeasonalEvent,
+	rain,
+	showSeasonalEvents,
+	showSeasonalTileGlow,
+	useMetric,
+	uv,
+	wind,
 }: Readonly<TileProps>) => {
 	const tileDate = new Date(day * 1000)
 	const dayDescriptor = days[tileDate.getDay()]
@@ -278,7 +281,7 @@ export const Tile = ({
 	const hiddenIdentifier =
 		identifier === TileIdentifier.Day ? dateDescriptor : dayDescriptor
 
-	const [seasonalEvent, setSeasonalEvent] = useState<SeasonalEvent | null>(null)
+	const [seasonalEvent, setSeasonalEvent] = useState<null | SeasonalEvent>(null)
 
 	useEffect(() => {
 		if (!showSeasonalEvents) {
@@ -295,7 +298,7 @@ export const Tile = ({
 					return
 				}
 				const nextSeasonalEvent = seasonalEvents.getSeasonalEventForDate({
-					date: tileDate,
+					date: new Date(day * 1000),
 					enabledEvents: enabledSeasonalEvents,
 					hemisphere,
 				})
@@ -348,18 +351,18 @@ export const Tile = ({
 
 	return (
 		<motion.div
-			initial={{ scale: 0.95, opacity: 0 }}
 			animate={{
-				scale: 1,
 				opacity: 1,
+				scale: 1,
 				transition: {
-					type: 'spring',
-					duration: 2,
 					delay: index * 0.1 + delayBaseline,
+					duration: 2,
+					type: 'spring',
 				},
 			}}
-			exit={{ scale: 0.95, opacity: 0 }}
 			className="group relative will-change-[transform,opacity]"
+			exit={{ opacity: 0, scale: 0.95 }}
+			initial={{ opacity: 0, scale: 0.95 }}
 		>
 			{seasonalAccent && (
 				<>
@@ -380,11 +383,11 @@ export const Tile = ({
 					<div className="absolute top-3 right-3">
 						<div className="group/seasonal relative">
 							<button
-								type="button"
-								aria-haspopup="dialog"
 								aria-expanded={isEventOpen}
-								onClick={() => setIsEventOpen(true)}
+								aria-haspopup="dialog"
 								className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-dark-800/80 text-sm text-white/90 shadow-sm ring-1 ring-white/10 backdrop-blur-sm transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+								onClick={() => setIsEventOpen(true)}
+								type="button"
 							>
 								<span aria-hidden="true">
 									{getSeasonalEmoji(seasonalBadgeId)}
@@ -411,7 +414,7 @@ export const Tile = ({
 				<div className="mt-3 flex items-center justify-between gap-4">
 					<div className="flex flex-col">
 						<div className="flex items-baseline gap-2">
-							<span className="text-3xl text-dark-100" aria-hidden>
+							<span aria-hidden className="text-3xl text-dark-100">
 								{useMetric ? Math.round(max) : Math.round((max * 9) / 5 + 32)}
 							</span>
 							<span className="sr-only">
@@ -428,7 +431,7 @@ export const Tile = ({
 									</Trans>
 								)}
 							</span>
-							<span className="text-lg text-dark-300" aria-hidden>
+							<span aria-hidden className="text-lg text-dark-300">
 								{useMetric ? Math.round(min) : Math.round((min * 9) / 5 + 32)}
 							</span>
 							<span className="sr-only">
@@ -446,7 +449,7 @@ export const Tile = ({
 								)}
 							</span>
 						</div>
-						<span className="text-dark-100" aria-hidden>
+						<span aria-hidden className="text-dark-100">
 							{descriptionMap[description as keyof typeof descriptionMap] ?? (
 								<Trans>unknown conditions</Trans>
 							)}
@@ -462,18 +465,18 @@ export const Tile = ({
 						</span>
 					</div>
 					<Image
-						quality={100}
-						priority
-						src={iconMap[description as keyof typeof iconMap] ?? FewClouds}
 						alt=""
-						width={56}
-						height={56}
 						className="h-14 w-14"
+						height={56}
+						priority
+						quality={100}
+						src={iconMap[description as keyof typeof iconMap] ?? FewClouds}
+						width={56}
 					/>
 				</div>
 				<div className="mt-4.5 flex flex-row justify-between gap-3">
 					<div className="flex flex-row items-center gap-1">
-						<IconUvIndex size={18} className="text-dark-100" aria-hidden />
+						<IconUvIndex aria-hidden className="text-dark-100" size={18} />
 						<span aria-hidden className="text-sm text-dark-100">
 							{Math.round(uv)}
 						</span>
@@ -482,7 +485,7 @@ export const Tile = ({
 						</span>
 					</div>
 					<div className="flex flex-row items-center gap-1">
-						<IconWind size={18} className="text-dark-100" aria-hidden />
+						<IconWind aria-hidden className="text-dark-100" size={18} />
 						<span aria-hidden className="text-sm text-dark-100">
 							{useMetric && <Trans>{Math.round(wind)} km/h</Trans>}
 							{!useMetric && <Trans>{Math.round(wind / 1.609344)} mph</Trans>}
@@ -503,7 +506,7 @@ export const Tile = ({
 						</span>
 					</div>
 					<div className="flex flex-row items-center gap-1">
-						<IconCloudRain size={18} className="text-dark-100" aria-hidden />
+						<IconCloudRain aria-hidden className="text-dark-100" size={18} />
 						<span
 							aria-hidden
 							className="text-sm text-dark-100"
@@ -520,18 +523,18 @@ export const Tile = ({
 				<SeasonalEventModal
 					isOpen={isEventOpen}
 					onClose={() => setIsEventOpen(false)}
-					title={renderSeasonalLabel(seasonalBadgeId)}
 					quickHeaderActions={
 						<div className="flex flex-wrap justify-end gap-1.5">
 							<HeaderSwitch
-								label={<Trans>Show this event</Trans>}
 								isEnabled={isCurrentSeasonalEventEnabled}
+								label={<Trans>Show this event</Trans>}
 								onToggle={(enabled) =>
 									onToggleSeasonalEvent(seasonalBadgeId, enabled)
 								}
 							/>
 						</div>
 					}
+					title={renderSeasonalLabel(seasonalBadgeId)}
 				>
 					<EventDetails />
 				</SeasonalEventModal>

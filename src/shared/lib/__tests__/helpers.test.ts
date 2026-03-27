@@ -1,5 +1,6 @@
+import { describe, expect, it } from 'vitest'
+
 import { mergeObjects } from '../helpers'
-import { describe, it, expect } from 'vitest'
 
 describe('mergeObjects', () => {
 	it('preserves keys from the target object', () => {
@@ -13,6 +14,6 @@ describe('mergeObjects', () => {
 		const target = { foo: 'bar' }
 		const source = { baz: 'qux' }
 		const result = mergeObjects(target, source)
-		expect(result).toEqual({ foo: 'bar', baz: 'qux' })
+		expect(result).toEqual({ baz: 'qux', foo: 'bar' })
 	})
 })

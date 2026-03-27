@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const EASTER_MOUNT_DELAY_MS = 900
 const EASTER_FIELD_OPACITY = '0.72'
@@ -13,17 +14,17 @@ const EASTER_FIELD_FILTER = 'saturate(135%)'
 const EASTER_FIELD_MAX_DPR = 2
 const EASTER_FIELD_MARGIN = 160
 const EASTER_PARTICLE_COUNT = 70
-const EASTER_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const EASTER_FADE_IN_DURATION_RANGE = { min: 1000, max: 1900 }
-const EASTER_SCALE_RANGE = { min: 0.45, max: 0.85 }
-const EASTER_SIZE_RANGE = { min: 16, max: 30 }
-const EASTER_VELOCITY_X_RANGE = { min: -8, max: 8 }
-const EASTER_VELOCITY_Y_RANGE = { min: -7, max: 6 }
-const EASTER_SWAY_RANGE = { min: 2.5, max: 8 }
-const EASTER_ROTATION_SPEED_RANGE = { min: -0.35, max: 0.35 }
+const EASTER_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+const EASTER_FADE_IN_DURATION_RANGE = { max: 1900, min: 1000 }
+const EASTER_SCALE_RANGE = { max: 0.85, min: 0.45 }
+const EASTER_SIZE_RANGE = { max: 30, min: 16 }
+const EASTER_VELOCITY_X_RANGE = { max: 8, min: -8 }
+const EASTER_VELOCITY_Y_RANGE = { max: 6, min: -7 }
+const EASTER_SWAY_RANGE = { max: 8, min: 2.5 }
+const EASTER_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
 const EASTER_SWAY_SPEED_X = 0.00055
 const EASTER_SWAY_SPEED_Y = 0.00045
-const EASTER_GLOW_RANGE = { min: 6, max: 16 }
+const EASTER_GLOW_RANGE = { max: 16, min: 6 }
 const EASTER_GLOW_COLORS = [
 	'rgba(244, 114, 182, 0.45)',
 	'rgba(167, 139, 250, 0.4)',
@@ -79,38 +80,26 @@ const EventDetails = () => (
 		</p>
 		<p>
 			<Trans>
-				There's a reason the holiday lands in spring — it borrows heavily from
-				the season's own sense of things starting over.
+				There&apos;s a reason the holiday lands in spring — it borrows heavily
+				from the season&apos;s own sense of things starting over.
 			</Trans>
 		</p>
 	</>
 )
 
 export const easterEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.Easter,
 	isActive: isEaster,
 	run: launchEaster,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#fce7f3', '#fbcfe8', '#a5b4fc', '#93c5fd', '#fce7f3'],
 	},
 }
 
-function isEaster({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const easterDate = getWesternEasterDate(year)
-	if (!easterDate) {
-		return false
-	}
-
-	return (
-		date.getMonth() === easterDate.month && date.getDate() === easterDate.day
-	)
-}
-
 function getWesternEasterDate(
 	year: number,
-): { month: number; day: number } | null {
+): null | { day: number; month: number } {
 	if (!Number.isFinite(year)) {
 		return null
 	}
@@ -134,7 +123,19 @@ function getWesternEasterDate(
 		return null
 	}
 
-	return { month, day }
+	return { day, month }
+}
+
+function isEaster({ date }: SeasonalEventContext) {
+	const year = date.getFullYear()
+	const easterDate = getWesternEasterDate(year)
+	if (!easterDate) {
+		return false
+	}
+
+	return (
+		date.getMonth() === easterDate.month && date.getDate() === easterDate.day
+	)
 }
 
 async function launchEaster() {
@@ -155,32 +156,32 @@ async function launchEaster() {
 		}
 
 		type EasterParticle = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			size: number
-			rotation: number
-			rotationSpeed: number
-			opacity: number
+			birthTime: number
 			emoji: string
+			fadeDuration: number
 			glow: number
 			glowColor: string
-			phase: number
-			sway: number
-			birthTime: number
-			fadeDuration: number
-			scaleFrom: number
 			hasSparkle: boolean
+			opacity: number
+			phase: number
+			rotation: number
+			rotationSpeed: number
+			scaleFrom: number
+			size: number
 			sparklePhase: number
+			sway: number
+			vx: number
+			vy: number
+			x: number
+			y: number
 		}
 		type EmojiSprite = {
 			canvas: HTMLCanvasElement
 			displaySize: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
@@ -199,30 +200,30 @@ async function launchEaster() {
 		const randomGlow = () =>
 			EASTER_GLOW_COLORS[Math.floor(Math.random() * EASTER_GLOW_COLORS.length)]
 		const createParticle = (time: number): EasterParticle => ({
-			x: randomInRange({
-				min: -EASTER_FIELD_MARGIN,
-				max: width + EASTER_FIELD_MARGIN,
-			}),
-			y: randomInRange({
-				min: -EASTER_FIELD_MARGIN,
-				max: height + EASTER_FIELD_MARGIN,
-			}),
-			vx: randomInRange(EASTER_VELOCITY_X_RANGE),
-			vy: randomInRange(EASTER_VELOCITY_Y_RANGE),
-			size: randomInRange(EASTER_SIZE_RANGE),
-			rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-			rotationSpeed: randomInRange(EASTER_ROTATION_SPEED_RANGE),
-			opacity: randomInRange({ min: 0.45, max: 0.85 }),
+			birthTime: time + randomInRange(EASTER_FADE_IN_DELAY_RANGE),
 			emoji: randomEmoji(),
+			fadeDuration: randomInRange(EASTER_FADE_IN_DURATION_RANGE),
 			glow: randomInRange(EASTER_GLOW_RANGE),
 			glowColor: randomGlow(),
-			phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-			sway: randomInRange(EASTER_SWAY_RANGE),
-			birthTime: time + randomInRange(EASTER_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(EASTER_FADE_IN_DURATION_RANGE),
-			scaleFrom: randomInRange(EASTER_SCALE_RANGE),
 			hasSparkle: Math.random() < 0.22,
-			sparklePhase: randomInRange({ min: 0, max: Math.PI * 2 }),
+			opacity: randomInRange({ max: 0.85, min: 0.45 }),
+			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotationSpeed: randomInRange(EASTER_ROTATION_SPEED_RANGE),
+			scaleFrom: randomInRange(EASTER_SCALE_RANGE),
+			size: randomInRange(EASTER_SIZE_RANGE),
+			sparklePhase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			sway: randomInRange(EASTER_SWAY_RANGE),
+			vx: randomInRange(EASTER_VELOCITY_X_RANGE),
+			vy: randomInRange(EASTER_VELOCITY_Y_RANGE),
+			x: randomInRange({
+				max: width + EASTER_FIELD_MARGIN,
+				min: -EASTER_FIELD_MARGIN,
+			}),
+			y: randomInRange({
+				max: height + EASTER_FIELD_MARGIN,
+				min: -EASTER_FIELD_MARGIN,
+			}),
 		})
 		const getSpriteKey = (
 			emoji: string,
@@ -287,7 +288,7 @@ async function launchEaster() {
 		const resizeCanvas = () => {
 			width = window.innerWidth
 			height = window.innerHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: EASTER_FIELD_MAX_DPR })
+			const dpr = getCanvasDpr({ height, maxDpr: EASTER_FIELD_MAX_DPR, width })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

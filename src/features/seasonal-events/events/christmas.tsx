@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const CHRISTMAS_MONTH = 11
 const CHRISTMAS_DAY = 25
@@ -15,17 +16,17 @@ const CHRISTMAS_FIELD_FILTER = 'saturate(135%)'
 const CHRISTMAS_FIELD_MAX_DPR = 2
 const CHRISTMAS_FIELD_MARGIN = 160
 const CHRISTMAS_PARTICLE_COUNT = 120
-const CHRISTMAS_FADE_IN_DELAY_RANGE = { min: 0, max: 2400 }
-const CHRISTMAS_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
-const CHRISTMAS_SCALE_RANGE = { min: 0.45, max: 0.9 }
-const CHRISTMAS_SIZE_RANGE = { min: 2.5, max: 6.5 }
-const CHRISTMAS_VELOCITY_X_RANGE = { min: -4.5, max: 4.5 }
-const CHRISTMAS_VELOCITY_Y_RANGE = { min: 10, max: 20 }
-const CHRISTMAS_SWAY_RANGE = { min: 1.2, max: 4 }
-const CHRISTMAS_ROTATION_SPEED_RANGE = { min: -0.35, max: 0.35 }
+const CHRISTMAS_FADE_IN_DELAY_RANGE = { max: 2400, min: 0 }
+const CHRISTMAS_FADE_IN_DURATION_RANGE = { max: 2200, min: 1200 }
+const CHRISTMAS_SCALE_RANGE = { max: 0.9, min: 0.45 }
+const CHRISTMAS_SIZE_RANGE = { max: 6.5, min: 2.5 }
+const CHRISTMAS_VELOCITY_X_RANGE = { max: 4.5, min: -4.5 }
+const CHRISTMAS_VELOCITY_Y_RANGE = { max: 20, min: 10 }
+const CHRISTMAS_SWAY_RANGE = { max: 4, min: 1.2 }
+const CHRISTMAS_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
 const CHRISTMAS_SWAY_SPEED_X = 0.00045
 const CHRISTMAS_SWAY_SPEED_Y = 0.00025
-const CHRISTMAS_GLOW_RANGE = { min: 10, max: 18 }
+const CHRISTMAS_GLOW_RANGE = { max: 18, min: 10 }
 const CHRISTMAS_SPARKLE_CHANCE = 0.3
 const CHRISTMAS_LIGHTS_OPACITY = '0.5'
 const CHRISTMAS_LIGHTS_GRADIENT =
@@ -115,10 +116,10 @@ const EventDetails = () => (
 )
 
 export const christmasEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.ChristmasDay,
 	isActive: isChristmasDay,
 	run: launchChristmasSnowfall,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#fef3c7', '#fca5a5', '#86efac', '#fde68a', '#fef3c7'],
 	},
@@ -149,26 +150,26 @@ async function launchChristmasSnowfall() {
 		}
 
 		type SnowParticle = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			size: number
-			opacity: number
-			color: string
-			glow: number
-			phase: number
-			sway: number
 			birthTime: number
+			color: string
 			fadeDuration: number
+			glow: number
+			hasSparkle: boolean
+			opacity: number
+			phase: number
 			rotation: number
 			rotationSpeed: number
 			scaleFrom: number
-			hasSparkle: boolean
+			size: number
+			sway: number
+			vx: number
+			vy: number
+			x: number
+			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
@@ -178,28 +179,28 @@ async function launchChristmasSnowfall() {
 		const randomColor = () =>
 			CHRISTMAS_COLORS[Math.floor(Math.random() * CHRISTMAS_COLORS.length)]
 		const createParticle = (time: number): SnowParticle => ({
-			x: randomInRange({
-				min: -CHRISTMAS_FIELD_MARGIN,
-				max: width + CHRISTMAS_FIELD_MARGIN,
-			}),
-			y: randomInRange({
-				min: -CHRISTMAS_FIELD_MARGIN,
-				max: height + CHRISTMAS_FIELD_MARGIN,
-			}),
-			vx: randomInRange(CHRISTMAS_VELOCITY_X_RANGE),
-			vy: randomInRange(CHRISTMAS_VELOCITY_Y_RANGE),
-			size: randomInRange(CHRISTMAS_SIZE_RANGE),
-			opacity: randomInRange({ min: 0.35, max: 0.8 }),
-			color: randomColor(),
-			glow: randomInRange(CHRISTMAS_GLOW_RANGE),
-			phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-			sway: randomInRange(CHRISTMAS_SWAY_RANGE),
 			birthTime: time + randomInRange(CHRISTMAS_FADE_IN_DELAY_RANGE),
+			color: randomColor(),
 			fadeDuration: randomInRange(CHRISTMAS_FADE_IN_DURATION_RANGE),
-			rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
+			glow: randomInRange(CHRISTMAS_GLOW_RANGE),
+			hasSparkle: Math.random() < CHRISTMAS_SPARKLE_CHANCE,
+			opacity: randomInRange({ max: 0.8, min: 0.35 }),
+			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
 			rotationSpeed: randomInRange(CHRISTMAS_ROTATION_SPEED_RANGE),
 			scaleFrom: randomInRange(CHRISTMAS_SCALE_RANGE),
-			hasSparkle: Math.random() < CHRISTMAS_SPARKLE_CHANCE,
+			size: randomInRange(CHRISTMAS_SIZE_RANGE),
+			sway: randomInRange(CHRISTMAS_SWAY_RANGE),
+			vx: randomInRange(CHRISTMAS_VELOCITY_X_RANGE),
+			vy: randomInRange(CHRISTMAS_VELOCITY_Y_RANGE),
+			x: randomInRange({
+				max: width + CHRISTMAS_FIELD_MARGIN,
+				min: -CHRISTMAS_FIELD_MARGIN,
+			}),
+			y: randomInRange({
+				max: height + CHRISTMAS_FIELD_MARGIN,
+				min: -CHRISTMAS_FIELD_MARGIN,
+			}),
 		})
 		const resetParticles = (time: number) => {
 			particles = Array.from({ length: CHRISTMAS_PARTICLE_COUNT }, () =>
@@ -208,7 +209,7 @@ async function launchChristmasSnowfall() {
 		}
 		const respawnParticle = (particle: SnowParticle, time: number) => {
 			Object.assign(particle, createParticle(time))
-			particle.y = -randomInRange({ min: 0, max: CHRISTMAS_FIELD_MARGIN })
+			particle.y = -randomInRange({ max: CHRISTMAS_FIELD_MARGIN, min: 0 })
 		}
 		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
 		const resizeCanvas = () => {
@@ -219,9 +220,9 @@ async function launchChristmasSnowfall() {
 			width = nextWidth
 			height = nextHeight
 			const dpr = getCanvasDpr({
-				width,
 				height,
 				maxDpr: CHRISTMAS_FIELD_MAX_DPR,
+				width,
 			})
 
 			canvas.width = Math.round(width * dpr)

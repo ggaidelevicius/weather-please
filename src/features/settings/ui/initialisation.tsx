@@ -1,3 +1,5 @@
+import type { Dispatch, SetStateAction } from 'react'
+
 import {
 	Description,
 	Dialog,
@@ -9,23 +11,17 @@ import { Trans } from '@lingui/react/macro'
 import { IconAlertTriangle, IconShieldCheckFilled } from '@tabler/icons-react'
 import Image from 'next/image'
 import { useState } from 'react'
+
+import type { LocaleKey } from '../../../shared/lib/i18n'
+import type { Config } from '../hooks/use-config'
+
+import Favicon from '../../../../public/favicon.png'
+import { AsyncStatus } from '../../../shared/hooks/async-status'
+import { locales } from '../../../shared/lib/i18n'
 import { Alert } from '../../../shared/ui/alert'
 import { AlertVariant } from '../../../shared/ui/alert-variant'
 import { Button } from '../../../shared/ui/button'
 import { Select, Switch } from '../../../shared/ui/input'
-import { AsyncStatus } from '../../../shared/hooks/async-status'
-import { locales } from '../../../shared/lib/i18n'
-import Favicon from '../../../../public/favicon.png'
-import type { Config } from '../hooks/use-config'
-import type { LocaleKey } from '../../../shared/lib/i18n'
-import type { Dispatch, SetStateAction } from 'react'
-
-interface InitialisationProps {
-	setInput: Dispatch<SetStateAction<Config>>
-	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
-	input: Config
-	pending: boolean
-}
 
 enum LocationErrorCode {
 	PermissionDenied = 'permission_denied',
@@ -33,11 +29,18 @@ enum LocationErrorCode {
 	Timeout = 'timeout',
 }
 
+interface InitialisationProps {
+	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
+	input: Config
+	pending: boolean
+	setInput: Dispatch<SetStateAction<Config>>
+}
+
 export const Initialisation = ({
-	setInput,
 	handleChange,
 	input,
 	pending,
+	setInput,
 }: Readonly<InitialisationProps>) => {
 	const [locationStatus, setLocationStatus] = useState<AsyncStatus>(
 		AsyncStatus.Idle,
@@ -84,24 +87,24 @@ export const Initialisation = ({
 				return (
 					<Trans>
 						<strong>Location access denied.</strong> Click the location icon in
-						the address bar, and select "always allow this to access your
-						location". Then click the button below to try again.
+						the address bar, and select &quot;always allow this to access your
+						location&quot;. Then click the button below to try again.
 					</Trans>
 				)
 			} else if (isFirefox) {
 				return (
 					<Trans>
 						<strong>Location access denied.</strong> Click the location icon in
-						the address bar, and select "always allow this to access your
-						location". Then click the button below to try again.
+						the address bar, and select &quot;always allow this to access your
+						location&quot;. Then click the button below to try again.
 					</Trans>
 				)
 			} else if (isSafari) {
 				return (
 					<Trans>
 						<strong>Location access denied.</strong> Click the location icon in
-						the address bar, and select "always allow this to access your
-						location". Then click the button below to try again.
+						the address bar, and select &quot;always allow this to access your
+						location&quot;. Then click the button below to try again.
 					</Trans>
 				)
 			}
@@ -130,15 +133,15 @@ export const Initialisation = ({
 	}
 
 	return (
-		<Dialog open={pending} onClose={() => {}} className="relative z-50">
+		<Dialog className="relative z-50" onClose={() => {}} open={pending}>
 			<DialogBackdrop
-				transition
 				className="fixed inset-0 bg-black/60 backdrop-blur-lg transition duration-300 will-change-[backdrop-filter,background-color] data-closed:opacity-0"
+				transition
 			/>{' '}
 			<div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 				<DialogPanel
-					transition
 					className="m-auto w-full max-w-lg space-y-4 rounded-xl bg-dark-800 p-12 transition duration-400 will-change-[transform,opacity,filter] data-closed:scale-97 data-closed:opacity-0 data-closed:blur-xs"
+					transition
 				>
 					{' '}
 					<DialogTitle
@@ -146,11 +149,11 @@ export const Initialisation = ({
 						className="flex flex-row items-center justify-center gap-5"
 					>
 						<Image
+							alt="Weather Please logo"
+							className="h-16 w-16 select-none"
 							priority
 							quality={100}
 							src={Favicon}
-							alt="Weather Please logo"
-							className="h-16 w-16 select-none"
 						/>
 						<h1 className="text-4xl font-bold text-white">
 							Weather <span className="text-[#ea5e57]">Please</span>
@@ -169,18 +172,18 @@ export const Initialisation = ({
 					</p>
 					<Select
 						label={<Trans>Language</Trans>}
-						value={input.lang}
 						onChange={(e) => {
 							handleChange('lang', e.target.value)
 						}}
 						options={localeKeys.map((key) => ({
-							value: key,
 							label: locales[key].label,
+							value: key,
 						}))}
+						value={input.lang}
 					/>
 					<Switch
-						label={<Trans>Use metric number format</Trans>}
 						checked={input.useMetric}
+						label={<Trans>Use metric number format</Trans>}
 						onChange={(e) => handleChange('useMetric', e)}
 					/>
 					<Alert icon={IconShieldCheckFilled}>
@@ -194,7 +197,7 @@ export const Initialisation = ({
 							{getErrorInstructions()}
 						</Alert>
 					)}
-					<Button onClick={handleClick} disabled={isLoading}>
+					<Button disabled={isLoading} onClick={handleClick}>
 						{errorCode ? (
 							<Trans>Try again</Trans>
 						) : (

@@ -1,14 +1,18 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
+
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { z } from 'zod'
+
+import type { LocaleKey } from '../../../shared/lib/i18n'
+
+import { mergeObjects } from '../../../shared/lib/helpers'
+import { changeLocalisation, locales } from '../../../shared/lib/i18n'
+import { isLocationInAustralia } from '../../../shared/lib/location'
 import {
 	BOOLEAN_CONFIG_DEFAULTS,
 	BOOLEAN_CONFIG_SCHEMA_SHAPE,
 } from '../model/boolean-settings'
-import { mergeObjects } from '../../../shared/lib/helpers'
-import { changeLocalisation, locales } from '../../../shared/lib/i18n'
-import { isLocationInAustralia } from '../../../shared/lib/location'
 import { TileIdentifier } from '../model/tile-identifier'
-import type { LocaleKey } from '../../../shared/lib/i18n'
 
 const configSchema = z.object({
 	daysToRetrieve: z.string(),
@@ -77,50 +81,70 @@ const getInitialConfig = (): Config => {
 	}
 }
 
+const hasValidCoordinates = ({ lat, lon }: Config) =>
+	Boolean(lat) &&
+	Boolean(lon) &&
+	/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(lat) &&
+	/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(lon)
+
+const persistConfigInput = (input: Config) => {
+	if (typeof window === 'undefined' || !hasValidCoordinates(input)) {
+		return { nextConfig: null, nextInput: input }
+	}
+
+	const hasStoredConfig = Boolean(localStorage.getItem('config'))
+	const shouldEnableAirQualityUv =
+		!hasStoredConfig &&
+		!input.useAirQualityUvOverride &&
+		isLocationInAustralia(input.lat, input.lon)
+	const nextConfig = shouldEnableAirQualityUv
+		? { ...input, useAirQualityUvOverride: true }
+		: input
+
+	localStorage.setItem('config', JSON.stringify(nextConfig))
+
+	return {
+		nextConfig,
+		nextInput: shouldEnableAirQualityUv ? nextConfig : input,
+	}
+}
+
 export const useConfig = () => {
 	const [config, setConfig] = useState<Config>(initialState)
-	const [input, setInput] = useState<Config>(initialState)
+	const [inputState, setInputState] = useState<Config>(initialState)
 	const [isHydrated, setIsHydrated] = useState(false)
+	const inputRef = useRef(initialState)
 
 	useIsomorphicLayoutEffect(() => {
 		const storedConfig = getInitialConfig()
+		inputRef.current = storedConfig
 		setConfig(storedConfig)
-		setInput(storedConfig)
+		setInputState(storedConfig)
 		setIsHydrated(true)
 	}, [])
 
-	// Save config when input changes and is valid
-	useEffect(() => {
-		if (
-			input.lat &&
-			input.lon &&
-			/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat) &&
-			/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(
-				input.lon,
-			)
-		) {
-			const hasStoredConfig = Boolean(localStorage.getItem('config'))
-			const shouldEnableAirQualityUv =
-				!hasStoredConfig &&
-				!input.useAirQualityUvOverride &&
-				isLocationInAustralia(input.lat, input.lon)
-			const nextConfig = shouldEnableAirQualityUv
-				? { ...input, useAirQualityUvOverride: true }
-				: input
-			localStorage.setItem('config', JSON.stringify(nextConfig))
+	const applyInputUpdate = (nextInput: Config) => {
+		const { nextConfig, nextInput: persistedInput } =
+			persistConfigInput(nextInput)
+		inputRef.current = persistedInput
+		setInputState(persistedInput)
+		if (nextConfig) {
 			setConfig(nextConfig)
-			if (shouldEnableAirQualityUv) {
-				setInput(nextConfig)
-			}
 		}
-	}, [input])
+	}
+
+	const setInput: Dispatch<SetStateAction<Config>> = (value) => {
+		const nextInput =
+			typeof value === 'function' ? value(inputRef.current) : value
+		applyInputUpdate(nextInput)
+	}
 
 	// Handle language changes
 	useEffect(() => {
-		if (input.lang) {
-			changeLocalisation(input.lang)
+		if (inputState.lang) {
+			changeLocalisation(inputState.lang)
 		}
-	}, [input.lang])
+	}, [inputState.lang])
 
 	const handleChange = (k: keyof Config, v: Config[keyof Config]) => {
 		setInput((prev) => ({
@@ -135,10 +159,10 @@ export const useConfig = () => {
 
 	return {
 		config,
-		input,
 		handleChange,
-		updateConfig,
-		setInput,
+		input: inputState,
 		isHydrated,
+		setInput,
+		updateConfig,
 	}
 }

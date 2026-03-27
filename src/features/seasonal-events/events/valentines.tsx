@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const VALENTINES_MONTH = 1
 const VALENTINES_DAY = 14
@@ -18,20 +19,20 @@ const HEARTS_FIELD_COUNT = 72
 const HEARTS_GLOW_OPACITY = '0.4'
 const HEARTS_GLOW_GRADIENT =
 	'radial-gradient(120% 90% at 50% 100%, rgba(244, 114, 182, 0.5), rgba(251, 113, 133, 0.25) 45%, rgba(15, 23, 42, 0) 75%)'
-const HEARTS_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const HEARTS_FADE_IN_DURATION_RANGE = { min: 900, max: 1600 }
-const HEARTS_SCALE_RANGE = { min: 0.4, max: 0.75 }
-const HEARTS_SIZE_RANGE = { min: 12, max: 26 }
-const HEARTS_VELOCITY_X_RANGE = { min: -6, max: 6 }
-const HEARTS_VELOCITY_Y_RANGE = { min: -6, max: -1 }
-const HEARTS_SWAY_RANGE = { min: 2, max: 8 }
-const HEARTS_ROTATION_SPEED_RANGE = { min: -0.35, max: 0.35 }
-const HEARTS_GLOW_RANGE = { min: 16, max: 28 }
+const HEARTS_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+const HEARTS_FADE_IN_DURATION_RANGE = { max: 1600, min: 900 }
+const HEARTS_SCALE_RANGE = { max: 0.75, min: 0.4 }
+const HEARTS_SIZE_RANGE = { max: 26, min: 12 }
+const HEARTS_VELOCITY_X_RANGE = { max: 6, min: -6 }
+const HEARTS_VELOCITY_Y_RANGE = { max: -1, min: -6 }
+const HEARTS_SWAY_RANGE = { max: 8, min: 2 }
+const HEARTS_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
+const HEARTS_GLOW_RANGE = { max: 28, min: 16 }
 const HEARTS_CLOUD_CHANCE = 0.33
 const HEARTS_CLOUD_SIZE_FACTOR = 1.22
 const HEARTS_CLOUD_BASE_SPAN = 34
-const HEARTS_CLOUD_FILL_RANGE = { min: 0.95, max: 1.02 }
-const HEARTS_CLOUD_JITTER_FACTOR_RANGE = { min: 0.02, max: 0.06 }
+const HEARTS_CLOUD_FILL_RANGE = { max: 1.02, min: 0.95 }
+const HEARTS_CLOUD_JITTER_FACTOR_RANGE = { max: 0.06, min: 0.02 }
 const HEARTS_CLOUD_T_JITTER = 0.15
 const HEARTS_GRADIENTS = [
 	{ inner: '#ffe1f2', mid: '#ff8fc1', outer: '#e11d48' },
@@ -58,8 +59,8 @@ const EventDetails = () => (
 		</p>
 		<p>
 			<Trans>
-				It's often less about grand gestures and more about letting someone know
-				they're on your mind.
+				It&apos;s often less about grand gestures and more about letting someone
+				know they&apos;re on your mind.
 			</Trans>
 		</p>
 
@@ -107,18 +108,18 @@ const EventDetails = () => (
 		</p>
 		<p>
 			<Trans>
-				Centuries later, people still reach for pen and paper when a text won't
-				do.
+				Centuries later, people still reach for pen and paper when a text
+				won&apos;t do.
 			</Trans>
 		</p>
 	</>
 )
 
 export const valentinesEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.ValentinesDay,
 	isActive: isValentinesDay,
 	run: launchValentinesHearts,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#fbcfe8', '#f9a8d4', '#f472b6', '#fb7185', '#fbcfe8'],
 	},
@@ -148,30 +149,30 @@ async function launchValentinesHearts() {
 		}
 
 		type HeartParticle = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			size: number
-			rotation: number
-			rotationSpeed: number
-			opacity: number
-			gradient: (typeof HEARTS_GRADIENTS)[number]
-			shape: (typeof HEARTS_SHAPES)[number]
-			glow: number
-			phase: number
-			sway: number
 			birthTime: number
 			fadeDuration: number
+			glow: number
+			gradient: (typeof HEARTS_GRADIENTS)[number]
+			opacity: number
+			phase: number
+			rotation: number
+			rotationSpeed: number
 			scaleFrom: number
+			shape: (typeof HEARTS_SHAPES)[number]
+			size: number
+			sway: number
+			vx: number
+			vy: number
+			x: number
+			y: number
 		}
 		type HeartSeed = {
 			x: number
 			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let hasCanceled = false
 		let width = window.innerWidth
 		let height = window.innerHeight
@@ -218,7 +219,7 @@ async function launchValentinesHearts() {
 				const jitter =
 					minDimension * randomInRange(HEARTS_CLOUD_JITTER_FACTOR_RANGE)
 				const spreadAngle = Math.random() * Math.PI * 2
-				const spread = randomInRange({ min: 0, max: jitter })
+				const spread = randomInRange({ max: jitter, min: 0 })
 
 				return {
 					x: centerX + x * scale * fill + Math.cos(spreadAngle) * spread,
@@ -227,32 +228,32 @@ async function launchValentinesHearts() {
 			})
 		}
 		const createParticle = (time: number, seed?: HeartSeed): HeartParticle => ({
+			birthTime: time + randomInRange(HEARTS_FADE_IN_DELAY_RANGE),
+			fadeDuration: randomInRange(HEARTS_FADE_IN_DURATION_RANGE),
+			glow: randomInRange(HEARTS_GLOW_RANGE),
+			gradient: randomGradient(),
+			opacity: randomInRange({ max: 0.85, min: 0.45 }),
+			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
+			rotationSpeed: randomInRange(HEARTS_ROTATION_SPEED_RANGE),
+			scaleFrom: randomInRange(HEARTS_SCALE_RANGE),
+			shape: randomShape(),
+			size: randomInRange(HEARTS_SIZE_RANGE),
+			sway: randomInRange(HEARTS_SWAY_RANGE),
+			vx: randomInRange(HEARTS_VELOCITY_X_RANGE),
+			vy: randomInRange(HEARTS_VELOCITY_Y_RANGE),
 			x:
 				seed?.x ??
 				randomInRange({
-					min: -HEARTS_FIELD_MARGIN,
 					max: width + HEARTS_FIELD_MARGIN,
+					min: -HEARTS_FIELD_MARGIN,
 				}),
 			y:
 				seed?.y ??
 				randomInRange({
-					min: -HEARTS_FIELD_MARGIN,
 					max: height + HEARTS_FIELD_MARGIN,
+					min: -HEARTS_FIELD_MARGIN,
 				}),
-			vx: randomInRange(HEARTS_VELOCITY_X_RANGE),
-			vy: randomInRange(HEARTS_VELOCITY_Y_RANGE),
-			size: randomInRange(HEARTS_SIZE_RANGE),
-			rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-			rotationSpeed: randomInRange(HEARTS_ROTATION_SPEED_RANGE),
-			opacity: randomInRange({ min: 0.45, max: 0.85 }),
-			gradient: randomGradient(),
-			shape: randomShape(),
-			glow: randomInRange(HEARTS_GLOW_RANGE),
-			phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-			sway: randomInRange(HEARTS_SWAY_RANGE),
-			birthTime: time + randomInRange(HEARTS_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(HEARTS_FADE_IN_DURATION_RANGE),
-			scaleFrom: randomInRange(HEARTS_SCALE_RANGE),
 		})
 		const resetParticles = (time: number) => {
 			const seeds = shouldFormHeartCloud ? createHeartCloudSeeds() : null
@@ -272,7 +273,7 @@ async function launchValentinesHearts() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: HEARTS_FIELD_MAX_DPR })
+			const dpr = getCanvasDpr({ height, maxDpr: HEARTS_FIELD_MAX_DPR, width })
 
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)

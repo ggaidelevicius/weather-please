@@ -1,6 +1,13 @@
 import { defineConfig } from '@lingui/cli'
 
 export default defineConfig({
+	catalogs: [
+		{
+			include: ['src'],
+			path: '<rootDir>/src/locales/{locale}/messages',
+		},
+	],
+	format: 'po',
 	locales: [
 		'en',
 		'lt',
@@ -17,11 +24,4 @@ export default defineConfig({
 		'bn',
 		'id',
 	],
-	catalogs: [
-		{
-			path: '<rootDir>/src/locales/{locale}/messages',
-			include: ['src'],
-		},
-	],
-	format: 'po',
 })

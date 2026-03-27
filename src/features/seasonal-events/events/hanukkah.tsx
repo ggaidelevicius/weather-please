@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const HANUKKAH_START_DATES = new Set([
 	'2026-12-04',
@@ -34,19 +35,19 @@ const HANUKKAH_MAX_DPR = 2
 const HANUKKAH_SCENE_FADE_DELAY_MS = 300
 const HANUKKAH_SCENE_FADE_DURATION_MS = 1400
 const HANUKKAH_STAR_COUNT = 140
-const HANUKKAH_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
-const HANUKKAH_STAR_OPACITY_RANGE = { min: 0.2, max: 0.6 }
-const HANUKKAH_STAR_TWINKLE_RANGE = { min: 0.0005, max: 0.0012 }
+const HANUKKAH_STAR_RADIUS_RANGE = { max: 1.4, min: 0.5 }
+const HANUKKAH_STAR_OPACITY_RANGE = { max: 0.6, min: 0.2 }
+const HANUKKAH_STAR_TWINKLE_RANGE = { max: 0.0012, min: 0.0005 }
 const HANUKKAH_CANDLE_COUNT = 9
-const HANUKKAH_CANDLE_SIZE_RANGE = { min: 12, max: 18 }
-const HANUKKAH_CANDLE_FLICKER_RANGE = { min: 0.0008, max: 0.0015 }
+const HANUKKAH_CANDLE_SIZE_RANGE = { max: 18, min: 12 }
+const HANUKKAH_CANDLE_FLICKER_RANGE = { max: 0.0015, min: 0.0008 }
 const HANUKKAH_SPARK_COUNT = 26
-const HANUKKAH_SPARK_SIZE_RANGE = { min: 2, max: 5 }
-const HANUKKAH_SPARK_SPEED_RANGE = { min: 7, max: 16 }
-const HANUKKAH_SPARK_SWAY_RANGE = { min: 5, max: 14 }
-const HANUKKAH_SPARK_OPACITY_RANGE = { min: 0.3, max: 0.75 }
-const HANUKKAH_SPARK_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const HANUKKAH_SPARK_FADE_IN_DURATION_RANGE = { min: 900, max: 2000 }
+const HANUKKAH_SPARK_SIZE_RANGE = { max: 5, min: 2 }
+const HANUKKAH_SPARK_SPEED_RANGE = { max: 16, min: 7 }
+const HANUKKAH_SPARK_SWAY_RANGE = { max: 14, min: 5 }
+const HANUKKAH_SPARK_OPACITY_RANGE = { max: 0.75, min: 0.3 }
+const HANUKKAH_SPARK_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+const HANUKKAH_SPARK_FADE_IN_DURATION_RANGE = { max: 2000, min: 900 }
 const HANUKKAH_SPARK_COLORS = [
 	'rgba(226, 232, 240, 0.8)',
 	'rgba(191, 219, 254, 0.75)',
@@ -122,19 +123,20 @@ const EventDetails = () => (
 		</p>
 		<p>
 			<Trans>
-				Dreidel, often dismissed as a children's game, was historically used as
-				a cover for Torah study during periods when it was outlawed. Each Hebrew
-				letter on its sides forms an acronym: "A great miracle happened there."
+				Dreidel, often dismissed as a children&apos;s game, was historically
+				used as a cover for Torah study during periods when it was outlawed.
+				Each Hebrew letter on its sides forms an acronym: &quot;A great miracle
+				happened there.&quot;
 			</Trans>
 		</p>
 	</>
 )
 
 export const hanukkahEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.Hanukkah,
 	isActive: isHanukkah,
 	run: launchHanukkahGlow,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#e0f2fe', '#60a5fa', '#fbbf24', '#fde68a', '#e0f2fe'],
 	},
@@ -166,37 +168,37 @@ async function launchHanukkahGlow() {
 		}
 
 		type Star = {
+			opacity: number
+			phase: number
+			radius: number
+			twinkle: number
 			x: number
 			y: number
-			radius: number
-			opacity: number
-			twinkle: number
-			phase: number
 		}
 		type Candle = {
-			x: number
-			y: number
-			radius: number
 			color: { core: string; mid: string }
 			flickerPhase: number
 			flickerSpeed: number
 			isShamash: boolean
+			radius: number
+			x: number
+			y: number
 		}
 		type Spark = {
 			baseX: number
-			y: number
-			vy: number
-			size: number
-			opacity: number
-			color: string
-			sway: number
-			phase: number
 			birthTime: number
+			color: string
 			fadeDuration: number
+			opacity: number
+			phase: number
+			size: number
+			sway: number
+			vy: number
+			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let width = window.innerWidth
 		let height = window.innerHeight
 		let stars: Star[] = []
@@ -206,12 +208,12 @@ async function launchHanukkahGlow() {
 		let sceneFadeStart = performance.now()
 
 		const createStar = (): Star => ({
+			opacity: randomInRange(HANUKKAH_STAR_OPACITY_RANGE),
+			phase: Math.random() * Math.PI * 2,
+			radius: randomInRange(HANUKKAH_STAR_RADIUS_RANGE),
+			twinkle: randomInRange(HANUKKAH_STAR_TWINKLE_RANGE),
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: randomInRange(HANUKKAH_STAR_RADIUS_RANGE),
-			opacity: randomInRange(HANUKKAH_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(HANUKKAH_STAR_TWINKLE_RANGE),
-			phase: Math.random() * Math.PI * 2,
 		})
 
 		const createCandles = (): Candle[] => {
@@ -229,13 +231,13 @@ async function launchHanukkahGlow() {
 				const sizeBoost = index === shamashIndex ? 1.12 : 1
 
 				return {
-					x: startX + spacing * index,
-					y: baseY - yOffset,
-					radius: radius * sizeBoost,
 					color,
 					flickerPhase: Math.random() * Math.PI * 2,
 					flickerSpeed: randomInRange(HANUKKAH_CANDLE_FLICKER_RANGE),
 					isShamash: index === shamashIndex,
+					radius: radius * sizeBoost,
+					x: startX + spacing * index,
+					y: baseY - yOffset,
 				}
 			})
 		}
@@ -247,15 +249,15 @@ async function launchHanukkahGlow() {
 
 		const createSpark = (time: number): Spark => ({
 			baseX: Math.random() * width,
-			y: height + Math.random() * height * 0.25,
-			vy: randomInRange(HANUKKAH_SPARK_SPEED_RANGE),
-			size: randomInRange(HANUKKAH_SPARK_SIZE_RANGE),
-			opacity: randomInRange(HANUKKAH_SPARK_OPACITY_RANGE),
-			color: randomSparkColor(),
-			sway: randomInRange(HANUKKAH_SPARK_SWAY_RANGE),
-			phase: Math.random() * Math.PI * 2,
 			birthTime: time + randomInRange(HANUKKAH_SPARK_FADE_IN_DELAY_RANGE),
+			color: randomSparkColor(),
 			fadeDuration: randomInRange(HANUKKAH_SPARK_FADE_IN_DURATION_RANGE),
+			opacity: randomInRange(HANUKKAH_SPARK_OPACITY_RANGE),
+			phase: Math.random() * Math.PI * 2,
+			size: randomInRange(HANUKKAH_SPARK_SIZE_RANGE),
+			sway: randomInRange(HANUKKAH_SPARK_SWAY_RANGE),
+			vy: randomInRange(HANUKKAH_SPARK_SPEED_RANGE),
+			y: height + Math.random() * height * 0.25,
 		})
 
 		const resetField = (time: number) => {
@@ -269,7 +271,7 @@ async function launchHanukkahGlow() {
 		const resizeCanvas = () => {
 			width = window.innerWidth
 			height = window.innerHeight
-			const dpr = getCanvasDpr({ width, height, maxDpr: HANUKKAH_MAX_DPR })
+			const dpr = getCanvasDpr({ height, maxDpr: HANUKKAH_MAX_DPR, width })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
@@ -302,12 +304,7 @@ async function launchHanukkahGlow() {
 			const shamash = candles.find((candle) => candle.isShamash)
 
 			if (left && right) {
-				const barPadding = spacing * 0.1
-				const barX = left.x - barPadding
-				const barW = right.x - left.x + barPadding * 2
 				const barH = Math.max(6, spacing * 0.025)
-				const barY = baseY - barH * 0.5
-				const centerX = barX + barW / 2
 
 				const shamashIndex = Math.floor(HANUKKAH_CANDLE_COUNT / 2)
 				const pairCount = Math.floor(HANUKKAH_CANDLE_COUNT / 2)

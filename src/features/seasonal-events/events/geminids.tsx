@@ -1,48 +1,49 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { createAdaptiveDprController, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const GEMINIDS_PEAK_DATES = new Set([
 	'2026-12-13',
-	'2027-12-13',
-	'2028-12-13',
-	'2029-12-13',
-	'2030-12-13',
-	'2031-12-13',
-	'2032-12-13',
-	'2033-12-13',
-	'2034-12-13',
-	'2035-12-13',
-	'2036-12-13',
-	'2037-12-13',
-	'2038-12-13',
-	'2039-12-13',
-	'2040-12-13',
-	'2041-12-13',
-	'2042-12-13',
-	'2043-12-13',
 	'2026-12-14',
+	'2027-12-13',
 	'2027-12-14',
+	'2028-12-13',
 	'2028-12-14',
+	'2029-12-13',
 	'2029-12-14',
+	'2030-12-13',
 	'2030-12-14',
+	'2031-12-13',
 	'2031-12-14',
+	'2032-12-13',
 	'2032-12-14',
+	'2033-12-13',
 	'2033-12-14',
+	'2034-12-13',
 	'2034-12-14',
+	'2035-12-13',
 	'2035-12-14',
+	'2036-12-13',
 	'2036-12-14',
+	'2037-12-13',
 	'2037-12-14',
+	'2038-12-13',
 	'2038-12-14',
+	'2039-12-13',
 	'2039-12-14',
+	'2040-12-13',
 	'2040-12-14',
+	'2041-12-13',
 	'2041-12-14',
+	'2042-12-13',
 	'2042-12-14',
+	'2043-12-13',
 	'2043-12-14',
 ])
 const GEMINIDS_MOUNT_DELAY_MS = 900
@@ -51,15 +52,15 @@ const GEMINIDS_OVERLAY_FILTER = 'saturate(120%)'
 const GEMINIDS_MAX_DPR = 2
 const GEMINIDS_METEOR_COUNT = 12
 const GEMINIDS_STAR_COUNT = 140
-const GEMINIDS_METEOR_LENGTH_RANGE = { min: 120, max: 230 }
-const GEMINIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.3 }
-const GEMINIDS_METEOR_SPEED_RANGE = { min: 460, max: 760 }
-const GEMINIDS_METEOR_ANGLE_RANGE = { min: 0.28, max: 0.46 }
-const GEMINIDS_METEOR_SPAWN_DELAY_RANGE = { min: 820, max: 2200 }
-const GEMINIDS_METEOR_LIFETIME_RANGE = { min: 1500, max: 2400 }
-const GEMINIDS_METEOR_SPAWN_X = { min: -0.15, max: 0.65 }
-const GEMINIDS_METEOR_SPAWN_Y = { min: -0.3, max: 0.15 }
-const GEMINIDS_METEOR_GLOW_RANGE = { min: 12, max: 22 }
+const GEMINIDS_METEOR_LENGTH_RANGE = { max: 230, min: 120 }
+const GEMINIDS_METEOR_WIDTH_RANGE = { max: 2.3, min: 1 }
+const GEMINIDS_METEOR_SPEED_RANGE = { max: 760, min: 460 }
+const GEMINIDS_METEOR_ANGLE_RANGE = { max: 0.46, min: 0.28 }
+const GEMINIDS_METEOR_SPAWN_DELAY_RANGE = { max: 2200, min: 820 }
+const GEMINIDS_METEOR_LIFETIME_RANGE = { max: 2400, min: 1500 }
+const GEMINIDS_METEOR_SPAWN_X = { max: 0.65, min: -0.15 }
+const GEMINIDS_METEOR_SPAWN_Y = { max: 0.15, min: -0.3 }
+const GEMINIDS_METEOR_GLOW_RANGE = { max: 22, min: 12 }
 const GEMINIDS_METEOR_COLORS = [
 	'rgba(226, 232, 240, 1)',
 	'rgba(191, 219, 254, 1)',
@@ -67,11 +68,11 @@ const GEMINIDS_METEOR_COLORS = [
 	'rgba(129, 140, 248, 1)',
 ]
 const GEMINIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const GEMINIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
-const GEMINIDS_STAR_OPACITY_RANGE = { min: 0.18, max: 0.55 }
-const GEMINIDS_STAR_TWINKLE_RANGE = { min: 0.0005, max: 0.0012 }
-const GEMINIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const GEMINIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const GEMINIDS_STAR_RADIUS_RANGE = { max: 1.4, min: 0.5 }
+const GEMINIDS_STAR_OPACITY_RANGE = { max: 0.55, min: 0.18 }
+const GEMINIDS_STAR_TWINKLE_RANGE = { max: 0.0012, min: 0.0005 }
+const GEMINIDS_STAR_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+const GEMINIDS_STAR_FADE_IN_DURATION_RANGE = { max: 2200, min: 1200 }
 
 const EventDetails = () => (
 	<>
@@ -143,10 +144,10 @@ const EventDetails = () => (
 )
 
 export const geminidsEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.Geminids,
 	isActive: isGeminidsPeak,
 	run: launchGeminidsShower,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#e2e8f0', '#93c5fd', '#818cf8', '#cbd5f5', '#e2e8f0'],
 	},
@@ -178,32 +179,32 @@ async function launchGeminidsShower() {
 		}
 
 		type Meteor = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			length: number
-			width: number
-			opacity: number
-			glow: number
-			color: string
 			age: number
+			color: string
+			glow: number
+			length: number
 			lifetime: number
 			nextSpawn: number
-		}
-		type Star = {
+			opacity: number
+			vx: number
+			vy: number
+			width: number
 			x: number
 			y: number
-			radius: number
-			opacity: number
-			twinkle: number
-			phase: number
+		}
+		type Star = {
 			birthTime: number
 			fadeDuration: number
+			opacity: number
+			phase: number
+			radius: number
+			twinkle: number
+			x: number
+			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let width = window.innerWidth
 		let height = window.innerHeight
 		let meteors: Meteor[] = []
@@ -220,32 +221,32 @@ async function launchGeminidsShower() {
 			]
 
 		const createStar = (time: number): Star => ({
-			x: Math.random() * width,
-			y: Math.random() * height,
-			radius: randomInRange(GEMINIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(GEMINIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(GEMINIDS_STAR_TWINKLE_RANGE),
-			phase: Math.random() * Math.PI * 2,
 			birthTime: time + randomInRange(GEMINIDS_STAR_FADE_IN_DELAY_RANGE),
 			fadeDuration: randomInRange(GEMINIDS_STAR_FADE_IN_DURATION_RANGE),
+			opacity: randomInRange(GEMINIDS_STAR_OPACITY_RANGE),
+			phase: Math.random() * Math.PI * 2,
+			radius: randomInRange(GEMINIDS_STAR_RADIUS_RANGE),
+			twinkle: randomInRange(GEMINIDS_STAR_TWINKLE_RANGE),
+			x: Math.random() * width,
+			y: Math.random() * height,
 		})
 
 		const createMeteor = (time: number): Meteor => {
 			const speed = randomInRange(GEMINIDS_METEOR_SPEED_RANGE)
 			const angle = randomInRange(GEMINIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(GEMINIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(GEMINIDS_METEOR_SPAWN_Y),
-				vx: Math.cos(angle) * speed,
-				vy: Math.sin(angle) * speed,
-				length: randomInRange(GEMINIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(GEMINIDS_METEOR_WIDTH_RANGE),
-				opacity: randomInRange({ min: 0.45, max: 0.85 }),
-				glow: randomInRange(GEMINIDS_METEOR_GLOW_RANGE),
-				color: randomMeteorColor(),
 				age: 0,
+				color: randomMeteorColor(),
+				glow: randomInRange(GEMINIDS_METEOR_GLOW_RANGE),
+				length: randomInRange(GEMINIDS_METEOR_LENGTH_RANGE),
 				lifetime: randomInRange(GEMINIDS_METEOR_LIFETIME_RANGE),
 				nextSpawn: time + randomInRange(GEMINIDS_METEOR_SPAWN_DELAY_RANGE),
+				opacity: randomInRange({ max: 0.85, min: 0.45 }),
+				vx: Math.cos(angle) * speed,
+				vy: Math.sin(angle) * speed,
+				width: randomInRange(GEMINIDS_METEOR_WIDTH_RANGE),
+				x: width * randomInRange(GEMINIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(GEMINIDS_METEOR_SPAWN_Y),
 			}
 		}
 
@@ -265,7 +266,7 @@ async function launchGeminidsShower() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = dprController.getDpr({ width, height })
+			const dpr = dprController.getDpr({ height, width })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`

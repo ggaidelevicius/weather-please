@@ -1,5 +1,3 @@
-import { Button as HeadlessButton } from '@headlessui/react'
-import { clsx } from 'clsx'
 import type { IconProps } from '@tabler/icons-react'
 import type {
 	ForwardRefExoticComponent,
@@ -8,25 +6,8 @@ import type {
 	RefAttributes,
 } from 'react'
 
-interface BaseButtonProps {
-	children: ReactNode
-	fullWidth?: boolean
-	disabled?: boolean
-	secondary?: boolean
-	className?: string
-}
-
-interface ControlledButtonProps extends BaseButtonProps {
-	onClick: MouseEventHandler<HTMLButtonElement>
-	type?: undefined
-	href?: undefined
-}
-
-interface UncontrolledButtonProps extends BaseButtonProps {
-	onClick?: undefined
-	type: 'submit'
-	href?: undefined
-}
+import { Button as HeadlessButton } from '@headlessui/react'
+import { clsx } from 'clsx'
 
 interface AnchorButtonProps extends BaseButtonProps {
 	href: string
@@ -34,33 +15,53 @@ interface AnchorButtonProps extends BaseButtonProps {
 	type?: undefined
 }
 
+interface BaseButtonProps {
+	children: ReactNode
+	className?: string
+	disabled?: boolean
+	fullWidth?: boolean
+	secondary?: boolean
+}
+
+interface ControlledButtonProps extends BaseButtonProps {
+	href?: undefined
+	onClick: MouseEventHandler<HTMLButtonElement>
+	type?: undefined
+}
+
+interface UncontrolledButtonProps extends BaseButtonProps {
+	href?: undefined
+	onClick?: undefined
+	type: 'submit'
+}
+
 const isAnchorClick = (
 	handler:
-		| MouseEventHandler<HTMLButtonElement>
 		| MouseEventHandler<HTMLAnchorElement>
+		| MouseEventHandler<HTMLButtonElement>
 		| undefined,
 	href: string | undefined,
 ): handler is MouseEventHandler<HTMLAnchorElement> => typeof href === 'string'
 
 const isButtonClick = (
 	handler:
-		| MouseEventHandler<HTMLButtonElement>
 		| MouseEventHandler<HTMLAnchorElement>
+		| MouseEventHandler<HTMLButtonElement>
 		| undefined,
 	href: string | undefined,
 ): handler is MouseEventHandler<HTMLButtonElement> => typeof href !== 'string'
 
 export const Button = ({
 	children,
-	onClick,
-	fullWidth = false,
-	disabled = false,
-	type,
-	href,
-	secondary = false,
 	className,
+	disabled = false,
+	fullWidth = false,
+	href,
+	onClick,
+	secondary = false,
+	type,
 }: Readonly<
-	ControlledButtonProps | UncontrolledButtonProps | AnchorButtonProps
+	AnchorButtonProps | ControlledButtonProps | UncontrolledButtonProps
 >) => {
 	const primaryClasses = fullWidth
 		? `group relative flex w-full cursor-pointer items-center rounded-md bg-white px-3 py-2 text-center text-sm font-medium text-dark-600 select-none hover:not-disabled:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:not-disabled:bg-zinc-300 disabled:cursor-wait disabled:bg-zinc-200 ${className}`
@@ -76,9 +77,10 @@ export const Button = ({
 
 	return href ? (
 		<a
+			aria-disabled={disabled}
+			className={clsx(classes, disabled && 'pointer-events-none')}
+			data-disabled={disabled ? '' : undefined}
 			href={href}
-			target="_blank"
-			rel="noopener noreferrer"
 			onClick={(event) => {
 				if (disabled) {
 					event.preventDefault()
@@ -87,10 +89,9 @@ export const Button = ({
 				}
 				anchorOnClick?.(event)
 			}}
-			className={clsx(classes, disabled && 'pointer-events-none')}
-			aria-disabled={disabled}
+			rel="noopener noreferrer"
 			tabIndex={disabled ? -1 : undefined}
-			data-disabled={disabled ? '' : undefined}
+			target="_blank"
 		>
 			{disabled && (
 				<span className="absolute inset-0 m-auto flex h-5 w-5 -translate-y-2 animate-spin rounded-full border-3 border-t-dark-600 border-r-dark-600 border-b-transparent border-l-dark-600 opacity-0 transition group-data-disabled:translate-y-0 group-data-disabled:opacity-100"></span>
@@ -101,9 +102,9 @@ export const Button = ({
 		</a>
 	) : (
 		<HeadlessButton
-			onClick={buttonOnClick}
 			className={classes}
 			disabled={disabled}
+			onClick={buttonOnClick}
 			type={type}
 		>
 			{disabled && (
@@ -117,25 +118,25 @@ export const Button = ({
 }
 
 interface IconButtonProps {
+	children: ReactNode
+	className?: string
 	icon: ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>>
 	onClick: MouseEventHandler<HTMLButtonElement>
-	className?: string
-	children: ReactNode
 }
 
 export const IconButton = ({
-	onClick,
+	children,
 	className,
 	icon: Icon,
-	children,
+	onClick,
 }: Readonly<IconButtonProps>) => {
 	return (
 		<HeadlessButton
-			onClick={onClick}
 			className={clsx(
 				'cursor-pointer rounded-md bg-dark-100/10 p-2 text-white ring-1 ring-white/5 select-none hover:bg-dark-100/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:bg-dark-100/30',
 				className,
 			)}
+			onClick={onClick}
 		>
 			<Icon aria-hidden size={20} />
 			<span className="sr-only">{children}</span>

@@ -5,12 +5,12 @@ const DEFAULT_LOCATION_CHECK_INTERVAL_MS = 60 * 1000
 const EARTH_RADIUS_KM = 6371
 
 type UsePeriodicLocationRefreshOptions = {
+	changeThresholdKm?: number
 	enabled: boolean
+	intervalMs?: number
 	lat: string
 	lon: string
 	onLocationChange: (coords: { lat: string; lon: string }) => void
-	changeThresholdKm?: number
-	intervalMs?: number
 }
 
 const toRadians = (degrees: number) => (degrees * Math.PI) / 180
@@ -35,12 +35,12 @@ export const calculateDistanceKm = (
 }
 
 export const usePeriodicLocationRefresh = ({
+	changeThresholdKm = DEFAULT_LOCATION_CHANGE_THRESHOLD_KM,
 	enabled,
+	intervalMs = DEFAULT_LOCATION_CHECK_INTERVAL_MS,
 	lat,
 	lon,
 	onLocationChange,
-	changeThresholdKm = DEFAULT_LOCATION_CHANGE_THRESHOLD_KM,
-	intervalMs = DEFAULT_LOCATION_CHECK_INTERVAL_MS,
 }: Readonly<UsePeriodicLocationRefreshOptions>) => {
 	const handleDetectedLocationChange = useEffectEvent(onLocationChange)
 

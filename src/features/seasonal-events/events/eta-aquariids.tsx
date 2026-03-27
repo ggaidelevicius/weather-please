@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+
+import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import {
-	SeasonalEventId,
 	type SeasonalEvent,
 	type SeasonalEventContext,
+	SeasonalEventId,
 } from '../core/types'
 import { createAdaptiveDprController, randomInRange } from '../core/utils'
-import { Trans } from '@lingui/react/macro'
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 
 const ETA_AQUARIIDS_PEAK_DATES = new Set([
 	'2026-05-05',
@@ -51,15 +52,15 @@ const ETA_AQUARIIDS_OVERLAY_FILTER = 'saturate(130%)'
 const ETA_AQUARIIDS_MAX_DPR = 2
 const ETA_AQUARIIDS_METEOR_COUNT = 11
 const ETA_AQUARIIDS_STAR_COUNT = 140
-const ETA_AQUARIIDS_METEOR_LENGTH_RANGE = { min: 140, max: 250 }
-const ETA_AQUARIIDS_METEOR_WIDTH_RANGE = { min: 1, max: 2.3 }
-const ETA_AQUARIIDS_METEOR_SPEED_RANGE = { min: 560, max: 860 }
-const ETA_AQUARIIDS_METEOR_ANGLE_RANGE = { min: 0.25, max: 0.42 }
-const ETA_AQUARIIDS_METEOR_SPAWN_DELAY_RANGE = { min: 760, max: 2200 }
-const ETA_AQUARIIDS_METEOR_LIFETIME_RANGE = { min: 1300, max: 2100 }
-const ETA_AQUARIIDS_METEOR_SPAWN_X = { min: -0.2, max: 0.6 }
-const ETA_AQUARIIDS_METEOR_SPAWN_Y = { min: -0.35, max: 0.2 }
-const ETA_AQUARIIDS_METEOR_GLOW_RANGE = { min: 12, max: 24 }
+const ETA_AQUARIIDS_METEOR_LENGTH_RANGE = { max: 250, min: 140 }
+const ETA_AQUARIIDS_METEOR_WIDTH_RANGE = { max: 2.3, min: 1 }
+const ETA_AQUARIIDS_METEOR_SPEED_RANGE = { max: 860, min: 560 }
+const ETA_AQUARIIDS_METEOR_ANGLE_RANGE = { max: 0.42, min: 0.25 }
+const ETA_AQUARIIDS_METEOR_SPAWN_DELAY_RANGE = { max: 2200, min: 760 }
+const ETA_AQUARIIDS_METEOR_LIFETIME_RANGE = { max: 2100, min: 1300 }
+const ETA_AQUARIIDS_METEOR_SPAWN_X = { max: 0.6, min: -0.2 }
+const ETA_AQUARIIDS_METEOR_SPAWN_Y = { max: 0.2, min: -0.35 }
+const ETA_AQUARIIDS_METEOR_GLOW_RANGE = { max: 24, min: 12 }
 const ETA_AQUARIIDS_METEOR_COLORS = [
 	'rgba(191, 219, 254, 1)',
 	'rgba(125, 211, 252, 1)',
@@ -67,11 +68,11 @@ const ETA_AQUARIIDS_METEOR_COLORS = [
 	'rgba(59, 130, 246, 1)',
 ]
 const ETA_AQUARIIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
-const ETA_AQUARIIDS_STAR_RADIUS_RANGE = { min: 0.5, max: 1.4 }
-const ETA_AQUARIIDS_STAR_OPACITY_RANGE = { min: 0.2, max: 0.55 }
-const ETA_AQUARIIDS_STAR_TWINKLE_RANGE = { min: 0.0006, max: 0.0014 }
-const ETA_AQUARIIDS_STAR_FADE_IN_DELAY_RANGE = { min: 0, max: 2200 }
-const ETA_AQUARIIDS_STAR_FADE_IN_DURATION_RANGE = { min: 1200, max: 2200 }
+const ETA_AQUARIIDS_STAR_RADIUS_RANGE = { max: 1.4, min: 0.5 }
+const ETA_AQUARIIDS_STAR_OPACITY_RANGE = { max: 0.55, min: 0.2 }
+const ETA_AQUARIIDS_STAR_TWINKLE_RANGE = { max: 0.0014, min: 0.0006 }
+const ETA_AQUARIIDS_STAR_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+const ETA_AQUARIIDS_STAR_FADE_IN_DURATION_RANGE = { max: 2200, min: 1200 }
 
 const EventDetails = () => (
 	<>
@@ -113,24 +114,24 @@ const EventDetails = () => (
 		<p>
 			<Trans>
 				The Eta Aquariids and the Orionids are sibling showers — both are born
-				from Halley's Comet, but Earth crosses different parts of the debris
-				trail six months apart.
+				from Halley&apos;s Comet, but Earth crosses different parts of the
+				debris trail six months apart.
 			</Trans>
 		</p>
 		<p>
 			<Trans>
-				At 66 km/s, these are among the fastest meteors you'll see. Their trails
-				can persist for several seconds after the meteor itself is gone.
+				At 66 km/s, these are among the fastest meteors you&apos;ll see. Their
+				trails can persist for several seconds after the meteor itself is gone.
 			</Trans>
 		</p>
 	</>
 )
 
 export const etaAquariidsEvent: SeasonalEvent = {
+	details: EventDetails,
 	id: SeasonalEventId.EtaAquariids,
 	isActive: isEtaAquariidsPeak,
 	run: launchEtaAquariidsShower,
-	details: EventDetails,
 	tileAccent: {
 		colors: ['#bae6fd', '#7dd3fc', '#60a5fa', '#3b82f6', '#bae6fd'],
 	},
@@ -162,32 +163,32 @@ async function launchEtaAquariidsShower() {
 		}
 
 		type Meteor = {
-			x: number
-			y: number
-			vx: number
-			vy: number
-			length: number
-			width: number
-			opacity: number
-			glow: number
-			color: string
 			age: number
+			color: string
+			glow: number
+			length: number
 			lifetime: number
 			nextSpawn: number
-		}
-		type Star = {
+			opacity: number
+			vx: number
+			vy: number
+			width: number
 			x: number
 			y: number
-			radius: number
-			opacity: number
-			twinkle: number
-			phase: number
+		}
+		type Star = {
 			birthTime: number
 			fadeDuration: number
+			opacity: number
+			phase: number
+			radius: number
+			twinkle: number
+			x: number
+			y: number
 		}
 
-		let timeoutId: number | null = null
-		let animationFrameId: number | null = null
+		let timeoutId: null | number = null
+		let animationFrameId: null | number = null
 		let width = window.innerWidth
 		let height = window.innerHeight
 		let meteors: Meteor[] = []
@@ -204,32 +205,32 @@ async function launchEtaAquariidsShower() {
 			]
 
 		const createStar = (time: number): Star => ({
-			x: Math.random() * width,
-			y: Math.random() * height,
-			radius: randomInRange(ETA_AQUARIIDS_STAR_RADIUS_RANGE),
-			opacity: randomInRange(ETA_AQUARIIDS_STAR_OPACITY_RANGE),
-			twinkle: randomInRange(ETA_AQUARIIDS_STAR_TWINKLE_RANGE),
-			phase: Math.random() * Math.PI * 2,
 			birthTime: time + randomInRange(ETA_AQUARIIDS_STAR_FADE_IN_DELAY_RANGE),
 			fadeDuration: randomInRange(ETA_AQUARIIDS_STAR_FADE_IN_DURATION_RANGE),
+			opacity: randomInRange(ETA_AQUARIIDS_STAR_OPACITY_RANGE),
+			phase: Math.random() * Math.PI * 2,
+			radius: randomInRange(ETA_AQUARIIDS_STAR_RADIUS_RANGE),
+			twinkle: randomInRange(ETA_AQUARIIDS_STAR_TWINKLE_RANGE),
+			x: Math.random() * width,
+			y: Math.random() * height,
 		})
 
 		const createMeteor = (time: number): Meteor => {
 			const speed = randomInRange(ETA_AQUARIIDS_METEOR_SPEED_RANGE)
 			const angle = randomInRange(ETA_AQUARIIDS_METEOR_ANGLE_RANGE)
 			return {
-				x: width * randomInRange(ETA_AQUARIIDS_METEOR_SPAWN_X),
-				y: height * randomInRange(ETA_AQUARIIDS_METEOR_SPAWN_Y),
-				vx: Math.cos(angle) * speed,
-				vy: Math.sin(angle) * speed,
-				length: randomInRange(ETA_AQUARIIDS_METEOR_LENGTH_RANGE),
-				width: randomInRange(ETA_AQUARIIDS_METEOR_WIDTH_RANGE),
-				opacity: randomInRange({ min: 0.45, max: 0.85 }),
-				glow: randomInRange(ETA_AQUARIIDS_METEOR_GLOW_RANGE),
-				color: randomMeteorColor(),
 				age: 0,
+				color: randomMeteorColor(),
+				glow: randomInRange(ETA_AQUARIIDS_METEOR_GLOW_RANGE),
+				length: randomInRange(ETA_AQUARIIDS_METEOR_LENGTH_RANGE),
 				lifetime: randomInRange(ETA_AQUARIIDS_METEOR_LIFETIME_RANGE),
 				nextSpawn: time + randomInRange(ETA_AQUARIIDS_METEOR_SPAWN_DELAY_RANGE),
+				opacity: randomInRange({ max: 0.85, min: 0.45 }),
+				vx: Math.cos(angle) * speed,
+				vy: Math.sin(angle) * speed,
+				width: randomInRange(ETA_AQUARIIDS_METEOR_WIDTH_RANGE),
+				x: width * randomInRange(ETA_AQUARIIDS_METEOR_SPAWN_X),
+				y: height * randomInRange(ETA_AQUARIIDS_METEOR_SPAWN_Y),
 			}
 		}
 
@@ -249,7 +250,7 @@ async function launchEtaAquariidsShower() {
 			const prevHeight = height
 			width = nextWidth
 			height = nextHeight
-			const dpr = dprController.getDpr({ width, height })
+			const dpr = dprController.getDpr({ height, width })
 			canvas.width = Math.round(width * dpr)
 			canvas.height = Math.round(height * dpr)
 			canvas.style.width = `${width}px`
