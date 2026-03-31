@@ -71,7 +71,7 @@ msgstr "{precipitationMm}mm of precipitation expected over the next {durationHou
 
 #: src/features/weather/ui/weather-alert.tsx:230
 msgid "{precipitationMm}mm of precipitation expected over the next 24 hours"
-msgstr ""
+msgstr "{precipitationMm}mm of precipitation expected over the next 24 hours"
 
 #: src/features/weather/ui/weather-alert.tsx:223
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
@@ -87,7 +87,7 @@ msgstr "<0>Location access denied.</0> Check your browser's settings to allow th
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 
-#: src/features/settings/ui/settings.tsx:385
+#: src/features/settings/ui/settings.tsx:394
 msgid "☕ Gift a coffee"
 msgstr "☕ Gift a coffee"
 
@@ -95,11 +95,11 @@ msgstr "☕ Gift a coffee"
 #~ msgid "✍️ Submit feedback"
 #~ msgstr "✍️ Submit feedback"
 
-#: src/features/settings/ui/settings.tsx:369
+#: src/features/settings/ui/settings.tsx:378
 msgid "🌟 Leave a review"
 msgstr "🌟 Leave a review"
 
-#: src/features/settings/ui/settings.tsx:377
+#: src/features/settings/ui/settings.tsx:386
 msgid "🐛 Report a bug"
 msgstr "🐛 Report a bug"
 
@@ -107,7 +107,7 @@ msgstr "🐛 Report a bug"
 #~ msgid "💡 Request a feature"
 #~ msgstr "💡 Request a feature"
 
-#: src/features/settings/ui/settings.tsx:404
+#: src/features/settings/ui/settings.tsx:437
 msgid "🔒 Privacy policy"
 msgstr "🔒 Privacy policy"
 
@@ -239,7 +239,7 @@ msgstr "As sunlight passes through Earth’s atmosphere, the shorter blue wavele
 #~ msgid "As the Earth turns, the new year arrives in a slow-moving wave that travels across time zones for nearly a full day."
 #~ msgstr "As the Earth turns, the new year arrives in a slow-moving wave that travels across time zones for nearly a full day."
 
-#: src/features/settings/ui/settings.tsx:128
+#: src/features/settings/ui/settings.tsx:126
 msgid "Astronomy"
 msgstr "Astronomy"
 
@@ -254,6 +254,10 @@ msgstr "At each boundary, fireworks go up, bells ring, and strangers count down 
 #: src/hooks/seasonal-events/diwali.tsx:110
 #~ msgid "At night, lights trace warm constellations across homes and streets, turning whole cities into living lanterns."
 #~ msgstr "At night, lights trace warm constellations across homes and streets, turning whole cities into living lanterns."
+
+#: src/features/settings/ui/settings.tsx:405
+msgid "Attributions"
+msgstr "Attributions"
 
 #: src/features/weather/ui/tile.tsx:129
 msgid "August"
@@ -347,7 +351,7 @@ msgstr "Comet Thatcher, the shower's parent body, won't return to the inner sola
 msgid "Community cleanups, tree planting, and habitat restoration are among the most common activities."
 msgstr "Community cleanups, tree planting, and habitat restoration are among the most common activities."
 
-#: src/features/settings/ui/settings.tsx:47
+#: src/features/settings/ui/settings.tsx:45
 msgid "Compact weather alerts"
 msgstr "Compact weather alerts"
 
@@ -367,11 +371,11 @@ msgstr "Compact weather alerts"
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 
-#: src/features/settings/ui/settings.tsx:294
+#: src/features/settings/ui/settings.tsx:303
 msgid "Date"
 msgstr "Date"
 
-#: src/features/settings/ui/settings.tsx:290
+#: src/features/settings/ui/settings.tsx:299
 msgid "Day"
 msgstr "Day"
 
@@ -583,7 +587,7 @@ msgstr "Families spend the night in cemeteries, cleaning graves, laying marigold
 msgid "February"
 msgstr "February"
 
-#: src/features/settings/ui/settings.tsx:361
+#: src/features/settings/ui/settings.tsx:370
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -639,19 +643,19 @@ msgstr "Geminid meteors move slower than most showers, which is part of what mak
 msgid "Geminids Meteor Shower"
 msgstr "Geminids Meteor Shower"
 
-#: src/features/settings/ui/settings.tsx:222
+#: src/features/settings/ui/settings.tsx:231
 msgid "General"
 msgstr "General"
 
-#: src/features/weather/ui/weather-alert.tsx:297
+#: src/features/weather/ui/weather-alert.tsx:294
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "Generally strong wind for the next {durationOfStrongWind} hours"
 
-#: src/features/weather/ui/weather-alert.tsx:306
+#: src/features/weather/ui/weather-alert.tsx:300
 msgid "Generally strong wind for the next 24 hours"
 msgstr "Generally strong wind for the next 24 hours"
 
-#: src/features/weather/ui/weather-alert.tsx:309
+#: src/features/weather/ui/weather-alert.tsx:303
 msgid "Generally strong wind for the next hour"
 msgstr "Generally strong wind for the next hour"
 
@@ -789,7 +793,7 @@ msgstr "Homes are carefully cleaned and decorated to clear away old luck and wel
 #~ msgid "I'd love to bring Weather Please to more languages."
 #~ msgstr "I'd love to bring Weather Please to more languages."
 
-#: src/features/settings/ui/settings.tsx:284
+#: src/features/settings/ui/settings.tsx:293
 msgid "Identifier"
 msgstr "Identifier"
 
@@ -973,7 +977,7 @@ msgstr "June"
 #~ msgstr "Lacks features I need"
 
 #: src/features/settings/ui/initialisation.tsx:174
-#: src/features/settings/ui/settings.tsx:225
+#: src/features/settings/ui/settings.tsx:234
 msgid "Language"
 msgstr "Language"
 
@@ -981,7 +985,7 @@ msgstr "Language"
 #~ msgid "Lanterns and parades transform the night into a flowing river of light."
 #~ msgstr "Lanterns and parades transform the night into a flowing river of light."
 
-#: src/features/settings/ui/settings.tsx:250
+#: src/features/settings/ui/settings.tsx:259
 msgid "Latitude"
 msgstr "Latitude"
 
@@ -989,7 +993,7 @@ msgstr "Latitude"
 msgid "Leave a review"
 msgstr "Leave a review"
 
-#: src/features/settings/ui/settings.tsx:396
+#: src/features/settings/ui/settings.tsx:429
 msgid "Legal"
 msgstr "Legal"
 
@@ -1053,7 +1057,11 @@ msgstr "Light shifts to a silvery tone, shadows sharpen, and temperatures may dr
 #~ msgid "Location"
 #~ msgstr "Location"
 
-#: src/features/settings/ui/settings.tsx:258
+#: src/features/location/ui/identified-location-indicator.tsx:52
+msgid "Location name unavailable"
+msgstr "Location name unavailable"
+
+#: src/features/settings/ui/settings.tsx:267
 msgid "Longitude"
 msgstr "Longitude"
 
@@ -1061,23 +1069,23 @@ msgstr "Longitude"
 #~ msgid "Looks like we can't grab your location info automatically."
 #~ msgstr "Looks like we can't grab your location info automatically."
 
-#: src/features/weather/ui/weather-alert.tsx:387
+#: src/features/weather/ui/weather-alert.tsx:375
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "Low visibility for the next {durationOfLowVisibility} hours"
 
-#: src/features/weather/ui/weather-alert.tsx:396
+#: src/features/weather/ui/weather-alert.tsx:384
 msgid "Low visibility for the next 24 hours"
 msgstr "Low visibility for the next 24 hours"
 
-#: src/features/weather/ui/weather-alert.tsx:399
+#: src/features/weather/ui/weather-alert.tsx:387
 msgid "Low visibility for the next hour"
 msgstr "Low visibility for the next hour"
 
-#: src/features/weather/ui/weather-alert.tsx:376
+#: src/features/weather/ui/weather-alert.tsx:364
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "Low visibility starting in {timeUntilLowVisibility} hours"
 
-#: src/features/weather/ui/weather-alert.tsx:374
+#: src/features/weather/ui/weather-alert.tsx:362
 msgid "Low visibility starting in 1 hour"
 msgstr "Low visibility starting in 1 hour"
 
@@ -1214,7 +1222,7 @@ msgstr "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precis
 msgid "November"
 msgstr "November"
 
-#: src/features/settings/ui/settings.tsx:273
+#: src/features/settings/ui/settings.tsx:282
 msgid "Number of days to forecast"
 msgstr "Number of days to forecast"
 
@@ -1242,7 +1250,7 @@ msgstr "On the longest day, twilight stretches out for hours and full darkness m
 msgid "Orionids Meteor Shower"
 msgstr "Orionids Meteor Shower"
 
-#: src/features/settings/ui/settings.tsx:152
+#: src/features/settings/ui/settings.tsx:150
 msgid "Other holidays"
 msgstr "Other holidays"
 
@@ -1300,7 +1308,7 @@ msgstr "partly cloudy"
 #~ msgid "Performance issues"
 #~ msgstr "Performance issues"
 
-#: src/features/settings/ui/settings.tsx:269
+#: src/features/settings/ui/settings.tsx:278
 msgid "Periodically update location automatically"
 msgstr "Periodically update location automatically"
 
@@ -1328,7 +1336,7 @@ msgstr "Rather than a solemn farewell, it treats remembrance as something vibran
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 
-#: src/features/settings/ui/settings.tsx:142
+#: src/features/settings/ui/settings.tsx:140
 msgid "Religious & cultural"
 msgstr "Religious & cultural"
 
@@ -1340,10 +1348,14 @@ msgstr "Report a bug"
 #~ msgid "Resource usage"
 #~ msgstr "Resource usage"
 
-#: src/pages/index.tsx:166
-#: src/pages/index.tsx:185
+#: src/pages/index.tsx:167
+#: src/pages/index.tsx:186
 msgid "Retry"
 msgstr "Retry"
+
+#: src/features/settings/ui/settings.tsx:166
+msgid "Reverse geocoding by OpenStreetMap contributors"
+msgstr "Reverse geocoding by OpenStreetMap contributors"
 
 #: src/features/weather/ui/tile.tsx:118
 msgid "Saturday"
@@ -1354,15 +1366,15 @@ msgstr "Saturday"
 #~ msgid "Save"
 #~ msgstr "Save"
 
-#: src/features/settings/ui/settings.tsx:331
+#: src/features/settings/ui/settings.tsx:340
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 
-#: src/features/settings/ui/settings.tsx:322
+#: src/features/settings/ui/settings.tsx:331
 msgid "Seasonal events"
 msgstr "Seasonal events"
 
-#: src/features/settings/ui/settings.tsx:112
+#: src/features/settings/ui/settings.tsx:110
 msgid "Seasons & nature"
 msgstr "Seasons & nature"
 
@@ -1382,8 +1394,8 @@ msgstr "September"
 msgid "Set my location"
 msgstr "Set my location"
 
-#: src/features/settings/ui/settings.tsx:202
-#: src/features/settings/ui/settings.tsx:219
+#: src/features/settings/ui/settings.tsx:211
+#: src/features/settings/ui/settings.tsx:228
 msgid "Settings"
 msgstr "Settings"
 
@@ -1399,119 +1411,119 @@ msgstr "Shared sweets, flowers, and small gifts keep the celebration intimate an
 #~ msgid "Show alert icons that expand to text when clicked."
 #~ msgstr "Show alert icons that expand to text when clicked."
 
-#: src/features/settings/ui/settings.tsx:61
+#: src/features/settings/ui/settings.tsx:59
 msgid "Show Autumn Equinox event"
 msgstr "Show Autumn Equinox event"
 
-#: src/features/settings/ui/settings.tsx:62
+#: src/features/settings/ui/settings.tsx:60
 msgid "Show Christmas Day event"
 msgstr "Show Christmas Day event"
 
-#: src/features/settings/ui/settings.tsx:63
+#: src/features/settings/ui/settings.tsx:61
 msgid "Show Day of the Dead event"
 msgstr "Show Day of the Dead event"
 
-#: src/features/settings/ui/settings.tsx:64
+#: src/features/settings/ui/settings.tsx:62
 msgid "Show Diwali event"
 msgstr "Show Diwali event"
 
-#: src/features/settings/ui/settings.tsx:65
+#: src/features/settings/ui/settings.tsx:63
 msgid "Show Earth Day event"
 msgstr "Show Earth Day event"
 
-#: src/features/settings/ui/settings.tsx:66
+#: src/features/settings/ui/settings.tsx:64
 msgid "Show Easter event"
 msgstr "Show Easter event"
 
-#: src/features/settings/ui/settings.tsx:67
+#: src/features/settings/ui/settings.tsx:65
 msgid "Show Eid al-Adha event"
 msgstr "Show Eid al-Adha event"
 
-#: src/features/settings/ui/settings.tsx:68
+#: src/features/settings/ui/settings.tsx:66
 msgid "Show Eid al-Fitr event"
 msgstr "Show Eid al-Fitr event"
 
-#: src/features/settings/ui/settings.tsx:70
+#: src/features/settings/ui/settings.tsx:68
 msgid "Show Eta Aquariids meteor shower event"
 msgstr "Show Eta Aquariids meteor shower event"
 
-#: src/features/settings/ui/settings.tsx:73
+#: src/features/settings/ui/settings.tsx:71
 msgid "Show Event Horizon Day event"
 msgstr "Show Event Horizon Day event"
 
-#: src/features/settings/ui/settings.tsx:48
+#: src/features/settings/ui/settings.tsx:46
 msgid "Show extreme UV alerts"
 msgstr "Show extreme UV alerts"
 
-#: src/features/settings/ui/settings.tsx:75
+#: src/features/settings/ui/settings.tsx:73
 msgid "Show Geminids meteor shower event"
 msgstr "Show Geminids meteor shower event"
 
-#: src/features/settings/ui/settings.tsx:76
+#: src/features/settings/ui/settings.tsx:74
 msgid "Show Halloween event"
 msgstr "Show Halloween event"
 
-#: src/features/settings/ui/settings.tsx:77
+#: src/features/settings/ui/settings.tsx:75
 msgid "Show Hanukkah event"
 msgstr "Show Hanukkah event"
 
-#: src/features/settings/ui/settings.tsx:51
+#: src/features/settings/ui/settings.tsx:49
 msgid "Show high precipitation alerts"
 msgstr "Show high precipitation alerts"
 
-#: src/features/settings/ui/settings.tsx:78
+#: src/features/settings/ui/settings.tsx:76
 msgid "Show Holi event"
 msgstr "Show Holi event"
 
-#: src/features/settings/ui/settings.tsx:79
+#: src/features/settings/ui/settings.tsx:77
 msgid "Show Leonids meteor shower event"
 msgstr "Show Leonids meteor shower event"
 
-#: src/features/settings/ui/settings.tsx:56
+#: src/features/settings/ui/settings.tsx:54
 msgid "Show low visibility alerts"
 msgstr "Show low visibility alerts"
 
-#: src/features/settings/ui/settings.tsx:80
+#: src/features/settings/ui/settings.tsx:78
 msgid "Show Lunar New Year event"
 msgstr "Show Lunar New Year event"
 
-#: src/features/settings/ui/settings.tsx:81
+#: src/features/settings/ui/settings.tsx:79
 msgid "Show Lyrids meteor shower event"
 msgstr "Show Lyrids meteor shower event"
 
-#: src/features/settings/ui/settings.tsx:82
+#: src/features/settings/ui/settings.tsx:80
 msgid "Show New Year's Day event"
 msgstr "Show New Year's Day event"
 
-#: src/features/settings/ui/settings.tsx:83
+#: src/features/settings/ui/settings.tsx:81
 msgid "Show Orionids meteor shower event"
 msgstr "Show Orionids meteor shower event"
 
-#: src/features/settings/ui/settings.tsx:84
+#: src/features/settings/ui/settings.tsx:82
 msgid "Show Perseids meteor shower event"
 msgstr "Show Perseids meteor shower event"
 
-#: src/features/settings/ui/settings.tsx:86
+#: src/features/settings/ui/settings.tsx:84
 msgid "Show Quadrantids meteor shower event"
 msgstr "Show Quadrantids meteor shower event"
 
-#: src/features/settings/ui/settings.tsx:326
+#: src/features/settings/ui/settings.tsx:335
 msgid "Show seasonal events"
 msgstr "Show seasonal events"
 
-#: src/features/settings/ui/settings.tsx:342
+#: src/features/settings/ui/settings.tsx:351
 msgid "Show seasonal tile glow"
 msgstr "Show seasonal tile glow"
 
-#: src/features/settings/ui/settings.tsx:88
+#: src/features/settings/ui/settings.tsx:86
 msgid "Show Spring Equinox event"
 msgstr "Show Spring Equinox event"
 
-#: src/features/settings/ui/settings.tsx:53
+#: src/features/settings/ui/settings.tsx:51
 msgid "Show strong wind alerts"
 msgstr "Show strong wind alerts"
 
-#: src/features/settings/ui/settings.tsx:89
+#: src/features/settings/ui/settings.tsx:87
 msgid "Show Summer Solstice event"
 msgstr "Show Summer Solstice event"
 
@@ -1519,27 +1531,27 @@ msgstr "Show Summer Solstice event"
 msgid "Show this event"
 msgstr "Show this event"
 
-#: src/features/settings/ui/settings.tsx:91
+#: src/features/settings/ui/settings.tsx:89
 msgid "Show total lunar eclipse event"
 msgstr "Show total lunar eclipse event"
 
-#: src/features/settings/ui/settings.tsx:94
+#: src/features/settings/ui/settings.tsx:92
 msgid "Show total solar eclipse event"
 msgstr "Show total solar eclipse event"
 
-#: src/features/settings/ui/settings.tsx:97
+#: src/features/settings/ui/settings.tsx:95
 msgid "Show Valentine's Day event"
 msgstr "Show Valentine's Day event"
 
-#: src/features/settings/ui/settings.tsx:315
+#: src/features/settings/ui/settings.tsx:324
 msgid "Show weather alerts"
 msgstr "Show weather alerts"
 
-#: src/features/settings/ui/settings.tsx:99
+#: src/features/settings/ui/settings.tsx:97
 msgid "Show Winter Solstice event"
 msgstr "Show Winter Solstice event"
 
-#: src/pages/index.tsx:179
+#: src/pages/index.tsx:180
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Showing cached weather data. Retry to refresh the latest forecast."
 
@@ -1604,23 +1616,23 @@ msgstr "Stories surrounding Holi vary by region, including the tale of Prahlad a
 #~ msgid "Strong wind for the next hour"
 #~ msgstr "Strong wind for the next 12 hours"
 
-#: src/features/weather/ui/weather-alert.tsx:342
+#: src/features/weather/ui/weather-alert.tsx:333
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "Strong wind gusts for the next {durationOfStrongWind} hours"
 
-#: src/features/weather/ui/weather-alert.tsx:351
+#: src/features/weather/ui/weather-alert.tsx:339
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "Strong wind gusts for the next 24 hours"
 
-#: src/features/weather/ui/weather-alert.tsx:354
+#: src/features/weather/ui/weather-alert.tsx:342
 msgid "Strong wind gusts for the next hour"
 msgstr "Strong wind gusts for the next hour"
 
-#: src/features/weather/ui/weather-alert.tsx:331
+#: src/features/weather/ui/weather-alert.tsx:325
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "Strong wind gusts starting in {timeUntilStrongWind} hours"
 
-#: src/features/weather/ui/weather-alert.tsx:329
+#: src/features/weather/ui/weather-alert.tsx:323
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "Strong wind gusts starting in 1 hour"
 
@@ -1769,7 +1781,7 @@ msgstr "The location request timed out. Please check your internet connection an
 msgid "The Lyrids appear each year in late April, with meteors radiating from the constellation Lyra."
 msgstr "The Lyrids appear each year in late April, with meteors radiating from the constellation Lyra."
 
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:103
+#: src/features/seasonal-events/events/day-of-the-dead.tsx:102
 msgid "The marigold paths (cempasúchil) aren't just decorative. Their strong scent is believed to guide the dead back to the living world for the night."
 msgstr "The marigold paths (cempasúchil) aren't just decorative. Their strong scent is believed to guide the dead back to the living world for the night."
 
@@ -2093,7 +2105,7 @@ msgstr "Try again"
 msgid "Tuesday"
 msgstr "Tuesday"
 
-#: src/features/settings/ui/settings.tsx:307
+#: src/features/settings/ui/settings.tsx:316
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 
@@ -2101,7 +2113,7 @@ msgstr "Turn this on if Weather Please's reported UV index is consistently lower
 #~ msgid "Twilight lingers, insects fill the air with song, and the sky can feel almost endless."
 #~ msgstr "Twilight lingers, insects fill the air with song, and the sky can feel almost endless."
 
-#: src/pages/index.tsx:160
+#: src/pages/index.tsx:161
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Unable to fetch weather data. Please check your internet connection and try again."
 
@@ -2143,7 +2155,7 @@ msgstr "Unlike most meteor showers, the Geminids originate from the asteroid 320
 #~ msgid "Usability and functionality"
 #~ msgstr "Usability and functionality"
 
-#: src/features/settings/ui/settings.tsx:303
+#: src/features/settings/ui/settings.tsx:312
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "Use Global Chemistry Models (CAMS)"
 
@@ -2152,7 +2164,7 @@ msgstr "Use Global Chemistry Models (CAMS)"
 #~ msgstr "Use keyboard shortcuts"
 
 #: src/features/settings/ui/initialisation.tsx:186
-#: src/features/settings/ui/settings.tsx:237
+#: src/features/settings/ui/settings.tsx:246
 msgid "Use metric number format"
 msgstr "Use metric number format"
 
@@ -2180,18 +2192,26 @@ msgstr "Ways to observe"
 #~ msgid "We'd love to bring Weather Please to more languages."
 #~ msgstr "We'd love to bring Weather Please to more languages."
 
-#: src/features/settings/ui/settings.tsx:241
+#: src/features/settings/ui/settings.tsx:250
 msgid "Weather"
 msgstr "Weather"
 
-#: src/pages/index.tsx:205
-msgid "weather data provided by open-meteo"
-msgstr "weather data provided by open-meteo"
+#: src/features/settings/ui/settings.tsx:162
+msgid "Weather data by Open-Meteo"
+msgstr "Weather data by Open-Meteo"
+
+#: src/pages/index.tsx:211
+#~ msgid "weather data provided by open-meteo"
+#~ msgstr "weather data provided by open-meteo"
 
 #: src/components/intialisation/index.tsx:128
 #: src/components/intialisation/index.tsx:236
 #~ msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
 #~ msgstr "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
+
+#: src/features/settings/ui/settings.tsx:408
+msgid "Weather Please uses the following third-party data sources and location services."
+msgstr "Weather Please uses the following third-party data sources and location services."
 
 #: src/features/weather/ui/tile.tsx:115
 msgid "Wednesday"
@@ -2274,7 +2294,7 @@ msgid "Your email (optional)"
 msgstr "Your email (optional)"
 
 #: src/features/settings/ui/initialisation.tsx:190
-#: src/features/settings/ui/settings.tsx:244
+#: src/features/settings/ui/settings.tsx:253
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Your location data is securely stored exclusively on your personal device."
 

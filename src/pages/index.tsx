@@ -4,6 +4,7 @@ import { IconAlertTriangle } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
+import { IdentifiedLocationIndicator } from '../features/location/ui/identified-location-indicator'
 import { getEnabledSeasonalEvents } from '../features/seasonal-events/core/enabled-events'
 import { SeasonalEventId } from '../features/seasonal-events/core/types'
 import {
@@ -195,15 +196,12 @@ const App = () => {
 				</motion.main>
 			</AnimatePresence>
 
-			<div className="fixed bottom-4 left-4 flex flex-col items-start gap-2">
-				<a
-					className="text-xs text-dark-300 hover:underline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500"
-					href="https://open-meteo.com/"
-					rel="noopener noreferrer"
-					target="_blank"
-				>
-					<Trans>weather data provided by open-meteo</Trans>
-				</a>
+			<div className="fixed bottom-4 left-4">
+				<IdentifiedLocationIndicator
+					lat={config.lat}
+					locale={config.lang}
+					lon={config.lon}
+				/>
 			</div>
 
 			<Settings handleChange={handleChange} input={input} />
