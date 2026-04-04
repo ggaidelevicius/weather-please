@@ -10,7 +10,8 @@ import {
 	IconSettings,
 	IconShieldCheckFilled,
 } from '@tabler/icons-react'
-import { Fragment, type ReactNode, useEffect, useState } from 'react'
+import { clsx } from 'clsx'
+import { type ReactNode, useEffect, useState } from 'react'
 
 import type { LocaleKey } from '../../../shared/lib/i18n'
 import type { Config } from '../hooks/use-config'
@@ -36,6 +37,21 @@ type SeasonalEventSection = {
 	title: ReactNode
 }
 
+type SettingsContentProps = {
+	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
+	hasSoftwareRenderer: boolean
+	input: Config
+	localeKeys: LocaleKey[]
+	platformReviewLink: string
+}
+
+type SettingsSectionDefinition = {
+	id: SettingsSectionId
+	title: ReactNode
+}
+
+type SettingsSectionId = 'about' | 'general' | 'seasonal' | 'weather'
+
 type SwitchDefinition<K extends BooleanConfigKey = BooleanConfigKey> = {
 	key: K
 	label: ReactNode
@@ -54,6 +70,25 @@ const ALERT_DETAIL_SWITCHES = [
 		label: <Trans>Show low visibility alerts</Trans>,
 	},
 ] as const satisfies ReadonlyArray<SwitchDefinition>
+
+const SETTINGS_SECTIONS = [
+	{
+		id: 'general',
+		title: <Trans>General</Trans>,
+	},
+	{
+		id: 'weather',
+		title: <Trans>Weather</Trans>,
+	},
+	{
+		id: 'seasonal',
+		title: <Trans>Seasonal events</Trans>,
+	},
+	{
+		id: 'about',
+		title: <Trans>About</Trans>,
+	},
+] as const satisfies ReadonlyArray<SettingsSectionDefinition>
 
 const SEASONAL_EVENT_LABELS = {
 	[SeasonalEventId.AutumnEquinox]: <Trans>Show Autumn Equinox event</Trans>,
@@ -151,11 +186,6 @@ const SEASONAL_EVENT_SECTIONS = [
 	},
 ] as const satisfies ReadonlyArray<SeasonalEventSection>
 
-interface SettingsProps {
-	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
-	input: Config
-}
-
 const ATTRIBUTION_LINKS = [
 	{
 		href: 'https://open-meteo.com/',
@@ -167,7 +197,14 @@ const ATTRIBUTION_LINKS = [
 	},
 ] as const satisfies ReadonlyArray<{ href: string; label: ReactNode }>
 
+interface SettingsProps {
+	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
+	input: Config
+}
+
 export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
+	const [activeSection, setActiveSection] =
+		useState<SettingsSectionId>('general')
 	const [isOpen, setIsOpen] = useState(false)
 	const [hasSoftwareRenderer] = useState(isLikelySoftwareRenderer)
 	const localeKeys = Object.keys(locales) as LocaleKey[]
@@ -176,6 +213,16 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 		navigator.userAgent.toLowerCase().includes('firefox/')
 			? 'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/'
 			: 'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews'
+	const activeSectionDefinition =
+		SETTINGS_SECTIONS.find((section) => section.id === activeSection) ??
+		SETTINGS_SECTIONS[0]
+	const contentProps = {
+		handleChange,
+		hasSoftwareRenderer,
+		input,
+		localeKeys,
+		platformReviewLink,
+	}
 
 	useEffect(() => {
 		setSettingsModalOpenState(isOpen)
@@ -188,23 +235,13 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 		[],
 	)
 
-	const renderBooleanSwitch = <K extends BooleanConfigKey>(
-		switchDefinition: SwitchDefinition<K>,
-	) => (
-		<Switch
-			checked={input[switchDefinition.key]}
-			key={switchDefinition.key}
-			label={switchDefinition.label}
-			onChange={(checked) => handleChange(switchDefinition.key, checked)}
-		/>
-	)
-
 	return (
 		<>
 			<IconButton
 				className="fixed right-4 bottom-4 shadow-md"
 				icon={IconSettings}
 				onClick={() => {
+					setActiveSection('general')
 					setIsOpen(true)
 				}}
 			>
@@ -219,225 +256,404 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 					className="fixed inset-0 bg-black/60 backdrop-blur-lg transition duration-300 will-change-[backdrop-filter,background-color] data-closed:opacity-0"
 					transition
 				/>
-				<div className="fixed inset-0 flex w-screen items-center justify-center overflow-y-auto p-8">
+				<div className="fixed inset-0 flex w-screen items-center justify-center overflow-y-auto p-4 md:p-8">
 					<DialogPanel
-						className="m-auto w-full max-w-lg space-y-4 rounded-xl bg-dark-800 p-12 transition duration-400 will-change-[transform,opacity,filter] data-closed:scale-97 data-closed:opacity-0 data-closed:blur-xs"
+						className="m-auto h-[85vh] w-full max-w-3xl overflow-hidden rounded-2xl bg-dark-800 transition duration-400 will-change-[transform,opacity,filter] data-closed:scale-97 data-closed:opacity-0 data-closed:blur-xs"
 						transition
 					>
-						<DialogTitle as="h1" className="text-4xl font-bold text-white">
-							<Trans>Settings</Trans>
-						</DialogTitle>
-						<h2 className="mt-14 text-2xl font-medium text-white">
-							<Trans>General</Trans>
-						</h2>
-						<Select
-							label={<Trans>Language</Trans>}
-							onChange={(e) => {
-								handleChange('lang', e.target.value)
-							}}
-							options={localeKeys.map((key) => ({
-								label: locales[key].label,
-								value: key,
-							}))}
-							value={input.lang}
-						/>
-						<Switch
-							checked={input.useMetric}
-							label={<Trans>Use metric number format</Trans>}
-							onChange={(e) => handleChange('useMetric', e)}
-						/>
-						<h2 className="mt-14 text-2xl font-medium text-white">
-							<Trans>Weather</Trans>
-						</h2>
-						<Alert icon={IconShieldCheckFilled}>
-							<Trans>
-								Your location data is securely stored exclusively on your
-								personal device.
-							</Trans>
-						</Alert>
-						<Input
-							label={<Trans>Latitude</Trans>}
-							onChange={(e) => {
-								handleChange('lat', e.target.value)
-							}}
-							validation={/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat)}
-							value={input.lat}
-						/>
-						<Input
-							label={<Trans>Longitude</Trans>}
-							onChange={(e) => {
-								handleChange('lon', e.target.value)
-							}}
-							validation={/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(
-								input.lon,
-							)}
-							value={input.lon}
-						/>
-						<Switch
-							checked={input.periodicLocationUpdate}
-							label={<Trans>Periodically update location automatically</Trans>}
-							onChange={(e) => handleChange('periodicLocationUpdate', e)}
-						/>
-						<Select
-							label={<Trans>Number of days to forecast</Trans>}
-							onChange={(e) => {
-								handleChange('daysToRetrieve', e.target.value)
-							}}
-							options={Array.from({ length: 9 }, (_, i) => ({
-								label: (i + 1).toString(),
-								value: (i + 1).toString(),
-							}))}
-							value={input.daysToRetrieve}
-						/>
-						<Select
-							label={<Trans>Identifier</Trans>}
-							onChange={(e) => {
-								handleChange('identifier', e.target.value as TileIdentifier)
-							}}
-							options={[
-								{
-									label: <Trans>Day</Trans>,
-									value: TileIdentifier.Day,
-								},
-								{
-									label: <Trans>Date</Trans>,
-									value: TileIdentifier.Date,
-								},
-							]}
-							value={input.identifier}
-						/>
-						<div className="space-y-1">
-							<Switch
-								checked={input.useAirQualityUvOverride}
-								label={<Trans>Use Global Chemistry Models (CAMS)</Trans>}
-								onChange={(e) => handleChange('useAirQualityUvOverride', e)}
-							/>
-							<p className="text-sm text-dark-100">
-								<Trans>
-									Turn this on if Weather Please&apos;s reported UV index is
-									consistently lower than local sources.
-								</Trans>
-							</p>
-						</div>
-						<Switch
-							checked={input.showAlerts}
-							label={<Trans>Show weather alerts</Trans>}
-							onChange={(e) => handleChange('showAlerts', e)}
-						/>
-						{input.showAlerts && (
-							<>{ALERT_DETAIL_SWITCHES.map(renderBooleanSwitch)}</>
-						)}
-						<h2 className="mt-8 text-2xl font-medium text-white">
-							<Trans>Seasonal events</Trans>
-						</h2>
-						<Switch
-							checked={input.showSeasonalEvents}
-							label={<Trans>Show seasonal events</Trans>}
-							onChange={(e) => handleChange('showSeasonalEvents', e)}
-						/>
-						{input.showSeasonalEvents && hasSoftwareRenderer && (
-							<Alert icon={IconAlertTriangle} variant={AlertVariant.InfoRed}>
-								<Trans>
-									Seasonal effects are disabled because your browser appears to
-									be using a software renderer. Enable hardware acceleration to
-									see these effects.
-								</Trans>
-							</Alert>
-						)}
-						{input.showSeasonalEvents && (
-							<>
-								<Switch
-									checked={input.showSeasonalTileGlow}
-									label={<Trans>Show seasonal tile glow</Trans>}
-									onChange={(e) => handleChange('showSeasonalTileGlow', e)}
-								/>
-								{SEASONAL_EVENT_SECTIONS.map((section) => (
-									<Fragment key={section.id}>
-										<h3 className="mt-8 text-sm font-semibold tracking-wide text-white uppercase">
-											{section.title}
-										</h3>
-										{section.eventIds.map((eventId) =>
-											renderBooleanSwitch({
-												key: SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId],
-												label: SEASONAL_EVENT_LABELS[eventId],
-											}),
-										)}
-									</Fragment>
-								))}
-							</>
-						)}
-						<h2 className="mt-14 text-2xl font-medium text-white">
-							<Trans>Feedback</Trans>
-						</h2>
-						<a
-							className="mb-2 flex text-sm text-blue-300 hover:underline"
-							href={platformReviewLink}
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							<Trans>🌟 Leave a review</Trans>
-						</a>
-						<a
-							className="mb-2 flex text-sm text-blue-300 hover:underline"
-							href={`https://weather-please.app/bug?locale=${input.lang}`}
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							<Trans>🐛 Report a bug</Trans>
-						</a>
-						<a
-							className="mb-2 flex text-sm text-blue-300 hover:underline"
-							href="https://www.buymeacoffee.com/ggaidelevicius"
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							<Trans>☕ Gift a coffee</Trans>
-						</a>
-						<a
-							className="flex text-sm text-blue-300 hover:underline"
-							href="https://ggaidelevicius.com/?utm_source=weather_please"
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							👨 ggaidelevicius.com
-						</a>
-						<h2 className="mt-14 text-2xl font-medium text-white">
-							<Trans>Attributions</Trans>
-						</h2>
-						<p className="text-sm text-dark-100">
-							<Trans>
-								Weather Please uses the following third-party data sources and
-								location services.
-							</Trans>
-						</p>
-						<ul className="space-y-2 pl-4">
-							{ATTRIBUTION_LINKS.map((link) => (
-								<li className="list-disc marker:text-blue-300" key={link.href}>
-									<a
-										className="flex text-sm text-blue-300 hover:underline"
-										href={link.href}
-										rel="noopener noreferrer"
-										target="_blank"
+						<div className="flex h-full flex-col md:flex-row">
+							<div className="border-b border-white/6 bg-dark-900/45 p-5 md:w-56 md:border-r md:border-b-0 md:p-6">
+								<DialogTitle as="h1" className="text-3xl font-bold text-white">
+									<Trans>Settings</Trans>
+								</DialogTitle>
+								<div className="mt-6">
+									<h2 className="text-sm font-semibold text-dark-200">
+										<Trans>Sections</Trans>
+									</h2>
+									<nav
+										aria-label="Settings sections"
+										className="mt-3 grid grid-cols-2 gap-2 md:flex md:flex-col"
 									>
-										{link.label}
-									</a>
-								</li>
-							))}
-						</ul>
-						<h2 className="mt-14 text-2xl font-medium text-white">
-							<Trans>Legal</Trans>
-						</h2>
-						<a
-							className="flex text-sm text-blue-300 hover:underline"
-							href={locales[input.lang].privacy}
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							<Trans>🔒 Privacy policy</Trans>
-						</a>
+										{SETTINGS_SECTIONS.map((section) => (
+											<button
+												aria-pressed={section.id === activeSection}
+												className={
+													section.id === activeSection
+														? 'w-full cursor-pointer rounded-xl bg-white px-3 py-2.5 text-left text-sm font-semibold text-dark-700 shadow-sm'
+														: 'w-full cursor-pointer rounded-xl bg-transparent px-3 py-2.5 text-left text-sm font-medium text-dark-100 transition hover:bg-white/6 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500'
+												}
+												key={section.id}
+												onClick={() => {
+													setActiveSection(section.id)
+												}}
+												type="button"
+											>
+												{section.title}
+											</button>
+										))}
+									</nav>
+								</div>
+							</div>
+							<div className="flex-1 overflow-y-auto p-6 md:p-8">
+								<div
+									className="mx-auto max-w-2xl space-y-6"
+									key={activeSection}
+								>
+									<div className="space-y-2">
+										<h2 className="text-2xl font-medium text-white">
+											{activeSectionDefinition.title}
+										</h2>
+									</div>
+									{renderActiveSection({
+										...contentProps,
+										activeSection,
+									})}
+								</div>
+							</div>
+						</div>
 					</DialogPanel>
 				</div>
 			</Dialog>
 		</>
 	)
 }
+
+const renderActiveSection = ({
+	activeSection,
+	handleChange,
+	hasSoftwareRenderer,
+	input,
+	localeKeys,
+	platformReviewLink,
+}: SettingsContentProps & { activeSection: SettingsSectionId }) => {
+	switch (activeSection) {
+		case 'about':
+			return (
+				<AboutSettingsSection
+					input={input}
+					platformReviewLink={platformReviewLink}
+				/>
+			)
+		case 'general':
+			return (
+				<GeneralSettingsSection
+					handleChange={handleChange}
+					input={input}
+					localeKeys={localeKeys}
+				/>
+			)
+		case 'seasonal':
+			return (
+				<SeasonalSettingsSection
+					handleChange={handleChange}
+					hasSoftwareRenderer={hasSoftwareRenderer}
+					input={input}
+				/>
+			)
+		case 'weather':
+			return (
+				<WeatherSettingsSection handleChange={handleChange} input={input} />
+			)
+	}
+}
+
+const SettingsSubsection = ({
+	bodyClassName = 'space-y-2',
+	children,
+	title,
+}: Readonly<{
+	bodyClassName?: string
+	children: ReactNode
+	title: ReactNode
+}>) => (
+	<div className="space-y-2">
+		<h3 className="text-sm font-semibold tracking-wide text-white uppercase">
+			{title}
+		</h3>
+		<div className={clsx(bodyClassName)}>{children}</div>
+	</div>
+)
+
+const SettingsSectionLayout = ({
+	children,
+}: Readonly<{ children: ReactNode }>) => (
+	<div className="space-y-8">{children}</div>
+)
+
+const GeneralSettingsSection = ({
+	handleChange,
+	input,
+	localeKeys,
+}: Pick<SettingsContentProps, 'handleChange' | 'input' | 'localeKeys'>) => (
+	<SettingsSectionLayout>
+		<Select
+			label={<Trans>Language</Trans>}
+			onChange={(e) => {
+				handleChange('lang', e.target.value)
+			}}
+			options={localeKeys.map((key) => ({
+				label: locales[key].label,
+				value: key,
+			}))}
+			value={input.lang}
+		/>
+		<Switch
+			checked={input.useMetric}
+			label={<Trans>Use metric number format</Trans>}
+			onChange={(checked) => handleChange('useMetric', checked)}
+		/>
+	</SettingsSectionLayout>
+)
+
+const WeatherSettingsSection = ({
+	handleChange,
+	input,
+}: Pick<SettingsContentProps, 'handleChange' | 'input'>) => (
+	<SettingsSectionLayout>
+		<SettingsSubsection
+			bodyClassName="space-y-4"
+			title={<Trans>Location</Trans>}
+		>
+			<Alert icon={IconShieldCheckFilled}>
+				<Trans>
+					Your location data is securely stored exclusively on your personal
+					device.
+				</Trans>
+			</Alert>
+			<Input
+				label={<Trans>Latitude</Trans>}
+				onChange={(e) => {
+					handleChange('lat', e.target.value)
+				}}
+				validation={/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(input.lat)}
+				value={input.lat}
+			/>
+			<Input
+				label={<Trans>Longitude</Trans>}
+				onChange={(e) => {
+					handleChange('lon', e.target.value)
+				}}
+				validation={/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(
+					input.lon,
+				)}
+				value={input.lon}
+			/>
+			<Switch
+				checked={input.periodicLocationUpdate}
+				label={<Trans>Periodically update location automatically</Trans>}
+				onChange={(checked) => handleChange('periodicLocationUpdate', checked)}
+			/>
+		</SettingsSubsection>
+		<SettingsSubsection
+			bodyClassName="space-y-4"
+			title={<Trans>Forecast</Trans>}
+		>
+			<Select
+				label={<Trans>Number of days to forecast</Trans>}
+				onChange={(e) => {
+					handleChange('daysToRetrieve', e.target.value)
+				}}
+				options={Array.from({ length: 9 }, (_, i) => ({
+					label: (i + 1).toString(),
+					value: (i + 1).toString(),
+				}))}
+				value={input.daysToRetrieve}
+			/>
+			<Select
+				label={<Trans>Identifier</Trans>}
+				onChange={(e) => {
+					handleChange('identifier', e.target.value as TileIdentifier)
+				}}
+				options={[
+					{
+						label: <Trans>Day</Trans>,
+						value: TileIdentifier.Day,
+					},
+					{
+						label: <Trans>Date</Trans>,
+						value: TileIdentifier.Date,
+					},
+				]}
+				value={input.identifier}
+			/>
+		</SettingsSubsection>
+		<SettingsSubsection
+			bodyClassName="space-y-4"
+			title={<Trans>Data & alerts</Trans>}
+		>
+			<div className="space-y-1">
+				<Switch
+					checked={input.useAirQualityUvOverride}
+					label={<Trans>Use Global Chemistry Models (CAMS)</Trans>}
+					onChange={(checked) =>
+						handleChange('useAirQualityUvOverride', checked)
+					}
+				/>
+				<p className="text-sm text-dark-100">
+					<Trans>
+						Turn this on if Weather Please&apos;s reported UV index is
+						consistently lower than local sources.
+					</Trans>
+				</p>
+			</div>
+			<Switch
+				checked={input.showAlerts}
+				label={<Trans>Show weather alerts</Trans>}
+				onChange={(checked) => handleChange('showAlerts', checked)}
+			/>
+			{input.showAlerts ? (
+				<div className="space-y-4">
+					{ALERT_DETAIL_SWITCHES.map((switchDefinition) => (
+						<Switch
+							checked={input[switchDefinition.key]}
+							key={switchDefinition.key}
+							label={switchDefinition.label}
+							onChange={(checked) =>
+								handleChange(switchDefinition.key, checked)
+							}
+						/>
+					))}
+				</div>
+			) : null}
+		</SettingsSubsection>
+	</SettingsSectionLayout>
+)
+
+const SeasonalSettingsSection = ({
+	handleChange,
+	hasSoftwareRenderer,
+	input,
+}: Pick<
+	SettingsContentProps,
+	'handleChange' | 'hasSoftwareRenderer' | 'input'
+>) => (
+	<SettingsSectionLayout>
+		<SettingsSubsection
+			bodyClassName="space-y-4"
+			title={<Trans>Display</Trans>}
+		>
+			<Switch
+				checked={input.showSeasonalEvents}
+				label={<Trans>Show seasonal events</Trans>}
+				onChange={(checked) => handleChange('showSeasonalEvents', checked)}
+			/>
+			{input.showSeasonalEvents && hasSoftwareRenderer ? (
+				<Alert icon={IconAlertTriangle} variant={AlertVariant.InfoRed}>
+					<Trans>
+						Seasonal effects are disabled because your browser appears to be
+						using a software renderer. Enable hardware acceleration to see these
+						effects.
+					</Trans>
+				</Alert>
+			) : null}
+			{input.showSeasonalEvents ? (
+				<Switch
+					checked={input.showSeasonalTileGlow}
+					label={<Trans>Show seasonal tile glow</Trans>}
+					onChange={(checked) => handleChange('showSeasonalTileGlow', checked)}
+				/>
+			) : null}
+		</SettingsSubsection>
+		{input.showSeasonalEvents
+			? SEASONAL_EVENT_SECTIONS.map((section) => (
+					<SettingsSubsection
+						bodyClassName="space-y-4"
+						key={section.id}
+						title={section.title}
+					>
+						{section.eventIds.map((eventId) => (
+							<Switch
+								checked={input[SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId]]}
+								key={eventId}
+								label={SEASONAL_EVENT_LABELS[eventId]}
+								onChange={(checked) =>
+									handleChange(
+										SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId],
+										checked,
+									)
+								}
+							/>
+						))}
+					</SettingsSubsection>
+				))
+			: null}
+	</SettingsSectionLayout>
+)
+
+const AboutSettingsSection = ({
+	input,
+	platformReviewLink,
+}: Pick<SettingsContentProps, 'input' | 'platformReviewLink'>) => (
+	<SettingsSectionLayout>
+		<SettingsSubsection title={<Trans>Feedback</Trans>}>
+			<>
+				<a
+					className="flex text-sm text-blue-300 hover:underline"
+					href={platformReviewLink}
+					rel="noopener noreferrer"
+					target="_blank"
+				>
+					<Trans>🌟 Leave a review</Trans>
+				</a>
+				<a
+					className="flex text-sm text-blue-300 hover:underline"
+					href={`https://weather-please.app/bug?locale=${input.lang}`}
+					rel="noopener noreferrer"
+					target="_blank"
+				>
+					<Trans>🐛 Report a bug</Trans>
+				</a>
+				<a
+					className="flex text-sm text-blue-300 hover:underline"
+					href="https://www.buymeacoffee.com/ggaidelevicius"
+					rel="noopener noreferrer"
+					target="_blank"
+				>
+					<Trans>☕ Gift a coffee</Trans>
+				</a>
+				<a
+					className="flex text-sm text-blue-300 hover:underline"
+					href="https://ggaidelevicius.com/?utm_source=weather_please"
+					rel="noopener noreferrer"
+					target="_blank"
+				>
+					👨 ggaidelevicius.com
+				</a>
+			</>
+		</SettingsSubsection>
+		<SettingsSubsection title={<Trans>Attributions</Trans>}>
+			<>
+				<p className="text-sm text-dark-100">
+					<Trans>
+						Weather Please uses the following third-party data sources and
+						location services.
+					</Trans>
+				</p>
+				<ul className="space-y-2 pl-4">
+					{ATTRIBUTION_LINKS.map((link) => (
+						<li className="list-disc marker:text-blue-300" key={link.href}>
+							<a
+								className="flex text-sm text-blue-300 hover:underline"
+								href={link.href}
+								rel="noopener noreferrer"
+								target="_blank"
+							>
+								{link.label}
+							</a>
+						</li>
+					))}
+				</ul>
+			</>
+		</SettingsSubsection>
+		<SettingsSubsection title={<Trans>Legal</Trans>}>
+			<a
+				className="flex text-sm text-blue-300 hover:underline"
+				href={locales[input.lang].privacy}
+				rel="noopener noreferrer"
+				target="_blank"
+			>
+				<Trans>🔒 Privacy policy</Trans>
+			</a>
+		</SettingsSubsection>
+	</SettingsSectionLayout>
+)

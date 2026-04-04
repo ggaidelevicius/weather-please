@@ -13,15 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/weather-alert.tsx:144
-#: src/components/weather-alert.tsx:151
-#~ msgid "{0} inches of precipitation expected over the next {1} hours"
-#~ msgstr "{0} pouces de précipitations attendues au cours des prochaines {1} heures"
-
-#: src/components/weather-alert.tsx:136
-#~ msgid "{0} inches of precipitation expected over the next hour"
-#~ msgstr "{0} pouces de précipitations attendues au cours de la prochaine heure"
-
 #. placeholder {0}: Math.round(wind)
 #: src/features/weather/ui/tile.tsx:490
 msgid "{0} km/h"
@@ -31,27 +22,6 @@ msgstr "{0} km/h"
 #: src/features/weather/ui/tile.tsx:491
 msgid "{0} mph"
 msgstr "{0} mph"
-
-#: src/components/alert/index.tsx:169
-#~ msgid "{0}in of precipitation expected over the next {1} hours"
-#~ msgstr "{0} pouces de précipitations attendues au cours des {1} prochaines heures"
-
-#: src/components/alert/index.tsx:161
-#~ msgid "{0}in of precipitation expected over the next hour"
-#~ msgstr "{0} pouces de précipitations attendues au cours de la prochaine heure"
-
-#: src/components/weather-alert.tsx:124
-#: src/components/weather-alert.tsx:130
-#~ msgid "{0}mm of precipitation expected over the next {1} hours"
-#~ msgstr "{0} mm de précipitations attendues au cours des {1} prochaines heures"
-
-#: src/components/weather-alert.tsx:116
-#~ msgid "{0}mm of precipitation expected over the next hour"
-#~ msgstr "{0} mm de précipitations attendues au cours de la prochaine heure"
-
-#: src/pages/feedback/index.tsx:153
-#~ msgid "{label}"
-#~ msgstr "Langue"
 
 #: src/features/weather/ui/weather-alert.tsx:261
 msgid "{precipitationInches} inches of precipitation expected over the next {durationHours} hours"
@@ -87,27 +57,19 @@ msgstr "<0>Accès à la localisation refusé.</0> Vérifiez les paramètres de v
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Accès à la localisation refusé.</0> Cliquez sur l'icône de localisation dans la barre d'adresse et sélectionnez \"toujours autoriser l'accès à votre position\". Cliquez ensuite sur le bouton ci-dessous pour réessayer."
 
-#: src/features/settings/ui/settings.tsx:394
+#: src/features/settings/ui/settings.tsx:612
 msgid "☕ Gift a coffee"
 msgstr "☕ Offrir un café"
 
-#: src/components/settings.tsx:209
-#~ msgid "✍️ Submit feedback"
-#~ msgstr "✍️ Soumettre des commentaires"
-
-#: src/features/settings/ui/settings.tsx:378
+#: src/features/settings/ui/settings.tsx:596
 msgid "🌟 Leave a review"
 msgstr "🌟 Laisser un avis"
 
-#: src/features/settings/ui/settings.tsx:386
+#: src/features/settings/ui/settings.tsx:604
 msgid "🐛 Report a bug"
 msgstr "🐛 Signaler un bug"
 
-#: src/components/settings.tsx:216
-#~ msgid "💡 Request a feature"
-#~ msgstr "💡 Demander une fonctionnalité"
-
-#: src/features/settings/ui/settings.tsx:437
+#: src/features/settings/ui/settings.tsx:655
 msgid "🔒 Privacy policy"
 msgstr "🔒 Politique de confidentialité"
 
@@ -126,6 +88,10 @@ msgstr "Une éclipse totale de Lune se produit lorsque la Terre se place directe
 #: src/features/seasonal-events/events/total-solar-eclipse.tsx:35
 msgid "A total solar eclipse occurs when the Moon moves directly in front of the Sun, briefly transforming daylight into twilight."
 msgstr "Une éclipse totale de Soleil se produit lorsque la Lune passe directement devant le Soleil, transformant brièvement le jour en crépuscule."
+
+#: src/features/settings/ui/settings.tsx:89
+msgid "About"
+msgstr "À propos"
 
 #: src/features/seasonal-events/events/summer-solstice.tsx:121
 msgid "Above the Arctic Circle, the sun doesn't set at all — it traces a low circle along the horizon and starts climbing again. This is the midnight sun, and it lasts for weeks."
@@ -155,25 +121,9 @@ msgstr "Dans de nombreuses cultures, la couleur rouge sombre de la Lune éclips�
 msgid "Across many cultures, traditions such as Yule and Saturnalia developed around this moment, gathering warmth, light, and community during the darkest part of the year in the regions where they first formed."
 msgstr "Dans de nombreuses cultures, des traditions comme Yule et les Saturnales se sont développées autour de ce moment, rassemblant chaleur, lumière et communauté pendant la période la plus sombre de l’année dans les régions où elles sont nées."
 
-#: src/hooks/seasonal-events/spring-equinox.tsx:109
-#~ msgid "Across the world, daylight begins to shift in new patterns as buds rise and the atmosphere carries the scent of change."
-#~ msgstr "Partout dans le monde, la lumière du jour commence à se réorganiser en de nouveaux rythmes, tandis que les bourgeons apparaissent et que l’air porte l’odeur du changement."
-
 #: src/features/seasonal-events/events/eid-al-adha.tsx:77
 msgid "Acts of charity, the sharing of food, and care for family, neighbours, and those in need form the heart of the celebration."
 msgstr "Les actes de charité, le partage de nourriture et l’attention portée à la famille, aux voisins et à ceux qui en ont besoin forment le cœur de la célébration."
-
-#: src/pages/feedback/index.tsx:337
-#~ msgid "Additional details"
-#~ msgstr "Détails supplémentaires"
-
-#: src/pages/feedback/index.tsx:244
-#~ msgid "Additional details (optional)"
-#~ msgstr "Détails supplémentaires (facultatif)"
-
-#: src/components/settings/index.tsx:310
-#~ msgid "Alerts"
-#~ msgstr "Alertes"
 
 #: src/features/seasonal-events/events/perseids.tsx:116
 msgid "Allow your eyes about twenty minutes to adjust, turn away from city lights, and let the wide sky do the work."
@@ -186,26 +136,6 @@ msgstr "Même si de nombreuses cultures suivent d’autres calendriers et fêten
 #: src/features/seasonal-events/events/quadrantids.tsx:105
 msgid "Although the radiant now lies within the constellation Boötes, the older name preserves a small piece of astronomical history."
 msgstr "Bien que le radiant se trouve aujourd’hui dans la constellation du Bouvier, l’ancien nom conserve un petit morceau d’histoire astronomique."
-
-#: src/pages/index.tsx:655
-#~ msgid "An error has occurred while fetching location data. Please check the console for more details."
-#~ msgstr "Une erreur s'est produite lors de la récupération des données de localisation. Veuillez vérifier la console pour plus de détails."
-
-#: src/pages/index.tsx:360
-#~ msgid "An error has occurred while fetching weather data. Please check the console for more details."
-#~ msgstr "Une erreur s'est produite lors de la récupération des données météorologiques. Veuillez vérifier la console pour plus de détails."
-
-#: src/pages/index.tsx:264
-#~ msgid "An error has occurred while fetching weather data. Please try again later."
-#~ msgstr "Une erreur s'est produite lors de la récupération des données météorologiques. Veuillez réessayer plus tard."
-
-#: src/components/settings/index.tsx:111
-#~ msgid "An error has occurred while fetching your location. Please check the console for more details."
-#~ msgstr "Une erreur s'est produite lors de la récupération de votre localisation. Veuillez consulter la console pour plus de détails."
-
-#: src/pages/index.tsx:619
-#~ msgid "An error has occurred while periodically updating location. Please check the console for more details."
-#~ msgstr "Une erreur s'est produite lors de la mise à jour périodique de l'emplacement. Veuillez consulter la console pour plus de détails."
 
 #: src/features/seasonal-events/events/summer-solstice.tsx:98
 msgid "Ancient monuments such as Stonehenge are aligned with the solstice sunrise, and midsummer festivals across many cultures celebrate light and abundance."
@@ -227,19 +157,11 @@ msgstr "Une autre histoire très répandue célèbre Krishna, dont les échanges
 msgid "April"
 msgstr "Avril"
 
-#: src/hooks/seasonal-events/orionids.tsx:109
-#~ msgid "As Orion rises before dawn, it can feel like a spotlight for the meteors that follow."
-#~ msgstr "Lorsque Orion se lève avant l’aube, on peut avoir l’impression qu’il éclaire les météores qui suivent."
-
 #: src/features/seasonal-events/events/total-lunar-eclipse.tsx:76
 msgid "As sunlight passes through Earth’s atmosphere, the shorter blue wavelengths scatter away while the longer red wavelengths bend toward the Moon."
 msgstr "Quand la lumière du soleil traverse l’atmosphère terrestre, les courtes longueurs d’onde bleues se dispersent, tandis que les longues longueurs d’onde rouges se courbent vers la Lune."
 
-#: src/hooks/seasonal-events/new-years.tsx:61
-#~ msgid "As the Earth turns, the new year arrives in a slow-moving wave that travels across time zones for nearly a full day."
-#~ msgstr "Au rythme de la rotation de la Terre, la nouvelle année arrive comme une vague lente qui traverse les fuseaux horaires pendant près d’une journée entière."
-
-#: src/features/settings/ui/settings.tsx:126
+#: src/features/settings/ui/settings.tsx:161
 msgid "Astronomy"
 msgstr "Astronomie"
 
@@ -251,11 +173,7 @@ msgstr "À 66 km/s, ce sont parmi les météores les plus rapides que vous verre
 msgid "At each boundary, fireworks go up, bells ring, and strangers count down together. The same moment of anticipation, repeated twenty-four times."
 msgstr "À chaque frontière, des feux d’artifice s’élèvent, des cloches sonnent et des inconnus font le compte à rebours ensemble. Le même moment d’anticipation, répété vingt-quatre fois."
 
-#: src/hooks/seasonal-events/diwali.tsx:110
-#~ msgid "At night, lights trace warm constellations across homes and streets, turning whole cities into living lanterns."
-#~ msgstr "La nuit, les lumières tracent de chaudes constellations sur les maisons et les rues, transformant des villes entières en lanternes vivantes."
-
-#: src/features/settings/ui/settings.tsx:405
+#: src/features/settings/ui/settings.tsx:624
 msgid "Attributions"
 msgstr "Attributions"
 
@@ -266,10 +184,6 @@ msgstr "Août"
 #: src/features/weather/ui/tile.tsx:167
 msgid "Autumn Equinox"
 msgstr "Équinoxe d'automne"
-
-#: src/components/settings/index.tsx:194
-#~ msgid "Based on the provided information, your location is:"
-#~ msgstr "Sur base des informations fournies, votre localisation est :"
 
 #: src/features/seasonal-events/events/black-hole.tsx:231
 msgid "Because gravity bends light paths, parts of the disk appear warped and wrapped above and below the black hole."
@@ -283,10 +197,6 @@ msgstr "Parce qu’il se comporte à la fois comme un astéroïde et comme une c
 msgid "Bonfires, late gatherings, and all-night vigils have long been part of welcoming this turning point of the year."
 msgstr "Feux de joie, rassemblements tardifs et veillées toute la nuit font depuis longtemps partie de l’accueil de ce tournant de l’année."
 
-#: src/pages/feedback/index.tsx:403
-#~ msgid "Bug report"
-#~ msgstr "Rapport de bug"
-
 #: src/features/seasonal-events/events/holi.tsx:257
 msgid "By midday, the streets, the walls, and every surface in sight are stained in layers of pink, green, yellow, and blue. It takes days to wash out."
 msgstr "À midi, les rues, les murs et chaque surface visible sont teintés de couches de rose, de vert, de jaune et de bleu. Il faut des jours pour tout enlever."
@@ -295,29 +205,13 @@ msgstr "À midi, les rues, les murs et chaque surface visible sont teintés de c
 msgid "By the eighteenth century, handwritten notes and printed cards had helped turn the day into a ritual of letters and messages."
 msgstr "Au XVIIIe siècle, les billets manuscrits et les cartes imprimées avaient contribué à faire de cette journée un rituel de lettres et de messages."
 
-#: src/components/settings/index.tsx:430
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
 #: src/features/seasonal-events/events/halloween.tsx:78
 msgid "Carved pumpkins, sweets, and playful scares echo much older customs of lanterns, bonfires, and protective charms."
 msgstr "Les citrouilles sculptées, les friandises et les frayeurs ludiques font écho à des coutumes bien plus anciennes de lanternes, de feux de joie et de talismans protecteurs."
 
-#: src/pages/feedback/index.tsx:189
-#~ msgid "Causes browser crashes or errors"
-#~ msgstr "Provoque des plantages ou des erreurs du navigateur"
-
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:89
-#~ msgid "Cemeteries and homes glow with candlelight, colour, music, and laughter, holding grief and gratitude in the same breath."
-#~ msgstr "Les cimetières et les maisons brillent à la lueur des bougies, de la couleur, de la musique et des rires, portant le chagrin et la gratitude dans le même souffle."
-
 #: src/features/seasonal-events/events/valentines.tsx:110
 msgid "Centuries later, people still reach for pen and paper when a text won't do."
 msgstr "Des siècles plus tard, les gens tendent encore la main vers le stylo et le papier quand un message ne suffit pas."
-
-#: src/pages/feedback/index.tsx:268
-#~ msgid "Changed needs"
-#~ msgstr "Besoins modifiés"
 
 #: src/features/seasonal-events/events/lyrids.tsx:114
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
@@ -343,39 +237,27 @@ msgstr "Fermer"
 msgid "Comet Thatcher, the shower's parent body, won't return to the inner solar system until roughly the year 2283."
 msgstr "La comète Thatcher, le corps parent de la pluie, ne reviendra pas dans le système solaire interne avant environ l'an 2283."
 
-#: src/hooks/seasonal-events/eid-al-adha.tsx:81
-#~ msgid "Communities gather for prayer and meals, and households open their doors in welcome."
-#~ msgstr "Les communautés se rassemblent pour la prière et les repas, et les foyers ouvrent leurs portes en signe d’accueil."
-
 #: src/features/seasonal-events/events/earth-day.tsx:159
 msgid "Community cleanups, tree planting, and habitat restoration are among the most common activities."
 msgstr "Les nettoyages communautaires, la plantation d’arbres et la restauration d’habitats comptent parmi les activités les plus courantes."
 
-#: src/features/settings/ui/settings.tsx:45
+#: src/features/settings/ui/settings.tsx:61
 msgid "Compact weather alerts"
 msgstr "Alertes météo compactes"
-
-#: src/pages/feedback/index.tsx:249
-#~ msgid "Concerned about privacy"
-#~ msgstr "Préoccupé par la vie privée"
-
-#: src/pages/feedback/index.tsx:258
-#~ msgid "Concerned about security"
-#~ msgstr "Préoccupé par la sécurité"
-
-#: src/pages/feedback/index.tsx:295
-#~ msgid "Consumes too much memory or CPU"
-#~ msgstr "Consomme trop de mémoire ou de CPU"
 
 #: src/features/seasonal-events/events/halloween.tsx:84
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "Les costumes peuvent être héroïques, amusants ou inquiétants, permettant de se glisser brièvement dans d’autres rôles."
 
-#: src/features/settings/ui/settings.tsx:303
+#: src/features/settings/ui/settings.tsx:482
+msgid "Data & alerts"
+msgstr "Données et alertes"
+
+#: src/features/settings/ui/settings.tsx:473
 msgid "Date"
 msgstr "Date"
 
-#: src/features/settings/ui/settings.tsx:299
+#: src/features/settings/ui/settings.tsx:469
 msgid "Day"
 msgstr "Jour"
 
@@ -407,13 +289,9 @@ msgstr "bruine givrante dense"
 msgid "depositing rime fog"
 msgstr "brouillard givrant déposant"
 
-#: src/pages/feedback/index.tsx:335
-#~ msgid "Details"
-#~ msgstr "Détails"
-
-#: src/pages/feedback/index.tsx:212
-#~ msgid "Difficult to use or understand"
-#~ msgstr "Difficile à utiliser ou à comprendre"
+#: src/features/settings/ui/settings.tsx:533
+msgid "Display"
+msgstr "Affichage"
 
 #: src/features/weather/ui/tile.tsx:170
 msgid "Diwali"
@@ -431,10 +309,6 @@ msgstr "Les diyas et les bougies brillent le long des portes et des fenêtres, t
 msgid "Do not fill this field if you are human"
 msgstr "Ne remplissez pas ce champ si vous êtes un humain"
 
-#: src/components/settings/index.tsx:565
-#~ msgid "Don't save"
-#~ msgstr "Ne pas enregistrer"
-
 #: src/features/seasonal-events/events/lunar-new-year.tsx:124
 msgid "Dragon and lion dances wind through streets packed with spectators, firecrackers, and the smell of street food — a finale that can last well past midnight."
 msgstr "Les danses du dragon et du lion serpentent dans des rues bondées de spectateurs, de pétards et d’odeurs de cuisine de rue — un final qui peut se prolonger bien après minuit."
@@ -446,14 +320,6 @@ msgstr "La toupie (dreidel), souvent considérée comme un jeu d'enfant, servait
 #: src/features/seasonal-events/events/total-solar-eclipse.tsx:83
 msgid "During totality, the Sun’s corona — normally invisible — appears as a shimmering halo of white light. Bright stars and planets become visible in the middle of the day."
 msgstr "Pendant la totalité, la couronne du Soleil — normalement invisible — apparaît comme un halo scintillant de lumière blanche. Des étoiles brillantes et des planètes deviennent visibles en plein jour."
-
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:77
-#~ msgid "During totality, the Sun’s corona becomes visible as a delicate silver crown, and a few bright stars may appear."
-#~ msgstr "Pendant la totalité, la couronne du Soleil devient visible comme une délicate couronne d’argent, et quelques étoiles brillantes peuvent apparaître."
-
-#: src/hooks/seasonal-events/winter-solstice.tsx:118
-#~ msgid "Each added minute of daylight carries the quiet promise of change."
-#~ msgstr "Chaque minute de lumière gagnée porte la promesse discrète du changement."
 
 #: src/features/seasonal-events/events/hanukkah.tsx:76
 msgid "Each evening, another candle is added to the menorah, gradually building the display of light."
@@ -499,18 +365,6 @@ msgstr "Aïd el-Fitr"
 msgid "Eid al-Fitr marks the end of Ramadan, celebrating renewal, gratitude, and the strength of shared community."
 msgstr "L’Aïd al-Fitr marque la fin du Ramadan, célébrant le renouveau, la gratitude et la force de la communauté."
 
-#: src/pages/feedback/index.tsx:423
-#~ msgid "Email (optional)"
-#~ msgstr "Email (optionnel)"
-
-#: src/components/settings/index.tsx:109
-#~ msgid "Error"
-#~ msgstr "Erreur"
-
-#: src/pages/feedback/index.tsx:475
-#~ msgid "Error submitting feedback. Try again later."
-#~ msgstr "Erreur lors de l'envoi des commentaires. Réessayez plus tard."
-
 #: src/features/weather/ui/tile.tsx:175
 msgid "Eta Aquariids Meteor Shower"
 msgstr "Pluie de météores des Eta Aquarides"
@@ -518,10 +372,6 @@ msgstr "Pluie de météores des Eta Aquarides"
 #: src/features/seasonal-events/events/earth-day.tsx:165
 msgid "Even small choices — repairing, reusing, conserving, or simply walking a familiar trail — reflect its underlying spirit."
 msgstr "Même de petits choix — réparer, réutiliser, économiser ou simplement marcher sur un sentier familier — reflètent son esprit profond."
-
-#: src/hooks/seasonal-events/valentines.tsx:103
-#~ msgid "Even today, paper hearts and quiet notes continue the tradition of deliberate kindness."
-#~ msgstr "Aujourd’hui encore, les cœurs en papier et les petites notes silencieuses perpétuent la tradition d’une gentillesse délibérée."
 
 #: src/features/weather/ui/tile.tsx:176
 msgid "Event Horizon Day"
@@ -538,10 +388,6 @@ msgstr "Les conifères, les bougies, les cloches et les étoiles reprennent un t
 #: src/features/weather/ui/weather-alert.tsx:190
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
 msgstr "UV extrêmes pour les {durationOfExtremeUv} prochaines heures"
-
-#: src/components/weather-alert.tsx:49
-#~ msgid "Extreme UV for the next 12 hours"
-#~ msgstr "UV extrêmes pour les 12 prochaines heures"
 
 #: src/features/weather/ui/weather-alert.tsx:194
 msgid "Extreme UV for the next hour"
@@ -571,57 +417,29 @@ msgstr "Les familles se réunissent pour allumer la menorah, chanter et jouer à
 msgid "Families spend the night in cemeteries, cleaning graves, laying marigold paths, and sharing meals beside the headstones. It's social, warm, and often funny — people tell stories and play music until morning."
 msgstr "Les familles passent la nuit dans les cimetières, nettoyant les tombes, posant des chemins de soucis et partageant des repas à côté des pierres tombales. C'est convivial, chaleureux et souvent drôle — les gens racontent des histoires et jouent de la musique jusqu'au matin."
 
-#: src/hooks/seasonal-events/perseids.tsx:126
-#~ msgid "Fast and bright, the Perseids often produce spectacular fireballs that leave glowing trails behind them."
-#~ msgstr "Rapides et lumineux, les Perséides produisent souvent des bolides spectaculaires qui laissent derrière eux des traînées incandescentes."
-
-#: src/pages/feedback/index.tsx:388
-#~ msgid "Feature request"
-#~ msgstr "Demande de fonctionnalité"
-
-#: src/pages/feedback/index.tsx:231
-#~ msgid "Features don't work as expected"
-#~ msgstr "Les fonctionnalités ne fonctionnent pas comme prévu"
-
 #: src/features/weather/ui/tile.tsx:123
 msgid "February"
 msgstr "Février"
 
-#: src/features/settings/ui/settings.tsx:370
+#: src/features/settings/ui/settings.tsx:588
 msgid "Feedback"
 msgstr "Retour d'information"
-
-#: src/pages/feedback/index.tsx:458
-#~ msgid "Feedback successfully submitted"
-#~ msgstr "Retour d'information envoyé avec succès"
 
 #: src/features/seasonal-events/events/geminids.tsx:115
 msgid "Find a wide view of the sky, allow your eyes time to adjust, and settle in — the display often strengthens after midnight."
 msgstr "Choisissez une vue dégagée du ciel, laissez vos yeux s’adapter et installez-vous — le spectacle se renforce souvent après minuit."
 
-#: src/hooks/seasonal-events/new-years.tsx:67
-#~ msgid "Fireworks, bells, and wishes seem to ride that wave, scattering light and sound across the night."
-#~ msgstr "Feux d’artifice, cloches et vœux semblent surfer sur cette vague, dispersant lumière et son dans la nuit."
-
 #: src/features/seasonal-events/events/hanukkah.tsx:108
 msgid "Foods fried in oil, including latkes and sufganiyot, reflect the central symbol of the story."
 msgstr "Les aliments frits dans l’huile, notamment les latkes et les sufganiyot, rappellent le symbole central de l’histoire."
-
-#: src/hooks/seasonal-events/holi.tsx:184
-#~ msgid "For a time, streets become living paintings and the air itself seems to celebrate."
-#~ msgstr "Pendant un temps, les rues deviennent des tableaux vivants et l’air lui-même semble célébrer."
 
 #: src/features/seasonal-events/events/diwali.tsx:83
 msgid "For many Hindus, the festival marks the return of Rama, Sita, Lakshmana, and Hanuman to Ayodhya after their long exile."
 msgstr "Pour de nombreux hindous, la fête marque le retour de Rama, Sita, Lakshmana et Hanuman à Ayodhya après leur long exil."
 
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:83
-#~ msgid "For safe viewing, certified eclipse glasses must be used during all phases except the brief moment of totality."
-#~ msgstr "Pour une observation en toute sécurité, des lunettes d’éclipse certifiées doivent être utilisées pendant toutes les phases, sauf durant le bref moment de totalité."
-
-#: src/pages/feedback/index.tsx:281
-#~ msgid "Found a better alternative"
-#~ msgstr "Trouvé une meilleure alternative"
+#: src/features/settings/ui/settings.tsx:449
+msgid "Forecast"
+msgstr "Prévisions"
 
 #: src/features/weather/ui/tile.tsx:117
 msgid "Friday"
@@ -643,7 +461,7 @@ msgstr "Les météores des Géminides se déplacent plus lentement que la plupar
 msgid "Geminids Meteor Shower"
 msgstr "Pluie de météores des Géminides"
 
-#: src/features/settings/ui/settings.tsx:231
+#: src/features/settings/ui/settings.tsx:77
 msgid "General"
 msgstr "Général"
 
@@ -785,33 +603,13 @@ msgstr "Holi est une joyeuse fête des couleurs, célébrée dans les rires, la 
 msgid "Homes are carefully cleaned and decorated to clear away old luck and welcome prosperity for the year ahead."
 msgstr "Les maisons sont soigneusement nettoyées et décorées pour chasser l’ancienne chance et accueillir la prospérité de l’année à venir."
 
-#: src/pages/feedback/index.tsx:167
-#~ msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
-#~ msgstr "J'apprécierais si vous pouviez fournir un retour sur la raison pour laquelle vous avez désinstallé Weather Please. Cela me permet de rendre Weather Please un meilleur produit."
-
-#: src/components/settings/index.tsx:405
-#~ msgid "I'd love to bring Weather Please to more languages."
-#~ msgstr "J'aimerais apporter Weather Please à d'autres langues."
-
-#: src/features/settings/ui/settings.tsx:293
+#: src/features/settings/ui/settings.tsx:463
 msgid "Identifier"
 msgstr "Identificateur"
-
-#: src/components/settings/index.tsx:206
-#~ msgid "If this is incorrect, please update the values below."
-#~ msgstr "Si cela est incorrect, veuillez mettre à jour les valeurs ci-dessous."
-
-#: src/components/settings/index.tsx:410
-#~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
-#~ msgstr "Si vous avez une demande de traduction, veuillez nous contacter à <0>contact@weather-please.app</0>"
 
 #: src/features/settings/ui/initialisation.tsx:168
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Si votre navigateur vous demande l'autorisation d'accéder à votre localisation, veuillez sélectionner \"autoriser\"."
-
-#: src/hooks/seasonal-events/summer-solstice.tsx:114
-#~ msgid "In far northern regions, the sun may barely set at all, creating the phenomenon of the midnight sun."
-#~ msgstr "Dans les régions très au nord, le soleil peut à peine se coucher, créant le phénomène du soleil de minuit."
 
 #: src/features/seasonal-events/events/eid-al-fitr.tsx:101
 msgid "In many communities, everyone wears new clothes, children receive money or gifts, and doors stay open all day for visitors."
@@ -821,40 +619,14 @@ msgstr "Dans de nombreuses communautés, tout le monde porte de nouveaux habits,
 msgid "In many traditions, the equinox is not only about what has been gathered, but about what lies ahead — a pause to take stock before the quieter months arrive."
 msgstr "Dans de nombreuses traditions, l’équinoxe ne concerne pas seulement ce qui a été récolté, mais aussi ce qui vient — une pause pour faire le point avant l’arrivée des mois plus calmes."
 
-#: src/hooks/seasonal-events/leonids.tsx:126
-#~ msgid "In most years the Leonids unfold gently, yet they always carry the possibility of a sudden, breathtaking encore."
-#~ msgstr "La plupart des années, les Léonides se déroulent doucement, mais elles portent toujours la possibilité d’un rappel soudain et saisissant."
-
 #: src/features/seasonal-events/events/leonids.tsx:132
 msgid "In most years, the Leonids produce only 10–15 meteors per hour. But during the 1966 storm, observers reported rates of thousands per minute — so many that some people thought the world was ending."
 msgstr "La plupart des années, les Léonides ne produisent que 10 à 15 météores par heure. Mais lors de la tempête de 1966, les observateurs ont signalé des taux de plusieurs milliers par minute — tellement que certains ont cru que la fin du monde était arrivée."
-
-#: src/hooks/seasonal-events/winter-solstice.tsx:112
-#~ msgid "In the depth of the long night, even a single candle can feel like a sunrise."
-#~ msgstr "Au cœur de la longue nuit, même une seule bougie peut donner l’impression d’un lever de soleil."
-
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:95
-#~ msgid "In this tradition, memory becomes a bridge between worlds, not a wall between them."
-#~ msgstr "Dans cette tradition, la mémoire devient un pont entre les mondes, pas un mur entre eux."
-
-#: src/components/intialisation/index.tsx:168
-#: src/components/settings/index.tsx:219
-#~ msgid "Invalid latitude value"
-#~ msgstr "Valeur de latitude invalide"
-
-#: src/components/intialisation/index.tsx:184
-#: src/components/settings/index.tsx:235
-#~ msgid "Invalid longitude value"
-#~ msgstr "Valeur de longitude invalide"
 
 #: src/shared/ui/input.tsx:99
 #: src/shared/ui/input.tsx:149
 msgid "Invalid value. Settings will not save until this is valid."
 msgstr "Valeur invalide. Les paramètres ne seront pas enregistrés tant que cette valeur n'est pas valide."
-
-#: src/pages/feedback/index.tsx:324
-#~ msgid "Issues after a recent update"
-#~ msgstr "Problèmes suite à une mise à jour récente"
 
 #: src/features/seasonal-events/events/black-hole.tsx:248
 msgid "It also opened a new era of black-hole imaging, with continued work on sharper reconstructions and time-varying dynamics."
@@ -880,29 +652,9 @@ msgstr "Elle est depuis devenue une célébration mondiale, attirant souvent l�
 msgid "It invites friendly fear, shared laughter, and a little mischief."
 msgstr "Elle invite à une peur amicale, à des rires partagés et à un peu de malice."
 
-#: src/hooks/seasonal-events/eid-al-adha.tsx:87
-#~ msgid "It is a day that turns personal devotion into shared kindness."
-#~ msgstr "C’est un jour qui transforme la dévotion personnelle en bienveillance partagée."
-
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:94
-#~ msgid "It is a holiday shaped by gratitude, generosity, and gentle celebration."
-#~ msgstr "C’est une fête façonnée par la gratitude, la générosité et une célébration tout en douceur."
-
-#: src/hooks/seasonal-events/easter.tsx:76
-#~ msgid "It is a holiday that speaks gently in the language of new beginnings."
-#~ msgstr "C’est une fête qui parle doucement le langage des nouveaux départs."
-
 #: src/features/seasonal-events/events/easter.tsx:50
 msgid "It is a movable feast, its date determined by the cycle of the moon and the arrival of spring in the northern hemisphere."
 msgstr "C’est une fête mobile, dont la date est déterminée par le cycle de la lune et l’arrivée du printemps dans l’hémisphère nord."
-
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:93
-#~ msgid "It is a quiet and patient spectacle that rewards unhurried attention."
-#~ msgstr "C’est un spectacle calme et patient, qui récompense l’attention sans hâte."
-
-#: src/hooks/seasonal-events/lyrids.tsx:114
-#~ msgid "It is a shower with a long memory, linking modern stargazers with watchers of ancient skies."
-#~ msgstr "C’est une pluie au long souvenir, reliant les observateurs d’aujourd’hui à ceux des ciels anciens."
 
 #: src/features/seasonal-events/events/holi.tsx:209
 msgid "It is closely associated with the arrival of spring in much of the world where the tradition first formed."
@@ -924,10 +676,6 @@ msgstr "Elle est célébrée dans le monde entier, de façon à la fois profond�
 msgid "It is observed by millions across India and by communities around the world."
 msgstr "Elle est célébrée par des millions de personnes en Inde et par des communautés du monde entier."
 
-#: src/hooks/seasonal-events/valentines.tsx:55
-#~ msgid "It is often marked by small gestures that simply say someone has been remembered."
-#~ msgstr "Elle est souvent marquée par de petits gestes qui disent simplement que quelqu’un a été pensé."
-
 #: src/features/seasonal-events/events/black-hole.tsx:215
 msgid "It represents a major milestone in astronomy, combining global cooperation, radio interferometry, and years of data processing."
 msgstr "Il représente une étape majeure en astronomie, combinant la coopération mondiale, l'interférométrie radio et des années de traitement des données."
@@ -939,18 +687,6 @@ msgstr "Elle annonce le début de l’hiver dans l’hémisphère nord et le dé
 #: src/features/seasonal-events/events/earth-day.tsx:133
 msgid "It stands as both a celebration of the natural world and a call to responsible action."
 msgstr "Elle est à la fois une célébration du monde naturel et un appel à l’action responsable."
-
-#: src/hooks/seasonal-events/christmas.tsx:103
-#~ msgid "It’s a holiday that invites both celebration and pause."
-#~ msgstr "C’est une fête qui invite à célébrer autant qu’à faire une pause."
-
-#: src/hooks/seasonal-events/earth-day.tsx:175
-#~ msgid "It’s a quiet reminder that care for the world and a sense of wonder often move together."
-#~ msgstr "C’est un rappel discret que le soin du monde et le sens de l’émerveillement vont souvent ensemble."
-
-#: src/hooks/seasonal-events/autumn-equinox.tsx:125
-#~ msgid "It’s a season for noticing the small transitions: seedpods splitting, leaves turning, and birds tracing long paths across the sky."
-#~ msgstr "C’est une saison pour remarquer les petites transitions : les gousses qui s’ouvrent, les feuilles qui tournent et les oiseaux qui tracent de longues routes dans le ciel."
 
 #: src/features/seasonal-events/events/valentines.tsx:61
 msgid "It's often less about grand gestures and more about letting someone know they're on your mind."
@@ -972,20 +708,12 @@ msgstr "Juillet"
 msgid "June"
 msgstr "Juin"
 
-#: src/pages/feedback/index.tsx:221
-#~ msgid "Lacks features I need"
-#~ msgstr "Manque de fonctionnalités dont j'ai besoin"
-
 #: src/features/settings/ui/initialisation.tsx:174
-#: src/features/settings/ui/settings.tsx:234
+#: src/features/settings/ui/settings.tsx:390
 msgid "Language"
 msgstr "Langue"
 
-#: src/hooks/seasonal-events/lunar-new-year.tsx:112
-#~ msgid "Lanterns and parades transform the night into a flowing river of light."
-#~ msgstr "Lanternes et parades transforment la nuit en une rivière de lumière en mouvement."
-
-#: src/features/settings/ui/settings.tsx:259
+#: src/features/settings/ui/settings.tsx:424
 msgid "Latitude"
 msgstr "Latitude"
 
@@ -993,7 +721,7 @@ msgstr "Latitude"
 msgid "Leave a review"
 msgstr "Laisser un avis"
 
-#: src/features/settings/ui/settings.tsx:429
+#: src/features/settings/ui/settings.tsx:648
 msgid "Legal"
 msgstr "Légal"
 
@@ -1021,53 +749,17 @@ msgstr "pluie verglaçante légère"
 msgid "Light shifts to a silvery tone, shadows sharpen, and temperatures may drop noticeably within minutes."
 msgstr "La lumière prend une teinte argentée, les ombres se durcissent et les températures peuvent chuter sensiblement en quelques minutes."
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:116
-#: src/hooks/seasonal-events/christmas.tsx:93
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:86
-#: src/hooks/seasonal-events/diwali.tsx:107
-#: src/hooks/seasonal-events/earth-day.tsx:166
-#: src/hooks/seasonal-events/easter.tsx:67
-#: src/hooks/seasonal-events/eid-al-adha.tsx:78
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:85
-#: src/hooks/seasonal-events/eta-aquariids.tsx:106
-#: src/hooks/seasonal-events/geminids.tsx:122
-#: src/hooks/seasonal-events/halloween.tsx:85
-#: src/hooks/seasonal-events/hanukkah.tsx:109
-#: src/hooks/seasonal-events/holi.tsx:175
-#: src/hooks/seasonal-events/leonids.tsx:123
-#: src/hooks/seasonal-events/lunar-new-year.tsx:109
-#: src/hooks/seasonal-events/lyrids.tsx:105
-#: src/hooks/seasonal-events/new-years.tsx:58
-#: src/hooks/seasonal-events/orionids.tsx:106
-#: src/hooks/seasonal-events/perseids.tsx:123
-#: src/hooks/seasonal-events/quadrantids.tsx:122
-#: src/hooks/seasonal-events/spring-equinox.tsx:106
-#: src/hooks/seasonal-events/summer-solstice.tsx:105
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:84
-#: src/hooks/seasonal-events/valentines.tsx:94
-#: src/hooks/seasonal-events/winter-solstice.tsx:109
-#~ msgid "Little wonder"
-#~ msgstr "Petite merveille"
-
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:74
-#~ msgid "Little wonder and safety"
-#~ msgstr "Petite merveille et sécurité"
-
-#: src/components/settings/index.tsx:191
-#~ msgid "Location"
-#~ msgstr "Localisation"
+#: src/features/settings/ui/settings.tsx:415
+msgid "Location"
+msgstr "Localisation"
 
 #: src/features/location/ui/identified-location-indicator.tsx:52
 msgid "Location name unavailable"
 msgstr "Nom de lieu non disponible"
 
-#: src/features/settings/ui/settings.tsx:267
+#: src/features/settings/ui/settings.tsx:432
 msgid "Longitude"
 msgstr "Longitude"
-
-#: src/components/intialisation/index.tsx:150
-#~ msgid "Looks like we can't grab your location info automatically."
-#~ msgstr "Il semble que nous ne pouvons pas obtenir automatiquement vos informations de localisation."
 
 #: src/features/weather/ui/weather-alert.tsx:375
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
@@ -1106,10 +798,6 @@ msgstr "Pluie de météores des Lyrides"
 msgid "mainly clear"
 msgstr "principalement clair"
 
-#: src/hooks/seasonal-events/spring-equinox.tsx:115
-#~ msgid "Many people still try the playful tradition of balancing an egg on its end, a quiet ritual of patience and curiosity."
-#~ msgstr "Beaucoup de gens tentent encore la tradition ludique consistant à faire tenir un œuf en équilibre sur sa pointe, un petit rituel de patience et de curiosité."
-
 #: src/features/weather/ui/tile.tsx:124
 msgid "March"
 msgstr "Mars"
@@ -1118,10 +806,6 @@ msgstr "Mars"
 msgid "Marigolds, papel picado, sugar skulls, candles, and favourite foods form a visual language of welcome and connection."
 msgstr "Les soucis, le papel picado, les crânes en sucre, les bougies et les plats préférés composent un langage visuel d’accueil et de lien."
 
-#: src/hooks/seasonal-events/halloween.tsx:88
-#~ msgid "Masks invite games of identity, and lanterns turn familiar streets into small theatres of light and shadow."
-#~ msgstr "Les masques invitent à des jeux d’identité, et les lanternes transforment les rues familières en petits théâtres de lumière et d’ombre."
-
 #: src/features/weather/ui/tile.tsx:126
 msgid "May"
 msgstr "Mai"
@@ -1129,14 +813,6 @@ msgstr "Mai"
 #: src/features/seasonal-events/events/autumn-equinox.tsx:133
 msgid "Meanwhile, billions of birds are mid-migration, navigating by stars, magnetic fields, and landmarks passed down through generations."
 msgstr "Pendant ce temps, des milliards d’oiseaux sont en pleine migration, se guidant par les étoiles, les champs magnétiques et des repères transmis de génération en génération."
-
-#: src/pages/feedback/index.tsx:411
-#~ msgid "Message"
-#~ msgstr "Message"
-
-#: src/components/settings/index.tsx:357
-#~ msgid "Miscellaneous"
-#~ msgstr "Divers"
 
 #: src/features/weather/ui/tile.tsx:88
 msgid "moderate drizzle"
@@ -1170,25 +846,9 @@ msgstr "La plupart des progrès environnementaux commencent à petite échelle e
 msgid "Most years the display is modest, but the shower is famous for its capacity to produce rare and spectacular surprises."
 msgstr "La plupart des années, le spectacle est modeste, mais cette pluie est célèbre pour sa capacité à offrir de rares et spectaculaires surprises."
 
-#: src/hooks/seasonal-events/lyrids.tsx:108
-#~ msgid "Most years the Lyrids unfold quietly, though they sometimes surprise observers with bright fireballs."
-#~ msgstr "La plupart des années, les Lyrides se déroulent discrètement, mais elles surprennent parfois les observateurs avec de brillants bolides."
-
-#: src/hooks/seasonal-events/hanukkah.tsx:118
-#~ msgid "Music, laughter, and shared meals give the celebration its warm and playful spirit."
-#~ msgstr "La musique, les rires et les repas partagés donnent à la célébration son esprit chaleureux et joyeux."
-
 #: src/features/settings/ui/review-prompt.tsx:59
 msgid "Never show this again"
 msgstr "Ne plus jamais afficher ceci"
-
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:88
-#~ msgid "New clothes, sweet foods, and warm embraces turn the day into a bright reunion."
-#~ msgstr "Des vêtements neufs, des mets sucrés et des embrassades chaleureuses transforment la journée en de lumineuses retrouvailles."
-
-#: src/pages/_app.tsx:21
-#~ msgid "New tab"
-#~ msgstr "Nouvel onglet"
 
 #: src/features/weather/ui/tile.tsx:184
 msgid "New Year's Day"
@@ -1202,27 +862,11 @@ msgstr "Le Jour de l’An sert de remise à zéro du calendrier, marqué par le 
 msgid "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precisely that sunlight floods its inner chamber for just seventeen minutes around the winter solstice each year."
 msgstr "Newgrange, un tombeau à couloir vieux de 5 000 ans en Irlande, a été construit avec une telle précision que la lumière du soleil inonde sa chambre intérieure pendant seulement dix-sept minutes autour du solstice d’hiver chaque année."
 
-#: src/pages/feedback/index.tsx:272
-#~ msgid "No longer need the functionality"
-#~ msgstr "N'a plus besoin de la fonctionnalité"
-
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:87
-#~ msgid "No special equipment is required; the Moon slowly drifts through shades of copper and crimson overhead."
-#~ msgstr "Aucun équipement spécial n’est nécessaire ; la Lune glisse lentement au‑dessus de vous à travers des teintes de cuivre et de cramoisi."
-
-#: src/pages/feedback/index.tsx:203
-#~ msgid "Not available in my language"
-#~ msgstr "Pas disponible dans ma langue"
-
-#: src/components/settings/index.tsx:259
-#~ msgid "Note: This requires browser permissions"
-#~ msgstr "Remarque : cela nécessite des autorisations de navigateur"
-
 #: src/features/weather/ui/tile.tsx:132
 msgid "November"
 msgstr "Novembre"
 
-#: src/features/settings/ui/settings.tsx:282
+#: src/features/settings/ui/settings.tsx:452
 msgid "Number of days to forecast"
 msgstr "Nombre de jours à prévoir"
 
@@ -1250,7 +894,7 @@ msgstr "Le jour le plus long, le crépuscule s’étire pendant des heures et l�
 msgid "Orionids Meteor Shower"
 msgstr "Pluie de météores des Orionides"
 
-#: src/features/settings/ui/settings.tsx:150
+#: src/features/settings/ui/settings.tsx:185
 msgid "Other holidays"
 msgstr "Autres fêtes"
 
@@ -1304,11 +948,7 @@ msgstr "Aperçu"
 msgid "partly cloudy"
 msgstr "partiellement nuageux"
 
-#: src/pages/feedback/index.tsx:173
-#~ msgid "Performance issues"
-#~ msgstr "Problèmes de performance"
-
-#: src/features/settings/ui/settings.tsx:278
+#: src/features/settings/ui/settings.tsx:443
 msgid "Periodically update location automatically"
 msgstr "Mettre à jour périodiquement la localisation automatiquement"
 
@@ -1319,10 +959,6 @@ msgstr "Les météores des Perséides entrent dans l’atmosphère à environ 60
 #: src/features/weather/ui/tile.tsx:186
 msgid "Perseids Meteor Shower"
 msgstr "Pluie de météores des Perséides"
-
-#: src/components/intialisation/index.tsx:155
-#~ msgid "Please enter it manually below."
-#~ msgstr "Veuillez l'entrer manuellement ci-dessous."
 
 #: src/features/weather/ui/tile.tsx:187
 msgid "Quadrantids Meteor Shower"
@@ -1336,7 +972,7 @@ msgstr "Plutôt qu’un adieu solennel, elle traite le souvenir comme quelque ch
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "Enveloppes rouges, mandarines et couplets calligraphiés expriment des vœux d’abondance, de bonheur et de nouveaux départs."
 
-#: src/features/settings/ui/settings.tsx:140
+#: src/features/settings/ui/settings.tsx:175
 msgid "Religious & cultural"
 msgstr "Religieux et culturel"
 
@@ -1344,16 +980,12 @@ msgstr "Religieux et culturel"
 msgid "Report a bug"
 msgstr "Signaler un bug"
 
-#: src/pages/feedback/index.tsx:291
-#~ msgid "Resource usage"
-#~ msgstr "Utilisation des ressources"
-
 #: src/pages/index.tsx:167
 #: src/pages/index.tsx:186
 msgid "Retry"
 msgstr "Réessayer"
 
-#: src/features/settings/ui/settings.tsx:166
+#: src/features/settings/ui/settings.tsx:196
 msgid "Reverse geocoding by OpenStreetMap contributors"
 msgstr "Géocodage inverse par les contributeurs OpenStreetMap"
 
@@ -1361,26 +993,21 @@ msgstr "Géocodage inverse par les contributeurs OpenStreetMap"
 msgid "Saturday"
 msgstr "Samedi"
 
-#: src/components/settings/index.tsx:417
-#: src/components/settings/index.tsx:551
-#~ msgid "Save"
-#~ msgstr "Enregistrer"
-
-#: src/features/settings/ui/settings.tsx:340
+#: src/features/settings/ui/settings.tsx:542
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "Les effets saisonniers sont désactivés car votre navigateur semble utiliser un rendu logiciel. Activez l'accélération matérielle pour voir ces effets."
 
-#: src/features/settings/ui/settings.tsx:331
+#: src/features/settings/ui/settings.tsx:85
 msgid "Seasonal events"
 msgstr "Événements saisonniers"
 
-#: src/features/settings/ui/settings.tsx:110
+#: src/features/settings/ui/settings.tsx:145
 msgid "Seasons & nature"
 msgstr "Saisons et nature"
 
-#: src/pages/feedback/index.tsx:244
-#~ msgid "Security and privacy concerns"
-#~ msgstr "Préoccupations de sécurité et de confidentialité"
+#: src/features/settings/ui/settings.tsx:271
+msgid "Sections"
+msgstr "Sections"
 
 #: src/features/seasonal-events/events/diwali.tsx:116
 msgid "Seen from above, cities during Diwali are transformed — rooftops, balconies, and streets are outlined in light, and the effect is visible from space in satellite imagery."
@@ -1394,136 +1021,128 @@ msgstr "Septembre"
 msgid "Set my location"
 msgstr "Définir ma localisation"
 
-#: src/features/settings/ui/settings.tsx:211
-#: src/features/settings/ui/settings.tsx:228
+#: src/features/settings/ui/settings.tsx:248
+#: src/features/settings/ui/settings.tsx:267
 msgid "Settings"
 msgstr "Paramètres"
-
-#: src/components/settings/index.tsx:395
-#~ msgid "Share anonymised crash data and error logs"
-#~ msgstr "Partager les données anonymisées de crash et les journaux d'erreurs"
 
 #: src/features/seasonal-events/events/valentines.tsx:93
 msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and personal."
 msgstr "Douceurs partagées, fleurs et petits cadeaux gardent la célébration intime et personnelle."
 
-#: src/components/settings.tsx:181
-#~ msgid "Show alert icons that expand to text when clicked."
-#~ msgstr "Affiche des icônes d’alerte qui se développent en texte lorsqu’on clique dessus."
-
-#: src/features/settings/ui/settings.tsx:59
+#: src/features/settings/ui/settings.tsx:94
 msgid "Show Autumn Equinox event"
 msgstr "Afficher l'équinoxe d'automne"
 
-#: src/features/settings/ui/settings.tsx:60
+#: src/features/settings/ui/settings.tsx:95
 msgid "Show Christmas Day event"
 msgstr "Afficher le Jour de Noël"
 
-#: src/features/settings/ui/settings.tsx:61
+#: src/features/settings/ui/settings.tsx:96
 msgid "Show Day of the Dead event"
 msgstr "Afficher le Jour des morts"
 
-#: src/features/settings/ui/settings.tsx:62
+#: src/features/settings/ui/settings.tsx:97
 msgid "Show Diwali event"
 msgstr "Afficher Diwali"
 
-#: src/features/settings/ui/settings.tsx:63
+#: src/features/settings/ui/settings.tsx:98
 msgid "Show Earth Day event"
 msgstr "Afficher le Jour de la Terre"
 
-#: src/features/settings/ui/settings.tsx:64
+#: src/features/settings/ui/settings.tsx:99
 msgid "Show Easter event"
 msgstr "Afficher Pâques"
 
-#: src/features/settings/ui/settings.tsx:65
+#: src/features/settings/ui/settings.tsx:100
 msgid "Show Eid al-Adha event"
 msgstr "Afficher l'Aïd el-Adha"
 
-#: src/features/settings/ui/settings.tsx:66
+#: src/features/settings/ui/settings.tsx:101
 msgid "Show Eid al-Fitr event"
 msgstr "Afficher l'Aïd el-Fitr"
 
-#: src/features/settings/ui/settings.tsx:68
+#: src/features/settings/ui/settings.tsx:103
 msgid "Show Eta Aquariids meteor shower event"
 msgstr "Afficher la pluie de météores des Eta Aquarides"
 
-#: src/features/settings/ui/settings.tsx:71
+#: src/features/settings/ui/settings.tsx:106
 msgid "Show Event Horizon Day event"
 msgstr "Afficher l'événement du Jour de l'Horizon des Événements"
 
-#: src/features/settings/ui/settings.tsx:46
+#: src/features/settings/ui/settings.tsx:62
 msgid "Show extreme UV alerts"
 msgstr "Afficher les alertes UV extrêmes"
 
-#: src/features/settings/ui/settings.tsx:73
+#: src/features/settings/ui/settings.tsx:108
 msgid "Show Geminids meteor shower event"
 msgstr "Afficher la pluie de météores des Géminides"
 
-#: src/features/settings/ui/settings.tsx:74
+#: src/features/settings/ui/settings.tsx:109
 msgid "Show Halloween event"
 msgstr "Afficher Halloween"
 
-#: src/features/settings/ui/settings.tsx:75
+#: src/features/settings/ui/settings.tsx:110
 msgid "Show Hanukkah event"
 msgstr "Afficher Hanoucca"
 
-#: src/features/settings/ui/settings.tsx:49
+#: src/features/settings/ui/settings.tsx:65
 msgid "Show high precipitation alerts"
 msgstr "Afficher les alertes de fortes précipitations"
 
-#: src/features/settings/ui/settings.tsx:76
+#: src/features/settings/ui/settings.tsx:111
 msgid "Show Holi event"
 msgstr "Afficher Holi"
 
-#: src/features/settings/ui/settings.tsx:77
+#: src/features/settings/ui/settings.tsx:112
 msgid "Show Leonids meteor shower event"
 msgstr "Afficher la pluie de météores des Léonides"
 
-#: src/features/settings/ui/settings.tsx:54
+#: src/features/settings/ui/settings.tsx:70
 msgid "Show low visibility alerts"
 msgstr "Afficher les alertes de faible visibilité"
 
-#: src/features/settings/ui/settings.tsx:78
+#: src/features/settings/ui/settings.tsx:113
 msgid "Show Lunar New Year event"
 msgstr "Afficher le Nouvel An lunaire"
 
-#: src/features/settings/ui/settings.tsx:79
+#: src/features/settings/ui/settings.tsx:114
 msgid "Show Lyrids meteor shower event"
 msgstr "Afficher la pluie de météores des Lyrides"
 
-#: src/features/settings/ui/settings.tsx:80
+#: src/features/settings/ui/settings.tsx:115
 msgid "Show New Year's Day event"
 msgstr "Afficher le Jour de l'An"
 
-#: src/features/settings/ui/settings.tsx:81
+#: src/features/settings/ui/settings.tsx:116
 msgid "Show Orionids meteor shower event"
 msgstr "Afficher la pluie de météores des Orionides"
 
-#: src/features/settings/ui/settings.tsx:82
+#: src/features/settings/ui/settings.tsx:117
 msgid "Show Perseids meteor shower event"
 msgstr "Afficher la pluie de météores des Perséides"
 
-#: src/features/settings/ui/settings.tsx:84
+#: src/features/settings/ui/settings.tsx:119
 msgid "Show Quadrantids meteor shower event"
 msgstr "Afficher la pluie de météores des Quadrantides"
 
-#: src/features/settings/ui/settings.tsx:335
+#: src/features/settings/ui/settings.tsx:537
 msgid "Show seasonal events"
 msgstr "Afficher les événements saisonniers"
 
-#: src/features/settings/ui/settings.tsx:351
+#: src/features/settings/ui/settings.tsx:552
 msgid "Show seasonal tile glow"
 msgstr "Afficher la lueur saisonnière des tuiles"
 
-#: src/features/settings/ui/settings.tsx:86
+#: src/features/settings/ui/settings.tsx:121
 msgid "Show Spring Equinox event"
 msgstr "Afficher l'équinoxe de printemps"
 
-#: src/features/settings/ui/settings.tsx:51
+#: src/features/settings/ui/settings.tsx:67
 msgid "Show strong wind alerts"
 msgstr "Afficher les alertes de vent fort"
 
-#: src/features/settings/ui/settings.tsx:87
+#: src/features/settings/ui/settings.tsx:122
 msgid "Show Summer Solstice event"
 msgstr "Afficher le solstice d'été"
 
@@ -1531,23 +1150,23 @@ msgstr "Afficher le solstice d'été"
 msgid "Show this event"
 msgstr "Afficher cet événement"
 
-#: src/features/settings/ui/settings.tsx:89
+#: src/features/settings/ui/settings.tsx:124
 msgid "Show total lunar eclipse event"
 msgstr "Afficher l'éclipse totale de Lune"
 
-#: src/features/settings/ui/settings.tsx:92
+#: src/features/settings/ui/settings.tsx:127
 msgid "Show total solar eclipse event"
 msgstr "Afficher l'éclipse totale de Soleil"
 
-#: src/features/settings/ui/settings.tsx:95
+#: src/features/settings/ui/settings.tsx:130
 msgid "Show Valentine's Day event"
 msgstr "Afficher la Saint-Valentin"
 
-#: src/features/settings/ui/settings.tsx:324
+#: src/features/settings/ui/settings.tsx:501
 msgid "Show weather alerts"
 msgstr "Afficher les alertes météorologiques"
 
-#: src/features/settings/ui/settings.tsx:97
+#: src/features/settings/ui/settings.tsx:132
 msgid "Show Winter Solstice event"
 msgstr "Afficher le solstice d'hiver"
 
@@ -1576,14 +1195,6 @@ msgstr "faibles averses de neige"
 msgid "slight snowfall"
 msgstr "faibles chutes de neige"
 
-#: src/pages/feedback/index.tsx:177
-#~ msgid "Slows down my browser"
-#~ msgstr "Ralentit mon navigateur"
-
-#: src/hooks/seasonal-events/earth-day.tsx:169
-#~ msgid "Small actions accumulate: a planted tree, a cleared shoreline, a renewed path."
-#~ msgstr "Les petites actions s’additionnent : un arbre planté, un rivage nettoyé, un sentier restauré."
-
 #: src/features/weather/ui/tile.tsx:100
 msgid "snow grains"
 msgstr "grains de neige"
@@ -1603,18 +1214,6 @@ msgstr "Équinoxe de printemps"
 #: src/features/seasonal-events/events/holi.tsx:219
 msgid "Stories surrounding Holi vary by region, including the tale of Prahlad and Holika, which speaks to the triumph of devotion and good over harm."
 msgstr "Les histoires autour de Holi varient selon les régions, notamment le récit de Prahlad et Holika, qui évoque le triomphe de la dévotion et du bien sur le mal."
-
-#: src/components/alert/index.tsx:236
-#~ msgid "Strong wind for the next {durationOfStrongWind} hours"
-#~ msgstr "Vent fort pour les prochaines {durationOfStrongWind} heures"
-
-#: src/components/alert/index.tsx:241
-#~ msgid "Strong wind for the next 24 hours"
-#~ msgstr "Vent fort pour les prochaines 24 heures"
-
-#: src/components/alert/index.tsx:244
-#~ msgid "Strong wind for the next hour"
-#~ msgstr "Vent fort pour la prochaine heure"
 
 #: src/features/weather/ui/weather-alert.tsx:333
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
@@ -1636,10 +1235,6 @@ msgstr "Rafales de vent fort commençant dans {timeUntilStrongWind} heures"
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "Rafales de vent fort commençant dans 1 heure"
 
-#: src/components/alert/index.tsx:227
-#~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
-#~ msgstr "Vent fort commençant dans {timeUntilStrongWind} heures"
-
 #: src/app/bug/page.tsx:83
 msgid "Submit"
 msgstr "Soumettre"
@@ -1655,10 +1250,6 @@ msgstr "Dimanche"
 #: src/features/seasonal-events/events/easter.tsx:76
 msgid "Sunrise services draw people outdoors before the day has fully started, and egg hunts send children tearing across gardens and parks."
 msgstr "Les offices du lever du soleil attirent les gens dehors avant que la journée ait vraiment commencé, et les chasses aux œufs envoient les enfants courir à travers jardins et parcs."
-
-#: src/hooks/seasonal-events/easter.tsx:70
-#~ msgid "Sunrise services, fresh mornings, and the simple delight of egg hunts carry the feeling of a world beginning again."
-#~ msgstr "Les offices au lever du soleil, les matins frais et le simple plaisir des chasses aux œufs portent la sensation d’un monde qui recommence."
 
 #: src/features/seasonal-events/events/day-of-the-dead.tsx:76
 msgid "Symbols and offerings"
@@ -1676,10 +1267,6 @@ msgstr "Symboles et rituels"
 msgid "Symbols of luck"
 msgstr "Symboles de chance"
 
-#: src/hooks/seasonal-events/diwali.tsx:116
-#~ msgid "The air hums with music, laughter, and the quiet shimmer of celebration."
-#~ msgstr "L’air vibre de musique, de rires et du scintillement discret de la fête."
-
 #: src/features/seasonal-events/events/autumn-equinox.tsx:89
 msgid "The autumn equinox marks a moment of near-perfect balance, when day and night stand equal before the long shift toward darker evenings."
 msgstr "L’équinoxe d’automne marque un moment d’équilibre presque parfait, lorsque le jour et la nuit sont égaux avant la longue marche vers des soirées plus sombres."
@@ -1691,10 +1278,6 @@ msgstr "La célébration vient de l’ancien festival de Samhain et de l’obser
 #: src/features/seasonal-events/events/autumn-equinox.tsx:126
 msgid "The colour change in autumn leaves isn’t new pigment appearing — it’s the green chlorophyll withdrawing, revealing yellows and oranges that were there all along."
 msgstr "Le changement de couleur des feuilles d’automne n’est pas l’apparition d’un nouveau pigment — c’est la chlorophylle verte qui se retire, révélant les jaunes et les oranges qui étaient là depuis le début."
-
-#: src/hooks/seasonal-events/holi.tsx:178
-#~ msgid "The colours draw everyone into the same bright moment, dissolving distance and difference."
-#~ msgstr "Les couleurs entraînent tout le monde dans le même moment éclatant, dissolvant la distance et la différence."
 
 #: src/features/seasonal-events/events/black-hole.tsx:225
 msgid "The dark center is the event horizon silhouette, while the bright ring is light from superheated material in the accretion flow around it."
@@ -1769,10 +1352,6 @@ msgstr "Les Léonides sont réputées pour des tempêtes de météores historiqu
 msgid "The Leonids originate from Comet Tempel–Tuttle, and every few decades Earth passes through especially dense streams of its debris."
 msgstr "Les Léonides proviennent de la comète Tempel–Tuttle et, tous les quelques décennies, la Terre traverse des courants de débris particulièrement denses."
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:119
-#~ msgid "The light softens and turns golden, the air grows gentler, and the year seems to pause — just for a breath."
-#~ msgstr "La lumière s’adoucit et devient dorée, l’air se fait plus doux et l’année semble s’arrêter — juste le temps d’un souffle."
-
 #: src/features/settings/ui/initialisation.tsx:126
 msgid "The location request timed out. Please check your internet connection and try again."
 msgstr "La demande de localisation a expiré. Vérifiez votre connexion internet et réessayez."
@@ -1822,14 +1401,6 @@ msgstr "La viande du sacrifice est traditionnellement divisée en trois parts é
 msgid "The menorah is placed in a window or doorway so the light faces outward — the tradition is specifically about making the flames visible to passersby."
 msgstr "La ménorah est placée dans une fenêtre ou une entrée de sorte que la lumière soit tournée vers l’extérieur — la tradition consiste précisément à rendre les flammes visibles aux passants."
 
-#: src/hooks/seasonal-events/eta-aquariids.tsx:115
-#~ msgid "The meteors are exceptionally fast and often leave long, delicate trains that linger in the sky."
-#~ msgstr "Les météores sont exceptionnellement rapides et laissent souvent de longues traînées délicates qui persistent dans le ciel."
-
-#: src/hooks/seasonal-events/geminids.tsx:125
-#~ msgid "The meteors are often bright and steady, tracing slow, colourful paths across the night."
-#~ msgstr "Les météores sont souvent brillants et réguliers, traçant des chemins lents et colorés dans la nuit."
-
 #: src/features/seasonal-events/events/orionids.tsx:122
 msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of any annual shower, which is why they often leave persistent glowing trails."
 msgstr "Les météores entrent dans l’atmosphère à environ 66 km/s, parmi les plus rapides de toutes les pluies annuelles, ce qui explique pourquoi ils laissent souvent des traînées lumineuses persistantes."
@@ -1860,17 +1431,9 @@ msgstr "La prochaine fenêtre potentielle de tempête de Léonides se situe dans
 msgid "The night before Holi features Holika Dahan, a ceremonial bonfire that symbolises the passing of winter and the renewal of life."
 msgstr "La nuit précédant Holi présente Holika Dahan, un feu de joie cérémoniel qui symbolise le départ de l’hiver et le renouveau de la vie."
 
-#: src/hooks/seasonal-events/halloween.tsx:94
-#~ msgid "The night encourages imagination to wander, as if even the moon were part of the performance."
-#~ msgstr "La nuit encourage l’imagination à vagabonder, comme si même la lune faisait partie du spectacle."
-
 #: src/features/seasonal-events/events/spring-equinox.tsx:123
 msgid "The old tradition of balancing an egg on its end at the equinox is a myth (you can do it any day of the year), but people keep trying anyway. It's become its own kind of ritual."
 msgstr "L'ancienne tradition de faire tenir un œuf debout à l'équinoxe est un mythe (vous pouvez le faire n'importe quel jour de l'année), mais les gens continuent d'essayer. C'est devenu son propre type de rituel."
-
-#: src/hooks/seasonal-events/valentines.tsx:97
-#~ msgid "The oldest known Valentine is a fifteenth-century poem written from imprisonment in the Tower of London."
-#~ msgstr "Le plus ancien Valentine connu est un poème du XVe siècle écrit depuis la Tour de Londres, en captivité."
 
 #: src/features/seasonal-events/events/valentines.tsx:103
 msgid "The oldest known Valentine is a fifteenth-century poem, written from a cell in the Tower of London — a love letter composed under the worst possible circumstances."
@@ -1887,10 +1450,6 @@ msgstr "Les Orionides sont une pluie de météores annuelle formée de débris l
 #: src/features/seasonal-events/events/orionids.tsx:99
 msgid "The Orionids are visible from both hemispheres and are known for producing bright, fast-moving meteors."
 msgstr "Les Orionides sont visibles depuis les deux hémisphères et sont connues pour produire des météores brillants et rapides."
-
-#: src/hooks/seasonal-events/quadrantids.tsx:131
-#~ msgid "The peak often arrives suddenly, like a secret performance unfolding before dawn."
-#~ msgstr "Le pic arrive souvent soudainement, comme une représentation secrète qui se déploie avant l’aube."
 
 #: src/features/seasonal-events/events/perseids.tsx:82
 msgid "The Perseids are a bright annual meteor shower formed from debris left by Comet Swift–Tuttle."
@@ -1915,14 +1474,6 @@ msgstr "Les Quadrantides sont une pluie de météores qui culmine début janvier
 #: src/features/seasonal-events/events/lunar-new-year.tsx:118
 msgid "The season builds toward the Lantern Festival on the fifteenth night, when thousands of lanterns are released into the sky."
 msgstr "La saison culmine avec le Festival des Lanternes la quinzième nuit, lorsque des milliers de lanternes sont libérées dans le ciel."
-
-#: src/hooks/seasonal-events/lunar-new-year.tsx:117
-#~ msgid "The season traditionally concludes with the Lantern Festival, when wishes are carried upward on glowing lanterns."
-#~ msgstr "La saison se conclut traditionnellement avec la Fête des lanternes, lorsque les vœux s’élèvent sur des lanternes lumineuses."
-
-#: src/hooks/seasonal-events/orionids.tsx:115
-#~ msgid "The shower frequently delivers swift, luminous streaks that carve clean lines across the night."
-#~ msgstr "La pluie offre souvent des traits rapides et lumineux qui tracent des lignes nettes dans la nuit."
 
 #: src/features/seasonal-events/events/lyrids.tsx:104
 msgid "The shower originates from Comet Thatcher, which returns to the inner solar system roughly every four hundred and fifteen years."
@@ -1972,10 +1523,6 @@ msgstr "Le solstice d’hiver marque le jour le plus court et la nuit la plus lo
 msgid "The zodiac animal associated with the year is believed to shape its character and fortunes."
 msgstr "On pense que l’animal du zodiaque associé à l’année en façonne le caractère et la fortune."
 
-#: src/hooks/seasonal-events/quadrantids.tsx:125
-#~ msgid "Their likely parent body is the asteroid 2003 EH1, a reminder that even an unassuming rock can paint the sky with light."
-#~ msgstr "Leur corps parent probable est l’astéroïde 2003 EH1, rappel que même un simple rocher peut peindre le ciel de lumière."
-
 #: src/features/seasonal-events/events/quadrantids.tsx:131
 msgid "Their likely parent body, asteroid 2003 EH1, may be a dead comet — one that exhausted its volatile ices and now orbits as a dark, quiet rock."
 msgstr "Leur corps parent probable, l’astéroïde 2003 EH1, pourrait être une comète morte — une comète qui a épuisé ses glaces volatiles et orbite désormais comme un rocher sombre et silencieux."
@@ -2001,10 +1548,6 @@ msgstr "Il y a {0}% de chances de précipitations."
 msgid "There's a reason the holiday lands in spring — it borrows heavily from the season's own sense of things starting over."
 msgstr "Il y a une raison pour laquelle cette fête tombe au printemps — elle emprunte largement au sens que la saison donne aux recommencements."
 
-#: src/hooks/seasonal-events/christmas.tsx:96
-#~ msgid "There’s something quietly luminous about the day itself — the glow of lights in windows, slow mornings, familiar songs, and tables set for gathering."
-#~ msgstr "Il y a quelque chose de doucement lumineux dans la journée elle-même — la lueur des guirlandes aux fenêtres, les matinées lentes, les chansons familières et les tables dressées pour se retrouver."
-
 #: src/features/seasonal-events/events/leonids.tsx:106
 msgid "These events played an important role in the development of scientific understanding of meteor showers."
 msgstr "Ces événements ont joué un rôle important dans le développement de la compréhension scientifique des pluies de météores."
@@ -2020,10 +1563,6 @@ msgstr "Ce sont généralement des pluies douces qui récompensent l’observati
 #: src/features/seasonal-events/events/eta-aquariids.tsx:89
 msgid "They peak in early May and are especially well seen from the southern hemisphere, though northern skies still catch their share of streaks."
 msgstr "Elles culminent début mai et sont particulièrement bien visibles depuis l’hémisphère sud, même si les cieux du nord en captent aussi leur part."
-
-#: src/hooks/seasonal-events/leonids.tsx:132
-#~ msgid "They serve as a quiet reminder that the sky still holds the power to surprise."
-#~ msgstr "Elles servent de rappel discret que le ciel a encore le pouvoir de surprendre."
 
 #: src/features/seasonal-events/events/quadrantids.tsx:121
 msgid "This makes the period of strongest activity short, but it can be especially spectacular."
@@ -2057,10 +1596,6 @@ msgstr "orage avec de légères grêles"
 msgid "Thursday"
 msgstr "Jeudi"
 
-#: src/components/settings/index.tsx:283
-#~ msgid "Tiles"
-#~ msgstr "Tuiles"
-
 #: src/features/settings/ui/initialisation.tsx:163
 msgid "To get started, let's set your language and location."
 msgstr "Pour commencer, définissons votre langue et votre localisation."
@@ -2072,10 +1607,6 @@ msgstr "Aujourd’hui, on estime que 350 millions de vrais sapins de Noël sont 
 #: src/features/seasonal-events/events/total-solar-eclipse.tsx:57
 msgid "Today, many people travel great distances to stand within the path of totality."
 msgstr "Aujourd’hui, de nombreuses personnes parcourent de grandes distances pour se tenir dans la bande de totalité."
-
-#: src/pages/feedback/index.tsx:307
-#~ msgid "Too much battery usage"
-#~ msgstr "Consommation excessive de la batterie"
 
 #: src/features/weather/ui/tile.tsx:190
 msgid "Total Lunar Eclipse"
@@ -2105,29 +1636,13 @@ msgstr "Réessayer"
 msgid "Tuesday"
 msgstr "Mardi"
 
-#: src/features/settings/ui/settings.tsx:316
+#: src/features/settings/ui/settings.tsx:493
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Activez cette option si l’indice UV indiqué par Weather Please est systématiquement inférieur à celui des sources locales."
-
-#: src/hooks/seasonal-events/summer-solstice.tsx:108
-#~ msgid "Twilight lingers, insects fill the air with song, and the sky can feel almost endless."
-#~ msgstr "Le crépuscule s’attarde, les insectes remplissent l’air de chant, et le ciel peut sembler presque sans fin."
 
 #: src/pages/index.tsx:161
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Impossible de récupérer les données météo. Vérifiez votre connexion internet et réessayez."
-
-#: src/hooks/seasonal-events/perseids.tsx:132
-#~ msgid "Under a dark sky, it can feel as though the universe itself is writing with light."
-#~ msgstr "Sous un ciel sombre, on peut avoir l’impression que l’univers lui-même écrit avec la lumière."
-
-#: src/hooks/seasonal-events/geminids.tsx:131
-#~ msgid "Under clear skies, the show can feel both calm and exhilarating at once."
-#~ msgstr "Sous un ciel clair, le spectacle peut paraître à la fois calme et exaltant."
-
-#: src/pages/feedback/index.tsx:164
-#~ msgid "Uninstall feedback"
-#~ msgstr "Retour sur la désinstallation"
 
 #: src/features/weather/ui/tile.tsx:454
 #: src/features/weather/ui/tile.tsx:461
@@ -2142,29 +1657,12 @@ msgstr "Contrairement à une éclipse solaire, une éclipse lunaire ne nécessit
 msgid "Unlike most meteor showers, the Geminids originate from the asteroid 3200 Phaethon rather than a comet."
 msgstr "Contrairement à la plupart des pluies de météores, les Géminides proviennent de l’astéroïde 3200 Phaethon plutôt que d’une comète."
 
-#: src/components/intialisation/index.tsx:197
-#: src/components/settings/index.tsx:248
-#~ msgid "Unsure how to find these? Click here."
-#~ msgstr "Vous ne savez pas comment les trouver ? Cliquez ici."
-
-#: src/pages/feedback/index.tsx:319
-#~ msgid "Update or change related"
-#~ msgstr "Lié à la mise à jour ou au changement"
-
-#: src/pages/feedback/index.tsx:198
-#~ msgid "Usability and functionality"
-#~ msgstr "Utilisabilité et fonctionnalité"
-
-#: src/features/settings/ui/settings.tsx:312
+#: src/features/settings/ui/settings.tsx:487
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "Utiliser les modèles de chimie globaux (CAMS)"
 
-#: src/components/settings.tsx:91
-#~ msgid "Use keyboard shortcuts"
-#~ msgstr "Utilisez des raccourcis clavier"
-
 #: src/features/settings/ui/initialisation.tsx:186
-#: src/features/settings/ui/settings.tsx:246
+#: src/features/settings/ui/settings.tsx:402
 msgid "Use metric number format"
 msgstr "Utiliser le format numérique métrique"
 
@@ -2180,36 +1678,19 @@ msgstr "La Saint-Valentin célèbre l’affection sous de nombreuses formes, de 
 msgid "violent rain showers"
 msgstr "averses de pluie violentes"
 
-#: src/hooks/seasonal-events/eta-aquariids.tsx:109
-#~ msgid "Watching the Eta Aquariids can feel like receiving a message from a distant traveller, carried on light across the dark."
-#~ msgstr "Observer les Eta Aquarides peut donner l’impression de recevoir un message d’un voyageur lointain, porté par la lumière à travers la nuit."
-
 #: src/features/seasonal-events/events/earth-day.tsx:156
 msgid "Ways to observe"
 msgstr "Façons d’observer"
 
-#: src/components/settings/index.tsx:283
-#~ msgid "We'd love to bring Weather Please to more languages."
-#~ msgstr "Nous aimerions proposer Weather Please dans davantage de langues."
-
-#: src/features/settings/ui/settings.tsx:250
+#: src/features/settings/ui/settings.tsx:81
 msgid "Weather"
 msgstr "Météo"
 
-#: src/features/settings/ui/settings.tsx:162
+#: src/features/settings/ui/settings.tsx:192
 msgid "Weather data by Open-Meteo"
 msgstr "Données météorologiques d'Open-Meteo"
 
-#: src/pages/index.tsx:211
-#~ msgid "weather data provided by open-meteo"
-#~ msgstr "données météorologiques fournies par open-meteo"
-
-#: src/components/intialisation/index.tsx:128
-#: src/components/intialisation/index.tsx:236
-#~ msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
-#~ msgstr "Weather Please collecte des données de plantage anonymisées et des journaux d'erreur. Vous pouvez vous désinscrire à tout moment via le menu des paramètres."
-
-#: src/features/settings/ui/settings.tsx:408
+#: src/features/settings/ui/settings.tsx:627
 msgid "Weather Please uses the following third-party data sources and location services."
 msgstr "Weather Please utilise les sources de données tierces et services de localisation suivants."
 
@@ -2261,10 +1742,6 @@ msgstr "Pourquoi le pic est bref"
 msgid "Winter Solstice"
 msgstr "Solstice d'hiver"
 
-#: src/hooks/seasonal-events/hanukkah.tsx:112
-#~ msgid "With each night, a new flame appears, forming a quiet ladder of light against the dark."
-#~ msgstr "Chaque nuit, une nouvelle flamme apparaît, formant une échelle silencieuse de lumière contre l’obscurité."
-
 #: src/features/seasonal-events/events/holi.tsx:251
 msgid "Within minutes of stepping outside, everyone looks the same — drenched head to toe in colour, impossible to tell apart."
 msgstr "En quelques minutes après être sorti, tout le monde a la même apparence — trempé de couleur des pieds à la tête, impossible à distinguer."
@@ -2272,18 +1749,6 @@ msgstr "En quelques minutes après être sorti, tout le monde a la même apparen
 #: src/features/settings/ui/review-prompt.tsx:36
 msgid "Would you like to leave a review?"
 msgstr "Souhaitez-vous laisser un avis?"
-
-#: src/components/settings/index.tsx:365
-#~ msgid "You can press numbers 1-9 to change how many weather tiles are displayed."
-#~ msgstr "Vous pouvez appuyer sur les chiffres 1 à 9 pour modifier le nombre de tuiles météorologiques affichées."
-
-#: src/components/settings/index.tsx:529
-#~ msgid "You can't save because either your latitude or longitude are invalid."
-#~ msgstr "Vous ne pouvez pas enregistrer car votre latitude ou longitude sont invalides."
-
-#: src/components/settings/index.tsx:522
-#~ msgid "You have unsaved changes"
-#~ msgstr "Vous avez des modifications non enregistrées"
 
 #: src/features/settings/ui/review-prompt.tsx:33
 msgid "You've been using Weather Please for a while"
@@ -2294,7 +1759,7 @@ msgid "Your email (optional)"
 msgstr "Votre e-mail (optionnel)"
 
 #: src/features/settings/ui/initialisation.tsx:190
-#: src/features/settings/ui/settings.tsx:253
+#: src/features/settings/ui/settings.tsx:418
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Vos données de localisation sont stockées en toute sécurité et exclusivement sur votre appareil personnel."
 

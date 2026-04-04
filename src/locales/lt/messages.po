@@ -13,15 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/weather-alert.tsx:144
-#: src/components/weather-alert.tsx:151
-#~ msgid "{0} inches of precipitation expected over the next {1} hours"
-#~ msgstr "Kitų {1} valandų metu tikimasi {0} colio kritulių"
-
-#: src/components/weather-alert.tsx:136
-#~ msgid "{0} inches of precipitation expected over the next hour"
-#~ msgstr "Kitos valandos metu tikimasi {0} colio kritulių"
-
 #. placeholder {0}: Math.round(wind)
 #: src/features/weather/ui/tile.tsx:490
 msgid "{0} km/h"
@@ -31,27 +22,6 @@ msgstr "{0} km/val"
 #: src/features/weather/ui/tile.tsx:491
 msgid "{0} mph"
 msgstr "{0} mpv"
-
-#: src/components/alert/index.tsx:169
-#~ msgid "{0}in of precipitation expected over the next {1} hours"
-#~ msgstr "Kitų {1} valandų metu tikimasi {0} colių kritulių"
-
-#: src/components/alert/index.tsx:161
-#~ msgid "{0}in of precipitation expected over the next hour"
-#~ msgstr "Kitą valandą tikimasi {0} colių kritulių"
-
-#: src/components/weather-alert.tsx:124
-#: src/components/weather-alert.tsx:130
-#~ msgid "{0}mm of precipitation expected over the next {1} hours"
-#~ msgstr "Kitų {1} valandų metu tikimasi {0} mm kritulių"
-
-#: src/components/weather-alert.tsx:116
-#~ msgid "{0}mm of precipitation expected over the next hour"
-#~ msgstr "Kitą valandą tikimasi {0} mm kritulių"
-
-#: src/pages/feedback/index.tsx:153
-#~ msgid "{label}"
-#~ msgstr "Kalba"
 
 #: src/features/weather/ui/weather-alert.tsx:261
 msgid "{precipitationInches} inches of precipitation expected over the next {durationHours} hours"
@@ -87,27 +57,19 @@ msgstr "<0>Prieiga prie vietos uždrausta.</0> Patikrinkite naršyklės nustatym
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Prieiga prie vietos uždrausta.</0> Spustelėkite vietos piktogramą adreso juostoje ir pasirinkite \"visada leisti pasiekti jūsų vietą\". Tada spustelėkite mygtuką žemiau ir bandykite dar kartą."
 
-#: src/features/settings/ui/settings.tsx:394
+#: src/features/settings/ui/settings.tsx:612
 msgid "☕ Gift a coffee"
 msgstr "☕ Padovanokite kavą"
 
-#: src/components/settings.tsx:209
-#~ msgid "✍️ Submit feedback"
-#~ msgstr "✍️ Pateikti atsiliepimą"
-
-#: src/features/settings/ui/settings.tsx:378
+#: src/features/settings/ui/settings.tsx:596
 msgid "🌟 Leave a review"
 msgstr "🌟 Palikite atsiliepimą"
 
-#: src/features/settings/ui/settings.tsx:386
+#: src/features/settings/ui/settings.tsx:604
 msgid "🐛 Report a bug"
 msgstr "🐛 Pranešti apie klaidą"
 
-#: src/components/settings.tsx:216
-#~ msgid "💡 Request a feature"
-#~ msgstr "💡 Prašyti funkcijos"
-
-#: src/features/settings/ui/settings.tsx:437
+#: src/features/settings/ui/settings.tsx:655
 msgid "🔒 Privacy policy"
 msgstr "🔒 Privatumo politika"
 
@@ -126,6 +88,10 @@ msgstr "Visiškas Mėnulio užtemimas įvyksta, kai Žemė atsiduria tiesiai tar
 #: src/features/seasonal-events/events/total-solar-eclipse.tsx:35
 msgid "A total solar eclipse occurs when the Moon moves directly in front of the Sun, briefly transforming daylight into twilight."
 msgstr "Visiškas Saulės užtemimas įvyksta, kai Mėnulis praeina tiesiai prieš Saulę ir akimirkai paverčia dienos šviesą prieblanda."
+
+#: src/features/settings/ui/settings.tsx:89
+msgid "About"
+msgstr "Apie"
 
 #: src/features/seasonal-events/events/summer-solstice.tsx:121
 msgid "Above the Arctic Circle, the sun doesn't set at all — it traces a low circle along the horizon and starts climbing again. This is the midnight sun, and it lasts for weeks."
@@ -155,25 +121,9 @@ msgstr "Daugelyje kultūrų gilus raudonas užtemdyto Mėnulio atspalvis įkvėp
 msgid "Across many cultures, traditions such as Yule and Saturnalia developed around this moment, gathering warmth, light, and community during the darkest part of the year in the regions where they first formed."
 msgstr "Daugelio kultūrų tradicijos, tokios kaip Jule ir Saturnalia, susiformavo aplink šį momentą, telkdamos šilumą ir bendrystę tamsiausiu metų laikotarpiu regionuose, kuriuose jos atsirado."
 
-#: src/hooks/seasonal-events/spring-equinox.tsx:109
-#~ msgid "Across the world, daylight begins to shift in new patterns as buds rise and the atmosphere carries the scent of change."
-#~ msgstr "Visame pasaulyje dienos šviesa ima keistis naujais ritmais, kai skleidžiasi pumpurai, o ore tvyro permainų kvapas."
-
 #: src/features/seasonal-events/events/eid-al-adha.tsx:77
 msgid "Acts of charity, the sharing of food, and care for family, neighbours, and those in need form the heart of the celebration."
 msgstr "Labdara, dalijimasis maistu ir rūpestis šeima, kaimynais bei stokojančiais sudaro šventės šerdį."
-
-#: src/pages/feedback/index.tsx:337
-#~ msgid "Additional details"
-#~ msgstr "Papildomi duomenys"
-
-#: src/pages/feedback/index.tsx:244
-#~ msgid "Additional details (optional)"
-#~ msgstr "Papildomi duomenys (neprivaloma)"
-
-#: src/components/settings/index.tsx:310
-#~ msgid "Alerts"
-#~ msgstr "Įspėjimai"
 
 #: src/features/seasonal-events/events/perseids.tsx:116
 msgid "Allow your eyes about twenty minutes to adjust, turn away from city lights, and let the wide sky do the work."
@@ -186,26 +136,6 @@ msgstr "Nors daugelis kultūrų vadovaujasi skirtingais kalendoriais ir naujuosi
 #: src/features/seasonal-events/events/quadrantids.tsx:105
 msgid "Although the radiant now lies within the constellation Boötes, the older name preserves a small piece of astronomical history."
 msgstr "Nors spinduliavimo taškas dabar yra Jaučiaganio (Boötes) žvaigždyne, senasis pavadinimas išsaugo mažą astronomijos istorijos dalį."
-
-#: src/pages/index.tsx:655
-#~ msgid "An error has occurred while fetching location data. Please check the console for more details."
-#~ msgstr "Gaunant vietos duomenis įvyko klaida. Išsamesnei informacijai patikrinkite konsolę."
-
-#: src/pages/index.tsx:360
-#~ msgid "An error has occurred while fetching weather data. Please check the console for more details."
-#~ msgstr "Gaunant orų duomenis įvyko klaida. Išsamesnei informacijai patikrinkite konsolę."
-
-#: src/pages/index.tsx:264
-#~ msgid "An error has occurred while fetching weather data. Please try again later."
-#~ msgstr "Įvyko klaida gaunant orų duomenis. Prašome bandyti vėliau."
-
-#: src/components/settings/index.tsx:111
-#~ msgid "An error has occurred while fetching your location. Please check the console for more details."
-#~ msgstr "Gaunant jūsų vietą įvyko klaida. Daugiau informacijos ieškokite konsolėje."
-
-#: src/pages/index.tsx:619
-#~ msgid "An error has occurred while periodically updating location. Please check the console for more details."
-#~ msgstr "Reguliariai atnaujinant vietą įvyko klaida. Norėdami gauti daugiau informacijos, patikrinkite konsolę."
 
 #: src/features/seasonal-events/events/summer-solstice.tsx:98
 msgid "Ancient monuments such as Stonehenge are aligned with the solstice sunrise, and midsummer festivals across many cultures celebrate light and abundance."
@@ -227,19 +157,11 @@ msgstr "Kita plačiai pasakojama istorija mini Krišną, kurio žaismingi spalv�
 msgid "April"
 msgstr "Balandis"
 
-#: src/hooks/seasonal-events/orionids.tsx:109
-#~ msgid "As Orion rises before dawn, it can feel like a spotlight for the meteors that follow."
-#~ msgstr "Kai Orionas pakyla prieš aušrą, gali atrodyti, kad jis apšviečia meteorų pasirodymą tarsi prožektorius."
-
 #: src/features/seasonal-events/events/total-lunar-eclipse.tsx:76
 msgid "As sunlight passes through Earth’s atmosphere, the shorter blue wavelengths scatter away while the longer red wavelengths bend toward the Moon."
 msgstr "Saulės šviesai keliaujant per Žemės atmosferą, trumpesnės mėlynos bangos išsisklaido, o ilgesnės raudonos bangos lūžta Mėnulio link."
 
-#: src/hooks/seasonal-events/new-years.tsx:61
-#~ msgid "As the Earth turns, the new year arrives in a slow-moving wave that travels across time zones for nearly a full day."
-#~ msgstr "Žemei sukantis, naujieji metai ateina lėtai slenkančia banga, keliaujančia per laiko juostas beveik visą parą."
-
-#: src/features/settings/ui/settings.tsx:126
+#: src/features/settings/ui/settings.tsx:161
 msgid "Astronomy"
 msgstr "Astronomija"
 
@@ -251,11 +173,7 @@ msgstr "66 km/s greičiu tai yra vieni greičiausių meteorų, kuriuos galite pa
 msgid "At each boundary, fireworks go up, bells ring, and strangers count down together. The same moment of anticipation, repeated twenty-four times."
 msgstr "Kiekvienoje riboje kyla fejerverkai, skamba varpai ir nepažįstami žmonės kartu skaičiuoja atgal. Ta pati laukimo akimirka, pakartota dvidešimt keturis kartus."
 
-#: src/hooks/seasonal-events/diwali.tsx:110
-#~ msgid "At night, lights trace warm constellations across homes and streets, turning whole cities into living lanterns."
-#~ msgstr "Naktį šviesos piešia šiltas „konsteliacijas“ ant namų ir gatvių, paversdamos ištisus miestus gyvais žibintais."
-
-#: src/features/settings/ui/settings.tsx:405
+#: src/features/settings/ui/settings.tsx:624
 msgid "Attributions"
 msgstr "Priskyrimai"
 
@@ -266,10 +184,6 @@ msgstr "Rugpjūtis"
 #: src/features/weather/ui/tile.tsx:167
 msgid "Autumn Equinox"
 msgstr "Rudens lygiadienis"
-
-#: src/components/settings/index.tsx:194
-#~ msgid "Based on the provided information, your location is:"
-#~ msgstr "Remiantis pateikta informacija, jūsų vieta yra:"
 
 #: src/features/seasonal-events/events/black-hole.tsx:231
 msgid "Because gravity bends light paths, parts of the disk appear warped and wrapped above and below the black hole."
@@ -283,10 +197,6 @@ msgstr "Kadangi jis elgiasi ir kaip asteroidas, ir kaip kometa, kartais jis vadi
 msgid "Bonfires, late gatherings, and all-night vigils have long been part of welcoming this turning point of the year."
 msgstr "Laužai, vėlyvi susibūrimai ir visą naktį trunkantys budėjimai nuo seno yra šio metų lūžio sutikimo dalis."
 
-#: src/pages/feedback/index.tsx:403
-#~ msgid "Bug report"
-#~ msgstr "Klaidos ataskaita"
-
 #: src/features/seasonal-events/events/holi.tsx:257
 msgid "By midday, the streets, the walls, and every surface in sight are stained in layers of pink, green, yellow, and blue. It takes days to wash out."
 msgstr "Vidurdienį gatvės, sienos ir kiekvienas matomas paviršius nuspalvintas rožinės, žalios, geltonos ir mėlynos spalvų sluoksniais. Nuplaunama kelias dienas."
@@ -295,29 +205,13 @@ msgstr "Vidurdienį gatvės, sienos ir kiekvienas matomas paviršius nuspalvinta
 msgid "By the eighteenth century, handwritten notes and printed cards had helped turn the day into a ritual of letters and messages."
 msgstr "Iki XVIII amžiaus ranka rašyti laiškeliai ir spausdintos atvirutės padėjo paversti dieną laiškų ir žinučių ritualu."
 
-#: src/components/settings/index.tsx:430
-#~ msgid "Cancel"
-#~ msgstr "Atšaukti"
-
 #: src/features/seasonal-events/events/halloween.tsx:78
 msgid "Carved pumpkins, sweets, and playful scares echo much older customs of lanterns, bonfires, and protective charms."
 msgstr "Išskaptuoti moliūgai, saldumynai ir žaismingos baimės aidi daug senesnius žibintų, laužų ir apsauginių talismanų papročius."
 
-#: src/pages/feedback/index.tsx:189
-#~ msgid "Causes browser crashes or errors"
-#~ msgstr "Sukelia naršyklės avarijas ar klaidas"
-
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:89
-#~ msgid "Cemeteries and homes glow with candlelight, colour, music, and laughter, holding grief and gratitude in the same breath."
-#~ msgstr "Kapinės ir namai švyti žvakių šviesa, spalvomis, muzika ir juoku, vienu metu talpindami ir gedulą, ir dėkingumą."
-
 #: src/features/seasonal-events/events/valentines.tsx:110
 msgid "Centuries later, people still reach for pen and paper when a text won't do."
 msgstr "Šimtmečiais vėliau žmonės vis dar siekia rašiklio ir popieriaus, kai žinutė nepakankamai išreiškia jausmus."
-
-#: src/pages/feedback/index.tsx:268
-#~ msgid "Changed needs"
-#~ msgstr "Pasikeitę poreikiai"
 
 #: src/features/seasonal-events/events/lyrids.tsx:114
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
@@ -343,39 +237,27 @@ msgstr "Uždaryti"
 msgid "Comet Thatcher, the shower's parent body, won't return to the inner solar system until roughly the year 2283."
 msgstr "Kometa Thatcher, liūties motininis kūnas, į vidinę Saulės sistemą grįš ne anksčiau kaip maždaug 2283 metais."
 
-#: src/hooks/seasonal-events/eid-al-adha.tsx:81
-#~ msgid "Communities gather for prayer and meals, and households open their doors in welcome."
-#~ msgstr "Bendruomenės susirenka maldai ir vaišėms, o namų durys atsiveria svečiams."
-
 #: src/features/seasonal-events/events/earth-day.tsx:159
 msgid "Community cleanups, tree planting, and habitat restoration are among the most common activities."
 msgstr "Bendruomenės talkos, medžių sodinimas ir buveinių atkūrimas — vienos dažniausių veiklų."
 
-#: src/features/settings/ui/settings.tsx:45
+#: src/features/settings/ui/settings.tsx:61
 msgid "Compact weather alerts"
 msgstr "Kompaktiški orų įspėjimai"
-
-#: src/pages/feedback/index.tsx:249
-#~ msgid "Concerned about privacy"
-#~ msgstr "Nerimaujama dėl privatumo"
-
-#: src/pages/feedback/index.tsx:258
-#~ msgid "Concerned about security"
-#~ msgstr "Nerimaujama dėl saugumo"
-
-#: src/pages/feedback/index.tsx:295
-#~ msgid "Consumes too much memory or CPU"
-#~ msgstr "Sunaudoja per daug atminties arba CPU"
 
 #: src/features/seasonal-events/events/halloween.tsx:84
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "Kostiumai gali būti herojiški, juokingi ar šiurpūs — leidžiantys trumpam įkūnyti kitas roles."
 
-#: src/features/settings/ui/settings.tsx:303
+#: src/features/settings/ui/settings.tsx:482
+msgid "Data & alerts"
+msgstr "Duomenys ir įspėjimai"
+
+#: src/features/settings/ui/settings.tsx:473
 msgid "Date"
 msgstr "Data"
 
-#: src/features/settings/ui/settings.tsx:299
+#: src/features/settings/ui/settings.tsx:469
 msgid "Day"
 msgstr "Diena"
 
@@ -407,13 +289,9 @@ msgstr "tiršta stingdanti šlapdriba"
 msgid "depositing rime fog"
 msgstr "nusėdęs rimo rūkas"
 
-#: src/pages/feedback/index.tsx:335
-#~ msgid "Details"
-#~ msgstr "Išsamiai"
-
-#: src/pages/feedback/index.tsx:212
-#~ msgid "Difficult to use or understand"
-#~ msgstr "Sunku naudotis ar suprasti"
+#: src/features/settings/ui/settings.tsx:533
+msgid "Display"
+msgstr "Rodymas"
 
 #: src/features/weather/ui/tile.tsx:170
 msgid "Diwali"
@@ -431,10 +309,6 @@ msgstr "Dijos ir žvakės švyti prie durų ir langų, o rangoli raštai pražys
 msgid "Do not fill this field if you are human"
 msgstr "Jei esate žmogus, neįveskite duomenų į šį laukel"
 
-#: src/components/settings/index.tsx:565
-#~ msgid "Don't save"
-#~ msgstr "Neišsaugoti"
-
 #: src/features/seasonal-events/events/lunar-new-year.tsx:124
 msgid "Dragon and lion dances wind through streets packed with spectators, firecrackers, and the smell of street food — a finale that can last well past midnight."
 msgstr "Drakono ir liūto šokiai vingiuoja gatvėmis, pilnomis žiūrovų, petardų ir gatvinio maisto kvapo – finalas, galintis tęstis gerokai po vidurnakčio."
@@ -446,14 +320,6 @@ msgstr "Dreidelis, dažnai laikomas vaikų žaidimu, istoriškai buvo naudojamas
 #: src/features/seasonal-events/events/total-solar-eclipse.tsx:83
 msgid "During totality, the Sun’s corona — normally invisible — appears as a shimmering halo of white light. Bright stars and planets become visible in the middle of the day."
 msgstr "Visiško užtemimo metu Saulės vainikiška atmosfera – paprastai nematoma – pasirodo kaip mirgantis baltos šviesos aureolas. Ryškios žvaigždės ir planetos tampa matomos vidury dienos."
-
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:77
-#~ msgid "During totality, the Sun’s corona becomes visible as a delicate silver crown, and a few bright stars may appear."
-#~ msgstr "Visiškumo metu Saulės vainikas (korona) tampa matomas kaip švelni sidabrinė karūna, o danguje gali pasirodyti kelios ryškios žvaigždės."
-
-#: src/hooks/seasonal-events/winter-solstice.tsx:118
-#~ msgid "Each added minute of daylight carries the quiet promise of change."
-#~ msgstr "Kiekviena papildoma dienos šviesos minutė neša tylų permainų pažadą."
 
 #: src/features/seasonal-events/events/hanukkah.tsx:76
 msgid "Each evening, another candle is added to the menorah, gradually building the display of light."
@@ -499,18 +365,6 @@ msgstr "Eid al-Fitr"
 msgid "Eid al-Fitr marks the end of Ramadan, celebrating renewal, gratitude, and the strength of shared community."
 msgstr "Eid al-Fitr žymi Ramadano pabaigą ir švenčia atsinaujinimą, dėkingumą bei bendruomenės stiprybę."
 
-#: src/pages/feedback/index.tsx:423
-#~ msgid "Email (optional)"
-#~ msgstr "El. paštas (nebūtinas)"
-
-#: src/components/settings/index.tsx:109
-#~ msgid "Error"
-#~ msgstr "Klaida"
-
-#: src/pages/feedback/index.tsx:475
-#~ msgid "Error submitting feedback. Try again later."
-#~ msgstr "Klaida pateikiant atsiliepimą. Bandykite vėliau."
-
 #: src/features/weather/ui/tile.tsx:175
 msgid "Eta Aquariids Meteor Shower"
 msgstr "Eta Akvaridų meteorų lietus"
@@ -518,10 +372,6 @@ msgstr "Eta Akvaridų meteorų lietus"
 #: src/features/seasonal-events/events/earth-day.tsx:165
 msgid "Even small choices — repairing, reusing, conserving, or simply walking a familiar trail — reflect its underlying spirit."
 msgstr "Net ir mažos pasirinktos kryptys — taisyti, pakartotinai naudoti, taupyti ar tiesiog eiti pažįstamu taku — atspindi jos vidinę dvasią."
-
-#: src/hooks/seasonal-events/valentines.tsx:103
-#~ msgid "Even today, paper hearts and quiet notes continue the tradition of deliberate kindness."
-#~ msgstr "Net ir šiandien popierinės širdelės ir tylūs laiškeliai tęsia apgalvoto gerumo tradiciją."
 
 #: src/features/weather/ui/tile.tsx:176
 msgid "Event Horizon Day"
@@ -538,10 +388,6 @@ msgstr "Eglės šakos, žvakės, varpeliai ir žvaigždės atkartoja bendrą tem
 #: src/features/weather/ui/weather-alert.tsx:190
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
 msgstr "Ekstremalus UV per ateinančias {durationOfExtremeUv} valandas"
-
-#: src/components/weather-alert.tsx:49
-#~ msgid "Extreme UV for the next 12 hours"
-#~ msgstr "Ekstremalus UV per ateinančias 12 valandų"
 
 #: src/features/weather/ui/weather-alert.tsx:194
 msgid "Extreme UV for the next hour"
@@ -571,57 +417,29 @@ msgstr "Šeimos susirenka uždegti menoros, dainuoti ir žaisti, pavyzdžiui, dr
 msgid "Families spend the night in cemeteries, cleaning graves, laying marigold paths, and sharing meals beside the headstones. It's social, warm, and often funny — people tell stories and play music until morning."
 msgstr "Šeimos praleidžia naktį kapinėse, valydamos kapus, tiesdamos aksamitžolių kelius ir dalydamosi valgiu prie antkapių. Tai socialiai, šilta ir dažnai linksma – žmonės pasakoja istorijas ir groja muziką iki ryto."
 
-#: src/hooks/seasonal-events/perseids.tsx:126
-#~ msgid "Fast and bright, the Perseids often produce spectacular fireballs that leave glowing trails behind them."
-#~ msgstr "Greiti ir ryškūs Perseidai dažnai dovanoja įspūdingus ugnies kamuolius, paliekančius švytinčius pėdsakus."
-
-#: src/pages/feedback/index.tsx:388
-#~ msgid "Feature request"
-#~ msgstr "Funkcijos užklausa"
-
-#: src/pages/feedback/index.tsx:231
-#~ msgid "Features don't work as expected"
-#~ msgstr "Funkcijos neveikia kaip tikėtasi"
-
 #: src/features/weather/ui/tile.tsx:123
 msgid "February"
 msgstr "Vasaris"
 
-#: src/features/settings/ui/settings.tsx:370
+#: src/features/settings/ui/settings.tsx:588
 msgid "Feedback"
 msgstr "Atsiliepimas"
-
-#: src/pages/feedback/index.tsx:458
-#~ msgid "Feedback successfully submitted"
-#~ msgstr "Atsiliepimas sėkmingai pateiktas"
 
 #: src/features/seasonal-events/events/geminids.tsx:115
 msgid "Find a wide view of the sky, allow your eyes time to adjust, and settle in — the display often strengthens after midnight."
 msgstr "Raskite plačią dangaus panoramą, leiskite akims prisitaikyti ir patogiai įsitaisykite — pasirodymas dažnai sustiprėja po vidurnakčio."
 
-#: src/hooks/seasonal-events/new-years.tsx:67
-#~ msgid "Fireworks, bells, and wishes seem to ride that wave, scattering light and sound across the night."
-#~ msgstr "Fejerverkai, varpai ir linkėjimai tarsi keliauja ta banga, paskleisdami šviesą ir garsą per naktį."
-
 #: src/features/seasonal-events/events/hanukkah.tsx:108
 msgid "Foods fried in oil, including latkes and sufganiyot, reflect the central symbol of the story."
 msgstr "Aliejuje kepti patiekalai, įskaitant latkes ir sufganiyot, primena pagrindinį šios istorijos simbolį."
-
-#: src/hooks/seasonal-events/holi.tsx:184
-#~ msgid "For a time, streets become living paintings and the air itself seems to celebrate."
-#~ msgstr "Kurį laiką gatvės tampa gyvais paveikslais, o pats oras tarsi švenčia."
 
 #: src/features/seasonal-events/events/diwali.tsx:83
 msgid "For many Hindus, the festival marks the return of Rama, Sita, Lakshmana, and Hanuman to Ayodhya after their long exile."
 msgstr "Daugeliui hinduistų ši šventė mini Ramos, Sitos, Lakšmanos ir Hanumano sugrįžimą į Ajodhją po ilgos tremties."
 
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:83
-#~ msgid "For safe viewing, certified eclipse glasses must be used during all phases except the brief moment of totality."
-#~ msgstr "Saugiam stebėjimui visų fazių metu būtina naudoti sertifikuotus užtemimų akinius, išskyrus trumpą visiškumo akimirką."
-
-#: src/pages/feedback/index.tsx:281
-#~ msgid "Found a better alternative"
-#~ msgstr "Rasta geresnė alternatyva"
+#: src/features/settings/ui/settings.tsx:449
+msgid "Forecast"
+msgstr "Orų prognozė"
 
 #: src/features/weather/ui/tile.tsx:117
 msgid "Friday"
@@ -643,7 +461,7 @@ msgstr "Dvynių meteorų liūties meteorai juda lėčiau nei dauguma kitų liū�
 msgid "Geminids Meteor Shower"
 msgstr "Geminidų meteorų lietus"
 
-#: src/features/settings/ui/settings.tsx:231
+#: src/features/settings/ui/settings.tsx:77
 msgid "General"
 msgstr "Bendras"
 
@@ -785,33 +603,13 @@ msgstr "Holi — džiaugsminga spalvų šventė, švenčiama su juoku, muzika ir
 msgid "Homes are carefully cleaned and decorated to clear away old luck and welcome prosperity for the year ahead."
 msgstr "Namai kruopščiai valomi ir puošiami, kad būtų „nušluota“ sena sėkmė ir pasitikta gerovė ateinantiems metams."
 
-#: src/pages/feedback/index.tsx:167
-#~ msgid "I would appreciate if you could provide some feedback as to why you've uninstalled Weather Please. This allows me to make Weather Please a better product."
-#~ msgstr "Būčiau dėkingas, jei galėtumėte pateikti atsiliepimų, kodėl išinstaliavote Weather Please. Tai leidžia man padaryti Weather Please geresniu produktu."
-
-#: src/components/settings/index.tsx:405
-#~ msgid "I'd love to bring Weather Please to more languages."
-#~ msgstr "Norėčiau atnesti Weather Please į daugiau kalbų."
-
-#: src/features/settings/ui/settings.tsx:293
+#: src/features/settings/ui/settings.tsx:463
 msgid "Identifier"
 msgstr "Identifikatorius"
-
-#: src/components/settings/index.tsx:206
-#~ msgid "If this is incorrect, please update the values below."
-#~ msgstr "Jei tai klaidinga, prašome atnaujinti žemiau esančias reikšmes."
-
-#: src/components/settings/index.tsx:410
-#~ msgid "If you have a translation request, please reach out at <0>contact@weather-please.app</0>"
-#~ msgstr "Jeigu turite vertimo užklausą, prašome kreiptis el. paštu <0>contact@weather-please.app</0>"
 
 #: src/features/settings/ui/initialisation.tsx:168
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Jei jūsų naršyklė prašo jūsų vietos leidimų, pasirinkite \"leisti\"."
-
-#: src/hooks/seasonal-events/summer-solstice.tsx:114
-#~ msgid "In far northern regions, the sun may barely set at all, creating the phenomenon of the midnight sun."
-#~ msgstr "Tolimoje šiaurėje saulė gali beveik visai nenusileisti, sukurdama vidurnakčio saulės reiškinį."
 
 #: src/features/seasonal-events/events/eid-al-fitr.tsx:101
 msgid "In many communities, everyone wears new clothes, children receive money or gifts, and doors stay open all day for visitors."
@@ -821,40 +619,14 @@ msgstr "Daugelyje bendruomenių visi dėvi naujus drabužius, vaikai gauna pinig
 msgid "In many traditions, the equinox is not only about what has been gathered, but about what lies ahead — a pause to take stock before the quieter months arrive."
 msgstr "Daugelyje tradicijų lygiadienis yra ne tik apie tai, kas surinkta, bet ir apie tai, kas laukia — pauzė įvertinti situaciją prieš ateinant ramesniems mėnesiams."
 
-#: src/hooks/seasonal-events/leonids.tsx:126
-#~ msgid "In most years the Leonids unfold gently, yet they always carry the possibility of a sudden, breathtaking encore."
-#~ msgstr "Daugeliu metų Leonidai klostosi švelniai, tačiau visada išlieka galimybė netikėtam, kvapą gniaužiančiam pakartojimui."
-
 #: src/features/seasonal-events/events/leonids.tsx:132
 msgid "In most years, the Leonids produce only 10–15 meteors per hour. But during the 1966 storm, observers reported rates of thousands per minute — so many that some people thought the world was ending."
 msgstr "Daugelyje metų Liūto meteorų liūtis sukuria tik 10–15 meteorų per valandą. Tačiau per 1966 m. audrą stebėtojai pranešė apie tūkstančius per minutę – tiek daug, kad kai kurie manė, jog ateina pasaulio pabaiga."
-
-#: src/hooks/seasonal-events/winter-solstice.tsx:112
-#~ msgid "In the depth of the long night, even a single candle can feel like a sunrise."
-#~ msgstr "Ilgos nakties gelmėje net viena žvakė gali atrodyti kaip saulėtekis."
-
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:95
-#~ msgid "In this tradition, memory becomes a bridge between worlds, not a wall between them."
-#~ msgstr "Šioje tradicijoje atmintis tampa tiltu tarp pasaulių, o ne siena tarp jų."
-
-#: src/components/intialisation/index.tsx:168
-#: src/components/settings/index.tsx:219
-#~ msgid "Invalid latitude value"
-#~ msgstr "Netinkama platumos reikšmė"
-
-#: src/components/intialisation/index.tsx:184
-#: src/components/settings/index.tsx:235
-#~ msgid "Invalid longitude value"
-#~ msgstr "Netinkama ilgumos reikšmė"
 
 #: src/shared/ui/input.tsx:99
 #: src/shared/ui/input.tsx:149
 msgid "Invalid value. Settings will not save until this is valid."
 msgstr "Neteisinga reikšmė. Nustatymai nebus išsaugoti, kol tai nebus tinkama."
-
-#: src/pages/feedback/index.tsx:324
-#~ msgid "Issues after a recent update"
-#~ msgstr "Problemų po neseniai atliktos atnaujinimo"
 
 #: src/features/seasonal-events/events/black-hole.tsx:248
 msgid "It also opened a new era of black-hole imaging, with continued work on sharper reconstructions and time-varying dynamics."
@@ -880,29 +652,9 @@ msgstr "Nuo tada ji tapo pasauliniu minėjimu, dažnai atkreipiančiu dėmesį �
 msgid "It invites friendly fear, shared laughter, and a little mischief."
 msgstr "Ji kviečia į draugišką baimę, bendrą juoką ir šiek tiek išdaigų."
 
-#: src/hooks/seasonal-events/eid-al-adha.tsx:87
-#~ msgid "It is a day that turns personal devotion into shared kindness."
-#~ msgstr "Tai diena, kai asmeninis atsidavimas virsta dalijama gerumo forma."
-
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:94
-#~ msgid "It is a holiday shaped by gratitude, generosity, and gentle celebration."
-#~ msgstr "Tai šventė, kurią formuoja dėkingumas, dosnumas ir švelnus džiaugsmas."
-
-#: src/hooks/seasonal-events/easter.tsx:76
-#~ msgid "It is a holiday that speaks gently in the language of new beginnings."
-#~ msgstr "Tai šventė, kuri švelniai kalba naujų pradžių kalba."
-
 #: src/features/seasonal-events/events/easter.tsx:50
 msgid "It is a movable feast, its date determined by the cycle of the moon and the arrival of spring in the northern hemisphere."
 msgstr "Tai kilnojama šventė: jos data nustatoma pagal Mėnulio ciklą ir pavasario atėjimą šiaurės pusrutulyje."
-
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:93
-#~ msgid "It is a quiet and patient spectacle that rewards unhurried attention."
-#~ msgstr "Tai ramus ir kantrus reginys, apdovanojantis neskubų dėmesį."
-
-#: src/hooks/seasonal-events/lyrids.tsx:114
-#~ msgid "It is a shower with a long memory, linking modern stargazers with watchers of ancient skies."
-#~ msgstr "Tai meteorų lietus su ilga atmintimi, siejantis šiuolaikinius stebėtojus su senovės dangaus sargais."
 
 #: src/features/seasonal-events/events/holi.tsx:209
 msgid "It is closely associated with the arrival of spring in much of the world where the tradition first formed."
@@ -924,10 +676,6 @@ msgstr "Ji švenčiama visame pasaulyje ir giliai religiniu, ir visiškai pasaul
 msgid "It is observed by millions across India and by communities around the world."
 msgstr "Ją mini milijonai Indijoje ir bendruomenės visame pasaulyje."
 
-#: src/hooks/seasonal-events/valentines.tsx:55
-#~ msgid "It is often marked by small gestures that simply say someone has been remembered."
-#~ msgstr "Ji dažnai minima mažais gestais, kurie tiesiog pasako: kažkas buvo prisimintas."
-
 #: src/features/seasonal-events/events/black-hole.tsx:215
 msgid "It represents a major milestone in astronomy, combining global cooperation, radio interferometry, and years of data processing."
 msgstr "Tai reiškia svarbų astronomijos pasiekimą, sujungiantį globalų bendradarbiavimą, radijo interferometriją ir daugiamečio duomenų apdorojimo rezultatus."
@@ -939,18 +687,6 @@ msgstr "Ji žymi žiemos pradžią šiaurės pusrutulyje ir vasaros pradžią pi
 #: src/features/seasonal-events/events/earth-day.tsx:133
 msgid "It stands as both a celebration of the natural world and a call to responsible action."
 msgstr "Tai ir gamtos pasaulio šventė, ir kvietimas atsakingai veikti."
-
-#: src/hooks/seasonal-events/christmas.tsx:103
-#~ msgid "It’s a holiday that invites both celebration and pause."
-#~ msgstr "Tai šventė, kviečianti ir švęsti, ir stabtelėti."
-
-#: src/hooks/seasonal-events/earth-day.tsx:175
-#~ msgid "It’s a quiet reminder that care for the world and a sense of wonder often move together."
-#~ msgstr "Tai tylus priminimas, kad rūpestis pasauliu ir nuostaba dažnai eina kartu."
-
-#: src/hooks/seasonal-events/autumn-equinox.tsx:125
-#~ msgid "It’s a season for noticing the small transitions: seedpods splitting, leaves turning, and birds tracing long paths across the sky."
-#~ msgstr "Tai metų laikas pastebėti mažus perėjimus: sėklų dėžučių skilimą, lapų spalvos kaitą ir paukščių ilgus kelius danguje."
 
 #: src/features/seasonal-events/events/valentines.tsx:61
 msgid "It's often less about grand gestures and more about letting someone know they're on your mind."
@@ -972,20 +708,12 @@ msgstr "Liepa"
 msgid "June"
 msgstr "Birželis"
 
-#: src/pages/feedback/index.tsx:221
-#~ msgid "Lacks features I need"
-#~ msgstr "Trūksta man reikalingų funkcijų"
-
 #: src/features/settings/ui/initialisation.tsx:174
-#: src/features/settings/ui/settings.tsx:234
+#: src/features/settings/ui/settings.tsx:390
 msgid "Language"
 msgstr "Kalba"
 
-#: src/hooks/seasonal-events/lunar-new-year.tsx:112
-#~ msgid "Lanterns and parades transform the night into a flowing river of light."
-#~ msgstr "Žibintai ir paradai paverčia naktį tekančia šviesos upe."
-
-#: src/features/settings/ui/settings.tsx:259
+#: src/features/settings/ui/settings.tsx:424
 msgid "Latitude"
 msgstr "Platuma"
 
@@ -993,7 +721,7 @@ msgstr "Platuma"
 msgid "Leave a review"
 msgstr "Palikite atsiliepimą"
 
-#: src/features/settings/ui/settings.tsx:429
+#: src/features/settings/ui/settings.tsx:648
 msgid "Legal"
 msgstr "Teisinis"
 
@@ -1021,53 +749,17 @@ msgstr "lengvas įšaldymas lietus"
 msgid "Light shifts to a silvery tone, shadows sharpen, and temperatures may drop noticeably within minutes."
 msgstr "Šviesa tampa sidabriška, šešėliai paaštrėja, o temperatūra per kelias minutes gali pastebimai nukristi."
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:116
-#: src/hooks/seasonal-events/christmas.tsx:93
-#: src/hooks/seasonal-events/day-of-the-dead.tsx:86
-#: src/hooks/seasonal-events/diwali.tsx:107
-#: src/hooks/seasonal-events/earth-day.tsx:166
-#: src/hooks/seasonal-events/easter.tsx:67
-#: src/hooks/seasonal-events/eid-al-adha.tsx:78
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:85
-#: src/hooks/seasonal-events/eta-aquariids.tsx:106
-#: src/hooks/seasonal-events/geminids.tsx:122
-#: src/hooks/seasonal-events/halloween.tsx:85
-#: src/hooks/seasonal-events/hanukkah.tsx:109
-#: src/hooks/seasonal-events/holi.tsx:175
-#: src/hooks/seasonal-events/leonids.tsx:123
-#: src/hooks/seasonal-events/lunar-new-year.tsx:109
-#: src/hooks/seasonal-events/lyrids.tsx:105
-#: src/hooks/seasonal-events/new-years.tsx:58
-#: src/hooks/seasonal-events/orionids.tsx:106
-#: src/hooks/seasonal-events/perseids.tsx:123
-#: src/hooks/seasonal-events/quadrantids.tsx:122
-#: src/hooks/seasonal-events/spring-equinox.tsx:106
-#: src/hooks/seasonal-events/summer-solstice.tsx:105
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:84
-#: src/hooks/seasonal-events/valentines.tsx:94
-#: src/hooks/seasonal-events/winter-solstice.tsx:109
-#~ msgid "Little wonder"
-#~ msgstr "Mažas stebuklas"
-
-#: src/hooks/seasonal-events/total-solar-eclipse.tsx:74
-#~ msgid "Little wonder and safety"
-#~ msgstr "Mažas stebuklas ir saugumas"
-
-#: src/components/settings/index.tsx:191
-#~ msgid "Location"
-#~ msgstr "Vieta"
+#: src/features/settings/ui/settings.tsx:415
+msgid "Location"
+msgstr "Vieta"
 
 #: src/features/location/ui/identified-location-indicator.tsx:52
 msgid "Location name unavailable"
 msgstr "Vietos pavadinimas nepasiekiamas"
 
-#: src/features/settings/ui/settings.tsx:267
+#: src/features/settings/ui/settings.tsx:432
 msgid "Longitude"
 msgstr "Ilguma"
-
-#: src/components/intialisation/index.tsx:150
-#~ msgid "Looks like we can't grab your location info automatically."
-#~ msgstr "Panašu, kad negalime automatiškai nustatyti jūsų vietos informacijos."
 
 #: src/features/weather/ui/weather-alert.tsx:375
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
@@ -1106,10 +798,6 @@ msgstr "Lyridų meteorų lietus"
 msgid "mainly clear"
 msgstr "daugiausiai giedras"
 
-#: src/hooks/seasonal-events/spring-equinox.tsx:115
-#~ msgid "Many people still try the playful tradition of balancing an egg on its end, a quiet ritual of patience and curiosity."
-#~ msgstr "Daugelis žmonių vis dar bando žaismingą tradiciją pastatyti kiaušinį ant galo — tylų kantrybės ir smalsumo ritualą."
-
 #: src/features/weather/ui/tile.tsx:124
 msgid "March"
 msgstr "Kovas"
@@ -1118,10 +806,6 @@ msgstr "Kovas"
 msgid "Marigolds, papel picado, sugar skulls, candles, and favourite foods form a visual language of welcome and connection."
 msgstr "Medetkos, papel picado, cukrinės kaukolės, žvakės ir mėgstami patiekalai sudaro vizualią pasitikimo ir ryšio kalbą."
 
-#: src/hooks/seasonal-events/halloween.tsx:88
-#~ msgid "Masks invite games of identity, and lanterns turn familiar streets into small theatres of light and shadow."
-#~ msgstr "Kaukės kviečia žaidimus su tapatybe, o žibintai paverčia pažįstamas gatves mažais šviesos ir šešėlio teatrais."
-
 #: src/features/weather/ui/tile.tsx:126
 msgid "May"
 msgstr "Gegužė"
@@ -1129,14 +813,6 @@ msgstr "Gegužė"
 #: src/features/seasonal-events/events/autumn-equinox.tsx:133
 msgid "Meanwhile, billions of birds are mid-migration, navigating by stars, magnetic fields, and landmarks passed down through generations."
 msgstr "Tuo metu milijardai paukščių yra migracijos viduryje, orientuojasi pagal žvaigždes, magnetinius laukus ir iš kartos į kartą perduodamus orientyrus."
-
-#: src/pages/feedback/index.tsx:411
-#~ msgid "Message"
-#~ msgstr "Pranešimas"
-
-#: src/components/settings/index.tsx:357
-#~ msgid "Miscellaneous"
-#~ msgstr "Įvairūs"
 
 #: src/features/weather/ui/tile.tsx:88
 msgid "moderate drizzle"
@@ -1170,25 +846,9 @@ msgstr "Dauguma aplinkosaugos laimėjimų prasideda mažai ir vietiškai: atgaiv
 msgid "Most years the display is modest, but the shower is famous for its capacity to produce rare and spectacular surprises."
 msgstr "Dažniausiai pasirodymas būna kuklus, tačiau šis lietus garsėja gebėjimu kartais pateikti retų ir įspūdingų staigmenų."
 
-#: src/hooks/seasonal-events/lyrids.tsx:108
-#~ msgid "Most years the Lyrids unfold quietly, though they sometimes surprise observers with bright fireballs."
-#~ msgstr "Daugeliu metų Lyridai klostosi ramiai, nors kartais nustebina ryškiais ugnies kamuoliais."
-
-#: src/hooks/seasonal-events/hanukkah.tsx:118
-#~ msgid "Music, laughter, and shared meals give the celebration its warm and playful spirit."
-#~ msgstr "Muzika, juokas ir bendri valgiai suteikia šventei šiltą ir žaismingą dvasią."
-
 #: src/features/settings/ui/review-prompt.tsx:59
 msgid "Never show this again"
 msgstr "Daugiau niekada nerodyti"
-
-#: src/hooks/seasonal-events/eid-al-fitr.tsx:88
-#~ msgid "New clothes, sweet foods, and warm embraces turn the day into a bright reunion."
-#~ msgstr "Nauji drabužiai, saldūs patiekalai ir šilti apkabinimai paverčia dieną šviesiu susitikimu."
-
-#: src/pages/_app.tsx:21
-#~ msgid "New tab"
-#~ msgstr "Nauja kortelė"
 
 #: src/features/weather/ui/tile.tsx:184
 msgid "New Year's Day"
@@ -1202,27 +862,11 @@ msgstr "Naujųjų metų diena yra kalendoriaus „nulis“, pažymimas pirmuoju 
 msgid "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precisely that sunlight floods its inner chamber for just seventeen minutes around the winter solstice each year."
 msgstr "Newgrange, 5 000 metų senumo koridorinė kapavietė Airijoje, buvo pastatyta taip tiksliai, kad kasmet per žiemos saulėgrąžą saulės šviesa apšviečia vidinę kamerą tik septyniolika minučių."
 
-#: src/pages/feedback/index.tsx:272
-#~ msgid "No longer need the functionality"
-#~ msgstr "Daugiau nebereikia funkcionalumo"
-
-#: src/hooks/seasonal-events/total-lunar-eclipse.tsx:87
-#~ msgid "No special equipment is required; the Moon slowly drifts through shades of copper and crimson overhead."
-#~ msgstr "Jokios specialios įrangos nereikia — Mėnulis lėtai slenka per vario ir tamsiai raudonus atspalvius virš galvos."
-
-#: src/pages/feedback/index.tsx:203
-#~ msgid "Not available in my language"
-#~ msgstr "Mano kalba neprieinama"
-
-#: src/components/settings/index.tsx:259
-#~ msgid "Note: This requires browser permissions"
-#~ msgstr "Pastaba: Tam reikalingi naršyklės leidimai"
-
 #: src/features/weather/ui/tile.tsx:132
 msgid "November"
 msgstr "Lapkritis"
 
-#: src/features/settings/ui/settings.tsx:282
+#: src/features/settings/ui/settings.tsx:452
 msgid "Number of days to forecast"
 msgstr "Prognozuojamų dienų skaičius"
 
@@ -1250,7 +894,7 @@ msgstr "Ilgiausioje dienoje sutemos tęsiasi valandas, o visiška tamsa gali tai
 msgid "Orionids Meteor Shower"
 msgstr "Orionidų meteorų lietus"
 
-#: src/features/settings/ui/settings.tsx:150
+#: src/features/settings/ui/settings.tsx:185
 msgid "Other holidays"
 msgstr "Kitos šventės"
 
@@ -1304,11 +948,7 @@ msgstr "Apžvalga"
 msgid "partly cloudy"
 msgstr "debesuota"
 
-#: src/pages/feedback/index.tsx:173
-#~ msgid "Performance issues"
-#~ msgstr "Veikimo problemos"
-
-#: src/features/settings/ui/settings.tsx:278
+#: src/features/settings/ui/settings.tsx:443
 msgid "Periodically update location automatically"
 msgstr "Automatiškai periodiškai atnaujinti vietą"
 
@@ -1319,10 +959,6 @@ msgstr "Persėjų meteorų liūties meteorai į atmosferą įsiveržia maždaug 
 #: src/features/weather/ui/tile.tsx:186
 msgid "Perseids Meteor Shower"
 msgstr "Perseidų meteorų lietus"
-
-#: src/components/intialisation/index.tsx:155
-#~ msgid "Please enter it manually below."
-#~ msgstr "Įveskite jį rankiniu būdu žemiau."
 
 #: src/features/weather/ui/tile.tsx:187
 msgid "Quadrantids Meteor Shower"
@@ -1336,7 +972,7 @@ msgstr "Vietoje liūdno atsisveikinimo ji traktuoja prisiminimą kaip gyvą, ben
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "Raudoni vokai, mandarinai ir kaligrafijos poros išreiškia linkėjimus gausai, laimei ir naujoms pradžioms."
 
-#: src/features/settings/ui/settings.tsx:140
+#: src/features/settings/ui/settings.tsx:175
 msgid "Religious & cultural"
 msgstr "Religiniai ir kultūriniai"
 
@@ -1344,16 +980,12 @@ msgstr "Religiniai ir kultūriniai"
 msgid "Report a bug"
 msgstr "Pranešti apie klaidą"
 
-#: src/pages/feedback/index.tsx:291
-#~ msgid "Resource usage"
-#~ msgstr "Išteklių naudojimas"
-
 #: src/pages/index.tsx:167
 #: src/pages/index.tsx:186
 msgid "Retry"
 msgstr "Bandyti dar kartą"
 
-#: src/features/settings/ui/settings.tsx:166
+#: src/features/settings/ui/settings.tsx:196
 msgid "Reverse geocoding by OpenStreetMap contributors"
 msgstr "Atvirkštinis geokodavimas, atliktas OpenStreetMap bendraautorių"
 
@@ -1361,26 +993,21 @@ msgstr "Atvirkštinis geokodavimas, atliktas OpenStreetMap bendraautorių"
 msgid "Saturday"
 msgstr "Šeštadienis"
 
-#: src/components/settings/index.tsx:417
-#: src/components/settings/index.tsx:551
-#~ msgid "Save"
-#~ msgstr "Išsaugoti"
-
-#: src/features/settings/ui/settings.tsx:340
+#: src/features/settings/ui/settings.tsx:542
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "Sezoniniai efektai išjungti, nes jūsų naršyklė, panašu, naudoja programinį vaizdavimo variklį. Įjunkite aparatinį spartinimą, kad matytumėte šiuos efektus."
 
-#: src/features/settings/ui/settings.tsx:331
+#: src/features/settings/ui/settings.tsx:85
 msgid "Seasonal events"
 msgstr "Sezoniniai renginiai"
 
-#: src/features/settings/ui/settings.tsx:110
+#: src/features/settings/ui/settings.tsx:145
 msgid "Seasons & nature"
 msgstr "Metų laikai ir gamta"
 
-#: src/pages/feedback/index.tsx:244
-#~ msgid "Security and privacy concerns"
-#~ msgstr "Saugumo ir privatumo problemos"
+#: src/features/settings/ui/settings.tsx:271
+msgid "Sections"
+msgstr "Skyriai"
 
 #: src/features/seasonal-events/events/diwali.tsx:116
 msgid "Seen from above, cities during Diwali are transformed — rooftops, balconies, and streets are outlined in light, and the effect is visible from space in satellite imagery."
@@ -1394,136 +1021,128 @@ msgstr "Rugsėjis"
 msgid "Set my location"
 msgstr "Nustatyti mano vietą"
 
-#: src/features/settings/ui/settings.tsx:211
-#: src/features/settings/ui/settings.tsx:228
+#: src/features/settings/ui/settings.tsx:248
+#: src/features/settings/ui/settings.tsx:267
 msgid "Settings"
 msgstr "Nustatymai"
-
-#: src/components/settings/index.tsx:395
-#~ msgid "Share anonymised crash data and error logs"
-#~ msgstr "Dalintis anonimizuotais strigties duomenimis ir klaidų žurnalais"
 
 #: src/features/seasonal-events/events/valentines.tsx:93
 msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and personal."
 msgstr "Dalijimasis saldumynais, gėlėmis ir mažomis dovanomis išlaiko šventę jaukią ir asmenišką."
 
-#: src/components/settings.tsx:181
-#~ msgid "Show alert icons that expand to text when clicked."
-#~ msgstr "Rodyti įspėjimo piktogramas, kurios paspaudus išsiplečia į tekstą."
-
-#: src/features/settings/ui/settings.tsx:59
+#: src/features/settings/ui/settings.tsx:94
 msgid "Show Autumn Equinox event"
 msgstr "Rodyti Rudens lygiadienį"
 
-#: src/features/settings/ui/settings.tsx:60
+#: src/features/settings/ui/settings.tsx:95
 msgid "Show Christmas Day event"
 msgstr "Rodyti Kalėdas"
 
-#: src/features/settings/ui/settings.tsx:61
+#: src/features/settings/ui/settings.tsx:96
 msgid "Show Day of the Dead event"
 msgstr "Rodyti Mirusiųjų dieną"
 
-#: src/features/settings/ui/settings.tsx:62
+#: src/features/settings/ui/settings.tsx:97
 msgid "Show Diwali event"
 msgstr "Rodyti Diwali"
 
-#: src/features/settings/ui/settings.tsx:63
+#: src/features/settings/ui/settings.tsx:98
 msgid "Show Earth Day event"
 msgstr "Rodyti Žemės dieną"
 
-#: src/features/settings/ui/settings.tsx:64
+#: src/features/settings/ui/settings.tsx:99
 msgid "Show Easter event"
 msgstr "Rodyti Velykas"
 
-#: src/features/settings/ui/settings.tsx:65
+#: src/features/settings/ui/settings.tsx:100
 msgid "Show Eid al-Adha event"
 msgstr "Rodyti Eid al-Adha"
 
-#: src/features/settings/ui/settings.tsx:66
+#: src/features/settings/ui/settings.tsx:101
 msgid "Show Eid al-Fitr event"
 msgstr "Rodyti Eid al-Fitr"
 
-#: src/features/settings/ui/settings.tsx:68
+#: src/features/settings/ui/settings.tsx:103
 msgid "Show Eta Aquariids meteor shower event"
 msgstr "Rodyti Eta Akvaridų meteorų lietų"
 
-#: src/features/settings/ui/settings.tsx:71
+#: src/features/settings/ui/settings.tsx:106
 msgid "Show Event Horizon Day event"
 msgstr "Rodyti Įvykių horizonto dienos renginį"
 
-#: src/features/settings/ui/settings.tsx:46
+#: src/features/settings/ui/settings.tsx:62
 msgid "Show extreme UV alerts"
 msgstr "Rodyti ekstremalių UV spinduliavimo įspėjimus"
 
-#: src/features/settings/ui/settings.tsx:73
+#: src/features/settings/ui/settings.tsx:108
 msgid "Show Geminids meteor shower event"
 msgstr "Rodyti Geminidų meteorų lietų"
 
-#: src/features/settings/ui/settings.tsx:74
+#: src/features/settings/ui/settings.tsx:109
 msgid "Show Halloween event"
 msgstr "Rodyti Heloviną"
 
-#: src/features/settings/ui/settings.tsx:75
+#: src/features/settings/ui/settings.tsx:110
 msgid "Show Hanukkah event"
 msgstr "Rodyti Chanuką"
 
-#: src/features/settings/ui/settings.tsx:49
+#: src/features/settings/ui/settings.tsx:65
 msgid "Show high precipitation alerts"
 msgstr "Rodyti didelio kritulio įspėjimus"
 
-#: src/features/settings/ui/settings.tsx:76
+#: src/features/settings/ui/settings.tsx:111
 msgid "Show Holi event"
 msgstr "Rodyti Holi"
 
-#: src/features/settings/ui/settings.tsx:77
+#: src/features/settings/ui/settings.tsx:112
 msgid "Show Leonids meteor shower event"
 msgstr "Rodyti Leonidų meteorų lietų"
 
-#: src/features/settings/ui/settings.tsx:54
+#: src/features/settings/ui/settings.tsx:70
 msgid "Show low visibility alerts"
 msgstr "Rodyti prasto matomumo įspėjimus"
 
-#: src/features/settings/ui/settings.tsx:78
+#: src/features/settings/ui/settings.tsx:113
 msgid "Show Lunar New Year event"
 msgstr "Rodyti Mėnulio Naujuosius metus"
 
-#: src/features/settings/ui/settings.tsx:79
+#: src/features/settings/ui/settings.tsx:114
 msgid "Show Lyrids meteor shower event"
 msgstr "Rodyti Lyridų meteorų lietų"
 
-#: src/features/settings/ui/settings.tsx:80
+#: src/features/settings/ui/settings.tsx:115
 msgid "Show New Year's Day event"
 msgstr "Rodyti Naujųjų metų dieną"
 
-#: src/features/settings/ui/settings.tsx:81
+#: src/features/settings/ui/settings.tsx:116
 msgid "Show Orionids meteor shower event"
 msgstr "Rodyti Orionidų meteorų lietų"
 
-#: src/features/settings/ui/settings.tsx:82
+#: src/features/settings/ui/settings.tsx:117
 msgid "Show Perseids meteor shower event"
 msgstr "Rodyti Perseidų meteorų lietų"
 
-#: src/features/settings/ui/settings.tsx:84
+#: src/features/settings/ui/settings.tsx:119
 msgid "Show Quadrantids meteor shower event"
 msgstr "Rodyti Kvadrantidų meteorų lietų"
 
-#: src/features/settings/ui/settings.tsx:335
+#: src/features/settings/ui/settings.tsx:537
 msgid "Show seasonal events"
 msgstr "Rodyti sezoninius įvykius"
 
-#: src/features/settings/ui/settings.tsx:351
+#: src/features/settings/ui/settings.tsx:552
 msgid "Show seasonal tile glow"
 msgstr "Rodyti sezoninį plytelių švytėjimą"
 
-#: src/features/settings/ui/settings.tsx:86
+#: src/features/settings/ui/settings.tsx:121
 msgid "Show Spring Equinox event"
 msgstr "Rodyti Pavasario lygiadienį"
 
-#: src/features/settings/ui/settings.tsx:51
+#: src/features/settings/ui/settings.tsx:67
 msgid "Show strong wind alerts"
 msgstr "Rodyti stipraus vėjo įspėjimus"
 
-#: src/features/settings/ui/settings.tsx:87
+#: src/features/settings/ui/settings.tsx:122
 msgid "Show Summer Solstice event"
 msgstr "Rodyti Vasaros saulėgrįžą"
 
@@ -1531,23 +1150,23 @@ msgstr "Rodyti Vasaros saulėgrįžą"
 msgid "Show this event"
 msgstr "Rodyti šį renginį"
 
-#: src/features/settings/ui/settings.tsx:89
+#: src/features/settings/ui/settings.tsx:124
 msgid "Show total lunar eclipse event"
 msgstr "Rodyti visišką Mėnulio užtemimą"
 
-#: src/features/settings/ui/settings.tsx:92
+#: src/features/settings/ui/settings.tsx:127
 msgid "Show total solar eclipse event"
 msgstr "Rodyti visišką Saulės užtemimą"
 
-#: src/features/settings/ui/settings.tsx:95
+#: src/features/settings/ui/settings.tsx:130
 msgid "Show Valentine's Day event"
 msgstr "Rodyti Valentino dieną"
 
-#: src/features/settings/ui/settings.tsx:324
+#: src/features/settings/ui/settings.tsx:501
 msgid "Show weather alerts"
 msgstr "Rodyti oro sąlygų įspėjimus"
 
-#: src/features/settings/ui/settings.tsx:97
+#: src/features/settings/ui/settings.tsx:132
 msgid "Show Winter Solstice event"
 msgstr "Rodyti Žiemos saulėgrįžą"
 
@@ -1576,14 +1195,6 @@ msgstr "silpni sniego smiltelėjimai"
 msgid "slight snowfall"
 msgstr "nedidelis sniegas"
 
-#: src/pages/feedback/index.tsx:177
-#~ msgid "Slows down my browser"
-#~ msgstr "Lėtina mano naršyklę"
-
-#: src/hooks/seasonal-events/earth-day.tsx:169
-#~ msgid "Small actions accumulate: a planted tree, a cleared shoreline, a renewed path."
-#~ msgstr "Maži veiksmai kaupiasi: pasodintas medis, išvalyta pakrantė, atnaujintas takas."
-
 #: src/features/weather/ui/tile.tsx:100
 msgid "snow grains"
 msgstr "sniego grūdeliai"
@@ -1603,18 +1214,6 @@ msgstr "Pavasario lygiadienis"
 #: src/features/seasonal-events/events/holi.tsx:219
 msgid "Stories surrounding Holi vary by region, including the tale of Prahlad and Holika, which speaks to the triumph of devotion and good over harm."
 msgstr "Pasakojimai apie Holi skiriasi pagal regioną, įskaitant Prahlado ir Holikos istoriją, kalbančią apie ištikimybės ir gėrio pergalę prieš žalą."
-
-#: src/components/alert/index.tsx:236
-#~ msgid "Strong wind for the next {durationOfStrongWind} hours"
-#~ msgstr "Stiprus vėjas kitas {durationOfStrongWind} valandas"
-
-#: src/components/alert/index.tsx:241
-#~ msgid "Strong wind for the next 24 hours"
-#~ msgstr "Stiprus vėjas kitas 24 valandas"
-
-#: src/components/alert/index.tsx:244
-#~ msgid "Strong wind for the next hour"
-#~ msgstr "Stiprus vėjas kitą valandą"
 
 #: src/features/weather/ui/weather-alert.tsx:333
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
@@ -1636,10 +1235,6 @@ msgstr "Stiprūs vėjo gūsiai prasidės už {timeUntilStrongWind} valandų"
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "Stiprūs vėjo gūsiai prasidės po 1 valandos"
 
-#: src/components/alert/index.tsx:227
-#~ msgid "Strong wind starting in {timeUntilStrongWind} hours"
-#~ msgstr "Stiprus vėjas prasidės už {timeUntilStrongWind} valandų"
-
 #: src/app/bug/page.tsx:83
 msgid "Submit"
 msgstr "Pateikti"
@@ -1655,10 +1250,6 @@ msgstr "Sekmadienis"
 #: src/features/seasonal-events/events/easter.tsx:76
 msgid "Sunrise services draw people outdoors before the day has fully started, and egg hunts send children tearing across gardens and parks."
 msgstr "Saulėtekio pamaldos išveda žmones laukan dar prieš prasidedant dienai, o kiaušinių paieška priverčia vaikus bėgioti po sodus ir parkus."
-
-#: src/hooks/seasonal-events/easter.tsx:70
-#~ msgid "Sunrise services, fresh mornings, and the simple delight of egg hunts carry the feeling of a world beginning again."
-#~ msgstr "Saulėtekio pamaldos, gaivūs rytai ir paprastas kiaušinių medžioklės džiaugsmas suteikia jausmą, kad pasaulis pradeda iš naujo."
 
 #: src/features/seasonal-events/events/day-of-the-dead.tsx:76
 msgid "Symbols and offerings"
@@ -1676,10 +1267,6 @@ msgstr "Simboliai ir ritualai"
 msgid "Symbols of luck"
 msgstr "Sėkmės simboliai"
 
-#: src/hooks/seasonal-events/diwali.tsx:116
-#~ msgid "The air hums with music, laughter, and the quiet shimmer of celebration."
-#~ msgstr "Oras dūzgia nuo muzikos, juoko ir ramaus šventės spindesio."
-
 #: src/features/seasonal-events/events/autumn-equinox.tsx:89
 msgid "The autumn equinox marks a moment of near-perfect balance, when day and night stand equal before the long shift toward darker evenings."
 msgstr "Rudens lygiadienis žymi beveik tobulos pusiausvyros akimirką, kai diena ir naktis susilygina prieš ilgą slinktį į tamsesnius vakarus."
@@ -1691,10 +1278,6 @@ msgstr "Šventė kilo iš senovės Samhaino ir vėlesnių Visų Šventųjų išv
 #: src/features/seasonal-events/events/autumn-equinox.tsx:126
 msgid "The colour change in autumn leaves isn’t new pigment appearing — it’s the green chlorophyll withdrawing, revealing yellows and oranges that were there all along."
 msgstr "Rudens lapų spalvos pasikeitimas nėra naujo pigmento atsiradimas – tai žaliojo chlorofilo atsitraukimas, atskleidžiantis geltonus ir oranžinius atspalvius, kurie visą laiką ten buvo."
-
-#: src/hooks/seasonal-events/holi.tsx:178
-#~ msgid "The colours draw everyone into the same bright moment, dissolving distance and difference."
-#~ msgstr "Spalvos įtraukia visus į tą pačią ryškią akimirką, ištirpindamos atstumą ir skirtumus."
 
 #: src/features/seasonal-events/events/black-hole.tsx:225
 msgid "The dark center is the event horizon silhouette, while the bright ring is light from superheated material in the accretion flow around it."
@@ -1769,10 +1352,6 @@ msgstr "Leonidai garsėja istorinėmis meteorų audromis, ypač 1833 ir 1966 met
 msgid "The Leonids originate from Comet Tempel–Tuttle, and every few decades Earth passes through especially dense streams of its debris."
 msgstr "Leonidai kilę iš Tempel–Tuttle kometos, o kas kelis dešimtmečius Žemė praeina per ypač tankius jos nuolaužų srautus."
 
-#: src/hooks/seasonal-events/autumn-equinox.tsx:119
-#~ msgid "The light softens and turns golden, the air grows gentler, and the year seems to pause — just for a breath."
-#~ msgstr "Šviesa suminkštėja ir tampa auksinė, oras švelnėja, o metai tarsi sustoja — tik akimirkai."
-
 #: src/features/settings/ui/initialisation.tsx:126
 msgid "The location request timed out. Please check your internet connection and try again."
 msgstr "Vietos užklausos laikas baigėsi. Patikrinkite interneto ryšį ir bandykite dar kartą."
@@ -1822,14 +1401,6 @@ msgstr "Aukos mėsa tradiciškai padalijama į tris lygias dalis: viena – šei
 msgid "The menorah is placed in a window or doorway so the light faces outward — the tradition is specifically about making the flames visible to passersby."
 msgstr "Menora statoma lange ar durų angoje taip, kad šviesa būtų nukreipta į išorę – tradicija yra konkrečiai apie tai, kad liepsnos būtų matomos praeiviams."
 
-#: src/hooks/seasonal-events/eta-aquariids.tsx:115
-#~ msgid "The meteors are exceptionally fast and often leave long, delicate trains that linger in the sky."
-#~ msgstr "Meteorai yra neįprastai greiti ir dažnai palieka ilgas, subtilias švytinčias juostas, išliekančias danguje."
-
-#: src/hooks/seasonal-events/geminids.tsx:125
-#~ msgid "The meteors are often bright and steady, tracing slow, colourful paths across the night."
-#~ msgstr "Meteorai dažnai būna ryškūs ir tolygūs, braižydami lėtesnes, spalvingas linijas per naktį."
-
 #: src/features/seasonal-events/events/orionids.tsx:122
 msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of any annual shower, which is why they often leave persistent glowing trails."
 msgstr "Meteorai į atmosferą įsiveržia maždaug 66 km/s greičiu – tai viena greičiausių iš visų metinių liūčių, todėl jie dažnai palieka ilgai trunkančius švytinčius pėdsakus."
@@ -1860,17 +1431,9 @@ msgstr "Kitas galimas Liūto meteorų liūties audros langas – 2030-ieji metai
 msgid "The night before Holi features Holika Dahan, a ceremonial bonfire that symbolises the passing of winter and the renewal of life."
 msgstr "Naktį prieš Holi vyksta Holika Dahan — ritualinis laužas, simbolizuojantis žiemos pabaigą ir gyvybės atsinaujinimą."
 
-#: src/hooks/seasonal-events/halloween.tsx:94
-#~ msgid "The night encourages imagination to wander, as if even the moon were part of the performance."
-#~ msgstr "Naktis skatina vaizduotę klaidžioti, tarsi net mėnulis būtų pasirodymo dalis."
-
 #: src/features/seasonal-events/events/spring-equinox.tsx:123
 msgid "The old tradition of balancing an egg on its end at the equinox is a myth (you can do it any day of the year), but people keep trying anyway. It's become its own kind of ritual."
 msgstr "Senoji tradicija laikyti kiaušinį stačiai per lygiadienį yra mitas (tai galima padaryti bet kurią metų dieną), tačiau žmonės vis tiek bando. Tai tapo savotiška apeiga."
-
-#: src/hooks/seasonal-events/valentines.tsx:97
-#~ msgid "The oldest known Valentine is a fifteenth-century poem written from imprisonment in the Tower of London."
-#~ msgstr "Seniausias žinomas „valentinas“ — XV amžiaus eilėraštis, parašytas iš kalėjimo Londono Bokšte."
 
 #: src/features/seasonal-events/events/valentines.tsx:103
 msgid "The oldest known Valentine is a fifteenth-century poem, written from a cell in the Tower of London — a love letter composed under the worst possible circumstances."
@@ -1887,10 +1450,6 @@ msgstr "Orionidai — kasmetinis meteorų lietus iš Halio kometos paliktų nuol
 #: src/features/seasonal-events/events/orionids.tsx:99
 msgid "The Orionids are visible from both hemispheres and are known for producing bright, fast-moving meteors."
 msgstr "Orionidai matomi abiejuose pusrutuliuose ir garsėja ryškiais, greitais meteorais."
-
-#: src/hooks/seasonal-events/quadrantids.tsx:131
-#~ msgid "The peak often arrives suddenly, like a secret performance unfolding before dawn."
-#~ msgstr "Pikas dažnai ateina staiga, tarsi slaptas pasirodymas prieš aušrą."
 
 #: src/features/seasonal-events/events/perseids.tsx:82
 msgid "The Perseids are a bright annual meteor shower formed from debris left by Comet Swift–Tuttle."
@@ -1915,14 +1474,6 @@ msgstr "Kvadrantidai — meteorų lietus, kurio pikas būna sausio pradžioje; j
 #: src/features/seasonal-events/events/lunar-new-year.tsx:118
 msgid "The season builds toward the Lantern Festival on the fifteenth night, when thousands of lanterns are released into the sky."
 msgstr "Sezonas kyla link Žibintų šventės penkioliktą naktį, kai tūkstančiai žibintų išleidžiami į dangų."
-
-#: src/hooks/seasonal-events/lunar-new-year.tsx:117
-#~ msgid "The season traditionally concludes with the Lantern Festival, when wishes are carried upward on glowing lanterns."
-#~ msgstr "Šventinis laikotarpis tradiciškai baigiasi Žibintų festivaliu, kai norai pakyla aukštyn su švytinčiais žibintais."
-
-#: src/hooks/seasonal-events/orionids.tsx:115
-#~ msgid "The shower frequently delivers swift, luminous streaks that carve clean lines across the night."
-#~ msgstr "Lietus dažnai dovanoja greitus, šviesius brūkšnius, kurie nubrėžia švarias linijas per naktį."
 
 #: src/features/seasonal-events/events/lyrids.tsx:104
 msgid "The shower originates from Comet Thatcher, which returns to the inner solar system roughly every four hundred and fifteen years."
@@ -1972,10 +1523,6 @@ msgstr "Žiemos saulėgrįža žymi trumpiausią dieną ir ilgiausią naktį met
 msgid "The zodiac animal associated with the year is believed to shape its character and fortunes."
 msgstr "Manoma, kad su metais siejamas zodiako gyvūnas formuoja jų pobūdį ir sėkmę."
 
-#: src/hooks/seasonal-events/quadrantids.tsx:125
-#~ msgid "Their likely parent body is the asteroid 2003 EH1, a reminder that even an unassuming rock can paint the sky with light."
-#~ msgstr "Tikėtinas jų „tėvinis kūnas“ yra asteroidas 2003 EH1 — priminimas, kad net kuklus akmuo gali nudažyti dangų šviesa."
-
 #: src/features/seasonal-events/events/quadrantids.tsx:131
 msgid "Their likely parent body, asteroid 2003 EH1, may be a dead comet — one that exhausted its volatile ices and now orbits as a dark, quiet rock."
 msgstr "Tikėtinas jų motininis kūnas, asteroidas 2003 EH1, gali būti mirusi kometa – tokia, kuri išnaudojo savo lakiuosius ledus ir dabar skrieja kaip tamsus, tylus akmuo."
@@ -2001,10 +1548,6 @@ msgstr "Yra {0}% kritulių tikimybė."
 msgid "There's a reason the holiday lands in spring — it borrows heavily from the season's own sense of things starting over."
 msgstr "Yra priežastis, kodėl ši šventė tenka pavasariui – ji stipriai remiasi paties sezono pojūčiu, kai viskas prasideda iš naujo."
 
-#: src/hooks/seasonal-events/christmas.tsx:96
-#~ msgid "There’s something quietly luminous about the day itself — the glow of lights in windows, slow mornings, familiar songs, and tables set for gathering."
-#~ msgstr "Yra kažkas tyliai švytinčio pačioje dienoje — sniego garsai, lėti rytai, pažįstamos giesmės ir stalas, paruoštas susibūrimui."
-
 #: src/features/seasonal-events/events/leonids.tsx:106
 msgid "These events played an important role in the development of scientific understanding of meteor showers."
 msgstr "Šie reiškiniai atliko svarbų vaidmenį kuriant mokslinį meteorų lietų supratimą."
@@ -2020,10 +1563,6 @@ msgstr "Paprastai tai švelnus lietus, apdovanojantis kantrų dangaus stebėtoj�
 #: src/features/seasonal-events/events/eta-aquariids.tsx:89
 msgid "They peak in early May and are especially well seen from the southern hemisphere, though northern skies still catch their share of streaks."
 msgstr "Jų pikas būna gegužės pradžioje ir ypač gerai matomas pietų pusrutulyje, nors šiauriniai dangūs taip pat pagauna savo dalį šviesių brūkšnių."
-
-#: src/hooks/seasonal-events/leonids.tsx:132
-#~ msgid "They serve as a quiet reminder that the sky still holds the power to surprise."
-#~ msgstr "Jie primena, kad dangus vis dar turi galią nustebinti."
 
 #: src/features/seasonal-events/events/quadrantids.tsx:121
 msgid "This makes the period of strongest activity short, but it can be especially spectacular."
@@ -2057,10 +1596,6 @@ msgstr "perkūnija su nedidele kruša"
 msgid "Thursday"
 msgstr "Ketvirtadienis"
 
-#: src/components/settings/index.tsx:283
-#~ msgid "Tiles"
-#~ msgstr "Plytelės"
-
 #: src/features/settings/ui/initialisation.tsx:163
 msgid "To get started, let's set your language and location."
 msgstr "Norėdami pradėti, nustatykite savo kalbą ir vietą."
@@ -2072,10 +1607,6 @@ msgstr "Šiandien vien Europoje auginami apie 350 milijonų tikrų Kalėdų eglu
 #: src/features/seasonal-events/events/total-solar-eclipse.tsx:57
 msgid "Today, many people travel great distances to stand within the path of totality."
 msgstr "Šiandien daugelis žmonių keliauja didelius atstumus, kad atsidurtų visiškumo kelyje."
-
-#: src/pages/feedback/index.tsx:307
-#~ msgid "Too much battery usage"
-#~ msgstr "Per didelis baterijos naudojimas"
 
 #: src/features/weather/ui/tile.tsx:190
 msgid "Total Lunar Eclipse"
@@ -2105,29 +1636,13 @@ msgstr "Bandykite dar kartą"
 msgid "Tuesday"
 msgstr "Antradienis"
 
-#: src/features/settings/ui/settings.tsx:316
+#: src/features/settings/ui/settings.tsx:493
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Įjunkite šią parinktį, jei „Weather Please“ pateikiamas UV indeksas nuolat yra mažesnis nei vietinių šaltinių."
-
-#: src/hooks/seasonal-events/summer-solstice.tsx:108
-#~ msgid "Twilight lingers, insects fill the air with song, and the sky can feel almost endless."
-#~ msgstr "Prieblanda užsitęsia, vabzdžiai pripildo orą giesme, o dangus gali atrodyti beveik begalinis."
 
 #: src/pages/index.tsx:161
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Nepavyko gauti orų duomenų. Patikrinkite interneto ryšį ir bandykite dar kartą."
-
-#: src/hooks/seasonal-events/perseids.tsx:132
-#~ msgid "Under a dark sky, it can feel as though the universe itself is writing with light."
-#~ msgstr "Po tamsiu dangumi gali pasirodyti, tarsi pati visata rašytų šviesa."
-
-#: src/hooks/seasonal-events/geminids.tsx:131
-#~ msgid "Under clear skies, the show can feel both calm and exhilarating at once."
-#~ msgstr "Giedromis naktimis reginys gali atrodyti ir ramus, ir jaudinantis vienu metu."
-
-#: src/pages/feedback/index.tsx:164
-#~ msgid "Uninstall feedback"
-#~ msgstr "Atsiliepimai apie šalinimą"
 
 #: src/features/weather/ui/tile.tsx:454
 #: src/features/weather/ui/tile.tsx:461
@@ -2142,29 +1657,12 @@ msgstr "Skirtingai nuo saulės užtemimo, mėnulio užtemimui nereikia jokios sp
 msgid "Unlike most meteor showers, the Geminids originate from the asteroid 3200 Phaethon rather than a comet."
 msgstr "Skirtingai nei dauguma meteorų lietų, Geminidai kyla iš asteroido 3200 Phaethon, o ne iš kometos."
 
-#: src/components/intialisation/index.tsx:197
-#: src/components/settings/index.tsx:248
-#~ msgid "Unsure how to find these? Click here."
-#~ msgstr "Nežinote, kaip juos rasti? Spustelėkite čia."
-
-#: src/pages/feedback/index.tsx:319
-#~ msgid "Update or change related"
-#~ msgstr "Susiję su atnaujinimu ar pakeitimu"
-
-#: src/pages/feedback/index.tsx:198
-#~ msgid "Usability and functionality"
-#~ msgstr "Naudojimo patogumas ir funkcionalumas"
-
-#: src/features/settings/ui/settings.tsx:312
+#: src/features/settings/ui/settings.tsx:487
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "Naudoti pasaulinius chemijos modelius (CAMS)"
 
-#: src/components/settings.tsx:91
-#~ msgid "Use keyboard shortcuts"
-#~ msgstr "Naudokite klaviatūros trumpinius"
-
 #: src/features/settings/ui/initialisation.tsx:186
-#: src/features/settings/ui/settings.tsx:246
+#: src/features/settings/ui/settings.tsx:402
 msgid "Use metric number format"
 msgstr "Naudoti metrinį skaičių formatą"
 
@@ -2180,36 +1678,19 @@ msgstr "Valentino diena švenčia įvairias meilės formas — nuo romantikos ik
 msgid "violent rain showers"
 msgstr "smarkus lietus"
 
-#: src/hooks/seasonal-events/eta-aquariids.tsx:109
-#~ msgid "Watching the Eta Aquariids can feel like receiving a message from a distant traveller, carried on light across the dark."
-#~ msgstr "Stebėti Eta Akvaridus gali būti tarsi gauti žinutę iš tolimo keliautojo, atneštą šviesa per tamsą."
-
 #: src/features/seasonal-events/events/earth-day.tsx:156
 msgid "Ways to observe"
 msgstr "Stebėjimo būdai"
 
-#: src/components/settings/index.tsx:283
-#~ msgid "We'd love to bring Weather Please to more languages."
-#~ msgstr "Mes norėtume pateikti „Weather Please“ daugiau kalbų."
-
-#: src/features/settings/ui/settings.tsx:250
+#: src/features/settings/ui/settings.tsx:81
 msgid "Weather"
 msgstr "Oras"
 
-#: src/features/settings/ui/settings.tsx:162
+#: src/features/settings/ui/settings.tsx:192
 msgid "Weather data by Open-Meteo"
 msgstr "Oro sąlygų duomenys iš Open-Meteo"
 
-#: src/pages/index.tsx:211
-#~ msgid "weather data provided by open-meteo"
-#~ msgstr "orų duomenis pateikė open-meteo"
-
-#: src/components/intialisation/index.tsx:128
-#: src/components/intialisation/index.tsx:236
-#~ msgid "Weather Please collects anonymised crash data and error logs. You can opt out of this at any time via the settings menu."
-#~ msgstr "Weather Please renka anoniminius avarijų duomenis ir klaidų žurnalus. Bet kada galite atsisakyti to per nustatymų meniu."
-
-#: src/features/settings/ui/settings.tsx:408
+#: src/features/settings/ui/settings.tsx:627
 msgid "Weather Please uses the following third-party data sources and location services."
 msgstr "Weather Please naudoja šiuos trečiųjų šalių duomenų šaltinius ir vietos paslaugas."
 
@@ -2261,10 +1742,6 @@ msgstr "Kodėl pikas trumpas"
 msgid "Winter Solstice"
 msgstr "Žiemos saulėgrįža"
 
-#: src/hooks/seasonal-events/hanukkah.tsx:112
-#~ msgid "With each night, a new flame appears, forming a quiet ladder of light against the dark."
-#~ msgstr "Su kiekviena naktimi atsiranda nauja liepsna, sudarydama tylų šviesos laiptelį prieš tamsą."
-
 #: src/features/seasonal-events/events/holi.tsx:251
 msgid "Within minutes of stepping outside, everyone looks the same — drenched head to toe in colour, impossible to tell apart."
 msgstr "Per kelias minutes po išėjimo į lauką visi atrodo vienodai – nuo galvos iki kojų persmelkti spalvų, neįmanoma atskirti."
@@ -2272,18 +1749,6 @@ msgstr "Per kelias minutes po išėjimo į lauką visi atrodo vienodai – nuo g
 #: src/features/settings/ui/review-prompt.tsx:36
 msgid "Would you like to leave a review?"
 msgstr "Norėtumėte palikti atsiliepimą?"
-
-#: src/components/settings/index.tsx:365
-#~ msgid "You can press numbers 1-9 to change how many weather tiles are displayed."
-#~ msgstr "Galite paspausti skaičius nuo 1 iki 9, kad pakeistumėte, kiek orų plytelių rodoma."
-
-#: src/components/settings/index.tsx:529
-#~ msgid "You can't save because either your latitude or longitude are invalid."
-#~ msgstr "Jūs negalite išsaugoti, nes jūsų platuma arba ilguma yra neteisinga."
-
-#: src/components/settings/index.tsx:522
-#~ msgid "You have unsaved changes"
-#~ msgstr "Jūs turite neišsaugotų pakeitimų"
 
 #: src/features/settings/ui/review-prompt.tsx:33
 msgid "You've been using Weather Please for a while"
@@ -2294,7 +1759,7 @@ msgid "Your email (optional)"
 msgstr "Jūsų el. paštas (pasirinktinai)"
 
 #: src/features/settings/ui/initialisation.tsx:190
-#: src/features/settings/ui/settings.tsx:253
+#: src/features/settings/ui/settings.tsx:418
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Jūsų vietos duomenys saugiai ir išskirtinai saugomi jūsų asmeniniame įrenginyje."
 
