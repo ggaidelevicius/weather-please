@@ -47,13 +47,13 @@ msgstr "{precipitationMm} mm curah hujan diperkirakan dalam 24 jam ke depan."
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
 msgstr "{precipitationMm} mm curah hujan diperkirakan dalam satu jam ke depan."
 
-#: src/features/settings/ui/initialisation.tsx:112
+#: src/features/settings/ui/initialisation.tsx:131
 msgid "<0>Location access denied.</0> Check your browser's settings to allow this site to access your location, then try again."
 msgstr "<0>Akses lokasi ditolak.</0> Periksa pengaturan browser Anda untuk mengizinkan situs ini mengakses lokasi Anda, lalu coba lagi."
 
-#: src/features/settings/ui/initialisation.tsx:88
-#: src/features/settings/ui/initialisation.tsx:96
-#: src/features/settings/ui/initialisation.tsx:104
+#: src/features/settings/ui/initialisation.tsx:107
+#: src/features/settings/ui/initialisation.tsx:115
+#: src/features/settings/ui/initialisation.tsx:123
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Akses lokasi ditolak.</0> Klik ikon lokasi di bilah alamat, lalu pilih \"selalu izinkan akses ke lokasi Anda\". Kemudian klik tombol di bawah untuk mencoba lagi."
 
@@ -607,7 +607,7 @@ msgstr "Rumah dibersihkan dan dihias dengan saksama untuk menyapu pergi keberunt
 msgid "Identifier"
 msgstr "Pengenal"
 
-#: src/features/settings/ui/initialisation.tsx:168
+#: src/features/settings/ui/initialisation.tsx:205
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Jika browser Anda meminta izin lokasi, silakan pilih \"izinkan\"."
 
@@ -708,7 +708,7 @@ msgstr "Juli"
 msgid "June"
 msgstr "Juni"
 
-#: src/features/settings/ui/initialisation.tsx:174
+#: src/features/settings/ui/initialisation.tsx:211
 #: src/features/settings/ui/settings.tsx:390
 msgid "Language"
 msgstr "Bahasa"
@@ -980,8 +980,8 @@ msgstr "Keagamaan & budaya"
 msgid "Report a bug"
 msgstr "Laporkan bug"
 
-#: src/pages/index.tsx:167
-#: src/pages/index.tsx:186
+#: src/pages/index.tsx:190
+#: src/pages/index.tsx:204
 msgid "Retry"
 msgstr "Coba lagi"
 
@@ -1017,7 +1017,7 @@ msgstr "Dilihat dari atas, kota-kota selama Diwali bertransformasi — atap, bal
 msgid "September"
 msgstr "September"
 
-#: src/features/settings/ui/initialisation.tsx:204
+#: src/features/settings/ui/initialisation.tsx:241
 msgid "Set my location"
 msgstr "Atur lokasi saya"
 
@@ -1170,7 +1170,7 @@ msgstr "Tampilkan peringatan cuaca"
 msgid "Show Winter Solstice event"
 msgstr "Tampilkan Solstis musim dingin"
 
-#: src/pages/index.tsx:180
+#: src/pages/index.tsx:55
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Menampilkan data cuaca yang tersimpan di cache. Coba lagi untuk memperbarui prakiraan terbaru."
 
@@ -1352,7 +1352,11 @@ msgstr "Leonid terkenal karena badai meteor bersejarah, terutama pada 1833 dan 1
 msgid "The Leonids originate from Comet Tempel–Tuttle, and every few decades Earth passes through especially dense streams of its debris."
 msgstr "Leonid berasal dari Komet Tempel–Tuttle, dan setiap beberapa dekade Bumi melewati aliran puing-puingnya yang sangat padat."
 
-#: src/features/settings/ui/initialisation.tsx:126
+#: src/features/settings/ui/initialisation.tsx:155
+msgid "The location request timed out - this looks like a service issue rather than a problem on your end. Please try again in a moment."
+msgstr "Permintaan lokasi habis waktu. Ini tampaknya masalah layanan, bukan masalah pada perangkat Anda. Silakan coba lagi sebentar lagi."
+
+#: src/features/settings/ui/initialisation.tsx:163
 msgid "The location request timed out. Please check your internet connection and try again."
 msgstr "Permintaan lokasi kehabisan waktu. Periksa koneksi internet Anda dan coba lagi."
 
@@ -1596,7 +1600,7 @@ msgstr "badai petir dengan hujan es ringan"
 msgid "Thursday"
 msgstr "Kamis"
 
-#: src/features/settings/ui/initialisation.tsx:163
+#: src/features/settings/ui/initialisation.tsx:200
 msgid "To get started, let's set your language and location."
 msgstr "Untuk memulai, mari atur bahasa dan lokasi Anda."
 
@@ -1628,7 +1632,7 @@ msgstr "Tradisi"
 msgid "Traditions such as Nowruz continue to celebrate themes of renewal on or around the equinox."
 msgstr "Tradisi seperti Nowruz terus merayakan tema pembaruan pada atau sekitar waktu ekuinoks."
 
-#: src/features/settings/ui/initialisation.tsx:202
+#: src/features/settings/ui/initialisation.tsx:239
 msgid "Try again"
 msgstr "Coba lagi"
 
@@ -1640,7 +1644,7 @@ msgstr "Selasa"
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Aktifkan ini jika indeks UV yang dilaporkan Weather Please secara konsisten lebih rendah daripada sumber lokal."
 
-#: src/pages/index.tsx:161
+#: src/pages/index.tsx:184
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Tidak dapat mengambil data cuaca. Periksa koneksi internet Anda dan coba lagi."
 
@@ -1661,7 +1665,7 @@ msgstr "Tidak seperti kebanyakan hujan meteor, Geminid berasal dari asteroid 320
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "Gunakan Model Kimia Global (CAMS)"
 
-#: src/features/settings/ui/initialisation.tsx:186
+#: src/features/settings/ui/initialisation.tsx:223
 #: src/features/settings/ui/settings.tsx:402
 msgid "Use metric number format"
 msgstr "Gunakan format nomor metrik"
@@ -1682,6 +1686,10 @@ msgstr "hujan deras"
 msgid "Ways to observe"
 msgstr "Cara mengamati"
 
+#: src/features/settings/ui/initialisation.tsx:139
+msgid "We couldn't reach the location service right now - this isn't an issue with your device. Please try again in a moment."
+msgstr "Kami tidak dapat menjangkau layanan lokasi saat ini. Ini bukan masalah pada perangkat Anda. Silakan coba lagi sebentar lagi."
+
 #: src/features/settings/ui/settings.tsx:81
 msgid "Weather"
 msgstr "Cuaca"
@@ -1689,6 +1697,10 @@ msgstr "Cuaca"
 #: src/features/settings/ui/settings.tsx:192
 msgid "Weather data by Open-Meteo"
 msgstr "Data cuaca oleh Open-Meteo"
+
+#: src/pages/index.tsx:47
+msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
+msgstr "Data cuaca tidak dapat dimuat karena masalah layanan — menampilkan data yang tersimpan. Silakan coba lagi sebentar lagi."
 
 #: src/features/settings/ui/settings.tsx:627
 msgid "Weather Please uses the following third-party data sources and location services."
@@ -1758,12 +1770,12 @@ msgstr "Anda telah menggunakan Weather Please untuk beberapa waktu"
 msgid "Your email (optional)"
 msgstr "Email Anda (opsional)"
 
-#: src/features/settings/ui/initialisation.tsx:190
+#: src/features/settings/ui/initialisation.tsx:227
 #: src/features/settings/ui/settings.tsx:418
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Data lokasi Anda disimpan dengan aman secara eksklusif di perangkat pribadi Anda."
 
-#: src/features/settings/ui/initialisation.tsx:119
+#: src/features/settings/ui/initialisation.tsx:147
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "Lokasi Anda saat ini tidak tersedia. Pastikan layanan lokasi di perangkat Anda aktif dan coba lagi."
 

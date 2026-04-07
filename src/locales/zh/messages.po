@@ -47,13 +47,13 @@ msgstr "预计未来24小时降水{precipitationMm}mm。"
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
 msgstr "预计未来1小时降水{precipitationMm}mm。"
 
-#: src/features/settings/ui/initialisation.tsx:112
+#: src/features/settings/ui/initialisation.tsx:131
 msgid "<0>Location access denied.</0> Check your browser's settings to allow this site to access your location, then try again."
 msgstr "<0>位置访问被拒绝。</0> 请检查浏览器设置，允许此网站访问您的位置，然后再试一次。"
 
-#: src/features/settings/ui/initialisation.tsx:88
-#: src/features/settings/ui/initialisation.tsx:96
-#: src/features/settings/ui/initialisation.tsx:104
+#: src/features/settings/ui/initialisation.tsx:107
+#: src/features/settings/ui/initialisation.tsx:115
+#: src/features/settings/ui/initialisation.tsx:123
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>位置访问被拒绝。</0> 点击地址栏中的位置图标，并选择\"始终允许访问您的位置\"。然后点击下面的按钮再试一次。"
 
@@ -607,7 +607,7 @@ msgstr "人们会细致地打扫并装饰家中，扫去旧运，迎接来年的
 msgid "Identifier"
 msgstr "标识符"
 
-#: src/features/settings/ui/initialisation.tsx:168
+#: src/features/settings/ui/initialisation.tsx:205
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "如果您的浏览器提示您允许地点权限，请选择“允许”。"
 
@@ -708,7 +708,7 @@ msgstr "七月"
 msgid "June"
 msgstr "六月"
 
-#: src/features/settings/ui/initialisation.tsx:174
+#: src/features/settings/ui/initialisation.tsx:211
 #: src/features/settings/ui/settings.tsx:390
 msgid "Language"
 msgstr "语言"
@@ -980,8 +980,8 @@ msgstr "宗教与文化"
 msgid "Report a bug"
 msgstr "报告错误"
 
-#: src/pages/index.tsx:167
-#: src/pages/index.tsx:186
+#: src/pages/index.tsx:190
+#: src/pages/index.tsx:204
 msgid "Retry"
 msgstr "重试"
 
@@ -1017,7 +1017,7 @@ msgstr "从高空俯瞰，排灯节期间的城市焕然一新——屋顶、阳
 msgid "September"
 msgstr "九月"
 
-#: src/features/settings/ui/initialisation.tsx:204
+#: src/features/settings/ui/initialisation.tsx:241
 msgid "Set my location"
 msgstr "设置我的位置"
 
@@ -1170,7 +1170,7 @@ msgstr "显示天气警报"
 msgid "Show Winter Solstice event"
 msgstr "显示冬至活动"
 
-#: src/pages/index.tsx:180
+#: src/pages/index.tsx:55
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "正在显示缓存的天气数据。请重试以刷新最新预报。"
 
@@ -1352,7 +1352,11 @@ msgstr "狮子座流星雨以历史上的“流星暴”著称，最著名的是
 msgid "The Leonids originate from Comet Tempel–Tuttle, and every few decades Earth passes through especially dense streams of its debris."
 msgstr "它源自坦普尔–塔特尔彗星（Tempel–Tuttle）；每隔几十年，地球会穿过更致密的碎屑流。"
 
-#: src/features/settings/ui/initialisation.tsx:126
+#: src/features/settings/ui/initialisation.tsx:155
+msgid "The location request timed out - this looks like a service issue rather than a problem on your end. Please try again in a moment."
+msgstr "位置请求已超时。这看起来是服务问题，而非您设备的问题。请稍后重试。"
+
+#: src/features/settings/ui/initialisation.tsx:163
 msgid "The location request timed out. Please check your internet connection and try again."
 msgstr "位置请求超时。请检查您的网络连接并重试。"
 
@@ -1596,7 +1600,7 @@ msgstr "有小冰雹的雷暴"
 msgid "Thursday"
 msgstr "星期四"
 
-#: src/features/settings/ui/initialisation.tsx:163
+#: src/features/settings/ui/initialisation.tsx:200
 msgid "To get started, let's set your language and location."
 msgstr "首先，让我们设置您的语言和位置。"
 
@@ -1628,7 +1632,7 @@ msgstr "传统"
 msgid "Traditions such as Nowruz continue to celebrate themes of renewal on or around the equinox."
 msgstr "像诺鲁孜节（Nowruz）这样的传统，至今仍在春分前后庆祝更新的主题。"
 
-#: src/features/settings/ui/initialisation.tsx:202
+#: src/features/settings/ui/initialisation.tsx:239
 msgid "Try again"
 msgstr "再试一次"
 
@@ -1640,7 +1644,7 @@ msgstr "星期二"
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "如果 Weather Please 显示的紫外线指数长期低于本地来源，请开启此选项。"
 
-#: src/pages/index.tsx:161
+#: src/pages/index.tsx:184
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "无法获取天气数据。请检查您的网络连接并重试。"
 
@@ -1661,7 +1665,7 @@ msgstr "与多数流星雨不同，双子座流星雨源自小行星 3200 法厄
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "使用全球化学模型（CAMS）"
 
-#: src/features/settings/ui/initialisation.tsx:186
+#: src/features/settings/ui/initialisation.tsx:223
 #: src/features/settings/ui/settings.tsx:402
 msgid "Use metric number format"
 msgstr "使用公制数字格式"
@@ -1682,6 +1686,10 @@ msgstr "猛烈的阵雨"
 msgid "Ways to observe"
 msgstr "如何纪念"
 
+#: src/features/settings/ui/initialisation.tsx:139
+msgid "We couldn't reach the location service right now - this isn't an issue with your device. Please try again in a moment."
+msgstr "我们现在无法连接到位置服务。这不是您设备的问题。请稍后重试。"
+
 #: src/features/settings/ui/settings.tsx:81
 msgid "Weather"
 msgstr "天气"
@@ -1689,6 +1697,10 @@ msgstr "天气"
 #: src/features/settings/ui/settings.tsx:192
 msgid "Weather data by Open-Meteo"
 msgstr "天气数据来自Open-Meteo"
+
+#: src/pages/index.tsx:47
+msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
+msgstr "由于服务问题，天气数据无法加载 — 正在显示缓存数据。请稍后重试。"
 
 #: src/features/settings/ui/settings.tsx:627
 msgid "Weather Please uses the following third-party data sources and location services."
@@ -1758,12 +1770,12 @@ msgstr "您已经使用Weather Please有一段时间了"
 msgid "Your email (optional)"
 msgstr "您的电子邮件（可选）"
 
-#: src/features/settings/ui/initialisation.tsx:190
+#: src/features/settings/ui/initialisation.tsx:227
 #: src/features/settings/ui/settings.tsx:418
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "您的位置数据安全地且仅在您的个人设备上存储。"
 
-#: src/features/settings/ui/initialisation.tsx:119
+#: src/features/settings/ui/initialisation.tsx:147
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "您的位置当前不可用。请确认设备上的位置服务已启用，然后再试一次。"
 

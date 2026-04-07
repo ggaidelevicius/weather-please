@@ -23,6 +23,10 @@ import { Tile } from '../features/weather/ui/tile'
 import { WeatherAlert } from '../features/weather/ui/weather-alert'
 import { messages } from '../locales/en/messages'
 import { AsyncStatus } from '../shared/hooks/async-status'
+import {
+	getHttpErrorStatusCode,
+	isServerErrorStatusCode,
+} from '../shared/lib/http-error-status'
 import { Alert } from '../shared/ui/alert'
 import { AlertVariant } from '../shared/ui/alert-variant'
 import { Button } from '../shared/ui/button'
@@ -34,6 +38,25 @@ i18n.load({
 i18n.activate('en')
 
 const TILE_STAGGER_DELAY_BASELINE = 0.75
+
+const getInlineWeatherErrorMessage = (error: Error) => {
+	const httpStatusCode = getHttpErrorStatusCode(error.message)
+
+	if (isServerErrorStatusCode(httpStatusCode)) {
+		return (
+			<Trans>
+				Weather data couldn&apos;t be loaded due to a service issue — showing
+				cached data. Please try again in a moment.
+			</Trans>
+		)
+	}
+
+	return (
+		<Trans>
+			Showing cached weather data. Retry to refresh the latest forecast.
+		</Trans>
+	)
+}
 
 const GRID_COLS_CLASS = {
 	'1': 'lg:grid-cols-1',
@@ -176,12 +199,7 @@ const App = () => {
 											variant={AlertVariant.InfoRed}
 										>
 											<div className="flex items-center justify-between gap-3">
-												<span>
-													<Trans>
-														Showing cached weather data. Retry to refresh the
-														latest forecast.
-													</Trans>
-												</span>
+												<span>{getInlineWeatherErrorMessage(error)}</span>
 												<Button className="ml-auto" onClick={retry}>
 													<Trans>Retry</Trans>
 												</Button>

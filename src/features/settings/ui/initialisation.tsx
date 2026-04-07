@@ -17,6 +17,7 @@ import type { Config } from '../hooks/use-config'
 
 import Favicon from '../../../../public/favicon.png'
 import { AsyncStatus } from '../../../shared/hooks/async-status'
+import { getHttpErrorStatusCode } from '../../../shared/lib/http-error-status'
 import { locales } from '../../../shared/lib/i18n'
 import { Alert } from '../../../shared/ui/alert'
 import { AlertVariant } from '../../../shared/ui/alert-variant'
@@ -36,6 +37,11 @@ interface InitialisationProps {
 	setInput: Dispatch<SetStateAction<Config>>
 }
 
+type LocationError = {
+	code: LocationErrorCode
+	httpStatusCode: null | number
+}
+
 export const Initialisation = ({
 	handleChange,
 	input,
@@ -45,13 +51,13 @@ export const Initialisation = ({
 	const [locationStatus, setLocationStatus] = useState<AsyncStatus>(
 		AsyncStatus.Idle,
 	)
-	const [errorCode, setErrorCode] = useState<LocationErrorCode | null>(null)
+	const [locationError, setLocationError] = useState<LocationError | null>(null)
 	const localeKeys = Object.keys(locales) as LocaleKey[]
 	const isLoading = locationStatus === AsyncStatus.Loading
 
 	const handleClick = () => {
 		setLocationStatus(AsyncStatus.Loading)
-		setErrorCode(null)
+		setLocationError(null)
 		navigator.geolocation.getCurrentPosition(
 			(pos) => {
 				setInput((prev) => ({
@@ -63,24 +69,37 @@ export const Initialisation = ({
 			},
 			(err) => {
 				setLocationStatus(AsyncStatus.Error)
+				const httpStatusCode = getHttpErrorStatusCode(err.message)
+
 				if (err.code === err.PERMISSION_DENIED) {
-					setErrorCode(LocationErrorCode.PermissionDenied)
+					setLocationError({
+						code: LocationErrorCode.PermissionDenied,
+						httpStatusCode,
+					})
 				} else if (err.code === err.POSITION_UNAVAILABLE) {
-					setErrorCode(LocationErrorCode.PositionUnavailable)
+					setLocationError({
+						code: LocationErrorCode.PositionUnavailable,
+						httpStatusCode,
+					})
 				} else if (err.code === err.TIMEOUT) {
-					setErrorCode(LocationErrorCode.Timeout)
+					setLocationError({
+						code: LocationErrorCode.Timeout,
+						httpStatusCode,
+					})
 				}
 			},
 		)
 	}
 
 	const getErrorInstructions = () => {
+		const errorCode = locationError?.code
 		const userAgent = navigator.userAgent.toLowerCase()
 		const isChrome = userAgent.includes('chrome') && !userAgent.includes('edg')
 		const isFirefox = userAgent.includes('firefox')
 		const isSafari =
 			userAgent.includes('safari') && !userAgent.includes('chrome')
 		const isEdge = userAgent.includes('edg')
+		const httpStatusCode = locationError?.httpStatusCode
 
 		if (errorCode === LocationErrorCode.PermissionDenied) {
 			if (isChrome || isEdge) {
@@ -115,6 +134,15 @@ export const Initialisation = ({
 				</Trans>
 			)
 		} else if (errorCode === LocationErrorCode.PositionUnavailable) {
+			if (httpStatusCode) {
+				return (
+					<Trans>
+						We couldn&apos;t reach the location service right now - this
+						isn&apos;t an issue with your device. Please try again in a moment.
+					</Trans>
+				)
+			}
+
 			return (
 				<Trans>
 					Your location is currently unavailable. Please check that location
@@ -122,6 +150,15 @@ export const Initialisation = ({
 				</Trans>
 			)
 		} else if (errorCode === LocationErrorCode.Timeout) {
+			if (httpStatusCode) {
+				return (
+					<Trans>
+						The location request timed out - this looks like a service issue
+						rather than a problem on your end. Please try again in a moment.
+					</Trans>
+				)
+			}
+
 			return (
 				<Trans>
 					The location request timed out. Please check your internet connection
@@ -192,13 +229,13 @@ export const Initialisation = ({
 							device.
 						</Trans>
 					</Alert>
-					{errorCode && (
+					{locationError && (
 						<Alert icon={IconAlertTriangle} variant={AlertVariant.InfoRed}>
 							{getErrorInstructions()}
 						</Alert>
 					)}
 					<Button disabled={isLoading} onClick={handleClick}>
-						{errorCode ? (
+						{locationError ? (
 							<Trans>Try again</Trans>
 						) : (
 							<Trans>Set my location</Trans>

@@ -47,13 +47,13 @@ msgstr "Per artimiausias 24 val. prognozuojama {precipitationMm} mm kritulių."
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
 msgstr "Per artimiausią valandą prognozuojama {precipitationMm} mm kritulių."
 
-#: src/features/settings/ui/initialisation.tsx:112
+#: src/features/settings/ui/initialisation.tsx:131
 msgid "<0>Location access denied.</0> Check your browser's settings to allow this site to access your location, then try again."
 msgstr "<0>Prieiga prie vietos uždrausta.</0> Patikrinkite naršyklės nustatymus ir leiskite šiai svetainei pasiekti jūsų vietą, tada bandykite dar kartą."
 
-#: src/features/settings/ui/initialisation.tsx:88
-#: src/features/settings/ui/initialisation.tsx:96
-#: src/features/settings/ui/initialisation.tsx:104
+#: src/features/settings/ui/initialisation.tsx:107
+#: src/features/settings/ui/initialisation.tsx:115
+#: src/features/settings/ui/initialisation.tsx:123
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Prieiga prie vietos uždrausta.</0> Spustelėkite vietos piktogramą adreso juostoje ir pasirinkite \"visada leisti pasiekti jūsų vietą\". Tada spustelėkite mygtuką žemiau ir bandykite dar kartą."
 
@@ -607,7 +607,7 @@ msgstr "Namai kruopščiai valomi ir puošiami, kad būtų „nušluota“ sena 
 msgid "Identifier"
 msgstr "Identifikatorius"
 
-#: src/features/settings/ui/initialisation.tsx:168
+#: src/features/settings/ui/initialisation.tsx:205
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Jei jūsų naršyklė prašo jūsų vietos leidimų, pasirinkite \"leisti\"."
 
@@ -708,7 +708,7 @@ msgstr "Liepa"
 msgid "June"
 msgstr "Birželis"
 
-#: src/features/settings/ui/initialisation.tsx:174
+#: src/features/settings/ui/initialisation.tsx:211
 #: src/features/settings/ui/settings.tsx:390
 msgid "Language"
 msgstr "Kalba"
@@ -980,8 +980,8 @@ msgstr "Religiniai ir kultūriniai"
 msgid "Report a bug"
 msgstr "Pranešti apie klaidą"
 
-#: src/pages/index.tsx:167
-#: src/pages/index.tsx:186
+#: src/pages/index.tsx:190
+#: src/pages/index.tsx:204
 msgid "Retry"
 msgstr "Bandyti dar kartą"
 
@@ -1017,7 +1017,7 @@ msgstr "Iš viršaus žiūrint, Diwali šventės metu miestai virsta neatpažįs
 msgid "September"
 msgstr "Rugsėjis"
 
-#: src/features/settings/ui/initialisation.tsx:204
+#: src/features/settings/ui/initialisation.tsx:241
 msgid "Set my location"
 msgstr "Nustatyti mano vietą"
 
@@ -1170,7 +1170,7 @@ msgstr "Rodyti oro sąlygų įspėjimus"
 msgid "Show Winter Solstice event"
 msgstr "Rodyti Žiemos saulėgrįžą"
 
-#: src/pages/index.tsx:180
+#: src/pages/index.tsx:55
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Rodomi talpyklos orų duomenys. Bandykite dar kartą, kad atnaujintumėte naujausią prognozę."
 
@@ -1352,7 +1352,11 @@ msgstr "Leonidai garsėja istorinėmis meteorų audromis, ypač 1833 ir 1966 met
 msgid "The Leonids originate from Comet Tempel–Tuttle, and every few decades Earth passes through especially dense streams of its debris."
 msgstr "Leonidai kilę iš Tempel–Tuttle kometos, o kas kelis dešimtmečius Žemė praeina per ypač tankius jos nuolaužų srautus."
 
-#: src/features/settings/ui/initialisation.tsx:126
+#: src/features/settings/ui/initialisation.tsx:155
+msgid "The location request timed out - this looks like a service issue rather than a problem on your end. Please try again in a moment."
+msgstr "Vietos užklausa baigėsi skirtasis laikas. Tai atrodo kaip paslaugos problema, o ne jūsų įrenginio problema. Bandykite dar kartą po akimirkos."
+
+#: src/features/settings/ui/initialisation.tsx:163
 msgid "The location request timed out. Please check your internet connection and try again."
 msgstr "Vietos užklausos laikas baigėsi. Patikrinkite interneto ryšį ir bandykite dar kartą."
 
@@ -1596,7 +1600,7 @@ msgstr "perkūnija su nedidele kruša"
 msgid "Thursday"
 msgstr "Ketvirtadienis"
 
-#: src/features/settings/ui/initialisation.tsx:163
+#: src/features/settings/ui/initialisation.tsx:200
 msgid "To get started, let's set your language and location."
 msgstr "Norėdami pradėti, nustatykite savo kalbą ir vietą."
 
@@ -1628,7 +1632,7 @@ msgstr "Tradicijos"
 msgid "Traditions such as Nowruz continue to celebrate themes of renewal on or around the equinox."
 msgstr "Tradicijos, tokios kaip Nowruz, ir šiandien mini atsinaujinimo temas lygiadienio metu ar netoli jo."
 
-#: src/features/settings/ui/initialisation.tsx:202
+#: src/features/settings/ui/initialisation.tsx:239
 msgid "Try again"
 msgstr "Bandykite dar kartą"
 
@@ -1640,7 +1644,7 @@ msgstr "Antradienis"
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Įjunkite šią parinktį, jei „Weather Please“ pateikiamas UV indeksas nuolat yra mažesnis nei vietinių šaltinių."
 
-#: src/pages/index.tsx:161
+#: src/pages/index.tsx:184
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Nepavyko gauti orų duomenų. Patikrinkite interneto ryšį ir bandykite dar kartą."
 
@@ -1661,7 +1665,7 @@ msgstr "Skirtingai nei dauguma meteorų lietų, Geminidai kyla iš asteroido 320
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "Naudoti pasaulinius chemijos modelius (CAMS)"
 
-#: src/features/settings/ui/initialisation.tsx:186
+#: src/features/settings/ui/initialisation.tsx:223
 #: src/features/settings/ui/settings.tsx:402
 msgid "Use metric number format"
 msgstr "Naudoti metrinį skaičių formatą"
@@ -1682,6 +1686,10 @@ msgstr "smarkus lietus"
 msgid "Ways to observe"
 msgstr "Stebėjimo būdai"
 
+#: src/features/settings/ui/initialisation.tsx:139
+msgid "We couldn't reach the location service right now - this isn't an issue with your device. Please try again in a moment."
+msgstr "Šiuo metu nepavyko prisijungti prie vietos paslaugos. Tai nėra jūsų įrenginio problema. Bandykite dar kartą po akimirkos."
+
 #: src/features/settings/ui/settings.tsx:81
 msgid "Weather"
 msgstr "Oras"
@@ -1689,6 +1697,10 @@ msgstr "Oras"
 #: src/features/settings/ui/settings.tsx:192
 msgid "Weather data by Open-Meteo"
 msgstr "Oro sąlygų duomenys iš Open-Meteo"
+
+#: src/pages/index.tsx:47
+msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
+msgstr "Orų duomenų nepavyko įkelti dėl paslaugos problemos — rodomi talpykloje esantys duomenys. Bandykite dar kartą po akimirkos."
 
 #: src/features/settings/ui/settings.tsx:627
 msgid "Weather Please uses the following third-party data sources and location services."
@@ -1758,12 +1770,12 @@ msgstr "Jūs naudojatės „Weather Please“ jau kurį laiką"
 msgid "Your email (optional)"
 msgstr "Jūsų el. paštas (pasirinktinai)"
 
-#: src/features/settings/ui/initialisation.tsx:190
+#: src/features/settings/ui/initialisation.tsx:227
 #: src/features/settings/ui/settings.tsx:418
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Jūsų vietos duomenys saugiai ir išskirtinai saugomi jūsų asmeniniame įrenginyje."
 
-#: src/features/settings/ui/initialisation.tsx:119
+#: src/features/settings/ui/initialisation.tsx:147
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "Jūsų vieta šiuo metu nepasiekiama. Patikrinkite, ar įrenginyje įjungtos vietos paslaugos, ir bandykite dar kartą."
 

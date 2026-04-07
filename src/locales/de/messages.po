@@ -47,13 +47,13 @@ msgstr "In den nächsten 24 Stunden werden {precipitationMm} mm Niederschlag erw
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
 msgstr "In der nächsten Stunde werden {precipitationMm} mm Niederschlag erwartet."
 
-#: src/features/settings/ui/initialisation.tsx:112
+#: src/features/settings/ui/initialisation.tsx:131
 msgid "<0>Location access denied.</0> Check your browser's settings to allow this site to access your location, then try again."
 msgstr "<0>Standortzugriff verweigert.</0> Überprüfen Sie die Einstellungen Ihres Browsers, um dieser Website den Zugriff auf Ihren Standort zu erlauben, und versuchen Sie es dann erneut."
 
-#: src/features/settings/ui/initialisation.tsx:88
-#: src/features/settings/ui/initialisation.tsx:96
-#: src/features/settings/ui/initialisation.tsx:104
+#: src/features/settings/ui/initialisation.tsx:107
+#: src/features/settings/ui/initialisation.tsx:115
+#: src/features/settings/ui/initialisation.tsx:123
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Standortzugriff verweigert.</0> Klicken Sie auf das Standortsymbol in der Adressleiste und wählen Sie \"immer den Zugriff auf Ihren Standort erlauben\". Klicken Sie dann auf die Schaltfläche unten, um es erneut zu versuchen."
 
@@ -607,7 +607,7 @@ msgstr "Häuser werden sorgfältig gereinigt und geschmückt, um altes Unglück 
 msgid "Identifier"
 msgstr "Identifikator"
 
-#: src/features/settings/ui/initialisation.tsx:168
+#: src/features/settings/ui/initialisation.tsx:205
 msgid "If your browser prompts you for location permissions, please select \"allow\"."
 msgstr "Wenn Ihr Browser Sie um Standortberechtigungen bittet, wählen Sie bitte \"Erlauben\"."
 
@@ -708,7 +708,7 @@ msgstr "Juli"
 msgid "June"
 msgstr "Juni"
 
-#: src/features/settings/ui/initialisation.tsx:174
+#: src/features/settings/ui/initialisation.tsx:211
 #: src/features/settings/ui/settings.tsx:390
 msgid "Language"
 msgstr "Sprache"
@@ -980,8 +980,8 @@ msgstr "Religiös & kulturell"
 msgid "Report a bug"
 msgstr "Einen Fehler melden"
 
-#: src/pages/index.tsx:167
-#: src/pages/index.tsx:186
+#: src/pages/index.tsx:190
+#: src/pages/index.tsx:204
 msgid "Retry"
 msgstr "Wiederholen"
 
@@ -1017,7 +1017,7 @@ msgstr "Von oben betrachtet sind Städte während Diwali verwandelt – Dächer,
 msgid "September"
 msgstr "September"
 
-#: src/features/settings/ui/initialisation.tsx:204
+#: src/features/settings/ui/initialisation.tsx:241
 msgid "Set my location"
 msgstr "Meinen Standort festlegen"
 
@@ -1170,7 +1170,7 @@ msgstr "Wetterwarnungen anzeigen"
 msgid "Show Winter Solstice event"
 msgstr "Wintersonnenwende anzeigen"
 
-#: src/pages/index.tsx:180
+#: src/pages/index.tsx:55
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Gecachte Wetterdaten werden angezeigt. Erneut versuchen, um die neueste Vorhersage zu laden."
 
@@ -1352,7 +1352,11 @@ msgstr "Die Leoniden sind berühmt für historische Meteorstürme, besonders 183
 msgid "The Leonids originate from Comet Tempel–Tuttle, and every few decades Earth passes through especially dense streams of its debris."
 msgstr "Die Leoniden stammen vom Kometen Tempel–Tuttle, und alle paar Jahrzehnte durchquert die Erde besonders dichte Ströme seines Trümmermaterials."
 
-#: src/features/settings/ui/initialisation.tsx:126
+#: src/features/settings/ui/initialisation.tsx:155
+msgid "The location request timed out - this looks like a service issue rather than a problem on your end. Please try again in a moment."
+msgstr "Die Standortanfrage ist abgelaufen. Das sieht nach einem Serviceproblem aus, nicht nach einem Problem mit deinem Gerät. Bitte versuche es gleich erneut."
+
+#: src/features/settings/ui/initialisation.tsx:163
 msgid "The location request timed out. Please check your internet connection and try again."
 msgstr "Die Standortanfrage hat zu lange gedauert. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
 
@@ -1596,7 +1600,7 @@ msgstr "Gewitter mit leichtem Hagel"
 msgid "Thursday"
 msgstr "Donnerstag"
 
-#: src/features/settings/ui/initialisation.tsx:163
+#: src/features/settings/ui/initialisation.tsx:200
 msgid "To get started, let's set your language and location."
 msgstr "Um zu beginnen, lassen Sie uns Ihre Sprache und Ihren Standort festlegen."
 
@@ -1628,7 +1632,7 @@ msgstr "Traditionen"
 msgid "Traditions such as Nowruz continue to celebrate themes of renewal on or around the equinox."
 msgstr "Traditionen wie Nowruz feiern bis heute Themen der Erneuerung an oder um die Tagundnachtgleiche herum."
 
-#: src/features/settings/ui/initialisation.tsx:202
+#: src/features/settings/ui/initialisation.tsx:239
 msgid "Try again"
 msgstr "Erneut versuchen"
 
@@ -1640,7 +1644,7 @@ msgstr "Dienstag"
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Aktivieren Sie diese Option, wenn der von Weather Please gemeldete UV-Index dauerhaft niedriger ist als bei lokalen Quellen."
 
-#: src/pages/index.tsx:161
+#: src/pages/index.tsx:184
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Wetterdaten konnten nicht abgerufen werden. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
 
@@ -1661,7 +1665,7 @@ msgstr "Im Gegensatz zu den meisten Meteorschauern stammen die Geminiden vom Ast
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "Globale Chemie-Modelle (CAMS) verwenden"
 
-#: src/features/settings/ui/initialisation.tsx:186
+#: src/features/settings/ui/initialisation.tsx:223
 #: src/features/settings/ui/settings.tsx:402
 msgid "Use metric number format"
 msgstr "Metrisches Zahlenformat verwenden"
@@ -1682,6 +1686,10 @@ msgstr "Heftige Regenschauer"
 msgid "Ways to observe"
 msgstr "Beobachtungsmöglichkeiten"
 
+#: src/features/settings/ui/initialisation.tsx:139
+msgid "We couldn't reach the location service right now - this isn't an issue with your device. Please try again in a moment."
+msgstr "Der Standortdienst ist gerade nicht erreichbar. Das ist kein Problem mit deinem Gerät. Bitte versuche es gleich erneut."
+
 #: src/features/settings/ui/settings.tsx:81
 msgid "Weather"
 msgstr "Wetter"
@@ -1689,6 +1697,10 @@ msgstr "Wetter"
 #: src/features/settings/ui/settings.tsx:192
 msgid "Weather data by Open-Meteo"
 msgstr "Wetterdaten von Open-Meteo"
+
+#: src/pages/index.tsx:47
+msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
+msgstr "Wetterdaten konnten aufgrund eines Serviceproblems nicht geladen werden — zwischengespeicherte Daten werden angezeigt. Bitte versuche es gleich erneut."
 
 #: src/features/settings/ui/settings.tsx:627
 msgid "Weather Please uses the following third-party data sources and location services."
@@ -1758,12 +1770,12 @@ msgstr "Sie verwenden Weather Please schon seit einiger Zeit"
 msgid "Your email (optional)"
 msgstr "Ihre E-Mail (optional)"
 
-#: src/features/settings/ui/initialisation.tsx:190
+#: src/features/settings/ui/initialisation.tsx:227
 #: src/features/settings/ui/settings.tsx:418
 msgid "Your location data is securely stored exclusively on your personal device."
 msgstr "Ihre Standortdaten werden sicher und ausschließlich auf Ihrem persönlichen Gerät gespeichert."
 
-#: src/features/settings/ui/initialisation.tsx:119
+#: src/features/settings/ui/initialisation.tsx:147
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "Ihr Standort ist derzeit nicht verfügbar. Bitte prüfen Sie, ob die Standortdienste auf Ihrem Gerät aktiviert sind, und versuchen Sie es erneut."
 

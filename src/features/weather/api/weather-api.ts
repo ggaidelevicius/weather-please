@@ -219,7 +219,7 @@ export const fetchWeatherResponse = async ({
 
 		const response = await fetch(weatherUrl, { signal })
 		if (!response.ok) {
-			throw new Error('Weather fetch failed')
+			throw new Error(`Weather fetch failed: ${response.status}`)
 		}
 
 		const json = await response.json()
