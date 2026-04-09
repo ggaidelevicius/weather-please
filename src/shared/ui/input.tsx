@@ -105,7 +105,12 @@ export const Select = ({
 		<div
 			className={getControlWrapperClassName({ controlType: 'select', layout })}
 		>
-			<div className="relative mt-2 md:mt-0">
+			<div
+				className={clsx(
+					'relative',
+					layout === 'split' ? 'mt-2 md:mt-0' : 'mt-1.5',
+				)}
+			>
 				<HeadlessSelect
 					className={clsx(
 						'block w-full appearance-none rounded-lg bg-dark-700/90 px-3 py-2 pr-9 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm',
@@ -180,7 +185,8 @@ export const Input = ({
 			>
 				<HeadlessInput
 					className={clsx(
-						'mt-2 block w-full appearance-none rounded-lg bg-dark-700/90 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm md:mt-0',
+						'block w-full appearance-none rounded-lg bg-dark-700/90 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm',
+						layout === 'split' ? 'mt-2 md:mt-0' : 'mt-3',
 						layout === 'split'
 							? 'text-right font-mono tracking-tight tabular-nums'
 							: undefined,
@@ -250,7 +256,10 @@ export const Textarea = ({
 				})}
 			>
 				<HeadlessTextarea
-					className="mt-2 block w-full resize-none appearance-none rounded-lg bg-dark-700/90 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm md:mt-0"
+					className={clsx(
+						'block w-full resize-none appearance-none rounded-lg bg-dark-700/90 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm',
+						layout === 'split' ? 'mt-2 md:mt-0' : 'mt-3',
+					)}
 					invalid={validation === false}
 					name={name}
 					onChange={onChange}
