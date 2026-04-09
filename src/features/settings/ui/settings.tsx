@@ -7,8 +7,11 @@ import {
 import { Trans } from '@lingui/react/macro'
 import {
 	IconAlertTriangle,
+	IconCloud,
+	IconInfoCircle,
 	IconSettings,
 	IconShieldCheckFilled,
+	IconSparkles,
 } from '@tabler/icons-react'
 import { clsx } from 'clsx'
 import { type ReactNode, useEffect, useState } from 'react'
@@ -47,6 +50,7 @@ type SettingsContentProps = {
 }
 
 type SettingsSectionDefinition = {
+	icon: ReactNode
 	id: SettingsSectionId
 	title: ReactNode
 }
@@ -74,18 +78,22 @@ const ALERT_DETAIL_SWITCHES = [
 
 const SETTINGS_SECTIONS = [
 	{
+		icon: <IconSettings aria-hidden size={18} />,
 		id: 'general',
 		title: <Trans>General</Trans>,
 	},
 	{
+		icon: <IconCloud aria-hidden size={18} />,
 		id: 'weather',
 		title: <Trans>Weather</Trans>,
 	},
 	{
+		icon: <IconSparkles aria-hidden size={18} />,
 		id: 'seasonal',
 		title: <Trans>Seasonal events</Trans>,
 	},
 	{
+		icon: <IconInfoCircle aria-hidden size={18} />,
 		id: 'about',
 		title: <Trans>About</Trans>,
 	},
@@ -269,33 +277,29 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 								<DialogTitle as="h1" className="text-3xl font-bold text-white">
 									<Trans>Settings</Trans>
 								</DialogTitle>
-								<div className="mt-6">
-									<h2 className="text-sm font-semibold text-dark-200">
-										<Trans>Sections</Trans>
-									</h2>
-									<nav
-										aria-label="Settings sections"
-										className="mt-3 grid grid-cols-2 gap-2 md:flex md:flex-col"
-									>
-										{SETTINGS_SECTIONS.map((section) => (
-											<button
-												aria-pressed={section.id === activeSection}
-												className={
-													section.id === activeSection
-														? 'w-full cursor-pointer rounded-xl bg-white px-3 py-2.5 text-left text-sm font-semibold text-dark-700 shadow-sm'
-														: 'w-full cursor-pointer rounded-xl bg-transparent px-3 py-2.5 text-left text-sm font-medium text-dark-100 transition hover:bg-white/6 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500'
-												}
-												key={section.id}
-												onClick={() => {
-													setActiveSection(section.id)
-												}}
-												type="button"
-											>
-												{section.title}
-											</button>
-										))}
-									</nav>
-								</div>
+								<nav
+									aria-label="Settings sections"
+									className="mt-6 grid grid-cols-2 gap-2 md:flex md:flex-col"
+								>
+									{SETTINGS_SECTIONS.map((section) => (
+										<button
+											aria-pressed={section.id === activeSection}
+											className={
+												section.id === activeSection
+													? 'flex w-full cursor-pointer items-center gap-2.5 rounded-xl bg-white px-3 py-2.5 text-left text-sm font-semibold text-dark-700 shadow-sm'
+													: 'flex w-full cursor-pointer items-center gap-2.5 rounded-xl bg-transparent px-3 py-2.5 text-left text-sm font-medium text-dark-100 transition hover:bg-white/6 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500'
+											}
+											key={section.id}
+											onClick={() => {
+												setActiveSection(section.id)
+											}}
+											type="button"
+										>
+											<span className="shrink-0">{section.icon}</span>
+											<span className="min-w-0">{section.title}</span>
+										</button>
+									))}
+								</nav>
 							</div>
 							<div className="flex-1 overflow-y-auto p-6 md:p-8">
 								<div
