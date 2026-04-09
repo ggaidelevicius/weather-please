@@ -21,6 +21,7 @@ import { setSettingsModalOpenState } from '../../../shared/lib/settings-modal-st
 import { Alert } from '../../../shared/ui/alert'
 import { AlertVariant } from '../../../shared/ui/alert-variant'
 import { IconButton } from '../../../shared/ui/button'
+import { HelpPopover } from '../../../shared/ui/help-popover'
 import { Input, Select, Switch } from '../../../shared/ui/input'
 import { SeasonalEventId } from '../../seasonal-events/core/types'
 import { isLikelySoftwareRenderer } from '../../seasonal-events/core/utils'
@@ -197,6 +198,8 @@ const ATTRIBUTION_LINKS = [
 	},
 ] as const satisfies ReadonlyArray<{ href: string; label: ReactNode }>
 
+const SETTINGS_FIELD_LAYOUT = 'split' as const
+
 interface SettingsProps {
 	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
 	input: Config
@@ -367,9 +370,7 @@ const SettingsSubsection = ({
 	title: ReactNode
 }>) => (
 	<div className="space-y-2">
-		<h3 className="text-sm font-semibold tracking-wide text-white uppercase">
-			{title}
-		</h3>
+		<h3 className="font-semibold text-white">{title}</h3>
 		<div className={clsx(bodyClassName)}>{children}</div>
 	</div>
 )
@@ -388,6 +389,7 @@ const GeneralSettingsSection = ({
 	<SettingsSectionLayout>
 		<Select
 			label={<Trans>Language</Trans>}
+			layout={SETTINGS_FIELD_LAYOUT}
 			onChange={(e) => {
 				handleChange('lang', e.target.value)
 			}}
@@ -400,6 +402,7 @@ const GeneralSettingsSection = ({
 		<Switch
 			checked={input.useMetric}
 			label={<Trans>Use metric number format</Trans>}
+			layout={SETTINGS_FIELD_LAYOUT}
 			onChange={(checked) => handleChange('useMetric', checked)}
 		/>
 	</SettingsSectionLayout>
@@ -422,6 +425,7 @@ const WeatherSettingsSection = ({
 			</Alert>
 			<Input
 				label={<Trans>Latitude</Trans>}
+				layout={SETTINGS_FIELD_LAYOUT}
 				onChange={(e) => {
 					handleChange('lat', e.target.value)
 				}}
@@ -430,6 +434,7 @@ const WeatherSettingsSection = ({
 			/>
 			<Input
 				label={<Trans>Longitude</Trans>}
+				layout={SETTINGS_FIELD_LAYOUT}
 				onChange={(e) => {
 					handleChange('lon', e.target.value)
 				}}
@@ -441,6 +446,7 @@ const WeatherSettingsSection = ({
 			<Switch
 				checked={input.periodicLocationUpdate}
 				label={<Trans>Periodically update location automatically</Trans>}
+				layout={SETTINGS_FIELD_LAYOUT}
 				onChange={(checked) => handleChange('periodicLocationUpdate', checked)}
 			/>
 		</SettingsSubsection>
@@ -450,6 +456,7 @@ const WeatherSettingsSection = ({
 		>
 			<Select
 				label={<Trans>Number of days to forecast</Trans>}
+				layout={SETTINGS_FIELD_LAYOUT}
 				onChange={(e) => {
 					handleChange('daysToRetrieve', e.target.value)
 				}}
@@ -461,6 +468,7 @@ const WeatherSettingsSection = ({
 			/>
 			<Select
 				label={<Trans>Identifier</Trans>}
+				layout={SETTINGS_FIELD_LAYOUT}
 				onChange={(e) => {
 					handleChange('identifier', e.target.value as TileIdentifier)
 				}}
@@ -481,24 +489,24 @@ const WeatherSettingsSection = ({
 			bodyClassName="space-y-4"
 			title={<Trans>Data & alerts</Trans>}
 		>
-			<div className="space-y-1">
-				<Switch
-					checked={input.useAirQualityUvOverride}
-					label={<Trans>Use Global Chemistry Models (CAMS)</Trans>}
-					onChange={(checked) =>
-						handleChange('useAirQualityUvOverride', checked)
-					}
-				/>
-				<p className="text-sm text-dark-100">
-					<Trans>
-						Turn this on if Weather Please&apos;s reported UV index is
-						consistently lower than local sources.
-					</Trans>
-				</p>
-			</div>
+			<Switch
+				checked={input.useAirQualityUvOverride}
+				label={<Trans>Use Global Chemistry Models (CAMS)</Trans>}
+				labelAccessory={
+					<HelpPopover label="Why use Global Chemistry Models (CAMS)?">
+						<Trans>
+							Turn this on if Weather Please&apos;s reported UV index is
+							consistently lower than local sources.
+						</Trans>
+					</HelpPopover>
+				}
+				layout={SETTINGS_FIELD_LAYOUT}
+				onChange={(checked) => handleChange('useAirQualityUvOverride', checked)}
+			/>
 			<Switch
 				checked={input.showAlerts}
 				label={<Trans>Show weather alerts</Trans>}
+				layout={SETTINGS_FIELD_LAYOUT}
 				onChange={(checked) => handleChange('showAlerts', checked)}
 			/>
 			{input.showAlerts ? (
@@ -508,6 +516,7 @@ const WeatherSettingsSection = ({
 							checked={input[switchDefinition.key]}
 							key={switchDefinition.key}
 							label={switchDefinition.label}
+							layout={SETTINGS_FIELD_LAYOUT}
 							onChange={(checked) =>
 								handleChange(switchDefinition.key, checked)
 							}
@@ -535,6 +544,7 @@ const SeasonalSettingsSection = ({
 			<Switch
 				checked={input.showSeasonalEvents}
 				label={<Trans>Show seasonal events</Trans>}
+				layout={SETTINGS_FIELD_LAYOUT}
 				onChange={(checked) => handleChange('showSeasonalEvents', checked)}
 			/>
 			{input.showSeasonalEvents && hasSoftwareRenderer ? (
@@ -550,6 +560,7 @@ const SeasonalSettingsSection = ({
 				<Switch
 					checked={input.showSeasonalTileGlow}
 					label={<Trans>Show seasonal tile glow</Trans>}
+					layout={SETTINGS_FIELD_LAYOUT}
 					onChange={(checked) => handleChange('showSeasonalTileGlow', checked)}
 				/>
 			) : null}
@@ -566,6 +577,7 @@ const SeasonalSettingsSection = ({
 								checked={input[SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId]]}
 								key={eventId}
 								label={SEASONAL_EVENT_LABELS[eventId]}
+								layout={SETTINGS_FIELD_LAYOUT}
 								onChange={(checked) =>
 									handleChange(
 										SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId],

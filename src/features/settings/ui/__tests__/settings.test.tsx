@@ -35,6 +35,27 @@ describe('Settings modal navigation', () => {
 		expect(screen.queryByLabelText('Latitude')).not.toBeInTheDocument()
 		expect(screen.queryByLabelText('Language')).not.toBeInTheDocument()
 	})
+
+	it('shows the CAMS explainer in a help popover', () => {
+		renderSettings()
+
+		fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
+		fireEvent.click(screen.getByRole('button', { name: 'Weather' }))
+
+		expect(
+			screen.queryByText(/reported UV index is consistently lower/i),
+		).not.toBeInTheDocument()
+
+		fireEvent.click(
+			screen.getByRole('button', {
+				name: 'Why use Global Chemistry Models (CAMS)?',
+			}),
+		)
+
+		expect(
+			screen.getByText(/reported UV index is consistently lower/i),
+		).toBeInTheDocument()
+	})
 })
 
 const createConfig = () => ({
