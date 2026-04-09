@@ -258,7 +258,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 				/>
 				<div className="fixed inset-0 flex w-screen items-center justify-center overflow-y-auto p-4 md:p-8">
 					<DialogPanel
-						className="m-auto h-[85vh] w-full max-w-3xl overflow-hidden rounded-2xl bg-dark-800 transition duration-400 will-change-[transform,opacity,filter] data-closed:scale-97 data-closed:opacity-0 data-closed:blur-xs"
+						className="m-auto h-150 w-full max-w-3xl overflow-hidden rounded-2xl bg-dark-800 transition duration-400 will-change-[transform,opacity,filter] data-closed:scale-97 data-closed:opacity-0 data-closed:blur-xs"
 						transition
 					>
 						<div className="flex h-full flex-col md:flex-row">
