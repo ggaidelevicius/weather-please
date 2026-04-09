@@ -57,19 +57,19 @@ msgstr "<0>Accès à la localisation refusé.</0> Vérifiez les paramètres de v
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Accès à la localisation refusé.</0> Cliquez sur l'icône de localisation dans la barre d'adresse et sélectionnez \"toujours autoriser l'accès à votre position\". Cliquez ensuite sur le bouton ci-dessous pour réessayer."
 
-#: src/features/settings/ui/settings.tsx:675
+#: src/features/settings/ui/settings.tsx:680
 msgid "☕ Gift a coffee"
 msgstr "☕ Offrir un café"
 
-#: src/features/settings/ui/settings.tsx:659
+#: src/features/settings/ui/settings.tsx:664
 msgid "🌟 Leave a review"
 msgstr "🌟 Laisser un avis"
 
-#: src/features/settings/ui/settings.tsx:667
+#: src/features/settings/ui/settings.tsx:672
 msgid "🐛 Report a bug"
 msgstr "🐛 Signaler un bug"
 
-#: src/features/settings/ui/settings.tsx:718
+#: src/features/settings/ui/settings.tsx:723
 msgid "🔒 Privacy policy"
 msgstr "🔒 Politique de confidentialité"
 
@@ -173,7 +173,7 @@ msgstr "À 66 km/s, ce sont parmi les météores les plus rapides que vous verre
 msgid "At each boundary, fireworks go up, bells ring, and strangers count down together. The same moment of anticipation, repeated twenty-four times."
 msgstr "À chaque frontière, des feux d’artifice s’élèvent, des cloches sonnent et des inconnus font le compte à rebours ensemble. Le même moment d’anticipation, répété vingt-quatre fois."
 
-#: src/features/settings/ui/settings.tsx:687
+#: src/features/settings/ui/settings.tsx:692
 msgid "Attributions"
 msgstr "Attributions"
 
@@ -254,15 +254,15 @@ msgstr "Alertes météo compactes"
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "Les costumes peuvent être héroïques, amusants ou inquiétants, permettant de se glisser brièvement dans d’autres rôles."
 
-#: src/features/settings/ui/settings.tsx:541
+#: src/features/settings/ui/settings.tsx:546
 msgid "Data & alerts"
 msgstr "Données et alertes"
 
-#: src/features/settings/ui/settings.tsx:532
+#: src/features/settings/ui/settings.tsx:537
 msgid "Date"
 msgstr "Date"
 
-#: src/features/settings/ui/settings.tsx:528
+#: src/features/settings/ui/settings.tsx:533
 msgid "Day"
 msgstr "Jour"
 
@@ -294,7 +294,7 @@ msgstr "bruine givrante dense"
 msgid "depositing rime fog"
 msgstr "brouillard givrant déposant"
 
-#: src/features/settings/ui/settings.tsx:593
+#: src/features/settings/ui/settings.tsx:598
 msgid "Display"
 msgstr "Affichage"
 
@@ -431,7 +431,7 @@ msgstr "Les familles passent la nuit dans les cimetières, nettoyant les tombes,
 msgid "February"
 msgstr "Février"
 
-#: src/features/settings/ui/settings.tsx:651
+#: src/features/settings/ui/settings.tsx:656
 msgid "Feedback"
 msgstr "Retour d'information"
 
@@ -447,7 +447,7 @@ msgstr "Les aliments frits dans l’huile, notamment les latkes et les sufganiyo
 msgid "For many Hindus, the festival marks the return of Rama, Sita, Lakshmana, and Hanuman to Ayodhya after their long exile."
 msgstr "Pour de nombreux hindous, la fête marque le retour de Rama, Sita, Lakshmana et Hanuman à Ayodhya après leur long exil."
 
-#: src/features/settings/ui/settings.tsx:506
+#: src/features/settings/ui/settings.tsx:511
 msgid "Forecast"
 msgstr "Prévisions"
 
@@ -613,7 +613,7 @@ msgstr "Holi est une joyeuse fête des couleurs, célébrée dans les rires, la 
 msgid "Homes are carefully cleaned and decorated to clear away old luck and welcome prosperity for the year ahead."
 msgstr "Les maisons sont soigneusement nettoyées et décorées pour chasser l’ancienne chance et accueillir la prospérité de l’année à venir."
 
-#: src/features/settings/ui/settings.tsx:521
+#: src/features/settings/ui/settings.tsx:526
 msgid "Identifier"
 msgstr "Identificateur"
 
@@ -724,11 +724,11 @@ msgid "June"
 msgstr "Juin"
 
 #: src/features/settings/ui/initialisation.tsx:234
-#: src/features/settings/ui/settings.tsx:430
+#: src/features/settings/ui/settings.tsx:434
 msgid "Language"
 msgstr "Langue"
 
-#: src/features/settings/ui/settings.tsx:478
+#: src/features/settings/ui/settings.tsx:483
 msgid "Latitude"
 msgstr "Latitude"
 
@@ -736,7 +736,7 @@ msgstr "Latitude"
 msgid "Leave a review"
 msgstr "Laisser un avis"
 
-#: src/features/settings/ui/settings.tsx:711
+#: src/features/settings/ui/settings.tsx:716
 msgid "Legal"
 msgstr "Légal"
 
@@ -764,7 +764,11 @@ msgstr "pluie verglaçante légère"
 msgid "Light shifts to a silvery tone, shadows sharpen, and temperatures may drop noticeably within minutes."
 msgstr "La lumière prend une teinte argentée, les ombres se durcissent et les températures peuvent chuter sensiblement en quelques minutes."
 
-#: src/features/settings/ui/settings.tsx:475
+#: src/features/settings/ui/settings.tsx:431
+msgid "Locale"
+msgstr "Paramètres régionaux"
+
+#: src/features/settings/ui/settings.tsx:480
 msgid "Location"
 msgstr "Localisation"
 
@@ -772,7 +776,7 @@ msgstr "Localisation"
 msgid "Location name unavailable"
 msgstr "Nom de lieu non disponible"
 
-#: src/features/settings/ui/settings.tsx:487
+#: src/features/settings/ui/settings.tsx:492
 msgid "Longitude"
 msgstr "Longitude"
 
@@ -886,7 +890,7 @@ msgstr "Newgrange, un tombeau à couloir vieux de 5 000 ans en Irlande, a été 
 msgid "November"
 msgstr "Novembre"
 
-#: src/features/settings/ui/settings.tsx:509
+#: src/features/settings/ui/settings.tsx:514
 msgid "Number of days to forecast"
 msgstr "Nombre de jours à prévoir"
 
@@ -923,7 +927,7 @@ msgid "Other traditions honour Lakshmi, the goddess of prosperity and fortune, w
 msgstr "D’autres traditions honorent Lakshmi, déesse de la prospérité et de la fortune, tandis que les communautés jaïnes et sikhes observent Diwali à travers leurs propres histoires sacrées."
 
 #: src/features/settings/ui/initialisation.tsx:253
-#: src/features/settings/ui/settings.tsx:451
+#: src/features/settings/ui/settings.tsx:455
 msgid "Other units"
 msgstr "Autres unités"
 
@@ -973,7 +977,7 @@ msgstr "Aperçu"
 msgid "partly cloudy"
 msgstr "partiellement nuageux"
 
-#: src/features/settings/ui/settings.tsx:499
+#: src/features/settings/ui/settings.tsx:504
 msgid "Periodically update location automatically"
 msgstr "Mettre à jour périodiquement la localisation automatiquement"
 
@@ -1018,7 +1022,7 @@ msgstr "Géocodage inverse par les contributeurs OpenStreetMap"
 msgid "Saturday"
 msgstr "Samedi"
 
-#: src/features/settings/ui/settings.tsx:603
+#: src/features/settings/ui/settings.tsx:608
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "Les effets saisonniers sont désactivés car votre navigateur semble utiliser un rendu logiciel. Activez l'accélération matérielle pour voir ces effets."
 
@@ -1034,7 +1038,7 @@ msgstr "Saisons et nature"
 #~ msgid "Sections"
 #~ msgstr "Sections"
 
-#: src/features/settings/ui/settings.tsx:472
+#: src/features/settings/ui/settings.tsx:477
 msgid "Securely stored"
 msgstr "Stocké de manière sécurisée"
 
@@ -1155,11 +1159,11 @@ msgstr "Afficher la pluie de météores des Perséides"
 msgid "Show Quadrantids meteor shower event"
 msgstr "Afficher la pluie de météores des Quadrantides"
 
-#: src/features/settings/ui/settings.tsx:597
+#: src/features/settings/ui/settings.tsx:602
 msgid "Show seasonal events"
 msgstr "Afficher les événements saisonniers"
 
-#: src/features/settings/ui/settings.tsx:613
+#: src/features/settings/ui/settings.tsx:618
 msgid "Show seasonal tile glow"
 msgstr "Afficher la lueur saisonnière des tuiles"
 
@@ -1191,7 +1195,7 @@ msgstr "Afficher l'éclipse totale de Soleil"
 msgid "Show Valentine's Day event"
 msgstr "Afficher la Saint-Valentin"
 
-#: src/features/settings/ui/settings.tsx:559
+#: src/features/settings/ui/settings.tsx:564
 msgid "Show weather alerts"
 msgstr "Afficher les alertes météorologiques"
 
@@ -1297,7 +1301,7 @@ msgid "Symbols of luck"
 msgstr "Symboles de chance"
 
 #: src/features/settings/ui/initialisation.tsx:245
-#: src/features/settings/ui/settings.tsx:442
+#: src/features/settings/ui/settings.tsx:446
 msgid "Temperature"
 msgstr "Température"
 
@@ -1678,7 +1682,7 @@ msgstr "Réessayer"
 msgid "Tuesday"
 msgstr "Mardi"
 
-#: src/features/settings/ui/settings.tsx:548
+#: src/features/settings/ui/settings.tsx:553
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Activez cette option si l’indice UV indiqué par Weather Please est systématiquement inférieur à celui des sources locales."
 
@@ -1699,7 +1703,7 @@ msgstr "Contrairement à une éclipse solaire, une éclipse lunaire ne nécessit
 msgid "Unlike most meteor showers, the Geminids originate from the asteroid 3200 Phaethon rather than a comet."
 msgstr "Contrairement à la plupart des pluies de météores, les Géminides proviennent de l’astéroïde 3200 Phaethon plutôt que d’une comète."
 
-#: src/features/settings/ui/settings.tsx:545
+#: src/features/settings/ui/settings.tsx:550
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "Utiliser les modèles de chimie globaux (CAMS)"
 
@@ -1740,7 +1744,7 @@ msgstr "Données météorologiques d'Open-Meteo"
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "Les données météo n'ont pas pu être chargées en raison d'un problème de service — affichage des données en cache. Veuillez réessayer dans un moment."
 
-#: src/features/settings/ui/settings.tsx:690
+#: src/features/settings/ui/settings.tsx:695
 msgid "Weather Please uses the following third-party data sources and location services."
 msgstr "Weather Please utilise les sources de données tierces et services de localisation suivants."
 

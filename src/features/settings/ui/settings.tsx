@@ -426,36 +426,38 @@ const GeneralSettingsSection = ({
 	localeKeys,
 }: Pick<SettingsContentProps, 'handleChange' | 'input' | 'localeKeys'>) => (
 	<SettingsSectionLayout>
-		<Select
-			label={<Trans>Language</Trans>}
-			layout={SETTINGS_FIELD_LAYOUT}
-			onChange={(e) => {
-				handleChange('lang', e.target.value)
-			}}
-			options={localeKeys.map((key) => ({
-				label: locales[key].label,
-				value: key,
-			}))}
-			value={input.lang}
-		/>
-		<Select
-			label={<Trans>Temperature</Trans>}
-			layout={SETTINGS_FIELD_LAYOUT}
-			onChange={(e) => {
-				handleChange('temperatureUnit', e.target.value as TemperatureUnit)
-			}}
-			options={getTemperatureUnitOptions()}
-			value={input.temperatureUnit}
-		/>
-		<Select
-			label={<Trans>Other units</Trans>}
-			layout={SETTINGS_FIELD_LAYOUT}
-			onChange={(e) => {
-				handleChange('unitSystem', e.target.value as UnitSystem)
-			}}
-			options={getUnitSystemOptions()}
-			value={input.unitSystem}
-		/>
+		<SettingsSubsection bodyClassName="space-y-4" title={<Trans>Locale</Trans>}>
+			<Select
+				label={<Trans>Language</Trans>}
+				layout={SETTINGS_FIELD_LAYOUT}
+				onChange={(e) => {
+					handleChange('lang', e.target.value)
+				}}
+				options={localeKeys.map((key) => ({
+					label: locales[key].label,
+					value: key,
+				}))}
+				value={input.lang}
+			/>
+			<Select
+				label={<Trans>Temperature</Trans>}
+				layout={SETTINGS_FIELD_LAYOUT}
+				onChange={(e) => {
+					handleChange('temperatureUnit', e.target.value as TemperatureUnit)
+				}}
+				options={getTemperatureUnitOptions()}
+				value={input.temperatureUnit}
+			/>
+			<Select
+				label={<Trans>Other units</Trans>}
+				layout={SETTINGS_FIELD_LAYOUT}
+				onChange={(e) => {
+					handleChange('unitSystem', e.target.value as UnitSystem)
+				}}
+				options={getUnitSystemOptions()}
+				value={input.unitSystem}
+			/>
+		</SettingsSubsection>
 	</SettingsSectionLayout>
 )
 
