@@ -30,15 +30,25 @@ const getFieldClassName = (layout: FieldLayout = 'stacked') =>
 
 const getLabelClassName = ({
 	layout = 'stacked',
-	withControlSpacing = false,
 }: Readonly<{
 	layout?: FieldLayout
-	withControlSpacing?: boolean
 }>) =>
 	clsx(
 		'block text-sm',
 		layout === 'split' ? 'font-normal text-dark-100' : 'font-medium text-white',
-		layout === 'split' && withControlSpacing ? 'md:pt-2' : undefined,
+	)
+
+const getLabelWrapperClassName = ({
+	controlType,
+	layout = 'stacked',
+}: Readonly<{
+	controlType: 'input' | 'select' | 'switch' | 'textarea'
+	layout?: FieldLayout
+}>) =>
+	clsx(
+		layout === 'split' && controlType !== 'textarea'
+			? 'md:self-center'
+			: undefined,
 	)
 
 const getControlWrapperClassName = ({
@@ -53,8 +63,10 @@ const getControlWrapperClassName = ({
 		layout === 'split' && controlType !== 'switch'
 			? 'md:ml-auto md:w-fit md:max-w-full'
 			: undefined,
-		layout === 'split' && controlType === 'input' ? 'md:w-[20ch]' : undefined,
-		layout === 'split' && controlType === 'select' ? 'md:w-[18ch]' : undefined,
+		layout === 'split' && controlType === 'input' ? 'md:w-[18.5ch]' : undefined,
+		layout === 'split' && controlType === 'select'
+			? 'md:w-[10.75rem]'
+			: undefined,
 		layout === 'split' && controlType === 'textarea'
 			? 'md:w-[28rem]'
 			: undefined,
@@ -82,7 +94,12 @@ export const Select = ({
 		SelectProps
 >) => (
 	<Field className={getFieldClassName(layout)}>
-		<Label className={getLabelClassName({ layout, withControlSpacing: true })}>
+		<Label
+			className={clsx(
+				getLabelClassName({ layout }),
+				getLabelWrapperClassName({ controlType: 'select', layout }),
+			)}
+		>
 			{label}
 		</Label>
 		<div
@@ -90,7 +107,12 @@ export const Select = ({
 		>
 			<div className="relative mt-2 md:mt-0">
 				<HeadlessSelect
-					className="block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 pr-9 text-right text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm"
+					className={clsx(
+						'block w-full appearance-none rounded-lg bg-dark-700/90 px-3 py-2 pr-9 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm',
+						layout === 'split'
+							? 'tabular-nums [text-align-last:right]'
+							: undefined,
+					)}
 					onChange={onChange}
 					value={value}
 				>
@@ -143,7 +165,10 @@ export const Input = ({
 	return (
 		<Field className={getFieldClassName(layout)}>
 			<Label
-				className={getLabelClassName({ layout, withControlSpacing: true })}
+				className={clsx(
+					getLabelClassName({ layout }),
+					getLabelWrapperClassName({ controlType: 'input', layout }),
+				)}
 			>
 				{label}
 			</Label>
@@ -154,7 +179,12 @@ export const Input = ({
 				})}
 			>
 				<HeadlessInput
-					className="mt-2 block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-right text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm md:mt-0"
+					className={clsx(
+						'mt-2 block w-full appearance-none rounded-lg bg-dark-700/90 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm md:mt-0',
+						layout === 'split'
+							? 'text-right font-mono tracking-tight tabular-nums'
+							: undefined,
+					)}
 					invalid={validation === false}
 					name={name}
 					onChange={onChange}
@@ -206,7 +236,10 @@ export const Textarea = ({
 	return (
 		<Field className={getFieldClassName(layout)}>
 			<Label
-				className={getLabelClassName({ layout, withControlSpacing: true })}
+				className={clsx(
+					getLabelClassName({ layout }),
+					getLabelWrapperClassName({ controlType: 'textarea', layout }),
+				)}
 			>
 				{label}
 			</Label>
@@ -217,7 +250,7 @@ export const Textarea = ({
 				})}
 			>
 				<HeadlessTextarea
-					className="mt-2 block w-full resize-none appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm md:mt-0"
+					className="mt-2 block w-full resize-none appearance-none rounded-lg bg-dark-700/90 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm md:mt-0"
 					invalid={validation === false}
 					name={name}
 					onChange={onChange}
@@ -256,7 +289,13 @@ export const Switch = ({
 }: Readonly<SwitchProps>) => {
 	return (
 		<Field className={getFieldClassName(layout)}>
-			<Label className={clsx(getLabelClassName({ layout }), 'min-w-0')}>
+			<Label
+				className={clsx(
+					getLabelClassName({ layout }),
+					getLabelWrapperClassName({ controlType: 'switch', layout }),
+					'min-w-0',
+				)}
+			>
 				{label}
 				{labelAccessory ? (
 					<span className="ml-1 inline-flex align-middle">

@@ -390,14 +390,26 @@ const renderActiveSection = ({
 const SettingsSubsection = ({
 	bodyClassName = 'space-y-2',
 	children,
+	description,
+	headerAccessory,
 	title,
 }: Readonly<{
 	bodyClassName?: string
 	children: ReactNode
+	description?: ReactNode
+	headerAccessory?: ReactNode
 	title: ReactNode
 }>) => (
 	<div className="space-y-2">
-		<h3 className="font-semibold text-white">{title}</h3>
+		<div className="flex items-center justify-between gap-3">
+			<h3 className="font-semibold text-white">{title}</h3>
+			{headerAccessory ? (
+				<div className="shrink-0">{headerAccessory}</div>
+			) : null}
+		</div>
+		{description ? (
+			<p className="text-sm text-dark-200">{description}</p>
+		) : null}
 		<div className={clsx(bodyClassName)}>{children}</div>
 	</div>
 )
@@ -454,14 +466,14 @@ const WeatherSettingsSection = ({
 	<SettingsSectionLayout>
 		<SettingsSubsection
 			bodyClassName="space-y-4"
+			headerAccessory={
+				<span className="inline-flex items-center gap-1.5 rounded-full bg-linear-to-r from-blue-600 to-blue-500 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white shadow-sm">
+					<IconShieldCheckFilled aria-hidden size={14} />
+					<Trans>Securely stored</Trans>
+				</span>
+			}
 			title={<Trans>Location</Trans>}
 		>
-			<Alert icon={IconShieldCheckFilled}>
-				<Trans>
-					Your location data is securely stored exclusively on your personal
-					device.
-				</Trans>
-			</Alert>
 			<Input
 				label={<Trans>Latitude</Trans>}
 				layout={SETTINGS_FIELD_LAYOUT}
