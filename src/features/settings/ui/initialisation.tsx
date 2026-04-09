@@ -22,7 +22,8 @@ import { locales } from '../../../shared/lib/i18n'
 import { Alert } from '../../../shared/ui/alert'
 import { AlertVariant } from '../../../shared/ui/alert-variant'
 import { Button } from '../../../shared/ui/button'
-import { Select, Switch } from '../../../shared/ui/input'
+import { Select } from '../../../shared/ui/input'
+import { TemperatureUnit, UnitSystem } from '../model/unit-system'
 
 enum LocationErrorCode {
 	PermissionDenied = 'permission_denied',
@@ -41,6 +42,28 @@ type LocationError = {
 	code: LocationErrorCode
 	httpStatusCode: null | number
 }
+
+const getTemperatureUnitOptions = () => [
+	{
+		label: <Trans>Celsius (°C)</Trans>,
+		value: TemperatureUnit.Celsius,
+	},
+	{
+		label: <Trans>Fahrenheit (°F)</Trans>,
+		value: TemperatureUnit.Fahrenheit,
+	},
+]
+
+const getUnitSystemOptions = () => [
+	{
+		label: <Trans>Metric (km/h, mm)</Trans>,
+		value: UnitSystem.Metric,
+	},
+	{
+		label: <Trans>Imperial (mph, in)</Trans>,
+		value: UnitSystem.Imperial,
+	},
+]
 
 export const Initialisation = ({
 	handleChange,
@@ -198,7 +221,7 @@ export const Initialisation = ({
 					</DialogTitle>
 					<Description className="mt-8 mb-1 font-semibold text-white">
 						<Trans>
-							To get started, let&apos;s set your language and location.
+							To get started, let&apos;s set your language, units, and location.
 						</Trans>
 					</Description>
 					<p className="text-sm text-dark-100">
@@ -218,10 +241,21 @@ export const Initialisation = ({
 						}))}
 						value={input.lang}
 					/>
-					<Switch
-						checked={input.useMetric}
-						label={<Trans>Use metric number format</Trans>}
-						onChange={(e) => handleChange('useMetric', e)}
+					<Select
+						label={<Trans>Temperature</Trans>}
+						onChange={(e) => {
+							handleChange('temperatureUnit', e.target.value as TemperatureUnit)
+						}}
+						options={getTemperatureUnitOptions()}
+						value={input.temperatureUnit}
+					/>
+					<Select
+						label={<Trans>Other units</Trans>}
+						onChange={(e) => {
+							handleChange('unitSystem', e.target.value as UnitSystem)
+						}}
+						options={getUnitSystemOptions()}
+						value={input.unitSystem}
 					/>
 					<Alert icon={IconShieldCheckFilled}>
 						<Trans>

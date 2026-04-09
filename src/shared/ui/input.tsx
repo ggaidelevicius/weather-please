@@ -25,7 +25,7 @@ type FieldLayoutProps = {
 
 const getFieldClassName = (layout: FieldLayout = 'stacked') =>
 	layout === 'split'
-		? 'space-y-2 md:grid md:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] md:items-start md:gap-x-6 md:space-y-0'
+		? 'space-y-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-start md:gap-x-6 md:space-y-0'
 		: undefined
 
 const getLabelClassName = ({
@@ -41,8 +41,27 @@ const getLabelClassName = ({
 		layout === 'split' && withControlSpacing ? 'md:pt-2' : undefined,
 	)
 
-const getControlWrapperClassName = (layout: FieldLayout = 'stacked') =>
-	layout === 'split' ? 'min-w-0' : undefined
+const getControlWrapperClassName = ({
+	controlType,
+	layout = 'stacked',
+}: Readonly<{
+	controlType: 'input' | 'select' | 'switch' | 'textarea'
+	layout?: FieldLayout
+}>) =>
+	clsx(
+		layout === 'split' ? 'min-w-0 md:justify-self-end' : undefined,
+		layout === 'split' && controlType !== 'switch'
+			? 'md:ml-auto md:w-fit md:max-w-full'
+			: undefined,
+		layout === 'split' && controlType === 'input' ? 'md:w-[20ch]' : undefined,
+		layout === 'split' && controlType === 'select' ? 'md:w-[18ch]' : undefined,
+		layout === 'split' && controlType === 'textarea'
+			? 'md:w-[28rem]'
+			: undefined,
+		layout === 'split' && controlType === 'switch'
+			? 'flex flex-col items-end'
+			: undefined,
+	)
 
 interface SelectProps {
 	label: ReactNode
@@ -66,10 +85,12 @@ export const Select = ({
 		<Label className={getLabelClassName({ layout, withControlSpacing: true })}>
 			{label}
 		</Label>
-		<div className={getControlWrapperClassName(layout)}>
+		<div
+			className={getControlWrapperClassName({ controlType: 'select', layout })}
+		>
 			<div className="relative mt-2 md:mt-0">
 				<HeadlessSelect
-					className="block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm"
+					className="block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 pr-9 text-right text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm"
 					onChange={onChange}
 					value={value}
 				>
@@ -126,9 +147,14 @@ export const Input = ({
 			>
 				{label}
 			</Label>
-			<div className={getControlWrapperClassName(layout)}>
+			<div
+				className={getControlWrapperClassName({
+					controlType: 'input',
+					layout,
+				})}
+			>
 				<HeadlessInput
-					className="mt-2 block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm md:mt-0"
+					className="mt-2 block w-full appearance-none rounded-sm bg-dark-700 px-3 py-2 text-right text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm md:mt-0"
 					invalid={validation === false}
 					name={name}
 					onChange={onChange}
@@ -184,7 +210,12 @@ export const Textarea = ({
 			>
 				{label}
 			</Label>
-			<div className={getControlWrapperClassName(layout)}>
+			<div
+				className={getControlWrapperClassName({
+					controlType: 'textarea',
+					layout,
+				})}
+			>
 				<HeadlessTextarea
 					className="mt-2 block w-full resize-none appearance-none rounded-sm bg-dark-700 px-3 py-2 text-base text-dark-100 outline-1 -outline-offset-1 outline-dark-400 select-none placeholder:text-dark-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 data-invalid:outline-red-500 sm:text-sm md:mt-0"
 					invalid={validation === false}
@@ -233,7 +264,12 @@ export const Switch = ({
 					</span>
 				) : null}
 			</Label>
-			<div className={getControlWrapperClassName(layout)}>
+			<div
+				className={getControlWrapperClassName({
+					controlType: 'switch',
+					layout,
+				})}
+			>
 				<HeadlessSwitch
 					checked={checked}
 					className="group mt-2 inline-flex h-6 w-11 items-center rounded-full bg-dark-500 transition-[background-color] select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-checked:bg-blue-600 md:mt-0"

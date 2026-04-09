@@ -30,6 +30,7 @@ import { SeasonalEventId } from '../../seasonal-events/core/types'
 import { isLikelySoftwareRenderer } from '../../seasonal-events/core/utils'
 import { SEASONAL_EVENT_TOGGLE_KEY_BY_ID } from '../model/seasonal-event-toggle-map'
 import { TileIdentifier } from '../model/tile-identifier'
+import { TemperatureUnit, UnitSystem } from '../model/unit-system'
 
 type BooleanConfigKey = {
 	[K in keyof Config]: Config[K] extends boolean ? K : never
@@ -208,6 +209,28 @@ const ATTRIBUTION_LINKS = [
 
 const SETTINGS_FIELD_LAYOUT = 'split' as const
 
+const getTemperatureUnitOptions = () => [
+	{
+		label: <Trans>Celsius (°C)</Trans>,
+		value: TemperatureUnit.Celsius,
+	},
+	{
+		label: <Trans>Fahrenheit (°F)</Trans>,
+		value: TemperatureUnit.Fahrenheit,
+	},
+]
+
+const getUnitSystemOptions = () => [
+	{
+		label: <Trans>Metric (km/h, mm)</Trans>,
+		value: UnitSystem.Metric,
+	},
+	{
+		label: <Trans>Imperial (mph, in)</Trans>,
+		value: UnitSystem.Imperial,
+	},
+]
+
 interface SettingsProps {
 	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
 	input: Config
@@ -382,7 +405,7 @@ const SettingsSubsection = ({
 const SettingsSectionLayout = ({
 	children,
 }: Readonly<{ children: ReactNode }>) => (
-	<div className="space-y-8">{children}</div>
+	<div className="space-y-4">{children}</div>
 )
 
 const GeneralSettingsSection = ({
@@ -403,11 +426,23 @@ const GeneralSettingsSection = ({
 			}))}
 			value={input.lang}
 		/>
-		<Switch
-			checked={input.useMetric}
-			label={<Trans>Use metric number format</Trans>}
+		<Select
+			label={<Trans>Temperature</Trans>}
 			layout={SETTINGS_FIELD_LAYOUT}
-			onChange={(checked) => handleChange('useMetric', checked)}
+			onChange={(e) => {
+				handleChange('temperatureUnit', e.target.value as TemperatureUnit)
+			}}
+			options={getTemperatureUnitOptions()}
+			value={input.temperatureUnit}
+		/>
+		<Select
+			label={<Trans>Other units</Trans>}
+			layout={SETTINGS_FIELD_LAYOUT}
+			onChange={(e) => {
+				handleChange('unitSystem', e.target.value as UnitSystem)
+			}}
+			options={getUnitSystemOptions()}
+			value={input.unitSystem}
 		/>
 	</SettingsSectionLayout>
 )

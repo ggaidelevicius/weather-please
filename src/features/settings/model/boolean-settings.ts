@@ -32,11 +32,6 @@ export const BOOLEAN_SETTINGS = [
 	{
 		category: BooleanSettingCategory.General,
 		defaultValue: true,
-		key: 'useMetric',
-	},
-	{
-		category: BooleanSettingCategory.Alerts,
-		defaultValue: true,
 		key: 'showAlerts',
 	},
 	{

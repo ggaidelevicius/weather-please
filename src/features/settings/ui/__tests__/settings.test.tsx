@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { BOOLEAN_CONFIG_DEFAULTS } from '../../model/boolean-settings'
 import { TileIdentifier } from '../../model/tile-identifier'
+import { TemperatureUnit, UnitSystem } from '../../model/unit-system'
 import { Settings } from '../settings'
 
 vi.mock('@lingui/react/macro', () => ({
@@ -66,4 +67,6 @@ const createConfig = () => ({
 	lang: 'en' as const,
 	lat: '-31.9523',
 	lon: '115.8613',
+	temperatureUnit: TemperatureUnit.Celsius,
+	unitSystem: UnitSystem.Metric,
 })

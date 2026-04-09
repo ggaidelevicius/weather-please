@@ -13,10 +13,11 @@ import {
 	BOOLEAN_CONFIG_SCHEMA_SHAPE,
 } from '../model/boolean-settings'
 import { TileIdentifier } from '../model/tile-identifier'
+import { TemperatureUnit, UnitSystem } from '../model/unit-system'
 
 const configSchema = z.object({
 	daysToRetrieve: z.string(),
-	identifier: z.nativeEnum(TileIdentifier),
+	identifier: z.enum(TileIdentifier),
 	installed: z.number(),
 	lang: z.enum(Object.keys(locales) as [LocaleKey, ...LocaleKey[]]),
 	lat: z.string().regex(/^(\+|-)?(?:90(?:\.0{1,6})?|[1-8]?\d(?:\.\d{1,6})?)$/),
@@ -25,6 +26,8 @@ const configSchema = z.object({
 		.regex(
 			/^(\+|-)?(?:180(?:\.0{1,6})?|((1[0-7]\d)|([1-9]?\d))(?:\.\d{1,6})?)$/,
 		),
+	temperatureUnit: z.enum(TemperatureUnit),
+	unitSystem: z.enum(UnitSystem),
 	...BOOLEAN_CONFIG_SCHEMA_SHAPE,
 })
 
@@ -38,10 +41,71 @@ const initialState: Config = {
 	daysToRetrieve: '3',
 	identifier: TileIdentifier.Day,
 	installed: new Date().getTime(),
+	temperatureUnit: TemperatureUnit.Celsius,
+	unitSystem: UnitSystem.Metric,
 }
 
 const useIsomorphicLayoutEffect =
 	typeof window === 'undefined' ? useEffect : useLayoutEffect
+
+const isTemperatureUnit = (value: unknown): value is TemperatureUnit =>
+	Object.values(TemperatureUnit).includes(value as TemperatureUnit)
+
+const isUnitSystem = (value: unknown): value is UnitSystem =>
+	Object.values(UnitSystem).includes(value as UnitSystem)
+
+const getLegacyUnitPreferences = (parsed: unknown) => {
+	if (
+		typeof parsed !== 'object' ||
+		parsed === null ||
+		!('useMetric' in parsed)
+	) {
+		return null
+	}
+
+	return parsed.useMetric === false
+		? {
+				temperatureUnit: TemperatureUnit.Fahrenheit,
+				unitSystem: UnitSystem.Imperial,
+			}
+		: {
+				temperatureUnit: TemperatureUnit.Celsius,
+				unitSystem: UnitSystem.Metric,
+			}
+}
+
+const mergeStoredConfig = (parsed: unknown) => {
+	const parsedObject =
+		typeof parsed === 'object' && parsed !== null ? parsed : {}
+	const merged = mergeObjects(parsedObject, initialState) as Config
+	const legacyUnitPreferences = getLegacyUnitPreferences(parsed)
+	const parsedTemperatureUnit =
+		typeof parsed === 'object' &&
+		parsed !== null &&
+		'temperatureUnit' in parsed &&
+		isTemperatureUnit(parsed.temperatureUnit)
+			? parsed.temperatureUnit
+			: null
+	const parsedUnitSystem =
+		typeof parsed === 'object' &&
+		parsed !== null &&
+		'unitSystem' in parsed &&
+		isUnitSystem(parsed.unitSystem)
+			? parsed.unitSystem
+			: null
+
+	return {
+		...merged,
+		temperatureUnit:
+			parsedTemperatureUnit ??
+			legacyUnitPreferences?.temperatureUnit ??
+			initialState.temperatureUnit,
+		unitSystem:
+			parsedUnitSystem ??
+			legacyUnitPreferences?.unitSystem ??
+			initialState.unitSystem,
+	}
+}
 
 const getInitialConfig = (): Config => {
 	if (typeof window === 'undefined') {
@@ -61,7 +125,7 @@ const getInitialConfig = (): Config => {
 			return parsed
 		}
 
-		const merged = mergeObjects(parsed, initialState) as Config
+		const merged = mergeStoredConfig(parsed)
 		const hasAirQualityOverrideKey =
 			typeof parsed === 'object' &&
 			parsed !== null &&

@@ -18,6 +18,7 @@ import type { SeasonalEvent } from '../../seasonal-events/core/types'
 import { SeasonalEventModal } from '../../../shared/ui/seasonal-event-modal'
 import { Hemisphere, SeasonalEventId } from '../../seasonal-events/core/types'
 import { TileIdentifier } from '../../settings/model/tile-identifier'
+import { TemperatureUnit, UnitSystem } from '../../settings/model/unit-system'
 import {
 	BrokenClouds,
 	ClearSky,
@@ -224,7 +225,8 @@ interface TileProps {
 	rain: number
 	showSeasonalEvents: boolean
 	showSeasonalTileGlow: boolean
-	useMetric: boolean
+	temperatureUnit: TemperatureUnit
+	unitSystem: UnitSystem
 	uv: number
 	wind: number
 }
@@ -263,10 +265,13 @@ export const Tile = ({
 	rain,
 	showSeasonalEvents,
 	showSeasonalTileGlow,
-	useMetric,
+	temperatureUnit,
+	unitSystem,
 	uv,
 	wind,
 }: Readonly<TileProps>) => {
+	const usesMetricTemperature = temperatureUnit === TemperatureUnit.Celsius
+	const usesMetricUnits = unitSystem === UnitSystem.Metric
 	const tileDate = new Date(day * 1000)
 	const dayDescriptor = days[tileDate.getDay()]
 	const dateDescriptor = (
@@ -415,16 +420,18 @@ export const Tile = ({
 					<div className="flex flex-col">
 						<div className="flex items-baseline gap-2">
 							<span aria-hidden className="text-3xl text-dark-100">
-								{useMetric ? Math.round(max) : Math.round((max * 9) / 5 + 32)}
+								{usesMetricTemperature
+									? Math.round(max)
+									: Math.round((max * 9) / 5 + 32)}
 							</span>
 							<span className="sr-only">
-								{useMetric && (
+								{usesMetricTemperature && (
 									<Trans>
 										The maximum temperature will be {Math.round(max)} degrees
 										celsius.
 									</Trans>
 								)}
-								{!useMetric && (
+								{!usesMetricTemperature && (
 									<Trans>
 										The maximum temperature will be{' '}
 										{Math.round((max * 9) / 5 + 32)} degrees fahrenheit.
@@ -432,16 +439,18 @@ export const Tile = ({
 								)}
 							</span>
 							<span aria-hidden className="text-lg text-dark-300">
-								{useMetric ? Math.round(min) : Math.round((min * 9) / 5 + 32)}
+								{usesMetricTemperature
+									? Math.round(min)
+									: Math.round((min * 9) / 5 + 32)}
 							</span>
 							<span className="sr-only">
-								{useMetric && (
+								{usesMetricTemperature && (
 									<Trans>
 										The minimum temperature will be {Math.round(min)} degrees
 										celsius.
 									</Trans>
 								)}
-								{!useMetric && (
+								{!usesMetricTemperature && (
 									<Trans>
 										The minimum temperature will be{' '}
 										{Math.round((min * 9) / 5 + 32)} degrees fahrenheit.
@@ -487,17 +496,19 @@ export const Tile = ({
 					<div className="flex flex-row items-center gap-1">
 						<IconWind aria-hidden className="text-dark-100" size={18} />
 						<span aria-hidden className="text-sm text-dark-100">
-							{useMetric && <Trans>{Math.round(wind)} km/h</Trans>}
-							{!useMetric && <Trans>{Math.round(wind / 1.609344)} mph</Trans>}
+							{usesMetricUnits && <Trans>{Math.round(wind)} km/h</Trans>}
+							{!usesMetricUnits && (
+								<Trans>{Math.round(wind / 1.609344)} mph</Trans>
+							)}
 						</span>
 						<span className="sr-only">
-							{useMetric && (
+							{usesMetricUnits && (
 								<Trans>
 									The maximum wind speed will be {Math.round(wind)} kilometers
 									per hour.
 								</Trans>
 							)}
-							{!useMetric && (
+							{!usesMetricUnits && (
 								<Trans>
 									The maximum wind speed will be {Math.round(wind / 1.609344)}{' '}
 									miles per hour.

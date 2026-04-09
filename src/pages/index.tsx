@@ -142,7 +142,8 @@ const App = () => {
 					showSeasonalTileGlow={
 						config.showSeasonalTileGlow && !isSoftwareRenderer
 					}
-					useMetric={config.useMetric}
+					temperatureUnit={config.temperatureUnit}
+					unitSystem={config.unitSystem}
 				/>
 			)
 		})
@@ -160,8 +161,8 @@ const App = () => {
 						showUvAlerts={config.showUvAlerts}
 						showVisibilityAlerts={config.showVisibilityAlerts}
 						showWindAlerts={config.showWindAlerts}
+						unitSystem={config.unitSystem}
 						useCompactAlerts={config.useCompactAlerts}
-						useMetric={config.useMetric}
 					/>
 				</AnimatePresence>
 			)}

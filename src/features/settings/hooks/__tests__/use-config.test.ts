@@ -2,6 +2,7 @@ import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { TileIdentifier } from '../../model/tile-identifier'
+import { TemperatureUnit, UnitSystem } from '../../model/unit-system'
 import { type Config, useConfig } from '../use-config'
 
 // Mock localStorage
@@ -90,9 +91,10 @@ const mockValidConfig: Config = {
 	showVisibilityAlerts: true,
 	showWindAlerts: true,
 	showWinterSolsticeEvent: true,
+	temperatureUnit: TemperatureUnit.Celsius,
+	unitSystem: UnitSystem.Metric,
 	useAirQualityUvOverride: false,
 	useCompactAlerts: true,
-	useMetric: true,
 }
 
 describe('useConfig - Core Functionality', () => {
@@ -147,9 +149,10 @@ describe('useConfig - Core Functionality', () => {
 			showVisibilityAlerts: true,
 			showWindAlerts: true,
 			showWinterSolsticeEvent: true,
+			temperatureUnit: TemperatureUnit.Celsius,
+			unitSystem: UnitSystem.Metric,
 			useAirQualityUvOverride: false,
 			useCompactAlerts: true,
-			useMetric: true,
 		})
 
 		expect(result.current.input).toEqual(result.current.config)
@@ -181,6 +184,26 @@ describe('useConfig - Core Functionality', () => {
 		})
 	})
 
+	it('migrates legacy useMetric preferences to temperature and other units', async () => {
+		const legacyConfig = {
+			...mockValidConfig,
+			useMetric: false,
+		} as Record<string, unknown>
+		delete legacyConfig.temperatureUnit
+		delete legacyConfig.unitSystem
+
+		localStorageMock.config = JSON.stringify(legacyConfig)
+
+		const { result } = renderHook(() => useConfig())
+
+		await waitFor(() => {
+			expect(result.current.config.temperatureUnit).toBe(
+				TemperatureUnit.Fahrenheit,
+			)
+			expect(result.current.config.unitSystem).toBe(UnitSystem.Imperial)
+		})
+	})
+
 	it('merges invalid config with defaults', async () => {
 		const invalidConfig = {
 			lang: 'en',
@@ -198,7 +221,8 @@ describe('useConfig - Core Functionality', () => {
 				lang: 'en',
 				lat: '40.7128',
 				lon: '', // Should be filled with default
-				useMetric: true, // Should be filled with default
+				temperatureUnit: TemperatureUnit.Celsius,
+				unitSystem: UnitSystem.Metric,
 			})
 		})
 	})
@@ -241,10 +265,10 @@ describe('useConfig - Core Functionality', () => {
 		const { result } = renderHook(() => useConfig())
 
 		act(() => {
-			result.current.handleChange('useMetric', false)
+			result.current.handleChange('unitSystem', UnitSystem.Imperial)
 		})
 
-		expect(result.current.input.useMetric).toBe(false)
+		expect(result.current.input.unitSystem).toBe(UnitSystem.Imperial)
 	})
 
 	it('updates config with updateConfig', () => {
@@ -253,12 +277,16 @@ describe('useConfig - Core Functionality', () => {
 		act(() => {
 			result.current.updateConfig({
 				lang: 'fr',
-				useMetric: false,
+				temperatureUnit: TemperatureUnit.Fahrenheit,
+				unitSystem: UnitSystem.Imperial,
 			})
 		})
 
 		expect(result.current.input.lang).toBe('fr')
-		expect(result.current.input.useMetric).toBe(false)
+		expect(result.current.input.temperatureUnit).toBe(
+			TemperatureUnit.Fahrenheit,
+		)
+		expect(result.current.input.unitSystem).toBe(UnitSystem.Imperial)
 	})
 
 	it('updates config with setInput', () => {
@@ -368,12 +396,16 @@ describe('useConfig - Core Functionality', () => {
 
 		act(() => {
 			result.current.handleChange('lang', 'es')
-			result.current.handleChange('useMetric', false)
+			result.current.handleChange('temperatureUnit', TemperatureUnit.Fahrenheit)
+			result.current.handleChange('unitSystem', UnitSystem.Imperial)
 			result.current.handleChange('daysToRetrieve', '5')
 		})
 
 		expect(result.current.input.lang).toBe('es')
-		expect(result.current.input.useMetric).toBe(false)
+		expect(result.current.input.temperatureUnit).toBe(
+			TemperatureUnit.Fahrenheit,
+		)
+		expect(result.current.input.unitSystem).toBe(UnitSystem.Imperial)
 		expect(result.current.input.daysToRetrieve).toBe('5')
 	})
 
@@ -382,7 +414,8 @@ describe('useConfig - Core Functionality', () => {
 
 		act(() => {
 			result.current.handleChange('lang', 'fr')
-			result.current.handleChange('useMetric', false)
+			result.current.handleChange('temperatureUnit', TemperatureUnit.Fahrenheit)
+			result.current.handleChange('unitSystem', UnitSystem.Imperial)
 		})
 
 		act(() => {
@@ -390,7 +423,10 @@ describe('useConfig - Core Functionality', () => {
 		})
 
 		expect(result.current.input.lang).toBe('fr')
-		expect(result.current.input.useMetric).toBe(false)
+		expect(result.current.input.temperatureUnit).toBe(
+			TemperatureUnit.Fahrenheit,
+		)
+		expect(result.current.input.unitSystem).toBe(UnitSystem.Imperial)
 		expect(result.current.input.daysToRetrieve).toBe('7')
 	})
 

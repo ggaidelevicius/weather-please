@@ -11,6 +11,7 @@ import type { Alerts } from '../model/types'
 
 import { Alert } from '../../../shared/ui/alert'
 import { AlertVariant } from '../../../shared/ui/alert-variant'
+import { UnitSystem } from '../../settings/model/unit-system'
 
 const PRECIPITATION_ALERT_THRESHOLD_MM = 15
 const UV_WARNING_LEAD_HOURS = 3
@@ -144,8 +145,8 @@ interface AlertProps extends Alerts {
 	showUvAlerts: boolean
 	showVisibilityAlerts: boolean
 	showWindAlerts: boolean
+	unitSystem: UnitSystem
 	useCompactAlerts: boolean
-	useMetric: boolean
 }
 
 export const WeatherAlert = ({
@@ -158,9 +159,10 @@ export const WeatherAlert = ({
 	showVisibilityAlerts,
 	showWindAlerts,
 	totalPrecipitation,
+	unitSystem,
 	useCompactAlerts,
-	useMetric,
 }: Readonly<AlertProps>) => {
+	const usesMetricUnits = unitSystem === UnitSystem.Metric
 	// Derive alerts array directly from props
 	const [expandedAlertKeys, setExpandedAlertKeys] = useState<Set<string>>(() =>
 		getInitialExpandedAlertKeys(useCompactAlerts),
@@ -218,21 +220,25 @@ export const WeatherAlert = ({
 		const precipitationInches = (precipitation.value / 25.4).toFixed(1)
 
 		let precipitationContent: null | ReactNode = null
-		if (useMetric && durationHours === 1) {
+		if (usesMetricUnits && durationHours === 1) {
 			precipitationContent = (
 				<Trans>
 					{precipitationMm}mm of precipitation expected over the next hour
 				</Trans>
 			)
 		}
-		if (useMetric && durationHours >= FULL_DAY_HOURS) {
+		if (usesMetricUnits && durationHours >= FULL_DAY_HOURS) {
 			precipitationContent = (
 				<Trans>
 					{precipitationMm}mm of precipitation expected over the next 24 hours
 				</Trans>
 			)
 		}
-		if (useMetric && durationHours > 1 && durationHours < FULL_DAY_HOURS) {
+		if (
+			usesMetricUnits &&
+			durationHours > 1 &&
+			durationHours < FULL_DAY_HOURS
+		) {
 			precipitationContent = (
 				<Trans>
 					{precipitationMm}mm of precipitation expected over the next{' '}
@@ -240,7 +246,7 @@ export const WeatherAlert = ({
 				</Trans>
 			)
 		}
-		if (!useMetric && durationHours === 1) {
+		if (!usesMetricUnits && durationHours === 1) {
 			precipitationContent = (
 				<Trans>
 					{precipitationInches} inches of precipitation expected over the next
@@ -248,7 +254,7 @@ export const WeatherAlert = ({
 				</Trans>
 			)
 		}
-		if (!useMetric && durationHours >= FULL_DAY_HOURS) {
+		if (!usesMetricUnits && durationHours >= FULL_DAY_HOURS) {
 			precipitationContent = (
 				<Trans>
 					{precipitationInches} inches of precipitation expected over the next
@@ -256,7 +262,11 @@ export const WeatherAlert = ({
 				</Trans>
 			)
 		}
-		if (!useMetric && durationHours > 1 && durationHours < FULL_DAY_HOURS) {
+		if (
+			!usesMetricUnits &&
+			durationHours > 1 &&
+			durationHours < FULL_DAY_HOURS
+		) {
 			precipitationContent = (
 				<Trans>
 					{precipitationInches} inches of precipitation expected over the next{' '}
