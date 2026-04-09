@@ -1,6 +1,6 @@
 # Kebijakan Privasi untuk Ekstensi Peramban "Weather Please"
 
-_Pembaruan terakhir: 2 Maret 2025_
+_Pembaruan terakhir: 10 April 2026_
 
 Privasi Anda penting bagi kami. Kebijakan ini menjelaskan data apa yang dapat
 dikumpulkan oleh ekstensi peramban "Weather Please" dan bagaimana data tersebut
@@ -19,14 +19,16 @@ geolokasi perangkat Anda (lintang dan bujur). Saat menginstal, Anda akan diminta
 untuk memberikan izin akses lokasi. Jika Anda menolak, ekstensi tidak akan
 berfungsi.
 
-Data lokasi Anda dikirim langsung ke layanan cuaca pihak ketiga untuk mengambil
-informasi cuaca. Layanan ini memiliki kebijakan privasi mereka sendiri, yang
-dapat Anda baca di sini:
+Data lokasi Anda dikirim langsung ke layanan pihak ketiga untuk mengambil
+informasi cuaca dan menampilkan nama lokasi yang mudah dibaca. Layanan ini
+memiliki kebijakan privasi mereka sendiri, yang dapat Anda baca di sini:
 
 - [Kebijakan Privasi Open-Meteo](https://open-meteo.com/en/terms)
+- [Kebijakan Privasi Nominatim (OpenStreetMap)](https://osmfoundation.org/wiki/Privacy_Policy)
 
-"Weather Please" tidak menyimpan atau mengirimkan data lokasi Anda di luar
-permintaan tersebut.
+Nominatim digunakan untuk mengubah koordinat Anda menjadi nama lokasi yang dapat
+dibaca (geocoding terbalik). "Weather Please" tidak menyimpan atau mengirimkan
+data lokasi Anda di luar permintaan ini.
 
 ## 3. Cara Kami Menggunakan Informasi Anda
 

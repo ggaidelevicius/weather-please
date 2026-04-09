@@ -1,6 +1,6 @@
 # "Weather Please" naršyklės plėtinio privatumo politika
 
-_Paskutinį kartą atnaujinta: 2025 m. kovo 2 d._
+_Paskutinį kartą atnaujinta: 2026 m. balandžio 10 d._
 
 Jūsų privatumas mums svarbus. Ši politika aprašo, kokius duomenis gali rinkti
 "Weather Please" naršyklės plėtinys ir kaip jie naudojami.
@@ -17,13 +17,16 @@ Norint gauti vietinę orų informaciją, "Weather Please" reikia prieigos prie j
 įrenginio geolokacijos (platuma ir ilguma). Įdiegimo metu jums bus pasiūlyta
 suteikti prieigą prie vietos nustatymo. Jei atsisakysite, plėtinys neveiks.
 
-Jūsų buvimo vietos duomenys siunčiami tiesiogiai trečiųjų šalių orų paslaugoms,
-kad būtų gauta orų informacija. Šios paslaugos turi savo privatumo politiką,
-kurią galite peržiūrėti čia:
+Jūsų buvimo vietos duomenys siunčiami tiesiogiai trečiųjų šalių paslaugoms, kad
+būtų gauta orų informacija ir rodomas patogus vietos pavadinimas. Šios paslaugos
+turi savo privatumo politiką, kurią galite peržiūrėti čia:
 
 - [Open-Meteo privatumo politika](https://open-meteo.com/en/terms)
+- [Nominatim (OpenStreetMap) privatumo politika](https://osmfoundation.org/wiki/Privacy_Policy)
 
-"Weather Please" nesaugo ir neperduoda jūsų vietos duomenų kitais būdais.
+Nominatim naudojamas jūsų koordinatėms paversti į skaitomą vietos pavadinimą
+(atvirkštinis geokodavimas). "Weather Please" nesaugo ir neperduoda jūsų vietos
+duomenų už šių užklausų ribų.
 
 ## 3. Kaip naudojame jūsų informaciją
 

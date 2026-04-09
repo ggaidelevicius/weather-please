@@ -1,6 +1,6 @@
 # Política de Privacidad de la Extensión del Navegador "Weather Please"
 
-_Última actualización: 2 de marzo de 2025_
+_Última actualización: 10 de abril de 2026_
 
 Tu privacidad es importante para nosotros. Esta política explica qué datos puede
 recopilar la extensión del navegador "Weather Please" y cómo se utilizan.
@@ -19,14 +19,17 @@ la geolocalización de tu dispositivo (latitud y longitud). Al instalar la
 extensión, se te pedirá permiso para acceder a tu ubicación. Si rechazas, la
 extensión no funcionará.
 
-Los datos de ubicación se envían directamente a servicios meteorológicos de
-terceros para recuperar la información del clima. Estos servicios operan bajo
-sus propias políticas de privacidad, que puedes consultar aquí:
+Los datos de ubicación se envían directamente a servicios de terceros para
+recuperar la información del clima y mostrar un nombre de ubicación fácil de
+entender. Estos servicios operan bajo sus propias políticas de privacidad, que
+puedes consultar aquí:
 
 - [Política de privacidad de Open-Meteo](https://open-meteo.com/en/terms)
+- [Política de privacidad de Nominatim (OpenStreetMap)](https://osmfoundation.org/wiki/Privacy_Policy)
 
-"Weather Please" no almacena ni transmite tus datos de ubicación más allá de la
-solicitud a estos servicios.
+Nominatim se utiliza para convertir tus coordenadas en un nombre de ubicación
+legible (geocodificación inversa). "Weather Please" no almacena ni transmite tus
+datos de ubicación más allá de estas solicitudes.
 
 ## 3. Cómo usamos tu información
 

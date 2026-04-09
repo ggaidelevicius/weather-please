@@ -1,6 +1,6 @@
 # Datenschutzrichtlinie für die "Weather Please" Browsererweiterung
 
-_Letzte Aktualisierung: 2. März 2025_
+_Letzte Aktualisierung: 10. April 2026_
 
 Ihre Privatsphäre ist uns wichtig. Diese Richtlinie beschreibt, welche Daten die
 "Weather Please" Browsererweiterung erfassen kann und wie diese genutzt werden.
@@ -19,12 +19,16 @@ werden Sie um Erlaubnis zur Standortfreigabe gebeten. Wenn Sie diese verweigern,
 funktioniert die Erweiterung nicht.
 
 Ihre Standortdaten werden direkt an Drittanbieter weitergeleitet, um
-Wetterinformationen abzurufen. Diese Drittanbieter haben ihre eigenen
-Datenschutzrichtlinien, die Sie hier einsehen können:
+Wetterinformationen abzurufen und einen benutzerfreundlichen Ortsnamen
+anzuzeigen. Diese Drittanbieter haben ihre eigenen Datenschutzrichtlinien, die
+Sie hier einsehen können:
 
 - [Open-Meteo Datenschutzrichtlinie](https://open-meteo.com/en/terms)
+- [Nominatim (OpenStreetMap) Datenschutzrichtlinie](https://osmfoundation.org/wiki/Privacy_Policy)
 
-"Weather Please" speichert oder überträgt Ihre Standortdaten nicht.
+Nominatim wird verwendet, um Ihre Koordinaten in einen lesbaren Ortsnamen
+umzuwandeln (Reverse Geocoding). "Weather Please" speichert oder überträgt Ihre
+Standortdaten nicht über diese Anfragen hinaus.
 
 ## 3. Wie wir Ihre Daten verwenden
 

@@ -1,6 +1,6 @@
 # Privacy Policy for the "Weather Please" Browser Extension
 
-_Last updated: March 02, 2025_
+_Last updated: April 10, 2026_
 
 Your privacy is important to us. This policy outlines what data the "Weather
 Please" browser extension may collect and how it is used.
@@ -18,14 +18,16 @@ device's geolocation (latitude and longitude). Upon installation, you will be
 prompted to allow location access. If you decline, the extension will not
 function.
 
-Location data is sent directly to third-party weather services to fetch weather
-updates. These services operate under their own privacy policies, which you can
-review here:
+Location data is sent directly to third-party services to fetch weather updates
+and to display a user-friendly location name. These services operate under their
+own privacy policies, which you can review here:
 
 - [Open-Meteo Privacy Policy](https://open-meteo.com/en/terms)
+- [Nominatim (OpenStreetMap) Privacy Policy](https://osmfoundation.org/wiki/Privacy_Policy)
 
-"Weather Please" does not store or transmit your location data beyond the
-request to these services.
+Nominatim is used to convert your coordinates into a readable location name
+(reverse geocoding). "Weather Please" does not store or transmit your location
+data beyond these requests.
 
 ## 3. How We Use Your Information
 
