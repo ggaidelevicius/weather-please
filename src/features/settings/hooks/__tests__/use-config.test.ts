@@ -1,6 +1,11 @@
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import {
+	CONFIG_MIGRATION_STATE_STORAGE_KEY,
+	CURRENT_CONFIG_VERSION,
+	LEGACY_TO_2026_04_10_MIGRATION_ID,
+} from '../../migrations/config-migrations'
 import { TileIdentifier } from '../../model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../model/unit-system'
 import { type Config, useConfig } from '../use-config'
@@ -97,6 +102,11 @@ const mockValidConfig: Config = {
 	useCompactAlerts: true,
 }
 
+const readMigrationState = () =>
+	JSON.parse(
+		localStorageMock.getItem(CONFIG_MIGRATION_STATE_STORAGE_KEY) || '{}',
+	)
+
 describe('useConfig - Core Functionality', () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
@@ -167,6 +177,17 @@ describe('useConfig - Core Functionality', () => {
 			expect(result.current.config).toEqual(mockValidConfig)
 			expect(result.current.input).toEqual(mockValidConfig)
 		})
+
+		expect(JSON.parse(localStorageMock.config)).toMatchObject({
+			configVersion: CURRENT_CONFIG_VERSION,
+			...mockValidConfig,
+		})
+		expect(readMigrationState()).toMatchObject({
+			completedMigrationIds: [],
+			currentVersion: CURRENT_CONFIG_VERSION,
+			failedMigrationIds: [],
+			skippedMigrationIds: [LEGACY_TO_2026_04_10_MIGRATION_ID],
+		})
 	})
 
 	it('enables air quality UV override for Australia when setting is missing', async () => {
@@ -201,6 +222,18 @@ describe('useConfig - Core Functionality', () => {
 				TemperatureUnit.Fahrenheit,
 			)
 			expect(result.current.config.unitSystem).toBe(UnitSystem.Imperial)
+		})
+
+		expect(JSON.parse(localStorageMock.config)).toMatchObject({
+			configVersion: CURRENT_CONFIG_VERSION,
+			temperatureUnit: TemperatureUnit.Fahrenheit,
+			unitSystem: UnitSystem.Imperial,
+		})
+		expect(readMigrationState()).toMatchObject({
+			completedMigrationIds: [LEGACY_TO_2026_04_10_MIGRATION_ID],
+			currentVersion: CURRENT_CONFIG_VERSION,
+			failedMigrationIds: [],
+			skippedMigrationIds: [],
 		})
 	})
 
@@ -312,6 +345,11 @@ describe('useConfig - Core Functionality', () => {
 
 		// Should save to localStorage and update config
 		expect(localStorageMock.config).toBeTruthy()
+		expect(JSON.parse(localStorageMock.config)).toMatchObject({
+			configVersion: CURRENT_CONFIG_VERSION,
+			lat: '40.7128',
+			lon: '-74.0060',
+		})
 		expect(result.current.config.lat).toBe('40.7128')
 		expect(result.current.config.lon).toBe('-74.0060')
 	})

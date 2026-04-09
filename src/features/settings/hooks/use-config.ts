@@ -9,6 +9,11 @@ import { mergeObjects } from '../../../shared/lib/helpers'
 import { changeLocalisation, locales } from '../../../shared/lib/i18n'
 import { isLocationInAustralia } from '../../../shared/lib/location'
 import {
+	CONFIG_MIGRATION_STATE_STORAGE_KEY,
+	CURRENT_CONFIG_VERSION,
+	migrateConfig,
+} from '../migrations/config-migrations'
+import {
 	BOOLEAN_CONFIG_DEFAULTS,
 	BOOLEAN_CONFIG_SCHEMA_SHAPE,
 } from '../model/boolean-settings'
@@ -31,7 +36,13 @@ const configSchema = z.object({
 	...BOOLEAN_CONFIG_SCHEMA_SHAPE,
 })
 
+const persistedConfigSchema = configSchema.extend({
+	configVersion: z.literal(CURRENT_CONFIG_VERSION),
+})
+
 export type Config = z.infer<typeof configSchema>
+
+type PersistedConfig = z.infer<typeof persistedConfigSchema>
 
 const initialState: Config = {
 	lang: 'en',
@@ -48,100 +59,63 @@ const initialState: Config = {
 const useIsomorphicLayoutEffect =
 	typeof window === 'undefined' ? useEffect : useLayoutEffect
 
-const isTemperatureUnit = (value: unknown): value is TemperatureUnit =>
-	Object.values(TemperatureUnit).includes(value as TemperatureUnit)
+const toPersistedConfig = (config: Config): PersistedConfig => ({
+	...config,
+	configVersion: CURRENT_CONFIG_VERSION,
+})
 
-const isUnitSystem = (value: unknown): value is UnitSystem =>
-	Object.values(UnitSystem).includes(value as UnitSystem)
-
-const getLegacyUnitPreferences = (parsed: unknown) => {
-	if (
-		typeof parsed !== 'object' ||
-		parsed === null ||
-		!('useMetric' in parsed)
-	) {
-		return null
-	}
-
-	return parsed.useMetric === false
-		? {
-				temperatureUnit: TemperatureUnit.Fahrenheit,
-				unitSystem: UnitSystem.Imperial,
-			}
-		: {
-				temperatureUnit: TemperatureUnit.Celsius,
-				unitSystem: UnitSystem.Metric,
-			}
-}
-
-const mergeStoredConfig = (parsed: unknown) => {
-	const parsedObject =
-		typeof parsed === 'object' && parsed !== null ? parsed : {}
-	const merged = mergeObjects(parsedObject, initialState) as Config
-	const legacyUnitPreferences = getLegacyUnitPreferences(parsed)
-	const parsedTemperatureUnit =
-		typeof parsed === 'object' &&
-		parsed !== null &&
-		'temperatureUnit' in parsed &&
-		isTemperatureUnit(parsed.temperatureUnit)
-			? parsed.temperatureUnit
-			: null
-	const parsedUnitSystem =
-		typeof parsed === 'object' &&
-		parsed !== null &&
-		'unitSystem' in parsed &&
-		isUnitSystem(parsed.unitSystem)
-			? parsed.unitSystem
-			: null
-
-	return {
-		...merged,
-		temperatureUnit:
-			parsedTemperatureUnit ??
-			legacyUnitPreferences?.temperatureUnit ??
-			initialState.temperatureUnit,
-		unitSystem:
-			parsedUnitSystem ??
-			legacyUnitPreferences?.unitSystem ??
-			initialState.unitSystem,
-	}
-}
-
-const getInitialConfig = (): Config => {
+const persistMigrationState = (state: unknown) => {
 	if (typeof window === 'undefined') {
-		return initialState
+		return
+	}
+
+	localStorage.setItem(
+		CONFIG_MIGRATION_STATE_STORAGE_KEY,
+		JSON.stringify(state),
+	)
+}
+
+const getInitialConfig = (): {
+	config: Config
+	nextStoredConfig: null | PersistedConfig
+} => {
+	if (typeof window === 'undefined') {
+		return { config: initialState, nextStoredConfig: null }
 	}
 
 	try {
 		const storedData = localStorage.getItem('config')
 		if (!storedData) {
-			return initialState
+			return { config: initialState, nextStoredConfig: null }
 		}
 
 		const parsed = JSON.parse(storedData)
-		const objectShapesMatch = configSchema.safeParse(parsed)
+		const migrated = migrateConfig({ input: parsed })
+		persistMigrationState(migrated.state)
 
-		if (objectShapesMatch.success) {
-			return parsed
+		if (!migrated.success || !migrated.config) {
+			console.warn('Failed to migrate config in localStorage, using defaults')
+			return { config: initialState, nextStoredConfig: null }
 		}
 
-		const merged = mergeStoredConfig(parsed)
-		const hasAirQualityOverrideKey =
-			typeof parsed === 'object' &&
-			parsed !== null &&
-			'useAirQualityUvOverride' in parsed
-
-		if (
-			!hasAirQualityOverrideKey &&
-			isLocationInAustralia(merged.lat, merged.lon)
-		) {
-			return { ...merged, useAirQualityUvOverride: true }
+		const persistedMatch = persistedConfigSchema.safeParse(migrated.config)
+		if (persistedMatch.success) {
+			const { configVersion: _, ...persistedConfig } = persistedMatch.data
+			return {
+				config: persistedConfig,
+				nextStoredConfig: migrated.shouldPersist ? persistedMatch.data : null,
+			}
 		}
 
-		return merged
+		const merged = mergeObjects(migrated.config, initialState) as Config
+
+		return {
+			config: merged,
+			nextStoredConfig: toPersistedConfig(merged),
+		}
 	} catch {
 		console.warn('Invalid config in localStorage, using defaults')
-		return initialState
+		return { config: initialState, nextStoredConfig: null }
 	}
 }
 
@@ -165,7 +139,7 @@ const persistConfigInput = (input: Config) => {
 		? { ...input, useAirQualityUvOverride: true }
 		: input
 
-	localStorage.setItem('config', JSON.stringify(nextConfig))
+	localStorage.setItem('config', JSON.stringify(toPersistedConfig(nextConfig)))
 
 	return {
 		nextConfig,
@@ -180,7 +154,10 @@ export const useConfig = () => {
 	const inputRef = useRef(initialState)
 
 	useIsomorphicLayoutEffect(() => {
-		const storedConfig = getInitialConfig()
+		const { config: storedConfig, nextStoredConfig } = getInitialConfig()
+		if (nextStoredConfig) {
+			localStorage.setItem('config', JSON.stringify(nextStoredConfig))
+		}
 		inputRef.current = storedConfig
 		setConfig(storedConfig)
 		setInputState(storedConfig)
@@ -203,7 +180,6 @@ export const useConfig = () => {
 		applyInputUpdate(nextInput)
 	}
 
-	// Handle language changes
 	useEffect(() => {
 		if (inputState.lang) {
 			changeLocalisation(inputState.lang)
