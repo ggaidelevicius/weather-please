@@ -95,6 +95,7 @@ const App = () => {
 		isEnabled: config.showSeasonalEvents,
 		isHydrated,
 		isOnboarded: isHydrated && isOnboarded,
+		seasonalEventOverride: config.seasonalEventOverride,
 	})
 
 	useEffect(() => {
@@ -138,6 +139,7 @@ const App = () => {
 					isSeasonalEventEnabled={isSeasonalEventEnabled}
 					key={day.day}
 					onToggleSeasonalEvent={toggleSeasonalEvent}
+					seasonalEventOverride={config.seasonalEventOverride}
 					showSeasonalEvents={canShowSeasonalEvents}
 					showSeasonalTileGlow={
 						config.showSeasonalTileGlow && !isSoftwareRenderer
@@ -215,7 +217,7 @@ const App = () => {
 				</motion.main>
 			</AnimatePresence>
 
-			<div className="fixed bottom-4 left-4">
+			<div className="fixed bottom-4 left-4 z-2">
 				<IdentifiedLocationIndicator
 					lat={config.lat}
 					locale={config.lang}

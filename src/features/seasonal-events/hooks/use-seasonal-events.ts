@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 
-import type { Hemisphere, SeasonalEventId } from '../core/types'
+import type {
+	Hemisphere,
+	SeasonalEventId,
+	SeasonalEventOverride,
+} from '../core/types'
 
+import { SEASONAL_EVENT_OVERRIDE_NONE } from '../core/types'
 import { isLikelySoftwareRenderer } from '../core/utils'
 
 type SeasonalEventsModule = typeof import('../core/seasonal-events-module')
@@ -12,6 +17,7 @@ type UseSeasonalEventsOptions = {
 	isEnabled: boolean
 	isHydrated?: boolean
 	isOnboarded?: boolean
+	seasonalEventOverride?: SeasonalEventOverride
 }
 
 let seasonalEventsModulePromise: null | Promise<SeasonalEventsModule> = null
@@ -30,6 +36,7 @@ export const useSeasonalEvents = ({
 	isEnabled,
 	isHydrated = true,
 	isOnboarded = true,
+	seasonalEventOverride = SEASONAL_EVENT_OVERRIDE_NONE,
 }: Readonly<UseSeasonalEventsOptions>) => {
 	const triggeredEvents = useRef<Set<SeasonalEventId>>(new Set())
 	const [dateKey, setDateKey] = useState(() => getDateKey(new Date()))
@@ -37,6 +44,8 @@ export const useSeasonalEvents = ({
 	const [activeEvent, setActiveEvent] = useState<null | SeasonalEventId>(null)
 	const shouldResolveActiveEvent = isHydrated && isEnabled && isOnboarded
 	const effectiveActiveEvent = shouldResolveActiveEvent ? activeEvent : null
+	const hasSeasonalEventOverride =
+		seasonalEventOverride !== SEASONAL_EVENT_OVERRIDE_NONE
 
 	useEffect(() => {
 		if (!shouldResolveActiveEvent) {
@@ -55,6 +64,7 @@ export const useSeasonalEvents = ({
 					date: activeDate,
 					enabledEvents,
 					hemisphere,
+					seasonalEventOverride,
 				})
 				setActiveEvent(nextActiveEvent)
 			} catch (error) {
@@ -68,7 +78,13 @@ export const useSeasonalEvents = ({
 		return () => {
 			hasCanceled = true
 		}
-	}, [activeDate, enabledEvents, hemisphere, shouldResolveActiveEvent])
+	}, [
+		activeDate,
+		enabledEvents,
+		hemisphere,
+		seasonalEventOverride,
+		shouldResolveActiveEvent,
+	])
 
 	useEffect(() => {
 		if (!shouldResolveActiveEvent) {
@@ -105,11 +121,16 @@ export const useSeasonalEvents = ({
 		if (!effectiveActiveEvent) {
 			return
 		}
-		if (triggeredEvents.current.has(effectiveActiveEvent)) {
+		if (
+			!hasSeasonalEventOverride &&
+			triggeredEvents.current.has(effectiveActiveEvent)
+		) {
 			return
 		}
 
-		triggeredEvents.current.add(effectiveActiveEvent)
+		if (!hasSeasonalEventOverride) {
+			triggeredEvents.current.add(effectiveActiveEvent)
+		}
 
 		let cleanup = () => {}
 		let hasCanceled = false
@@ -137,7 +158,7 @@ export const useSeasonalEvents = ({
 			hasCanceled = true
 			cleanup()
 		}
-	}, [effectiveActiveEvent])
+	}, [effectiveActiveEvent, hasSeasonalEventOverride])
 
 	return effectiveActiveEvent
 }

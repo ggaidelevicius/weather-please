@@ -9,6 +9,10 @@ import { mergeObjects } from '../../../shared/lib/helpers'
 import { changeLocalisation, locales } from '../../../shared/lib/i18n'
 import { isLocationInAustralia } from '../../../shared/lib/location'
 import {
+	SEASONAL_EVENT_OVERRIDE_NONE,
+	SeasonalEventId,
+} from '../../seasonal-events/core/types'
+import {
 	CONFIG_MIGRATION_STATE_STORAGE_KEY,
 	CURRENT_CONFIG_VERSION,
 	migrateConfig,
@@ -31,6 +35,10 @@ const configSchema = z.object({
 		.regex(
 			/^(\+|-)?(?:180(?:\.0{1,6})?|((1[0-7]\d)|([1-9]?\d))(?:\.\d{1,6})?)$/,
 		),
+	seasonalEventOverride: z.union([
+		z.literal(SEASONAL_EVENT_OVERRIDE_NONE),
+		z.enum(SeasonalEventId),
+	]),
 	temperatureUnit: z.enum(TemperatureUnit),
 	unitSystem: z.enum(UnitSystem),
 	...BOOLEAN_CONFIG_SCHEMA_SHAPE,
@@ -48,6 +56,7 @@ const initialState: Config = {
 	lang: 'en',
 	lat: '',
 	lon: '',
+	seasonalEventOverride: SEASONAL_EVENT_OVERRIDE_NONE,
 	...BOOLEAN_CONFIG_DEFAULTS,
 	daysToRetrieve: '3',
 	identifier: TileIdentifier.Day,

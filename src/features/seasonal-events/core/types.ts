@@ -33,7 +33,7 @@ export enum SeasonalEventId {
 	WinterSolstice = 'winter-solstice',
 }
 
-import type { ReactElement } from 'react'
+export const SEASONAL_EVENT_OVERRIDE_NONE = 'none' as const
 
 export type SeasonalEvent = {
 	details?: SeasonalEventDetails
@@ -43,12 +43,18 @@ export type SeasonalEvent = {
 	tileAccent?: SeasonalEventTileAccent
 }
 
+import type { ReactElement } from 'react'
+
 export type SeasonalEventContext = {
 	date: Date
 	hemisphere: Hemisphere
 }
 
 export type SeasonalEventDetails = () => ReactElement
+
+export type SeasonalEventOverride =
+	| SeasonalEventId
+	| typeof SEASONAL_EVENT_OVERRIDE_NONE
 
 export type SeasonalEventTileAccent = {
 	colors: readonly string[]

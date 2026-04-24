@@ -1,6 +1,7 @@
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { SEASONAL_EVENT_OVERRIDE_NONE } from '../../../seasonal-events/core/types'
 import {
 	CONFIG_MIGRATION_STATE_STORAGE_KEY,
 	CURRENT_CONFIG_VERSION,
@@ -62,6 +63,7 @@ const mockValidConfig: Config = {
 	lat: '40.7128',
 	lon: '-74.0060',
 	periodicLocationUpdate: false,
+	seasonalEventOverride: SEASONAL_EVENT_OVERRIDE_NONE,
 	showAlerts: true,
 	showAutumnEquinoxEvent: true,
 	showChristmasEvent: true,
@@ -125,6 +127,7 @@ describe('useConfig - Core Functionality', () => {
 			lat: '',
 			lon: '',
 			periodicLocationUpdate: false,
+			seasonalEventOverride: SEASONAL_EVENT_OVERRIDE_NONE,
 			showAlerts: true,
 			showAutumnEquinoxEvent: true,
 			showChristmasEvent: true,

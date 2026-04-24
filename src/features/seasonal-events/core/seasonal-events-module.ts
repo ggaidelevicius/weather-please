@@ -27,8 +27,10 @@ import { valentinesEvent } from '../events/valentines'
 import { winterSolsticeEvent } from '../events/winter-solstice'
 import {
 	Hemisphere,
+	SEASONAL_EVENT_OVERRIDE_NONE,
 	type SeasonalEvent,
 	SeasonalEventId,
+	type SeasonalEventOverride,
 	type SeasonalEventTileAccent,
 } from './types'
 
@@ -66,14 +68,45 @@ const seasonalEventMap = new Map<SeasonalEventId, SeasonalEvent>(
 )
 
 export type { SeasonalEventTileAccent } from './types'
-export { Hemisphere, SeasonalEventId } from './types'
+export {
+	Hemisphere,
+	SEASONAL_EVENT_OVERRIDE_NONE,
+	SeasonalEventId,
+} from './types'
+
+export const getSeasonalEventById = (
+	eventId: SeasonalEventId,
+): null | SeasonalEvent => seasonalEventMap.get(eventId) ?? null
+
+const getOverriddenSeasonalEvent = (
+	seasonalEventOverride?: SeasonalEventOverride,
+) => {
+	if (
+		!seasonalEventOverride ||
+		seasonalEventOverride === SEASONAL_EVENT_OVERRIDE_NONE
+	) {
+		return null
+	}
+
+	return getSeasonalEventById(seasonalEventOverride)
+}
 
 export const getSeasonalEventForDate = (params: {
 	date: Date
 	enabledEvents?: Set<SeasonalEventId>
 	hemisphere?: Hemisphere
+	seasonalEventOverride?: SeasonalEventOverride
 }): null | SeasonalEvent => {
-	const { date, enabledEvents, hemisphere = Hemisphere.Northern } = params
+	const {
+		date,
+		enabledEvents,
+		hemisphere = Hemisphere.Northern,
+		seasonalEventOverride,
+	} = params
+	const overriddenEvent = getOverriddenSeasonalEvent(seasonalEventOverride)
+	if (overriddenEvent) {
+		return overriddenEvent
+	}
 
 	for (const event of seasonalEvents) {
 		if (enabledEvents && !enabledEvents.has(event.id)) {
@@ -91,6 +124,7 @@ export const getActiveSeasonalEvent = (params: {
 	date: Date
 	enabledEvents?: Set<SeasonalEventId>
 	hemisphere?: Hemisphere
+	seasonalEventOverride?: SeasonalEventOverride
 }): null | SeasonalEventId => {
 	const event = getSeasonalEventForDate(params)
 	return event ? event.id : null
@@ -110,6 +144,7 @@ export const getSeasonalTileAccent = (params: {
 	date: Date
 	enabledEvents?: Set<SeasonalEventId>
 	hemisphere?: Hemisphere
+	seasonalEventOverride?: SeasonalEventOverride
 }): null | SeasonalEventTileAccent => {
 	const event = getSeasonalEventForDate(params)
 	return event?.tileAccent ?? null

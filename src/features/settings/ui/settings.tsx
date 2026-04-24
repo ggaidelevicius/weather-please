@@ -8,6 +8,7 @@ import { Trans } from '@lingui/react/macro'
 import {
 	IconAlertTriangle,
 	IconCloud,
+	IconCode,
 	IconInfoCircle,
 	IconSettings,
 	IconShieldCheckFilled,
@@ -26,7 +27,11 @@ import { AlertVariant } from '../../../shared/ui/alert-variant'
 import { IconButton } from '../../../shared/ui/button'
 import { HelpPopover } from '../../../shared/ui/help-popover'
 import { Input, Select, Switch } from '../../../shared/ui/input'
-import { SeasonalEventId } from '../../seasonal-events/core/types'
+import {
+	SEASONAL_EVENT_OVERRIDE_NONE,
+	SeasonalEventId,
+	type SeasonalEventOverride,
+} from '../../seasonal-events/core/types'
 import { isLikelySoftwareRenderer } from '../../seasonal-events/core/utils'
 import { SEASONAL_EVENT_TOGGLE_KEY_BY_ID } from '../model/seasonal-event-toggle-map'
 import { TileIdentifier } from '../model/tile-identifier'
@@ -56,7 +61,12 @@ type SettingsSectionDefinition = {
 	title: ReactNode
 }
 
-type SettingsSectionId = 'about' | 'general' | 'seasonal' | 'weather'
+type SettingsSectionId =
+	| 'about'
+	| 'developer'
+	| 'general'
+	| 'seasonal'
+	| 'weather'
 
 type SwitchDefinition<K extends BooleanConfigKey = BooleanConfigKey> = {
 	key: K
@@ -97,6 +107,11 @@ const SETTINGS_SECTIONS = [
 		icon: <IconInfoCircle aria-hidden size={18} />,
 		id: 'about',
 		title: <Trans>About</Trans>,
+	},
+	{
+		icon: <IconCode aria-hidden size={18} />,
+		id: 'developer',
+		title: <Trans>Developer</Trans>,
 	},
 ] as const satisfies ReadonlyArray<SettingsSectionDefinition>
 
@@ -140,6 +155,36 @@ const SEASONAL_EVENT_LABELS = {
 		<Trans>Show Valentine&apos;s Day event</Trans>
 	),
 	[SeasonalEventId.WinterSolstice]: <Trans>Show Winter Solstice event</Trans>,
+} as const satisfies Record<SeasonalEventId, ReactNode>
+
+const SEASONAL_EVENT_OPTION_LABELS = {
+	[SeasonalEventId.AutumnEquinox]: <Trans>Autumn Equinox</Trans>,
+	[SeasonalEventId.ChristmasDay]: <Trans>Christmas Day</Trans>,
+	[SeasonalEventId.DayOfTheDead]: <Trans>Day of the Dead</Trans>,
+	[SeasonalEventId.Diwali]: <Trans>Diwali</Trans>,
+	[SeasonalEventId.EarthDay]: <Trans>Earth Day</Trans>,
+	[SeasonalEventId.Easter]: <Trans>Easter</Trans>,
+	[SeasonalEventId.EidAlAdha]: <Trans>Eid al-Adha</Trans>,
+	[SeasonalEventId.EidAlFitr]: <Trans>Eid al-Fitr</Trans>,
+	[SeasonalEventId.EtaAquariids]: <Trans>Eta Aquariids meteor shower</Trans>,
+	[SeasonalEventId.EventHorizonDay]: <Trans>Event Horizon Day</Trans>,
+	[SeasonalEventId.Geminids]: <Trans>Geminids meteor shower</Trans>,
+	[SeasonalEventId.Halloween]: <Trans>Halloween</Trans>,
+	[SeasonalEventId.Hanukkah]: <Trans>Hanukkah</Trans>,
+	[SeasonalEventId.Holi]: <Trans>Holi</Trans>,
+	[SeasonalEventId.Leonids]: <Trans>Leonids meteor shower</Trans>,
+	[SeasonalEventId.LunarNewYear]: <Trans>Lunar New Year</Trans>,
+	[SeasonalEventId.Lyrids]: <Trans>Lyrids meteor shower</Trans>,
+	[SeasonalEventId.NewYearsDay]: <Trans>New Year&apos;s Day</Trans>,
+	[SeasonalEventId.Orionids]: <Trans>Orionids meteor shower</Trans>,
+	[SeasonalEventId.Perseids]: <Trans>Perseids meteor shower</Trans>,
+	[SeasonalEventId.Quadrantids]: <Trans>Quadrantids meteor shower</Trans>,
+	[SeasonalEventId.SpringEquinox]: <Trans>Spring Equinox</Trans>,
+	[SeasonalEventId.SummerSolstice]: <Trans>Summer Solstice</Trans>,
+	[SeasonalEventId.TotalLunarEclipse]: <Trans>Total lunar eclipse</Trans>,
+	[SeasonalEventId.TotalSolarEclipse]: <Trans>Total solar eclipse</Trans>,
+	[SeasonalEventId.ValentinesDay]: <Trans>Valentine&apos;s Day</Trans>,
+	[SeasonalEventId.WinterSolstice]: <Trans>Winter Solstice</Trans>,
 } as const satisfies Record<SeasonalEventId, ReactNode>
 
 const SEASONAL_EVENT_SECTIONS = [
@@ -196,6 +241,10 @@ const SEASONAL_EVENT_SECTIONS = [
 	},
 ] as const satisfies ReadonlyArray<SeasonalEventSection>
 
+const SEASONAL_EVENT_OPTIONS = SEASONAL_EVENT_SECTIONS.flatMap(
+	(section) => section.eventIds,
+)
+
 const ATTRIBUTION_LINKS = [
 	{
 		href: 'https://open-meteo.com/',
@@ -231,6 +280,24 @@ const getUnitSystemOptions = () => [
 	},
 ]
 
+const getSeasonalEventOverrideOptions = () => [
+	{
+		label: <Trans>None</Trans>,
+		value: SEASONAL_EVENT_OVERRIDE_NONE,
+	},
+	...SEASONAL_EVENT_OPTIONS.map((eventId) => ({
+		label: SEASONAL_EVENT_OPTION_LABELS[eventId],
+		value: eventId,
+	})),
+]
+
+const getVisibleSettingsSections = ({
+	isDeveloperMode,
+}: Readonly<{ isDeveloperMode: boolean }>) =>
+	isDeveloperMode
+		? SETTINGS_SECTIONS
+		: SETTINGS_SECTIONS.filter((section) => section.id !== 'developer')
+
 interface SettingsProps {
 	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
 	input: Config
@@ -241,15 +308,17 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 		useState<SettingsSectionId>('general')
 	const [isOpen, setIsOpen] = useState(false)
 	const [hasSoftwareRenderer] = useState(isLikelySoftwareRenderer)
+	const isDeveloperMode = process.env.NODE_ENV === 'development'
 	const localeKeys = Object.keys(locales) as LocaleKey[]
+	const settingsSections = getVisibleSettingsSections({ isDeveloperMode })
 	const platformReviewLink =
 		typeof navigator !== 'undefined' &&
 		navigator.userAgent.toLowerCase().includes('firefox/')
 			? 'https://addons.mozilla.org/en-US/firefox/addon/weather-please/reviews/'
 			: 'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn/reviews'
 	const activeSectionDefinition =
-		SETTINGS_SECTIONS.find((section) => section.id === activeSection) ??
-		SETTINGS_SECTIONS[0]
+		settingsSections.find((section) => section.id === activeSection) ??
+		settingsSections[0]
 	const contentProps = {
 		handleChange,
 		hasSoftwareRenderer,
@@ -304,7 +373,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 									aria-label="Settings sections"
 									className="mt-6 grid grid-cols-2 gap-2 md:flex md:flex-col"
 								>
-									{SETTINGS_SECTIONS.map((section) => (
+									{settingsSections.map((section) => (
 										<button
 											aria-pressed={section.id === activeSection}
 											className={
@@ -364,6 +433,10 @@ const renderActiveSection = ({
 					platformReviewLink={platformReviewLink}
 				/>
 			)
+		case 'developer':
+			return (
+				<DeveloperSettingsSection handleChange={handleChange} input={input} />
+			)
 		case 'general':
 			return (
 				<GeneralSettingsSection
@@ -418,6 +491,31 @@ const SettingsSectionLayout = ({
 	children,
 }: Readonly<{ children: ReactNode }>) => (
 	<div className="space-y-8">{children}</div>
+)
+
+const DeveloperSettingsSection = ({
+	handleChange,
+	input,
+}: Pick<SettingsContentProps, 'handleChange' | 'input'>) => (
+	<SettingsSectionLayout>
+		<SettingsSubsection
+			bodyClassName="space-y-4"
+			title={<Trans>Overrides</Trans>}
+		>
+			<Select
+				label={<Trans>Seasonal event override</Trans>}
+				layout={SETTINGS_FIELD_LAYOUT}
+				onChange={(e) => {
+					handleChange(
+						'seasonalEventOverride',
+						e.target.value as SeasonalEventOverride,
+					)
+				}}
+				options={getSeasonalEventOverrideOptions()}
+				value={input.seasonalEventOverride}
+			/>
+		</SettingsSubsection>
+	</SettingsSectionLayout>
 )
 
 const GeneralSettingsSection = ({

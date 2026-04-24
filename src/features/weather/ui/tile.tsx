@@ -13,7 +13,10 @@ import {
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-import type { SeasonalEvent } from '../../seasonal-events/core/types'
+import type {
+	SeasonalEvent,
+	SeasonalEventOverride,
+} from '../../seasonal-events/core/types'
 
 import { SeasonalEventModal } from '../../../shared/ui/seasonal-event-modal'
 import { Hemisphere, SeasonalEventId } from '../../seasonal-events/core/types'
@@ -223,6 +226,7 @@ interface TileProps {
 	min: number
 	onToggleSeasonalEvent: (eventId: SeasonalEventId, enabled: boolean) => void
 	rain: number
+	seasonalEventOverride?: SeasonalEventOverride
 	showSeasonalEvents: boolean
 	showSeasonalTileGlow: boolean
 	temperatureUnit: TemperatureUnit
@@ -263,6 +267,7 @@ export const Tile = ({
 	min,
 	onToggleSeasonalEvent,
 	rain,
+	seasonalEventOverride,
 	showSeasonalEvents,
 	showSeasonalTileGlow,
 	temperatureUnit,
@@ -306,6 +311,7 @@ export const Tile = ({
 					date: new Date(day * 1000),
 					enabledEvents: enabledSeasonalEvents,
 					hemisphere,
+					seasonalEventOverride,
 				})
 				setSeasonalEvent(nextSeasonalEvent)
 			} catch (error) {
@@ -319,7 +325,13 @@ export const Tile = ({
 		return () => {
 			hasCanceled = true
 		}
-	}, [day, enabledSeasonalEvents, hemisphere, showSeasonalEvents])
+	}, [
+		day,
+		enabledSeasonalEvents,
+		hemisphere,
+		seasonalEventOverride,
+		showSeasonalEvents,
+	])
 
 	const seasonalAccent =
 		showSeasonalTileGlow && seasonalEvent

@@ -1,8 +1,14 @@
 import type { ReactNode } from 'react'
 
-import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import type { Config } from '../../hooks/use-config'
+
+import {
+	SEASONAL_EVENT_OVERRIDE_NONE,
+	SeasonalEventId,
+} from '../../../seasonal-events/core/types'
 import { BOOLEAN_CONFIG_DEFAULTS } from '../../model/boolean-settings'
 import { TileIdentifier } from '../../model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../model/unit-system'
@@ -12,8 +18,16 @@ vi.mock('@lingui/react/macro', () => ({
 	Trans: ({ children }: { children: ReactNode }) => children,
 }))
 
-const renderSettings = () =>
-	render(<Settings handleChange={vi.fn()} input={createConfig()} />)
+const renderSettings = ({
+	handleChange = vi.fn(),
+}: {
+	handleChange?: (k: keyof Config, v: Config[keyof Config]) => void
+} = {}) =>
+	render(<Settings handleChange={handleChange} input={createConfig()} />)
+
+afterEach(() => {
+	vi.unstubAllEnvs()
+})
 
 describe('Settings modal navigation', () => {
 	it('shows one section at a time and switches content from the left rail', () => {
@@ -35,6 +49,44 @@ describe('Settings modal navigation', () => {
 		expect(screen.getByText(/Leave a review/i)).toBeInTheDocument()
 		expect(screen.queryByLabelText('Latitude')).not.toBeInTheDocument()
 		expect(screen.queryByLabelText('Language')).not.toBeInTheDocument()
+	})
+
+	it('only shows the developer section in development mode', () => {
+		renderSettings()
+
+		fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
+
+		expect(
+			screen.queryByRole('button', { name: 'Developer' }),
+		).not.toBeInTheDocument()
+
+		cleanup()
+		vi.stubEnv('NODE_ENV', 'development')
+		renderSettings()
+
+		fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
+
+		expect(
+			screen.getByRole('button', { name: 'Developer' }),
+		).toBeInTheDocument()
+	})
+
+	it('updates the seasonal event override from the developer section', () => {
+		vi.stubEnv('NODE_ENV', 'development')
+		const handleChange = vi.fn()
+
+		renderSettings({ handleChange })
+
+		fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
+		fireEvent.click(screen.getByRole('button', { name: 'Developer' }))
+		fireEvent.change(screen.getByLabelText('Seasonal event override'), {
+			target: { value: SeasonalEventId.ChristmasDay },
+		})
+
+		expect(handleChange).toHaveBeenCalledWith(
+			'seasonalEventOverride',
+			SeasonalEventId.ChristmasDay,
+		)
 	})
 
 	it('shows the CAMS explainer in a help popover', () => {
@@ -67,6 +119,7 @@ const createConfig = () => ({
 	lang: 'en' as const,
 	lat: '-31.9523',
 	lon: '115.8613',
+	seasonalEventOverride: SEASONAL_EVENT_OVERRIDE_NONE,
 	temperatureUnit: TemperatureUnit.Celsius,
 	unitSystem: UnitSystem.Metric,
 })
