@@ -1,6 +1,11 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { fetchWeatherResponse } from '../weather-api'
+import type { WeatherResponse } from '../weather-api'
+
+import {
+	fetchWeatherResponse,
+	mapWeatherResponseToNext24HoursData,
+} from '../weather-api'
 
 describe('fetchWeatherResponse', () => {
 	it('includes the upstream HTTP status code in weather fetch errors', async () => {
@@ -19,4 +24,57 @@ describe('fetchWeatherResponse', () => {
 
 		fetchMock.mockRestore()
 	})
+})
+
+describe('mapWeatherResponseToNext24HoursData', () => {
+	it('maps the current hour through the next 24 hours', () => {
+		const data = createWeatherResponse()
+
+		const result = mapWeatherResponseToNext24HoursData({
+			currentHour: 3,
+			data,
+		})
+
+		expect(result).toHaveLength(25)
+		expect(result[0]).toEqual({
+			apparentTemperature: 13,
+			precipitation: 3,
+			precipitationProbability: 6,
+			temperature: 23,
+			time: 3,
+			uv: 3,
+			visibility: 997,
+			weatherCode: 3,
+			wind: 13,
+			windGust: 23,
+		})
+		expect(result.at(-1)?.time).toBe(27)
+	})
+})
+
+const createWeatherResponse = (): WeatherResponse => ({
+	daily: {
+		precipitation_probability_max: [10],
+		temperature_2m_max: [30],
+		temperature_2m_min: [20],
+		time: [0],
+		uv_index_max: [8],
+		weathercode: [1],
+		windspeed_10m_max: [15],
+	},
+	hourly: {
+		apparent_temperature: Array.from({ length: 30 }, (_, index) => index + 10),
+		precipitation: Array.from({ length: 30 }, (_, index) => index),
+		precipitation_probability: Array.from(
+			{ length: 30 },
+			(_, index) => index * 2,
+		),
+		temperature_2m: Array.from({ length: 30 }, (_, index) => index + 20),
+		time: Array.from({ length: 30 }, (_, index) => index),
+		uv_index: Array.from({ length: 30 }, (_, index) => index),
+		visibility: Array.from({ length: 30 }, (_, index) => 1000 - index),
+		weathercode: Array.from({ length: 30 }, (_, index) => index),
+		windgusts_10m: Array.from({ length: 30 }, (_, index) => index + 20),
+		windspeed_10m: Array.from({ length: 30 }, (_, index) => index + 10),
+	},
 })

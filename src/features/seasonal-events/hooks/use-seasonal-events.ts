@@ -6,6 +6,7 @@ import type {
 	SeasonalEventOverride,
 } from '../core/types'
 
+import { applySeasonalEventCanvasBlur } from '../core/effect-canvas-blur'
 import { SEASONAL_EVENT_OVERRIDE_NONE } from '../core/types'
 import { isLikelySoftwareRenderer } from '../core/utils'
 
@@ -18,6 +19,7 @@ type UseSeasonalEventsOptions = {
 	isHydrated?: boolean
 	isOnboarded?: boolean
 	seasonalEventOverride?: SeasonalEventOverride
+	shouldBlurEffects?: boolean
 }
 
 let seasonalEventsModulePromise: null | Promise<SeasonalEventsModule> = null
@@ -37,6 +39,7 @@ export const useSeasonalEvents = ({
 	isHydrated = true,
 	isOnboarded = true,
 	seasonalEventOverride = SEASONAL_EVENT_OVERRIDE_NONE,
+	shouldBlurEffects = false,
 }: Readonly<UseSeasonalEventsOptions>) => {
 	const triggeredEvents = useRef<Set<SeasonalEventId>>(new Set())
 	const [dateKey, setDateKey] = useState(() => getDateKey(new Date()))
@@ -159,6 +162,25 @@ export const useSeasonalEvents = ({
 			cleanup()
 		}
 	}, [effectiveActiveEvent, hasSeasonalEventOverride])
+
+	useEffect(() => {
+		if (!effectiveActiveEvent || typeof document === 'undefined') {
+			return
+		}
+
+		const applyCurrentBlurState = () => {
+			applySeasonalEventCanvasBlur({ shouldBlurEffects })
+		}
+		const mutationObserver = new MutationObserver(applyCurrentBlurState)
+
+		applyCurrentBlurState()
+		mutationObserver.observe(document.body, { childList: true })
+
+		return () => {
+			mutationObserver.disconnect()
+			applySeasonalEventCanvasBlur({ shouldBlurEffects: false })
+		}
+	}, [effectiveActiveEvent, shouldBlurEffects])
 
 	return effectiveActiveEvent
 }

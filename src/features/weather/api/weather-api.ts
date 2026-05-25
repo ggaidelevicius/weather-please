@@ -4,6 +4,8 @@ import { isAbortError } from '../model/error-names'
 import {
 	AIR_QUALITY_FORECAST_DAYS,
 	type Data,
+	type Next24HoursData,
+	NEXT_24_HOURS_FORECAST_HOURS,
 	WEATHER_FORECAST_DAYS,
 } from '../model/types'
 
@@ -22,10 +24,14 @@ const weatherResponseSchema = z
 			windspeed_10m_max: z.array(z.number()).min(1),
 		}),
 		hourly: z.object({
+			apparent_temperature: z.array(z.number()).min(1),
 			precipitation: z.array(z.number()).min(1),
+			precipitation_probability: z.array(z.number()).min(1),
+			temperature_2m: z.array(z.number()).min(1),
 			time: z.array(z.number()).min(1),
 			uv_index: z.array(z.number()).min(1),
 			visibility: z.array(z.number()).min(1),
+			weathercode: z.array(z.number()).min(1),
 			windgusts_10m: z.array(z.number()).min(1),
 			windspeed_10m: z.array(z.number()).min(1),
 		}),
@@ -215,7 +221,7 @@ export const fetchWeatherResponse = async ({
 }): Promise<WeatherResponse> => {
 	try {
 		const encodedTimeZone = encodeURIComponent(timeZone)
-		const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=${encodedTimeZone}&hourly=precipitation,uv_index,windspeed_10m,visibility,windgusts_10m&forecast_days=${WEATHER_FORECAST_DAYS}`
+		const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=${encodedTimeZone}&hourly=temperature_2m,apparent_temperature,precipitation,precipitation_probability,uv_index,windspeed_10m,visibility,weathercode,windgusts_10m&forecast_days=${WEATHER_FORECAST_DAYS}`
 
 		const response = await fetch(weatherUrl, { signal })
 		if (!response.ok) {
@@ -278,3 +284,39 @@ export const mapWeatherResponseToForecastData = (data: WeatherResponse): Data =>
 		uv: data.daily.uv_index_max[index],
 		wind: data.daily.windspeed_10m_max[index],
 	}))
+
+export const mapWeatherResponseToNext24HoursData = ({
+	currentHour,
+	data,
+}: {
+	currentHour: number
+	data: WeatherResponse
+}): Next24HoursData => {
+	const start = Math.max(0, currentHour)
+	const end = Math.min(
+		data.hourly.time.length,
+		start + NEXT_24_HOURS_FORECAST_HOURS,
+	)
+	const next24HoursData: Next24HoursData = []
+
+	for (let index = start; index < end; index += 1) {
+		const point = {
+			apparentTemperature: data.hourly.apparent_temperature[index],
+			precipitation: data.hourly.precipitation[index],
+			precipitationProbability: data.hourly.precipitation_probability[index],
+			temperature: data.hourly.temperature_2m[index],
+			time: data.hourly.time[index],
+			uv: data.hourly.uv_index[index],
+			visibility: data.hourly.visibility[index],
+			weatherCode: data.hourly.weathercode[index],
+			wind: data.hourly.windspeed_10m[index],
+			windGust: data.hourly.windgusts_10m[index],
+		}
+
+		if (Object.values(point).every(Number.isFinite)) {
+			next24HoursData.push(point)
+		}
+	}
+
+	return next24HoursData
+}

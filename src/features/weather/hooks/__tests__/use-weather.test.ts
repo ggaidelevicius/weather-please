@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react'
+import { renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useWeather } from '../use-weather'
@@ -59,6 +59,7 @@ describe('useWeather - Core Functionality', () => {
 		const { result } = renderHook(() => useWeather('', '', 0, false))
 
 		expect(result.current.weatherData).toEqual([])
+		expect(result.current.next24HoursData).toEqual([])
 		expect(result.current.alertData).toEqual({
 			hoursOfExtremeUv: Array(13).fill(false),
 			hoursOfLowVisibility: Array(25).fill(false),
@@ -111,10 +112,28 @@ describe('useWeather - Core Functionality', () => {
 				precipitation: { flag: false, value: 5, zeroCount: 0 },
 			},
 		}
+		const cachedNext24HoursData = [
+			{
+				apparentTemperature: 21,
+				precipitation: 0,
+				precipitationProbability: 10,
+				temperature: 22,
+				time: Math.floor(now.getTime() / 1000),
+				uv: 4,
+				visibility: 10_000,
+				weatherCode: 1,
+				wind: 15,
+				windGust: 20,
+			},
+		]
 
 		const lastUpdated = now.toISOString()
 
 		localStorageMock.setItem('data', JSON.stringify(cachedData))
+		localStorageMock.setItem(
+			'next24HoursData',
+			JSON.stringify(cachedNext24HoursData),
+		)
 		localStorageMock.setItem('alerts', JSON.stringify(cachedAlerts))
 		localStorageMock.setItem('lastUpdated', lastUpdated)
 		localStorageMock.setItem('cachedLat', '40.7128')
@@ -127,9 +146,49 @@ describe('useWeather - Core Functionality', () => {
 		)
 
 		expect(result.current.weatherData).toEqual(cachedData)
+		expect(result.current.next24HoursData).toEqual(cachedNext24HoursData)
 		expect(result.current.alertData).toEqual(cachedAlerts)
 		expect(result.current.isLoading).toBe(false)
 		expect(fetchMock).not.toHaveBeenCalled()
+	})
+
+	it('refreshes cached data when next 24 hours data is missing', async () => {
+		const now = new Date()
+		const cachedData = [
+			{
+				day: now.getTime(),
+				description: 1,
+				max: 30,
+				min: 20,
+				rain: 10,
+				uv: 9,
+				wind: 15,
+			},
+		]
+		const cachedAlerts = {
+			hoursOfExtremeUv: Array(13).fill(true),
+			hoursOfLowVisibility: Array(25).fill(false),
+			hoursOfStrongWind: Array(25).fill(false),
+			hoursOfStrongWindGusts: Array(25).fill(false),
+			totalPrecipitation: {
+				duration: Array(25).fill(true),
+				precipitation: { flag: false, value: 5, zeroCount: 0 },
+			},
+		}
+
+		localStorageMock.setItem('data', JSON.stringify(cachedData))
+		localStorageMock.setItem('alerts', JSON.stringify(cachedAlerts))
+		localStorageMock.setItem('lastUpdated', now.toISOString())
+		localStorageMock.setItem('cachedLat', '40.7128')
+		localStorageMock.setItem('cachedLon', '-74.0060')
+		localStorageMock.setItem('cachedTimeZone', userTimeZone)
+		localStorageMock.setItem('cachedUseAirQualityUv', JSON.stringify(false))
+
+		renderHook(() => useWeather('40.7128', '-74.0060', 0, false))
+
+		await waitFor(() => {
+			expect(fetchMock).toHaveBeenCalled()
+		})
 	})
 
 	it('accepts legacy lastUpdated format', () => {
