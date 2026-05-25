@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 export const ALERT_HOURS_UV = 13 // 12 hours + current hour
 export const ALERT_HOURS_GENERAL = 25 // 24 hours + current hour
+export const NEXT_24_HOURS_FORECAST_HOURS = 25 // 24 hours + current hour
 export const WEATHER_FORECAST_DAYS = 9
 export const AIR_QUALITY_FORECAST_DAYS = 7
 export const CACHE_REFRESH_INTERVAL_MS = 60 * 1000
@@ -24,6 +25,25 @@ export const dataSchema = z
 	.max(WEATHER_FORECAST_DAYS)
 
 export type Data = z.infer<typeof dataSchema>
+
+export const next24HoursDataSchema = z
+	.array(
+		z.object({
+			apparentTemperature: z.number(),
+			precipitation: z.number(),
+			precipitationProbability: z.number(),
+			temperature: z.number(),
+			time: z.number(),
+			uv: z.number(),
+			visibility: z.number(),
+			weatherCode: z.number(),
+			wind: z.number(),
+			windGust: z.number(),
+		}),
+	)
+	.max(NEXT_24_HOURS_FORECAST_HOURS)
+
+export type Next24HoursData = z.infer<typeof next24HoursDataSchema>
 
 export const alertSchema = z.object({
 	hoursOfExtremeUv: z.array(z.boolean()).length(ALERT_HOURS_UV),

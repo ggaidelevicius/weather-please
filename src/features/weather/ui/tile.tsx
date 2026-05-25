@@ -377,7 +377,7 @@ export const Tile = ({
 					type: 'spring',
 				},
 			}}
-			className="group relative will-change-[transform,opacity]"
+			className="group relative isolate will-change-[transform,opacity]"
 			exit={{ opacity: 0, scale: 0.95 }}
 			initial={{ opacity: 0, scale: 0.95 }}
 		>

@@ -6,6 +6,8 @@ import {
 	CACHE_VALIDITY_MS,
 	type Data,
 	dataSchema,
+	type Next24HoursData,
+	next24HoursDataSchema,
 } from './types'
 
 const LEGACY_LAST_UPDATED_PATTERN = /^\d{4}-\d{1,2}-\d{1,2}-\d{1,2}$/
@@ -66,6 +68,7 @@ const readStorageItem = <T>({
 export type CachedWeather = {
 	alertData: Alerts
 	lastUpdatedDate: Date
+	next24HoursData: Next24HoursData
 	weatherData: Data
 }
 
@@ -117,6 +120,12 @@ export const getCachedWeather = ({
 		parse: JSON.parse,
 		schema: dataSchema,
 	})
+	const storedNext24HoursData = readStorageItem({
+		key: 'next24HoursData',
+		normalize: (value) => JSON.stringify(value),
+		parse: JSON.parse,
+		schema: next24HoursDataSchema,
+	})
 
 	if (
 		!cachedLat ||
@@ -147,6 +156,7 @@ export const getCachedWeather = ({
 	return {
 		alertData: storedAlerts,
 		lastUpdatedDate,
+		next24HoursData: storedNext24HoursData ?? [],
 		weatherData: storedData,
 	}
 }
@@ -156,15 +166,18 @@ export const writeCachedWeather = ({
 	lastUpdatedDate,
 	lat,
 	lon,
+	next24HoursData,
 	shouldUseAirQualityUv,
 	timeZone,
 	weatherData,
 }: CacheIdentity & {
 	alertData: Alerts
 	lastUpdatedDate: Date
+	next24HoursData: Next24HoursData
 	weatherData: Data
 }) => {
 	localStorage.setItem('data', JSON.stringify(weatherData))
+	localStorage.setItem('next24HoursData', JSON.stringify(next24HoursData))
 	localStorage.setItem('alerts', JSON.stringify(alertData))
 	localStorage.setItem('cachedLat', lat)
 	localStorage.setItem('cachedLon', lon)

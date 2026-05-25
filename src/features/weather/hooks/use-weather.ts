@@ -9,6 +9,7 @@ import {
 	fetchWeatherResponse,
 	getUserTimeZone,
 	mapWeatherResponseToForecastData,
+	mapWeatherResponseToNext24HoursData,
 } from '../api/weather-api'
 import { createEmptyAlerts, deriveAlertsFromWeather } from '../model/alerts'
 import { getCachedWeather, writeCachedWeather } from '../model/cache'
@@ -18,17 +19,20 @@ import {
 	CACHE_REFRESH_DELAY_MINUTE,
 	CACHE_REFRESH_INTERVAL_MS,
 	type Data,
+	type Next24HoursData,
 } from '../model/types'
 
 type WeatherAction =
 	| {
 			alertData: Alerts
+			next24HoursData: Next24HoursData
 			shouldRefresh: boolean
 			type: 'hydrate-cache'
 			weatherData: [] | Data
 	  }
 	| {
 			alertData: Alerts
+			next24HoursData: Next24HoursData
 			type: 'fetch-success'
 			weatherData: [] | Data
 	  }
@@ -53,6 +57,7 @@ type WeatherAction =
 type WeatherState = {
 	alertData: Alerts
 	error: Error | null
+	next24HoursData: [] | Next24HoursData
 	refreshToken: number
 	status: AsyncStatus
 	usingCachedData: boolean
@@ -64,6 +69,7 @@ export type { Alerts } from '../model/types'
 const createInitialWeatherState = (): WeatherState => ({
 	alertData: createEmptyAlerts(),
 	error: null,
+	next24HoursData: [],
 	refreshToken: 0,
 	status: AsyncStatus.Idle,
 	usingCachedData: true,
@@ -86,6 +92,7 @@ const weatherReducer = (
 				...state,
 				alertData: action.alertData,
 				error: null,
+				next24HoursData: action.next24HoursData,
 				status: AsyncStatus.Success,
 				weatherData: action.weatherData,
 			}
@@ -94,6 +101,7 @@ const weatherReducer = (
 				...state,
 				alertData: action.alertData,
 				error: null,
+				next24HoursData: action.next24HoursData,
 				refreshToken: state.refreshToken + (action.shouldRefresh ? 1 : 0),
 				status: AsyncStatus.Success,
 				usingCachedData: !action.shouldRefresh,
@@ -178,18 +186,24 @@ export const useWeather = (
 				lastHourRef.current = currentHour
 
 				const weatherData = mapWeatherResponseToForecastData(responseData)
+				const next24HoursData = mapWeatherResponseToNext24HoursData({
+					currentHour,
+					data: responseData,
+				})
 				const alertData = deriveAlertsFromWeather(responseData, currentHour)
 				writeCachedWeather({
 					alertData,
 					lastUpdatedDate: now,
 					lat,
 					lon,
+					next24HoursData,
 					shouldUseAirQualityUv,
 					timeZone: userTimeZone,
 					weatherData,
 				})
 				dispatch({
 					alertData,
+					next24HoursData,
 					type: 'fetch-success',
 					weatherData,
 				})
@@ -270,10 +284,12 @@ export const useWeather = (
 		lastHourRef.current = cached.lastUpdatedDate.getHours()
 
 		const shouldRefresh =
-			now.getHours() !== cached.lastUpdatedDate.getHours() &&
-			now.getMinutes() >= CACHE_REFRESH_DELAY_MINUTE
+			(now.getHours() !== cached.lastUpdatedDate.getHours() &&
+				now.getMinutes() >= CACHE_REFRESH_DELAY_MINUTE) ||
+			cached.next24HoursData.length === 0
 		dispatch({
 			alertData: cached.alertData,
+			next24HoursData: cached.next24HoursData,
 			shouldRefresh,
 			type: 'hydrate-cache',
 			weatherData: cached.weatherData,
@@ -297,6 +313,7 @@ export const useWeather = (
 			!Boolean(lat) ||
 			!Boolean(lon) ||
 			(isLoadingStatus(state.status) && state.weatherData.length === 0),
+		next24HoursData: state.next24HoursData,
 		retry,
 		status: state.status,
 		weatherData: state.weatherData,
