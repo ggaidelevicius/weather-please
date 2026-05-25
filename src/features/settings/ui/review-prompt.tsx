@@ -28,7 +28,7 @@ export const ReviewPrompt = ({
 		new Date().getTime() - config.installed >= REVIEW_PROMPT_DELAY_MS
 	) {
 		return (
-			<div className="absolute top-5 right-5 z-2 flex flex-col rounded-lg bg-dark-700 p-5 text-white shadow-md">
+			<div className="fixed top-5 right-5 z-30 flex flex-col rounded-lg bg-dark-700 p-5 text-white shadow-md">
 				<p className="mb-2 text-lg font-medium">
 					<Trans>You&apos;ve been using Weather Please for a while</Trans>
 				</p>

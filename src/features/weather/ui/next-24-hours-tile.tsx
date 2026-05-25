@@ -228,6 +228,8 @@ export const Next24HoursDetailView = ({
 		const amountScale = getChartScale(precipitation, { minValue: 0 })
 		const peakProbability = getPeakPoint(precipitationProbability)
 		const peakAmount = getPeakPoint(precipitation)
+		const hasPrecipitationChance = peakProbability.value > 0
+		const hasMeasurablePrecipitation = peakAmount.value > 0
 
 		return (
 			<DetailViewShell
@@ -239,27 +241,47 @@ export const Next24HoursDetailView = ({
 					<>
 						<Metric
 							icon={<IconCloudRain aria-hidden size={18} />}
-							label={<Trans>Total rain</Trans>}
+							label={<Trans>Total precipitation</Trans>}
 							value={<Trans>{formatDecimal(sum(precipitation))} mm</Trans>}
 						/>
 						<Metric
 							icon={<IconCloudRain aria-hidden size={18} />}
-							label={<Trans>Peak chance</Trans>}
+							label={
+								hasPrecipitationChance ? (
+									<Trans>Peak chance</Trans>
+								) : (
+									<Trans>Precipitation chance</Trans>
+								)
+							}
 							value={
-								<Trans>
-									{Math.round(peakProbability.value)}% at{' '}
-									{formatHour(data[peakProbability.index]?.time)}
-								</Trans>
+								hasPrecipitationChance ? (
+									<Trans>
+										{Math.round(peakProbability.value)}% at{' '}
+										{formatHour(data[peakProbability.index]?.time)}
+									</Trans>
+								) : (
+									<Trans>No precipitation expected</Trans>
+								)
 							}
 						/>
 						<Metric
 							icon={<IconCloudRain aria-hidden size={18} />}
-							label={<Trans>Wettest hour</Trans>}
+							label={
+								hasMeasurablePrecipitation ? (
+									<Trans>Heaviest hour</Trans>
+								) : (
+									<Trans>Precipitation</Trans>
+								)
+							}
 							value={
-								<Trans>
-									{formatDecimal(peakAmount.value)} mm at{' '}
-									{formatHour(data[peakAmount.index]?.time)}
-								</Trans>
+								hasMeasurablePrecipitation ? (
+									<Trans>
+										{formatDecimal(peakAmount.value)} mm between{' '}
+										{formatHourInterval(times, peakAmount.index)}
+									</Trans>
+								) : (
+									<Trans>No measurable precipitation expected</Trans>
+								)
 							}
 						/>
 					</>
@@ -321,16 +343,6 @@ export const Next24HoursDetailView = ({
 								<Trans>
 									{Math.round(peakGust.value)} {windUnitLabel} at{' '}
 									{formatHour(data[peakGust.index]?.time)}
-								</Trans>
-							}
-						/>
-						<Metric
-							activeSeriesId={activeSeriesId}
-							icon={<IconWind aria-hidden size={18} />}
-							label={<Trans>Gust spread</Trans>}
-							value={
-								<Trans>
-									{Math.round(peakGust.value - peakWind.value)} {windUnitLabel}
 								</Trans>
 							}
 						/>
@@ -813,7 +825,7 @@ const PrecipitationChart = ({
 					points={probabilityPoints}
 					scale={probabilityScale}
 					seriesId="precipitationProbability"
-					seriesLabel="Rain chance"
+					seriesLabel="Precipitation chance"
 					strokeWidth={2.5}
 					times={times}
 					valueFormatter={(value) => `${Math.round(value)}%`}
@@ -1021,6 +1033,14 @@ const formatHour = (time?: number) => {
 	return new Intl.DateTimeFormat('en', { hour: 'numeric' }).format(
 		new Date(time * 1000),
 	)
+}
+
+const formatHourInterval = (times: number[], index: number) => {
+	const hasNextTime = typeof times[index + 1] === 'number'
+	const startTime = hasNextTime ? times[index] : times[index - 1]
+	const endTime = hasNextTime ? times[index + 1] : times[index]
+
+	return `${formatHour(startTime)} and ${formatHour(endTime)}`
 }
 
 const formatTooltipTime = (time: number) =>

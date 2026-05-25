@@ -137,7 +137,7 @@ const App = () => {
 		: 'forecast'
 	const shouldBlurSeasonalEffects = activeAvailableViewId !== 'forecast'
 
-	useSeasonalEvents({
+	const activeSeasonalEvent = useSeasonalEvents({
 		enabledEvents: enabledSeasonalEvents,
 		hemisphere,
 		isEnabled: config.showSeasonalEvents,
@@ -146,6 +146,8 @@ const App = () => {
 		seasonalEventOverride: config.seasonalEventOverride,
 		shouldBlurEffects: shouldBlurSeasonalEffects,
 	})
+	const shouldShowDetailFallbackGlow =
+		activeAvailableViewId !== 'forecast' && !activeSeasonalEvent
 
 	useEffect(() => {
 		if (error) {
@@ -378,6 +380,10 @@ const App = () => {
 					onWheel={handleViewWheel}
 					transition={{ duration: 0.35, ease: 'easeOut' }}
 				>
+					<DetailFallbackGlow
+						activeViewId={activeAvailableViewId}
+						isVisible={shouldShowDetailFallbackGlow}
+					/>
 					<AnimatePresence>{isLoading ? <RingLoader /> : null}</AnimatePresence>
 					<DirectionalView
 						activeViewId={activeAvailableViewId}
@@ -511,6 +517,43 @@ const VIEW_INDICATOR_LABELS: Record<ForecastViewId, string> = {
 	precipitation: 'precipitation',
 	temperature: 'temperature',
 	wind: 'wind',
+}
+const DETAIL_FALLBACK_AURORA_GRADIENTS: Record<ForecastViewId, string> = {
+	conditions:
+		'radial-gradient(120% 80% at 15% 0%, rgba(139, 92, 246, 0.22), rgba(76, 29, 149, 0.08) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(52, 211, 153, 0.16), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(129, 140, 248, 0.13), rgba(15, 23, 42, 0) 70%)',
+	forecast:
+		'radial-gradient(120% 80% at 15% 0%, rgba(59, 130, 246, 0.24), rgba(14, 116, 144, 0.1) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(129, 140, 248, 0.17), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(52, 211, 153, 0.13), rgba(15, 23, 42, 0) 70%)',
+	precipitation:
+		'radial-gradient(120% 80% at 15% 0%, rgba(37, 99, 235, 0.24), rgba(14, 116, 144, 0.12) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(56, 189, 248, 0.16), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(45, 212, 191, 0.12), rgba(15, 23, 42, 0) 70%)',
+	temperature:
+		'radial-gradient(120% 80% at 15% 0%, rgba(59, 130, 246, 0.24), rgba(14, 116, 144, 0.1) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(129, 140, 248, 0.17), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(52, 211, 153, 0.13), rgba(15, 23, 42, 0) 70%)',
+	wind: 'radial-gradient(120% 80% at 15% 0%, rgba(14, 165, 233, 0.23), rgba(8, 145, 178, 0.1) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(103, 232, 249, 0.16), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(59, 130, 246, 0.12), rgba(15, 23, 42, 0) 70%)',
+}
+
+const DetailFallbackGlow = ({
+	activeViewId,
+	isVisible,
+}: Readonly<{ activeViewId: ForecastViewId; isVisible: boolean }>) => {
+	const activeGradient = DETAIL_FALLBACK_AURORA_GRADIENTS[activeViewId]
+
+	return (
+		<motion.div
+			animate={{
+				background: activeGradient,
+				opacity: isVisible ? 0.68 : 0,
+			}}
+			aria-hidden="true"
+			className="pointer-events-none absolute -top-[15%] right-[-10%] bottom-0 left-[-10%] z-1 mix-blend-screen"
+			initial={false}
+			style={{
+				background: activeGradient,
+				filter: 'blur(24px)',
+				transform: 'translate3d(0, 0, 0)',
+				willChange: 'background, opacity',
+			}}
+			transition={{ duration: 0.35, ease: 'easeOut' }}
+		/>
+	)
 }
 
 type DirectionalViewProps = {

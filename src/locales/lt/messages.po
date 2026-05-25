@@ -17,28 +17,28 @@ msgstr ""
 #. placeholder {0}: formatDecimal(lowestVisibility.value)
 #. placeholder {1}: formatHour(data[bestVisibility.index]?.time)
 #. placeholder {1}: formatHour(data[lowestVisibility.index]?.time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:405
-#: src/features/weather/ui/next-24-hours-tile.tsx:418
+#: src/features/weather/ui/next-24-hours-tile.tsx:417
+#: src/features/weather/ui/next-24-hours-tile.tsx:430
 msgid "{0} {visibilityUnitLabel} at {1}"
 msgstr "{0} {visibilityUnitLabel}, {1}"
 
 #. placeholder {0}: Math.round(peakGust.value - peakWind.value)
 #: src/features/weather/ui/next-24-hours-tile.tsx:332
-msgid "{0} {windUnitLabel}"
-msgstr "{0} {windUnitLabel}"
+#~ msgid "{0} {windUnitLabel}"
+#~ msgstr "{0} {windUnitLabel}"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
 #. placeholder {1}: formatHour(data[peakGust.index]?.time)
 #. placeholder {1}: formatHour(data[peakWind.index]?.time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:308
-#: src/features/weather/ui/next-24-hours-tile.tsx:321
+#: src/features/weather/ui/next-24-hours-tile.tsx:330
+#: src/features/weather/ui/next-24-hours-tile.tsx:343
 msgid "{0} {windUnitLabel} at {1}"
 msgstr "{0} {windUnitLabel}, {1}"
 
 #. placeholder {0}: Math.round(peakUv.value)
 #. placeholder {1}: formatHour(data[peakUv.index]?.time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:392
+#: src/features/weather/ui/next-24-hours-tile.tsx:404
 msgid "{0} at {1}"
 msgstr "{0}, {1}"
 
@@ -48,15 +48,21 @@ msgid "{0} km/h"
 msgstr "{0} km/val"
 
 #. placeholder {0}: formatDecimal(sum(precipitation))
-#: src/features/weather/ui/next-24-hours-tile.tsx:243
+#: src/features/weather/ui/next-24-hours-tile.tsx:245
 msgid "{0} mm"
 msgstr "{0} mm"
 
 #. placeholder {0}: formatDecimal(peakAmount.value)
 #. placeholder {1}: formatHour(data[peakAmount.index]?.time)
 #: src/features/weather/ui/next-24-hours-tile.tsx:259
-msgid "{0} mm at {1}"
-msgstr "{0} mm, {1}"
+#~ msgid "{0} mm at {1}"
+#~ msgstr "{0} mm, {1}"
+
+#. placeholder {0}: formatDecimal(peakAmount.value)
+#. placeholder {1}: formatHourInterval(times, peakAmount.index)
+#: src/features/weather/ui/next-24-hours-tile.tsx:278
+msgid "{0} mm between {1}"
+msgstr "{0} mm tarp {1}"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
 #: src/features/weather/ui/tile.tsx:513
@@ -74,7 +80,7 @@ msgstr "{0}{temperatureUnitLabel}, {1}"
 
 #. placeholder {0}: Math.round(peakProbability.value)
 #. placeholder {1}: formatHour(data[peakProbability.index]?.time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:249
+#: src/features/weather/ui/next-24-hours-tile.tsx:258
 msgid "{0}% at {1}"
 msgstr "{0}%, {1}"
 
@@ -116,7 +122,7 @@ msgstr "<0>Prieiga prie vietos uždrausta.</0> Spustelėkite vietos piktogramą 
 msgid "☕ Gift a coffee"
 msgstr "☕ Padovanokite kavą"
 
-#: src/pages/index.tsx:430
+#: src/pages/index.tsx:479
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ NAUJA: Pabandykite slinkti žemyn"
 
@@ -295,7 +301,7 @@ msgstr "Kalėdų diena mini Jėzaus gimimą, o daugeliui ji tapo ir platesniu do
 msgid "clear sky"
 msgstr "giedras dangus"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:414
+#: src/features/weather/ui/next-24-hours-tile.tsx:426
 msgid "Clearest hour"
 msgstr "Aiškiausia valanda"
 
@@ -315,7 +321,7 @@ msgstr "Bendruomenės talkos, medžių sodinimas ir buveinių atkūrimas — vie
 msgid "Compact weather alerts"
 msgstr "Kompaktiški orų įspėjimai"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:426
+#: src/features/weather/ui/next-24-hours-tile.tsx:438
 msgid "Conditions"
 msgstr "Sąlygos"
 
@@ -618,8 +624,8 @@ msgid "Good to know"
 msgstr "Naudinga žinoti"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:330
-msgid "Gust spread"
-msgstr "Gūsių skirtumas"
+#~ msgid "Gust spread"
+#~ msgstr "Gūsių skirtumas"
 
 #: src/features/seasonal-events/events/eta-aquariids.tsx:99
 msgid "Halley’s Comet itself returns roughly every seventy-six years, but the stream of dust it leaves behind crosses Earth’s path each year."
@@ -646,6 +652,10 @@ msgstr "Hanuka — žydų šviesų šventė, švenčiama aštuonias naktis."
 #: src/features/seasonal-events/events/valentines.tsx:87
 msgid "Hearts, roses, and red ribbons became familiar symbols of devotion, warmth, and connection."
 msgstr "Širdys, rožės ir raudonos juostelės tapo pažįstamais atsidavimo, šilumos ir ryšio simboliais."
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:271
+msgid "Heaviest hour"
+msgstr "Sunkiausia valanda"
 
 #: src/features/weather/ui/tile.tsx:100
 msgid "heavy freezing rain"
@@ -911,7 +921,7 @@ msgstr "Prastas matomumas po {timeUntilLowVisibility} valandų"
 msgid "Low visibility starting in 1 hour"
 msgstr "Prastas matomumas po 1 valandos"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:401
+#: src/features/weather/ui/next-24-hours-tile.tsx:413
 msgid "Lowest visibility"
 msgstr "Mažiausias matomumas"
 
@@ -1008,11 +1018,19 @@ msgid "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precise
 msgstr "Newgrange, 5 000 metų senumo koridorinė kapavietė Airijoje, buvo pastatyta taip tiksliai, kad kasmet per žiemos saulėgrąžą saulės šviesa apšviečia vidinę kamerą tik septyniolika minučių."
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:170
-#: src/features/weather/ui/next-24-hours-tile.tsx:237
-#: src/features/weather/ui/next-24-hours-tile.tsx:298
-#: src/features/weather/ui/next-24-hours-tile.tsx:382
+#: src/features/weather/ui/next-24-hours-tile.tsx:239
+#: src/features/weather/ui/next-24-hours-tile.tsx:320
+#: src/features/weather/ui/next-24-hours-tile.tsx:394
 msgid "Next 24 hours"
 msgstr "Kitos 24 valandos"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:283
+msgid "No measurable precipitation expected"
+msgstr "Matuojamų kritulių nesitikima"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:263
+msgid "No precipitation expected"
+msgstr "Kritulių nesitikima"
 
 #: src/features/settings/ui/settings.tsx:285
 msgid "None"
@@ -1117,19 +1135,19 @@ msgstr "Apžvalga"
 msgid "partly cloudy"
 msgstr "debesuota"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:247
+#: src/features/weather/ui/next-24-hours-tile.tsx:251
 msgid "Peak chance"
 msgstr "Didžiausia tikimybė"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:317
+#: src/features/weather/ui/next-24-hours-tile.tsx:339
 msgid "Peak gust"
 msgstr "Stipriausias gūsis"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:388
+#: src/features/weather/ui/next-24-hours-tile.tsx:400
 msgid "Peak UV"
 msgstr "Didžiausias UV"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:304
+#: src/features/weather/ui/next-24-hours-tile.tsx:326
 msgid "Peak wind"
 msgstr "Stipriausias vėjas"
 
@@ -1149,9 +1167,14 @@ msgstr "Perseidų meteorų lietus"
 msgid "Perseids Meteor Shower"
 msgstr "Perseidų meteorų lietus"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:267
+#: src/features/weather/ui/next-24-hours-tile.tsx:273
+#: src/features/weather/ui/next-24-hours-tile.tsx:289
 msgid "Precipitation"
 msgstr "Krituliai"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:253
+msgid "Precipitation chance"
+msgstr "Kritulių tikimybė"
 
 #: src/features/settings/ui/settings.tsx:181
 msgid "Quadrantids meteor shower"
@@ -1177,8 +1200,8 @@ msgstr "Religiniai ir kultūriniai"
 msgid "Report a bug"
 msgstr "Pranešti apie klaidą"
 
-#: src/pages/index.tsx:366
-#: src/pages/index.tsx:380
+#: src/pages/index.tsx:415
+#: src/pages/index.tsx:429
 msgid "Retry"
 msgstr "Bandyti dar kartą"
 
@@ -1375,7 +1398,7 @@ msgstr "Rodyti oro sąlygų įspėjimus"
 msgid "Show Winter Solstice event"
 msgstr "Rodyti Žiemos saulėgrįžą"
 
-#: src/pages/index.tsx:82
+#: src/pages/index.tsx:85
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Rodomi talpyklos orų duomenys. Bandykite dar kartą, kad atnaujintumėte naujausią prognozę."
 
@@ -1837,9 +1860,13 @@ msgstr "Visiškas Mėnulio užtemimas"
 msgid "Total Lunar Eclipse"
 msgstr "Visiškas Mėnulio užtemimas"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:244
+msgid "Total precipitation"
+msgstr "Visi krituliai"
+
 #: src/features/weather/ui/next-24-hours-tile.tsx:242
-msgid "Total rain"
-msgstr "Visas lietus"
+#~ msgid "Total rain"
+#~ msgstr "Visas lietus"
 
 #: src/features/settings/ui/settings.tsx:185
 msgid "Total solar eclipse"
@@ -1873,7 +1900,7 @@ msgstr "Antradienis"
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Įjunkite šią parinktį, jei „Weather Please“ pateikiamas UV indeksas nuolat yra mažesnis nei vietinių šaltinių."
 
-#: src/pages/index.tsx:360
+#: src/pages/index.tsx:409
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Nepavyko gauti orų duomenų. Patikrinkite interneto ryšį ir bandykite dar kartą."
 
@@ -1928,7 +1955,7 @@ msgstr "Oras"
 msgid "Weather data by Open-Meteo"
 msgstr "Oro sąlygų duomenys iš Open-Meteo"
 
-#: src/pages/index.tsx:74
+#: src/pages/index.tsx:77
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "Orų duomenų nepavyko įkelti dėl paslaugos problemos — rodomi talpykloje esantys duomenys. Bandykite dar kartą po akimirkos."
 
@@ -1941,8 +1968,8 @@ msgid "Wednesday"
 msgstr "Trečiadienis"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:257
-msgid "Wettest hour"
-msgstr "Lietingiausia valanda"
+#~ msgid "Wettest hour"
+#~ msgstr "Lietingiausia valanda"
 
 #: src/features/seasonal-events/events/total-solar-eclipse.tsx:64
 msgid "What it feels like"
@@ -1984,7 +2011,7 @@ msgstr "Kodėl jis parausta"
 msgid "Why the peak is brief"
 msgstr "Kodėl pikas trumpas"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:339
+#: src/features/weather/ui/next-24-hours-tile.tsx:351
 msgid "Wind"
 msgstr "Vėjas"
 
