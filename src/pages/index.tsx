@@ -55,6 +55,7 @@ const TILE_STAGGER_DELAY_BASELINE = 0.75
 const VIEW_SWITCH_SCROLL_DELTA_MIN = 1
 const VIEW_SWITCH_TOUCH_THRESHOLD = 80
 const VIEW_SWITCH_COOLDOWN_MS = 300
+const VIEW_SWITCH_WHEEL_GESTURE_END_MS = 180
 const VIEW_INDICATOR_VISIBLE_MS = 2500
 const VIEW_TRANSITION_DISTANCE = 120
 const FORECAST_VIEW_BACKGROUND_COLOR = '#1a1b1e'
@@ -97,6 +98,10 @@ const App = () => {
 		null,
 	)
 	const viewSwitchCooldownUntilRef = useRef(0)
+	const wheelGestureEndTimeoutRef = useRef<null | ReturnType<
+		typeof setTimeout
+	>>(null)
+	const hasConsumedWheelGestureRef = useRef(false)
 	const touchStartYRef = useRef<null | number>(null)
 
 	const { config, handleChange, input, isHydrated, setInput, updateConfig } =
@@ -205,6 +210,9 @@ const App = () => {
 			if (viewIndicatorTimeoutRef.current) {
 				clearTimeout(viewIndicatorTimeoutRef.current)
 			}
+			if (wheelGestureEndTimeoutRef.current) {
+				clearTimeout(wheelGestureEndTimeoutRef.current)
+			}
 		},
 		[],
 	)
@@ -278,6 +286,19 @@ const App = () => {
 			return
 		}
 
+		event.preventDefault()
+		if (wheelGestureEndTimeoutRef.current) {
+			clearTimeout(wheelGestureEndTimeoutRef.current)
+		}
+		wheelGestureEndTimeoutRef.current = setTimeout(() => {
+			hasConsumedWheelGestureRef.current = false
+		}, VIEW_SWITCH_WHEEL_GESTURE_END_MS)
+
+		if (hasConsumedWheelGestureRef.current) {
+			return
+		}
+
+		hasConsumedWheelGestureRef.current = true
 		switchActiveViewByStep(event.deltaY > 0 ? 'next' : 'previous')
 	}
 
