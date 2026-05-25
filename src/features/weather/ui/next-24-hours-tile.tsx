@@ -6,7 +6,7 @@ import {
 	IconUvIndex,
 	IconWind,
 } from '@tabler/icons-react'
-import { type ReactNode, useState } from 'react'
+import { type PointerEvent, type ReactNode, useState } from 'react'
 
 import type { Next24HoursData } from '../model/types'
 
@@ -40,6 +40,14 @@ type ChartScale = {
 	minValue?: number
 }
 
+type ChartTooltipState = {
+	seriesLabel: string
+	time: number
+	value: string
+	x: number
+	y: number
+}
+
 type DetailViewShellProps = {
 	accentClassName: string
 	children: ReactNode
@@ -56,11 +64,16 @@ type LineChartProps = {
 	onSeriesFocus?: (seriesId: null | WeatherDetailSeriesId) => void
 	points: number[]
 	primarySeriesId?: WeatherDetailSeriesId
+	primarySeriesLabel: string
+	primaryValueFormatter: (value: number) => string
 	scale: Required<ChartScale>
 	secondaryAccentClassName?: string
 	secondaryPoints?: number[]
 	secondaryScale?: Required<ChartScale>
 	secondarySeriesId?: WeatherDetailSeriesId
+	secondarySeriesLabel?: string
+	secondaryValueFormatter?: (value: number) => string
+	times: number[]
 }
 
 type MetricProps = {
@@ -88,9 +101,16 @@ type PointSummary = {
 type PrecipitationChartProps = {
 	amountPoints: number[]
 	probabilityPoints: number[]
+	times: number[]
 }
 
-type WeatherDetailSeriesId = 'uv' | 'visibility' | 'wind' | 'windGust'
+type WeatherDetailSeriesId =
+	| 'precipitationProbability'
+	| 'temperature'
+	| 'uv'
+	| 'visibility'
+	| 'wind'
+	| 'windGust'
 
 export const Next24HoursDetailView = ({
 	data,
@@ -129,6 +149,7 @@ export const Next24HoursDetailView = ({
 	const visibility = data.map(({ visibility }) =>
 		convertVisibility({ usesMetricUnits, visibility }),
 	)
+	const times = data.map(({ time }) => time)
 	const temperatureUnitLabel = usesMetricTemperature ? '°C' : '°F'
 	const windUnitLabel = usesMetricUnits ? 'km/h' : 'mph'
 	const visibilityUnitLabel = usesMetricUnits ? 'km' : 'mi'
@@ -143,7 +164,7 @@ export const Next24HoursDetailView = ({
 
 		return (
 			<DetailViewShell
-				accentClassName="text-rose-200"
+				accentClassName="text-blue-200"
 				icon={<IconTemperature aria-hidden size={22} />}
 				isActive={isActive}
 				kicker={<Trans>Next 24 hours</Trans>}
@@ -187,9 +208,15 @@ export const Next24HoursDetailView = ({
 					startLabel={startLabel}
 				>
 					<LineChart
-						accentClassName="stroke-rose-300"
+						accentClassName="stroke-blue-300"
 						points={temperatures}
+						primarySeriesId="temperature"
+						primarySeriesLabel="Temperature"
+						primaryValueFormatter={(value) =>
+							`${formatDecimal(value)}${temperatureUnitLabel}`
+						}
 						scale={scale}
+						times={times}
 					/>
 				</ChartFrame>
 			</DetailViewShell>
@@ -251,6 +278,7 @@ export const Next24HoursDetailView = ({
 					<PrecipitationChart
 						amountPoints={precipitation}
 						probabilityPoints={precipitationProbability}
+						times={times}
 					/>
 				</ChartFrame>
 			</DetailViewShell>
@@ -321,10 +349,19 @@ export const Next24HoursDetailView = ({
 						onSeriesFocus={setActiveSeriesId}
 						points={wind}
 						primarySeriesId="wind"
+						primarySeriesLabel="Wind"
+						primaryValueFormatter={(value) =>
+							`${formatDecimal(value)} ${windUnitLabel}`
+						}
 						scale={scale}
 						secondaryAccentClassName="stroke-cyan-100"
 						secondaryPoints={windGust}
 						secondarySeriesId="windGust"
+						secondarySeriesLabel="Gust"
+						secondaryValueFormatter={(value) =>
+							`${formatDecimal(value)} ${windUnitLabel}`
+						}
+						times={times}
 					/>
 				</ChartFrame>
 			</DetailViewShell>
@@ -403,11 +440,18 @@ export const Next24HoursDetailView = ({
 					onSeriesFocus={setActiveSeriesId}
 					points={uv}
 					primarySeriesId="uv"
+					primarySeriesLabel="UV"
+					primaryValueFormatter={formatDecimal}
 					scale={uvScale}
 					secondaryAccentClassName="stroke-emerald-300"
 					secondaryPoints={visibility}
 					secondaryScale={visibilityScale}
 					secondarySeriesId="visibility"
+					secondarySeriesLabel="Visibility"
+					secondaryValueFormatter={(value) =>
+						`${formatDecimal(value)} ${visibilityUnitLabel}`
+					}
+					times={times}
 				/>
 			</ChartFrame>
 		</DetailViewShell>
@@ -549,59 +593,92 @@ const LineChart = ({
 	onSeriesFocus,
 	points,
 	primarySeriesId,
+	primarySeriesLabel,
+	primaryValueFormatter,
 	scale,
 	secondaryAccentClassName,
 	secondaryPoints,
 	secondaryScale,
 	secondarySeriesId,
-}: Readonly<LineChartProps>) => (
-	<svg
-		aria-hidden="true"
-		className="h-48 w-full overflow-visible"
-		preserveAspectRatio="none"
-		viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
-	>
-		<ChartGrid />
-		{secondaryPoints ? (
-			<ChartLine
-				activeSeriesId={activeSeriesId}
-				className={secondaryAccentClassName}
-				onSeriesFocus={onSeriesFocus}
-				path={getLinePath(secondaryPoints, secondaryScale ?? scale)}
-				seriesId={secondarySeriesId}
-				strokeWidth={2}
-			/>
-		) : null}
-		<ChartLine
-			activeSeriesId={activeSeriesId}
-			className={accentClassName}
-			onSeriesFocus={onSeriesFocus}
-			path={getLinePath(points, scale)}
-			seriesId={primarySeriesId}
-			strokeWidth={2.5}
-		/>
-	</svg>
-)
+	secondarySeriesLabel,
+	secondaryValueFormatter,
+	times,
+}: Readonly<LineChartProps>) => {
+	const [tooltip, setTooltip] = useState<ChartTooltipState | null>(null)
+
+	return (
+		<div className="relative h-48">
+			<svg
+				aria-hidden="true"
+				className="h-full w-full overflow-visible"
+				preserveAspectRatio="none"
+				viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
+			>
+				<ChartGrid />
+				{secondaryPoints ? (
+					<ChartLine
+						activeSeriesId={activeSeriesId}
+						className={secondaryAccentClassName}
+						onSeriesFocus={onSeriesFocus}
+						onTooltipChange={setTooltip}
+						points={secondaryPoints}
+						scale={secondaryScale ?? scale}
+						seriesId={secondarySeriesId}
+						seriesLabel={secondarySeriesLabel ?? primarySeriesLabel}
+						strokeWidth={2}
+						times={times}
+						valueFormatter={secondaryValueFormatter ?? primaryValueFormatter}
+					/>
+				) : null}
+				<ChartLine
+					activeSeriesId={activeSeriesId}
+					className={accentClassName}
+					onSeriesFocus={onSeriesFocus}
+					onTooltipChange={setTooltip}
+					points={points}
+					scale={scale}
+					seriesId={primarySeriesId}
+					seriesLabel={primarySeriesLabel}
+					strokeWidth={2.5}
+					times={times}
+					valueFormatter={primaryValueFormatter}
+				/>
+			</svg>
+			<ChartTooltip tooltip={tooltip} />
+		</div>
+	)
+}
 
 type ChartLineProps = {
 	activeSeriesId: null | WeatherDetailSeriesId
 	className?: string
 	onSeriesFocus?: (seriesId: null | WeatherDetailSeriesId) => void
-	path: string
+	onTooltipChange: (tooltip: ChartTooltipState | null) => void
+	points: number[]
+	scale: Required<ChartScale>
 	seriesId?: WeatherDetailSeriesId
+	seriesLabel: string
 	strokeWidth: number
+	times: number[]
+	valueFormatter: (value: number) => string
 }
 
 const ChartLine = ({
 	activeSeriesId,
 	className,
 	onSeriesFocus,
-	path,
+	onTooltipChange,
+	points,
+	scale,
 	seriesId,
+	seriesLabel,
 	strokeWidth,
+	times,
+	valueFormatter,
 }: Readonly<ChartLineProps>) => {
 	const isHighlighted = Boolean(seriesId) && activeSeriesId === seriesId
 	const shouldDim = Boolean(activeSeriesId) && !isHighlighted
+	const path = getLinePath(points, scale)
 
 	const handleMouseEnter = () => {
 		if (seriesId) {
@@ -609,14 +686,45 @@ const ChartLine = ({
 		}
 	}
 
-	const handleMouseLeave = () => {
+	const handlePointerMove = (event: PointerEvent<SVGGElement>) => {
+		const svg = event.currentTarget.ownerSVGElement
+		if (!svg) {
+			return
+		}
+
+		const rect = svg.getBoundingClientRect()
+		const x = ((event.clientX - rect.left) / rect.width) * CHART_WIDTH
+		const index = getNearestPointIndex({ pointCount: points.length, x })
+		const value = points[index]
+		const time = times[index]
+
+		if (typeof value !== 'number' || typeof time !== 'number') {
+			onTooltipChange(null)
+			return
+		}
+
+		onTooltipChange({
+			seriesLabel,
+			time,
+			value: valueFormatter(value),
+			x: getChartX(index, points.length),
+			y: getChartY(value, scale),
+		})
+	}
+
+	const handlePointerLeave = () => {
 		if (seriesId) {
 			onSeriesFocus?.(null)
 		}
+		onTooltipChange(null)
 	}
 
 	return (
-		<g onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+		<g
+			onMouseEnter={handleMouseEnter}
+			onPointerLeave={handlePointerLeave}
+			onPointerMove={handlePointerMove}
+		>
 			<path
 				className="stroke-transparent"
 				d={path}
@@ -639,46 +747,80 @@ const ChartLine = ({
 	)
 }
 
+const ChartTooltip = ({
+	tooltip,
+}: Readonly<{ tooltip: ChartTooltipState | null }>) => {
+	if (!tooltip) {
+		return null
+	}
+
+	return (
+		<div
+			aria-hidden="true"
+			className="pointer-events-none absolute z-10 rounded-md border border-white/10 bg-dark-950/90 px-2.5 py-1.5 text-xs whitespace-nowrap text-white shadow-lg backdrop-blur-md"
+			style={{
+				left: `${(tooltip.x / CHART_WIDTH) * 100}%`,
+				top: `${(tooltip.y / CHART_HEIGHT) * 100}%`,
+				transform: 'translate(-50%, calc(-100% - 0.5rem))',
+			}}
+		>
+			<span className="block font-semibold text-white">{tooltip.value}</span>
+			<span className="block text-dark-300">
+				{tooltip.seriesLabel} · {formatTooltipTime(tooltip.time)}
+			</span>
+		</div>
+	)
+}
+
 const PrecipitationChart = ({
 	amountPoints,
 	probabilityPoints,
+	times,
 }: Readonly<PrecipitationChartProps>) => {
 	const amountScale = getChartScale(amountPoints, { minValue: 0 })
 	const probabilityScale = { maxValue: 100, minValue: 0 }
 	const barWidth = CHART_WIDTH / Math.max(1, amountPoints.length) - 2
+	const [tooltip, setTooltip] = useState<ChartTooltipState | null>(null)
 
 	return (
-		<svg
-			aria-hidden="true"
-			className="h-48 w-full overflow-visible"
-			preserveAspectRatio="none"
-			viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
-		>
-			<ChartGrid />
-			{amountPoints.map((point, index) => {
-				const y = getChartY(point, amountScale)
-				const x = getChartX(index, amountPoints.length) - barWidth / 2
-				return (
-					<rect
-						className="fill-blue-300/45"
-						height={CHART_HEIGHT - CHART_PADDING - y}
-						key={`${index}-${point}`}
-						rx="2"
-						width={Math.max(2, barWidth)}
-						x={x}
-						y={y}
-					/>
-				)
-			})}
-			<path
-				className="stroke-blue-100"
-				d={getLinePath(probabilityPoints, probabilityScale)}
-				fill="none"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-				strokeWidth="2.5"
-			/>
-		</svg>
+		<div className="relative h-48">
+			<svg
+				aria-hidden="true"
+				className="h-full w-full overflow-visible"
+				preserveAspectRatio="none"
+				viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
+			>
+				<ChartGrid />
+				{amountPoints.map((point, index) => {
+					const y = getChartY(point, amountScale)
+					const x = getChartX(index, amountPoints.length) - barWidth / 2
+					return (
+						<rect
+							className="fill-blue-300/45"
+							height={CHART_HEIGHT - CHART_PADDING - y}
+							key={`${index}-${point}`}
+							rx="2"
+							width={Math.max(2, barWidth)}
+							x={x}
+							y={y}
+						/>
+					)
+				})}
+				<ChartLine
+					activeSeriesId={null}
+					className="stroke-blue-100"
+					onTooltipChange={setTooltip}
+					points={probabilityPoints}
+					scale={probabilityScale}
+					seriesId="precipitationProbability"
+					seriesLabel="Rain chance"
+					strokeWidth={2.5}
+					times={times}
+					valueFormatter={(value) => `${Math.round(value)}%`}
+				/>
+			</svg>
+			<ChartTooltip tooltip={tooltip} />
+		</div>
 	)
 }
 
@@ -800,6 +942,21 @@ const getChartX = (index: number, pointCount: number) => {
 	return (index / (pointCount - 1)) * CHART_WIDTH
 }
 
+const getNearestPointIndex = ({
+	pointCount,
+	x,
+}: {
+	pointCount: number
+	x: number
+}) => {
+	if (pointCount <= 1) {
+		return 0
+	}
+
+	const normalizedX = Math.min(Math.max(x, 0), CHART_WIDTH)
+	return Math.round((normalizedX / CHART_WIDTH) * (pointCount - 1))
+}
+
 const getChartY = (
 	point: number,
 	{ maxValue, minValue }: Required<ChartScale>,
@@ -865,6 +1022,12 @@ const formatHour = (time?: number) => {
 		new Date(time * 1000),
 	)
 }
+
+const formatTooltipTime = (time: number) =>
+	new Intl.DateTimeFormat('en', {
+		hour: 'numeric',
+		weekday: 'short',
+	}).format(new Date(time * 1000))
 
 const max = (points: number[]) =>
 	points.reduce((currentMax, point) => Math.max(currentMax, point), -Infinity)

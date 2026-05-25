@@ -427,7 +427,7 @@ const App = () => {
 								initial={{ opacity: 0, y: 8 }}
 								transition={{ duration: 0.22 }}
 							>
-								<Trans>New: Try scrolling down</Trans>
+								<Trans>✨ NEW: Try scrolling down</Trans>
 							</motion.div>
 						) : null}
 					</AnimatePresence>

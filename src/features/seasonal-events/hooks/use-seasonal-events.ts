@@ -6,7 +6,7 @@ import type {
 	SeasonalEventOverride,
 } from '../core/types'
 
-import { applySeasonalEventCanvasBlur } from '../core/effect-canvas-blur'
+import { applySeasonalEventEffectBlur } from '../core/effect-blur'
 import { SEASONAL_EVENT_OVERRIDE_NONE } from '../core/types'
 import { isLikelySoftwareRenderer } from '../core/utils'
 
@@ -169,7 +169,7 @@ export const useSeasonalEvents = ({
 		}
 
 		const applyCurrentBlurState = () => {
-			applySeasonalEventCanvasBlur({ shouldBlurEffects })
+			applySeasonalEventEffectBlur({ shouldBlurEffects })
 		}
 		const mutationObserver = new MutationObserver(applyCurrentBlurState)
 
@@ -178,7 +178,7 @@ export const useSeasonalEvents = ({
 
 		return () => {
 			mutationObserver.disconnect()
-			applySeasonalEventCanvasBlur({ shouldBlurEffects: false })
+			applySeasonalEventEffectBlur({ shouldBlurEffects: false })
 		}
 	}, [effectiveActiveEvent, shouldBlurEffects])
 
