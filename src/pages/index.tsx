@@ -56,6 +56,8 @@ const VIEW_SWITCH_SCROLL_DELTA_MIN = 1
 const VIEW_SWITCH_TOUCH_THRESHOLD = 80
 const VIEW_SWITCH_COOLDOWN_MS = 300
 const VIEW_SWITCH_WHEEL_GESTURE_END_MS = 180
+const VIEW_SWITCH_WHEEL_REIMPULSE_DELTA_MIN = 3
+const VIEW_SWITCH_WHEEL_REIMPULSE_RATIO = 1.6
 const VIEW_INDICATOR_VISIBLE_MS = 2500
 const VIEW_TRANSITION_DISTANCE = 120
 const FORECAST_VIEW_BACKGROUND_COLOR = '#1a1b1e'
@@ -102,6 +104,8 @@ const App = () => {
 		typeof setTimeout
 	>>(null)
 	const hasConsumedWheelGestureRef = useRef(false)
+	const lastWheelDirectionRef = useRef<null | ViewStepDirection>(null)
+	const lastWheelDeltaAbsRef = useRef(0)
 	const touchStartYRef = useRef<null | number>(null)
 
 	const { config, handleChange, input, isHydrated, setInput, updateConfig } =
@@ -292,14 +296,32 @@ const App = () => {
 		}
 		wheelGestureEndTimeoutRef.current = setTimeout(() => {
 			hasConsumedWheelGestureRef.current = false
+			lastWheelDeltaAbsRef.current = 0
+			lastWheelDirectionRef.current = null
 		}, VIEW_SWITCH_WHEEL_GESTURE_END_MS)
 
-		if (hasConsumedWheelGestureRef.current) {
+		const direction = event.deltaY > 0 ? 'next' : 'previous'
+		const deltaAbs = Math.abs(event.deltaY)
+		const hasNewImpulse =
+			Date.now() >= viewSwitchCooldownUntilRef.current &&
+			(direction !== lastWheelDirectionRef.current ||
+				deltaAbs >=
+					Math.max(
+						VIEW_SWITCH_WHEEL_REIMPULSE_DELTA_MIN,
+						lastWheelDeltaAbsRef.current * VIEW_SWITCH_WHEEL_REIMPULSE_RATIO,
+					))
+		const shouldIgnoreWheelEvent =
+			hasConsumedWheelGestureRef.current && !hasNewImpulse
+
+		lastWheelDeltaAbsRef.current = deltaAbs
+		lastWheelDirectionRef.current = direction
+
+		if (shouldIgnoreWheelEvent) {
 			return
 		}
 
 		hasConsumedWheelGestureRef.current = true
-		switchActiveViewByStep(event.deltaY > 0 ? 'next' : 'previous')
+		switchActiveViewByStep(direction)
 	}
 
 	const handleViewTouchStart = (event: TouchEvent<HTMLElement>) => {
