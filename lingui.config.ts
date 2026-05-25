@@ -7,7 +7,6 @@ export default defineConfig({
 			path: '<rootDir>/src/locales/{locale}/messages',
 		},
 	],
-	format: 'po',
 	locales: [
 		'en',
 		'lt',

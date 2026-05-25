@@ -20,6 +20,7 @@ import { Settings } from '../features/settings/ui/settings'
 import { usePeriodicLocationRefresh } from '../features/weather/hooks/use-periodic-location-refresh'
 import { useWeather } from '../features/weather/hooks/use-weather'
 import { Tile } from '../features/weather/ui/tile'
+import { useWeatherTileGrid } from '../features/weather/ui/use-weather-tile-grid'
 import { WeatherAlert } from '../features/weather/ui/weather-alert'
 import { messages } from '../locales/en/messages'
 import { AsyncStatus } from '../shared/hooks/async-status'
@@ -57,18 +58,6 @@ const getInlineWeatherErrorMessage = (error: Error) => {
 		</Trans>
 	)
 }
-
-const GRID_COLS_CLASS = {
-	'1': 'lg:grid-cols-1',
-	'2': 'lg:grid-cols-2',
-	'3': 'lg:grid-cols-3',
-	'4': 'lg:grid-cols-4',
-	'5': 'lg:grid-cols-5',
-	'6': 'lg:grid-cols-3',
-	'7': 'lg:grid-cols-3',
-	'8': 'lg:grid-cols-4',
-	'9': 'lg:grid-cols-3',
-} as const
 
 const App = () => {
 	const [locationChangeToken, setLocationChangeToken] = useState(0)
@@ -149,6 +138,9 @@ const App = () => {
 				/>
 			)
 		})
+	const { gridStyle } = useWeatherTileGrid({
+		tileCount: tiles.length,
+	})
 
 	const shouldShowBlockingError = status === AsyncStatus.Error && !hasData
 	const shouldShowInlineError = status === AsyncStatus.Error && hasData
@@ -173,7 +165,8 @@ const App = () => {
 				<motion.main className="relative min-h-21 min-w-21 p-5">
 					<AnimatePresence>{isLoading ? <RingLoader /> : null}</AnimatePresence>
 					<div
-						className={`relative z-10 grid h-full w-full grid-cols-1 gap-5 ${GRID_COLS_CLASS[config.daysToRetrieve as keyof typeof GRID_COLS_CLASS] ?? ''}`}
+						className="relative z-10 grid h-full w-full grid-cols-1 gap-5"
+						style={gridStyle}
 					>
 						<Initialisation
 							handleChange={handleChange}
