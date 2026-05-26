@@ -1099,6 +1099,7 @@ const WeatherMap = ({
 		frameIndex: playback.frameIndex,
 		weatherMapData,
 	})
+	const canRenderWeatherMap = Boolean(weatherMapData && selectedFrame)
 
 	useEffect(() => {
 		const element = containerRef.current
@@ -1134,7 +1135,7 @@ const WeatherMap = ({
 		return () => {
 			resizeObserver.disconnect()
 		}
-	}, [])
+	}, [canRenderWeatherMap])
 
 	if (!weatherMapData || !selectedFrame) {
 		return (
