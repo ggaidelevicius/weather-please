@@ -195,8 +195,8 @@ export const WeatherAlert = ({
 		alerts.push({
 			content: (
 				<Trans>
-					Showing a reduced saved forecast because the latest data couldn&apos;t
-					be fetched.
+					Live data is temporarily unavailable. Showing your last saved forecast
+					instead.
 				</Trans>
 			),
 			icon: IconInfoCircle,
