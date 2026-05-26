@@ -25,6 +25,35 @@ describe('fetchWeatherResponse', () => {
 
 		fetchMock.mockRestore()
 	})
+
+	it('accepts nullable weather UV values before applying air quality UV data', async () => {
+		const weatherResponse = createWeatherResponse()
+		weatherResponse.daily.uv_index_max = [null]
+		weatherResponse.hourly.uv_index = Array.from({ length: 30 }, () => null)
+		const fetchMock = vi
+			.spyOn(global, 'fetch')
+			.mockResolvedValueOnce(Response.json(weatherResponse))
+			.mockResolvedValueOnce(
+				Response.json({
+					hourly: {
+						time: [0, 1],
+						uv_index: [2, 3],
+					},
+				}),
+			)
+
+		const result = await fetchWeatherResponse({
+			lat: '-31.9523',
+			lon: '115.8613',
+			shouldUseAirQualityUv: true,
+			timeZone: 'Australia/Perth',
+		})
+
+		expect(result.daily.uv_index_max[0]).toBe(3)
+		expect(result.hourly.uv_index.slice(0, 2)).toEqual([2, 3])
+
+		fetchMock.mockRestore()
+	})
 })
 
 describe('fetchWeatherMapData', () => {
@@ -117,6 +146,42 @@ describe('mapWeatherResponseToNext24HoursData', () => {
 			windGust: 23,
 		})
 		expect(result.at(-1)?.time).toBe(27)
+	})
+
+	it('normalizes null hourly weather values with conservative fallbacks', () => {
+		const data = createWeatherResponse()
+		data.hourly.apparent_temperature[3] = null
+		data.hourly.dew_point_2m[3] = null
+		data.hourly.precipitation[3] = null
+		data.hourly.precipitation_probability[3] = null
+		data.hourly.relative_humidity_2m[3] = null
+		data.hourly.shortwave_radiation_instant[3] = null
+		data.hourly.uv_index[3] = null
+		data.hourly.visibility[3] = null
+		data.hourly.weathercode[3] = null
+		data.hourly.windgusts_10m[3] = null
+		data.hourly.windspeed_10m[3] = null
+
+		const result = mapWeatherResponseToNext24HoursData({
+			currentHour: 3,
+			data,
+		})
+
+		expect(result[0]).toEqual({
+			apparentTemperature: 23,
+			dewPoint: 23,
+			humidity: 0,
+			precipitation: 0,
+			precipitationProbability: 0,
+			shortwaveRadiation: 0,
+			temperature: 23,
+			time: 3,
+			uv: 0,
+			visibility: 0,
+			weatherCode: 0,
+			wind: 0,
+			windGust: 0,
+		})
 	})
 })
 

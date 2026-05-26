@@ -33,45 +33,45 @@ export const deriveAlertsFromWeather = (
 	currentHour: number,
 ): Alerts => ({
 	hoursOfExtremeUv: processSimpleAlert(
-		data.hourly.uv_index.slice(currentHour, currentHour + ALERT_HOURS_UV),
+		data.hourly.uv_index
+			.slice(currentHour, currentHour + ALERT_HOURS_UV)
+			.map(normalizeUvValue),
 		ALERT_CONDITIONS.extremeUv,
 	),
 	hoursOfLowVisibility: processSimpleAlert(
-		data.hourly.visibility.slice(
-			currentHour,
-			currentHour + ALERT_HOURS_GENERAL,
-		),
+		data.hourly.visibility
+			.slice(currentHour, currentHour + ALERT_HOURS_GENERAL)
+			.map(normalizeNumber),
 		ALERT_CONDITIONS.lowVisibility,
 	),
 	hoursOfStrongWind: processSimpleAlert(
-		data.hourly.windspeed_10m.slice(
-			currentHour,
-			currentHour + ALERT_HOURS_GENERAL,
-		),
+		data.hourly.windspeed_10m
+			.slice(currentHour, currentHour + ALERT_HOURS_GENERAL)
+			.map(normalizeNumber),
 		ALERT_CONDITIONS.strongWind,
 	),
 	hoursOfStrongWindGusts: processSimpleAlert(
-		data.hourly.windgusts_10m.slice(
-			currentHour,
-			currentHour + ALERT_HOURS_GENERAL,
-		),
+		data.hourly.windgusts_10m
+			.slice(currentHour, currentHour + ALERT_HOURS_GENERAL)
+			.map(normalizeNumber),
 		ALERT_CONDITIONS.strongWindGusts,
 	),
 	totalPrecipitation: {
 		duration: processPrecipitationDuration(
-			data.hourly.precipitation.slice(
-				currentHour,
-				currentHour + ALERT_HOURS_GENERAL,
-			),
+			data.hourly.precipitation
+				.slice(currentHour, currentHour + ALERT_HOURS_GENERAL)
+				.map(normalizeNumber),
 		),
 		precipitation: processPrecipitationAlert(
-			data.hourly.precipitation.slice(
-				currentHour,
-				currentHour + ALERT_HOURS_GENERAL,
-			),
+			data.hourly.precipitation
+				.slice(currentHour, currentHour + ALERT_HOURS_GENERAL)
+				.map(normalizeNumber),
 		),
 	},
 })
+
+const normalizeNumber = (value: null | number | undefined) =>
+	typeof value === 'number' && Number.isFinite(value) ? value : 0
 
 export const deriveAlertsFromNext24HoursData = (
 	data: Next24HoursData,
@@ -124,3 +124,5 @@ const padBooleanArray = ({
 	length: number
 	values: boolean[]
 }) => [...values, ...Array(length).fill(false)].slice(0, length)
+
+const normalizeUvValue = (uv: null | number | undefined) => normalizeNumber(uv)

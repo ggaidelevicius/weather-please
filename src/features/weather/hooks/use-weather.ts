@@ -21,6 +21,7 @@ import {
 	type CachedWeather,
 	getCachedWeather,
 	writeCachedWeather,
+	writeCachedWeatherDegraded,
 	writeCachedWeatherMapData,
 } from '../model/cache'
 import { isAbortError } from '../model/error-names'
@@ -37,18 +38,22 @@ import {
 type WeatherAction =
 	| {
 			alertData: Alerts
-			error: Error
-			lastUpdatedDate: Date
+			degradedForecast: null | {
+				error: Error
+				lastUpdatedDate: Date
+			}
 			next24HoursData: Next24HoursData
-			type: 'fetch-degraded-cache'
+			shouldRefresh: boolean
+			type: 'hydrate-cache'
 			weatherData: [] | Data
 			weatherMapData: null | WeatherMapData
 	  }
 	| {
 			alertData: Alerts
+			error: Error
+			lastUpdatedDate: Date
 			next24HoursData: Next24HoursData
-			shouldRefresh: boolean
-			type: 'hydrate-cache'
+			type: 'fetch-degraded-cache'
 			weatherData: [] | Data
 			weatherMapData: null | WeatherMapData
 	  }
@@ -157,7 +162,7 @@ const weatherReducer = (
 			return {
 				...state,
 				alertData: action.alertData,
-				degradedForecast: null,
+				degradedForecast: action.degradedForecast,
 				error: null,
 				next24HoursData: action.next24HoursData,
 				refreshToken: state.refreshToken + (action.shouldRefresh ? 1 : 0),
@@ -183,7 +188,6 @@ const weatherReducer = (
 		case 'start-fetch':
 			return {
 				...state,
-				degradedForecast: null,
 				error: null,
 				status: AsyncStatus.Loading,
 			}
@@ -359,6 +363,7 @@ export const useWeather = (
 					: null
 
 				if (cached && reducedCached) {
+					writeCachedWeatherDegraded()
 					dispatch({
 						alertData: reducedCached.alertData,
 						error,
@@ -483,18 +488,33 @@ export const useWeather = (
 
 		const now = new Date()
 		lastHourRef.current = cached.lastUpdatedDate.getHours()
+		const reducedCached = cached.isDegraded
+			? getReducedCachedWeather({ cached, now })
+			: null
+
+		if (cached.isDegraded && !reducedCached) {
+			dispatch({ type: 'use-network' })
+			return
+		}
 
 		const shouldRefresh =
+			cached.isDegraded ||
 			(now.getHours() !== cached.lastUpdatedDate.getHours() &&
 				now.getMinutes() >= CACHE_REFRESH_DELAY_MINUTE) ||
 			cached.next24HoursData.length === 0
 		dispatch({
-			alertData: cached.alertData,
-			next24HoursData: cached.next24HoursData,
+			alertData: reducedCached?.alertData ?? cached.alertData,
+			degradedForecast: cached.isDegraded
+				? {
+						error: new Error('Weather refresh previously failed'),
+						lastUpdatedDate: cached.lastUpdatedDate,
+					}
+				: null,
+			next24HoursData: reducedCached?.next24HoursData ?? cached.next24HoursData,
 			shouldRefresh,
 			type: 'hydrate-cache',
-			weatherData: cached.weatherData,
-			weatherMapData: cached.weatherMapData,
+			weatherData: reducedCached?.weatherData ?? cached.weatherData,
+			weatherMapData: reducedCached?.weatherMapData ?? cached.weatherMapData,
 		})
 	}, [lat, lon, locationChangeToken, userTimeZone, shouldUseAirQualityUv])
 

@@ -13,6 +13,7 @@ import {
 } from './types'
 
 const LEGACY_LAST_UPDATED_PATTERN = /^\d{4}-\d{1,2}-\d{1,2}-\d{1,2}$/
+const WEATHER_CACHE_DEGRADED_KEY = 'weatherCacheDegraded'
 
 const lastUpdatedSchema = z.union([
 	z.iso.datetime().transform((value) => new Date(value)),
@@ -69,6 +70,7 @@ const readStorageItem = <T>({
 
 export type CachedWeather = {
 	alertData: Alerts
+	isDegraded: boolean
 	lastUpdatedDate: Date
 	next24HoursData: Next24HoursData
 	weatherData: Data
@@ -136,6 +138,13 @@ export const getCachedWeather = ({
 		parse: JSON.parse,
 		schema: weatherMapDataSchema.nullable(),
 	})
+	const isDegraded =
+		readStorageItem({
+			key: WEATHER_CACHE_DEGRADED_KEY,
+			normalize: (value) => JSON.stringify(value),
+			parse: JSON.parse,
+			schema: z.boolean(),
+		}) ?? false
 
 	if (
 		!cachedLat ||
@@ -165,6 +174,7 @@ export const getCachedWeather = ({
 
 	return {
 		alertData: storedAlerts,
+		isDegraded,
 		lastUpdatedDate,
 		next24HoursData: storedNext24HoursData ?? [],
 		weatherData: storedData,
@@ -201,6 +211,11 @@ export const writeCachedWeather = ({
 		JSON.stringify(shouldUseAirQualityUv),
 	)
 	localStorage.setItem('lastUpdated', lastUpdatedDate.toISOString())
+	localStorage.removeItem(WEATHER_CACHE_DEGRADED_KEY)
+}
+
+export const writeCachedWeatherDegraded = () => {
+	localStorage.setItem(WEATHER_CACHE_DEGRADED_KEY, JSON.stringify(true))
 }
 
 export const writeCachedWeatherMapData = ({

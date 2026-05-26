@@ -15,32 +15,33 @@ import {
 const SECONDS_PER_HOUR = 60 * 60
 const SECONDS_PER_DAY = 24 * SECONDS_PER_HOUR
 const WEATHER_MAP_LATITUDE_SPAN = 1.8
+const nullableNumberArraySchema = z.array(z.number().nullable()).min(1)
 
 const weatherResponseSchema = z
 	.object({
 		daily: z.object({
-			precipitation_probability_max: z.array(z.number()).min(1),
-			temperature_2m_max: z.array(z.number()).min(1),
-			temperature_2m_min: z.array(z.number()).min(1),
+			precipitation_probability_max: nullableNumberArraySchema,
+			temperature_2m_max: nullableNumberArraySchema,
+			temperature_2m_min: nullableNumberArraySchema,
 			time: z.array(z.number()).min(1),
-			uv_index_max: z.array(z.number()).min(1),
-			weathercode: z.array(z.number()).min(1),
-			windspeed_10m_max: z.array(z.number()).min(1),
+			uv_index_max: nullableNumberArraySchema,
+			weathercode: nullableNumberArraySchema,
+			windspeed_10m_max: nullableNumberArraySchema,
 		}),
 		hourly: z.object({
-			apparent_temperature: z.array(z.number()).min(1),
-			dew_point_2m: z.array(z.number()).min(1),
-			precipitation: z.array(z.number()).min(1),
-			precipitation_probability: z.array(z.number()).min(1),
-			relative_humidity_2m: z.array(z.number()).min(1),
-			shortwave_radiation_instant: z.array(z.number()).min(1),
-			temperature_2m: z.array(z.number()).min(1),
+			apparent_temperature: nullableNumberArraySchema,
+			dew_point_2m: nullableNumberArraySchema,
+			precipitation: nullableNumberArraySchema,
+			precipitation_probability: nullableNumberArraySchema,
+			relative_humidity_2m: nullableNumberArraySchema,
+			shortwave_radiation_instant: nullableNumberArraySchema,
+			temperature_2m: nullableNumberArraySchema,
 			time: z.array(z.number()).min(1),
-			uv_index: z.array(z.number()).min(1),
-			visibility: z.array(z.number()).min(1),
-			weathercode: z.array(z.number()).min(1),
-			windgusts_10m: z.array(z.number()).min(1),
-			windspeed_10m: z.array(z.number()).min(1),
+			uv_index: nullableNumberArraySchema,
+			visibility: nullableNumberArraySchema,
+			weathercode: nullableNumberArraySchema,
+			windgusts_10m: nullableNumberArraySchema,
+			windspeed_10m: nullableNumberArraySchema,
 		}),
 	})
 	.loose()
@@ -145,10 +146,10 @@ const mergeHourlyUv = ({
 	airQualityTimes: number[]
 	airQualityUv: Array<null | number>
 	weatherTimes: number[]
-	weatherUv: number[]
+	weatherUv: Array<null | number>
 }): number[] => {
 	if (airQualityUv.length === 0) {
-		return weatherUv
+		return weatherUv.map(normalizeUvValue)
 	}
 
 	if (airQualityTimes.length > 0) {
@@ -170,12 +171,12 @@ const mergeHourlyUv = ({
 		return weatherUv.map((value, index) => {
 			const time = weatherTimes[index]
 			if (typeof time !== 'number' || !Number.isFinite(time)) {
-				return value
+				return normalizeUvValue(value)
 			}
 			const override = uvByTime.get(time)
 			return typeof override === 'number' && Number.isFinite(override)
 				? override
-				: value
+				: normalizeUvValue(value)
 		})
 	}
 
@@ -183,9 +184,20 @@ const mergeHourlyUv = ({
 		const override = airQualityUv[index]
 		return typeof override === 'number' && Number.isFinite(override)
 			? override
-			: value
+			: normalizeUvValue(value)
 	})
 }
+
+const normalizeNumber = ({
+	fallback,
+	value,
+}: {
+	fallback: number
+	value: null | number | undefined
+}) => (typeof value === 'number' && Number.isFinite(value) ? value : fallback)
+
+const normalizeUvValue = (uv: null | number | undefined) =>
+	normalizeNumber({ fallback: 0, value: uv })
 
 const mergeUvData = ({
 	airQuality,
@@ -213,7 +225,7 @@ const mergeUvData = ({
 		const override = airQualityUvByDay.get(day)
 		return typeof override === 'number' && Number.isFinite(override)
 			? override
-			: value
+			: normalizeUvValue(value)
 	})
 
 	const mergedHourlyUv = mergeHourlyUv({
@@ -445,12 +457,27 @@ const normalizeLongitude = (lon: number) =>
 export const mapWeatherResponseToForecastData = (data: WeatherResponse): Data =>
 	data.daily.time.map((day, index) => ({
 		day,
-		description: data.daily.weathercode[index],
-		max: data.daily.temperature_2m_max[index],
-		min: data.daily.temperature_2m_min[index],
-		rain: data.daily.precipitation_probability_max[index],
-		uv: data.daily.uv_index_max[index],
-		wind: data.daily.windspeed_10m_max[index],
+		description: normalizeNumber({
+			fallback: 0,
+			value: data.daily.weathercode[index],
+		}),
+		max: normalizeNumber({
+			fallback: 0,
+			value: data.daily.temperature_2m_max[index],
+		}),
+		min: normalizeNumber({
+			fallback: 0,
+			value: data.daily.temperature_2m_min[index],
+		}),
+		rain: normalizeNumber({
+			fallback: 0,
+			value: data.daily.precipitation_probability_max[index],
+		}),
+		uv: normalizeUvValue(data.daily.uv_index_max[index]),
+		wind: normalizeNumber({
+			fallback: 0,
+			value: data.daily.windspeed_10m_max[index],
+		}),
 	}))
 
 export const mapWeatherResponseToNext24HoursData = ({
@@ -468,20 +495,54 @@ export const mapWeatherResponseToNext24HoursData = ({
 	const next24HoursData: Next24HoursData = []
 
 	for (let index = start; index < end; index += 1) {
+		const temperature = normalizeNumber({
+			fallback: 0,
+			value: data.hourly.temperature_2m[index],
+		})
 		const point = {
-			apparentTemperature: data.hourly.apparent_temperature[index],
-			dewPoint: data.hourly.dew_point_2m[index],
-			humidity: data.hourly.relative_humidity_2m[index],
-			precipitation: data.hourly.precipitation[index],
-			precipitationProbability: data.hourly.precipitation_probability[index],
-			shortwaveRadiation: data.hourly.shortwave_radiation_instant[index],
-			temperature: data.hourly.temperature_2m[index],
+			apparentTemperature: normalizeNumber({
+				fallback: temperature,
+				value: data.hourly.apparent_temperature[index],
+			}),
+			dewPoint: normalizeNumber({
+				fallback: temperature,
+				value: data.hourly.dew_point_2m[index],
+			}),
+			humidity: normalizeNumber({
+				fallback: 0,
+				value: data.hourly.relative_humidity_2m[index],
+			}),
+			precipitation: normalizeNumber({
+				fallback: 0,
+				value: data.hourly.precipitation[index],
+			}),
+			precipitationProbability: normalizeNumber({
+				fallback: 0,
+				value: data.hourly.precipitation_probability[index],
+			}),
+			shortwaveRadiation: normalizeNumber({
+				fallback: 0,
+				value: data.hourly.shortwave_radiation_instant[index],
+			}),
+			temperature,
 			time: data.hourly.time[index],
-			uv: data.hourly.uv_index[index],
-			visibility: data.hourly.visibility[index],
-			weatherCode: data.hourly.weathercode[index],
-			wind: data.hourly.windspeed_10m[index],
-			windGust: data.hourly.windgusts_10m[index],
+			uv: normalizeUvValue(data.hourly.uv_index[index]),
+			visibility: normalizeNumber({
+				fallback: 0,
+				value: data.hourly.visibility[index],
+			}),
+			weatherCode: normalizeNumber({
+				fallback: 0,
+				value: data.hourly.weathercode[index],
+			}),
+			wind: normalizeNumber({
+				fallback: 0,
+				value: data.hourly.windspeed_10m[index],
+			}),
+			windGust: normalizeNumber({
+				fallback: 0,
+				value: data.hourly.windgusts_10m[index],
+			}),
 		}
 
 		if (Object.values(point).every(Number.isFinite)) {

@@ -178,6 +178,83 @@ describe('useWeather - Core Functionality', () => {
 		expect(fetchMock).not.toHaveBeenCalled()
 	})
 
+	it('retries fresh weather when cached data is marked degraded', async () => {
+		const now = new Date()
+		const cachedData = [
+			{
+				day: now.getTime(),
+				description: 1,
+				max: 30,
+				min: 20,
+				rain: 10,
+				uv: 9,
+				wind: 15,
+			},
+		]
+		const cachedAlerts = {
+			hoursOfExtremeUv: Array(13).fill(false),
+			hoursOfLowVisibility: Array(25).fill(false),
+			hoursOfStrongWind: Array(25).fill(false),
+			hoursOfStrongWindGusts: Array(25).fill(false),
+			totalPrecipitation: {
+				duration: Array(25).fill(false),
+				precipitation: { flag: false, value: 0, zeroCount: 0 },
+			},
+		}
+		const cachedNext24HoursData = [
+			{
+				apparentTemperature: 21,
+				dewPoint: 12,
+				humidity: 55,
+				precipitation: 0,
+				precipitationProbability: 10,
+				shortwaveRadiation: 120,
+				temperature: 22,
+				time: Math.floor(now.getTime() / 1000),
+				uv: 4,
+				visibility: 10_000,
+				weatherCode: 1,
+				wind: 15,
+				windGust: 20,
+			},
+		]
+
+		fetchMock
+			.mockResolvedValueOnce({
+				json: async () => createWeatherResponse(),
+				ok: true,
+			})
+			.mockImplementationOnce(() => new Promise(() => {}))
+
+		localStorageMock.setItem('data', JSON.stringify(cachedData))
+		localStorageMock.setItem(
+			'next24HoursData',
+			JSON.stringify(cachedNext24HoursData),
+		)
+		localStorageMock.setItem('alerts', JSON.stringify(cachedAlerts))
+		localStorageMock.setItem('weatherMapData', JSON.stringify(null))
+		localStorageMock.setItem('lastUpdated', now.toISOString())
+		localStorageMock.setItem('cachedLat', '40.7128')
+		localStorageMock.setItem('cachedLon', '-74.0060')
+		localStorageMock.setItem('cachedTimeZone', userTimeZone)
+		localStorageMock.setItem('cachedUseAirQualityUv', JSON.stringify(false))
+		localStorageMock.setItem('weatherCacheDegraded', JSON.stringify(true))
+
+		const { result } = renderHook(() =>
+			useWeather('40.7128', '-74.0060', 0, false),
+		)
+
+		await waitFor(() => {
+			expect(fetchMock).toHaveBeenCalled()
+		})
+		await waitFor(() => {
+			expect(localStorageMock.getItem('weatherCacheDegraded')).toBeNull()
+		})
+
+		expect(result.current.degradedForecast ?? null).toBeNull()
+		expect(result.current.isLoading).toBe(false)
+	})
+
 	it('fetches missing weather map data when weather cache is fresh', async () => {
 		const now = new Date()
 		const timestamp = Math.floor(now.getTime() / 1000)
@@ -403,6 +480,7 @@ describe('useWeather - Core Functionality', () => {
 		expect(result.current.weatherMapData?.frames).toEqual([
 			cachedWeatherMapData.frames[1],
 		])
+		expect(localStorageMock.getItem('weatherCacheDegraded')).toBe('true')
 		expect(result.current.alertData.hoursOfStrongWind[0]).toBe(true)
 		expect(result.current.alertData.hoursOfStrongWindGusts[0]).toBe(true)
 	})
