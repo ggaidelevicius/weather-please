@@ -25,7 +25,6 @@ const CHART_PADDING = 10
 const CHART_SPLINE_TENSION = 0.16
 const WEATHER_MAP_BASE_HEIGHT = 260
 const WEATHER_MAP_FRAME_DURATION_MS = 4200
-const WEATHER_MAP_MIN_BASE_WIDTH = 420
 const WEATHER_MAP_PARTICLE_DENSITY = 0.00011
 const WEATHER_MAP_PRECIPITATION_FRAME_INTERVAL_MS = 66
 const WEATHER_MAP_PRECIPITATION_MESH_CELL_SIZE = 8
@@ -173,6 +172,14 @@ type WeatherMapParticle = {
 	age: number
 	x: number
 	y: number
+}
+
+type WeatherMapPlaybackState = {
+	frameIndex: number
+	framePosition: number
+	frameProgress: number
+	time: number
+	totalProgress: number
 }
 
 type WeatherMapPointerPoint = {
@@ -883,9 +890,15 @@ const WeatherMapDetail = ({
 	weatherMapData: null | WeatherMapData
 	windUnitLabel: string
 }>) => {
-	const [selectedFrameIndex, setSelectedFrameIndex] = useState(0)
+	const [playback, setPlayback] = useState<WeatherMapPlaybackState>(() =>
+		getWeatherMapPlaybackState({
+			frames: weatherMapData?.frames ?? [],
+			startedAt: 0,
+			time: 0,
+		}),
+	)
 	const selectedFrame = getWeatherMapFrame({
-		frameIndex: selectedFrameIndex,
+		frameIndex: playback.frameIndex,
 		weatherMapData,
 	})
 	const frameCount = weatherMapData?.frames.length ?? 0
@@ -895,32 +908,26 @@ const WeatherMapDetail = ({
 			return
 		}
 
-		let timeout = 0
-		let nextFrameIndex = 0
+		const startedAt = performance.now()
+		let animationFrame = 0
 
-		const advanceFrame = () => {
-			nextFrameIndex += 1
-
-			if (nextFrameIndex >= frameCount) {
-				nextFrameIndex = 0
-				setSelectedFrameIndex(0)
-				timeout = window.setTimeout(advanceFrame, 80)
-				return
-			}
-
-			setSelectedFrameIndex(nextFrameIndex)
-			timeout = window.setTimeout(advanceFrame, WEATHER_MAP_FRAME_DURATION_MS)
+		const updatePlayback = (time: number) => {
+			setPlayback(
+				getWeatherMapPlaybackState({
+					frames: weatherMapData?.frames ?? [],
+					startedAt,
+					time,
+				}),
+			)
+			animationFrame = window.requestAnimationFrame(updatePlayback)
 		}
 
-		timeout = window.setTimeout(() => {
-			setSelectedFrameIndex(0)
-			timeout = window.setTimeout(advanceFrame, 80)
-		}, 0)
+		animationFrame = window.requestAnimationFrame(updatePlayback)
 
 		return () => {
-			window.clearTimeout(timeout)
+			window.cancelAnimationFrame(animationFrame)
 		}
-	}, [frameCount, isActive])
+	}, [frameCount, isActive, weatherMapData?.frames])
 
 	return (
 		<DetailViewShell
@@ -939,8 +946,8 @@ const WeatherMapDetail = ({
 			title={<Trans>Local map</Trans>}
 		>
 			<WeatherMap
-				frameIndex={selectedFrameIndex}
 				isActive={isActive}
+				playback={playback}
 				usesMetricUnits={usesMetricUnits}
 				weatherMapData={weatherMapData}
 				windUnitLabel={windUnitLabel}
@@ -950,28 +957,27 @@ const WeatherMapDetail = ({
 }
 
 const WeatherMap = ({
-	frameIndex,
 	isActive,
+	playback,
 	usesMetricUnits,
 	weatherMapData,
 	windUnitLabel,
 }: Readonly<{
-	frameIndex: number
 	isActive: boolean
+	playback: WeatherMapPlaybackState
 	usesMetricUnits: boolean
 	weatherMapData: null | WeatherMapData
 	windUnitLabel: string
 }>) => {
 	const containerRef = useRef<HTMLDivElement>(null)
-	const [displaySize, setDisplaySize] = useState<WeatherMapDisplaySize>({
-		height: 320,
-		width: 960,
-	})
+	const [displaySize, setDisplaySize] = useState<null | WeatherMapDisplaySize>(
+		null,
+	)
 	const [hoverPoint, setHoverPoint] = useState<null | WeatherMapPointerPoint>(
 		null,
 	)
 	const selectedFrame = getWeatherMapFrame({
-		frameIndex,
+		frameIndex: playback.frameIndex,
 		weatherMapData,
 	})
 
@@ -988,9 +994,20 @@ const WeatherMap = ({
 			}
 
 			const { height, width } = entry.contentRect
-			setDisplaySize({
+			const nextDisplaySize = {
 				height: Math.max(1, height),
 				width: Math.max(1, width),
+			}
+
+			setDisplaySize((currentDisplaySize) => {
+				if (
+					currentDisplaySize?.height === nextDisplaySize.height &&
+					currentDisplaySize.width === nextDisplaySize.width
+				) {
+					return currentDisplaySize
+				}
+
+				return nextDisplaySize
 			})
 		})
 		resizeObserver.observe(element)
@@ -1008,17 +1025,25 @@ const WeatherMap = ({
 		)
 	}
 
-	const dimensions = getWeatherMapDimensions(displaySize)
-	const tiles = getWeatherMapTiles({
-		center: weatherMapData.center,
-		dimensions,
-	})
-	const viewport = getWeatherMapViewport({
-		center: weatherMapData.center,
-		dimensions,
-	})
+	const dimensions = displaySize ? getWeatherMapDimensions(displaySize) : null
+	const tiles = dimensions
+		? getWeatherMapTiles({
+				center: weatherMapData.center,
+				dimensions,
+			})
+		: []
+	const viewport = dimensions
+		? getWeatherMapViewport({
+				center: weatherMapData.center,
+				dimensions,
+			})
+		: null
 
 	const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+		if (!dimensions) {
+			return
+		}
+
 		const rect = event.currentTarget.getBoundingClientRect()
 		setHoverPoint({
 			x: ((event.clientX - rect.left) / rect.width) * dimensions.width,
@@ -1038,108 +1063,108 @@ const WeatherMap = ({
 				onPointerMove={handlePointerMove}
 				ref={containerRef}
 			>
-				<svg
-					aria-label="Local precipitation and wind direction map"
-					className="h-full w-full"
-					preserveAspectRatio="none"
-					viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
-				>
-					<rect
-						fill="#0f172a"
-						height={dimensions.height}
-						width={dimensions.width}
-					/>
-					{tiles.map((tile) => (
-						<image
-							height={WEATHER_MAP_TILE_SIZE}
-							href={tile.url}
-							key={tile.key}
-							opacity="0.58"
+				{dimensions && viewport ? (
+					<>
+						<svg
+							aria-label="Local precipitation and wind direction map"
+							className="h-full w-full"
 							preserveAspectRatio="none"
-							width={WEATHER_MAP_TILE_SIZE}
-							x={tile.x}
-							y={tile.y}
+							viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+						>
+							<rect
+								fill="#0f172a"
+								height={dimensions.height}
+								width={dimensions.width}
+							/>
+							{tiles.map((tile) => (
+								<image
+									height={WEATHER_MAP_TILE_SIZE}
+									href={tile.url}
+									key={tile.key}
+									opacity="0.58"
+									preserveAspectRatio="none"
+									width={WEATHER_MAP_TILE_SIZE}
+									x={tile.x}
+									y={tile.y}
+								/>
+							))}
+							<rect
+								fill="rgba(8, 47, 73, 0.42)"
+								height={dimensions.height}
+								width={dimensions.width}
+							/>
+						</svg>
+						<WeatherMapPrecipitationCanvas
+							dimensions={dimensions}
+							frames={weatherMapData.frames}
+							isActive={isActive}
+							playbackPosition={playback.framePosition}
+							viewport={viewport}
 						/>
-					))}
-					<rect
-						fill="rgba(8, 47, 73, 0.42)"
-						height={dimensions.height}
-						width={dimensions.width}
-					/>
-				</svg>
-				<WeatherMapPrecipitationCanvas
-					dimensions={dimensions}
-					frameIndex={frameIndex}
-					frames={weatherMapData.frames}
-					isActive={isActive}
-					viewport={viewport}
-				/>
-				<WeatherMapWindParticleCanvas
-					dimensions={dimensions}
-					frameIndex={frameIndex}
-					frames={weatherMapData.frames}
-					isActive={isActive}
-					viewport={viewport}
-				/>
-				<svg
-					aria-hidden
-					className="pointer-events-none absolute inset-0 h-full w-full"
-					preserveAspectRatio="none"
-					viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
-				>
-					<WeatherMapCenterMarker
-						center={weatherMapData.center}
-						viewport={viewport}
-					/>
-				</svg>
-				<div className="pointer-events-none absolute top-3 left-3 rounded-full border border-white/10 bg-dark-950/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md">
-					{formatTooltipTime(selectedFrame.time)}
-				</div>
-				<WeatherMapTooltip
-					dimensions={dimensions}
-					frameIndex={frameIndex}
-					frames={weatherMapData.frames}
-					isActive={isActive}
-					point={hoverPoint}
-					usesMetricUnits={usesMetricUnits}
-					viewport={viewport}
-					windUnitLabel={windUnitLabel}
-				/>
-				<WeatherMapPrecipitationLegend usesMetricUnits={usesMetricUnits} />
-				<a
-					className="absolute right-2 bottom-2 rounded bg-dark-950/60 px-1.5 py-0.5 text-[10px] font-medium text-white/70 backdrop-blur-md transition hover:text-white"
-					href="https://www.openstreetmap.org/copyright"
-					rel="noreferrer"
-					target="_blank"
-				>
-					© OpenStreetMap
-				</a>
+						<WeatherMapWindParticleCanvas
+							dimensions={dimensions}
+							frames={weatherMapData.frames}
+							isActive={isActive}
+							playbackPosition={playback.framePosition}
+							viewport={viewport}
+						/>
+						<svg
+							aria-hidden
+							className="pointer-events-none absolute inset-0 h-full w-full"
+							preserveAspectRatio="none"
+							viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+						>
+							<WeatherMapCenterMarker
+								center={weatherMapData.center}
+								viewport={viewport}
+							/>
+						</svg>
+						<div className="pointer-events-none absolute top-3 left-3 rounded-full border border-white/10 bg-dark-950/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md">
+							{formatTooltipTime(playback.time ?? selectedFrame.time)}
+						</div>
+						<WeatherMapTooltip
+							dimensions={dimensions}
+							frames={weatherMapData.frames}
+							isActive={isActive}
+							playbackPosition={playback.framePosition}
+							point={hoverPoint}
+							usesMetricUnits={usesMetricUnits}
+							viewport={viewport}
+							windUnitLabel={windUnitLabel}
+						/>
+						<WeatherMapPrecipitationLegend usesMetricUnits={usesMetricUnits} />
+						<a
+							className="absolute right-2 bottom-2 rounded bg-dark-950/60 px-1.5 py-0.5 text-[10px] font-medium text-white/70 backdrop-blur-md transition hover:text-white"
+							href="https://www.openstreetmap.org/copyright"
+							rel="noreferrer"
+							target="_blank"
+						>
+							© OpenStreetMap
+						</a>
+					</>
+				) : null}
 			</div>
-			<WeatherMapTimeline frames={weatherMapData.frames} isActive={isActive} />
+			<WeatherMapTimeline frames={weatherMapData.frames} playback={playback} />
 		</div>
 	)
 }
 
 const WeatherMapWindParticleCanvas = ({
 	dimensions,
-	frameIndex,
 	frames,
 	isActive,
+	playbackPosition,
 	viewport,
 }: Readonly<{
 	dimensions: WeatherMapDimensions
-	frameIndex: number
 	frames: WeatherMapData['frames']
 	isActive: boolean
+	playbackPosition: number
 	viewport: WeatherMapViewport
 }>) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const framesRef = useRef(frames)
-	const frameTransitionRef = useRef({
-		fromIndex: frameIndex,
-		startedAt: 0,
-		toIndex: frameIndex,
-	})
+	const playbackPositionRef = useRef(playbackPosition)
 	const mapHeight = dimensions.height
 	const mapWidth = dimensions.width
 	const viewportCenterX = viewport.centerX
@@ -1150,26 +1175,8 @@ const WeatherMapWindParticleCanvas = ({
 	}, [frames])
 
 	useEffect(() => {
-		const transition = frameTransitionRef.current
-		if (transition.toIndex === frameIndex) {
-			return
-		}
-
-		if (frameIndex < transition.toIndex) {
-			frameTransitionRef.current = {
-				fromIndex: frameIndex,
-				startedAt: performance.now() - WEATHER_MAP_FRAME_DURATION_MS,
-				toIndex: frameIndex,
-			}
-			return
-		}
-
-		frameTransitionRef.current = {
-			fromIndex: transition.toIndex,
-			startedAt: performance.now(),
-			toIndex: frameIndex,
-		}
-	}, [frameIndex])
+		playbackPositionRef.current = playbackPosition
+	}, [playbackPosition])
 
 	useEffect(() => {
 		const canvas = canvasRef.current
@@ -1200,11 +1207,10 @@ const WeatherMapWindParticleCanvas = ({
 		const particles = createWeatherMapParticles(animationDimensions)
 		let animationFrame = 0
 
-		const draw = (time: number) => {
+		const draw = () => {
 			const projectedPoints = getInterpolatedWeatherMapWindPoints({
+				framePosition: playbackPositionRef.current,
 				frames: framesRef.current,
-				time,
-				transition: frameTransitionRef.current,
 				viewport: animationViewport,
 			})
 			const maxWind = Math.max(
@@ -1283,24 +1289,20 @@ const WeatherMapWindParticleCanvas = ({
 
 const WeatherMapPrecipitationCanvas = ({
 	dimensions,
-	frameIndex,
 	frames,
 	isActive,
+	playbackPosition,
 	viewport,
 }: Readonly<{
 	dimensions: WeatherMapDimensions
-	frameIndex: number
 	frames: WeatherMapData['frames']
 	isActive: boolean
+	playbackPosition: number
 	viewport: WeatherMapViewport
 }>) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const framesRef = useRef(frames)
-	const frameTransitionRef = useRef({
-		fromIndex: frameIndex,
-		startedAt: 0,
-		toIndex: frameIndex,
-	})
+	const playbackPositionRef = useRef(playbackPosition)
 	const mapHeight = dimensions.height
 	const mapWidth = dimensions.width
 	const viewportCenterX = viewport.centerX
@@ -1311,26 +1313,8 @@ const WeatherMapPrecipitationCanvas = ({
 	}, [frames])
 
 	useEffect(() => {
-		const transition = frameTransitionRef.current
-		if (transition.toIndex === frameIndex) {
-			return
-		}
-
-		if (frameIndex < transition.toIndex) {
-			frameTransitionRef.current = {
-				fromIndex: frameIndex,
-				startedAt: performance.now() - WEATHER_MAP_FRAME_DURATION_MS,
-				toIndex: frameIndex,
-			}
-			return
-		}
-
-		frameTransitionRef.current = {
-			fromIndex: transition.toIndex,
-			startedAt: performance.now(),
-			toIndex: frameIndex,
-		}
-	}, [frameIndex])
+		playbackPositionRef.current = playbackPosition
+	}, [playbackPosition])
 
 	useEffect(() => {
 		const canvas = canvasRef.current
@@ -1378,9 +1362,8 @@ const WeatherMapPrecipitationCanvas = ({
 
 			lastDrawTime = time
 			const precipitationPoints = getInterpolatedWeatherMapPrecipitationPoints({
+				framePosition: playbackPositionRef.current,
 				frames: framesRef.current,
-				time,
-				transition: frameTransitionRef.current,
 				viewport: animationViewport,
 			})
 			const precipitationImageData = createWeatherMapPrecipitationMeshImageData(
@@ -1419,29 +1402,25 @@ const WeatherMapPrecipitationCanvas = ({
 
 const WeatherMapTooltip = ({
 	dimensions,
-	frameIndex,
 	frames,
 	isActive,
+	playbackPosition,
 	point,
 	usesMetricUnits,
 	viewport,
 	windUnitLabel,
 }: Readonly<{
 	dimensions: WeatherMapDimensions
-	frameIndex: number
 	frames: WeatherMapData['frames']
 	isActive: boolean
+	playbackPosition: number
 	point: null | WeatherMapPointerPoint
 	usesMetricUnits: boolean
 	viewport: WeatherMapViewport
 	windUnitLabel: string
 }>) => {
 	const framesRef = useRef(frames)
-	const frameTransitionRef = useRef({
-		fromIndex: frameIndex,
-		startedAt: 0,
-		toIndex: frameIndex,
-	})
+	const playbackPositionRef = useRef(playbackPosition)
 	const [weather, setWeather] = useState<null | WeatherMapPointerWeather>(null)
 	const pointX = point?.x ?? 0
 	const pointY = point?.y ?? 0
@@ -1451,26 +1430,8 @@ const WeatherMapTooltip = ({
 	}, [frames])
 
 	useEffect(() => {
-		const transition = frameTransitionRef.current
-		if (transition.toIndex === frameIndex) {
-			return
-		}
-
-		if (frameIndex < transition.toIndex) {
-			frameTransitionRef.current = {
-				fromIndex: frameIndex,
-				startedAt: performance.now() - WEATHER_MAP_FRAME_DURATION_MS,
-				toIndex: frameIndex,
-			}
-			return
-		}
-
-		frameTransitionRef.current = {
-			fromIndex: transition.toIndex,
-			startedAt: performance.now(),
-			toIndex: frameIndex,
-		}
-	}, [frameIndex])
+		playbackPositionRef.current = playbackPosition
+	}, [playbackPosition])
 
 	useEffect(() => {
 		if (!isActive || !point) {
@@ -1489,9 +1450,8 @@ const WeatherMapTooltip = ({
 			if (time - lastDrawTime >= WEATHER_MAP_TOOLTIP_FRAME_INTERVAL_MS) {
 				lastDrawTime = time
 				const projectedPoints = getInterpolatedWeatherMapWindPoints({
+					framePosition: playbackPositionRef.current,
 					frames: framesRef.current,
-					time,
-					transition: frameTransitionRef.current,
 					viewport: animationViewport,
 				})
 				const speed = getWeatherMapWindSpeedAtPoint({
@@ -1501,9 +1461,8 @@ const WeatherMapTooltip = ({
 				const precipitation = getWeatherMapPrecipitationAtPoint({
 					point,
 					projectedPoints: getInterpolatedWeatherMapPrecipitationPoints({
+						framePosition: playbackPositionRef.current,
 						frames: framesRef.current,
-						time,
-						transition: frameTransitionRef.current,
 						viewport: animationViewport,
 					}),
 				})
@@ -1644,24 +1603,13 @@ const WeatherMapPrecipitationLegend = ({
 
 const WeatherMapTimeline = ({
 	frames,
-	isActive,
+	playback,
 }: Readonly<{
 	frames: WeatherMapData['frames']
-	isActive: boolean
+	playback: WeatherMapPlaybackState
 }>) => {
-	const duration =
-		Math.max(1, frames.length - 1) * WEATHER_MAP_FRAME_DURATION_MS
-
 	return (
 		<div className="space-y-2">
-			<style>
-				{`
-					@keyframes weather-map-timeline-progress {
-						from { transform: scaleX(0); }
-						to { transform: scaleX(1); }
-					}
-				`}
-			</style>
 			<div className="flex items-center justify-between text-xs font-semibold text-dark-300">
 				<span>{formatHour(frames[0]?.time ?? 0)}</span>
 				<span>{formatHour(frames.at(-1)?.time ?? 0)}</span>
@@ -1670,9 +1618,7 @@ const WeatherMapTimeline = ({
 				<div
 					className="h-full origin-left rounded-full bg-cyan-100/80"
 					style={{
-						animation: isActive
-							? `weather-map-timeline-progress ${duration}ms linear infinite`
-							: undefined,
+						transform: `scaleX(${playback.totalProgress})`,
 					}}
 				/>
 			</div>
@@ -2316,18 +2262,10 @@ const projectWeatherMapPoint = ({
 const getWeatherMapDimensions = ({
 	height,
 	width,
-}: WeatherMapDisplaySize): WeatherMapDimensions => {
-	const aspectRatio = width / Math.max(height, 1)
-	const baseWidth = Math.max(
-		WEATHER_MAP_MIN_BASE_WIDTH,
-		WEATHER_MAP_BASE_HEIGHT * aspectRatio,
-	)
-
-	return {
-		height: WEATHER_MAP_BASE_HEIGHT * WEATHER_MAP_RENDER_SCALE,
-		width: Math.round(baseWidth * WEATHER_MAP_RENDER_SCALE),
-	}
-}
+}: WeatherMapDisplaySize): WeatherMapDimensions => ({
+	height: Math.max(1, Math.round(height * WEATHER_MAP_RENDER_SCALE)),
+	width: Math.max(1, Math.round(width * WEATHER_MAP_RENDER_SCALE)),
+})
 
 const getWeatherMapTiles = ({
 	center,
@@ -2421,36 +2359,24 @@ const resetWeatherMapParticle = ({
 }
 
 const getInterpolatedWeatherMapPrecipitationPoints = ({
+	framePosition,
 	frames,
-	time,
-	transition,
 	viewport,
 }: {
+	framePosition: number
 	frames: WeatherMapData['frames']
-	time: number
-	transition: {
-		fromIndex: number
-		startedAt: number
-		toIndex: number
-	}
 	viewport: WeatherMapViewport
 }) => {
-	const fromFrame = getWeatherMapFrame({
-		frameIndex: transition.fromIndex,
-		weatherMapData: { center: { lat: 0, lon: 0 }, frames },
-	})
-	const toFrame = getWeatherMapFrame({
-		frameIndex: transition.toIndex,
-		weatherMapData: { center: { lat: 0, lon: 0 }, frames },
-	})
-	const progress = getWeatherMapTransitionProgress({
-		startedAt: transition.startedAt,
-		time,
+	const interpolation = getWeatherMapFrameInterpolation({
+		framePosition,
+		frames,
 	})
 
-	if (!fromFrame || !toFrame) {
+	if (!interpolation) {
 		return []
 	}
+
+	const { fromFrame, progress, toFrame } = interpolation
 
 	return fromFrame.points.flatMap((fromPoint, pointIndex) => {
 		const toPoint = toFrame.points[pointIndex]
@@ -2836,36 +2762,24 @@ const getWeatherMapPrecipitationIntensity = (precipitation: number) =>
 	Math.min(1, Math.sqrt(Math.max(0, precipitation) / 6))
 
 const getInterpolatedWeatherMapWindPoints = ({
+	framePosition,
 	frames,
-	time,
-	transition,
 	viewport,
 }: {
+	framePosition: number
 	frames: WeatherMapData['frames']
-	time: number
-	transition: {
-		fromIndex: number
-		startedAt: number
-		toIndex: number
-	}
 	viewport: WeatherMapViewport
 }) => {
-	const fromFrame = getWeatherMapFrame({
-		frameIndex: transition.fromIndex,
-		weatherMapData: { center: { lat: 0, lon: 0 }, frames },
-	})
-	const toFrame = getWeatherMapFrame({
-		frameIndex: transition.toIndex,
-		weatherMapData: { center: { lat: 0, lon: 0 }, frames },
-	})
-	const progress = getWeatherMapTransitionProgress({
-		startedAt: transition.startedAt,
-		time,
+	const interpolation = getWeatherMapFrameInterpolation({
+		framePosition,
+		frames,
 	})
 
-	if (!fromFrame || !toFrame) {
+	if (!interpolation) {
 		return []
 	}
+
+	const { fromFrame, progress, toFrame } = interpolation
 
 	return fromFrame.points.flatMap((fromPoint, pointIndex) => {
 		const toPoint = toFrame.points[pointIndex]
@@ -2963,14 +2877,77 @@ const getWeatherMapWindInfluenceRadius = (
 	return Math.max(72, (medianDistance ?? 120) * 1.35)
 }
 
-const getWeatherMapTransitionProgress = ({
+const getWeatherMapPlaybackState = ({
+	frames,
 	startedAt,
 	time,
 }: {
+	frames: WeatherMapData['frames']
 	startedAt: number
 	time: number
-}) =>
-	Math.min(1, Math.max(0, (time - startedAt) / WEATHER_MAP_FRAME_DURATION_MS))
+}): WeatherMapPlaybackState => {
+	const frameCount = frames.length
+	const firstFrame = frames[0]
+
+	if (frameCount <= 1 || !firstFrame) {
+		return {
+			frameIndex: 0,
+			framePosition: 0,
+			frameProgress: 0,
+			time: firstFrame?.time ?? 0,
+			totalProgress: 0,
+		}
+	}
+
+	const segmentCount = frameCount - 1
+	const duration = segmentCount * WEATHER_MAP_FRAME_DURATION_MS
+	const elapsed = (((time - startedAt) % duration) + duration) % duration
+	const framePosition = elapsed / WEATHER_MAP_FRAME_DURATION_MS
+	const frameIndex = Math.min(segmentCount - 1, Math.floor(framePosition))
+	const frameProgress = framePosition - frameIndex
+	const fromFrame = frames[frameIndex] ?? firstFrame
+	const toFrame = frames[frameIndex + 1] ?? fromFrame
+
+	return {
+		frameIndex,
+		framePosition,
+		frameProgress,
+		time: fromFrame.time + (toFrame.time - fromFrame.time) * frameProgress,
+		totalProgress: elapsed / duration,
+	}
+}
+
+const getWeatherMapFrameInterpolation = ({
+	framePosition,
+	frames,
+}: {
+	framePosition: number
+	frames: WeatherMapData['frames']
+}) => {
+	const frameCount = frames.length
+	if (frameCount === 0) {
+		return null
+	}
+
+	const lastFrameIndex = frameCount - 1
+	const fromIndex = Math.min(
+		lastFrameIndex,
+		Math.max(0, Math.floor(framePosition)),
+	)
+	const toIndex = Math.min(lastFrameIndex, fromIndex + 1)
+	const fromFrame = frames[fromIndex]
+	const toFrame = frames[toIndex]
+
+	if (!fromFrame || !toFrame) {
+		return null
+	}
+
+	return {
+		fromFrame,
+		progress: Math.min(1, Math.max(0, framePosition - fromIndex)),
+		toFrame,
+	}
+}
 
 const interpolateWeatherMapDirection = ({
 	fromDirection,
