@@ -21,6 +21,7 @@ const COMPACT_COLLAPSED_WIDTH_PX = 44
 const COMPACT_TEXT_LEFT_PADDING_PX = 50
 const COMPACT_TEXT_RIGHT_PADDING_PX = 36
 const COMPACT_ALERT_STORAGE_KEY = 'compactAlertExpandedKeys'
+const DEGRADED_FORECAST_ALERT_KEY = 'degradedForecast'
 
 type AlertIcon = ForwardRefExoticComponent<
 	IconProps & RefAttributes<SVGSVGElement>
@@ -33,24 +34,37 @@ type AlertItem = {
 	variant: AlertVariant
 }
 
-const getInitialExpandedAlertKeys = (useCompactAlerts: boolean) => {
+const getInitialExpandedAlertKeys = ({
+	shouldExpandDegradedForecast,
+	useCompactAlerts,
+}: {
+	shouldExpandDegradedForecast: boolean
+	useCompactAlerts: boolean
+}) => {
 	if (!useCompactAlerts || typeof window === 'undefined') {
 		return new Set<string>()
 	}
 
+	const defaultKeys = shouldExpandDegradedForecast
+		? [DEGRADED_FORECAST_ALERT_KEY]
+		: []
+
 	try {
 		const stored = localStorage.getItem(COMPACT_ALERT_STORAGE_KEY)
 		if (!stored) {
-			return new Set<string>()
+			return new Set(defaultKeys)
 		}
 		const parsed = JSON.parse(stored)
 		if (Array.isArray(parsed)) {
-			return new Set(parsed.filter((value) => typeof value === 'string'))
+			return new Set([
+				...defaultKeys,
+				...parsed.filter((value) => typeof value === 'string'),
+			])
 		}
-		return new Set<string>()
+		return new Set(defaultKeys)
 	} catch (error) {
 		console.error('Failed to read compact alert state', error)
-		return new Set<string>()
+		return new Set(defaultKeys)
 	}
 }
 
@@ -141,6 +155,7 @@ const CompactAlertButton = ({
 }
 
 interface AlertProps extends Alerts {
+	shouldShowDegradedForecastAlert?: boolean
 	showPrecipitationAlerts: boolean
 	showUvAlerts: boolean
 	showVisibilityAlerts: boolean
@@ -154,6 +169,7 @@ export const WeatherAlert = ({
 	hoursOfLowVisibility,
 	hoursOfStrongWind,
 	hoursOfStrongWindGusts,
+	shouldShowDegradedForecastAlert = false,
 	showPrecipitationAlerts,
 	showUvAlerts,
 	showVisibilityAlerts,
@@ -165,9 +181,29 @@ export const WeatherAlert = ({
 	const usesMetricUnits = unitSystem === UnitSystem.Metric
 	// Derive alerts array directly from props
 	const [expandedAlertKeys, setExpandedAlertKeys] = useState<Set<string>>(() =>
-		getInitialExpandedAlertKeys(useCompactAlerts),
+		getInitialExpandedAlertKeys({
+			shouldExpandDegradedForecast: shouldShowDegradedForecastAlert,
+			useCompactAlerts,
+		}),
 	)
 	const alerts: AlertItem[] = []
+	const visibleExpandedAlertKeys = shouldShowDegradedForecastAlert
+		? new Set([...expandedAlertKeys, DEGRADED_FORECAST_ALERT_KEY])
+		: expandedAlertKeys
+
+	if (shouldShowDegradedForecastAlert) {
+		alerts.push({
+			content: (
+				<Trans>
+					Showing a reduced saved forecast because the latest data couldn&apos;t
+					be fetched.
+				</Trans>
+			),
+			icon: IconInfoCircle,
+			key: DEGRADED_FORECAST_ALERT_KEY,
+			variant: AlertVariant.LightBlue,
+		})
+	}
 
 	// UV Alert
 	if (showUvAlerts && hoursOfExtremeUv.includes(true)) {
@@ -447,7 +483,7 @@ export const WeatherAlert = ({
 					{alerts.map((alert) => (
 						<CompactAlertButton
 							alert={alert}
-							isExpanded={expandedAlertKeys.has(alert.key)}
+							isExpanded={visibleExpandedAlertKeys.has(alert.key)}
 							key={alert.key}
 							onToggle={() => handleToggle(alert.key)}
 						/>

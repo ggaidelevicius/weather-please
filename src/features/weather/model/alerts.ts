@@ -6,7 +6,12 @@ import {
 	processPrecipitationDuration,
 	processSimpleAlert,
 } from './alert-processor'
-import { ALERT_HOURS_GENERAL, ALERT_HOURS_UV, type Alerts } from './types'
+import {
+	ALERT_HOURS_GENERAL,
+	ALERT_HOURS_UV,
+	type Alerts,
+	type Next24HoursData,
+} from './types'
 
 export const createEmptyAlerts = (): Alerts => ({
 	hoursOfExtremeUv: Array(ALERT_HOURS_UV).fill(false),
@@ -67,3 +72,55 @@ export const deriveAlertsFromWeather = (
 		),
 	},
 })
+
+export const deriveAlertsFromNext24HoursData = (
+	data: Next24HoursData,
+): Alerts => {
+	const precipitation = data.map(({ precipitation }) => precipitation)
+
+	return {
+		hoursOfExtremeUv: padBooleanArray({
+			length: ALERT_HOURS_UV,
+			values: processSimpleAlert(
+				data.map(({ uv }) => uv),
+				ALERT_CONDITIONS.extremeUv,
+			),
+		}),
+		hoursOfLowVisibility: padBooleanArray({
+			length: ALERT_HOURS_GENERAL,
+			values: processSimpleAlert(
+				data.map(({ visibility }) => visibility),
+				ALERT_CONDITIONS.lowVisibility,
+			),
+		}),
+		hoursOfStrongWind: padBooleanArray({
+			length: ALERT_HOURS_GENERAL,
+			values: processSimpleAlert(
+				data.map(({ wind }) => wind),
+				ALERT_CONDITIONS.strongWind,
+			),
+		}),
+		hoursOfStrongWindGusts: padBooleanArray({
+			length: ALERT_HOURS_GENERAL,
+			values: processSimpleAlert(
+				data.map(({ windGust }) => windGust),
+				ALERT_CONDITIONS.strongWindGusts,
+			),
+		}),
+		totalPrecipitation: {
+			duration: padBooleanArray({
+				length: ALERT_HOURS_GENERAL,
+				values: processPrecipitationDuration(precipitation),
+			}),
+			precipitation: processPrecipitationAlert(precipitation),
+		},
+	}
+}
+
+const padBooleanArray = ({
+	length,
+	values,
+}: {
+	length: number
+	values: boolean[]
+}) => [...values, ...Array(length).fill(false)].slice(0, length)

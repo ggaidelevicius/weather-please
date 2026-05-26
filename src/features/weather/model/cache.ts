@@ -83,11 +83,12 @@ type CacheIdentity = {
 }
 
 export const getCachedWeather = ({
+	allowStale = false,
 	lat,
 	lon,
 	shouldUseAirQualityUv,
 	timeZone,
-}: CacheIdentity): CachedWeather | null => {
+}: CacheIdentity & { allowStale?: boolean }): CachedWeather | null => {
 	const cachedLat = readStorageItem({
 		key: 'cachedLat',
 		schema: z.string().min(1),
@@ -158,7 +159,7 @@ export const getCachedWeather = ({
 	}
 
 	const isFresh = Date.now() - lastUpdatedDate.getTime() <= CACHE_VALIDITY_MS
-	if (!isFresh) {
+	if (!allowStale && !isFresh) {
 		return null
 	}
 

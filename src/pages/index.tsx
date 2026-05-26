@@ -160,6 +160,7 @@ const App = () => {
 		useConfig()
 	const {
 		alertData,
+		degradedForecast,
 		error,
 		hasData,
 		isLoading,
@@ -421,6 +422,7 @@ const App = () => {
 				<AnimatePresence>
 					<WeatherAlert
 						{...alertData}
+						shouldShowDegradedForecastAlert={Boolean(degradedForecast)}
 						showPrecipitationAlerts={config.showPrecipitationAlerts}
 						showUvAlerts={config.showUvAlerts}
 						showVisibilityAlerts={config.showVisibilityAlerts}

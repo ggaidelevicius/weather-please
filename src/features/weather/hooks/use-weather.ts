@@ -12,8 +12,13 @@ import {
 	mapWeatherResponseToForecastData,
 	mapWeatherResponseToNext24HoursData,
 } from '../api/weather-api'
-import { createEmptyAlerts, deriveAlertsFromWeather } from '../model/alerts'
 import {
+	createEmptyAlerts,
+	deriveAlertsFromNext24HoursData,
+	deriveAlertsFromWeather,
+} from '../model/alerts'
+import {
+	type CachedWeather,
 	getCachedWeather,
 	writeCachedWeather,
 	writeCachedWeatherMapData,
@@ -25,10 +30,20 @@ import {
 	CACHE_REFRESH_INTERVAL_MS,
 	type Data,
 	type Next24HoursData,
+	NEXT_24_HOURS_FORECAST_HOURS,
 	type WeatherMapData,
 } from '../model/types'
 
 type WeatherAction =
+	| {
+			alertData: Alerts
+			error: Error
+			lastUpdatedDate: Date
+			next24HoursData: Next24HoursData
+			type: 'fetch-degraded-cache'
+			weatherData: [] | Data
+			weatherMapData: null | WeatherMapData
+	  }
 	| {
 			alertData: Alerts
 			next24HoursData: Next24HoursData
@@ -68,6 +83,10 @@ type WeatherAction =
 
 type WeatherState = {
 	alertData: Alerts
+	degradedForecast: null | {
+		error: Error
+		lastUpdatedDate: Date
+	}
 	error: Error | null
 	next24HoursData: [] | Next24HoursData
 	refreshToken: number
@@ -81,6 +100,7 @@ export type { Alerts } from '../model/types'
 
 const createInitialWeatherState = (): WeatherState => ({
 	alertData: createEmptyAlerts(),
+	degradedForecast: null,
 	error: null,
 	next24HoursData: [],
 	refreshToken: 0,
@@ -95,9 +115,25 @@ const weatherReducer = (
 	action: WeatherAction,
 ): WeatherState => {
 	switch (action.type) {
+		case 'fetch-degraded-cache':
+			return {
+				...state,
+				alertData: action.alertData,
+				degradedForecast: {
+					error: action.error,
+					lastUpdatedDate: action.lastUpdatedDate,
+				},
+				error: null,
+				next24HoursData: action.next24HoursData,
+				status: AsyncStatus.Success,
+				usingCachedData: true,
+				weatherData: action.weatherData,
+				weatherMapData: action.weatherMapData,
+			}
 		case 'fetch-error':
 			return {
 				...state,
+				degradedForecast: null,
 				error: action.error,
 				status: AsyncStatus.Error,
 			}
@@ -110,6 +146,7 @@ const weatherReducer = (
 			return {
 				...state,
 				alertData: action.alertData,
+				degradedForecast: null,
 				error: null,
 				next24HoursData: action.next24HoursData,
 				status: AsyncStatus.Success,
@@ -120,6 +157,7 @@ const weatherReducer = (
 			return {
 				...state,
 				alertData: action.alertData,
+				degradedForecast: null,
 				error: null,
 				next24HoursData: action.next24HoursData,
 				refreshToken: state.refreshToken + (action.shouldRefresh ? 1 : 0),
@@ -138,21 +176,62 @@ const weatherReducer = (
 		case 'reset-no-location':
 			return {
 				...state,
+				degradedForecast: null,
 				error: null,
 				status: AsyncStatus.Idle,
 			}
 		case 'start-fetch':
 			return {
 				...state,
+				degradedForecast: null,
 				error: null,
 				status: AsyncStatus.Loading,
 			}
 		case 'use-network':
 			return {
 				...state,
+				degradedForecast: null,
 				status: AsyncStatus.Loading,
 				usingCachedData: false,
 			}
+	}
+}
+
+const getReducedCachedWeather = ({
+	cached,
+	now,
+}: {
+	cached: CachedWeather
+	now: Date
+}) => {
+	const nowSeconds = Math.floor(now.getTime() / 1000)
+	const todayStart = new Date(now)
+	todayStart.setHours(0, 0, 0, 0)
+	const todayStartSeconds = Math.floor(todayStart.getTime() / 1000)
+	const next24HoursData = cached.next24HoursData
+		.filter(({ time }) => time >= nowSeconds)
+		.slice(0, NEXT_24_HOURS_FORECAST_HOURS)
+	const weatherData = cached.weatherData.filter(
+		({ day }) => day >= todayStartSeconds,
+	)
+	const weatherMapData = cached.weatherMapData
+		? {
+				...cached.weatherMapData,
+				frames: cached.weatherMapData.frames.filter(
+					({ time }) => time >= nowSeconds,
+				),
+			}
+		: null
+
+	if (weatherData.length === 0 && next24HoursData.length === 0) {
+		return null
+	}
+
+	return {
+		alertData: deriveAlertsFromNext24HoursData(next24HoursData),
+		next24HoursData,
+		weatherData,
+		weatherMapData,
 	}
 }
 
@@ -267,6 +346,31 @@ export const useWeather = (
 						? fetchError
 						: new Error('Weather fetch failed')
 				console.error('Weather fetch error:', error)
+
+				const cached = getCachedWeather({
+					allowStale: true,
+					lat,
+					lon,
+					shouldUseAirQualityUv,
+					timeZone: userTimeZone,
+				})
+				const reducedCached = cached
+					? getReducedCachedWeather({ cached, now: new Date() })
+					: null
+
+				if (cached && reducedCached) {
+					dispatch({
+						alertData: reducedCached.alertData,
+						error,
+						lastUpdatedDate: cached.lastUpdatedDate,
+						next24HoursData: reducedCached.next24HoursData,
+						type: 'fetch-degraded-cache',
+						weatherData: reducedCached.weatherData,
+						weatherMapData: reducedCached.weatherMapData,
+					})
+					return
+				}
+
 				dispatch({
 					error,
 					type: 'fetch-error',
@@ -405,6 +509,7 @@ export const useWeather = (
 
 	return {
 		alertData: state.alertData,
+		degradedForecast: state.degradedForecast,
 		error: state.error,
 		hasData,
 		isLoading:
