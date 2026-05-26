@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: formatPrecipitationValue({ precipitation: sum(precipitation), usesMetricUnits, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:287
+#: src/features/weather/ui/next-24-hours-tile.tsx:372
 msgid "{0}"
 msgstr "{0}"
 
@@ -29,15 +29,17 @@ msgstr "{0}"
 
 #. placeholder {0}: formatDecimal(bestVisibility.value)
 #. placeholder {0}: formatDecimal(lowestVisibility.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:503
-#: src/features/weather/ui/next-24-hours-tile.tsx:519
+#: src/features/weather/ui/next-24-hours-tile.tsx:599
+#: src/features/weather/ui/next-24-hours-tile.tsx:615
 msgid "{0} {visibilityUnitLabel} at <0/>"
 msgstr "{0} {visibilityUnitLabel}, <0/>-এ"
 
-#. placeholder {0}: Math.round(peakGust.value - peakWind.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:332
-#~ msgid "{0} {windUnitLabel}"
-#~ msgstr "{0} {windUnitLabel}"
+#. placeholder {0}: Math.round(averageWind)
+#. placeholder {0}: Math.round(peakWind.value)
+#: src/features/weather/ui/next-24-hours-tile.tsx:1726
+#: src/features/weather/ui/next-24-hours-tile.tsx:1735
+msgid "{0} {windUnitLabel}"
+msgstr "{0} {windUnitLabel}"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
@@ -50,10 +52,28 @@ msgstr "{0} {visibilityUnitLabel}, <0/>-এ"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:407
-#: src/features/weather/ui/next-24-hours-tile.tsx:423
+#: src/features/weather/ui/next-24-hours-tile.tsx:503
+#: src/features/weather/ui/next-24-hours-tile.tsx:519
 msgid "{0} {windUnitLabel} at <0/>"
 msgstr "{0} {windUnitLabel}, <0/>-এ"
+
+#. placeholder {0}: formatHour(startTime)
+#. placeholder {1}: formatHour(endTime)
+#: src/features/weather/ui/next-24-hours-tile.tsx:794
+msgid "{0} and {1}"
+msgstr "{0} এবং {1}"
+
+#. placeholder {0}: formatHour(startTime)
+#. placeholder {1}: formatHour(endTime)
+#: src/features/weather/ui/next-24-hours-tile.tsx:807
+msgid "{0} and {1} today"
+msgstr "আজ {0} এবং {1}"
+
+#. placeholder {0}: formatHour(startTime)
+#. placeholder {1}: formatHour(endTime)
+#: src/features/weather/ui/next-24-hours-tile.tsx:815
+msgid "{0} and {1} tomorrow"
+msgstr "আগামীকাল {0} এবং {1}"
 
 #. placeholder {0}: Math.round(peakUv.value)
 #. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakUv.index]?.time, })
@@ -62,7 +82,7 @@ msgstr "{0} {windUnitLabel}, <0/>-এ"
 #~ msgstr "{0}, {1}-এ"
 
 #. placeholder {0}: Math.round(peakUv.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:487
+#: src/features/weather/ui/next-24-hours-tile.tsx:583
 msgid "{0} at <0/>"
 msgstr "{0}, <0/>-এ"
 
@@ -73,7 +93,7 @@ msgstr "{0}, <0/>-এ"
 #~ msgstr "{0}, {1}-এর মধ্যে"
 
 #. placeholder {0}: formatPrecipitationValue({ precipitation: peakAmount.value, usesMetricUnits, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:335
+#: src/features/weather/ui/next-24-hours-tile.tsx:420
 msgid "{0} between <0/>"
 msgstr "{0}, <0/>-এর মধ্যে"
 
@@ -105,12 +125,12 @@ msgid "{0} mph"
 msgstr "{0} মাইল/ঘণ্টা"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:672
+#: src/features/weather/ui/next-24-hours-tile.tsx:768
 msgid "{0} today"
 msgstr "আজ {0}"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:676
+#: src/features/weather/ui/next-24-hours-tile.tsx:772
 msgid "{0} tomorrow"
 msgstr "আগামীকাল {0}"
 
@@ -125,10 +145,15 @@ msgstr "আগামীকাল {0}"
 
 #. placeholder {0}: Math.round(high.value)
 #. placeholder {0}: Math.round(low.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:198
-#: src/features/weather/ui/next-24-hours-tile.tsx:212
+#: src/features/weather/ui/next-24-hours-tile.tsx:283
+#: src/features/weather/ui/next-24-hours-tile.tsx:297
 msgid "{0}{temperatureUnitLabel} at <0/>"
 msgstr "{0}{temperatureUnitLabel}, <0/>-এ"
+
+#. placeholder {0}: Math.round(peakChance.value)
+#: src/features/weather/ui/next-24-hours-tile.tsx:1720
+msgid "{0}%"
+msgstr "{0}%"
 
 #. placeholder {0}: Math.round(peakProbability.value)
 #. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakProbability.index]?.time, })
@@ -137,7 +162,7 @@ msgstr "{0}{temperatureUnitLabel}, <0/>-এ"
 #~ msgstr "{0}%, {1}-এ"
 
 #. placeholder {0}: Math.round(peakProbability.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:309
+#: src/features/weather/ui/next-24-hours-tile.tsx:394
 msgid "{0}% at <0/>"
 msgstr "{0}%, <0/>-এ"
 
@@ -179,7 +204,7 @@ msgstr "<0>অবস্থান অ্যাক্সেস বাতিল ক
 msgid "☕ Gift a coffee"
 msgstr "☕ একটি কফি উপহার দিন"
 
-#: src/pages/index.tsx:479
+#: src/pages/index.tsx:500
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ নতুন: নিচে স্ক্রোল করুন"
 
@@ -267,7 +292,7 @@ msgstr "স্টোনহেঞ্জের মতো প্রাচীন স
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "প্রাচীন পর্যবেক্ষণাগারগুলি এই বছরের মোড়গুলোকে সতর্কতার সাথে অনুসরণ করত যেন ফসল রোপনের চক্র, ক্যালেন্ডার ও ঋতু উৎসবগুলো পরিচালনা করা যায়।"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:694
+#: src/features/weather/ui/next-24-hours-tile.tsx:825
 msgid "and"
 msgstr "এবং"
 
@@ -312,6 +337,10 @@ msgstr "আগস্ট"
 msgid "Autumn Equinox"
 msgstr "শরৎ বিষুব"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:1724
+msgid "Average wind"
+msgstr "গড় বায়ু"
+
 #: src/features/seasonal-events/events/black-hole.tsx:231
 msgid "Because gravity bends light paths, parts of the disk appear warped and wrapped above and below the black hole."
 msgstr "মাধ্যাকর্ষণ আলোর পথ বাঁকিয়ে দেওয়ার কারণে, ডিস্কের কিছু অংশ বিকৃত দেখায় এবং কৃষ্ণগহ্বরের উপরে ও নিচে মোড়ানো দেখা যায়।"
@@ -345,6 +374,10 @@ msgstr "সেলসিয়াস (°C)"
 msgid "Centuries later, people still reach for pen and paper when a text won't do."
 msgstr "শতাব্দী পরেও, যখন টেক্সট বার্তায় কাজ হয় না, মানুষ তখনও কলম ও কাগজের দিকে হাত বাড়ায়।"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:1561
+msgid "Chance"
+msgstr "সম্ভাবনা"
+
 #: src/features/seasonal-events/events/lyrids.tsx:114
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
 msgstr "খ্রিস্টপূর্ব ৬৮৭ সালের চীনা নথিতে \"বৃষ্টির মতো তারা ঝরা\" বর্ণিত হয়েছে — এটি লিরিডসের প্রাচীনতম পরিচিত বিবরণ এবং যেকোনো ধরনের উল্কাপাতের প্রাচীনতম নথিভুক্ত পর্যবেক্ষণগুলির একটি।"
@@ -362,7 +395,7 @@ msgstr "খ্রিস্ট জন্মদিন যিশুর জন্ম
 msgid "clear sky"
 msgstr "পরিষ্কার আকাশ"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:515
+#: src/features/weather/ui/next-24-hours-tile.tsx:611
 msgid "Clearest hour"
 msgstr "সবচেয়ে পরিষ্কার ঘণ্টা"
 
@@ -382,7 +415,7 @@ msgstr "সামাজিক পরিষ্কার-পরিচ্ছন্�
 msgid "Compact weather alerts"
 msgstr "সংক্ষিপ্ত আবহাওয়া সতর্কতা"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:530
+#: src/features/weather/ui/next-24-hours-tile.tsx:626
 msgid "Conditions"
 msgstr "আবহাওয়ার অবস্থা"
 
@@ -430,6 +463,10 @@ msgstr "ঘন হিমায়িত ঝরঝর বৃষ্টি"
 #: src/features/weather/ui/tile.tsx:90
 msgid "depositing rime fog"
 msgstr "রাইম কুয়াশা জমা"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1567
+msgid "Depth"
+msgstr "গভীরতা"
 
 #: src/features/settings/ui/settings.tsx:114
 msgid "Developer"
@@ -586,7 +623,7 @@ msgstr "ফেব্রুয়ারি"
 msgid "Feedback"
 msgstr "প্রতিক্রিয়া"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:224
+#: src/features/weather/ui/next-24-hours-tile.tsx:309
 msgid "Feels like now"
 msgstr "এখন অনুভূতি"
 
@@ -714,7 +751,7 @@ msgstr "হনুক্কা হলো ইহুদি আলোর উৎস�
 msgid "Hearts, roses, and red ribbons became familiar symbols of devotion, warmth, and connection."
 msgstr "হৃদয়, গোলাপ ও লাল ফিতা ভক্তি, উষ্ণতা ও সংযোগের পরিচিত প্রতীক হয়ে ওঠে।"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:326
+#: src/features/weather/ui/next-24-hours-tile.tsx:411
 msgid "Heaviest hour"
 msgstr "সবচেয়ে ভারী বৃষ্টির ঘণ্টা"
 
@@ -734,7 +771,7 @@ msgstr "ভারী তুষারঝড়"
 msgid "heavy snowfall"
 msgstr "ভারী তুষারপাত"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:196
+#: src/features/weather/ui/next-24-hours-tile.tsx:281
 msgid "High"
 msgstr "সর্বোচ্চ"
 
@@ -942,6 +979,10 @@ msgstr "হালকা হিমায়িত বৃষ্টি"
 msgid "Light shifts to a silvery tone, shadows sharpen, and temperatures may drop noticeably within minutes."
 msgstr "আলো রূপালি রং ধারণ করে, ছায়া তীক্ষ্ণ হয়, এবং কয়েক মিনিটের মধ্যে তাপমাত্রা উল্লেখযোগ্যভাবে কমে যেতে পারে।"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:939
+msgid "Local map"
+msgstr "স্থানীয় মানচিত্র"
+
 #: src/features/settings/ui/settings.tsx:527
 msgid "Locale"
 msgstr "লোকেল"
@@ -958,7 +999,7 @@ msgstr "অবস্থানের নাম পাওয়া যাচ্ছ
 msgid "Longitude"
 msgstr "দ্রাঘিমাংশ"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:210
+#: src/features/weather/ui/next-24-hours-tile.tsx:295
 msgid "Low"
 msgstr "সর্বনিম্ন"
 
@@ -982,7 +1023,7 @@ msgstr "{timeUntilLowVisibility} ঘণ্টা পরে কম দৃশ্�
 msgid "Low visibility starting in 1 hour"
 msgstr "এক ঘণ্টা পরে কম দৃশ্যতা শুরু হবে"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:499
+#: src/features/weather/ui/next-24-hours-tile.tsx:595
 msgid "Lowest visibility"
 msgstr "সর্বনিম্ন দৃশ্যমানতা"
 
@@ -1007,6 +1048,14 @@ msgstr "লাইরিডস উল্কাবৃষ্টি"
 #: src/features/weather/ui/tile.tsx:89
 msgid "mainly clear"
 msgstr "প্রধানভাবে পরিষ্কার"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1698
+msgid "Map"
+msgstr "মানচিত্র"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1006
+msgid "Map data unavailable"
+msgstr "মানচিত্র ডেটা পাওয়া যাচ্ছে না"
 
 #: src/features/weather/ui/tile.tsx:128
 msgid "March"
@@ -1078,18 +1127,22 @@ msgstr "নববর্ষ দিবস ক্যালেন্ডারের 
 msgid "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precisely that sunlight floods its inner chamber for just seventeen minutes around the winter solstice each year."
 msgstr "নিউগ্রেঞ্জ, আয়ারল্যান্ডের ৫,০০০ বছর পুরনো একটি করিডোর সমাধি, এতটাই নিখুঁতভাবে নির্মিত যে প্রতি বছর শীত অয়নান্তের কাছাকাছি মাত্র সতেরো মিনিটের জন্য সূর্যালোক এর অভ্যন্তরীণ কক্ষ প্লাবিত করে।"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:191
-#: src/features/weather/ui/next-24-hours-tile.tsx:277
-#: src/features/weather/ui/next-24-hours-tile.tsx:397
-#: src/features/weather/ui/next-24-hours-tile.tsx:477
+#: src/features/weather/ui/next-24-hours-tile.tsx:276
+#: src/features/weather/ui/next-24-hours-tile.tsx:362
+#: src/features/weather/ui/next-24-hours-tile.tsx:493
+#: src/features/weather/ui/next-24-hours-tile.tsx:573
 msgid "Next 24 hours"
 msgstr "আগামী ২৪ ঘণ্টা"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:348
+#: src/features/weather/ui/next-24-hours-tile.tsx:930
+msgid "Next 6 hours"
+msgstr "আগামী ৬ ঘণ্টা"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:433
 msgid "No measurable precipitation expected"
 msgstr "কোনো পরিমাপযোগ্য বৃষ্টিপাত প্রত্যাশিত নয়"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:317
+#: src/features/weather/ui/next-24-hours-tile.tsx:402
 msgid "No precipitation expected"
 msgstr "কোনো বৃষ্টিপাত প্রত্যাশিত নয়"
 
@@ -1196,19 +1249,24 @@ msgstr "সংক্ষিপ্ত পরিচিতি"
 msgid "partly cloudy"
 msgstr "আংশিকভাবে মেঘলা"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:300
+#: src/features/weather/ui/next-24-hours-tile.tsx:385
 msgid "Peak chance"
 msgstr "সর্বোচ্চ সম্ভাবনা"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:419
+#: src/features/weather/ui/next-24-hours-tile.tsx:515
 msgid "Peak gust"
 msgstr "সর্বোচ্চ ঝোড়ো বাতাস"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:483
+#: src/features/weather/ui/next-24-hours-tile.tsx:1719
+msgid "Peak precipitation chance"
+msgstr "সর্বোচ্চ বৃষ্টিপাতের সম্ভাবনা"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:579
 msgid "Peak UV"
 msgstr "সর্বোচ্চ UV"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:403
+#: src/features/weather/ui/next-24-hours-tile.tsx:499
+#: src/features/weather/ui/next-24-hours-tile.tsx:1733
 msgid "Peak wind"
 msgstr "সর্বোচ্চ বায়ু"
 
@@ -1228,16 +1286,17 @@ msgstr "পারসিডস উল্কাবৃষ্টি"
 msgid "Perseids Meteor Shower"
 msgstr "পারসিডস উল্কাবৃষ্টি"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:328
-#: src/features/weather/ui/next-24-hours-tile.tsx:354
+#: src/features/weather/ui/next-24-hours-tile.tsx:413
+#: src/features/weather/ui/next-24-hours-tile.tsx:439
+#: src/features/weather/ui/next-24-hours-tile.tsx:1619
 msgid "Precipitation"
 msgstr "বৃষ্টিপাত"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:302
+#: src/features/weather/ui/next-24-hours-tile.tsx:387
 msgid "Precipitation chance"
 msgstr "বৃষ্টিপাতের সম্ভাবনা"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:274
+#: src/features/weather/ui/next-24-hours-tile.tsx:359
 msgid "Precipitation includes rain and snow."
 msgstr "বৃষ্টিপাতে বৃষ্টি ও তুষার উভয়ই অন্তর্ভুক্ত।"
 
@@ -1265,8 +1324,8 @@ msgstr "ধর্মীয় ও সাংস্কৃতিক"
 msgid "Report a bug"
 msgstr "একটি বাগ রিপোর্ট করুন"
 
-#: src/pages/index.tsx:415
-#: src/pages/index.tsx:429
+#: src/pages/index.tsx:434
+#: src/pages/index.tsx:448
 msgid "Retry"
 msgstr "পুনরায় চেষ্টা করুন"
 
@@ -1463,7 +1522,7 @@ msgstr "আবহাওয়া সতর্কবাণী দেখান"
 msgid "Show Winter Solstice event"
 msgstr "শীত অয়নান্ত দেখান"
 
-#: src/pages/index.tsx:85
+#: src/pages/index.tsx:86
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "ক্যাশ করা আবহাওয়ার তথ্য দেখানো হচ্ছে। সর্বশেষ পূর্বাভাস রিফ্রেশ করতে পুনরায় চেষ্টা করুন।"
 
@@ -1564,7 +1623,7 @@ msgstr "সৌভাগ্যের প্রতীক"
 
 #: src/features/settings/ui/initialisation.tsx:245
 #: src/features/settings/ui/settings.tsx:541
-#: src/features/weather/ui/next-24-hours-tile.tsx:229
+#: src/features/weather/ui/next-24-hours-tile.tsx:314
 msgid "Temperature"
 msgstr "তাপমাত্রা"
 
@@ -1925,7 +1984,7 @@ msgstr "পূর্ণ চন্দ্রগ্রহণ"
 msgid "Total Lunar Eclipse"
 msgstr "পূর্ণ চন্দ্রগ্রহণ"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:283
+#: src/features/weather/ui/next-24-hours-tile.tsx:368
 msgid "Total precipitation"
 msgstr "মোট বৃষ্টিপাত"
 
@@ -1965,7 +2024,7 @@ msgstr "মঙ্গলবার"
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "যদি Weather Please-এর প্রদত্ত UV সূচক নিয়মিতভাবে স্থানীয় উৎসগুলোর তুলনায় কম হয়, তবে এটি চালু করুন।"
 
-#: src/pages/index.tsx:409
+#: src/pages/index.tsx:428
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "আবহাওয়ার ডেটা আনা যায়নি. অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন."
 
@@ -2004,6 +2063,10 @@ msgstr "ভ্যালেন্টাইনস ডে বহু ধরনের
 msgid "violent rain showers"
 msgstr "তীব্র বৃষ্টির ঝড়"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:1699
+msgid "Waiting for map data"
+msgstr "মানচিত্র ডেটার জন্য অপেক্ষা করছে"
+
 #: src/features/seasonal-events/events/earth-day.tsx:156
 msgid "Ways to observe"
 msgstr "পালনের উপায়"
@@ -2020,7 +2083,7 @@ msgstr "আবহাওয়া"
 msgid "Weather data by Open-Meteo"
 msgstr "Open-Meteo দ্বারা আবহাওয়া ডেটা"
 
-#: src/pages/index.tsx:77
+#: src/pages/index.tsx:78
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "সেবা সমস্যার কারণে আবহাওয়া ডেটা লোড করা যায়নি — ক্যাশ করা ডেটা দেখানো হচ্ছে। অনুগ্রহ করে একটু পরে আবার চেষ্টা করুন।"
 
@@ -2076,7 +2139,8 @@ msgstr "কেন এটি লাল হয়ে যায়"
 msgid "Why the peak is brief"
 msgstr "কেন শীর্ষ সময় সংক্ষিপ্ত"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:434
+#: src/features/weather/ui/next-24-hours-tile.tsx:530
+#: src/features/weather/ui/next-24-hours-tile.tsx:1555
 msgid "Wind"
 msgstr "বায়ু"
 

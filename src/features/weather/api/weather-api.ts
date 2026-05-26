@@ -7,10 +7,14 @@ import {
 	type Next24HoursData,
 	NEXT_24_HOURS_FORECAST_HOURS,
 	WEATHER_FORECAST_DAYS,
+	WEATHER_MAP_FORECAST_HOURS,
+	WEATHER_MAP_GRID_SIZE,
+	type WeatherMapData,
 } from '../model/types'
 
 const SECONDS_PER_HOUR = 60 * 60
 const SECONDS_PER_DAY = 24 * SECONDS_PER_HOUR
+const WEATHER_MAP_LATITUDE_SPAN = 1.8
 
 const weatherResponseSchema = z
 	.object({
@@ -50,6 +54,29 @@ const airQualityResponseSchema = z
 	.loose()
 
 type AirQualityResponse = z.infer<typeof airQualityResponseSchema>
+
+const weatherMapLocationResponseSchema = z
+	.object({
+		hourly: z.object({
+			precipitation: z.array(z.number()).min(1),
+			precipitation_probability: z.array(z.number()).min(1),
+			time: z.array(z.number()).min(1),
+			winddirection_10m: z.array(z.number()).min(1),
+			windspeed_10m: z.array(z.number()).min(1),
+		}),
+		latitude: z.number(),
+		longitude: z.number(),
+	})
+	.loose()
+
+const weatherMapResponseSchema = z.union([
+	weatherMapLocationResponseSchema,
+	z.array(weatherMapLocationResponseSchema).min(1),
+])
+
+type WeatherMapLocationResponse = z.infer<
+	typeof weatherMapLocationResponseSchema
+>
 
 export const getUserTimeZone = (): string => {
 	try {
@@ -206,6 +233,54 @@ const mergeUvData = ({
 	}
 }
 
+export const fetchWeatherMapData = async ({
+	lat,
+	lon,
+	signal,
+	timeZone,
+}: {
+	lat: string
+	lon: string
+	signal?: AbortSignal
+	timeZone: string
+}): Promise<WeatherMapData> => {
+	try {
+		const centerLat = parseCoordinate(lat)
+		const centerLon = parseCoordinate(lon)
+		const grid = getWeatherMapGrid({ lat: centerLat, lon: centerLon })
+		const encodedTimeZone = encodeURIComponent(timeZone)
+		const latitude = grid.map((point) => point.lat.toFixed(4)).join(',')
+		const longitude = grid.map((point) => point.lon.toFixed(4)).join(',')
+		const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=precipitation,precipitation_probability,windspeed_10m,winddirection_10m&forecast_hours=${WEATHER_MAP_FORECAST_HOURS}&timeformat=unixtime&timezone=${encodedTimeZone}`
+
+		const response = await fetch(weatherUrl, { signal })
+		if (!response.ok) {
+			throw new Error(`Weather map fetch failed: ${response.status}`)
+		}
+
+		const json = await response.json()
+		const parsed = weatherMapResponseSchema.safeParse(json)
+		if (!parsed.success) {
+			throw new Error('Invalid weather map response')
+		}
+
+		const locations = Array.isArray(parsed.data) ? parsed.data : [parsed.data]
+		return mapWeatherMapResponseToData({
+			center: { lat: centerLat, lon: centerLon },
+			locations,
+		})
+	} catch (fetchError) {
+		if (isAbortError(fetchError)) {
+			throw fetchError
+		}
+		const errorMessage =
+			fetchError instanceof Error
+				? fetchError.message
+				: 'Weather map fetch failed'
+		throw new Error(errorMessage, { cause: fetchError })
+	}
+}
+
 export const fetchWeatherResponse = async ({
 	lat,
 	lon,
@@ -273,6 +348,96 @@ export const fetchWeatherResponse = async ({
 		throw new Error(errorMessage, { cause: fetchError })
 	}
 }
+
+const getWeatherMapGrid = ({ lat, lon }: { lat: number; lon: number }) => {
+	const grid: Array<{ lat: number; lon: number }> = []
+	const latStep = WEATHER_MAP_LATITUDE_SPAN / (WEATHER_MAP_GRID_SIZE - 1)
+	const lonSpan =
+		WEATHER_MAP_LATITUDE_SPAN /
+		Math.max(0.35, Math.cos((Math.abs(lat) * Math.PI) / 180))
+	const lonStep = lonSpan / (WEATHER_MAP_GRID_SIZE - 1)
+	const centerIndex = Math.floor(WEATHER_MAP_GRID_SIZE / 2)
+
+	for (let row = 0; row < WEATHER_MAP_GRID_SIZE; row += 1) {
+		for (let column = 0; column < WEATHER_MAP_GRID_SIZE; column += 1) {
+			grid.push({
+				lat: clampCoordinate(lat + (centerIndex - row) * latStep, -89, 89),
+				lon: normalizeLongitude(lon + (column - centerIndex) * lonStep),
+			})
+		}
+	}
+
+	return grid
+}
+
+const mapWeatherMapResponseToData = ({
+	center,
+	locations,
+}: {
+	center: WeatherMapData['center']
+	locations: WeatherMapLocationResponse[]
+}): WeatherMapData => {
+	const firstLocation = locations[0]
+	const frameCount = Math.min(
+		WEATHER_MAP_FORECAST_HOURS,
+		firstLocation?.hourly.time.length ?? 0,
+	)
+	const frames: WeatherMapData['frames'] = []
+
+	for (let frameIndex = 0; frameIndex < frameCount; frameIndex += 1) {
+		const time = firstLocation?.hourly.time[frameIndex]
+		if (typeof time !== 'number' || !Number.isFinite(time)) {
+			continue
+		}
+
+		const points = locations.flatMap((location) => {
+			const precipitation = location.hourly.precipitation[frameIndex]
+			const precipitationProbability =
+				location.hourly.precipitation_probability[frameIndex]
+			const windDirection = location.hourly.winddirection_10m[frameIndex]
+			const windSpeed = location.hourly.windspeed_10m[frameIndex]
+
+			if (
+				!Number.isFinite(precipitation) ||
+				!Number.isFinite(precipitationProbability) ||
+				!Number.isFinite(windDirection) ||
+				!Number.isFinite(windSpeed)
+			) {
+				return []
+			}
+
+			return {
+				lat: location.latitude,
+				lon: location.longitude,
+				precipitation,
+				precipitationProbability,
+				windDirection,
+				windSpeed,
+			}
+		})
+
+		if (points.length > 0) {
+			frames.push({ points, time })
+		}
+	}
+
+	return { center, frames }
+}
+
+const parseCoordinate = (coordinate: string) => {
+	const value = Number(coordinate)
+	if (!Number.isFinite(value)) {
+		throw new Error('Invalid map coordinate')
+	}
+
+	return value
+}
+
+const clampCoordinate = (coordinate: number, min: number, max: number) =>
+	Math.min(Math.max(coordinate, min), max)
+
+const normalizeLongitude = (lon: number) =>
+	((((lon + 180) % 360) + 360) % 360) - 180
 
 export const mapWeatherResponseToForecastData = (data: WeatherResponse): Data =>
 	data.daily.time.map((day, index) => ({

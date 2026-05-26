@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 import type { WeatherResponse } from '../weather-api'
 
 import {
+	fetchWeatherMapData,
 	fetchWeatherResponse,
 	mapWeatherResponseToNext24HoursData,
 } from '../weather-api'
@@ -21,6 +22,70 @@ describe('fetchWeatherResponse', () => {
 				timeZone: 'Australia/Perth',
 			}),
 		).rejects.toThrow('Weather fetch failed: 503')
+
+		fetchMock.mockRestore()
+	})
+})
+
+describe('fetchWeatherMapData', () => {
+	it('maps local grid forecast frames from Open-Meteo responses', async () => {
+		const fetchMock = vi.spyOn(global, 'fetch').mockResolvedValueOnce(
+			Response.json([
+				{
+					hourly: {
+						precipitation: [0.4, 1.2],
+						precipitation_probability: [10, 20],
+						time: [100, 200],
+						winddirection_10m: [90, 180],
+						windspeed_10m: [12, 18],
+					},
+					latitude: -31.95,
+					longitude: 115.86,
+				},
+			]),
+		)
+
+		const result = await fetchWeatherMapData({
+			lat: '-31.9523',
+			lon: '115.8613',
+			timeZone: 'Australia/Perth',
+		})
+
+		expect(result).toEqual({
+			center: {
+				lat: -31.9523,
+				lon: 115.8613,
+			},
+			frames: [
+				{
+					points: [
+						{
+							lat: -31.95,
+							lon: 115.86,
+							precipitation: 0.4,
+							precipitationProbability: 10,
+							windDirection: 90,
+							windSpeed: 12,
+						},
+					],
+					time: 100,
+				},
+				{
+					points: [
+						{
+							lat: -31.95,
+							lon: 115.86,
+							precipitation: 1.2,
+							precipitationProbability: 20,
+							windDirection: 180,
+							windSpeed: 18,
+						},
+					],
+					time: 200,
+				},
+			],
+		})
+		expect(String(fetchMock.mock.calls[0]?.[0])).toContain('forecast_hours=7')
 
 		fetchMock.mockRestore()
 	})

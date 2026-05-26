@@ -2,13 +2,20 @@ import { Trans } from '@lingui/react/macro'
 import {
 	IconCloudRain,
 	IconEye,
+	IconMap2,
 	IconTemperature,
 	IconUvIndex,
 	IconWind,
 } from '@tabler/icons-react'
-import { type PointerEvent, type ReactNode, useState } from 'react'
+import {
+	type PointerEvent,
+	type ReactNode,
+	useEffect,
+	useRef,
+	useState,
+} from 'react'
 
-import type { Next24HoursData } from '../model/types'
+import type { Next24HoursData, WeatherMapData } from '../model/types'
 
 import { TemperatureUnit, UnitSystem } from '../../settings/model/unit-system'
 
@@ -16,12 +23,34 @@ const CHART_HEIGHT = 150
 const CHART_WIDTH = 360
 const CHART_PADDING = 10
 const CHART_SPLINE_TENSION = 0.16
+const WEATHER_MAP_BASE_HEIGHT = 260
+const WEATHER_MAP_FRAME_DURATION_MS = 4200
+const WEATHER_MAP_MIN_BASE_WIDTH = 420
+const WEATHER_MAP_PARTICLE_DENSITY = 0.00011
+const WEATHER_MAP_PRECIPITATION_FRAME_INTERVAL_MS = 66
+const WEATHER_MAP_PRECIPITATION_MESH_CELL_SIZE = 8
+const WEATHER_MAP_PRECIPITATION_MIN_VISIBLE = 0.08
+const WEATHER_MAP_TOOLTIP_FRAME_INTERVAL_MS = 66
+const WEATHER_MAP_RENDER_SCALE = 2
+const WEATHER_MAP_TILE_SIZE = 256
+const WEATHER_MAP_ZOOM = 9
+
+const WEATHER_MAP_PRECIPITATION_BANDS = [
+	{ blue: 0, green: 0, label: '', precipitation: 0, red: 0 },
+	{ blue: 255, green: 247, label: '0.1', precipitation: 0.1, red: 224 },
+	{ blue: 246, green: 223, label: '0.5', precipitation: 0.5, red: 137 },
+	{ blue: 222, green: 183, label: '1', precipitation: 1, red: 68 },
+	{ blue: 169, green: 111, label: '2', precipitation: 2, red: 17 },
+	{ blue: 91, green: 48, label: '5', precipitation: 5, red: 5 },
+	{ blue: 24, green: 9, label: '10+', precipitation: 10, red: 2 },
+]
 
 export const NEXT_24_HOURS_DETAIL_VIEW_IDS = [
 	'temperature',
 	'precipitation',
 	'wind',
 	'conditions',
+	'map',
 ] as const
 
 export type Next24HoursDetailViewId =
@@ -98,6 +127,7 @@ type Next24HoursDetailViewProps = {
 	temperatureUnit: TemperatureUnit
 	unitSystem: UnitSystem
 	viewId: Next24HoursDetailViewId
+	weatherMapData: null | WeatherMapData
 }
 
 type PointSummary = {
@@ -129,12 +159,67 @@ type WeatherDetailSeriesId =
 	| 'wind'
 	| 'windGust'
 
+type WeatherMapDimensions = {
+	height: number
+	width: number
+}
+
+type WeatherMapDisplaySize = {
+	height: number
+	width: number
+}
+
+type WeatherMapParticle = {
+	age: number
+	x: number
+	y: number
+}
+
+type WeatherMapPointerPoint = {
+	x: number
+	y: number
+}
+
+type WeatherMapPointerWeather = {
+	precipitation: number
+	probability: number
+	windSpeed: number
+}
+
+type WeatherMapProjectedPrecipitationPoint = {
+	precipitation: number
+	probability: number
+	x: number
+	y: number
+}
+
+type WeatherMapProjectedWindPoint = {
+	direction: number
+	speed: number
+	x: number
+	y: number
+}
+
+type WeatherMapTile = {
+	key: string
+	url: string
+	x: number
+	y: number
+}
+
+type WeatherMapViewport = {
+	centerX: number
+	centerY: number
+	dimensions: WeatherMapDimensions
+}
+
 export const Next24HoursDetailView = ({
 	data,
 	isActive,
 	temperatureUnit,
 	unitSystem,
 	viewId,
+	weatherMapData,
 }: Readonly<Next24HoursDetailViewProps>) => {
 	const [activeSeriesId, setActiveSeriesId] =
 		useState<null | WeatherDetailSeriesId>(null)
@@ -381,6 +466,17 @@ export const Next24HoursDetailView = ({
 					/>
 				</ChartFrame>
 			</DetailViewShell>
+		)
+	}
+
+	if (viewId === 'map') {
+		return (
+			<WeatherMapDetail
+				isActive={isActive}
+				usesMetricUnits={usesMetricUnits}
+				weatherMapData={weatherMapData}
+				windUnitLabel={windUnitLabel}
+			/>
 		)
 	}
 
@@ -687,6 +783,41 @@ const HourIntervalLabel = ({
 	const hasNextTime = typeof times[index + 1] === 'number'
 	const startTime = hasNextTime ? times[index] : times[index - 1]
 	const endTime = hasNextTime ? times[index + 1] : times[index]
+	if (typeof startTime !== 'number' || typeof endTime !== 'number') {
+		return null
+	}
+
+	const startDate = new Date(startTime * 1000)
+	const endDate = new Date(endTime * 1000)
+	if (typeof referenceTime !== 'number') {
+		return (
+			<Trans>
+				{formatHour(startTime)} and {formatHour(endTime)}
+			</Trans>
+		)
+	}
+
+	const referenceDate = new Date(referenceTime * 1000)
+	const tomorrowDate = new Date(referenceDate)
+	tomorrowDate.setDate(referenceDate.getDate() + 1)
+
+	if (isSameLocalDate(startDate, endDate)) {
+		if (isSameLocalDate(endDate, referenceDate)) {
+			return (
+				<Trans>
+					{formatHour(startTime)} and {formatHour(endTime)} today
+				</Trans>
+			)
+		}
+
+		if (isSameLocalDate(endDate, tomorrowDate)) {
+			return (
+				<Trans>
+					{formatHour(startTime)} and {formatHour(endTime)} tomorrow
+				</Trans>
+			)
+		}
+	}
 
 	return (
 		<>
@@ -740,6 +871,875 @@ const AxisLabels = ({ labels }: Readonly<{ labels: string[] }>) => (
 		))}
 	</div>
 )
+
+const WeatherMapDetail = ({
+	isActive,
+	usesMetricUnits,
+	weatherMapData,
+	windUnitLabel,
+}: Readonly<{
+	isActive: boolean
+	usesMetricUnits: boolean
+	weatherMapData: null | WeatherMapData
+	windUnitLabel: string
+}>) => {
+	const [selectedFrameIndex, setSelectedFrameIndex] = useState(0)
+	const selectedFrame = getWeatherMapFrame({
+		frameIndex: selectedFrameIndex,
+		weatherMapData,
+	})
+	const frameCount = weatherMapData?.frames.length ?? 0
+
+	useEffect(() => {
+		if (!isActive || frameCount <= 1) {
+			return
+		}
+
+		let timeout = 0
+		let nextFrameIndex = 0
+
+		const advanceFrame = () => {
+			nextFrameIndex += 1
+
+			if (nextFrameIndex >= frameCount) {
+				nextFrameIndex = 0
+				setSelectedFrameIndex(0)
+				timeout = window.setTimeout(advanceFrame, 80)
+				return
+			}
+
+			setSelectedFrameIndex(nextFrameIndex)
+			timeout = window.setTimeout(advanceFrame, WEATHER_MAP_FRAME_DURATION_MS)
+		}
+
+		timeout = window.setTimeout(() => {
+			setSelectedFrameIndex(0)
+			timeout = window.setTimeout(advanceFrame, 80)
+		}, 0)
+
+		return () => {
+			window.clearTimeout(timeout)
+		}
+	}, [frameCount, isActive])
+
+	return (
+		<DetailViewShell
+			accentClassName="text-cyan-200"
+			icon={<IconMap2 aria-hidden size={22} />}
+			isActive={isActive}
+			kicker={<Trans>Next 6 hours</Trans>}
+			metrics={
+				<WeatherMapMetrics
+					frame={selectedFrame}
+					usesMetricUnits={usesMetricUnits}
+					weatherMapData={weatherMapData}
+					windUnitLabel={windUnitLabel}
+				/>
+			}
+			title={<Trans>Local map</Trans>}
+		>
+			<WeatherMap
+				frameIndex={selectedFrameIndex}
+				isActive={isActive}
+				usesMetricUnits={usesMetricUnits}
+				weatherMapData={weatherMapData}
+				windUnitLabel={windUnitLabel}
+			/>
+		</DetailViewShell>
+	)
+}
+
+const WeatherMap = ({
+	frameIndex,
+	isActive,
+	usesMetricUnits,
+	weatherMapData,
+	windUnitLabel,
+}: Readonly<{
+	frameIndex: number
+	isActive: boolean
+	usesMetricUnits: boolean
+	weatherMapData: null | WeatherMapData
+	windUnitLabel: string
+}>) => {
+	const containerRef = useRef<HTMLDivElement>(null)
+	const [displaySize, setDisplaySize] = useState<WeatherMapDisplaySize>({
+		height: 320,
+		width: 960,
+	})
+	const [hoverPoint, setHoverPoint] = useState<null | WeatherMapPointerPoint>(
+		null,
+	)
+	const selectedFrame = getWeatherMapFrame({
+		frameIndex,
+		weatherMapData,
+	})
+
+	useEffect(() => {
+		const element = containerRef.current
+		if (!element) {
+			return
+		}
+
+		const resizeObserver = new ResizeObserver((entries) => {
+			const entry = entries[0]
+			if (!entry) {
+				return
+			}
+
+			const { height, width } = entry.contentRect
+			setDisplaySize({
+				height: Math.max(1, height),
+				width: Math.max(1, width),
+			})
+		})
+		resizeObserver.observe(element)
+
+		return () => {
+			resizeObserver.disconnect()
+		}
+	}, [])
+
+	if (!weatherMapData || !selectedFrame) {
+		return (
+			<div className="flex h-96 items-center justify-center rounded-lg border border-white/8 bg-white/[0.03] text-sm text-dark-200">
+				<Trans>Map data unavailable</Trans>
+			</div>
+		)
+	}
+
+	const dimensions = getWeatherMapDimensions(displaySize)
+	const tiles = getWeatherMapTiles({
+		center: weatherMapData.center,
+		dimensions,
+	})
+	const viewport = getWeatherMapViewport({
+		center: weatherMapData.center,
+		dimensions,
+	})
+
+	const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+		const rect = event.currentTarget.getBoundingClientRect()
+		setHoverPoint({
+			x: ((event.clientX - rect.left) / rect.width) * dimensions.width,
+			y: ((event.clientY - rect.top) / rect.height) * dimensions.height,
+		})
+	}
+
+	const handlePointerLeave = () => {
+		setHoverPoint(null)
+	}
+
+	return (
+		<div className="space-y-4">
+			<div
+				className="relative h-96 overflow-hidden rounded-lg border border-white/8 bg-cyan-950/20"
+				onPointerLeave={handlePointerLeave}
+				onPointerMove={handlePointerMove}
+				ref={containerRef}
+			>
+				<svg
+					aria-label="Local precipitation and wind direction map"
+					className="h-full w-full"
+					preserveAspectRatio="none"
+					viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+				>
+					<rect
+						fill="#0f172a"
+						height={dimensions.height}
+						width={dimensions.width}
+					/>
+					{tiles.map((tile) => (
+						<image
+							height={WEATHER_MAP_TILE_SIZE}
+							href={tile.url}
+							key={tile.key}
+							opacity="0.58"
+							preserveAspectRatio="none"
+							width={WEATHER_MAP_TILE_SIZE}
+							x={tile.x}
+							y={tile.y}
+						/>
+					))}
+					<rect
+						fill="rgba(8, 47, 73, 0.42)"
+						height={dimensions.height}
+						width={dimensions.width}
+					/>
+				</svg>
+				<WeatherMapPrecipitationCanvas
+					dimensions={dimensions}
+					frameIndex={frameIndex}
+					frames={weatherMapData.frames}
+					isActive={isActive}
+					viewport={viewport}
+				/>
+				<WeatherMapWindParticleCanvas
+					dimensions={dimensions}
+					frameIndex={frameIndex}
+					frames={weatherMapData.frames}
+					isActive={isActive}
+					viewport={viewport}
+				/>
+				<svg
+					aria-hidden
+					className="pointer-events-none absolute inset-0 h-full w-full"
+					preserveAspectRatio="none"
+					viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+				>
+					<WeatherMapCenterMarker
+						center={weatherMapData.center}
+						viewport={viewport}
+					/>
+				</svg>
+				<div className="pointer-events-none absolute top-3 left-3 rounded-full border border-white/10 bg-dark-950/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md">
+					{formatTooltipTime(selectedFrame.time)}
+				</div>
+				<WeatherMapTooltip
+					dimensions={dimensions}
+					frameIndex={frameIndex}
+					frames={weatherMapData.frames}
+					isActive={isActive}
+					point={hoverPoint}
+					usesMetricUnits={usesMetricUnits}
+					viewport={viewport}
+					windUnitLabel={windUnitLabel}
+				/>
+				<WeatherMapPrecipitationLegend usesMetricUnits={usesMetricUnits} />
+				<a
+					className="absolute right-2 bottom-2 rounded bg-dark-950/60 px-1.5 py-0.5 text-[10px] font-medium text-white/70 backdrop-blur-md transition hover:text-white"
+					href="https://www.openstreetmap.org/copyright"
+					rel="noreferrer"
+					target="_blank"
+				>
+					© OpenStreetMap
+				</a>
+			</div>
+			<WeatherMapTimeline frames={weatherMapData.frames} isActive={isActive} />
+		</div>
+	)
+}
+
+const WeatherMapWindParticleCanvas = ({
+	dimensions,
+	frameIndex,
+	frames,
+	isActive,
+	viewport,
+}: Readonly<{
+	dimensions: WeatherMapDimensions
+	frameIndex: number
+	frames: WeatherMapData['frames']
+	isActive: boolean
+	viewport: WeatherMapViewport
+}>) => {
+	const canvasRef = useRef<HTMLCanvasElement>(null)
+	const framesRef = useRef(frames)
+	const frameTransitionRef = useRef({
+		fromIndex: frameIndex,
+		startedAt: 0,
+		toIndex: frameIndex,
+	})
+	const mapHeight = dimensions.height
+	const mapWidth = dimensions.width
+	const viewportCenterX = viewport.centerX
+	const viewportCenterY = viewport.centerY
+
+	useEffect(() => {
+		framesRef.current = frames
+	}, [frames])
+
+	useEffect(() => {
+		const transition = frameTransitionRef.current
+		if (transition.toIndex === frameIndex) {
+			return
+		}
+
+		if (frameIndex < transition.toIndex) {
+			frameTransitionRef.current = {
+				fromIndex: frameIndex,
+				startedAt: performance.now() - WEATHER_MAP_FRAME_DURATION_MS,
+				toIndex: frameIndex,
+			}
+			return
+		}
+
+		frameTransitionRef.current = {
+			fromIndex: transition.toIndex,
+			startedAt: performance.now(),
+			toIndex: frameIndex,
+		}
+	}, [frameIndex])
+
+	useEffect(() => {
+		const canvas = canvasRef.current
+		if (!canvas || !isActive) {
+			return
+		}
+
+		const context = canvas.getContext('2d')
+		if (!context) {
+			return
+		}
+
+		const animationDimensions = {
+			height: mapHeight,
+			width: mapWidth,
+		}
+		const animationViewport = {
+			centerX: viewportCenterX,
+			centerY: viewportCenterY,
+			dimensions: animationDimensions,
+		}
+
+		canvas.width = mapWidth
+		canvas.height = mapHeight
+		context.setTransform(1, 0, 0, 1, 0, 0)
+
+		const overlayScale = getWeatherMapOverlayScale(animationDimensions)
+		const particles = createWeatherMapParticles(animationDimensions)
+		let animationFrame = 0
+
+		const draw = (time: number) => {
+			const projectedPoints = getInterpolatedWeatherMapWindPoints({
+				frames: framesRef.current,
+				time,
+				transition: frameTransitionRef.current,
+				viewport: animationViewport,
+			})
+			const maxWind = Math.max(
+				1,
+				max(projectedPoints.map(({ speed }) => speed)),
+			)
+			context.globalCompositeOperation = 'destination-in'
+			context.fillStyle = 'rgba(0, 0, 0, 0.9)'
+			context.fillRect(0, 0, mapWidth, mapHeight)
+			context.globalCompositeOperation = 'source-over'
+			context.lineCap = 'round'
+
+			for (const particle of particles) {
+				const nearestPoint = getNearestWeatherMapWindPoint({
+					particle,
+					projectedPoints,
+				})
+				if (!nearestPoint) {
+					resetWeatherMapParticle({
+						dimensions: animationDimensions,
+						particle,
+					})
+					continue
+				}
+
+				const windRatio = nearestPoint.speed / maxWind
+				const radians = ((nearestPoint.direction + 180 - 90) * Math.PI) / 180
+				const speed = (0.05 + Math.pow(windRatio, 1.85) * 0.74) * overlayScale
+				const nextX = particle.x + Math.cos(radians) * speed
+				const nextY = particle.y + Math.sin(radians) * speed
+
+				context.lineWidth = (0.85 + windRatio * 1.25) * overlayScale
+				context.strokeStyle = `rgba(236, 254, 255, ${0.18 + windRatio * 0.42})`
+				context.beginPath()
+				context.moveTo(particle.x, particle.y)
+				context.lineTo(nextX, nextY)
+				context.stroke()
+
+				particle.x = nextX
+				particle.y = nextY
+				particle.age += 1
+
+				if (
+					particle.age > 180 ||
+					particle.x < -12 ||
+					particle.x > mapWidth + 12 ||
+					particle.y < -12 ||
+					particle.y > mapHeight + 12
+				) {
+					resetWeatherMapParticle({
+						dimensions: animationDimensions,
+						particle,
+					})
+				}
+			}
+
+			animationFrame = window.requestAnimationFrame(draw)
+		}
+
+		context.clearRect(0, 0, mapWidth, mapHeight)
+		animationFrame = window.requestAnimationFrame(draw)
+
+		return () => {
+			window.cancelAnimationFrame(animationFrame)
+		}
+	}, [isActive, mapHeight, mapWidth, viewportCenterX, viewportCenterY])
+
+	return (
+		<canvas
+			aria-hidden
+			className="pointer-events-none absolute inset-0 h-full w-full mix-blend-screen"
+			ref={canvasRef}
+		/>
+	)
+}
+
+const WeatherMapPrecipitationCanvas = ({
+	dimensions,
+	frameIndex,
+	frames,
+	isActive,
+	viewport,
+}: Readonly<{
+	dimensions: WeatherMapDimensions
+	frameIndex: number
+	frames: WeatherMapData['frames']
+	isActive: boolean
+	viewport: WeatherMapViewport
+}>) => {
+	const canvasRef = useRef<HTMLCanvasElement>(null)
+	const framesRef = useRef(frames)
+	const frameTransitionRef = useRef({
+		fromIndex: frameIndex,
+		startedAt: 0,
+		toIndex: frameIndex,
+	})
+	const mapHeight = dimensions.height
+	const mapWidth = dimensions.width
+	const viewportCenterX = viewport.centerX
+	const viewportCenterY = viewport.centerY
+
+	useEffect(() => {
+		framesRef.current = frames
+	}, [frames])
+
+	useEffect(() => {
+		const transition = frameTransitionRef.current
+		if (transition.toIndex === frameIndex) {
+			return
+		}
+
+		if (frameIndex < transition.toIndex) {
+			frameTransitionRef.current = {
+				fromIndex: frameIndex,
+				startedAt: performance.now() - WEATHER_MAP_FRAME_DURATION_MS,
+				toIndex: frameIndex,
+			}
+			return
+		}
+
+		frameTransitionRef.current = {
+			fromIndex: transition.toIndex,
+			startedAt: performance.now(),
+			toIndex: frameIndex,
+		}
+	}, [frameIndex])
+
+	useEffect(() => {
+		const canvas = canvasRef.current
+		if (!canvas || !isActive) {
+			return
+		}
+
+		const context = canvas.getContext('2d')
+		if (!context) {
+			return
+		}
+
+		const animationDimensions = {
+			height: mapHeight,
+			width: mapWidth,
+		}
+		const animationViewport = {
+			centerX: viewportCenterX,
+			centerY: viewportCenterY,
+			dimensions: animationDimensions,
+		}
+		const meshDimensions =
+			getWeatherMapPrecipitationMeshDimensions(animationDimensions)
+		const meshCanvas = document.createElement('canvas')
+		const meshContext = meshCanvas.getContext('2d')
+		if (!meshContext) {
+			return
+		}
+
+		let animationFrame = 0
+
+		canvas.width = mapWidth
+		canvas.height = mapHeight
+		meshCanvas.width = meshDimensions.width
+		meshCanvas.height = meshDimensions.height
+		context.setTransform(1, 0, 0, 1, 0, 0)
+
+		let lastDrawTime = 0
+
+		const draw = (time: number) => {
+			if (time - lastDrawTime < WEATHER_MAP_PRECIPITATION_FRAME_INTERVAL_MS) {
+				animationFrame = window.requestAnimationFrame(draw)
+				return
+			}
+
+			lastDrawTime = time
+			const precipitationPoints = getInterpolatedWeatherMapPrecipitationPoints({
+				frames: framesRef.current,
+				time,
+				transition: frameTransitionRef.current,
+				viewport: animationViewport,
+			})
+			const precipitationImageData = createWeatherMapPrecipitationMeshImageData(
+				{
+					context: meshContext,
+					dimensions: animationDimensions,
+					meshDimensions,
+					points: precipitationPoints,
+				},
+			)
+
+			context.clearRect(0, 0, mapWidth, mapHeight)
+			context.globalCompositeOperation = 'source-over'
+			context.filter = 'none'
+			context.imageSmoothingEnabled = true
+			meshContext.putImageData(precipitationImageData, 0, 0)
+			context.drawImage(meshCanvas, 0, 0, mapWidth, mapHeight)
+			animationFrame = window.requestAnimationFrame(draw)
+		}
+
+		animationFrame = window.requestAnimationFrame(draw)
+
+		return () => {
+			window.cancelAnimationFrame(animationFrame)
+		}
+	}, [isActive, mapHeight, mapWidth, viewportCenterX, viewportCenterY])
+
+	return (
+		<canvas
+			aria-hidden
+			className="pointer-events-none absolute inset-0 h-full w-full"
+			ref={canvasRef}
+		/>
+	)
+}
+
+const WeatherMapTooltip = ({
+	dimensions,
+	frameIndex,
+	frames,
+	isActive,
+	point,
+	usesMetricUnits,
+	viewport,
+	windUnitLabel,
+}: Readonly<{
+	dimensions: WeatherMapDimensions
+	frameIndex: number
+	frames: WeatherMapData['frames']
+	isActive: boolean
+	point: null | WeatherMapPointerPoint
+	usesMetricUnits: boolean
+	viewport: WeatherMapViewport
+	windUnitLabel: string
+}>) => {
+	const framesRef = useRef(frames)
+	const frameTransitionRef = useRef({
+		fromIndex: frameIndex,
+		startedAt: 0,
+		toIndex: frameIndex,
+	})
+	const [weather, setWeather] = useState<null | WeatherMapPointerWeather>(null)
+	const pointX = point?.x ?? 0
+	const pointY = point?.y ?? 0
+
+	useEffect(() => {
+		framesRef.current = frames
+	}, [frames])
+
+	useEffect(() => {
+		const transition = frameTransitionRef.current
+		if (transition.toIndex === frameIndex) {
+			return
+		}
+
+		if (frameIndex < transition.toIndex) {
+			frameTransitionRef.current = {
+				fromIndex: frameIndex,
+				startedAt: performance.now() - WEATHER_MAP_FRAME_DURATION_MS,
+				toIndex: frameIndex,
+			}
+			return
+		}
+
+		frameTransitionRef.current = {
+			fromIndex: transition.toIndex,
+			startedAt: performance.now(),
+			toIndex: frameIndex,
+		}
+	}, [frameIndex])
+
+	useEffect(() => {
+		if (!isActive || !point) {
+			return
+		}
+
+		const animationViewport = {
+			centerX: viewport.centerX,
+			centerY: viewport.centerY,
+			dimensions,
+		}
+		let animationFrame = 0
+		let lastDrawTime = 0
+
+		const updateTooltip = (time: number) => {
+			if (time - lastDrawTime >= WEATHER_MAP_TOOLTIP_FRAME_INTERVAL_MS) {
+				lastDrawTime = time
+				const projectedPoints = getInterpolatedWeatherMapWindPoints({
+					frames: framesRef.current,
+					time,
+					transition: frameTransitionRef.current,
+					viewport: animationViewport,
+				})
+				const speed = getWeatherMapWindSpeedAtPoint({
+					point,
+					projectedPoints,
+				})
+				const precipitation = getWeatherMapPrecipitationAtPoint({
+					point,
+					projectedPoints: getInterpolatedWeatherMapPrecipitationPoints({
+						frames: framesRef.current,
+						time,
+						transition: frameTransitionRef.current,
+						viewport: animationViewport,
+					}),
+				})
+
+				if (typeof speed === 'number' && precipitation) {
+					setWeather({
+						precipitation: convertPrecipitation({
+							precipitation: precipitation.precipitation,
+							usesMetricUnits,
+						}),
+						probability: precipitation.probability,
+						windSpeed: convertWind({ usesMetricUnits, wind: speed }),
+					})
+				}
+			}
+
+			animationFrame = window.requestAnimationFrame(updateTooltip)
+		}
+
+		animationFrame = window.requestAnimationFrame(updateTooltip)
+
+		return () => {
+			window.cancelAnimationFrame(animationFrame)
+		}
+	}, [
+		dimensions,
+		isActive,
+		point,
+		usesMetricUnits,
+		viewport.centerX,
+		viewport.centerY,
+	])
+
+	if (!point || !weather) {
+		return null
+	}
+
+	return (
+		<div
+			className="pointer-events-none absolute z-10 rounded-md border border-white/10 bg-dark-950/85 px-2.5 py-1.5 text-xs whitespace-nowrap text-white shadow-lg backdrop-blur-md"
+			style={{
+				left: `${(pointX / dimensions.width) * 100}%`,
+				top: `${(pointY / dimensions.height) * 100}%`,
+				transform: 'translate(0.75rem, calc(-100% - 0.75rem))',
+			}}
+		>
+			<dl className="grid grid-cols-[auto_auto] gap-x-3 gap-y-1">
+				<dt className="text-white/55">
+					<Trans>Wind</Trans>
+				</dt>
+				<dd className="text-right font-semibold text-white">
+					{Math.round(weather.windSpeed)} {windUnitLabel}
+				</dd>
+				<dt className="text-white/55">
+					<Trans>Chance</Trans>
+				</dt>
+				<dd className="text-right font-semibold text-white">
+					{Math.round(weather.probability)}%
+				</dd>
+				<dt className="text-white/55">
+					<Trans>Depth</Trans>
+				</dt>
+				<dd className="text-right font-semibold text-white">
+					{formatWeatherMapTooltipPrecipitationDepth({
+						precipitation: weather.precipitation,
+						usesMetricUnits,
+					})}
+				</dd>
+			</dl>
+		</div>
+	)
+}
+
+const WeatherMapCenterMarker = ({
+	center,
+	viewport,
+}: Readonly<{
+	center: WeatherMapData['center']
+	viewport: WeatherMapViewport
+}>) => {
+	const overlayScale = getWeatherMapOverlayScale(viewport.dimensions)
+	const { x, y } = projectWeatherMapPoint({
+		point: {
+			lat: center.lat,
+			lon: center.lon,
+			precipitation: 0,
+			precipitationProbability: 0,
+			windDirection: 0,
+			windSpeed: 0,
+		},
+		viewport,
+	})
+
+	return (
+		<g>
+			<circle className="fill-white" cx={x} cy={y} r={3 * overlayScale} />
+			<circle
+				className="fill-none stroke-white/50"
+				cx={x}
+				cy={y}
+				r={9 * overlayScale}
+				strokeWidth={1.5 * overlayScale}
+			/>
+		</g>
+	)
+}
+
+const WeatherMapPrecipitationLegend = ({
+	usesMetricUnits,
+}: Readonly<{ usesMetricUnits: boolean }>) => (
+	<div className="pointer-events-none absolute bottom-2 left-2 rounded-lg border border-white/10 bg-dark-950/60 px-2.5 py-2 text-[10px] font-semibold text-white/80 backdrop-blur-md">
+		<div className="mb-1 text-white/60">
+			<Trans>Precipitation</Trans>
+		</div>
+		<div className="flex items-center gap-1.5">
+			{WEATHER_MAP_PRECIPITATION_BANDS.slice(1).map((band) => (
+				<div className="flex flex-col items-center gap-1" key={band.label}>
+					<span
+						className="h-2 w-5 rounded-full border border-white/20"
+						style={{
+							backgroundColor: getWeatherMapPrecipitationBandColor(band),
+						}}
+					/>
+					<span>
+						{formatWeatherMapPrecipitationBandLabel({
+							band,
+							usesMetricUnits,
+						})}
+					</span>
+				</div>
+			))}
+			<span className="ml-1 text-white/50">
+				{usesMetricUnits ? 'mm/h' : 'in/h'}
+			</span>
+		</div>
+	</div>
+)
+
+const WeatherMapTimeline = ({
+	frames,
+	isActive,
+}: Readonly<{
+	frames: WeatherMapData['frames']
+	isActive: boolean
+}>) => {
+	const duration =
+		Math.max(1, frames.length - 1) * WEATHER_MAP_FRAME_DURATION_MS
+
+	return (
+		<div className="space-y-2">
+			<style>
+				{`
+					@keyframes weather-map-timeline-progress {
+						from { transform: scaleX(0); }
+						to { transform: scaleX(1); }
+					}
+				`}
+			</style>
+			<div className="flex items-center justify-between text-xs font-semibold text-dark-300">
+				<span>{formatHour(frames[0]?.time ?? 0)}</span>
+				<span>{formatHour(frames.at(-1)?.time ?? 0)}</span>
+			</div>
+			<div className="h-1.5 overflow-hidden rounded-full bg-white/12">
+				<div
+					className="h-full origin-left rounded-full bg-cyan-100/80"
+					style={{
+						animation: isActive
+							? `weather-map-timeline-progress ${duration}ms linear infinite`
+							: undefined,
+					}}
+				/>
+			</div>
+		</div>
+	)
+}
+
+const WeatherMapMetrics = ({
+	frame,
+	usesMetricUnits,
+	weatherMapData,
+	windUnitLabel,
+}: Readonly<{
+	frame: null | WeatherMapData['frames'][number]
+	usesMetricUnits: boolean
+	weatherMapData: null | WeatherMapData
+	windUnitLabel: string
+}>) => {
+	if (!weatherMapData || !frame) {
+		return (
+			<Metric
+				icon={<IconMap2 aria-hidden size={18} />}
+				label={<Trans>Map</Trans>}
+				value={<Trans>Waiting for map data</Trans>}
+			/>
+		)
+	}
+
+	const windSpeeds = frame.points.map(({ windSpeed }) =>
+		convertWind({ usesMetricUnits, wind: windSpeed }),
+	)
+	const averageWind = average(windSpeeds)
+	const peakChance = getPeakPoint(
+		frame.points.map(
+			({ precipitationProbability }) => precipitationProbability,
+		),
+	)
+	const peakWind = getPeakPoint(windSpeeds)
+
+	return (
+		<>
+			<Metric
+				icon={<IconCloudRain aria-hidden size={18} />}
+				label={<Trans>Peak precipitation chance</Trans>}
+				value={<Trans>{Math.round(peakChance.value)}%</Trans>}
+			/>
+			<Metric
+				icon={<IconWind aria-hidden size={18} />}
+				label={<Trans>Average wind</Trans>}
+				value={
+					<Trans>
+						{Math.round(averageWind)} {windUnitLabel}
+					</Trans>
+				}
+			/>
+			<Metric
+				icon={<IconWind aria-hidden size={18} />}
+				label={<Trans>Peak wind</Trans>}
+				value={
+					<Trans>
+						{Math.round(peakWind.value)} {windUnitLabel}
+					</Trans>
+				}
+			/>
+		</>
+	)
+}
 
 const LineChart = ({
 	accentClassName,
@@ -1279,6 +2279,769 @@ const isSameLocalDate = (date: Date, comparisonDate: Date) =>
 	date.getFullYear() === comparisonDate.getFullYear() &&
 	date.getMonth() === comparisonDate.getMonth() &&
 	date.getDate() === comparisonDate.getDate()
+
+const getWeatherMapFrame = ({
+	frameIndex,
+	weatherMapData,
+}: {
+	frameIndex: number
+	weatherMapData: null | WeatherMapData
+}) => {
+	if (!weatherMapData || weatherMapData.frames.length === 0) {
+		return null
+	}
+
+	return (
+		weatherMapData.frames[
+			Math.min(Math.max(frameIndex, 0), weatherMapData.frames.length - 1)
+		] ?? null
+	)
+}
+
+const projectWeatherMapPoint = ({
+	point,
+	viewport,
+}: {
+	point: WeatherMapData['frames'][number]['points'][number]
+	viewport: WeatherMapViewport
+}) => {
+	const { x, y } = coordinateToWeatherMapWorld(point)
+
+	return {
+		x: x - viewport.centerX + viewport.dimensions.width / 2,
+		y: y - viewport.centerY + viewport.dimensions.height / 2,
+	}
+}
+
+const getWeatherMapDimensions = ({
+	height,
+	width,
+}: WeatherMapDisplaySize): WeatherMapDimensions => {
+	const aspectRatio = width / Math.max(height, 1)
+	const baseWidth = Math.max(
+		WEATHER_MAP_MIN_BASE_WIDTH,
+		WEATHER_MAP_BASE_HEIGHT * aspectRatio,
+	)
+
+	return {
+		height: WEATHER_MAP_BASE_HEIGHT * WEATHER_MAP_RENDER_SCALE,
+		width: Math.round(baseWidth * WEATHER_MAP_RENDER_SCALE),
+	}
+}
+
+const getWeatherMapTiles = ({
+	center,
+	dimensions,
+}: {
+	center: WeatherMapData['center']
+	dimensions: WeatherMapDimensions
+}): WeatherMapTile[] => {
+	const viewport = getWeatherMapViewport({ center, dimensions })
+	const minTileX = Math.floor(
+		(viewport.centerX - dimensions.width / 2) / WEATHER_MAP_TILE_SIZE,
+	)
+	const maxTileX = Math.floor(
+		(viewport.centerX + dimensions.width / 2) / WEATHER_MAP_TILE_SIZE,
+	)
+	const minTileY = Math.floor(
+		(viewport.centerY - dimensions.height / 2) / WEATHER_MAP_TILE_SIZE,
+	)
+	const maxTileY = Math.floor(
+		(viewport.centerY + dimensions.height / 2) / WEATHER_MAP_TILE_SIZE,
+	)
+	const tiles: WeatherMapTile[] = []
+
+	for (let tileY = minTileY; tileY <= maxTileY; tileY += 1) {
+		for (let tileX = minTileX; tileX <= maxTileX; tileX += 1) {
+			const wrappedTileX = wrapWeatherMapTileX(tileX)
+			const clampedTileY = clampWeatherMapTileY(tileY)
+			tiles.push({
+				key: `${wrappedTileX}-${clampedTileY}`,
+				url: `https://tile.openstreetmap.org/${WEATHER_MAP_ZOOM}/${wrappedTileX}/${clampedTileY}.png`,
+				x:
+					tileX * WEATHER_MAP_TILE_SIZE -
+					viewport.centerX +
+					dimensions.width / 2,
+				y:
+					tileY * WEATHER_MAP_TILE_SIZE -
+					viewport.centerY +
+					dimensions.height / 2,
+			})
+		}
+	}
+
+	return tiles
+}
+
+const getWeatherMapViewport = ({
+	center,
+	dimensions,
+}: {
+	center: WeatherMapData['center']
+	dimensions: WeatherMapDimensions
+}): WeatherMapViewport => {
+	const { x, y } = coordinateToWeatherMapWorld(center)
+	return { centerX: x, centerY: y, dimensions }
+}
+
+const getWeatherMapOverlayScale = ({ height }: WeatherMapDimensions) =>
+	height / WEATHER_MAP_BASE_HEIGHT
+
+const createWeatherMapParticles = (
+	dimensions: WeatherMapDimensions,
+): WeatherMapParticle[] =>
+	Array.from({ length: getWeatherMapParticleCount(dimensions) }, () =>
+		resetWeatherMapParticle({
+			dimensions,
+			particle: {
+				age: 0,
+				x: 0,
+				y: 0,
+			},
+		}),
+	)
+
+const getWeatherMapParticleCount = ({ height, width }: WeatherMapDimensions) =>
+	Math.min(
+		240,
+		Math.max(150, Math.round(width * height * WEATHER_MAP_PARTICLE_DENSITY)),
+	)
+
+const resetWeatherMapParticle = ({
+	dimensions,
+	particle,
+}: {
+	dimensions: WeatherMapDimensions
+	particle: WeatherMapParticle
+}): WeatherMapParticle => {
+	particle.age = Math.floor(Math.random() * 140)
+	particle.x = Math.random() * dimensions.width
+	particle.y = Math.random() * dimensions.height
+	return particle
+}
+
+const getInterpolatedWeatherMapPrecipitationPoints = ({
+	frames,
+	time,
+	transition,
+	viewport,
+}: {
+	frames: WeatherMapData['frames']
+	time: number
+	transition: {
+		fromIndex: number
+		startedAt: number
+		toIndex: number
+	}
+	viewport: WeatherMapViewport
+}) => {
+	const fromFrame = getWeatherMapFrame({
+		frameIndex: transition.fromIndex,
+		weatherMapData: { center: { lat: 0, lon: 0 }, frames },
+	})
+	const toFrame = getWeatherMapFrame({
+		frameIndex: transition.toIndex,
+		weatherMapData: { center: { lat: 0, lon: 0 }, frames },
+	})
+	const progress = getWeatherMapTransitionProgress({
+		startedAt: transition.startedAt,
+		time,
+	})
+
+	if (!fromFrame || !toFrame) {
+		return []
+	}
+
+	return fromFrame.points.flatMap((fromPoint, pointIndex) => {
+		const toPoint = toFrame.points[pointIndex]
+		if (!toPoint) {
+			return []
+		}
+
+		const projectedPoint = projectWeatherMapPoint({
+			point: fromPoint,
+			viewport,
+		})
+
+		return {
+			precipitation:
+				fromPoint.precipitation +
+				(toPoint.precipitation - fromPoint.precipitation) * progress,
+			probability:
+				fromPoint.precipitationProbability +
+				(toPoint.precipitationProbability -
+					fromPoint.precipitationProbability) *
+					progress,
+			x: projectedPoint.x,
+			y: projectedPoint.y,
+		}
+	})
+}
+
+const getWeatherMapPrecipitationMeshDimensions = ({
+	height,
+	width,
+}: WeatherMapDimensions): WeatherMapDimensions => ({
+	height: Math.max(
+		24,
+		Math.round(height / WEATHER_MAP_PRECIPITATION_MESH_CELL_SIZE),
+	),
+	width: Math.max(
+		48,
+		Math.round(width / WEATHER_MAP_PRECIPITATION_MESH_CELL_SIZE),
+	),
+})
+
+const createWeatherMapPrecipitationMeshImageData = ({
+	context,
+	dimensions,
+	meshDimensions,
+	points,
+}: {
+	context: CanvasRenderingContext2D
+	dimensions: WeatherMapDimensions
+	meshDimensions: WeatherMapDimensions
+	points: WeatherMapProjectedPrecipitationPoint[]
+}) => {
+	const imageData = context.createImageData(
+		meshDimensions.width,
+		meshDimensions.height,
+	)
+	const bands = new Uint8Array(meshDimensions.width * meshDimensions.height)
+	const values = new Float32Array(meshDimensions.width * meshDimensions.height)
+	const influenceRadius = getWeatherMapPrecipitationInfluenceRadius(points)
+
+	for (let y = 0; y < meshDimensions.height; y += 1) {
+		for (let x = 0; x < meshDimensions.width; x += 1) {
+			const index = y * meshDimensions.width + x
+			const canvasPoint = getWeatherMapPrecipitationMeshPoint({
+				dimensions,
+				meshDimensions,
+				x,
+				y,
+			})
+			const precipitation = getWeatherMapInterpolatedPrecipitation({
+				influenceRadius,
+				point: canvasPoint,
+				points,
+			})
+			const band = getWeatherMapPrecipitationBand(precipitation)
+
+			bands[index] = band
+			values[index] = precipitation
+		}
+	}
+
+	for (let y = 0; y < meshDimensions.height; y += 1) {
+		for (let x = 0; x < meshDimensions.width; x += 1) {
+			const index = y * meshDimensions.width + x
+			const band = bands[index] ?? 0
+			if (band === 0) {
+				continue
+			}
+
+			const dataIndex = index * 4
+			const color = WEATHER_MAP_PRECIPITATION_BANDS[band]
+			const precipitation = values[index] ?? 0
+			const isEdge = isWeatherMapPrecipitationMeshEdge({
+				band,
+				bands,
+				height: meshDimensions.height,
+				width: meshDimensions.width,
+				x,
+				y,
+			})
+			if (!color) {
+				continue
+			}
+
+			imageData.data[dataIndex] = color.red
+			imageData.data[dataIndex + 1] = color.green
+			imageData.data[dataIndex + 2] = color.blue
+			imageData.data[dataIndex + 3] = getWeatherMapPrecipitationMeshAlpha({
+				isEdge,
+				precipitation,
+			})
+		}
+	}
+
+	return imageData
+}
+
+const getWeatherMapPrecipitationMeshPoint = ({
+	dimensions,
+	meshDimensions,
+	x,
+	y,
+}: {
+	dimensions: WeatherMapDimensions
+	meshDimensions: WeatherMapDimensions
+	x: number
+	y: number
+}) => {
+	const canvasX = ((x + 0.5) / meshDimensions.width) * dimensions.width
+	const canvasY = ((y + 0.5) / meshDimensions.height) * dimensions.height
+	const warp = WEATHER_MAP_PRECIPITATION_MESH_CELL_SIZE * 1.75
+	const warpX =
+		(getWeatherMapNoise(canvasX * 0.021 + canvasY * 0.013) - 0.5) * warp
+	const warpY =
+		(getWeatherMapNoise(canvasX * 0.015 - canvasY * 0.019 + 17.3) - 0.5) * warp
+
+	return {
+		x: canvasX + warpX,
+		y: canvasY + warpY,
+	}
+}
+
+const getWeatherMapInterpolatedPrecipitation = ({
+	influenceRadius,
+	point,
+	points,
+}: {
+	influenceRadius: number
+	point: { x: number; y: number }
+	points: WeatherMapProjectedPrecipitationPoint[]
+}) => {
+	let totalWeight = 0
+	let weightedPrecipitation = 0
+	const influenceRadiusSquared = influenceRadius * influenceRadius
+
+	for (const precipitationPoint of points) {
+		const dx = point.x - precipitationPoint.x
+		const dy = point.y - precipitationPoint.y
+		const distanceSquared = dx * dx + dy * dy
+		const weight = Math.exp(-distanceSquared / (2 * influenceRadiusSquared))
+
+		totalWeight += weight
+		weightedPrecipitation += precipitationPoint.precipitation * weight
+	}
+
+	if (totalWeight === 0) {
+		return 0
+	}
+
+	return weightedPrecipitation / totalWeight
+}
+
+const getWeatherMapPrecipitationAtPoint = ({
+	point,
+	projectedPoints,
+}: {
+	point: WeatherMapPointerPoint
+	projectedPoints: WeatherMapProjectedPrecipitationPoint[]
+}) => {
+	if (projectedPoints.length === 0) {
+		return null
+	}
+
+	const influenceRadius =
+		getWeatherMapPrecipitationInfluenceRadius(projectedPoints)
+	const influenceRadiusSquared = influenceRadius * influenceRadius
+	let totalWeight = 0
+	let weightedPrecipitation = 0
+	let weightedProbability = 0
+
+	for (const projectedPoint of projectedPoints) {
+		const dx = point.x - projectedPoint.x
+		const dy = point.y - projectedPoint.y
+		const distanceSquared = dx * dx + dy * dy
+		const weight = Math.exp(-distanceSquared / (2 * influenceRadiusSquared))
+
+		totalWeight += weight
+		weightedPrecipitation += projectedPoint.precipitation * weight
+		weightedProbability += projectedPoint.probability * weight
+	}
+
+	if (totalWeight === 0) {
+		return null
+	}
+
+	return {
+		precipitation: weightedPrecipitation / totalWeight,
+		probability: weightedProbability / totalWeight,
+	}
+}
+
+const getWeatherMapPrecipitationInfluenceRadius = (
+	points: WeatherMapProjectedPrecipitationPoint[],
+) => {
+	if (points.length < 2) {
+		return 120
+	}
+
+	const distances = points.map((point, pointIndex) => {
+		let nearestDistance = Number.POSITIVE_INFINITY
+
+		for (
+			let comparisonPointIndex = 0;
+			comparisonPointIndex < points.length;
+			comparisonPointIndex += 1
+		) {
+			if (comparisonPointIndex === pointIndex) {
+				continue
+			}
+
+			const comparisonPoint = points[comparisonPointIndex]
+			if (!comparisonPoint) {
+				continue
+			}
+
+			const dx = point.x - comparisonPoint.x
+			const dy = point.y - comparisonPoint.y
+			const distance = Math.hypot(dx, dy)
+			if (distance < nearestDistance) {
+				nearestDistance = distance
+			}
+		}
+
+		return nearestDistance
+	})
+	const medianDistance = [...distances].sort((a, b) => a - b)[
+		Math.floor(distances.length / 2)
+	]
+
+	return Math.max(72, (medianDistance ?? 120) * 1.35)
+}
+
+const getWeatherMapPrecipitationBand = (precipitation: number) => {
+	if (precipitation < WEATHER_MAP_PRECIPITATION_MIN_VISIBLE) {
+		return 0
+	}
+
+	if (precipitation >= 10) {
+		return 6
+	}
+
+	if (precipitation >= 5) {
+		return 5
+	}
+
+	if (precipitation >= 2) {
+		return 4
+	}
+
+	if (precipitation >= 1) {
+		return 3
+	}
+
+	if (precipitation >= 0.5) {
+		return 2
+	}
+
+	return 1
+}
+
+const isWeatherMapPrecipitationMeshEdge = ({
+	band,
+	bands,
+	height,
+	width,
+	x,
+	y,
+}: {
+	band: number
+	bands: Uint8Array
+	height: number
+	width: number
+	x: number
+	y: number
+}) => {
+	const neighborBands = [
+		x > 0 ? bands[y * width + x - 1] : 0,
+		x < width - 1 ? bands[y * width + x + 1] : 0,
+		y > 0 ? bands[(y - 1) * width + x] : 0,
+		y < height - 1 ? bands[(y + 1) * width + x] : 0,
+	]
+
+	return neighborBands.some(
+		(neighborBand) => neighborBand > 0 && neighborBand !== band,
+	)
+}
+
+const getWeatherMapPrecipitationMeshAlpha = ({
+	isEdge,
+	precipitation,
+}: {
+	isEdge: boolean
+	precipitation: number
+}) => {
+	const amountIntensity = getWeatherMapPrecipitationIntensity(precipitation)
+	const alpha = isEdge ? 150 + amountIntensity * 85 : 54 + amountIntensity * 150
+
+	return Math.round(alpha)
+}
+
+const getWeatherMapPrecipitationBandColor = ({
+	blue,
+	green,
+	red,
+}: {
+	blue: number
+	green: number
+	red: number
+}) => `rgb(${red}, ${green}, ${blue})`
+
+const formatWeatherMapPrecipitationBandLabel = ({
+	band,
+	usesMetricUnits,
+}: {
+	band: (typeof WEATHER_MAP_PRECIPITATION_BANDS)[number]
+	usesMetricUnits: boolean
+}) => {
+	if (usesMetricUnits) {
+		return band.label
+	}
+
+	const precipitation = convertPrecipitation({
+		precipitation: band.precipitation,
+		usesMetricUnits,
+	})
+	const suffix = band.label.endsWith('+') ? '+' : ''
+
+	if (precipitation < 0.01) {
+		return `<0.01${suffix}`
+	}
+
+	return `${precipitation >= 1 ? precipitation.toFixed(1) : precipitation.toFixed(2)}${suffix}`
+}
+
+const formatWeatherMapTooltipPrecipitationDepth = ({
+	precipitation,
+	usesMetricUnits,
+}: {
+	precipitation: number
+	usesMetricUnits: boolean
+}) => {
+	if (usesMetricUnits) {
+		return `${formatDecimal(precipitation)} mm/h`
+	}
+
+	if (precipitation === 0) {
+		return '0.00 in/h'
+	}
+
+	if (precipitation < 0.01) {
+		return '<0.01 in/h'
+	}
+
+	return `${precipitation >= 1 ? precipitation.toFixed(1) : precipitation.toFixed(2)} in/h`
+}
+
+const getWeatherMapNoise = (seed: number) => {
+	const value = Math.sin(seed * 12.9898) * 43758.5453
+	return value - Math.floor(value)
+}
+
+const getWeatherMapPrecipitationIntensity = (precipitation: number) =>
+	Math.min(1, Math.sqrt(Math.max(0, precipitation) / 6))
+
+const getInterpolatedWeatherMapWindPoints = ({
+	frames,
+	time,
+	transition,
+	viewport,
+}: {
+	frames: WeatherMapData['frames']
+	time: number
+	transition: {
+		fromIndex: number
+		startedAt: number
+		toIndex: number
+	}
+	viewport: WeatherMapViewport
+}) => {
+	const fromFrame = getWeatherMapFrame({
+		frameIndex: transition.fromIndex,
+		weatherMapData: { center: { lat: 0, lon: 0 }, frames },
+	})
+	const toFrame = getWeatherMapFrame({
+		frameIndex: transition.toIndex,
+		weatherMapData: { center: { lat: 0, lon: 0 }, frames },
+	})
+	const progress = getWeatherMapTransitionProgress({
+		startedAt: transition.startedAt,
+		time,
+	})
+
+	if (!fromFrame || !toFrame) {
+		return []
+	}
+
+	return fromFrame.points.flatMap((fromPoint, pointIndex) => {
+		const toPoint = toFrame.points[pointIndex]
+		if (!toPoint) {
+			return []
+		}
+
+		const projectedPoint = projectWeatherMapPoint({
+			point: fromPoint,
+			viewport,
+		})
+
+		return {
+			direction: interpolateWeatherMapDirection({
+				fromDirection: fromPoint.windDirection,
+				progress,
+				toDirection: toPoint.windDirection,
+			}),
+			speed:
+				fromPoint.windSpeed +
+				(toPoint.windSpeed - fromPoint.windSpeed) * progress,
+			x: projectedPoint.x,
+			y: projectedPoint.y,
+		}
+	})
+}
+
+const getWeatherMapWindSpeedAtPoint = ({
+	point,
+	projectedPoints,
+}: {
+	point: WeatherMapPointerPoint
+	projectedPoints: WeatherMapProjectedWindPoint[]
+}) => {
+	if (projectedPoints.length === 0) {
+		return null
+	}
+
+	const influenceRadius = getWeatherMapWindInfluenceRadius(projectedPoints)
+	const influenceRadiusSquared = influenceRadius * influenceRadius
+	let totalWeight = 0
+	let weightedSpeed = 0
+
+	for (const projectedPoint of projectedPoints) {
+		const distanceX = point.x - projectedPoint.x
+		const distanceY = point.y - projectedPoint.y
+		const distanceSquared = distanceX * distanceX + distanceY * distanceY
+		const weight = Math.exp(-distanceSquared / (2 * influenceRadiusSquared))
+
+		totalWeight += weight
+		weightedSpeed += projectedPoint.speed * weight
+	}
+
+	return totalWeight === 0 ? null : weightedSpeed / totalWeight
+}
+
+const getWeatherMapWindInfluenceRadius = (
+	projectedPoints: WeatherMapProjectedWindPoint[],
+) => {
+	if (projectedPoints.length < 2) {
+		return 120
+	}
+
+	const distances = projectedPoints.map((point, pointIndex) => {
+		let nearestDistance = Number.POSITIVE_INFINITY
+
+		for (
+			let comparisonPointIndex = 0;
+			comparisonPointIndex < projectedPoints.length;
+			comparisonPointIndex += 1
+		) {
+			if (comparisonPointIndex === pointIndex) {
+				continue
+			}
+
+			const comparisonPoint = projectedPoints[comparisonPointIndex]
+			if (!comparisonPoint) {
+				continue
+			}
+
+			const distanceX = point.x - comparisonPoint.x
+			const distanceY = point.y - comparisonPoint.y
+			const distance = Math.hypot(distanceX, distanceY)
+			if (distance < nearestDistance) {
+				nearestDistance = distance
+			}
+		}
+
+		return nearestDistance
+	})
+	const medianDistance = [...distances].sort((a, b) => a - b)[
+		Math.floor(distances.length / 2)
+	]
+
+	return Math.max(72, (medianDistance ?? 120) * 1.35)
+}
+
+const getWeatherMapTransitionProgress = ({
+	startedAt,
+	time,
+}: {
+	startedAt: number
+	time: number
+}) =>
+	Math.min(1, Math.max(0, (time - startedAt) / WEATHER_MAP_FRAME_DURATION_MS))
+
+const interpolateWeatherMapDirection = ({
+	fromDirection,
+	progress,
+	toDirection,
+}: {
+	fromDirection: number
+	progress: number
+	toDirection: number
+}) => {
+	const delta = ((((toDirection - fromDirection) % 360) + 540) % 360) - 180
+	return (fromDirection + delta * progress + 360) % 360
+}
+
+const getNearestWeatherMapWindPoint = ({
+	particle,
+	projectedPoints,
+}: {
+	particle: WeatherMapParticle
+	projectedPoints: WeatherMapProjectedWindPoint[]
+}) => {
+	let closestPoint: null | WeatherMapProjectedWindPoint = null
+	let closestDistanceSquared = Infinity
+
+	for (const point of projectedPoints) {
+		const distanceX = particle.x - point.x
+		const distanceY = particle.y - point.y
+		const distanceSquared = distanceX * distanceX + distanceY * distanceY
+
+		if (distanceSquared < closestDistanceSquared) {
+			closestDistanceSquared = distanceSquared
+			closestPoint = point
+		}
+	}
+
+	return closestPoint
+}
+
+const coordinateToWeatherMapWorld = ({
+	lat,
+	lon,
+}: {
+	lat: number
+	lon: number
+}) => {
+	const scale = WEATHER_MAP_TILE_SIZE * 2 ** WEATHER_MAP_ZOOM
+	const clampedLat = Math.min(Math.max(lat, -85.05112878), 85.05112878)
+	const latRadians = (clampedLat * Math.PI) / 180
+
+	return {
+		x: ((lon + 180) / 360) * scale,
+		y:
+			(0.5 -
+				Math.log((1 + Math.sin(latRadians)) / (1 - Math.sin(latRadians))) /
+					(4 * Math.PI)) *
+			scale,
+	}
+}
+
+const wrapWeatherMapTileX = (tileX: number) => {
+	const tileCount = 2 ** WEATHER_MAP_ZOOM
+	return ((tileX % tileCount) + tileCount) % tileCount
+}
+
+const clampWeatherMapTileY = (tileY: number) => {
+	const maxTile = 2 ** WEATHER_MAP_ZOOM - 1
+	return Math.min(Math.max(tileY, 0), maxTile)
+}
+
+const average = (points: number[]) =>
+	points.length > 0 ? sum(points) / points.length : 0
 
 const max = (points: number[]) =>
 	points.reduce((currentMax, point) => Math.max(currentMax, point), -Infinity)

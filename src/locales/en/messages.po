@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: formatPrecipitationValue({ precipitation: sum(precipitation), usesMetricUnits, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:287
+#: src/features/weather/ui/next-24-hours-tile.tsx:372
 msgid "{0}"
 msgstr "{0}"
 
@@ -29,15 +29,17 @@ msgstr "{0}"
 
 #. placeholder {0}: formatDecimal(bestVisibility.value)
 #. placeholder {0}: formatDecimal(lowestVisibility.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:503
-#: src/features/weather/ui/next-24-hours-tile.tsx:519
+#: src/features/weather/ui/next-24-hours-tile.tsx:599
+#: src/features/weather/ui/next-24-hours-tile.tsx:615
 msgid "{0} {visibilityUnitLabel} at <0/>"
 msgstr "{0} {visibilityUnitLabel} at <0/>"
 
-#. placeholder {0}: Math.round(peakGust.value - peakWind.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:332
-#~ msgid "{0} {windUnitLabel}"
-#~ msgstr "{0} {windUnitLabel}"
+#. placeholder {0}: Math.round(averageWind)
+#. placeholder {0}: Math.round(peakWind.value)
+#: src/features/weather/ui/next-24-hours-tile.tsx:1726
+#: src/features/weather/ui/next-24-hours-tile.tsx:1735
+msgid "{0} {windUnitLabel}"
+msgstr "{0} {windUnitLabel}"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
@@ -50,10 +52,28 @@ msgstr "{0} {visibilityUnitLabel} at <0/>"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:407
-#: src/features/weather/ui/next-24-hours-tile.tsx:423
+#: src/features/weather/ui/next-24-hours-tile.tsx:503
+#: src/features/weather/ui/next-24-hours-tile.tsx:519
 msgid "{0} {windUnitLabel} at <0/>"
 msgstr "{0} {windUnitLabel} at <0/>"
+
+#. placeholder {0}: formatHour(startTime)
+#. placeholder {1}: formatHour(endTime)
+#: src/features/weather/ui/next-24-hours-tile.tsx:794
+msgid "{0} and {1}"
+msgstr "{0} and {1}"
+
+#. placeholder {0}: formatHour(startTime)
+#. placeholder {1}: formatHour(endTime)
+#: src/features/weather/ui/next-24-hours-tile.tsx:807
+msgid "{0} and {1} today"
+msgstr "{0} and {1} today"
+
+#. placeholder {0}: formatHour(startTime)
+#. placeholder {1}: formatHour(endTime)
+#: src/features/weather/ui/next-24-hours-tile.tsx:815
+msgid "{0} and {1} tomorrow"
+msgstr "{0} and {1} tomorrow"
 
 #. placeholder {0}: Math.round(peakUv.value)
 #. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakUv.index]?.time, })
@@ -62,7 +82,7 @@ msgstr "{0} {windUnitLabel} at <0/>"
 #~ msgstr "{0} at {1}"
 
 #. placeholder {0}: Math.round(peakUv.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:487
+#: src/features/weather/ui/next-24-hours-tile.tsx:583
 msgid "{0} at <0/>"
 msgstr "{0} at <0/>"
 
@@ -73,7 +93,7 @@ msgstr "{0} at <0/>"
 #~ msgstr "{0} between {1}"
 
 #. placeholder {0}: formatPrecipitationValue({ precipitation: peakAmount.value, usesMetricUnits, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:335
+#: src/features/weather/ui/next-24-hours-tile.tsx:420
 msgid "{0} between <0/>"
 msgstr "{0} between <0/>"
 
@@ -105,12 +125,12 @@ msgid "{0} mph"
 msgstr "{0} mph"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:672
+#: src/features/weather/ui/next-24-hours-tile.tsx:768
 msgid "{0} today"
 msgstr "{0} today"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:676
+#: src/features/weather/ui/next-24-hours-tile.tsx:772
 msgid "{0} tomorrow"
 msgstr "{0} tomorrow"
 
@@ -125,10 +145,15 @@ msgstr "{0} tomorrow"
 
 #. placeholder {0}: Math.round(high.value)
 #. placeholder {0}: Math.round(low.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:198
-#: src/features/weather/ui/next-24-hours-tile.tsx:212
+#: src/features/weather/ui/next-24-hours-tile.tsx:283
+#: src/features/weather/ui/next-24-hours-tile.tsx:297
 msgid "{0}{temperatureUnitLabel} at <0/>"
 msgstr "{0}{temperatureUnitLabel} at <0/>"
+
+#. placeholder {0}: Math.round(peakChance.value)
+#: src/features/weather/ui/next-24-hours-tile.tsx:1720
+msgid "{0}%"
+msgstr "{0}%"
 
 #. placeholder {0}: Math.round(peakProbability.value)
 #. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakProbability.index]?.time, })
@@ -137,7 +162,7 @@ msgstr "{0}{temperatureUnitLabel} at <0/>"
 #~ msgstr "{0}% at {1}"
 
 #. placeholder {0}: Math.round(peakProbability.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:309
+#: src/features/weather/ui/next-24-hours-tile.tsx:394
 msgid "{0}% at <0/>"
 msgstr "{0}% at <0/>"
 
@@ -179,7 +204,7 @@ msgstr "<0>Location access denied.</0> Click the location icon in the address ba
 msgid "☕ Gift a coffee"
 msgstr "☕ Gift a coffee"
 
-#: src/pages/index.tsx:479
+#: src/pages/index.tsx:500
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ NEW: Try scrolling down"
 
@@ -267,7 +292,7 @@ msgstr "Ancient monuments such as Stonehenge are aligned with the solstice sunri
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:694
+#: src/features/weather/ui/next-24-hours-tile.tsx:825
 msgid "and"
 msgstr "and"
 
@@ -312,6 +337,10 @@ msgstr "August"
 msgid "Autumn Equinox"
 msgstr "Autumn Equinox"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:1724
+msgid "Average wind"
+msgstr "Average wind"
+
 #: src/features/seasonal-events/events/black-hole.tsx:231
 msgid "Because gravity bends light paths, parts of the disk appear warped and wrapped above and below the black hole."
 msgstr "Because gravity bends light paths, parts of the disk appear warped and wrapped above and below the black hole."
@@ -345,6 +374,10 @@ msgstr "Celsius (°C)"
 msgid "Centuries later, people still reach for pen and paper when a text won't do."
 msgstr "Centuries later, people still reach for pen and paper when a text won't do."
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:1561
+msgid "Chance"
+msgstr "Chance"
+
 #: src/features/seasonal-events/events/lyrids.tsx:114
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
 msgstr "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
@@ -362,7 +395,7 @@ msgstr "Christmas Day marks the celebration of the birth of Jesus, and for many 
 msgid "clear sky"
 msgstr "clear sky"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:515
+#: src/features/weather/ui/next-24-hours-tile.tsx:611
 msgid "Clearest hour"
 msgstr "Clearest hour"
 
@@ -382,7 +415,7 @@ msgstr "Community cleanups, tree planting, and habitat restoration are among the
 msgid "Compact weather alerts"
 msgstr "Compact weather alerts"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:530
+#: src/features/weather/ui/next-24-hours-tile.tsx:626
 msgid "Conditions"
 msgstr "Conditions"
 
@@ -430,6 +463,10 @@ msgstr "dense freezing drizzle"
 #: src/features/weather/ui/tile.tsx:90
 msgid "depositing rime fog"
 msgstr "depositing rime fog"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1567
+msgid "Depth"
+msgstr "Depth"
 
 #: src/features/settings/ui/settings.tsx:114
 msgid "Developer"
@@ -586,7 +623,7 @@ msgstr "February"
 msgid "Feedback"
 msgstr "Feedback"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:224
+#: src/features/weather/ui/next-24-hours-tile.tsx:309
 msgid "Feels like now"
 msgstr "Feels like now"
 
@@ -714,7 +751,7 @@ msgstr "Hanukkah is a Jewish festival of lights, observed over eight nights."
 msgid "Hearts, roses, and red ribbons became familiar symbols of devotion, warmth, and connection."
 msgstr "Hearts, roses, and red ribbons became familiar symbols of devotion, warmth, and connection."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:326
+#: src/features/weather/ui/next-24-hours-tile.tsx:411
 msgid "Heaviest hour"
 msgstr "Heaviest hour"
 
@@ -734,7 +771,7 @@ msgstr "heavy snow showers"
 msgid "heavy snowfall"
 msgstr "heavy snowfall"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:196
+#: src/features/weather/ui/next-24-hours-tile.tsx:281
 msgid "High"
 msgstr "High"
 
@@ -942,6 +979,10 @@ msgstr "light freezing rain"
 msgid "Light shifts to a silvery tone, shadows sharpen, and temperatures may drop noticeably within minutes."
 msgstr "Light shifts to a silvery tone, shadows sharpen, and temperatures may drop noticeably within minutes."
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:939
+msgid "Local map"
+msgstr "Local map"
+
 #: src/features/settings/ui/settings.tsx:527
 msgid "Locale"
 msgstr "Locale"
@@ -958,7 +999,7 @@ msgstr "Location name unavailable"
 msgid "Longitude"
 msgstr "Longitude"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:210
+#: src/features/weather/ui/next-24-hours-tile.tsx:295
 msgid "Low"
 msgstr "Low"
 
@@ -982,7 +1023,7 @@ msgstr "Low visibility starting in {timeUntilLowVisibility} hours"
 msgid "Low visibility starting in 1 hour"
 msgstr "Low visibility starting in 1 hour"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:499
+#: src/features/weather/ui/next-24-hours-tile.tsx:595
 msgid "Lowest visibility"
 msgstr "Lowest visibility"
 
@@ -1007,6 +1048,14 @@ msgstr "Lyrids Meteor Shower"
 #: src/features/weather/ui/tile.tsx:89
 msgid "mainly clear"
 msgstr "mainly clear"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1698
+msgid "Map"
+msgstr "Map"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1006
+msgid "Map data unavailable"
+msgstr "Map data unavailable"
 
 #: src/features/weather/ui/tile.tsx:128
 msgid "March"
@@ -1078,18 +1127,22 @@ msgstr "New Year’s Day serves as the calendar’s reset, marked by the first s
 msgid "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precisely that sunlight floods its inner chamber for just seventeen minutes around the winter solstice each year."
 msgstr "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precisely that sunlight floods its inner chamber for just seventeen minutes around the winter solstice each year."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:191
-#: src/features/weather/ui/next-24-hours-tile.tsx:277
-#: src/features/weather/ui/next-24-hours-tile.tsx:397
-#: src/features/weather/ui/next-24-hours-tile.tsx:477
+#: src/features/weather/ui/next-24-hours-tile.tsx:276
+#: src/features/weather/ui/next-24-hours-tile.tsx:362
+#: src/features/weather/ui/next-24-hours-tile.tsx:493
+#: src/features/weather/ui/next-24-hours-tile.tsx:573
 msgid "Next 24 hours"
 msgstr "Next 24 hours"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:348
+#: src/features/weather/ui/next-24-hours-tile.tsx:930
+msgid "Next 6 hours"
+msgstr "Next 6 hours"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:433
 msgid "No measurable precipitation expected"
 msgstr "No measurable precipitation expected"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:317
+#: src/features/weather/ui/next-24-hours-tile.tsx:402
 msgid "No precipitation expected"
 msgstr "No precipitation expected"
 
@@ -1196,19 +1249,24 @@ msgstr "Overview"
 msgid "partly cloudy"
 msgstr "partly cloudy"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:300
+#: src/features/weather/ui/next-24-hours-tile.tsx:385
 msgid "Peak chance"
 msgstr "Peak chance"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:419
+#: src/features/weather/ui/next-24-hours-tile.tsx:515
 msgid "Peak gust"
 msgstr "Peak gust"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:483
+#: src/features/weather/ui/next-24-hours-tile.tsx:1719
+msgid "Peak precipitation chance"
+msgstr "Peak precipitation chance"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:579
 msgid "Peak UV"
 msgstr "Peak UV"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:403
+#: src/features/weather/ui/next-24-hours-tile.tsx:499
+#: src/features/weather/ui/next-24-hours-tile.tsx:1733
 msgid "Peak wind"
 msgstr "Peak wind"
 
@@ -1228,16 +1286,17 @@ msgstr "Perseids meteor shower"
 msgid "Perseids Meteor Shower"
 msgstr "Perseids Meteor Shower"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:328
-#: src/features/weather/ui/next-24-hours-tile.tsx:354
+#: src/features/weather/ui/next-24-hours-tile.tsx:413
+#: src/features/weather/ui/next-24-hours-tile.tsx:439
+#: src/features/weather/ui/next-24-hours-tile.tsx:1619
 msgid "Precipitation"
 msgstr "Precipitation"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:302
+#: src/features/weather/ui/next-24-hours-tile.tsx:387
 msgid "Precipitation chance"
 msgstr "Precipitation chance"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:274
+#: src/features/weather/ui/next-24-hours-tile.tsx:359
 msgid "Precipitation includes rain and snow."
 msgstr "Precipitation includes rain and snow."
 
@@ -1265,8 +1324,8 @@ msgstr "Religious & cultural"
 msgid "Report a bug"
 msgstr "Report a bug"
 
-#: src/pages/index.tsx:415
-#: src/pages/index.tsx:429
+#: src/pages/index.tsx:434
+#: src/pages/index.tsx:448
 msgid "Retry"
 msgstr "Retry"
 
@@ -1463,7 +1522,7 @@ msgstr "Show weather alerts"
 msgid "Show Winter Solstice event"
 msgstr "Show Winter Solstice event"
 
-#: src/pages/index.tsx:85
+#: src/pages/index.tsx:86
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Showing cached weather data. Retry to refresh the latest forecast."
 
@@ -1564,7 +1623,7 @@ msgstr "Symbols of luck"
 
 #: src/features/settings/ui/initialisation.tsx:245
 #: src/features/settings/ui/settings.tsx:541
-#: src/features/weather/ui/next-24-hours-tile.tsx:229
+#: src/features/weather/ui/next-24-hours-tile.tsx:314
 msgid "Temperature"
 msgstr "Temperature"
 
@@ -1925,7 +1984,7 @@ msgstr "Total lunar eclipse"
 msgid "Total Lunar Eclipse"
 msgstr "Total Lunar Eclipse"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:283
+#: src/features/weather/ui/next-24-hours-tile.tsx:368
 msgid "Total precipitation"
 msgstr "Total precipitation"
 
@@ -1965,7 +2024,7 @@ msgstr "Tuesday"
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 
-#: src/pages/index.tsx:409
+#: src/pages/index.tsx:428
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Unable to fetch weather data. Please check your internet connection and try again."
 
@@ -2004,6 +2063,10 @@ msgstr "Valentine’s Day celebrates affection in many forms, from romantic love
 msgid "violent rain showers"
 msgstr "violent rain showers"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:1699
+msgid "Waiting for map data"
+msgstr "Waiting for map data"
+
 #: src/features/seasonal-events/events/earth-day.tsx:156
 msgid "Ways to observe"
 msgstr "Ways to observe"
@@ -2020,7 +2083,7 @@ msgstr "Weather"
 msgid "Weather data by Open-Meteo"
 msgstr "Weather data by Open-Meteo"
 
-#: src/pages/index.tsx:77
+#: src/pages/index.tsx:78
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 
@@ -2076,7 +2139,8 @@ msgstr "Why it turns red"
 msgid "Why the peak is brief"
 msgstr "Why the peak is brief"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:434
+#: src/features/weather/ui/next-24-hours-tile.tsx:530
+#: src/features/weather/ui/next-24-hours-tile.tsx:1555
 msgid "Wind"
 msgstr "Wind"
 

@@ -125,6 +125,7 @@ const App = () => {
 		retry,
 		status,
 		weatherData,
+		weatherMapData,
 	} = useWeather(
 		config.lat,
 		config.lon,
@@ -472,6 +473,7 @@ const App = () => {
 										temperatureUnit={config.temperatureUnit}
 										unitSystem={config.unitSystem}
 										viewId={viewId}
+										weatherMapData={weatherMapData}
 									/>
 								</DirectionalView>
 							))
@@ -520,6 +522,7 @@ export default App
 const VIEW_ORDER: Record<ForecastViewId, number> = {
 	conditions: 4,
 	forecast: 0,
+	map: 5,
 	precipitation: 2,
 	temperature: 1,
 	wind: 3,
@@ -533,6 +536,7 @@ const FORECAST_VIEW_IDS: readonly ForecastViewId[] = [
 const VIEW_INDICATOR_LABELS: Record<ForecastViewId, string> = {
 	conditions: 'conditions',
 	forecast: 'forecast',
+	map: 'map',
 	precipitation: 'precipitation',
 	temperature: 'temperature',
 	wind: 'wind',
@@ -542,6 +546,7 @@ const DETAIL_FALLBACK_AURORA_GRADIENTS: Record<ForecastViewId, string> = {
 		'radial-gradient(120% 80% at 15% 0%, rgba(139, 92, 246, 0.22), rgba(76, 29, 149, 0.08) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(52, 211, 153, 0.16), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(129, 140, 248, 0.13), rgba(15, 23, 42, 0) 70%)',
 	forecast:
 		'radial-gradient(120% 80% at 15% 0%, rgba(59, 130, 246, 0.24), rgba(14, 116, 144, 0.1) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(129, 140, 248, 0.17), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(52, 211, 153, 0.13), rgba(15, 23, 42, 0) 70%)',
+	map: 'radial-gradient(120% 80% at 15% 0%, rgba(6, 182, 212, 0.22), rgba(14, 116, 144, 0.11) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(56, 189, 248, 0.15), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(34, 211, 238, 0.12), rgba(15, 23, 42, 0) 70%)',
 	precipitation:
 		'radial-gradient(120% 80% at 15% 0%, rgba(37, 99, 235, 0.24), rgba(14, 116, 144, 0.12) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(56, 189, 248, 0.16), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(45, 212, 191, 0.12), rgba(15, 23, 42, 0) 70%)',
 	temperature:

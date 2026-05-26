@@ -6,6 +6,7 @@ import {
 } from '../../../shared/hooks/async-status'
 import { isLocationInAustralia } from '../../../shared/lib/location'
 import {
+	fetchWeatherMapData,
 	fetchWeatherResponse,
 	getUserTimeZone,
 	mapWeatherResponseToForecastData,
@@ -20,6 +21,7 @@ import {
 	CACHE_REFRESH_INTERVAL_MS,
 	type Data,
 	type Next24HoursData,
+	type WeatherMapData,
 } from '../model/types'
 
 type WeatherAction =
@@ -29,12 +31,14 @@ type WeatherAction =
 			shouldRefresh: boolean
 			type: 'hydrate-cache'
 			weatherData: [] | Data
+			weatherMapData: null | WeatherMapData
 	  }
 	| {
 			alertData: Alerts
 			next24HoursData: Next24HoursData
 			type: 'fetch-success'
 			weatherData: [] | Data
+			weatherMapData: null | WeatherMapData
 	  }
 	| {
 			error: Error
@@ -62,6 +66,7 @@ type WeatherState = {
 	status: AsyncStatus
 	usingCachedData: boolean
 	weatherData: [] | Data
+	weatherMapData: null | WeatherMapData
 }
 
 export type { Alerts } from '../model/types'
@@ -74,6 +79,7 @@ const createInitialWeatherState = (): WeatherState => ({
 	status: AsyncStatus.Idle,
 	usingCachedData: true,
 	weatherData: [],
+	weatherMapData: null,
 })
 
 const weatherReducer = (
@@ -95,6 +101,7 @@ const weatherReducer = (
 				next24HoursData: action.next24HoursData,
 				status: AsyncStatus.Success,
 				weatherData: action.weatherData,
+				weatherMapData: action.weatherMapData,
 			}
 		case 'hydrate-cache':
 			return {
@@ -106,6 +113,7 @@ const weatherReducer = (
 				status: AsyncStatus.Success,
 				usingCachedData: !action.shouldRefresh,
 				weatherData: action.weatherData,
+				weatherMapData: action.weatherMapData,
 			}
 		case 'request-refresh':
 			return {
@@ -170,14 +178,28 @@ export const useWeather = (
 		const controller = new AbortController()
 		activeRequestControllerRef.current = controller
 
-		void fetchWeatherResponse({
+		const weatherRequest = fetchWeatherResponse({
 			lat,
 			lon,
 			shouldUseAirQualityUv,
 			signal: controller.signal,
 			timeZone: userTimeZone,
 		})
-			.then((responseData) => {
+		const weatherMapRequest = fetchWeatherMapData({
+			lat,
+			lon,
+			signal: controller.signal,
+			timeZone: userTimeZone,
+		}).catch((weatherMapError) => {
+			if (isAbortError(weatherMapError)) {
+				throw weatherMapError
+			}
+			console.error('Weather map fetch error:', weatherMapError)
+			return null
+		})
+
+		void Promise.all([weatherRequest, weatherMapRequest])
+			.then(([responseData, weatherMapData]) => {
 				if (latestRequestRef.current !== requestId) {
 					return
 				}
@@ -200,12 +222,14 @@ export const useWeather = (
 					shouldUseAirQualityUv,
 					timeZone: userTimeZone,
 					weatherData,
+					weatherMapData,
 				})
 				dispatch({
 					alertData,
 					next24HoursData,
 					type: 'fetch-success',
 					weatherData,
+					weatherMapData,
 				})
 			})
 			.catch((fetchError) => {
@@ -293,6 +317,7 @@ export const useWeather = (
 			shouldRefresh,
 			type: 'hydrate-cache',
 			weatherData: cached.weatherData,
+			weatherMapData: cached.weatherMapData,
 		})
 	}, [lat, lon, locationChangeToken, userTimeZone, shouldUseAirQualityUv])
 
@@ -317,5 +342,6 @@ export const useWeather = (
 		retry,
 		status: state.status,
 		weatherData: state.weatherData,
+		weatherMapData: state.weatherMapData,
 	}
 }

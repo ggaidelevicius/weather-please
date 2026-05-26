@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: formatPrecipitationValue({ precipitation: sum(precipitation), usesMetricUnits, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:287
+#: src/features/weather/ui/next-24-hours-tile.tsx:372
 msgid "{0}"
 msgstr "{0}"
 
@@ -29,15 +29,17 @@ msgstr "{0}"
 
 #. placeholder {0}: formatDecimal(bestVisibility.value)
 #. placeholder {0}: formatDecimal(lowestVisibility.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:503
-#: src/features/weather/ui/next-24-hours-tile.tsx:519
+#: src/features/weather/ui/next-24-hours-tile.tsx:599
+#: src/features/weather/ui/next-24-hours-tile.tsx:615
 msgid "{0} {visibilityUnitLabel} at <0/>"
 msgstr "{0} {visibilityUnitLabel} pukul <0/>"
 
-#. placeholder {0}: Math.round(peakGust.value - peakWind.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:332
-#~ msgid "{0} {windUnitLabel}"
-#~ msgstr "{0} {windUnitLabel}"
+#. placeholder {0}: Math.round(averageWind)
+#. placeholder {0}: Math.round(peakWind.value)
+#: src/features/weather/ui/next-24-hours-tile.tsx:1726
+#: src/features/weather/ui/next-24-hours-tile.tsx:1735
+msgid "{0} {windUnitLabel}"
+msgstr "{0} {windUnitLabel}"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
@@ -50,10 +52,28 @@ msgstr "{0} {visibilityUnitLabel} pukul <0/>"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:407
-#: src/features/weather/ui/next-24-hours-tile.tsx:423
+#: src/features/weather/ui/next-24-hours-tile.tsx:503
+#: src/features/weather/ui/next-24-hours-tile.tsx:519
 msgid "{0} {windUnitLabel} at <0/>"
 msgstr "{0} {windUnitLabel} pukul <0/>"
+
+#. placeholder {0}: formatHour(startTime)
+#. placeholder {1}: formatHour(endTime)
+#: src/features/weather/ui/next-24-hours-tile.tsx:794
+msgid "{0} and {1}"
+msgstr "{0} dan {1}"
+
+#. placeholder {0}: formatHour(startTime)
+#. placeholder {1}: formatHour(endTime)
+#: src/features/weather/ui/next-24-hours-tile.tsx:807
+msgid "{0} and {1} today"
+msgstr "{0} dan {1} hari ini"
+
+#. placeholder {0}: formatHour(startTime)
+#. placeholder {1}: formatHour(endTime)
+#: src/features/weather/ui/next-24-hours-tile.tsx:815
+msgid "{0} and {1} tomorrow"
+msgstr "{0} dan {1} besok"
 
 #. placeholder {0}: Math.round(peakUv.value)
 #. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakUv.index]?.time, })
@@ -62,7 +82,7 @@ msgstr "{0} {windUnitLabel} pukul <0/>"
 #~ msgstr "{0} pukul {1}"
 
 #. placeholder {0}: Math.round(peakUv.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:487
+#: src/features/weather/ui/next-24-hours-tile.tsx:583
 msgid "{0} at <0/>"
 msgstr "{0} pukul <0/>"
 
@@ -73,7 +93,7 @@ msgstr "{0} pukul <0/>"
 #~ msgstr "{0} antara {1}"
 
 #. placeholder {0}: formatPrecipitationValue({ precipitation: peakAmount.value, usesMetricUnits, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:335
+#: src/features/weather/ui/next-24-hours-tile.tsx:420
 msgid "{0} between <0/>"
 msgstr "{0} antara <0/>"
 
@@ -105,12 +125,12 @@ msgid "{0} mph"
 msgstr "{0} mph"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:672
+#: src/features/weather/ui/next-24-hours-tile.tsx:768
 msgid "{0} today"
 msgstr "{0} hari ini"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:676
+#: src/features/weather/ui/next-24-hours-tile.tsx:772
 msgid "{0} tomorrow"
 msgstr "{0} besok"
 
@@ -125,10 +145,15 @@ msgstr "{0} besok"
 
 #. placeholder {0}: Math.round(high.value)
 #. placeholder {0}: Math.round(low.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:198
-#: src/features/weather/ui/next-24-hours-tile.tsx:212
+#: src/features/weather/ui/next-24-hours-tile.tsx:283
+#: src/features/weather/ui/next-24-hours-tile.tsx:297
 msgid "{0}{temperatureUnitLabel} at <0/>"
 msgstr "{0}{temperatureUnitLabel} pukul <0/>"
+
+#. placeholder {0}: Math.round(peakChance.value)
+#: src/features/weather/ui/next-24-hours-tile.tsx:1720
+msgid "{0}%"
+msgstr "{0}%"
 
 #. placeholder {0}: Math.round(peakProbability.value)
 #. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakProbability.index]?.time, })
@@ -137,7 +162,7 @@ msgstr "{0}{temperatureUnitLabel} pukul <0/>"
 #~ msgstr "{0}% pukul {1}"
 
 #. placeholder {0}: Math.round(peakProbability.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:309
+#: src/features/weather/ui/next-24-hours-tile.tsx:394
 msgid "{0}% at <0/>"
 msgstr "{0}% pukul <0/>"
 
@@ -179,7 +204,7 @@ msgstr "<0>Akses lokasi ditolak.</0> Klik ikon lokasi di bilah alamat, lalu pili
 msgid "☕ Gift a coffee"
 msgstr "☕ Berikan secangkir kopi"
 
-#: src/pages/index.tsx:479
+#: src/pages/index.tsx:500
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ BARU: Coba gulir ke bawah"
 
@@ -267,7 +292,7 @@ msgstr "Monumen kuno seperti Stonehenge disejajarkan dengan matahari terbit saat
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "Observatorium kuno dengan cermat melacak titik balik tahun ini untuk memandu siklus tanam, kalender, dan festival musiman."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:694
+#: src/features/weather/ui/next-24-hours-tile.tsx:825
 msgid "and"
 msgstr "dan"
 
@@ -312,6 +337,10 @@ msgstr "Agustus"
 msgid "Autumn Equinox"
 msgstr "Ekuinoks musim gugur"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:1724
+msgid "Average wind"
+msgstr "Angin rata-rata"
+
 #: src/features/seasonal-events/events/black-hole.tsx:231
 msgid "Because gravity bends light paths, parts of the disk appear warped and wrapped above and below the black hole."
 msgstr "Karena gravitasi membelokkan jalur cahaya, bagian-bagian cakram tampak melengkung dan melilit di atas dan di bawah lubang hitam."
@@ -345,6 +374,10 @@ msgstr "Celsius (°C)"
 msgid "Centuries later, people still reach for pen and paper when a text won't do."
 msgstr "Berabad-abad kemudian, orang masih meraih pena dan kertas ketika pesan teks tidak cukup."
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:1561
+msgid "Chance"
+msgstr "Peluang"
+
 #: src/features/seasonal-events/events/lyrids.tsx:114
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
 msgstr "Catatan Tiongkok dari tahun 687 SM menggambarkan \"bintang-bintang jatuh seperti hujan\" — laporan tertua yang diketahui tentang Lyrid, dan salah satu pengamatan meteor tertua yang pernah didokumentasikan."
@@ -362,7 +395,7 @@ msgstr "Hari Natal menandai perayaan kelahiran Yesus, dan bagi banyak orang juga
 msgid "clear sky"
 msgstr "langit cerah"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:515
+#: src/features/weather/ui/next-24-hours-tile.tsx:611
 msgid "Clearest hour"
 msgstr "Jam paling cerah"
 
@@ -382,7 +415,7 @@ msgstr "Aksi bersih-bersih komunitas, penanaman pohon, dan pemulihan habitat ter
 msgid "Compact weather alerts"
 msgstr "Peringatan cuaca ringkas"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:530
+#: src/features/weather/ui/next-24-hours-tile.tsx:626
 msgid "Conditions"
 msgstr "Kondisi"
 
@@ -430,6 +463,10 @@ msgstr "gerimis beku pekat"
 #: src/features/weather/ui/tile.tsx:90
 msgid "depositing rime fog"
 msgstr "kabut membeku"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1567
+msgid "Depth"
+msgstr "Kedalaman"
 
 #: src/features/settings/ui/settings.tsx:114
 msgid "Developer"
@@ -586,7 +623,7 @@ msgstr "Februari"
 msgid "Feedback"
 msgstr "Masukan"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:224
+#: src/features/weather/ui/next-24-hours-tile.tsx:309
 msgid "Feels like now"
 msgstr "Terasa sekarang"
 
@@ -714,7 +751,7 @@ msgstr "Hanukkah adalah festival cahaya dalam tradisi Yahudi, yang dirayakan sel
 msgid "Hearts, roses, and red ribbons became familiar symbols of devotion, warmth, and connection."
 msgstr "Hati, mawar, dan pita merah menjadi simbol yang akrab untuk pengabdian, kehangatan, dan kedekatan."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:326
+#: src/features/weather/ui/next-24-hours-tile.tsx:411
 msgid "Heaviest hour"
 msgstr "Jam paling lebat"
 
@@ -734,7 +771,7 @@ msgstr "hujan salju lebat"
 msgid "heavy snowfall"
 msgstr "salju lebat"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:196
+#: src/features/weather/ui/next-24-hours-tile.tsx:281
 msgid "High"
 msgstr "Tertinggi"
 
@@ -942,6 +979,10 @@ msgstr "hujan beku ringan"
 msgid "Light shifts to a silvery tone, shadows sharpen, and temperatures may drop noticeably within minutes."
 msgstr "Cahaya berubah menjadi nuansa keperakan, bayangan menajam, dan suhu dapat turun terasa dalam hitungan menit."
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:939
+msgid "Local map"
+msgstr "Peta lokal"
+
 #: src/features/settings/ui/settings.tsx:527
 msgid "Locale"
 msgstr "Lokal"
@@ -958,7 +999,7 @@ msgstr "Nama lokasi tidak tersedia"
 msgid "Longitude"
 msgstr "Bujur"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:210
+#: src/features/weather/ui/next-24-hours-tile.tsx:295
 msgid "Low"
 msgstr "Terendah"
 
@@ -982,7 +1023,7 @@ msgstr "Visibilitas rendah dimulai dalam {timeUntilLowVisibility} jam"
 msgid "Low visibility starting in 1 hour"
 msgstr "Visibilitas rendah dimulai dalam 1 jam"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:499
+#: src/features/weather/ui/next-24-hours-tile.tsx:595
 msgid "Lowest visibility"
 msgstr "Jarak pandang terendah"
 
@@ -1007,6 +1048,14 @@ msgstr "Hujan meteor Lyrid"
 #: src/features/weather/ui/tile.tsx:89
 msgid "mainly clear"
 msgstr "sebagian besar cerah"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1698
+msgid "Map"
+msgstr "Peta"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1006
+msgid "Map data unavailable"
+msgstr "Data peta tidak tersedia"
 
 #: src/features/weather/ui/tile.tsx:128
 msgid "March"
@@ -1078,18 +1127,22 @@ msgstr "Hari Tahun Baru berfungsi sebagai reset kalender, ditandai oleh matahari
 msgid "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precisely that sunlight floods its inner chamber for just seventeen minutes around the winter solstice each year."
 msgstr "Newgrange, makam lorong berusia 5.000 tahun di Irlandia, dibangun dengan sangat presisi sehingga sinar matahari membanjiri ruang dalamnya hanya selama tujuh belas menit sekitar titik balik matahari musim dingin setiap tahunnya."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:191
-#: src/features/weather/ui/next-24-hours-tile.tsx:277
-#: src/features/weather/ui/next-24-hours-tile.tsx:397
-#: src/features/weather/ui/next-24-hours-tile.tsx:477
+#: src/features/weather/ui/next-24-hours-tile.tsx:276
+#: src/features/weather/ui/next-24-hours-tile.tsx:362
+#: src/features/weather/ui/next-24-hours-tile.tsx:493
+#: src/features/weather/ui/next-24-hours-tile.tsx:573
 msgid "Next 24 hours"
 msgstr "24 jam ke depan"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:348
+#: src/features/weather/ui/next-24-hours-tile.tsx:930
+msgid "Next 6 hours"
+msgstr "6 jam ke depan"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:433
 msgid "No measurable precipitation expected"
 msgstr "Tidak ada curah hujan yang dapat diukur"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:317
+#: src/features/weather/ui/next-24-hours-tile.tsx:402
 msgid "No precipitation expected"
 msgstr "Tidak ada curah hujan yang diperkirakan"
 
@@ -1196,19 +1249,24 @@ msgstr "Ikhtisar"
 msgid "partly cloudy"
 msgstr "sebagian berawan"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:300
+#: src/features/weather/ui/next-24-hours-tile.tsx:385
 msgid "Peak chance"
 msgstr "Peluang tertinggi"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:419
+#: src/features/weather/ui/next-24-hours-tile.tsx:515
 msgid "Peak gust"
 msgstr "Hembusan tertinggi"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:483
+#: src/features/weather/ui/next-24-hours-tile.tsx:1719
+msgid "Peak precipitation chance"
+msgstr "Peluang hujan tertinggi"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:579
 msgid "Peak UV"
 msgstr "UV tertinggi"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:403
+#: src/features/weather/ui/next-24-hours-tile.tsx:499
+#: src/features/weather/ui/next-24-hours-tile.tsx:1733
 msgid "Peak wind"
 msgstr "Angin tertinggi"
 
@@ -1228,16 +1286,17 @@ msgstr "Hujan meteor Perseid"
 msgid "Perseids Meteor Shower"
 msgstr "Hujan meteor Perseid"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:328
-#: src/features/weather/ui/next-24-hours-tile.tsx:354
+#: src/features/weather/ui/next-24-hours-tile.tsx:413
+#: src/features/weather/ui/next-24-hours-tile.tsx:439
+#: src/features/weather/ui/next-24-hours-tile.tsx:1619
 msgid "Precipitation"
 msgstr "Curah hujan"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:302
+#: src/features/weather/ui/next-24-hours-tile.tsx:387
 msgid "Precipitation chance"
 msgstr "Peluang hujan"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:274
+#: src/features/weather/ui/next-24-hours-tile.tsx:359
 msgid "Precipitation includes rain and snow."
 msgstr "Curah hujan mencakup hujan dan salju."
 
@@ -1265,8 +1324,8 @@ msgstr "Keagamaan & budaya"
 msgid "Report a bug"
 msgstr "Laporkan bug"
 
-#: src/pages/index.tsx:415
-#: src/pages/index.tsx:429
+#: src/pages/index.tsx:434
+#: src/pages/index.tsx:448
 msgid "Retry"
 msgstr "Coba lagi"
 
@@ -1463,7 +1522,7 @@ msgstr "Tampilkan peringatan cuaca"
 msgid "Show Winter Solstice event"
 msgstr "Tampilkan Solstis musim dingin"
 
-#: src/pages/index.tsx:85
+#: src/pages/index.tsx:86
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Menampilkan data cuaca yang tersimpan di cache. Coba lagi untuk memperbarui prakiraan terbaru."
 
@@ -1564,7 +1623,7 @@ msgstr "Simbol keberuntungan"
 
 #: src/features/settings/ui/initialisation.tsx:245
 #: src/features/settings/ui/settings.tsx:541
-#: src/features/weather/ui/next-24-hours-tile.tsx:229
+#: src/features/weather/ui/next-24-hours-tile.tsx:314
 msgid "Temperature"
 msgstr "Suhu"
 
@@ -1925,7 +1984,7 @@ msgstr "Gerhana Bulan Total"
 msgid "Total Lunar Eclipse"
 msgstr "Gerhana Bulan Total"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:283
+#: src/features/weather/ui/next-24-hours-tile.tsx:368
 msgid "Total precipitation"
 msgstr "Total curah hujan"
 
@@ -1965,7 +2024,7 @@ msgstr "Selasa"
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Aktifkan ini jika indeks UV yang dilaporkan Weather Please secara konsisten lebih rendah daripada sumber lokal."
 
-#: src/pages/index.tsx:409
+#: src/pages/index.tsx:428
 msgid "Unable to fetch weather data. Please check your internet connection and try again."
 msgstr "Tidak dapat mengambil data cuaca. Periksa koneksi internet Anda dan coba lagi."
 
@@ -2004,6 +2063,10 @@ msgstr "Hari Valentine merayakan kasih sayang dalam banyak bentuk, dari cinta ro
 msgid "violent rain showers"
 msgstr "hujan deras"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:1699
+msgid "Waiting for map data"
+msgstr "Menunggu data peta"
+
 #: src/features/seasonal-events/events/earth-day.tsx:156
 msgid "Ways to observe"
 msgstr "Cara mengamati"
@@ -2020,7 +2083,7 @@ msgstr "Cuaca"
 msgid "Weather data by Open-Meteo"
 msgstr "Data cuaca oleh Open-Meteo"
 
-#: src/pages/index.tsx:77
+#: src/pages/index.tsx:78
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "Data cuaca tidak dapat dimuat karena masalah layanan — menampilkan data yang tersimpan. Silakan coba lagi sebentar lagi."
 
@@ -2076,7 +2139,8 @@ msgstr "Mengapa berubah merah"
 msgid "Why the peak is brief"
 msgstr "Mengapa puncaknya singkat"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:434
+#: src/features/weather/ui/next-24-hours-tile.tsx:530
+#: src/features/weather/ui/next-24-hours-tile.tsx:1555
 msgid "Wind"
 msgstr "Angin"
 
