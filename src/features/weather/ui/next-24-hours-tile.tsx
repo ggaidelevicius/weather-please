@@ -51,6 +51,7 @@ type ChartTooltipState = {
 type DetailViewShellProps = {
 	accentClassName: string
 	children: ReactNode
+	footer?: ReactNode
 	icon: ReactNode
 	isActive: boolean
 	kicker: ReactNode
@@ -99,12 +100,15 @@ type PointSummary = {
 }
 
 type PrecipitationChartProps = {
+	activeSeriesId?: null | WeatherDetailSeriesId
 	amountPoints: number[]
+	onSeriesFocus?: (seriesId: null | WeatherDetailSeriesId) => void
 	probabilityPoints: number[]
 	times: number[]
 }
 
 type WeatherDetailSeriesId =
+	| 'precipitationAmount'
 	| 'precipitationProbability'
 	| 'temperature'
 	| 'uv'
@@ -234,17 +238,22 @@ export const Next24HoursDetailView = ({
 		return (
 			<DetailViewShell
 				accentClassName="text-blue-200"
+				footer={<Trans>Precipitation includes rain and snow.</Trans>}
 				icon={<IconCloudRain aria-hidden size={22} />}
 				isActive={isActive}
 				kicker={<Trans>Next 24 hours</Trans>}
 				metrics={
 					<>
 						<Metric
+							activeSeriesId={activeSeriesId}
 							icon={<IconCloudRain aria-hidden size={18} />}
 							label={<Trans>Total precipitation</Trans>}
+							onSeriesFocus={setActiveSeriesId}
+							seriesId="precipitationAmount"
 							value={<Trans>{formatDecimal(sum(precipitation))} mm</Trans>}
 						/>
 						<Metric
+							activeSeriesId={activeSeriesId}
 							icon={<IconCloudRain aria-hidden size={18} />}
 							label={
 								hasPrecipitationChance ? (
@@ -253,6 +262,8 @@ export const Next24HoursDetailView = ({
 									<Trans>Precipitation chance</Trans>
 								)
 							}
+							onSeriesFocus={setActiveSeriesId}
+							seriesId="precipitationProbability"
 							value={
 								hasPrecipitationChance ? (
 									<Trans>
@@ -265,6 +276,7 @@ export const Next24HoursDetailView = ({
 							}
 						/>
 						<Metric
+							activeSeriesId={activeSeriesId}
 							icon={<IconCloudRain aria-hidden size={18} />}
 							label={
 								hasMeasurablePrecipitation ? (
@@ -273,6 +285,8 @@ export const Next24HoursDetailView = ({
 									<Trans>Precipitation</Trans>
 								)
 							}
+							onSeriesFocus={setActiveSeriesId}
+							seriesId="precipitationAmount"
 							value={
 								hasMeasurablePrecipitation ? (
 									<Trans>
@@ -298,7 +312,9 @@ export const Next24HoursDetailView = ({
 					startLabel={startLabel}
 				>
 					<PrecipitationChart
+						activeSeriesId={activeSeriesId}
 						amountPoints={precipitation}
+						onSeriesFocus={setActiveSeriesId}
 						probabilityPoints={precipitationProbability}
 						times={times}
 					/>
@@ -473,6 +489,7 @@ export const Next24HoursDetailView = ({
 const DetailViewShell = ({
 	accentClassName,
 	children,
+	footer,
 	icon,
 	isActive,
 	kicker,
@@ -495,7 +512,10 @@ const DetailViewShell = ({
 			</div>
 			<div className="grid min-h-0 items-center gap-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
 				<div className="min-w-0">{children}</div>
-				<div className="grid gap-4">{metrics}</div>
+				<div className="grid">{metrics}</div>
+			</div>
+			<div className="flex min-h-16 items-start">
+				{footer ? <p className="text-sm text-dark-300">{footer}</p> : null}
 			</div>
 		</div>
 	</section>
@@ -526,7 +546,7 @@ const Metric = ({
 
 	return (
 		<div
-			className={`grid grid-cols-[1.5rem_minmax(0,1fr)] items-start gap-3 border-t border-white/8 pt-4 transition-opacity ${
+			className={`grid grid-cols-[1.5rem_minmax(0,1fr)] items-start gap-3 border-t border-white/8 py-4 transition-opacity ${
 				shouldDim ? 'opacity-40' : 'opacity-100'
 			}`}
 			onMouseEnter={handleMouseEnter}
@@ -785,7 +805,9 @@ const ChartTooltip = ({
 }
 
 const PrecipitationChart = ({
+	activeSeriesId = null,
 	amountPoints,
+	onSeriesFocus,
 	probabilityPoints,
 	times,
 }: Readonly<PrecipitationChartProps>) => {
@@ -793,6 +815,43 @@ const PrecipitationChart = ({
 	const probabilityScale = { maxValue: 100, minValue: 0 }
 	const barWidth = CHART_WIDTH / Math.max(1, amountPoints.length) - 2
 	const [tooltip, setTooltip] = useState<ChartTooltipState | null>(null)
+	const isAmountHighlighted = activeSeriesId === 'precipitationAmount'
+	const shouldDimAmount = Boolean(activeSeriesId) && !isAmountHighlighted
+
+	const handleAmountMouseEnter = () => {
+		onSeriesFocus?.('precipitationAmount')
+	}
+
+	const handleAmountMouseLeave = () => {
+		onSeriesFocus?.(null)
+		setTooltip(null)
+	}
+
+	const handleAmountPointerMove = (event: PointerEvent<SVGGElement>) => {
+		const svg = event.currentTarget.ownerSVGElement
+		if (!svg) {
+			return
+		}
+
+		const rect = svg.getBoundingClientRect()
+		const x = ((event.clientX - rect.left) / rect.width) * CHART_WIDTH
+		const index = getNearestPointIndex({ pointCount: amountPoints.length, x })
+		const value = amountPoints[index]
+		const time = times[index]
+
+		if (typeof value !== 'number' || typeof time !== 'number') {
+			setTooltip(null)
+			return
+		}
+
+		setTooltip({
+			seriesLabel: 'Total precipitation',
+			time,
+			value: `${formatDecimal(value)} mm`,
+			x: getChartX(index, amountPoints.length),
+			y: getChartY(value, amountScale),
+		})
+	}
 
 	return (
 		<div className="relative h-48">
@@ -803,24 +862,33 @@ const PrecipitationChart = ({
 				viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
 			>
 				<ChartGrid />
-				{amountPoints.map((point, index) => {
-					const y = getChartY(point, amountScale)
-					const x = getChartX(index, amountPoints.length) - barWidth / 2
-					return (
-						<rect
-							className="fill-blue-300/45"
-							height={CHART_HEIGHT - CHART_PADDING - y}
-							key={`${index}-${point}`}
-							rx="2"
-							width={Math.max(2, barWidth)}
-							x={x}
-							y={y}
-						/>
-					)
-				})}
+				<g
+					onMouseEnter={handleAmountMouseEnter}
+					onMouseLeave={handleAmountMouseLeave}
+					onPointerMove={handleAmountPointerMove}
+				>
+					{amountPoints.map((point, index) => {
+						const y = getChartY(point, amountScale)
+						const x = getChartX(index, amountPoints.length) - barWidth / 2
+						return (
+							<rect
+								className={`fill-blue-300/45 transition-opacity ${
+									shouldDimAmount ? 'opacity-30' : 'opacity-100'
+								}`}
+								height={CHART_HEIGHT - CHART_PADDING - y}
+								key={`${index}-${point}`}
+								rx="2"
+								width={Math.max(2, barWidth)}
+								x={x}
+								y={y}
+							/>
+						)
+					})}
+				</g>
 				<ChartLine
-					activeSeriesId={null}
+					activeSeriesId={activeSeriesId}
 					className="stroke-blue-100"
+					onSeriesFocus={onSeriesFocus}
 					onTooltipChange={setTooltip}
 					points={probabilityPoints}
 					scale={probabilityScale}
