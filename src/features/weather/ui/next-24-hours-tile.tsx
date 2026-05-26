@@ -28,6 +28,7 @@ const WEATHER_MAP_FRAME_DURATION_MS = 4200
 const WEATHER_MAP_PARTICLE_DENSITY = 0.00011
 const WEATHER_MAP_PARTICLE_FRAME_MS = 1000 / 60
 const WEATHER_MAP_PARTICLE_MAX_FRAME_MULTIPLIER = 2
+const WEATHER_MAP_PARTICLE_TRAIL_ALPHA = 0.9
 const WEATHER_MAP_PRECIPITATION_FRAME_INTERVAL_MS = 66
 const WEATHER_MAP_PRECIPITATION_MESH_CELL_SIZE = 8
 const WEATHER_MAP_PRECIPITATION_MIN_VISIBLE = 0.08
@@ -1228,8 +1229,12 @@ const WeatherMapWindParticleCanvas = ({
 				1,
 				max(projectedPoints.map(({ speed }) => speed)),
 			)
+			const trailAlpha = Math.pow(
+				WEATHER_MAP_PARTICLE_TRAIL_ALPHA,
+				frameMultiplier,
+			)
 			context.globalCompositeOperation = 'destination-in'
-			context.fillStyle = 'rgba(0, 0, 0, 0.9)'
+			context.fillStyle = `rgba(0, 0, 0, ${trailAlpha})`
 			context.fillRect(0, 0, mapWidth, mapHeight)
 			context.globalCompositeOperation = 'source-over'
 			context.lineCap = 'round'
