@@ -29,6 +29,7 @@ const FEELS_LIKE_MIN_DELTA_C = 1.5
 const FEELS_LIKE_SOLAR_RADIATION_THRESHOLD = 250
 const FEELS_LIKE_WARM_TEMPERATURE_C = 20
 const FEELS_LIKE_WIND_THRESHOLD_KMH = 12
+const PRECIPITATION_CHART_DEFAULT_MAX_MM = 5
 const UV_CHART_DEFAULT_MAX = 15
 const VISIBILITY_CHART_DEFAULT_MAX_METERS = 10_000
 const WIND_CHART_DEFAULT_MAX_KMH = 40
@@ -376,13 +377,12 @@ export const Next24HoursDetailView = ({
 		const peakAmount = getPeakPoint(precipitation)
 		const hasPrecipitationChance = peakProbability.value > 0
 		const hasMeasurablePrecipitation = peakAmount.value > 0
+		const precipitationDefaultMax = convertPrecipitation({
+			precipitation: PRECIPITATION_CHART_DEFAULT_MAX_MM,
+			usesMetricUnits,
+		})
 		const amountScale = getChartScale(precipitation, {
-			maxValue: hasMeasurablePrecipitation
-				? undefined
-				: convertPrecipitation({
-						precipitation: 1,
-						usesMetricUnits,
-					}),
+			maxValue: Math.max(precipitationDefaultMax, peakAmount.value),
 			minValue: 0,
 		})
 
