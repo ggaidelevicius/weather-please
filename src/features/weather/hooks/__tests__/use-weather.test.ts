@@ -126,6 +126,24 @@ describe('useWeather - Core Functionality', () => {
 				windGust: 20,
 			},
 		]
+		const cachedWeatherMapData = {
+			center: { lat: 40.7128, lon: -74.006 },
+			frames: [
+				{
+					points: [
+						{
+							lat: 40.7128,
+							lon: -74.006,
+							precipitation: 0,
+							precipitationProbability: 10,
+							windDirection: 180,
+							windSpeed: 15,
+						},
+					],
+					time: Math.floor(now.getTime() / 1000),
+				},
+			],
+		}
 
 		const lastUpdated = now.toISOString()
 
@@ -135,6 +153,10 @@ describe('useWeather - Core Functionality', () => {
 			JSON.stringify(cachedNext24HoursData),
 		)
 		localStorageMock.setItem('alerts', JSON.stringify(cachedAlerts))
+		localStorageMock.setItem(
+			'weatherMapData',
+			JSON.stringify(cachedWeatherMapData),
+		)
 		localStorageMock.setItem('lastUpdated', lastUpdated)
 		localStorageMock.setItem('cachedLat', '40.7128')
 		localStorageMock.setItem('cachedLon', '-74.0060')
@@ -148,8 +170,106 @@ describe('useWeather - Core Functionality', () => {
 		expect(result.current.weatherData).toEqual(cachedData)
 		expect(result.current.next24HoursData).toEqual(cachedNext24HoursData)
 		expect(result.current.alertData).toEqual(cachedAlerts)
+		expect(result.current.weatherMapData).toEqual(cachedWeatherMapData)
 		expect(result.current.isLoading).toBe(false)
 		expect(fetchMock).not.toHaveBeenCalled()
+	})
+
+	it('fetches missing weather map data when weather cache is fresh', async () => {
+		const now = new Date()
+		const timestamp = Math.floor(now.getTime() / 1000)
+		const cachedData = [
+			{
+				day: now.getTime(),
+				description: 1,
+				max: 30,
+				min: 20,
+				rain: 10,
+				uv: 9,
+				wind: 15,
+			},
+		]
+		const cachedAlerts = {
+			hoursOfExtremeUv: Array(13).fill(true),
+			hoursOfLowVisibility: Array(25).fill(false),
+			hoursOfStrongWind: Array(25).fill(false),
+			hoursOfStrongWindGusts: Array(25).fill(false),
+			totalPrecipitation: {
+				duration: Array(25).fill(true),
+				precipitation: { flag: false, value: 5, zeroCount: 0 },
+			},
+		}
+		const cachedNext24HoursData = [
+			{
+				apparentTemperature: 21,
+				precipitation: 0,
+				precipitationProbability: 10,
+				temperature: 22,
+				time: timestamp,
+				uv: 4,
+				visibility: 10_000,
+				weatherCode: 1,
+				wind: 15,
+				windGust: 20,
+			},
+		]
+
+		fetchMock.mockResolvedValue({
+			json: async () => ({
+				hourly: {
+					precipitation: [0.2],
+					precipitation_probability: [40],
+					time: [timestamp],
+					winddirection_10m: [90],
+					windspeed_10m: [12],
+				},
+				latitude: 40.7128,
+				longitude: -74.006,
+			}),
+			ok: true,
+		})
+
+		localStorageMock.setItem('data', JSON.stringify(cachedData))
+		localStorageMock.setItem(
+			'next24HoursData',
+			JSON.stringify(cachedNext24HoursData),
+		)
+		localStorageMock.setItem('alerts', JSON.stringify(cachedAlerts))
+		localStorageMock.setItem('lastUpdated', now.toISOString())
+		localStorageMock.setItem('cachedLat', '40.7128')
+		localStorageMock.setItem('cachedLon', '-74.0060')
+		localStorageMock.setItem('cachedTimeZone', userTimeZone)
+		localStorageMock.setItem('cachedUseAirQualityUv', JSON.stringify(false))
+
+		const { result } = renderHook(() =>
+			useWeather('40.7128', '-74.0060', 0, false),
+		)
+
+		expect(result.current.weatherData).toEqual(cachedData)
+		expect(result.current.weatherMapData).toBeNull()
+
+		await waitFor(() => {
+			expect(result.current.weatherMapData).toEqual({
+				center: { lat: 40.7128, lon: -74.006 },
+				frames: [
+					{
+						points: [
+							{
+								lat: 40.7128,
+								lon: -74.006,
+								precipitation: 0.2,
+								precipitationProbability: 40,
+								windDirection: 90,
+								windSpeed: 12,
+							},
+						],
+						time: timestamp,
+					},
+				],
+			})
+		})
+		expect(fetchMock).toHaveBeenCalledTimes(1)
+		expect(localStorageMock.getItem('weatherMapData')).not.toBeNull()
 	})
 
 	it('refreshes cached data when next 24 hours data is missing', async () => {

@@ -201,3 +201,11 @@ export const writeCachedWeather = ({
 	)
 	localStorage.setItem('lastUpdated', lastUpdatedDate.toISOString())
 }
+
+export const writeCachedWeatherMapData = ({
+	weatherMapData,
+}: {
+	weatherMapData: WeatherMapData
+}) => {
+	localStorage.setItem('weatherMapData', JSON.stringify(weatherMapData))
+}

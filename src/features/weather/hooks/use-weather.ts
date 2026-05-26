@@ -13,7 +13,11 @@ import {
 	mapWeatherResponseToNext24HoursData,
 } from '../api/weather-api'
 import { createEmptyAlerts, deriveAlertsFromWeather } from '../model/alerts'
-import { getCachedWeather, writeCachedWeather } from '../model/cache'
+import {
+	getCachedWeather,
+	writeCachedWeather,
+	writeCachedWeatherMapData,
+} from '../model/cache'
 import { isAbortError } from '../model/error-names'
 import {
 	type Alerts,
@@ -47,6 +51,10 @@ type WeatherAction =
 	| {
 			status?: AsyncStatus
 			type: 'request-refresh'
+	  }
+	| {
+			type: 'fetch-map-success'
+			weatherMapData: WeatherMapData
 	  }
 	| {
 			type: 'reset-no-location'
@@ -92,6 +100,11 @@ const weatherReducer = (
 				...state,
 				error: action.error,
 				status: AsyncStatus.Error,
+			}
+		case 'fetch-map-success':
+			return {
+				...state,
+				weatherMapData: action.weatherMapData,
 			}
 		case 'fetch-success':
 			return {
@@ -161,6 +174,7 @@ export const useWeather = (
 	const lastHourRef = useRef(new Date().getHours())
 	const latestRequestRef = useRef(0)
 	const activeRequestControllerRef = useRef<AbortController | null>(null)
+	const missingMapRequestKeyRef = useRef<null | string>(null)
 
 	useEffect(() => {
 		if (!lat || !lon || state.usingCachedData) {
@@ -278,6 +292,56 @@ export const useWeather = (
 
 		return () => clearInterval(interval)
 	}, [])
+
+	useEffect(() => {
+		if (
+			!lat ||
+			!lon ||
+			!state.usingCachedData ||
+			state.weatherData.length === 0 ||
+			state.weatherMapData
+		) {
+			return
+		}
+
+		const requestKey = `${lat}:${lon}:${userTimeZone}:${shouldUseAirQualityUv}`
+		if (missingMapRequestKeyRef.current === requestKey) {
+			return
+		}
+
+		missingMapRequestKeyRef.current = requestKey
+		const controller = new AbortController()
+
+		void fetchWeatherMapData({
+			lat,
+			lon,
+			signal: controller.signal,
+			timeZone: userTimeZone,
+		})
+			.then((weatherMapData) => {
+				writeCachedWeatherMapData({ weatherMapData })
+				dispatch({ type: 'fetch-map-success', weatherMapData })
+			})
+			.catch((weatherMapError) => {
+				if (isAbortError(weatherMapError)) {
+					return
+				}
+				console.error('Weather map fetch error:', weatherMapError)
+				missingMapRequestKeyRef.current = null
+			})
+
+		return () => {
+			controller.abort()
+		}
+	}, [
+		lat,
+		lon,
+		shouldUseAirQualityUv,
+		state.usingCachedData,
+		state.weatherData.length,
+		state.weatherMapData,
+		userTimeZone,
+	])
 
 	useEffect(() => {
 		if (!lat || !lon) {
