@@ -59,6 +59,12 @@ type DetailViewShellProps = {
 	title: ReactNode
 }
 
+type HourIntervalLabelProps = {
+	index: number
+	referenceTime?: number
+	times: number[]
+}
+
 type LineChartProps = {
 	accentClassName: string
 	activeSeriesId?: null | WeatherDetailSeriesId
@@ -102,9 +108,16 @@ type PointSummary = {
 type PrecipitationChartProps = {
 	activeSeriesId?: null | WeatherDetailSeriesId
 	amountPoints: number[]
+	amountScale: Required<ChartScale>
+	amountValueFormatter: (value: number) => string
 	onSeriesFocus?: (seriesId: null | WeatherDetailSeriesId) => void
 	probabilityPoints: number[]
 	times: number[]
+}
+
+type RelativeHourLabelProps = {
+	referenceTime?: number
+	time?: number
 }
 
 type WeatherDetailSeriesId =
@@ -141,7 +154,9 @@ export const Next24HoursDetailView = ({
 			usesMetricTemperature,
 		}),
 	)
-	const precipitation = data.map(({ precipitation }) => precipitation)
+	const precipitation = data.map(({ precipitation }) =>
+		convertPrecipitation({ precipitation, usesMetricUnits }),
+	)
 	const precipitationProbability = data.map(
 		({ precipitationProbability }) => precipitationProbability,
 	)
@@ -155,10 +170,12 @@ export const Next24HoursDetailView = ({
 	)
 	const times = data.map(({ time }) => time)
 	const temperatureUnitLabel = usesMetricTemperature ? '°C' : '°F'
+	const precipitationUnitLabel = usesMetricUnits ? 'mm' : 'in'
 	const windUnitLabel = usesMetricUnits ? 'km/h' : 'mph'
 	const visibilityUnitLabel = usesMetricUnits ? 'km' : 'mi'
 	const startLabel = formatHour(data[0]?.time)
 	const endLabel = formatHour(data[data.length - 1]?.time)
+	const referenceTime = times[0]
 
 	if (viewId === 'temperature') {
 		const scale = getChartScale(temperatures)
@@ -180,7 +197,11 @@ export const Next24HoursDetailView = ({
 							value={
 								<Trans>
 									{Math.round(high.value)}
-									{temperatureUnitLabel} at {formatHour(data[high.index]?.time)}
+									{temperatureUnitLabel} at{' '}
+									<RelativeHourLabel
+										referenceTime={referenceTime}
+										time={data[high.index]?.time}
+									/>
 								</Trans>
 							}
 						/>
@@ -190,7 +211,11 @@ export const Next24HoursDetailView = ({
 							value={
 								<Trans>
 									{Math.round(low.value)}
-									{temperatureUnitLabel} at {formatHour(data[low.index]?.time)}
+									{temperatureUnitLabel} at{' '}
+									<RelativeHourLabel
+										referenceTime={referenceTime}
+										time={data[low.index]?.time}
+									/>
 								</Trans>
 							}
 						/>
@@ -229,11 +254,19 @@ export const Next24HoursDetailView = ({
 
 	if (viewId === 'precipitation') {
 		const probabilityScale = { maxValue: 100, minValue: 0 }
-		const amountScale = getChartScale(precipitation, { minValue: 0 })
 		const peakProbability = getPeakPoint(precipitationProbability)
 		const peakAmount = getPeakPoint(precipitation)
 		const hasPrecipitationChance = peakProbability.value > 0
 		const hasMeasurablePrecipitation = peakAmount.value > 0
+		const amountScale = getChartScale(precipitation, {
+			maxValue: hasMeasurablePrecipitation
+				? undefined
+				: convertPrecipitation({
+						precipitation: 1,
+						usesMetricUnits,
+					}),
+			minValue: 0,
+		})
 
 		return (
 			<DetailViewShell
@@ -250,7 +283,14 @@ export const Next24HoursDetailView = ({
 							label={<Trans>Total precipitation</Trans>}
 							onSeriesFocus={setActiveSeriesId}
 							seriesId="precipitationAmount"
-							value={<Trans>{formatDecimal(sum(precipitation))} mm</Trans>}
+							value={
+								<Trans>
+									{formatPrecipitationValue({
+										precipitation: sum(precipitation),
+										usesMetricUnits,
+									})}
+								</Trans>
+							}
 						/>
 						<Metric
 							activeSeriesId={activeSeriesId}
@@ -268,7 +308,10 @@ export const Next24HoursDetailView = ({
 								hasPrecipitationChance ? (
 									<Trans>
 										{Math.round(peakProbability.value)}% at{' '}
-										{formatHour(data[peakProbability.index]?.time)}
+										<RelativeHourLabel
+											referenceTime={referenceTime}
+											time={data[peakProbability.index]?.time}
+										/>
 									</Trans>
 								) : (
 									<Trans>No precipitation expected</Trans>
@@ -290,8 +333,16 @@ export const Next24HoursDetailView = ({
 							value={
 								hasMeasurablePrecipitation ? (
 									<Trans>
-										{formatDecimal(peakAmount.value)} mm between{' '}
-										{formatHourInterval(times, peakAmount.index)}
+										{formatPrecipitationValue({
+											precipitation: peakAmount.value,
+											usesMetricUnits,
+										})}{' '}
+										between{' '}
+										<HourIntervalLabel
+											index={peakAmount.index}
+											referenceTime={referenceTime}
+											times={times}
+										/>
 									</Trans>
 								) : (
 									<Trans>No measurable precipitation expected</Trans>
@@ -304,7 +355,10 @@ export const Next24HoursDetailView = ({
 			>
 				<ChartFrame
 					endLabel={endLabel}
-					leftLabels={getScaleLabels({ scale: amountScale, unitLabel: 'mm' })}
+					leftLabels={getScaleLabels({
+						scale: amountScale,
+						unitLabel: precipitationUnitLabel,
+					})}
 					rightLabels={getScaleLabels({
 						scale: probabilityScale,
 						unitLabel: '%',
@@ -314,6 +368,13 @@ export const Next24HoursDetailView = ({
 					<PrecipitationChart
 						activeSeriesId={activeSeriesId}
 						amountPoints={precipitation}
+						amountScale={amountScale}
+						amountValueFormatter={(value) =>
+							formatPrecipitationValue({
+								precipitation: value,
+								usesMetricUnits,
+							})
+						}
 						onSeriesFocus={setActiveSeriesId}
 						probabilityPoints={precipitationProbability}
 						times={times}
@@ -345,7 +406,10 @@ export const Next24HoursDetailView = ({
 							value={
 								<Trans>
 									{Math.round(peakWind.value)} {windUnitLabel} at{' '}
-									{formatHour(data[peakWind.index]?.time)}
+									<RelativeHourLabel
+										referenceTime={referenceTime}
+										time={data[peakWind.index]?.time}
+									/>
 								</Trans>
 							}
 						/>
@@ -358,7 +422,10 @@ export const Next24HoursDetailView = ({
 							value={
 								<Trans>
 									{Math.round(peakGust.value)} {windUnitLabel} at{' '}
-									{formatHour(data[peakGust.index]?.time)}
+									<RelativeHourLabel
+										referenceTime={referenceTime}
+										time={data[peakGust.index]?.time}
+									/>
 								</Trans>
 							}
 						/>
@@ -419,7 +486,10 @@ export const Next24HoursDetailView = ({
 						value={
 							<Trans>
 								{Math.round(peakUv.value)} at{' '}
-								{formatHour(data[peakUv.index]?.time)}
+								<RelativeHourLabel
+									referenceTime={referenceTime}
+									time={data[peakUv.index]?.time}
+								/>
 							</Trans>
 						}
 					/>
@@ -432,7 +502,10 @@ export const Next24HoursDetailView = ({
 						value={
 							<Trans>
 								{formatDecimal(lowestVisibility.value)} {visibilityUnitLabel} at{' '}
-								{formatHour(data[lowestVisibility.index]?.time)}
+								<RelativeHourLabel
+									referenceTime={referenceTime}
+									time={data[lowestVisibility.index]?.time}
+								/>
 							</Trans>
 						}
 					/>
@@ -445,7 +518,10 @@ export const Next24HoursDetailView = ({
 						value={
 							<Trans>
 								{formatDecimal(bestVisibility.value)} {visibilityUnitLabel} at{' '}
-								{formatHour(data[bestVisibility.index]?.time)}
+								<RelativeHourLabel
+									referenceTime={referenceTime}
+									time={data[bestVisibility.index]?.time}
+								/>
 							</Trans>
 						}
 					/>
@@ -572,6 +648,52 @@ const Metric = ({
 				</span>
 			</span>
 		</div>
+	)
+}
+
+const RelativeHourLabel = ({
+	referenceTime,
+	time,
+}: Readonly<RelativeHourLabelProps>) => {
+	if (typeof time !== 'number') {
+		return null
+	}
+
+	if (typeof referenceTime !== 'number') {
+		return formatHour(time)
+	}
+
+	const date = new Date(time * 1000)
+	const referenceDate = new Date(referenceTime * 1000)
+	const tomorrowDate = new Date(referenceDate)
+	tomorrowDate.setDate(referenceDate.getDate() + 1)
+
+	if (isSameLocalDate(date, referenceDate)) {
+		return <Trans>{formatHour(time)} today</Trans>
+	}
+
+	if (isSameLocalDate(date, tomorrowDate)) {
+		return <Trans>{formatHour(time)} tomorrow</Trans>
+	}
+
+	return formatWeekdayHour(time)
+}
+
+const HourIntervalLabel = ({
+	index,
+	referenceTime,
+	times,
+}: Readonly<HourIntervalLabelProps>) => {
+	const hasNextTime = typeof times[index + 1] === 'number'
+	const startTime = hasNextTime ? times[index] : times[index - 1]
+	const endTime = hasNextTime ? times[index + 1] : times[index]
+
+	return (
+		<>
+			<RelativeHourLabel referenceTime={referenceTime} time={startTime} />{' '}
+			<Trans>and</Trans>{' '}
+			<RelativeHourLabel referenceTime={referenceTime} time={endTime} />
+		</>
 	)
 }
 
@@ -807,11 +929,12 @@ const ChartTooltip = ({
 const PrecipitationChart = ({
 	activeSeriesId = null,
 	amountPoints,
+	amountScale,
+	amountValueFormatter,
 	onSeriesFocus,
 	probabilityPoints,
 	times,
 }: Readonly<PrecipitationChartProps>) => {
-	const amountScale = getChartScale(amountPoints, { minValue: 0 })
 	const probabilityScale = { maxValue: 100, minValue: 0 }
 	const barWidth = CHART_WIDTH / Math.max(1, amountPoints.length) - 2
 	const [tooltip, setTooltip] = useState<ChartTooltipState | null>(null)
@@ -847,7 +970,7 @@ const PrecipitationChart = ({
 		setTooltip({
 			seriesLabel: 'Total precipitation',
 			time,
-			value: `${formatDecimal(value)} mm`,
+			value: amountValueFormatter(value),
 			x: getChartX(index, amountPoints.length),
 			y: getChartY(value, amountScale),
 		})
@@ -1079,6 +1202,14 @@ const convertWind = ({
 	wind: number
 }) => (usesMetricUnits ? wind : wind / 1.609344)
 
+const convertPrecipitation = ({
+	precipitation,
+	usesMetricUnits,
+}: {
+	precipitation: number
+	usesMetricUnits: boolean
+}) => (usesMetricUnits ? precipitation : precipitation / 25.4)
+
 const convertVisibility = ({
 	usesMetricUnits,
 	visibility,
@@ -1087,11 +1218,44 @@ const convertVisibility = ({
 	visibility: number
 }) => (usesMetricUnits ? visibility / 1000 : visibility / 1609.344)
 
-const formatAxisValue = (value: number) =>
-	Math.abs(value) >= 10 ? Math.round(value).toString() : value.toFixed(1)
+const formatAxisValue = (value: number) => {
+	const absoluteValue = Math.abs(value)
+
+	if (absoluteValue >= 10) {
+		return Math.round(value).toString()
+	}
+
+	if (absoluteValue > 0 && absoluteValue < 0.1) {
+		return value.toFixed(2)
+	}
+
+	return value.toFixed(1)
+}
 
 const formatDecimal = (value: number) =>
 	value >= 10 ? Math.round(value).toString() : value.toFixed(1)
+
+const formatPrecipitationValue = ({
+	precipitation,
+	usesMetricUnits,
+}: {
+	precipitation: number
+	usesMetricUnits: boolean
+}) => {
+	if (usesMetricUnits) {
+		return `${formatDecimal(precipitation)} mm`
+	}
+
+	if (precipitation === 0) {
+		return '0.0 in'
+	}
+
+	if (precipitation < 0.01) {
+		return '<0.01 in'
+	}
+
+	return `${precipitation >= 1 ? precipitation.toFixed(1) : precipitation.toFixed(2)} in`
+}
 
 const formatHour = (time?: number) => {
 	if (typeof time !== 'number') {
@@ -1103,19 +1267,18 @@ const formatHour = (time?: number) => {
 	)
 }
 
-const formatHourInterval = (times: number[], index: number) => {
-	const hasNextTime = typeof times[index + 1] === 'number'
-	const startTime = hasNextTime ? times[index] : times[index - 1]
-	const endTime = hasNextTime ? times[index + 1] : times[index]
-
-	return `${formatHour(startTime)} and ${formatHour(endTime)}`
-}
-
-const formatTooltipTime = (time: number) =>
+const formatWeekdayHour = (time: number) =>
 	new Intl.DateTimeFormat('en', {
 		hour: 'numeric',
 		weekday: 'short',
 	}).format(new Date(time * 1000))
+
+const formatTooltipTime = formatWeekdayHour
+
+const isSameLocalDate = (date: Date, comparisonDate: Date) =>
+	date.getFullYear() === comparisonDate.getFullYear() &&
+	date.getMonth() === comparisonDate.getMonth() &&
+	date.getDate() === comparisonDate.getDate()
 
 const max = (points: number[]) =>
 	points.reduce((currentMax, point) => Math.max(currentMax, point), -Infinity)

@@ -13,14 +13,26 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: formatPrecipitationValue({ precipitation: sum(precipitation), usesMetricUnits, })
+#: src/features/weather/ui/next-24-hours-tile.tsx:287
+msgid "{0}"
+msgstr "{0}"
+
 #. placeholder {0}: formatDecimal(bestVisibility.value)
 #. placeholder {0}: formatDecimal(lowestVisibility.value)
-#. placeholder {1}: formatHour(data[bestVisibility.index]?.time)
-#. placeholder {1}: formatHour(data[lowestVisibility.index]?.time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:417
-#: src/features/weather/ui/next-24-hours-tile.tsx:430
-msgid "{0} {visibilityUnitLabel} at {1}"
-msgstr "{0} {visibilityUnitLabel}, {1} पर"
+#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[bestVisibility.index]?.time, })
+#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[lowestVisibility.index]?.time, })
+#: src/features/weather/ui/next-24-hours-tile.tsx:492
+#: src/features/weather/ui/next-24-hours-tile.tsx:508
+#~ msgid "{0} {visibilityUnitLabel} at {1}"
+#~ msgstr "{0} {visibilityUnitLabel}, {1} पर"
+
+#. placeholder {0}: formatDecimal(bestVisibility.value)
+#. placeholder {0}: formatDecimal(lowestVisibility.value)
+#: src/features/weather/ui/next-24-hours-tile.tsx:503
+#: src/features/weather/ui/next-24-hours-tile.tsx:519
+msgid "{0} {visibilityUnitLabel} at <0/>"
+msgstr "{0} {visibilityUnitLabel}, <0/> पर"
 
 #. placeholder {0}: Math.round(peakGust.value - peakWind.value)
 #: src/features/weather/ui/next-24-hours-tile.tsx:332
@@ -29,18 +41,41 @@ msgstr "{0} {visibilityUnitLabel}, {1} पर"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
-#. placeholder {1}: formatHour(data[peakGust.index]?.time)
-#. placeholder {1}: formatHour(data[peakWind.index]?.time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:330
-#: src/features/weather/ui/next-24-hours-tile.tsx:343
-msgid "{0} {windUnitLabel} at {1}"
-msgstr "{0} {windUnitLabel}, {1} पर"
+#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakGust.index]?.time, })
+#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakWind.index]?.time, })
+#: src/features/weather/ui/next-24-hours-tile.tsx:396
+#: src/features/weather/ui/next-24-hours-tile.tsx:412
+#~ msgid "{0} {windUnitLabel} at {1}"
+#~ msgstr "{0} {windUnitLabel}, {1} पर"
+
+#. placeholder {0}: Math.round(peakGust.value)
+#. placeholder {0}: Math.round(peakWind.value)
+#: src/features/weather/ui/next-24-hours-tile.tsx:407
+#: src/features/weather/ui/next-24-hours-tile.tsx:423
+msgid "{0} {windUnitLabel} at <0/>"
+msgstr "{0} {windUnitLabel}, <0/> पर"
 
 #. placeholder {0}: Math.round(peakUv.value)
-#. placeholder {1}: formatHour(data[peakUv.index]?.time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:404
-msgid "{0} at {1}"
-msgstr "{0}, {1} पर"
+#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakUv.index]?.time, })
+#: src/features/weather/ui/next-24-hours-tile.tsx:476
+#~ msgid "{0} at {1}"
+#~ msgstr "{0}, {1} पर"
+
+#. placeholder {0}: Math.round(peakUv.value)
+#: src/features/weather/ui/next-24-hours-tile.tsx:487
+msgid "{0} at <0/>"
+msgstr "{0}, <0/> पर"
+
+#. placeholder {0}: formatPrecipitationValue({ precipitation: peakAmount.value, usesMetricUnits, })
+#. placeholder {1}: formatHourInterval({ index: peakAmount.index, referenceTime, times, })
+#: src/features/weather/ui/next-24-hours-tile.tsx:324
+#~ msgid "{0} between {1}"
+#~ msgstr "{0}, {1} के बीच"
+
+#. placeholder {0}: formatPrecipitationValue({ precipitation: peakAmount.value, usesMetricUnits, })
+#: src/features/weather/ui/next-24-hours-tile.tsx:335
+msgid "{0} between <0/>"
+msgstr "{0}, <0/> के बीच"
 
 #. placeholder {0}: Math.round(wind)
 #: src/features/weather/ui/tile.tsx:511
@@ -49,8 +84,8 @@ msgstr "{0} किमी/घंटा"
 
 #. placeholder {0}: formatDecimal(sum(precipitation))
 #: src/features/weather/ui/next-24-hours-tile.tsx:245
-msgid "{0} mm"
-msgstr "{0} मिमी"
+#~ msgid "{0} mm"
+#~ msgstr "{0} मिमी"
 
 #. placeholder {0}: formatDecimal(peakAmount.value)
 #. placeholder {1}: formatHour(data[peakAmount.index]?.time)
@@ -61,28 +96,50 @@ msgstr "{0} मिमी"
 #. placeholder {0}: formatDecimal(peakAmount.value)
 #. placeholder {1}: formatHourInterval(times, peakAmount.index)
 #: src/features/weather/ui/next-24-hours-tile.tsx:278
-msgid "{0} mm between {1}"
-msgstr "{0} मिमी, {1} के बीच"
+#~ msgid "{0} mm between {1}"
+#~ msgstr "{0} मिमी, {1} के बीच"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
 #: src/features/weather/ui/tile.tsx:513
 msgid "{0} mph"
 msgstr "{0} मील प्रति घंटा"
 
+#. placeholder {0}: formatHour(time)
+#: src/features/weather/ui/next-24-hours-tile.tsx:672
+msgid "{0} today"
+msgstr "आज {0}"
+
+#. placeholder {0}: formatHour(time)
+#: src/features/weather/ui/next-24-hours-tile.tsx:676
+msgid "{0} tomorrow"
+msgstr "कल {0}"
+
 #. placeholder {0}: Math.round(high.value)
 #. placeholder {0}: Math.round(low.value)
-#. placeholder {1}: formatHour(data[high.index]?.time)
-#. placeholder {1}: formatHour(data[low.index]?.time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:177
+#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[high.index]?.time, })
+#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[low.index]?.time, })
 #: src/features/weather/ui/next-24-hours-tile.tsx:187
-msgid "{0}{temperatureUnitLabel} at {1}"
-msgstr "{0}{temperatureUnitLabel}, {1} पर"
+#: src/features/weather/ui/next-24-hours-tile.tsx:201
+#~ msgid "{0}{temperatureUnitLabel} at {1}"
+#~ msgstr "{0}{temperatureUnitLabel}, {1} पर"
+
+#. placeholder {0}: Math.round(high.value)
+#. placeholder {0}: Math.round(low.value)
+#: src/features/weather/ui/next-24-hours-tile.tsx:198
+#: src/features/weather/ui/next-24-hours-tile.tsx:212
+msgid "{0}{temperatureUnitLabel} at <0/>"
+msgstr "{0}{temperatureUnitLabel}, <0/> पर"
 
 #. placeholder {0}: Math.round(peakProbability.value)
-#. placeholder {1}: formatHour(data[peakProbability.index]?.time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:258
-msgid "{0}% at {1}"
-msgstr "{0}%, {1} पर"
+#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakProbability.index]?.time, })
+#: src/features/weather/ui/next-24-hours-tile.tsx:298
+#~ msgid "{0}% at {1}"
+#~ msgstr "{0}%, {1} पर"
+
+#. placeholder {0}: Math.round(peakProbability.value)
+#: src/features/weather/ui/next-24-hours-tile.tsx:309
+msgid "{0}% at <0/>"
+msgstr "{0}%, <0/> पर"
 
 #: src/features/weather/ui/weather-alert.tsx:271
 msgid "{precipitationInches} inches of precipitation expected over the next {durationHours} hours"
@@ -210,6 +267,10 @@ msgstr "स्टोनहेंज जैसे प्राचीन स्म
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "प्राचीन वेधशालाएँ वर्ष के इस मोड़ को सावधानी से ट्रैक करती थीं, ताकि बुवाई के चक्र, कैलेंडर, और मौसमी त्योहार तय किए जा सकें।"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:694
+msgid "and"
+msgstr "और"
+
 #: src/features/seasonal-events/events/total-solar-eclipse.tsx:73
 msgid "Animals can grow quiet, while the horizon glows like a complete circle of sunset."
 msgstr "जानवर शांत हो सकते हैं, जबकि क्षितिज पूरा सूर्यास्त-घेरा जैसा चमक उठता है।"
@@ -301,7 +362,7 @@ msgstr "क्रिसमस दिवस यीशु के जन्म क�
 msgid "clear sky"
 msgstr "साफ़ आकाश"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:426
+#: src/features/weather/ui/next-24-hours-tile.tsx:515
 msgid "Clearest hour"
 msgstr "सबसे साफ़ घंटा"
 
@@ -321,7 +382,7 @@ msgstr "सामुदायिक सफ़ाई अभियान, पे�
 msgid "Compact weather alerts"
 msgstr "संक्षिप्त मौसम चेतावनियाँ"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:438
+#: src/features/weather/ui/next-24-hours-tile.tsx:530
 msgid "Conditions"
 msgstr "मौसम की स्थिति"
 
@@ -525,7 +586,7 @@ msgstr "फ़रवरी"
 msgid "Feedback"
 msgstr "प्रतिक्रिया"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:195
+#: src/features/weather/ui/next-24-hours-tile.tsx:224
 msgid "Feels like now"
 msgstr "अभी महसूस"
 
@@ -653,7 +714,7 @@ msgstr "हनुक्का रोशनी का यहूदी त्य�
 msgid "Hearts, roses, and red ribbons became familiar symbols of devotion, warmth, and connection."
 msgstr "दिल, गुलाब, और लाल रिबन भक्ति, अपनापन, और जुड़ाव के परिचित प्रतीक बन गए।"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:271
+#: src/features/weather/ui/next-24-hours-tile.tsx:326
 msgid "Heaviest hour"
 msgstr "सबसे भारी वर्षा का घंटा"
 
@@ -673,7 +734,7 @@ msgstr "भारी हिमवर्षा"
 msgid "heavy snowfall"
 msgstr "भारी हिमपात"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:175
+#: src/features/weather/ui/next-24-hours-tile.tsx:196
 msgid "High"
 msgstr "उच्चतम"
 
@@ -897,7 +958,7 @@ msgstr "स्थान का नाम उपलब्ध नहीं है"
 msgid "Longitude"
 msgstr "देशांतर"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:185
+#: src/features/weather/ui/next-24-hours-tile.tsx:210
 msgid "Low"
 msgstr "न्यूनतम"
 
@@ -921,7 +982,7 @@ msgstr "{timeUntilLowVisibility} घंटों में कम दृश्�
 msgid "Low visibility starting in 1 hour"
 msgstr "एक घंटे में कम दृश्यता शुरू होगी"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:413
+#: src/features/weather/ui/next-24-hours-tile.tsx:499
 msgid "Lowest visibility"
 msgstr "न्यूनतम दृश्यता"
 
@@ -1017,18 +1078,18 @@ msgstr "नववर्ष दिवस कैलेंडर का रीस�
 msgid "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precisely that sunlight floods its inner chamber for just seventeen minutes around the winter solstice each year."
 msgstr "न्यूग्रेंज, आयरलैंड में 5,000 साल पुरानी एक मार्ग कब्र, इतनी सटीकता से बनाई गई थी कि हर साल शीतकालीन अयनांत के आसपास केवल सत्रह मिनट के लिए सूर्य का प्रकाश इसके आंतरिक कक्ष को भर देता है।"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:170
-#: src/features/weather/ui/next-24-hours-tile.tsx:239
-#: src/features/weather/ui/next-24-hours-tile.tsx:320
-#: src/features/weather/ui/next-24-hours-tile.tsx:394
+#: src/features/weather/ui/next-24-hours-tile.tsx:191
+#: src/features/weather/ui/next-24-hours-tile.tsx:277
+#: src/features/weather/ui/next-24-hours-tile.tsx:397
+#: src/features/weather/ui/next-24-hours-tile.tsx:477
 msgid "Next 24 hours"
 msgstr "अगले 24 घंटे"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:283
+#: src/features/weather/ui/next-24-hours-tile.tsx:348
 msgid "No measurable precipitation expected"
 msgstr "कोई मापनीय वर्षा अपेक्षित नहीं"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:263
+#: src/features/weather/ui/next-24-hours-tile.tsx:317
 msgid "No precipitation expected"
 msgstr "कोई वर्षा अपेक्षित नहीं"
 
@@ -1135,19 +1196,19 @@ msgstr "सारांश"
 msgid "partly cloudy"
 msgstr "आंशिक रूप से बादल"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:251
+#: src/features/weather/ui/next-24-hours-tile.tsx:300
 msgid "Peak chance"
 msgstr "अधिकतम संभावना"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:339
+#: src/features/weather/ui/next-24-hours-tile.tsx:419
 msgid "Peak gust"
 msgstr "अधिकतम झोंका"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:400
+#: src/features/weather/ui/next-24-hours-tile.tsx:483
 msgid "Peak UV"
 msgstr "अधिकतम UV"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:326
+#: src/features/weather/ui/next-24-hours-tile.tsx:403
 msgid "Peak wind"
 msgstr "अधिकतम हवा"
 
@@ -1167,14 +1228,18 @@ msgstr "पर्सीड्स उल्का वर्षा"
 msgid "Perseids Meteor Shower"
 msgstr "पर्सीड्स उल्का वर्षा"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:273
-#: src/features/weather/ui/next-24-hours-tile.tsx:289
+#: src/features/weather/ui/next-24-hours-tile.tsx:328
+#: src/features/weather/ui/next-24-hours-tile.tsx:354
 msgid "Precipitation"
 msgstr "वर्षा"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:253
+#: src/features/weather/ui/next-24-hours-tile.tsx:302
 msgid "Precipitation chance"
 msgstr "वर्षा की संभावना"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:274
+msgid "Precipitation includes rain and snow."
+msgstr "वर्षा में बारिश और बर्फ दोनों शामिल हैं।"
 
 #: src/features/settings/ui/settings.tsx:181
 msgid "Quadrantids meteor shower"
@@ -1499,7 +1564,7 @@ msgstr "सौभाग्य के प्रतीक"
 
 #: src/features/settings/ui/initialisation.tsx:245
 #: src/features/settings/ui/settings.tsx:541
-#: src/features/weather/ui/next-24-hours-tile.tsx:200
+#: src/features/weather/ui/next-24-hours-tile.tsx:229
 msgid "Temperature"
 msgstr "तापमान"
 
@@ -1860,7 +1925,7 @@ msgstr "पूर्ण चंद्र ग्रहण"
 msgid "Total Lunar Eclipse"
 msgstr "पूर्ण चंद्र ग्रहण"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:244
+#: src/features/weather/ui/next-24-hours-tile.tsx:283
 msgid "Total precipitation"
 msgstr "कुल वर्षा"
 
@@ -2011,7 +2076,7 @@ msgstr "यह लाल क्यों हो जाता है"
 msgid "Why the peak is brief"
 msgstr "चरम संक्षिप्त क्यों होता है"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:351
+#: src/features/weather/ui/next-24-hours-tile.tsx:434
 msgid "Wind"
 msgstr "हवा"
 
