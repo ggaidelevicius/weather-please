@@ -59,6 +59,7 @@ const VIEW_SWITCH_WHEEL_GESTURE_END_MS = 180
 const VIEW_SWITCH_WHEEL_REIMPULSE_DELTA_MIN = 3
 const VIEW_SWITCH_WHEEL_REIMPULSE_RATIO = 1.6
 const VIEW_INDICATOR_VISIBLE_MS = 2500
+const VIEW_TRANSITION_WILL_CHANGE_MS = 450
 const VIEW_TRANSITION_DISTANCE = 120
 const FORECAST_VIEW_BACKGROUND_COLOR = '#1a1b1e'
 const DETAIL_VIEW_BACKGROUND_COLOR = '#101113'
@@ -93,12 +94,17 @@ const App = () => {
 	const [isViewIndicatorHovered, setIsViewIndicatorHovered] = useState(false)
 	const [isViewIndicatorVisible, setIsViewIndicatorVisible] = useState(false)
 	const [locationChangeToken, setLocationChangeToken] = useState(0)
+	const [previousTransitionViewId, setPreviousTransitionViewId] =
+		useState<ForecastViewId | null>(null)
 	const [hasDismissedScrollHint, setHasDismissedScrollHint] = useState(
 		getHasDismissedScrollHint,
 	)
 	const viewIndicatorTimeoutRef = useRef<null | ReturnType<typeof setTimeout>>(
 		null,
 	)
+	const viewTransitionWillChangeTimeoutRef = useRef<null | ReturnType<
+		typeof setTimeout
+	>>(null)
 	const viewSwitchCooldownUntilRef = useRef(0)
 	const wheelGestureEndTimeoutRef = useRef<null | ReturnType<
 		typeof setTimeout
@@ -219,6 +225,9 @@ const App = () => {
 			if (wheelGestureEndTimeoutRef.current) {
 				clearTimeout(wheelGestureEndTimeoutRef.current)
 			}
+			if (viewTransitionWillChangeTimeoutRef.current) {
+				clearTimeout(viewTransitionWillChangeTimeoutRef.current)
+			}
 		},
 		[],
 	)
@@ -239,7 +248,15 @@ const App = () => {
 			return
 		}
 
+		setPreviousTransitionViewId(activeAvailableViewId)
 		setActiveViewId(nextViewId)
+		if (viewTransitionWillChangeTimeoutRef.current) {
+			clearTimeout(viewTransitionWillChangeTimeoutRef.current)
+		}
+		viewTransitionWillChangeTimeoutRef.current = setTimeout(() => {
+			setPreviousTransitionViewId(null)
+			viewTransitionWillChangeTimeoutRef.current = null
+		}, VIEW_TRANSITION_WILL_CHANGE_MS)
 		showViewIndicator()
 	}
 
@@ -388,6 +405,7 @@ const App = () => {
 					<DirectionalView
 						activeViewId={activeAvailableViewId}
 						className="z-10 flex items-center justify-center p-5"
+						previousTransitionViewId={previousTransitionViewId}
 						viewId="forecast"
 					>
 						<div
@@ -445,6 +463,7 @@ const App = () => {
 									activeViewId={activeAvailableViewId}
 									className="z-0"
 									key={viewId}
+									previousTransitionViewId={previousTransitionViewId}
 									viewId={viewId}
 								>
 									<Next24HoursDetailView
@@ -560,6 +579,7 @@ type DirectionalViewProps = {
 	activeViewId: ForecastViewId
 	children: ReactNode
 	className: string
+	previousTransitionViewId: ForecastViewId | null
 	viewId: ForecastViewId
 }
 
@@ -567,10 +587,16 @@ const DirectionalView = ({
 	activeViewId,
 	children,
 	className,
+	previousTransitionViewId,
 	viewId,
 }: Readonly<DirectionalViewProps>) => {
 	const isActive = activeViewId === viewId
-	const y = getDirectionalViewY({ activeViewId, viewId })
+	const relativePosition = getViewRelativePosition({ activeViewId, viewId })
+	const shouldWillChange =
+		isActive ||
+		Math.abs(relativePosition) === 1 ||
+		previousTransitionViewId === viewId
+	const y = relativePosition * VIEW_TRANSITION_DISTANCE
 
 	return (
 		<motion.div
@@ -580,7 +606,9 @@ const DirectionalView = ({
 				y,
 			}}
 			aria-hidden={!isActive}
-			className={`absolute inset-0 ${className}`}
+			className={`absolute inset-0 ${
+				shouldWillChange ? 'will-change-[transform,opacity]' : ''
+			} ${className}`}
 			initial={false}
 			style={{
 				pointerEvents: isActive ? 'auto' : 'none',
@@ -598,12 +626,11 @@ type DirectionalViewYParams = {
 	viewId: ForecastViewId
 }
 
-const getDirectionalViewY = ({
+const getViewRelativePosition = ({
 	activeViewId,
 	viewId,
 }: DirectionalViewYParams) => {
-	const relativePosition = VIEW_ORDER[viewId] - VIEW_ORDER[activeViewId]
-	return relativePosition * VIEW_TRANSITION_DISTANCE
+	return VIEW_ORDER[viewId] - VIEW_ORDER[activeViewId]
 }
 
 const getViewBackgroundColor = (activeViewId: ForecastViewId) =>
