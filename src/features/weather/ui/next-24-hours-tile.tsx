@@ -26,6 +26,8 @@ const CHART_SPLINE_TENSION = 0.16
 const WEATHER_MAP_BASE_HEIGHT = 260
 const WEATHER_MAP_FRAME_DURATION_MS = 4200
 const WEATHER_MAP_PARTICLE_DENSITY = 0.00011
+const WEATHER_MAP_PARTICLE_FRAME_MS = 1000 / 60
+const WEATHER_MAP_PARTICLE_MAX_FRAME_MULTIPLIER = 2
 const WEATHER_MAP_PRECIPITATION_FRAME_INTERVAL_MS = 66
 const WEATHER_MAP_PRECIPITATION_MESH_CELL_SIZE = 8
 const WEATHER_MAP_PRECIPITATION_MIN_VISIBLE = 0.08
@@ -1206,8 +1208,17 @@ const WeatherMapWindParticleCanvas = ({
 		const overlayScale = getWeatherMapOverlayScale(animationDimensions)
 		const particles = createWeatherMapParticles(animationDimensions)
 		let animationFrame = 0
+		let lastFrameTime = 0
 
-		const draw = () => {
+		const draw = (time: number) => {
+			const frameMultiplier =
+				lastFrameTime === 0
+					? 1
+					: Math.min(
+							WEATHER_MAP_PARTICLE_MAX_FRAME_MULTIPLIER,
+							(time - lastFrameTime) / WEATHER_MAP_PARTICLE_FRAME_MS,
+						)
+			lastFrameTime = time
 			const projectedPoints = getInterpolatedWeatherMapWindPoints({
 				framePosition: playbackPositionRef.current,
 				frames: framesRef.current,
@@ -1239,8 +1250,9 @@ const WeatherMapWindParticleCanvas = ({
 				const windRatio = nearestPoint.speed / maxWind
 				const radians = ((nearestPoint.direction + 180 - 90) * Math.PI) / 180
 				const speed = (0.05 + Math.pow(windRatio, 1.85) * 0.74) * overlayScale
-				const nextX = particle.x + Math.cos(radians) * speed
-				const nextY = particle.y + Math.sin(radians) * speed
+				const frameSpeed = speed * frameMultiplier
+				const nextX = particle.x + Math.cos(radians) * frameSpeed
+				const nextY = particle.y + Math.sin(radians) * frameSpeed
 
 				context.lineWidth = (0.85 + windRatio * 1.25) * overlayScale
 				context.strokeStyle = `rgba(236, 254, 255, ${0.18 + windRatio * 0.42})`
@@ -1251,7 +1263,7 @@ const WeatherMapWindParticleCanvas = ({
 
 				particle.x = nextX
 				particle.y = nextY
-				particle.age += 1
+				particle.age += frameMultiplier
 
 				if (
 					particle.age > 180 ||
