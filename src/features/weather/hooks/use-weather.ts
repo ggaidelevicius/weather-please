@@ -199,21 +199,9 @@ export const useWeather = (
 			signal: controller.signal,
 			timeZone: userTimeZone,
 		})
-		const weatherMapRequest = fetchWeatherMapData({
-			lat,
-			lon,
-			signal: controller.signal,
-			timeZone: userTimeZone,
-		}).catch((weatherMapError) => {
-			if (isAbortError(weatherMapError)) {
-				throw weatherMapError
-			}
-			console.error('Weather map fetch error:', weatherMapError)
-			return null
-		})
 
-		void Promise.all([weatherRequest, weatherMapRequest])
-			.then(([responseData, weatherMapData]) => {
+		void weatherRequest
+			.then((responseData) => {
 				if (latestRequestRef.current !== requestId) {
 					return
 				}
@@ -236,15 +224,36 @@ export const useWeather = (
 					shouldUseAirQualityUv,
 					timeZone: userTimeZone,
 					weatherData,
-					weatherMapData,
+					weatherMapData: null,
 				})
 				dispatch({
 					alertData,
 					next24HoursData,
 					type: 'fetch-success',
 					weatherData,
-					weatherMapData,
+					weatherMapData: null,
 				})
+
+				void fetchWeatherMapData({
+					lat,
+					lon,
+					signal: controller.signal,
+					timeZone: userTimeZone,
+				})
+					.then((weatherMapData) => {
+						if (latestRequestRef.current !== requestId) {
+							return
+						}
+
+						writeCachedWeatherMapData({ weatherMapData })
+						dispatch({ type: 'fetch-map-success', weatherMapData })
+					})
+					.catch((weatherMapError) => {
+						if (isAbortError(weatherMapError)) {
+							return
+						}
+						console.error('Weather map fetch error:', weatherMapError)
+					})
 			})
 			.catch((fetchError) => {
 				if (latestRequestRef.current !== requestId) {

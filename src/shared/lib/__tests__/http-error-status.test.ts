@@ -13,6 +13,11 @@ describe('getHttpErrorStatusCode', () => {
 			),
 		).toBe(502)
 		expect(getHttpErrorStatusCode('Weather fetch failed: 504')).toBe(504)
+		expect(
+			getHttpErrorStatusCode(
+				'Failed to load resource: the server responded with a status of 502.',
+			),
+		).toBe(502)
 	})
 
 	it('ignores non-http status values', () => {

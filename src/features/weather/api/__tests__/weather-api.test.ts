@@ -103,8 +103,11 @@ describe('mapWeatherResponseToNext24HoursData', () => {
 		expect(result).toHaveLength(25)
 		expect(result[0]).toEqual({
 			apparentTemperature: 13,
+			dewPoint: 8,
+			humidity: 53,
 			precipitation: 3,
 			precipitationProbability: 6,
+			shortwaveRadiation: 130,
 			temperature: 23,
 			time: 3,
 			uv: 3,
@@ -129,10 +132,16 @@ const createWeatherResponse = (): WeatherResponse => ({
 	},
 	hourly: {
 		apparent_temperature: Array.from({ length: 30 }, (_, index) => index + 10),
+		dew_point_2m: Array.from({ length: 30 }, (_, index) => index + 5),
 		precipitation: Array.from({ length: 30 }, (_, index) => index),
 		precipitation_probability: Array.from(
 			{ length: 30 },
 			(_, index) => index * 2,
+		),
+		relative_humidity_2m: Array.from({ length: 30 }, (_, index) => index + 50),
+		shortwave_radiation_instant: Array.from(
+			{ length: 30 },
+			(_, index) => index * 10 + 100,
 		),
 		temperature_2m: Array.from({ length: 30 }, (_, index) => index + 20),
 		time: Array.from({ length: 30 }, (_, index) => index),

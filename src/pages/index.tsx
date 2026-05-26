@@ -89,6 +89,48 @@ const getInlineWeatherErrorMessage = (error: Error) => {
 	)
 }
 
+const getBlockingWeatherErrorMessage = (error: Error | null) => {
+	const httpStatusCode = getHttpErrorStatusCode(error?.message)
+	const isBrowserOffline =
+		typeof navigator !== 'undefined' && navigator.onLine === false
+
+	if (isServerErrorStatusCode(httpStatusCode)) {
+		return (
+			<Trans>
+				Weather data couldn&apos;t be loaded because the weather service is
+				having trouble. This isn&apos;t a problem with your device. Please try
+				again in a moment.
+			</Trans>
+		)
+	}
+
+	if (httpStatusCode) {
+		return (
+			<Trans>
+				Weather data couldn&apos;t be loaded for this location. Please check
+				your location settings and try again.
+			</Trans>
+		)
+	}
+
+	if (!isBrowserOffline && error) {
+		return (
+			<Trans>
+				Weather data couldn&apos;t be loaded because the weather service could
+				not be reached. This usually isn&apos;t a problem with your device.
+				Please try again in a moment.
+			</Trans>
+		)
+	}
+
+	return (
+		<Trans>
+			We couldn&apos;t reach the weather service. Please check your internet
+			connection and try again.
+		</Trans>
+	)
+}
+
 const App = () => {
 	const [activeViewId, setActiveViewId] = useState<ForecastViewId>('forecast')
 	const [isViewIndicatorHovered, setIsViewIndicatorHovered] = useState(false)
@@ -213,6 +255,9 @@ const App = () => {
 
 	const shouldShowBlockingError = status === AsyncStatus.Error && !hasData
 	const shouldShowInlineError = status === AsyncStatus.Error && hasData
+	const blockingWeatherErrorMessage = shouldShowBlockingError
+		? getBlockingWeatherErrorMessage(error)
+		: null
 	const shouldShowScrollHint =
 		canShowNext24HoursView &&
 		!hasDismissedScrollHint &&
@@ -420,15 +465,12 @@ const App = () => {
 								setInput={setInput}
 							/>
 							{shouldShowBlockingError ? (
-								<div className="col-span-full flex flex-col items-center justify-center gap-4">
+								<div className="col-span-full mx-auto flex w-full max-w-[74ch] flex-col items-center justify-center gap-4">
 									<Alert
 										icon={IconAlertTriangle}
 										variant={AlertVariant.InfoRed}
 									>
-										<Trans>
-											Unable to fetch weather data. Please check your internet
-											connection and try again.
-										</Trans>
+										{blockingWeatherErrorMessage}
 									</Alert>
 									<Button className="ml-auto" onClick={retry}>
 										<Trans>Retry</Trans>
@@ -437,7 +479,7 @@ const App = () => {
 							) : (
 								<>
 									{shouldShowInlineError && error && (
-										<div className="col-span-full">
+										<div className="col-span-full mx-auto w-full max-w-[74ch]">
 											<Alert
 												icon={IconAlertTriangle}
 												variant={AlertVariant.InfoRed}

@@ -1,6 +1,7 @@
 const HTTP_ERROR_STATUS_PATTERNS = [
 	/returned error code\s+(\d{3})\b/i,
 	/status code(?:\s+of)?\s+(\d{3})\b/i,
+	/status(?:\s+code)?\s+of\s+(\d{3})\b/i,
 	/\bhttp\s+(\d{3})\b/i,
 	/\bstatus\s+(\d{3})\b/i,
 	/failed:\s*(\d{3})\b/i,

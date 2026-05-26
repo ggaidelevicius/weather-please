@@ -23,6 +23,15 @@ const CHART_HEIGHT = 150
 const CHART_WIDTH = 360
 const CHART_PADDING = 10
 const CHART_SPLINE_TENSION = 0.16
+const FEELS_LIKE_DEW_POINT_THRESHOLD_C = 16
+const FEELS_LIKE_HUMIDITY_THRESHOLD = 65
+const FEELS_LIKE_MIN_DELTA_C = 1.5
+const FEELS_LIKE_SOLAR_RADIATION_THRESHOLD = 250
+const FEELS_LIKE_WARM_TEMPERATURE_C = 20
+const FEELS_LIKE_WIND_THRESHOLD_KMH = 12
+const UV_CHART_DEFAULT_MAX = 15
+const VISIBILITY_CHART_DEFAULT_MAX_METERS = 10_000
+const WIND_CHART_DEFAULT_MAX_KMH = 40
 const WEATHER_MAP_BASE_HEIGHT = 260
 const WEATHER_MAP_FRAME_DURATION_MS = 4200
 const WEATHER_MAP_PARTICLE_DENSITY = 0.00011
@@ -62,6 +71,7 @@ type ChartFrameProps = {
 	children: ReactNode
 	endLabel: ReactNode
 	leftLabels: string[]
+	middleLabel: ReactNode
 	rightLabels?: string[]
 	startLabel: ReactNode
 }
@@ -88,6 +98,15 @@ type DetailViewShellProps = {
 	kicker: ReactNode
 	metrics: ReactNode
 	title: ReactNode
+}
+
+type FeelsLikeExplanationProps = {
+	apparentTemperature?: number
+	dewPoint?: number
+	humidity?: number
+	shortwaveRadiation?: number
+	temperature?: number
+	wind?: number
 }
 
 type HourIntervalLabelProps = {
@@ -269,6 +288,7 @@ export const Next24HoursDetailView = ({
 	const windUnitLabel = usesMetricUnits ? 'km/h' : 'mph'
 	const visibilityUnitLabel = usesMetricUnits ? 'km' : 'mi'
 	const startLabel = formatHour(data[0]?.time)
+	const middleLabel = formatHour(data[Math.floor(data.length / 2)]?.time)
 	const endLabel = formatHour(data[data.length - 1]?.time)
 	const referenceTime = times[0]
 
@@ -277,10 +297,12 @@ export const Next24HoursDetailView = ({
 		const high = getPeakPoint(temperatures)
 		const low = getLowPoint(temperatures)
 		const currentApparentTemperature = apparentTemperatures[0] ?? 0
+		const feelsLikeExplanation = getFeelsLikeExplanation(data[0] ?? {})
 
 		return (
 			<DetailViewShell
 				accentClassName="text-blue-200"
+				footer={feelsLikeExplanation}
 				icon={<IconTemperature aria-hidden size={22} />}
 				isActive={isActive}
 				kicker={<Trans>Next 24 hours</Trans>}
@@ -329,6 +351,7 @@ export const Next24HoursDetailView = ({
 						scale,
 						unitLabel: temperatureUnitLabel,
 					})}
+					middleLabel={middleLabel}
 					startLabel={startLabel}
 				>
 					<LineChart
@@ -454,6 +477,7 @@ export const Next24HoursDetailView = ({
 						scale: amountScale,
 						unitLabel: precipitationUnitLabel,
 					})}
+					middleLabel={middleLabel}
 					rightLabels={getScaleLabels({
 						scale: probabilityScale,
 						unitLabel: '%',
@@ -491,7 +515,14 @@ export const Next24HoursDetailView = ({
 	}
 
 	if (viewId === 'wind') {
-		const scale = getChartScale([...wind, ...windGust], { minValue: 0 })
+		const windDefaultMax = convertWind({
+			usesMetricUnits,
+			wind: WIND_CHART_DEFAULT_MAX_KMH,
+		})
+		const scale = getChartScale([...wind, ...windGust], {
+			maxValue: Math.max(windDefaultMax, max([...wind, ...windGust])),
+			minValue: 0,
+		})
 		const peakWind = getPeakPoint(wind)
 		const peakGust = getPeakPoint(windGust)
 
@@ -542,6 +573,7 @@ export const Next24HoursDetailView = ({
 				<ChartFrame
 					endLabel={endLabel}
 					leftLabels={getScaleLabels({ scale, unitLabel: windUnitLabel })}
+					middleLabel={middleLabel}
 					startLabel={startLabel}
 				>
 					<LineChart
@@ -569,8 +601,18 @@ export const Next24HoursDetailView = ({
 		)
 	}
 
-	const uvScale = getChartScale(uv, { minValue: 0 })
-	const visibilityScale = getChartScale(visibility, { minValue: 0 })
+	const uvScale = getChartScale(uv, {
+		maxValue: Math.max(UV_CHART_DEFAULT_MAX, max(uv)),
+		minValue: 0,
+	})
+	const visibilityDefaultMax = convertVisibility({
+		usesMetricUnits,
+		visibility: VISIBILITY_CHART_DEFAULT_MAX_METERS,
+	})
+	const visibilityScale = getChartScale(visibility, {
+		maxValue: Math.max(visibilityDefaultMax, max(visibility)),
+		minValue: 0,
+	})
 	const peakUv = getPeakPoint(uv)
 	const lowestVisibility = getLowPoint(visibility)
 	const bestVisibility = getPeakPoint(visibility)
@@ -638,6 +680,7 @@ export const Next24HoursDetailView = ({
 			<ChartFrame
 				endLabel={endLabel}
 				leftLabels={getScaleLabels({ scale: uvScale, unitLabel: '' })}
+				middleLabel={middleLabel}
 				rightLabels={getScaleLabels({
 					scale: visibilityScale,
 					unitLabel: visibilityUnitLabel,
@@ -702,6 +745,77 @@ const DetailViewShell = ({
 		</div>
 	</section>
 )
+
+const getFeelsLikeExplanation = ({
+	apparentTemperature,
+	dewPoint,
+	humidity,
+	shortwaveRadiation,
+	temperature,
+	wind,
+}: Readonly<FeelsLikeExplanationProps>) => {
+	if (
+		typeof apparentTemperature !== 'number' ||
+		typeof temperature !== 'number'
+	) {
+		return null
+	}
+
+	const delta = apparentTemperature - temperature
+	if (Math.abs(delta) < FEELS_LIKE_MIN_DELTA_C) {
+		return null
+	}
+
+	const isFeelingWarmer = delta > 0
+	const isWarm = temperature >= FEELS_LIKE_WARM_TEMPERATURE_C
+	const hasHumidAir =
+		typeof dewPoint === 'number' &&
+		dewPoint >= FEELS_LIKE_DEW_POINT_THRESHOLD_C &&
+		typeof humidity === 'number' &&
+		humidity >= FEELS_LIKE_HUMIDITY_THRESHOLD
+	const hasStrongSun =
+		typeof shortwaveRadiation === 'number' &&
+		shortwaveRadiation >= FEELS_LIKE_SOLAR_RADIATION_THRESHOLD
+	const hasCoolingWind =
+		typeof wind === 'number' && wind >= FEELS_LIKE_WIND_THRESHOLD_KMH
+
+	if (isFeelingWarmer && isWarm && hasHumidAir && hasStrongSun) {
+		return (
+			<Trans>
+				Humid air and direct sunlight are making it feel warmer than the
+				measured temperature right now.
+			</Trans>
+		)
+	}
+
+	if (isFeelingWarmer && isWarm && hasHumidAir) {
+		return (
+			<Trans>
+				Humid air is making it feel warmer than the measured temperature right
+				now.
+			</Trans>
+		)
+	}
+
+	if (isFeelingWarmer && hasStrongSun) {
+		return (
+			<Trans>
+				Direct sunlight is making it feel warmer than the measured temperature
+				right now.
+			</Trans>
+		)
+	}
+
+	if (!isFeelingWarmer && hasCoolingWind) {
+		return (
+			<Trans>
+				Wind is making it feel cooler than the measured temperature right now.
+			</Trans>
+		)
+	}
+
+	return null
+}
 
 const Metric = ({
 	activeSeriesId = null,
@@ -842,6 +956,7 @@ const ChartFrame = ({
 	children,
 	endLabel,
 	leftLabels,
+	middleLabel,
 	rightLabels,
 	startLabel,
 }: Readonly<ChartFrameProps>) => (
@@ -867,6 +982,7 @@ const ChartFrame = ({
 			<span />
 			<div className="flex justify-between">
 				<span>{startLabel}</span>
+				<span>{middleLabel}</span>
 				<span>{endLabel}</span>
 			</div>
 			{rightLabels ? <span /> : null}

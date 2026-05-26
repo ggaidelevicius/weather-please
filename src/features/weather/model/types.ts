@@ -32,8 +32,11 @@ export const next24HoursDataSchema = z
 	.array(
 		z.object({
 			apparentTemperature: z.number(),
+			dewPoint: z.number().catch(0),
+			humidity: z.number().catch(0),
 			precipitation: z.number(),
 			precipitationProbability: z.number(),
+			shortwaveRadiation: z.number().catch(0),
 			temperature: z.number(),
 			time: z.number(),
 			uv: z.number(),

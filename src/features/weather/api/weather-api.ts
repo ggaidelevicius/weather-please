@@ -29,8 +29,11 @@ const weatherResponseSchema = z
 		}),
 		hourly: z.object({
 			apparent_temperature: z.array(z.number()).min(1),
+			dew_point_2m: z.array(z.number()).min(1),
 			precipitation: z.array(z.number()).min(1),
 			precipitation_probability: z.array(z.number()).min(1),
+			relative_humidity_2m: z.array(z.number()).min(1),
+			shortwave_radiation_instant: z.array(z.number()).min(1),
 			temperature_2m: z.array(z.number()).min(1),
 			time: z.array(z.number()).min(1),
 			uv_index: z.array(z.number()).min(1),
@@ -296,7 +299,7 @@ export const fetchWeatherResponse = async ({
 }): Promise<WeatherResponse> => {
 	try {
 		const encodedTimeZone = encodeURIComponent(timeZone)
-		const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=${encodedTimeZone}&hourly=temperature_2m,apparent_temperature,precipitation,precipitation_probability,uv_index,windspeed_10m,visibility,weathercode,windgusts_10m&forecast_days=${WEATHER_FORECAST_DAYS}`
+		const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=${encodedTimeZone}&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,dew_point_2m,shortwave_radiation_instant,precipitation,precipitation_probability,uv_index,windspeed_10m,visibility,weathercode,windgusts_10m&forecast_days=${WEATHER_FORECAST_DAYS}`
 
 		const response = await fetch(weatherUrl, { signal })
 		if (!response.ok) {
@@ -467,8 +470,11 @@ export const mapWeatherResponseToNext24HoursData = ({
 	for (let index = start; index < end; index += 1) {
 		const point = {
 			apparentTemperature: data.hourly.apparent_temperature[index],
+			dewPoint: data.hourly.dew_point_2m[index],
+			humidity: data.hourly.relative_humidity_2m[index],
 			precipitation: data.hourly.precipitation[index],
 			precipitationProbability: data.hourly.precipitation_probability[index],
+			shortwaveRadiation: data.hourly.shortwave_radiation_instant[index],
 			temperature: data.hourly.temperature_2m[index],
 			time: data.hourly.time[index],
 			uv: data.hourly.uv_index[index],

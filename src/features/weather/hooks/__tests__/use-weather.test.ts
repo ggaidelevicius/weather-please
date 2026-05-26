@@ -115,8 +115,11 @@ describe('useWeather - Core Functionality', () => {
 		const cachedNext24HoursData = [
 			{
 				apparentTemperature: 21,
+				dewPoint: 12,
+				humidity: 55,
 				precipitation: 0,
 				precipitationProbability: 10,
+				shortwaveRadiation: 120,
 				temperature: 22,
 				time: Math.floor(now.getTime() / 1000),
 				uv: 4,
@@ -202,8 +205,11 @@ describe('useWeather - Core Functionality', () => {
 		const cachedNext24HoursData = [
 			{
 				apparentTemperature: 21,
+				dewPoint: 12,
+				humidity: 55,
 				precipitation: 0,
 				precipitationProbability: 10,
+				shortwaveRadiation: 120,
 				temperature: 22,
 				time: timestamp,
 				uv: 4,
@@ -270,6 +276,27 @@ describe('useWeather - Core Functionality', () => {
 		})
 		expect(fetchMock).toHaveBeenCalledTimes(1)
 		expect(localStorageMock.getItem('weatherMapData')).not.toBeNull()
+	})
+
+	it('shows weather data before fresh map data finishes loading', async () => {
+		fetchMock
+			.mockResolvedValueOnce({
+				json: async () => createWeatherResponse(),
+				ok: true,
+			})
+			.mockImplementationOnce(() => new Promise(() => {}))
+
+		const { result } = renderHook(() =>
+			useWeather('40.7128', '-74.0060', 0, false),
+		)
+
+		await waitFor(() => {
+			expect(result.current.weatherData).toHaveLength(1)
+		})
+
+		expect(result.current.isLoading).toBe(false)
+		expect(result.current.weatherMapData).toBeNull()
+		expect(fetchMock).toHaveBeenCalledTimes(2)
 	})
 
 	it('refreshes cached data when next 24 hours data is missing', async () => {
@@ -392,4 +419,31 @@ describe('useWeather - Core Functionality', () => {
 			expect(result.current.isLoading).toBe(expected)
 		})
 	})
+})
+
+const createWeatherResponse = () => ({
+	daily: {
+		precipitation_probability_max: [10],
+		temperature_2m_max: [30],
+		temperature_2m_min: [20],
+		time: [0],
+		uv_index_max: [8],
+		weathercode: [1],
+		windspeed_10m_max: [15],
+	},
+	hourly: {
+		apparent_temperature: Array.from({ length: 60 }, (_, index) => index + 10),
+		dew_point_2m: Array.from({ length: 60 }, () => 12),
+		precipitation: Array.from({ length: 60 }, () => 0),
+		precipitation_probability: Array.from({ length: 60 }, () => 0),
+		relative_humidity_2m: Array.from({ length: 60 }, () => 55),
+		shortwave_radiation_instant: Array.from({ length: 60 }, () => 120),
+		temperature_2m: Array.from({ length: 60 }, (_, index) => index + 20),
+		time: Array.from({ length: 60 }, (_, index) => index),
+		uv_index: Array.from({ length: 60 }, (_, index) => index % 8),
+		visibility: Array.from({ length: 60 }, () => 10_000),
+		weathercode: Array.from({ length: 60 }, () => 1),
+		windgusts_10m: Array.from({ length: 60 }, () => 20),
+		windspeed_10m: Array.from({ length: 60 }, () => 10),
+	},
 })
