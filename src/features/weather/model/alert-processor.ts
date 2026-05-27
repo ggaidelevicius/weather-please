@@ -59,26 +59,36 @@ export const processPrecipitationAlert = (
  * Returns a boolean array where `true` indicates the hour is part of the precipitation event,
  * and `false` indicates the event has ended.
  *
- * The event ends after 3 consecutive hours of zero precipitation. The 3 zero hours themselves
- * are included in the event (marked as `true`), and subsequent hours are marked as `false`.
+ * The event ends on the fourth consecutive hour of zero precipitation. The first 3 zero
+ * hours are included in the event (marked as `true`) so this matches the precipitation
+ * total, which still includes rain that starts after a short dry lead-in.
  *
- * Example: [1, 0, 0, 0, 1] → [true, true, true, true, false]
- * - Hours 0-3 are part of the event (including the 3 consecutive zeros)
+ * Example: [1, 0, 0, 0, 0, 1] → [true, true, true, true, false, false]
+ * - Hours 0-3 are part of the event (including the 3 tolerated zeros)
  * - Hour 4 onwards are marked as ended
  */
 export const processPrecipitationDuration = (
 	precipitationData: number[],
 ): boolean[] => {
-	let negativeCount = 0
+	let zeroCount = 0
+	let hasEnded = false
+
 	return precipitationData.slice(0, 25).map((val: number) => {
-		if (negativeCount === 3) {
+		if (hasEnded) {
 			return false
 		}
+
 		if (val === 0) {
-			negativeCount++
+			zeroCount++
+			if (zeroCount > 3) {
+				hasEnded = true
+				return false
+			}
+
 			return true
 		}
-		negativeCount = 0
+
+		zeroCount = 0
 		return true
 	})
 }

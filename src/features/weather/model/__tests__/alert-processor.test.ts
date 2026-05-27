@@ -103,7 +103,7 @@ describe('Alert Processor', () => {
 			})
 		})
 
-		it('detects precipitation flag when zero count reaches 3', () => {
+		it('detects precipitation flag on the fourth consecutive zero', () => {
 			const data = [1, 2, 0, 0, 0, 0, 3]
 
 			const result = processPrecipitationAlert(data)
@@ -116,7 +116,7 @@ describe('Alert Processor', () => {
 		})
 
 		it('continues flagging after flag is set', () => {
-			const data = [0, 0, 0, 0, 5, 10] // Flag should be set after 3 zeros
+			const data = [0, 0, 0, 0, 5, 10]
 
 			const result = processPrecipitationAlert(data)
 
@@ -174,22 +174,28 @@ describe('Alert Processor', () => {
 			expect(result).toEqual([true, true, true, true, true])
 		})
 
-		it('handles consecutive zeros correctly', () => {
-			const data = [1, 0, 0, 0, 1] // 3 consecutive zeros should trigger end
-			// The algorithm includes the 3 zeros in the duration, then marks subsequent hours as false
-			// Result: first 4 hours (including the 3 zeros) are part of event, 5th hour is not
+		it('tolerates up to three consecutive zeros before more rain', () => {
+			const data = [1, 0, 0, 0, 1]
 
 			const result = processPrecipitationDuration(data)
 
-			expect(result).toEqual([true, true, true, true, false])
+			expect(result).toEqual([true, true, true, true, true])
 		})
 
-		it('resets negative count on non-zero value', () => {
-			const data = [1, 0, 0, 2, 0, 0, 0, 1] // Second set of zeros should trigger
+		it('ends on the fourth consecutive zero', () => {
+			const data = [1, 0, 0, 0, 0, 1]
 
 			const result = processPrecipitationDuration(data)
 
-			expect(result).toEqual([true, true, true, true, true, true, true, false])
+			expect(result).toEqual([true, true, true, true, false, false])
+		})
+
+		it('resets zero count on non-zero value', () => {
+			const data = [1, 0, 0, 2, 0, 0, 0, 1]
+
+			const result = processPrecipitationDuration(data)
+
+			expect(result).toEqual([true, true, true, true, true, true, true, true])
 		})
 
 		it('handles all-zero data', () => {
@@ -207,14 +213,14 @@ describe('Alert Processor', () => {
 
 			const result = processPrecipitationDuration(data)
 
-			// The function returns false once negativeCount reaches 3
+			// The function returns false on the fourth consecutive zero.
 			// For data [1, 2, 0, 0, 0, 0, 3, 4, 0, 0, 0, 0]:
-			// Index 0: val=1, negativeCount=0 → returns true
-			// Index 1: val=2, negativeCount=0 → returns true
-			// Index 2: val=0, negativeCount→1 → returns true
-			// Index 3: val=0, negativeCount→2 → returns true
-			// Index 4: val=0, negativeCount→3 → returns true (3rd zero is still included)
-			// Index 5: val=0, negativeCount=3 → returns false (check happens first)
+			// Index 0: val=1, zeroCount=0 → returns true
+			// Index 1: val=2, zeroCount=0 → returns true
+			// Index 2: val=0, zeroCount→1 → returns true
+			// Index 3: val=0, zeroCount→2 → returns true
+			// Index 4: val=0, zeroCount→3 → returns true
+			// Index 5: val=0, zeroCount→4 → returns false
 			// Index 6+: All return false (precipitation event has ended)
 			expect(result).toEqual([
 				true,
@@ -239,6 +245,14 @@ describe('Alert Processor', () => {
 
 			expect(result).toHaveLength(25)
 			expect(result).toEqual(Array(25).fill(true))
+		})
+
+		it('does not end before delayed rain after three dry hours', () => {
+			const data = [0, 0, 0, 0.1, 0.5, 3.5, 3.4]
+
+			const result = processPrecipitationDuration(data)
+
+			expect(result).toEqual([true, true, true, true, true, true, true])
 		})
 	})
 
