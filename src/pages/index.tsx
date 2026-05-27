@@ -8,7 +8,6 @@ import {
 	useEffect,
 	useRef,
 	useState,
-	type WheelEvent,
 } from 'react'
 import { z } from 'zod'
 
@@ -155,6 +154,8 @@ const App = () => {
 	const lastWheelDirectionRef = useRef<null | ViewStepDirection>(null)
 	const lastWheelDeltaAbsRef = useRef(0)
 	const touchStartYRef = useRef<null | number>(null)
+	const viewFrameRef = useRef<HTMLElement | null>(null)
+	const handleViewWheelRef = useRef<(event: WheelEvent) => void>(() => {})
 
 	const { config, handleChange, input, isHydrated, setInput, updateConfig } =
 		useConfig()
@@ -347,7 +348,7 @@ const App = () => {
 		viewSwitchCooldownUntilRef.current = Date.now() + VIEW_SWITCH_COOLDOWN_MS
 	}
 
-	const handleViewWheel = (event: WheelEvent<HTMLElement>) => {
+	const handleViewWheel = (event: WheelEvent) => {
 		if (
 			!canShowNext24HoursView ||
 			Math.abs(event.deltaY) < VIEW_SWITCH_SCROLL_DELTA_MIN ||
@@ -389,6 +390,27 @@ const App = () => {
 		hasConsumedWheelGestureRef.current = true
 		switchActiveViewByStep(direction)
 	}
+
+	useEffect(() => {
+		handleViewWheelRef.current = handleViewWheel
+	})
+
+	useEffect(() => {
+		const viewFrame = viewFrameRef.current
+		if (!viewFrame) {
+			return
+		}
+
+		const handleWheel = (event: WheelEvent) => {
+			handleViewWheelRef.current(event)
+		}
+
+		viewFrame.addEventListener('wheel', handleWheel, { passive: false })
+
+		return () => {
+			viewFrame.removeEventListener('wheel', handleWheel)
+		}
+	}, [])
 
 	const handleViewTouchStart = (event: TouchEvent<HTMLElement>) => {
 		touchStartYRef.current = event.touches[0]?.clientY ?? null
@@ -442,7 +464,7 @@ const App = () => {
 					initial={false}
 					onTouchEnd={handleViewTouchEnd}
 					onTouchStart={handleViewTouchStart}
-					onWheel={handleViewWheel}
+					ref={viewFrameRef}
 					transition={{ duration: 0.35, ease: 'easeOut' }}
 				>
 					<DetailFallbackGlow
