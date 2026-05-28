@@ -14,9 +14,15 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: formatPrecipitationValue({ precipitation: sum(precipitation), usesMetricUnits, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:405
+#: src/features/weather/ui/next-24-hours-tile.tsx:414
 msgid "{0}"
 msgstr "{0}"
+
+#. placeholder {0}: Math.round(currentAqi ?? 0)
+#. placeholder {1}: getUsAqiCategory(currentAqi ?? 0)
+#: src/features/weather/ui/next-24-hours-tile.tsx:624
+msgid "{0} · {1}"
+msgstr "{0} · {1}"
 
 #. placeholder {0}: formatDecimal(bestVisibility.value)
 #. placeholder {0}: formatDecimal(lowestVisibility.value)
@@ -29,8 +35,8 @@ msgstr "{0}"
 
 #. placeholder {0}: formatDecimal(bestVisibility.value)
 #. placeholder {0}: formatDecimal(lowestVisibility.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:651
-#: src/features/weather/ui/next-24-hours-tile.tsx:667
+#: src/features/weather/ui/next-24-hours-tile.tsx:821
+#: src/features/weather/ui/next-24-hours-tile.tsx:834
 msgid "{0} {visibilityUnitLabel} at <0/>"
 msgstr "{0} {visibilityUnitLabel}（<0/>）"
 
@@ -38,8 +44,8 @@ msgstr "{0} {visibilityUnitLabel}（<0/>）"
 #. placeholder {0}: Math.round(peakWind.value)
 #: src/features/weather/ui/next-24-hours-tile.tsx:1805
 #: src/features/weather/ui/next-24-hours-tile.tsx:1814
-msgid "{0} {windUnitLabel}"
-msgstr "{0} {windUnitLabel}"
+#~ msgid "{0} {windUnitLabel}"
+#~ msgstr "{0} {windUnitLabel}"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
@@ -52,26 +58,26 @@ msgstr "{0} {windUnitLabel}"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:544
-#: src/features/weather/ui/next-24-hours-tile.tsx:560
+#: src/features/weather/ui/next-24-hours-tile.tsx:738
+#: src/features/weather/ui/next-24-hours-tile.tsx:754
 msgid "{0} {windUnitLabel} at <0/>"
 msgstr "{0} {windUnitLabel}（<0/>）"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:918
+#: src/features/weather/ui/next-24-hours-tile.tsx:1076
 msgid "{0} and {1}"
 msgstr "{0}和{1}"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:931
+#: src/features/weather/ui/next-24-hours-tile.tsx:1089
 msgid "{0} and {1} today"
 msgstr "今天 {0}和{1}"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:939
+#: src/features/weather/ui/next-24-hours-tile.tsx:1097
 msgid "{0} and {1} tomorrow"
 msgstr "明天 {0}和{1}"
 
@@ -81,8 +87,10 @@ msgstr "明天 {0}和{1}"
 #~ msgid "{0} at {1}"
 #~ msgstr "{0}（{1}）"
 
+#. placeholder {0}: Math.round(peakAqi.value)
 #. placeholder {0}: Math.round(peakUv.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:635
+#: src/features/weather/ui/next-24-hours-tile.tsx:547
+#: src/features/weather/ui/next-24-hours-tile.tsx:637
 msgid "{0} at <0/>"
 msgstr "{0}（<0/>）"
 
@@ -93,7 +101,7 @@ msgstr "{0}（<0/>）"
 #~ msgstr "{0}（{1}期间）"
 
 #. placeholder {0}: formatPrecipitationValue({ precipitation: peakAmount.value, usesMetricUnits, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:453
+#: src/features/weather/ui/next-24-hours-tile.tsx:462
 msgid "{0} between <0/>"
 msgstr "{0}（<0/>期间）"
 
@@ -125,12 +133,12 @@ msgid "{0} mph"
 msgstr "{0} 英里/小时"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:892
+#: src/features/weather/ui/next-24-hours-tile.tsx:1050
 msgid "{0} today"
 msgstr "今天 {0}"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:896
+#: src/features/weather/ui/next-24-hours-tile.tsx:1054
 msgid "{0} tomorrow"
 msgstr "明天 {0}"
 
@@ -147,13 +155,13 @@ msgstr "明天 {0}"
 #. placeholder {0}: Math.round(low.value)
 #: src/features/weather/ui/next-24-hours-tile.tsx:315
 #: src/features/weather/ui/next-24-hours-tile.tsx:329
-msgid "{0}{temperatureUnitLabel} at <0/>"
-msgstr "{0}{temperatureUnitLabel}（<0/>）"
+#~ msgid "{0}{temperatureUnitLabel} at <0/>"
+#~ msgstr "{0}{temperatureUnitLabel}（<0/>）"
 
 #. placeholder {0}: Math.round(peakChance.value)
 #: src/features/weather/ui/next-24-hours-tile.tsx:1799
-msgid "{0}%"
-msgstr "{0}%"
+#~ msgid "{0}%"
+#~ msgstr "{0}%"
 
 #. placeholder {0}: Math.round(peakProbability.value)
 #. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakProbability.index]?.time, })
@@ -162,31 +170,31 @@ msgstr "{0}%"
 #~ msgstr "{0}%（{1}）"
 
 #. placeholder {0}: Math.round(peakProbability.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:427
+#: src/features/weather/ui/next-24-hours-tile.tsx:436
 msgid "{0}% at <0/>"
 msgstr "{0}%（<0/>）"
 
-#: src/features/weather/ui/weather-alert.tsx:306
+#: src/features/weather/ui/weather-alert.tsx:307
 msgid "{precipitationInches} inches of precipitation expected over the next {durationHours} hours"
 msgstr "预计未来{durationHours}小时降水{precipitationInches}英寸。"
 
-#: src/features/weather/ui/weather-alert.tsx:294
+#: src/features/weather/ui/weather-alert.tsx:295
 msgid "{precipitationInches} inches of precipitation expected over the next 24 hours"
 msgstr "预计未来24小时降水{precipitationInches}英寸。"
 
-#: src/features/weather/ui/weather-alert.tsx:286
+#: src/features/weather/ui/weather-alert.tsx:287
 msgid "{precipitationInches} inches of precipitation expected over the next hour"
 msgstr "预计未来1小时降水{precipitationInches}英寸。"
 
-#: src/features/weather/ui/weather-alert.tsx:278
+#: src/features/weather/ui/weather-alert.tsx:279
 msgid "{precipitationMm}mm of precipitation expected over the next {durationHours} hours"
 msgstr "预计未来{durationHours}小时降水{precipitationMm}mm。"
 
-#: src/features/weather/ui/weather-alert.tsx:267
+#: src/features/weather/ui/weather-alert.tsx:268
 msgid "{precipitationMm}mm of precipitation expected over the next 24 hours"
 msgstr "预计未来24小时降水{precipitationMm}mm。"
 
-#: src/features/weather/ui/weather-alert.tsx:260
+#: src/features/weather/ui/weather-alert.tsx:261
 msgid "{precipitationMm}mm of precipitation expected over the next hour"
 msgstr "预计未来1小时降水{precipitationMm}mm。"
 
@@ -204,7 +212,7 @@ msgstr "<0>位置访问被拒绝。</0> 点击地址栏中的位置图标，并�
 msgid "☕ Gift a coffee"
 msgstr "☕ 送一杯咖啡"
 
-#: src/pages/index.tsx:544
+#: src/pages/index.tsx:566
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ 新功能：试试向下滚动"
 
@@ -272,6 +280,19 @@ msgstr "在许多文化中，尤尔节与农神节等传统围绕这一时刻发
 msgid "Acts of charity, the sharing of food, and care for family, neighbours, and those in need form the heart of the celebration."
 msgstr "施舍行善、分享食物，以及照顾家人、邻里与有需要的人，构成庆祝的核心。"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:662
+#: src/features/weather/ui/next-24-hours-tile.tsx:667
+msgid "Air quality"
+msgstr "空气质量"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:612
+#~ msgid "Air quality forecast from Open-Meteo and CAMS atmospheric data."
+#~ msgstr "空气质量预报来自 Open-Meteo 和 CAMS 大气数据。"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:693
+msgid "Air quality unavailable"
+msgstr "空气质量数据不可用"
+
 #: src/features/seasonal-events/events/perseids.tsx:116
 msgid "Allow your eyes about twenty minutes to adjust, turn away from city lights, and let the wide sky do the work."
 msgstr "让眼睛适应约二十分钟，避开城市灯光，让广阔的夜空自己“工作”。"
@@ -292,7 +313,7 @@ msgstr "像巨石阵这样的古老遗迹与夏至日出对齐，许多文化的
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "古代天文台细致追踪这一年中的转折点，用以指导播种周期、历法与季节性节庆。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:949
+#: src/features/weather/ui/next-24-hours-tile.tsx:1107
 msgid "and"
 msgstr "和"
 
@@ -337,7 +358,7 @@ msgstr "八月"
 msgid "Autumn Equinox"
 msgstr "秋分"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1803
+#: src/features/weather/ui/next-24-hours-tile.tsx:1975
 msgid "Average wind"
 msgstr "平均风速"
 
@@ -374,7 +395,7 @@ msgstr "摄氏度 (°C)"
 msgid "Centuries later, people still reach for pen and paper when a text won't do."
 msgstr "几个世纪过去了，当文字信息不够用时，人们依然伸手去拿笔和纸。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1653
+#: src/features/weather/ui/next-24-hours-tile.tsx:1814
 msgid "Chance"
 msgstr "概率"
 
@@ -395,7 +416,7 @@ msgstr "圣诞节纪念耶稣诞生；对许多人而言，它也演变为更广
 msgid "clear sky"
 msgstr "晴空"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:663
+#: src/features/weather/ui/next-24-hours-tile.tsx:832
 msgid "Clearest hour"
 msgstr "最晴朗的时段"
 
@@ -415,13 +436,17 @@ msgstr "社区清理、植树与栖息地修复是最常见的活动之一。"
 msgid "Compact weather alerts"
 msgstr "紧凑的天气警报"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:678
+#: src/features/weather/ui/next-24-hours-tile.tsx:845
 msgid "Conditions"
 msgstr "天气状况"
 
 #: src/features/seasonal-events/events/halloween.tsx:84
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "服装可以英勇、幽默或诡异，让人短暂走进不同的角色。"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:620
+msgid "Current AQI"
+msgstr "当前 AQI"
 
 #: src/features/settings/ui/settings.tsx:641
 msgid "Data & alerts"
@@ -464,7 +489,7 @@ msgstr "冻雾霾"
 msgid "depositing rime fog"
 msgstr "储存白霜雾"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1659
+#: src/features/weather/ui/next-24-hours-tile.tsx:1820
 msgid "Depth"
 msgstr "降水深度"
 
@@ -472,7 +497,7 @@ msgstr "降水深度"
 msgid "Developer"
 msgstr "开发者"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:802
+#: src/features/weather/ui/next-24-hours-tile.tsx:960
 msgid "Direct sunlight is making it feel warmer than the measured temperature right now."
 msgstr "直射阳光使当前体感温度高于实测温度。"
 
@@ -582,19 +607,19 @@ msgstr "事件视界日旨在纪念2019年由事件视界望远镜合作项目�
 msgid "Evergreens, candles, bells, and stars echo a shared theme drawn from those early traditions: light enduring through the darkest part of the year in the cultures where the holiday first formed."
 msgstr "常青植物、蜡烛、铃铛与星星，呼应着早期传统中的共同主题：在一年最黑暗的时段里，光依然延续。"
 
-#: src/features/weather/ui/weather-alert.tsx:227
+#: src/features/weather/ui/weather-alert.tsx:228
 msgid "Extreme UV for the next {durationOfExtremeUv} hours"
 msgstr "接下来 {durationOfExtremeUv} 小时内的极端紫外线"
 
-#: src/features/weather/ui/weather-alert.tsx:231
+#: src/features/weather/ui/weather-alert.tsx:232
 msgid "Extreme UV for the next hour"
 msgstr "接下来一小时的极端紫外线"
 
-#: src/features/weather/ui/weather-alert.tsx:218
+#: src/features/weather/ui/weather-alert.tsx:219
 msgid "Extreme UV starting in {timeUntilExtremeUv} hours"
 msgstr "极端紫外线将于 {timeUntilExtremeUv} 小时后开始"
 
-#: src/features/weather/ui/weather-alert.tsx:216
+#: src/features/weather/ui/weather-alert.tsx:217
 msgid "Extreme UV starting in 1 hour"
 msgstr "极端紫外线将于1小时后开始"
 
@@ -627,7 +652,7 @@ msgstr "二月"
 msgid "Feedback"
 msgstr "反馈"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:341
+#: src/features/weather/ui/next-24-hours-tile.tsx:351
 msgid "Feels like now"
 msgstr "当前体感温度"
 
@@ -675,23 +700,23 @@ msgstr "双子座流星雨"
 msgid "General"
 msgstr "通用"
 
-#: src/features/weather/ui/weather-alert.tsx:339
+#: src/features/weather/ui/weather-alert.tsx:340
 msgid "Generally strong wind for the next {durationOfStrongWind} hours"
 msgstr "接下来{durationOfStrongWind}小时内通常有大风"
 
-#: src/features/weather/ui/weather-alert.tsx:345
+#: src/features/weather/ui/weather-alert.tsx:346
 msgid "Generally strong wind for the next 24 hours"
 msgstr "接下来24小时内通常有大风"
 
-#: src/features/weather/ui/weather-alert.tsx:348
+#: src/features/weather/ui/weather-alert.tsx:349
 msgid "Generally strong wind for the next hour"
 msgstr "下一个小时内通常有大风"
 
-#: src/features/weather/ui/weather-alert.tsx:331
+#: src/features/weather/ui/weather-alert.tsx:332
 msgid "Generally strong wind starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}小时后开始通常有大风"
 
-#: src/features/weather/ui/weather-alert.tsx:329
+#: src/features/weather/ui/weather-alert.tsx:330
 msgid "Generally strong wind starting in 1 hour"
 msgstr "1小时后开始通常有大风"
 
@@ -755,7 +780,7 @@ msgstr "光明节（Hanukkah）是犹太人的“灯节”，持续八个夜晚�
 msgid "Hearts, roses, and red ribbons became familiar symbols of devotion, warmth, and connection."
 msgstr "心形、玫瑰与红丝带成为熟悉的象征，代表热情、温暖与连结。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:444
+#: src/features/weather/ui/next-24-hours-tile.tsx:453
 msgid "Heaviest hour"
 msgstr "降雨最强的时段"
 
@@ -776,8 +801,8 @@ msgid "heavy snowfall"
 msgstr "大雪"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:313
-msgid "High"
-msgstr "最高"
+#~ msgid "High"
+#~ msgstr "最高"
 
 #: src/features/seasonal-events/events/lyrids.tsx:98
 msgid "Historical Chinese records describe displays of Lyrid meteors more than two thousand six hundred years ago."
@@ -828,11 +853,11 @@ msgstr "洒红节（Holi）是一场充满喜悦的“色彩节”，伴随笑�
 msgid "Homes are carefully cleaned and decorated to clear away old luck and welcome prosperity for the year ahead."
 msgstr "人们会细致地打扫并装饰家中，扫去旧运，迎接来年的富足。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:784
+#: src/features/weather/ui/next-24-hours-tile.tsx:942
 msgid "Humid air and direct sunlight are making it feel warmer than the measured temperature right now."
 msgstr "潮湿空气和直射阳光使当前体感温度高于实测温度。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:793
+#: src/features/weather/ui/next-24-hours-tile.tsx:951
 msgid "Humid air is making it feel warmer than the measured temperature right now."
 msgstr "潮湿空气使当前体感温度高于实测温度。"
 
@@ -999,7 +1024,7 @@ msgstr "实时数据暂时不可用。正在显示您上次保存的预报。"
 #~ msgid "Live data is unavailable. Showing your last saved forecast instead."
 #~ msgstr "实时数据不可用。正在显示您上次保存的预报。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1065
+#: src/features/weather/ui/next-24-hours-tile.tsx:1225
 msgid "Local map"
 msgstr "本地地图"
 
@@ -1020,30 +1045,30 @@ msgid "Longitude"
 msgstr "经度"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:327
-msgid "Low"
-msgstr "最低"
+#~ msgid "Low"
+#~ msgstr "最低"
 
-#: src/features/weather/ui/weather-alert.tsx:420
+#: src/features/weather/ui/weather-alert.tsx:421
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
 msgstr "接下来的{durationOfLowVisibility}小时内将有低能见度"
 
-#: src/features/weather/ui/weather-alert.tsx:429
+#: src/features/weather/ui/weather-alert.tsx:430
 msgid "Low visibility for the next 24 hours"
 msgstr "接下来的24小时内将有低能见度"
 
-#: src/features/weather/ui/weather-alert.tsx:432
+#: src/features/weather/ui/weather-alert.tsx:433
 msgid "Low visibility for the next hour"
 msgstr "接下来的一个小时内将有低能见度"
 
-#: src/features/weather/ui/weather-alert.tsx:409
+#: src/features/weather/ui/weather-alert.tsx:410
 msgid "Low visibility starting in {timeUntilLowVisibility} hours"
 msgstr "低能见度将于{timeUntilLowVisibility}小时后开始"
 
-#: src/features/weather/ui/weather-alert.tsx:407
+#: src/features/weather/ui/weather-alert.tsx:408
 msgid "Low visibility starting in 1 hour"
 msgstr "低能见度将于1小时后开始"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:647
+#: src/features/weather/ui/next-24-hours-tile.tsx:819
 msgid "Lowest visibility"
 msgstr "最低能见度"
 
@@ -1069,11 +1094,11 @@ msgstr "天琴座流星雨"
 msgid "mainly clear"
 msgstr "主要晴朗"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1777
+#: src/features/weather/ui/next-24-hours-tile.tsx:1945
 msgid "Map"
 msgstr "地图"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1142
+#: src/features/weather/ui/next-24-hours-tile.tsx:1303
 msgid "Map data unavailable"
 msgstr "地图数据不可用"
 
@@ -1147,22 +1172,32 @@ msgstr "元旦像是日历的重置键：以新年的第一缕日出为记号，
 msgid "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precisely that sunlight floods its inner chamber for just seventeen minutes around the winter solstice each year."
 msgstr "爱尔兰有一座拥有5000年历史的通道式墓穴——纽格莱奇，它建造得如此精确，每年冬至前后只有17分钟的时间阳光会涌入其内室。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:308
-#: src/features/weather/ui/next-24-hours-tile.tsx:395
-#: src/features/weather/ui/next-24-hours-tile.tsx:534
-#: src/features/weather/ui/next-24-hours-tile.tsx:625
+#: src/features/weather/ui/next-24-hours-tile.tsx:341
+#: src/features/weather/ui/next-24-hours-tile.tsx:404
+#: src/features/weather/ui/next-24-hours-tile.tsx:537
+#: src/features/weather/ui/next-24-hours-tile.tsx:613
+#: src/features/weather/ui/next-24-hours-tile.tsx:728
+#: src/features/weather/ui/next-24-hours-tile.tsx:814
 msgid "Next 24 hours"
 msgstr "未来24小时"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1056
+#: src/features/weather/ui/next-24-hours-tile.tsx:1216
 msgid "Next 6 hours"
 msgstr "未来6小时"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:466
+#: src/features/weather/ui/next-24-hours-tile.tsx:559
+msgid "Next sunrise"
+msgstr "下次日出"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:565
+msgid "Next sunset"
+msgstr "下次日落"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:475
 msgid "No measurable precipitation expected"
 msgstr "预计无明显降水"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:435
+#: src/features/weather/ui/next-24-hours-tile.tsx:444
 msgid "No precipitation expected"
 msgstr "预计无降水"
 
@@ -1269,24 +1304,28 @@ msgstr "概览"
 msgid "partly cloudy"
 msgstr "多云"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:418
+#: src/features/weather/ui/next-24-hours-tile.tsx:633
+msgid "Peak AQI"
+msgstr "最高 AQI"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:427
 msgid "Peak chance"
 msgstr "最大降水概率"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:556
+#: src/features/weather/ui/next-24-hours-tile.tsx:750
 msgid "Peak gust"
 msgstr "最大阵风"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1798
+#: src/features/weather/ui/next-24-hours-tile.tsx:1966
 msgid "Peak precipitation chance"
 msgstr "最大降水概率"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:631
+#: src/features/weather/ui/next-24-hours-tile.tsx:543
 msgid "Peak UV"
 msgstr "最高UV指数"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:540
-#: src/features/weather/ui/next-24-hours-tile.tsx:1812
+#: src/features/weather/ui/next-24-hours-tile.tsx:734
+#: src/features/weather/ui/next-24-hours-tile.tsx:1984
 msgid "Peak wind"
 msgstr "最大风速"
 
@@ -1306,17 +1345,25 @@ msgstr "英仙座流星雨"
 msgid "Perseids Meteor Shower"
 msgstr "英仙座流星雨"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:446
-#: src/features/weather/ui/next-24-hours-tile.tsx:472
-#: src/features/weather/ui/next-24-hours-tile.tsx:1711
+#: src/features/weather/ui/next-24-hours-tile.tsx:655
+msgid "PM10 / ozone / NO₂"
+msgstr "PM10 / 臭氧 / NO₂"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:649
+msgid "PM2.5 now"
+msgstr "当前 PM2.5"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:455
+#: src/features/weather/ui/next-24-hours-tile.tsx:481
+#: src/features/weather/ui/next-24-hours-tile.tsx:1872
 msgid "Precipitation"
 msgstr "降水量"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:420
+#: src/features/weather/ui/next-24-hours-tile.tsx:429
 msgid "Precipitation chance"
 msgstr "降水概率"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:392
+#: src/features/weather/ui/next-24-hours-tile.tsx:401
 msgid "Precipitation includes rain and snow."
 msgstr "降水量包括雨和雪。"
 
@@ -1344,8 +1391,8 @@ msgstr "宗教与文化"
 msgid "Report a bug"
 msgstr "报告错误"
 
-#: src/pages/index.tsx:478
-#: src/pages/index.tsx:492
+#: src/pages/index.tsx:500
+#: src/pages/index.tsx:514
 msgid "Retry"
 msgstr "重试"
 
@@ -1546,7 +1593,7 @@ msgstr "显示冬至活动"
 #~ msgid "Showing a reduced saved forecast because the latest data couldn't be fetched."
 #~ msgstr "由于无法获取最新数据，正在显示已保存的精简预报。"
 
-#: src/pages/index.tsx:86
+#: src/pages/index.tsx:85
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "正在显示缓存的天气数据。请重试以刷新最新预报。"
 
@@ -1592,23 +1639,23 @@ msgstr "春分"
 msgid "Stories surrounding Holi vary by region, including the tale of Prahlad and Holika, which speaks to the triumph of devotion and good over harm."
 msgstr "围绕洒红节的故事因地区而异，包括普拉赫拉德与霍利卡的传说，讲述虔诚与善战胜伤害。"
 
-#: src/features/weather/ui/weather-alert.tsx:378
+#: src/features/weather/ui/weather-alert.tsx:379
 msgid "Strong wind gusts for the next {durationOfStrongWind} hours"
 msgstr "未来{durationOfStrongWind}小时有强风暴"
 
-#: src/features/weather/ui/weather-alert.tsx:384
+#: src/features/weather/ui/weather-alert.tsx:385
 msgid "Strong wind gusts for the next 24 hours"
 msgstr "未来24小时有强风暴"
 
-#: src/features/weather/ui/weather-alert.tsx:387
+#: src/features/weather/ui/weather-alert.tsx:388
 msgid "Strong wind gusts for the next hour"
 msgstr "未来一小时有强风暴"
 
-#: src/features/weather/ui/weather-alert.tsx:370
+#: src/features/weather/ui/weather-alert.tsx:371
 msgid "Strong wind gusts starting in {timeUntilStrongWind} hours"
 msgstr "{timeUntilStrongWind}小时后开始有强风暴"
 
-#: src/features/weather/ui/weather-alert.tsx:368
+#: src/features/weather/ui/weather-alert.tsx:369
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "1小时后开始有强风暴"
 
@@ -1620,6 +1667,10 @@ msgstr "提交"
 #: src/features/weather/ui/tile.tsx:193
 msgid "Summer Solstice"
 msgstr "夏至"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:570
+msgid "Sun"
+msgstr "太阳"
 
 #: src/features/weather/ui/tile.tsx:116
 msgid "Sunday"
@@ -1647,9 +1698,13 @@ msgstr "幸运象征"
 
 #: src/features/settings/ui/initialisation.tsx:245
 #: src/features/settings/ui/settings.tsx:541
-#: src/features/weather/ui/next-24-hours-tile.tsx:346
+#: src/features/weather/ui/next-24-hours-tile.tsx:356
 msgid "Temperature"
 msgstr "温度"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:346
+msgid "Temperature now"
+msgstr "当前气温"
 
 #: src/features/seasonal-events/events/autumn-equinox.tsx:89
 msgid "The autumn equinox marks a moment of near-perfect balance, when day and night stand equal before the long shift toward darker evenings."
@@ -2008,7 +2063,7 @@ msgstr "月全食"
 msgid "Total Lunar Eclipse"
 msgstr "月全食"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:401
+#: src/features/weather/ui/next-24-hours-tile.tsx:410
 msgid "Total precipitation"
 msgstr "总降水量"
 
@@ -2052,6 +2107,10 @@ msgstr "如果 Weather Please 显示的紫外线指数长期低于本地来源�
 #~ msgid "Unable to fetch weather data. Please check your internet connection and try again."
 #~ msgstr "无法获取天气数据。请检查您的网络连接并重试。"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:2576
+msgid "Unavailable"
+msgstr "不可用"
+
 #: src/features/weather/ui/tile.tsx:475
 #: src/features/weather/ui/tile.tsx:482
 msgid "unknown conditions"
@@ -2087,7 +2146,11 @@ msgstr "情人节庆祝多种形式的情感：从浪漫爱情，到友情与安
 msgid "violent rain showers"
 msgstr "猛烈的阵雨"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1778
+#: src/features/weather/ui/next-24-hours-tile.tsx:663
+msgid "Waiting for air quality data"
+msgstr "正在等待空气质量数据"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1946
 msgid "Waiting for map data"
 msgstr "正在等待地图数据"
 
@@ -2099,7 +2162,7 @@ msgstr "如何纪念"
 msgid "We couldn't reach the location service right now - this isn't an issue with your device. Please try again in a moment."
 msgstr "我们现在无法连接到位置服务。这不是您设备的问题。请稍后重试。"
 
-#: src/pages/index.tsx:127
+#: src/pages/index.tsx:126
 msgid "We couldn't reach the weather service. Please check your internet connection and try again."
 msgstr "无法连接天气服务。请检查您的网络连接并重试。"
 
@@ -2111,19 +2174,19 @@ msgstr "天气"
 msgid "Weather data by Open-Meteo"
 msgstr "天气数据来自Open-Meteo"
 
-#: src/pages/index.tsx:118
+#: src/pages/index.tsx:117
 msgid "Weather data couldn't be loaded because the weather service could not be reached. This usually isn't a problem with your device. Please try again in a moment."
 msgstr "由于无法连接天气服务，天气数据未能加载。这通常不是您设备的问题。请稍后再试。"
 
-#: src/pages/index.tsx:99
+#: src/pages/index.tsx:98
 msgid "Weather data couldn't be loaded because the weather service is having trouble. This isn't a problem with your device. Please try again in a moment."
 msgstr "由于天气服务出现故障，天气数据未能加载。这不是您设备的问题。请稍后再试。"
 
-#: src/pages/index.tsx:78
+#: src/pages/index.tsx:77
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "由于服务问题，天气数据无法加载 — 正在显示缓存数据。请稍后重试。"
 
-#: src/pages/index.tsx:109
+#: src/pages/index.tsx:108
 msgid "Weather data couldn't be loaded for this location. Please check your location settings and try again."
 msgstr "无法加载此位置的天气数据。请检查您的位置设置并重试。"
 
@@ -2179,12 +2242,12 @@ msgstr "为何会变红"
 msgid "Why the peak is brief"
 msgstr "为何极大期短暂"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:571
-#: src/features/weather/ui/next-24-hours-tile.tsx:1647
+#: src/features/weather/ui/next-24-hours-tile.tsx:765
+#: src/features/weather/ui/next-24-hours-tile.tsx:1808
 msgid "Wind"
 msgstr "风"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:811
+#: src/features/weather/ui/next-24-hours-tile.tsx:969
 msgid "Wind is making it feel cooler than the measured temperature right now."
 msgstr "风使当前体感温度低于实测温度。"
 

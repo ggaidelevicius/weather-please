@@ -608,11 +608,6 @@ export const Next24HoursDetailView = ({
 		return (
 			<DetailViewShell
 				accentClassName="text-teal-200"
-				footer={
-					<Trans>
-						Air quality forecast from Open-Meteo and CAMS atmospheric data.
-					</Trans>
-				}
 				icon={<IconLungs aria-hidden size={22} />}
 				isActive={isActive}
 				kicker={<Trans>Next 24 hours</Trans>}
