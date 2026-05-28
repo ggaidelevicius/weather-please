@@ -19,6 +19,7 @@ import {
 	useSpring,
 } from 'framer-motion'
 import {
+	type CSSProperties,
 	type PointerEvent,
 	type ReactNode,
 	useEffect,
@@ -29,6 +30,7 @@ import {
 import type { Next24HoursData, WeatherMapData } from '../model/types'
 
 import { TemperatureUnit, UnitSystem } from '../../settings/model/unit-system'
+import { getTemperatureAccentColor } from '../model/temperature-colour'
 
 const CHART_HEIGHT = 150
 const CHART_WIDTH = 360
@@ -112,6 +114,7 @@ type ChartTooltipState = {
 
 type DetailViewShellProps = {
 	accentClassName: string
+	accentStyle?: CSSProperties
 	children: ReactNode
 	footer?: ReactNode
 	icon: ReactNode
@@ -138,6 +141,7 @@ type HourIntervalLabelProps = {
 
 type LineChartProps = {
 	accentClassName: string
+	accentStyle?: CSSProperties
 	activeSeriesId?: null | WeatherDetailSeriesId
 	onSeriesFocus?: (seriesId: null | WeatherDetailSeriesId) => void
 	points: number[]
@@ -155,6 +159,8 @@ type LineChartProps = {
 }
 
 type MetricProps = {
+	accentClassName?: string
+	accentStyle?: CSSProperties
 	activeSeriesId?: null | WeatherDetailSeriesId
 	icon: ReactNode
 	label: ReactNode
@@ -329,12 +335,17 @@ export const Next24HoursDetailView = ({
 	if (viewId === 'temperature') {
 		const scale = getChartScale(temperatures)
 		const currentTemperature = temperatures[0] ?? 0
+		const currentTemperatureCelsius = data[0]?.temperature ?? 0
+		const temperatureAccentColor = getTemperatureAccentColor(
+			currentTemperatureCelsius,
+		)
 		const currentApparentTemperature = apparentTemperatures[0] ?? 0
 		const feelsLikeExplanation = getFeelsLikeExplanation(data[0] ?? {})
 
 		return (
 			<DetailViewShell
-				accentClassName="text-blue-200"
+				accentClassName=""
+				accentStyle={{ color: temperatureAccentColor }}
 				footer={feelsLikeExplanation}
 				icon={<IconTemperature aria-hidden size={22} />}
 				isActive={isActive}
@@ -342,6 +353,7 @@ export const Next24HoursDetailView = ({
 				metrics={
 					<>
 						<Metric
+							accentStyle={{ color: temperatureAccentColor }}
 							icon={<IconTemperature aria-hidden size={18} />}
 							label={<Trans>Temperature now</Trans>}
 							value={`${Math.round(currentTemperature)}${temperatureUnitLabel}`}
@@ -365,7 +377,8 @@ export const Next24HoursDetailView = ({
 					startLabel={startLabel}
 				>
 					<LineChart
-						accentClassName="stroke-blue-300"
+						accentClassName=""
+						accentStyle={{ stroke: temperatureAccentColor }}
 						points={temperatures}
 						primarySeriesId="temperature"
 						primarySeriesLabel="Temperature"
@@ -397,7 +410,7 @@ export const Next24HoursDetailView = ({
 
 		return (
 			<DetailViewShell
-				accentClassName="text-blue-200"
+				accentClassName="text-cyan-200"
 				footer={<Trans>Precipitation includes rain and snow.</Trans>}
 				icon={<IconCloudRain aria-hidden size={22} />}
 				isActive={isActive}
@@ -405,6 +418,7 @@ export const Next24HoursDetailView = ({
 				metrics={
 					<>
 						<Metric
+							accentClassName="text-cyan-300"
 							activeSeriesId={activeSeriesId}
 							icon={<IconCloudRain aria-hidden size={18} />}
 							label={<Trans>Total precipitation</Trans>}
@@ -420,6 +434,7 @@ export const Next24HoursDetailView = ({
 							}
 						/>
 						<Metric
+							accentClassName="text-sky-300"
 							activeSeriesId={activeSeriesId}
 							icon={<IconCloudRain aria-hidden size={18} />}
 							label={
@@ -446,6 +461,7 @@ export const Next24HoursDetailView = ({
 							}
 						/>
 						<Metric
+							accentClassName="text-cyan-300"
 							activeSeriesId={activeSeriesId}
 							icon={<IconCloudRain aria-hidden size={18} />}
 							label={
@@ -538,6 +554,7 @@ export const Next24HoursDetailView = ({
 				metrics={
 					<>
 						<Metric
+							accentClassName="text-amber-200"
 							activeSeriesId={activeSeriesId}
 							icon={<IconUvIndex aria-hidden size={18} />}
 							label={<Trans>Peak UV</Trans>}
@@ -615,6 +632,7 @@ export const Next24HoursDetailView = ({
 					hasAirQualityData ? (
 						<>
 							<Metric
+								accentClassName="text-teal-200"
 								activeSeriesId={activeSeriesId}
 								icon={<IconLungs aria-hidden size={18} />}
 								label={<Trans>Current AQI</Trans>}
@@ -628,6 +646,7 @@ export const Next24HoursDetailView = ({
 								}
 							/>
 							<Metric
+								accentClassName="text-teal-200"
 								activeSeriesId={activeSeriesId}
 								icon={<IconHaze aria-hidden size={18} />}
 								label={<Trans>Peak AQI</Trans>}
@@ -724,29 +743,14 @@ export const Next24HoursDetailView = ({
 
 		return (
 			<DetailViewShell
-				accentClassName="text-sky-200"
+				accentClassName="text-slate-200"
 				icon={<IconWind aria-hidden size={22} />}
 				isActive={isActive}
 				kicker={<Trans>Next 24 hours</Trans>}
 				metrics={
 					<>
 						<Metric
-							activeSeriesId={activeSeriesId}
-							icon={<IconWind aria-hidden size={18} />}
-							label={<Trans>Peak wind</Trans>}
-							onSeriesFocus={setActiveSeriesId}
-							seriesId="wind"
-							value={
-								<Trans>
-									{Math.round(peakWind.value)} {windUnitLabel} at{' '}
-									<RelativeHourLabel
-										referenceTime={referenceTime}
-										time={data[peakWind.index]?.time}
-									/>
-								</Trans>
-							}
-						/>
-						<Metric
+							accentClassName="text-orange-300"
 							activeSeriesId={activeSeriesId}
 							icon={<IconWind aria-hidden size={18} />}
 							label={<Trans>Peak gust</Trans>}
@@ -758,6 +762,23 @@ export const Next24HoursDetailView = ({
 									<RelativeHourLabel
 										referenceTime={referenceTime}
 										time={data[peakGust.index]?.time}
+									/>
+								</Trans>
+							}
+						/>
+						<Metric
+							accentClassName="text-sky-300"
+							activeSeriesId={activeSeriesId}
+							icon={<IconWind aria-hidden size={18} />}
+							label={<Trans>Peak wind</Trans>}
+							onSeriesFocus={setActiveSeriesId}
+							seriesId="wind"
+							value={
+								<Trans>
+									{Math.round(peakWind.value)} {windUnitLabel} at{' '}
+									<RelativeHourLabel
+										referenceTime={referenceTime}
+										time={data[peakWind.index]?.time}
 									/>
 								</Trans>
 							}
@@ -783,7 +804,7 @@ export const Next24HoursDetailView = ({
 							`${formatDecimal(value)} ${windUnitLabel}`
 						}
 						scale={scale}
-						secondaryAccentClassName="stroke-cyan-100"
+						secondaryAccentClassName="stroke-orange-300"
 						secondaryPoints={windGust}
 						secondarySeriesId="windGust"
 						secondarySeriesLabel="Gust"
@@ -817,6 +838,7 @@ export const Next24HoursDetailView = ({
 			metrics={
 				<>
 					<Metric
+						accentClassName="text-emerald-300"
 						icon={<IconEye aria-hidden size={18} />}
 						label={<Trans>Lowest visibility</Trans>}
 						value={
@@ -830,6 +852,7 @@ export const Next24HoursDetailView = ({
 						}
 					/>
 					<Metric
+						accentClassName="text-emerald-300"
 						icon={<IconEye aria-hidden size={18} />}
 						label={<Trans>Clearest hour</Trans>}
 						value={
@@ -873,6 +896,7 @@ export const Next24HoursDetailView = ({
 
 const DetailViewShell = ({
 	accentClassName,
+	accentStyle,
 	children,
 	footer,
 	icon,
@@ -887,7 +911,9 @@ const DetailViewShell = ({
 	>
 		<div className="mx-auto grid h-full w-full max-w-6xl grid-rows-[auto_minmax(0,1fr)] gap-7">
 			<div className="flex items-center gap-3">
-				<span className={accentClassName}>{icon}</span>
+				<span className={accentClassName} style={accentStyle}>
+					{icon}
+				</span>
 				<div>
 					<p className="text-xs font-semibold tracking-[0.18em] text-dark-300 uppercase">
 						{kicker}
@@ -978,6 +1004,8 @@ const getFeelsLikeExplanation = ({
 }
 
 const Metric = ({
+	accentClassName,
+	accentStyle,
 	activeSeriesId = null,
 	icon,
 	label,
@@ -987,6 +1015,9 @@ const Metric = ({
 }: Readonly<MetricProps>) => {
 	const isHighlighted = Boolean(seriesId) && activeSeriesId === seriesId
 	const shouldDim = Boolean(activeSeriesId) && !isHighlighted
+	const iconClassName =
+		accentClassName ?? (isHighlighted ? 'text-white' : 'text-dark-200')
+	const iconStyle = accentStyle
 
 	const handleMouseEnter = () => {
 		if (seriesId) {
@@ -1008,7 +1039,7 @@ const Metric = ({
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 		>
-			<span className={isHighlighted ? 'text-white' : 'text-dark-200'}>
+			<span className={iconClassName} style={iconStyle}>
 				{icon}
 			</span>
 			<span className="min-w-0">
@@ -2077,6 +2108,7 @@ const formatAnimatedNumber = ({
 
 const LineChart = ({
 	accentClassName,
+	accentStyle,
 	activeSeriesId = null,
 	onSeriesFocus,
 	points,
@@ -2128,6 +2160,7 @@ const LineChart = ({
 					seriesId={primarySeriesId}
 					seriesLabel={primarySeriesLabel}
 					strokeWidth={2.5}
+					style={accentStyle}
 					times={times}
 					valueFormatter={primaryValueFormatter}
 				/>
@@ -2147,6 +2180,7 @@ type ChartLineProps = {
 	seriesId?: WeatherDetailSeriesId
 	seriesLabel: string
 	strokeWidth: number
+	style?: CSSProperties
 	times: number[]
 	valueFormatter: (value: number) => ReactNode
 }
@@ -2161,6 +2195,7 @@ const ChartLine = ({
 	seriesId,
 	seriesLabel,
 	strokeWidth,
+	style,
 	times,
 	valueFormatter,
 }: Readonly<ChartLineProps>) => {
@@ -2230,6 +2265,7 @@ const ChartLine = ({
 				strokeLinecap="round"
 				strokeLinejoin="round"
 				strokeWidth={isHighlighted ? strokeWidth + 0.75 : strokeWidth}
+				style={style}
 			/>
 		</g>
 	)
@@ -2329,7 +2365,7 @@ const PrecipitationChart = ({
 						const x = getChartX(index, amountPoints.length) - barWidth / 2
 						return (
 							<rect
-								className={`fill-blue-300/45 transition-opacity ${
+								className={`fill-cyan-300/60 transition-opacity ${
 									shouldDimAmount ? 'opacity-30' : 'opacity-100'
 								}`}
 								height={CHART_HEIGHT - CHART_PADDING - y}
@@ -2344,7 +2380,7 @@ const PrecipitationChart = ({
 				</g>
 				<ChartLine
 					activeSeriesId={activeSeriesId}
-					className="stroke-blue-100"
+					className="stroke-sky-300"
 					onSeriesFocus={onSeriesFocus}
 					onTooltipChange={setTooltip}
 					points={probabilityPoints}

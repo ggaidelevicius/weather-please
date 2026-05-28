@@ -26,6 +26,7 @@ import { ReviewPrompt } from '../features/settings/ui/review-prompt'
 import { Settings } from '../features/settings/ui/settings'
 import { usePeriodicLocationRefresh } from '../features/weather/hooks/use-periodic-location-refresh'
 import { useWeather } from '../features/weather/hooks/use-weather'
+import { getTemperatureAccentColor } from '../features/weather/model/temperature-colour'
 import {
 	Next24HoursDetailView,
 	type Next24HoursDetailViewId,
@@ -186,6 +187,9 @@ const App = () => {
 	const activeAvailableViewId = canShowNext24HoursView
 		? activeViewId
 		: 'forecast'
+	const temperatureAccentColor = getTemperatureAccentColor(
+		next24HoursData[0]?.temperature ?? 0,
+	)
 	const shouldBlurSeasonalEffects = activeAvailableViewId !== 'forecast'
 
 	const activeSeasonalEvent = useSeasonalEvents({
@@ -470,6 +474,7 @@ const App = () => {
 					<DetailFallbackGlow
 						activeViewId={activeAvailableViewId}
 						isVisible={shouldShowDetailFallbackGlow}
+						temperatureAccentColor={temperatureAccentColor}
 					/>
 					<AnimatePresence>{isLoading ? <RingLoader /> : null}</AnimatePresence>
 					<DirectionalView
@@ -620,18 +625,32 @@ const DETAIL_FALLBACK_AURORA_GRADIENTS: Record<ForecastViewId, string> = {
 		'radial-gradient(120% 80% at 15% 0%, rgba(59, 130, 246, 0.24), rgba(14, 116, 144, 0.1) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(129, 140, 248, 0.17), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(52, 211, 153, 0.13), rgba(15, 23, 42, 0) 70%)',
 	map: 'radial-gradient(120% 80% at 15% 0%, rgba(6, 182, 212, 0.22), rgba(14, 116, 144, 0.11) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(56, 189, 248, 0.15), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(34, 211, 238, 0.12), rgba(15, 23, 42, 0) 70%)',
 	precipitation:
-		'radial-gradient(120% 80% at 15% 0%, rgba(37, 99, 235, 0.24), rgba(14, 116, 144, 0.12) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(56, 189, 248, 0.16), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(45, 212, 191, 0.12), rgba(15, 23, 42, 0) 70%)',
+		'radial-gradient(120% 80% at 15% 0%, rgba(14, 165, 233, 0.22), rgba(8, 145, 178, 0.1) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(56, 189, 248, 0.16), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(45, 212, 191, 0.11), rgba(15, 23, 42, 0) 70%)',
 	sun: 'radial-gradient(120% 80% at 15% 0%, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.09) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(251, 191, 36, 0.14), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(244, 114, 182, 0.1), rgba(15, 23, 42, 0) 70%)',
 	temperature:
-		'radial-gradient(120% 80% at 15% 0%, rgba(59, 130, 246, 0.24), rgba(14, 116, 144, 0.1) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(129, 140, 248, 0.17), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(52, 211, 153, 0.13), rgba(15, 23, 42, 0) 70%)',
-	wind: 'radial-gradient(120% 80% at 15% 0%, rgba(14, 165, 233, 0.23), rgba(8, 145, 178, 0.1) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(103, 232, 249, 0.16), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(59, 130, 246, 0.12), rgba(15, 23, 42, 0) 70%)',
+		'radial-gradient(120% 80% at 15% 0%, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.08) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(96, 165, 250, 0.13), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(244, 114, 182, 0.09), rgba(15, 23, 42, 0) 70%)',
+	wind: 'radial-gradient(120% 80% at 15% 0%, rgba(56, 189, 248, 0.17), rgba(51, 65, 85, 0.1) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(217, 70, 239, 0.12), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(148, 163, 184, 0.12), rgba(15, 23, 42, 0) 70%)',
 }
+
+const getTemperatureDetailFallbackGradient = (accentColor: string) =>
+	`radial-gradient(120% 80% at 15% 0%, ${toRgba(accentColor, 0.22)}, ${toRgba(accentColor, 0.09)} 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, ${toRgba(accentColor, 0.15)}, rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, ${toRgba(accentColor, 0.1)}, rgba(15, 23, 42, 0) 70%)`
+
+const toRgba = (rgbColor: string, alpha: number) =>
+	rgbColor.replace('rgb(', 'rgba(').replace(')', `, ${alpha})`)
 
 const DetailFallbackGlow = ({
 	activeViewId,
 	isVisible,
-}: Readonly<{ activeViewId: ForecastViewId; isVisible: boolean }>) => {
-	const activeGradient = DETAIL_FALLBACK_AURORA_GRADIENTS[activeViewId]
+	temperatureAccentColor,
+}: Readonly<{
+	activeViewId: ForecastViewId
+	isVisible: boolean
+	temperatureAccentColor: string
+}>) => {
+	const activeGradient =
+		activeViewId === 'temperature'
+			? getTemperatureDetailFallbackGradient(temperatureAccentColor)
+			: DETAIL_FALLBACK_AURORA_GRADIENTS[activeViewId]
 
 	return (
 		<motion.div
