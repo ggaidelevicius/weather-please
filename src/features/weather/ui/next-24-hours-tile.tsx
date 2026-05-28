@@ -2,11 +2,22 @@ import { Trans } from '@lingui/react/macro'
 import {
 	IconCloudRain,
 	IconEye,
+	IconHaze,
+	IconLungs,
 	IconMap2,
+	IconSun,
+	IconSunrise,
+	IconSunset,
 	IconTemperature,
 	IconUvIndex,
 	IconWind,
 } from '@tabler/icons-react'
+import {
+	useMotionValue,
+	useMotionValueEvent,
+	useReducedMotion,
+	useSpring,
+} from 'framer-motion'
 import {
 	type PointerEvent,
 	type ReactNode,
@@ -29,6 +40,7 @@ const FEELS_LIKE_MIN_DELTA_C = 1.5
 const FEELS_LIKE_SOLAR_RADIATION_THRESHOLD = 250
 const FEELS_LIKE_WARM_TEMPERATURE_C = 20
 const FEELS_LIKE_WIND_THRESHOLD_KMH = 12
+const AIR_QUALITY_AQI_DEFAULT_MAX = 150
 const PRECIPITATION_CHART_DEFAULT_MAX_MM = 5
 const UV_CHART_DEFAULT_MAX = 15
 const VISIBILITY_CHART_DEFAULT_MAX_METERS = 10_000
@@ -61,12 +73,20 @@ export const NEXT_24_HOURS_DETAIL_VIEW_IDS = [
 	'temperature',
 	'precipitation',
 	'wind',
+	'air-quality',
+	'sun',
 	'conditions',
 	'map',
 ] as const
 
 export type Next24HoursDetailViewId =
 	(typeof NEXT_24_HOURS_DETAIL_VIEW_IDS)[number]
+
+type AnimatedNumberProps = {
+	maximumFractionDigits?: number
+	minimumFractionDigits?: number
+	value: number
+}
 
 type ChartFrameProps = {
 	children: ReactNode
@@ -173,6 +193,7 @@ type RelativeHourLabelProps = {
 }
 
 type WeatherDetailSeriesId =
+	| 'airQualityAqi'
 	| 'precipitationAmount'
 	| 'precipitationProbability'
 	| 'temperature'
@@ -189,6 +210,11 @@ type WeatherMapDimensions = {
 type WeatherMapDisplaySize = {
 	height: number
 	width: number
+}
+
+type WeatherMapMetricPoint = {
+	precipitationProbability: number
+	windSpeed: number
 }
 
 type WeatherMapParticle = {
@@ -284,6 +310,13 @@ export const Next24HoursDetailView = ({
 		convertVisibility({ usesMetricUnits, visibility }),
 	)
 	const times = data.map(({ time }) => time)
+	const airQualityAqi = data.map(({ airQualityAqi }) => airQualityAqi)
+	const airQualityPm25 = data.map(({ airQualityPm25 }) => airQualityPm25)
+	const airQualityPm10 = data.map(({ airQualityPm10 }) => airQualityPm10)
+	const airQualityOzone = data.map(({ airQualityOzone }) => airQualityOzone)
+	const airQualityNitrogenDioxide = data.map(
+		({ airQualityNitrogenDioxide }) => airQualityNitrogenDioxide,
+	)
 	const temperatureUnitLabel = usesMetricTemperature ? '°C' : '°F'
 	const precipitationUnitLabel = usesMetricUnits ? 'mm' : 'in'
 	const windUnitLabel = usesMetricUnits ? 'km/h' : 'mph'
@@ -295,8 +328,7 @@ export const Next24HoursDetailView = ({
 
 	if (viewId === 'temperature') {
 		const scale = getChartScale(temperatures)
-		const high = getPeakPoint(temperatures)
-		const low = getLowPoint(temperatures)
+		const currentTemperature = temperatures[0] ?? 0
 		const currentApparentTemperature = apparentTemperatures[0] ?? 0
 		const feelsLikeExplanation = getFeelsLikeExplanation(data[0] ?? {})
 
@@ -311,31 +343,8 @@ export const Next24HoursDetailView = ({
 					<>
 						<Metric
 							icon={<IconTemperature aria-hidden size={18} />}
-							label={<Trans>High</Trans>}
-							value={
-								<Trans>
-									{Math.round(high.value)}
-									{temperatureUnitLabel} at{' '}
-									<RelativeHourLabel
-										referenceTime={referenceTime}
-										time={data[high.index]?.time}
-									/>
-								</Trans>
-							}
-						/>
-						<Metric
-							icon={<IconTemperature aria-hidden size={18} />}
-							label={<Trans>Low</Trans>}
-							value={
-								<Trans>
-									{Math.round(low.value)}
-									{temperatureUnitLabel} at{' '}
-									<RelativeHourLabel
-										referenceTime={referenceTime}
-										time={data[low.index]?.time}
-									/>
-								</Trans>
-							}
+							label={<Trans>Temperature now</Trans>}
+							value={`${Math.round(currentTemperature)}${temperatureUnitLabel}`}
 						/>
 						<Metric
 							icon={<IconTemperature aria-hidden size={18} />}
@@ -503,6 +512,196 @@ export const Next24HoursDetailView = ({
 		)
 	}
 
+	if (viewId === 'sun') {
+		const uvScale = getChartScale(uv, {
+			maxValue: Math.max(UV_CHART_DEFAULT_MAX, max(uv)),
+			minValue: 0,
+		})
+		const peakUv = getPeakPoint(uv)
+		const nextSunrise = getNextSunEvent({
+			data,
+			referenceTime,
+			type: 'sunrise',
+		})
+		const nextSunset = getNextSunEvent({
+			data,
+			referenceTime,
+			type: 'sunset',
+		})
+
+		return (
+			<DetailViewShell
+				accentClassName="text-amber-200"
+				icon={<IconSun aria-hidden size={22} />}
+				isActive={isActive}
+				kicker={<Trans>Next 24 hours</Trans>}
+				metrics={
+					<>
+						<Metric
+							activeSeriesId={activeSeriesId}
+							icon={<IconUvIndex aria-hidden size={18} />}
+							label={<Trans>Peak UV</Trans>}
+							onSeriesFocus={setActiveSeriesId}
+							seriesId="uv"
+							value={
+								<Trans>
+									{Math.round(peakUv.value)} at{' '}
+									<RelativeHourLabel
+										referenceTime={referenceTime}
+										time={data[peakUv.index]?.time}
+									/>
+								</Trans>
+							}
+						/>
+						<Metric
+							activeSeriesId={activeSeriesId}
+							icon={<IconSunrise aria-hidden size={18} />}
+							label={<Trans>Next sunrise</Trans>}
+							value={formatOptionalHour(nextSunrise)}
+						/>
+						<Metric
+							activeSeriesId={activeSeriesId}
+							icon={<IconSunset aria-hidden size={18} />}
+							label={<Trans>Next sunset</Trans>}
+							value={formatOptionalHour(nextSunset)}
+						/>
+					</>
+				}
+				title={<Trans>Sun</Trans>}
+			>
+				<ChartFrame
+					endLabel={endLabel}
+					leftLabels={getScaleLabels({ scale: uvScale, unitLabel: '' })}
+					middleLabel={middleLabel}
+					startLabel={startLabel}
+				>
+					<LineChart
+						accentClassName="stroke-amber-200"
+						activeSeriesId={activeSeriesId}
+						onSeriesFocus={setActiveSeriesId}
+						points={uv}
+						primarySeriesId="uv"
+						primarySeriesLabel="UV"
+						primaryValueFormatter={formatDecimal}
+						scale={uvScale}
+						times={times}
+					/>
+				</ChartFrame>
+			</DetailViewShell>
+		)
+	}
+
+	if (viewId === 'air-quality') {
+		const hasAirQualityData = airQualityAqi.some(isNumber)
+		const airQualityAqiValues = airQualityAqi.map((value) => value ?? 0)
+		const airQualityScale = getChartScale(airQualityAqiValues, {
+			maxValue: Math.max(AIR_QUALITY_AQI_DEFAULT_MAX, max(airQualityAqiValues)),
+			minValue: 0,
+		})
+		const currentAqi = airQualityAqi[0] ?? null
+		const currentPm25 = airQualityPm25[0] ?? null
+		const currentPm10 = airQualityPm10[0] ?? null
+		const currentOzone = airQualityOzone[0] ?? null
+		const currentNitrogenDioxide = airQualityNitrogenDioxide[0] ?? null
+		const peakAqi = getPeakPoint(airQualityAqiValues)
+
+		return (
+			<DetailViewShell
+				accentClassName="text-teal-200"
+				footer={
+					<Trans>
+						Air quality forecast from Open-Meteo and CAMS atmospheric data.
+					</Trans>
+				}
+				icon={<IconLungs aria-hidden size={22} />}
+				isActive={isActive}
+				kicker={<Trans>Next 24 hours</Trans>}
+				metrics={
+					hasAirQualityData ? (
+						<>
+							<Metric
+								activeSeriesId={activeSeriesId}
+								icon={<IconLungs aria-hidden size={18} />}
+								label={<Trans>Current AQI</Trans>}
+								onSeriesFocus={setActiveSeriesId}
+								seriesId="airQualityAqi"
+								value={
+									<Trans>
+										{Math.round(currentAqi ?? 0)} ·{' '}
+										{getUsAqiCategory(currentAqi ?? 0)}
+									</Trans>
+								}
+							/>
+							<Metric
+								activeSeriesId={activeSeriesId}
+								icon={<IconHaze aria-hidden size={18} />}
+								label={<Trans>Peak AQI</Trans>}
+								onSeriesFocus={setActiveSeriesId}
+								seriesId="airQualityAqi"
+								value={
+									<Trans>
+										{Math.round(peakAqi.value)} at{' '}
+										<RelativeHourLabel
+											referenceTime={referenceTime}
+											time={data[peakAqi.index]?.time}
+										/>
+									</Trans>
+								}
+							/>
+							<Metric
+								activeSeriesId={activeSeriesId}
+								icon={<IconHaze aria-hidden size={18} />}
+								label={<Trans>PM2.5 now</Trans>}
+								value={formatPollutantValue(currentPm25)}
+							/>
+							<Metric
+								activeSeriesId={activeSeriesId}
+								icon={<IconHaze aria-hidden size={18} />}
+								label={<Trans>PM10 / ozone / NO₂</Trans>}
+								value={`${formatPollutantValue(currentPm10)} · ${formatPollutantValue(currentOzone)} · ${formatPollutantValue(currentNitrogenDioxide)}`}
+							/>
+						</>
+					) : (
+						<Metric
+							icon={<IconLungs aria-hidden size={18} />}
+							label={<Trans>Air quality</Trans>}
+							value={<Trans>Waiting for air quality data</Trans>}
+						/>
+					)
+				}
+				title={<Trans>Air quality</Trans>}
+			>
+				<ChartFrame
+					endLabel={endLabel}
+					leftLabels={getScaleLabels({
+						scale: airQualityScale,
+						unitLabel: '',
+					})}
+					middleLabel={middleLabel}
+					startLabel={startLabel}
+				>
+					{hasAirQualityData ? (
+						<LineChart
+							accentClassName="stroke-teal-200"
+							activeSeriesId={activeSeriesId}
+							onSeriesFocus={setActiveSeriesId}
+							points={airQualityAqiValues}
+							primarySeriesId="airQualityAqi"
+							primarySeriesLabel="AQI"
+							primaryValueFormatter={(value) =>
+								`${Math.round(value)} · ${getUsAqiCategory(value)}`
+							}
+							scale={airQualityScale}
+							times={times}
+						/>
+					) : (
+						<EmptyChartState label={<Trans>Air quality unavailable</Trans>} />
+					)}
+				</ChartFrame>
+			</DetailViewShell>
+		)
+	}
+
 	if (viewId === 'map') {
 		return (
 			<WeatherMapDetail
@@ -601,10 +800,6 @@ export const Next24HoursDetailView = ({
 		)
 	}
 
-	const uvScale = getChartScale(uv, {
-		maxValue: Math.max(UV_CHART_DEFAULT_MAX, max(uv)),
-		minValue: 0,
-	})
 	const visibilityDefaultMax = convertVisibility({
 		usesMetricUnits,
 		visibility: VISIBILITY_CHART_DEFAULT_MAX_METERS,
@@ -613,40 +808,20 @@ export const Next24HoursDetailView = ({
 		maxValue: Math.max(visibilityDefaultMax, max(visibility)),
 		minValue: 0,
 	})
-	const peakUv = getPeakPoint(uv)
 	const lowestVisibility = getLowPoint(visibility)
 	const bestVisibility = getPeakPoint(visibility)
 
 	return (
 		<DetailViewShell
-			accentClassName="text-violet-200"
-			icon={<IconUvIndex aria-hidden size={22} />}
+			accentClassName="text-emerald-200"
+			icon={<IconEye aria-hidden size={22} />}
 			isActive={isActive}
 			kicker={<Trans>Next 24 hours</Trans>}
 			metrics={
 				<>
 					<Metric
-						activeSeriesId={activeSeriesId}
-						icon={<IconUvIndex aria-hidden size={18} />}
-						label={<Trans>Peak UV</Trans>}
-						onSeriesFocus={setActiveSeriesId}
-						seriesId="uv"
-						value={
-							<Trans>
-								{Math.round(peakUv.value)} at{' '}
-								<RelativeHourLabel
-									referenceTime={referenceTime}
-									time={data[peakUv.index]?.time}
-								/>
-							</Trans>
-						}
-					/>
-					<Metric
-						activeSeriesId={activeSeriesId}
 						icon={<IconEye aria-hidden size={18} />}
 						label={<Trans>Lowest visibility</Trans>}
-						onSeriesFocus={setActiveSeriesId}
-						seriesId="visibility"
 						value={
 							<Trans>
 								{formatDecimal(lowestVisibility.value)} {visibilityUnitLabel} at{' '}
@@ -658,11 +833,8 @@ export const Next24HoursDetailView = ({
 						}
 					/>
 					<Metric
-						activeSeriesId={activeSeriesId}
 						icon={<IconEye aria-hidden size={18} />}
 						label={<Trans>Clearest hour</Trans>}
-						onSeriesFocus={setActiveSeriesId}
-						seriesId="visibility"
 						value={
 							<Trans>
 								{formatDecimal(bestVisibility.value)} {visibilityUnitLabel} at{' '}
@@ -679,31 +851,22 @@ export const Next24HoursDetailView = ({
 		>
 			<ChartFrame
 				endLabel={endLabel}
-				leftLabels={getScaleLabels({ scale: uvScale, unitLabel: '' })}
-				middleLabel={middleLabel}
-				rightLabels={getScaleLabels({
+				leftLabels={getScaleLabels({
 					scale: visibilityScale,
 					unitLabel: visibilityUnitLabel,
 				})}
+				middleLabel={middleLabel}
 				startLabel={startLabel}
 			>
 				<LineChart
-					accentClassName="stroke-violet-300"
-					activeSeriesId={activeSeriesId}
-					onSeriesFocus={setActiveSeriesId}
-					points={uv}
-					primarySeriesId="uv"
-					primarySeriesLabel="UV"
-					primaryValueFormatter={formatDecimal}
-					scale={uvScale}
-					secondaryAccentClassName="stroke-emerald-300"
-					secondaryPoints={visibility}
-					secondaryScale={visibilityScale}
-					secondarySeriesId="visibility"
-					secondarySeriesLabel="Visibility"
-					secondaryValueFormatter={(value) =>
+					accentClassName="stroke-emerald-300"
+					points={visibility}
+					primarySeriesId="visibility"
+					primarySeriesLabel="Visibility"
+					primaryValueFormatter={(value) =>
 						`${formatDecimal(value)} ${visibilityUnitLabel}`
 					}
+					scale={visibilityScale}
 					times={times}
 				/>
 			</ChartFrame>
@@ -998,6 +1161,12 @@ const AxisLabels = ({ labels }: Readonly<{ labels: string[] }>) => (
 	</div>
 )
 
+const EmptyChartState = ({ label }: Readonly<{ label: ReactNode }>) => (
+	<div className="flex h-48 items-center justify-center border-y border-white/8 text-sm font-medium text-dark-300">
+		{label}
+	</div>
+)
+
 const WeatherMapDetail = ({
 	isActive,
 	usesMetricUnits,
@@ -1016,10 +1185,6 @@ const WeatherMapDetail = ({
 			time: 0,
 		}),
 	)
-	const selectedFrame = getWeatherMapFrame({
-		frameIndex: playback.frameIndex,
-		weatherMapData,
-	})
 	const frameCount = weatherMapData?.frames.length ?? 0
 
 	useEffect(() => {
@@ -1056,7 +1221,7 @@ const WeatherMapDetail = ({
 			kicker={<Trans>Next 6 hours</Trans>}
 			metrics={
 				<WeatherMapMetrics
-					frame={selectedFrame}
+					playbackPosition={playback.framePosition}
 					usesMetricUnits={usesMetricUnits}
 					weatherMapData={weatherMapData}
 					windUnitLabel={windUnitLabel}
@@ -1761,17 +1926,24 @@ const WeatherMapTimeline = ({
 }
 
 const WeatherMapMetrics = ({
-	frame,
+	playbackPosition,
 	usesMetricUnits,
 	weatherMapData,
 	windUnitLabel,
 }: Readonly<{
-	frame: null | WeatherMapData['frames'][number]
+	playbackPosition: number
 	usesMetricUnits: boolean
 	weatherMapData: null | WeatherMapData
 	windUnitLabel: string
 }>) => {
-	if (!weatherMapData || !frame) {
+	const interpolatedPoints = weatherMapData
+		? getInterpolatedWeatherMapMetricPoints({
+				framePosition: playbackPosition,
+				frames: weatherMapData.frames,
+			})
+		: []
+
+	if (!weatherMapData || interpolatedPoints.length === 0) {
 		return (
 			<Metric
 				icon={<IconMap2 aria-hidden size={18} />}
@@ -1781,12 +1953,12 @@ const WeatherMapMetrics = ({
 		)
 	}
 
-	const windSpeeds = frame.points.map(({ windSpeed }) =>
+	const windSpeeds = interpolatedPoints.map(({ windSpeed }) =>
 		convertWind({ usesMetricUnits, wind: windSpeed }),
 	)
 	const averageWind = average(windSpeeds)
 	const peakChance = getPeakPoint(
-		frame.points.map(
+		interpolatedPoints.map(
 			({ precipitationProbability }) => precipitationProbability,
 		),
 	)
@@ -1797,29 +1969,81 @@ const WeatherMapMetrics = ({
 			<Metric
 				icon={<IconCloudRain aria-hidden size={18} />}
 				label={<Trans>Peak precipitation chance</Trans>}
-				value={<Trans>{Math.round(peakChance.value)}%</Trans>}
+				value={
+					<>
+						<AnimatedNumber value={peakChance.value} />%
+					</>
+				}
 			/>
 			<Metric
 				icon={<IconWind aria-hidden size={18} />}
 				label={<Trans>Average wind</Trans>}
 				value={
-					<Trans>
-						{Math.round(averageWind)} {windUnitLabel}
-					</Trans>
+					<>
+						<AnimatedNumber value={averageWind} /> {windUnitLabel}
+					</>
 				}
 			/>
 			<Metric
 				icon={<IconWind aria-hidden size={18} />}
 				label={<Trans>Peak wind</Trans>}
 				value={
-					<Trans>
-						{Math.round(peakWind.value)} {windUnitLabel}
-					</Trans>
+					<>
+						<AnimatedNumber value={peakWind.value} /> {windUnitLabel}
+					</>
 				}
 			/>
 		</>
 	)
 }
+
+const AnimatedNumber = ({
+	maximumFractionDigits = 0,
+	minimumFractionDigits = 0,
+	value,
+}: Readonly<AnimatedNumberProps>) => {
+	const sourceValue = useMotionValue(value)
+	const springValue = useSpring(sourceValue, {
+		damping: 24,
+		mass: 0.45,
+		stiffness: 180,
+	})
+	const shouldReduceMotion = useReducedMotion()
+	const displayedMotionValue = shouldReduceMotion ? sourceValue : springValue
+	const [displayedValue, setDisplayedValue] = useState(() =>
+		formatAnimatedNumber({
+			maximumFractionDigits,
+			minimumFractionDigits,
+			value,
+		}),
+	)
+
+	useMotionValueEvent(displayedMotionValue, 'change', (latestValue) => {
+		setDisplayedValue(
+			formatAnimatedNumber({
+				maximumFractionDigits,
+				minimumFractionDigits,
+				value: latestValue,
+			}),
+		)
+	})
+
+	useEffect(() => {
+		sourceValue.set(value)
+	}, [sourceValue, value])
+
+	return <span>{displayedValue}</span>
+}
+
+const formatAnimatedNumber = ({
+	maximumFractionDigits,
+	minimumFractionDigits,
+	value,
+}: Required<AnimatedNumberProps>) =>
+	new Intl.NumberFormat(undefined, {
+		maximumFractionDigits,
+		minimumFractionDigits,
+	}).format(value)
 
 const LineChart = ({
 	accentClassName,
@@ -2347,6 +2571,18 @@ const formatHour = (time?: number) => {
 	)
 }
 
+const formatHourMinute = (time: number) =>
+	new Intl.DateTimeFormat('en', {
+		hour: 'numeric',
+		minute: '2-digit',
+	}).format(new Date(time * 1000))
+
+const formatOptionalHour = (time: null | number) =>
+	typeof time === 'number' ? formatHourMinute(time) : <Trans>Unavailable</Trans>
+
+const formatPollutantValue = (value: null | number) =>
+	typeof value === 'number' ? `${formatDecimal(value)} µg/m³` : '—'
+
 const formatWeekdayHour = (time: number) =>
 	new Intl.DateTimeFormat('en', {
 		hour: 'numeric',
@@ -2354,6 +2590,55 @@ const formatWeekdayHour = (time: number) =>
 	}).format(new Date(time * 1000))
 
 const formatTooltipTime = formatWeekdayHour
+
+const getNextSunEvent = ({
+	data,
+	referenceTime,
+	type,
+}: {
+	data: Next24HoursData
+	referenceTime: number | undefined
+	type: 'sunrise' | 'sunset'
+}) => {
+	const events = data
+		.map((point) => point[type])
+		.filter((time): time is number => typeof time === 'number')
+	const uniqueEvents = [...new Set(events)]
+
+	if (typeof referenceTime !== 'number') {
+		return uniqueEvents[0] ?? null
+	}
+
+	return (
+		uniqueEvents.find((time) => time >= referenceTime) ??
+		uniqueEvents[0] ??
+		null
+	)
+}
+
+const getUsAqiCategory = (aqi: number) => {
+	if (aqi <= 50) {
+		return 'Good'
+	}
+
+	if (aqi <= 100) {
+		return 'Moderate'
+	}
+
+	if (aqi <= 150) {
+		return 'Unhealthy for sensitive groups'
+	}
+
+	if (aqi <= 200) {
+		return 'Unhealthy'
+	}
+
+	if (aqi <= 300) {
+		return 'Very unhealthy'
+	}
+
+	return 'Hazardous'
+}
 
 const isSameLocalDate = (date: Date, comparisonDate: Date) =>
 	date.getFullYear() === comparisonDate.getFullYear() &&
@@ -2895,6 +3180,40 @@ const getWeatherMapNoise = (seed: number) => {
 const getWeatherMapPrecipitationIntensity = (precipitation: number) =>
 	Math.min(1, Math.sqrt(Math.max(0, precipitation) / 6))
 
+const getInterpolatedWeatherMapMetricPoints = ({
+	framePosition,
+	frames,
+}: {
+	framePosition: number
+	frames: WeatherMapData['frames']
+}): WeatherMapMetricPoint[] => {
+	const interpolation = getWeatherMapFrameInterpolation({
+		framePosition,
+		frames,
+	})
+
+	if (!interpolation) {
+		return []
+	}
+
+	const { fromFrame, progress, toFrame } = interpolation
+
+	return fromFrame.points.map((fromPoint, pointIndex) => {
+		const toPoint = toFrame.points[pointIndex] ?? fromPoint
+
+		return {
+			precipitationProbability:
+				fromPoint.precipitationProbability +
+				(toPoint.precipitationProbability -
+					fromPoint.precipitationProbability) *
+					progress,
+			windSpeed:
+				fromPoint.windSpeed +
+				(toPoint.windSpeed - fromPoint.windSpeed) * progress,
+		}
+	})
+}
+
 const getInterpolatedWeatherMapWindPoints = ({
 	framePosition,
 	frames,
@@ -3159,6 +3478,9 @@ const max = (points: number[]) =>
 
 const min = (points: number[]) =>
 	points.reduce((currentMin, point) => Math.min(currentMin, point), Infinity)
+
+const isNumber = (value: null | number): value is number =>
+	typeof value === 'number' && Number.isFinite(value)
 
 const sum = (points: number[]) =>
 	points.reduce((total, point) => total + point, 0)

@@ -131,12 +131,21 @@ describe('mapWeatherResponseToNext24HoursData', () => {
 
 		expect(result).toHaveLength(25)
 		expect(result[0]).toEqual({
+			airQualityAqi: null,
+			airQualityNitrogenDioxide: null,
+			airQualityOzone: null,
+			airQualityPm10: null,
+			airQualityPm25: null,
 			apparentTemperature: 13,
+			daylightDuration: 43_200,
 			dewPoint: 8,
 			humidity: 53,
 			precipitation: 3,
 			precipitationProbability: 6,
 			shortwaveRadiation: 130,
+			sunrise: 21_600,
+			sunset: 64_800,
+			sunshineDuration: 36_000,
 			temperature: 23,
 			time: 3,
 			uv: 3,
@@ -168,12 +177,21 @@ describe('mapWeatherResponseToNext24HoursData', () => {
 		})
 
 		expect(result[0]).toEqual({
+			airQualityAqi: null,
+			airQualityNitrogenDioxide: null,
+			airQualityOzone: null,
+			airQualityPm10: null,
+			airQualityPm25: null,
 			apparentTemperature: 23,
+			daylightDuration: 43_200,
 			dewPoint: 23,
 			humidity: 0,
 			precipitation: 0,
 			precipitationProbability: 0,
 			shortwaveRadiation: 0,
+			sunrise: 21_600,
+			sunset: 64_800,
+			sunshineDuration: 36_000,
 			temperature: 23,
 			time: 3,
 			uv: 0,
@@ -183,11 +201,47 @@ describe('mapWeatherResponseToNext24HoursData', () => {
 			windGust: 0,
 		})
 	})
+
+	it('maps hourly air quality values by matching forecast time', () => {
+		const data = createWeatherResponse()
+		data.airQuality = {
+			hourly: {
+				nitrogen_dioxide: [4, 5],
+				ozone: [30, 35],
+				pm2_5: [6, 7],
+				pm10: [12, 13],
+				time: [3, 4],
+				us_aqi: [28, 31],
+				uv_index: [],
+			},
+		}
+
+		const result = mapWeatherResponseToNext24HoursData({
+			currentHour: 3,
+			data,
+		})
+
+		expect(result[0]).toMatchObject({
+			airQualityAqi: 28,
+			airQualityNitrogenDioxide: 4,
+			airQualityOzone: 30,
+			airQualityPm10: 12,
+			airQualityPm25: 6,
+		})
+		expect(result[1]).toMatchObject({
+			airQualityAqi: 31,
+			airQualityPm25: 7,
+		})
+	})
 })
 
 const createWeatherResponse = (): WeatherResponse => ({
 	daily: {
+		daylight_duration: [43_200],
 		precipitation_probability_max: [10],
+		sunrise: [21_600],
+		sunset: [64_800],
+		sunshine_duration: [36_000],
 		temperature_2m_max: [30],
 		temperature_2m_min: [20],
 		time: [0],

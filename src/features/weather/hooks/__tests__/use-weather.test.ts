@@ -171,7 +171,7 @@ describe('useWeather - Core Functionality', () => {
 		)
 
 		expect(result.current.weatherData).toEqual(cachedData)
-		expect(result.current.next24HoursData).toEqual(cachedNext24HoursData)
+		expect(result.current.next24HoursData).toMatchObject(cachedNext24HoursData)
 		expect(result.current.alertData).toEqual(cachedAlerts)
 		expect(result.current.weatherMapData).toEqual(cachedWeatherMapData)
 		expect(result.current.isLoading).toBe(false)
@@ -222,6 +222,10 @@ describe('useWeather - Core Functionality', () => {
 		fetchMock
 			.mockResolvedValueOnce({
 				json: async () => createWeatherResponse(),
+				ok: true,
+			})
+			.mockResolvedValueOnce({
+				json: async () => createAirQualityResponse(),
 				ok: true,
 			})
 			.mockImplementationOnce(() => new Promise(() => {}))
@@ -361,6 +365,10 @@ describe('useWeather - Core Functionality', () => {
 				json: async () => createWeatherResponse(),
 				ok: true,
 			})
+			.mockResolvedValueOnce({
+				json: async () => createAirQualityResponse(),
+				ok: true,
+			})
 			.mockImplementationOnce(() => new Promise(() => {}))
 
 		const { result } = renderHook(() =>
@@ -373,7 +381,7 @@ describe('useWeather - Core Functionality', () => {
 
 		expect(result.current.isLoading).toBe(false)
 		expect(result.current.weatherMapData).toBeNull()
-		expect(fetchMock).toHaveBeenCalledTimes(2)
+		expect(fetchMock).toHaveBeenCalledTimes(3)
 	})
 
 	it('shows reduced stale cached data when weather refresh fails', async () => {
@@ -476,7 +484,9 @@ describe('useWeather - Core Functionality', () => {
 		expect(result.current.error).toBeNull()
 		expect(result.current.isLoading).toBe(false)
 		expect(result.current.weatherData).toEqual(cachedData)
-		expect(result.current.next24HoursData).toEqual([cachedNext24HoursData[1]])
+		expect(result.current.next24HoursData).toMatchObject([
+			cachedNext24HoursData[1],
+		])
 		expect(result.current.weatherMapData?.frames).toEqual([
 			cachedWeatherMapData.frames[1],
 		])
@@ -631,5 +641,17 @@ const createWeatherResponse = () => ({
 		weathercode: Array.from({ length: 60 }, () => 1),
 		windgusts_10m: Array.from({ length: 60 }, () => 20),
 		windspeed_10m: Array.from({ length: 60 }, () => 10),
+	},
+})
+
+const createAirQualityResponse = () => ({
+	hourly: {
+		nitrogen_dioxide: Array.from({ length: 60 }, () => 4),
+		ozone: Array.from({ length: 60 }, () => 30),
+		pm2_5: Array.from({ length: 60 }, () => 6),
+		pm10: Array.from({ length: 60 }, () => 12),
+		time: Array.from({ length: 60 }, (_, index) => index),
+		us_aqi: Array.from({ length: 60 }, () => 28),
+		uv_index: Array.from({ length: 60 }, (_, index) => index % 8),
 	},
 })

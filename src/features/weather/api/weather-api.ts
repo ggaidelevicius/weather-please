@@ -16,11 +16,20 @@ const SECONDS_PER_HOUR = 60 * 60
 const SECONDS_PER_DAY = 24 * SECONDS_PER_HOUR
 const WEATHER_MAP_LATITUDE_SPAN = 1.8
 const nullableNumberArraySchema = z.array(z.number().nullable()).min(1)
+const optionalNullableNumberArraySchema = z
+	.array(z.number().nullable())
+	.optional()
+	.catch([])
+	.transform((value) => value ?? [])
 
 const weatherResponseSchema = z
 	.object({
 		daily: z.object({
+			daylight_duration: optionalNullableNumberArraySchema,
 			precipitation_probability_max: nullableNumberArraySchema,
+			sunrise: optionalNullableNumberArraySchema,
+			sunset: optionalNullableNumberArraySchema,
+			sunshine_duration: optionalNullableNumberArraySchema,
 			temperature_2m_max: nullableNumberArraySchema,
 			temperature_2m_min: nullableNumberArraySchema,
 			time: z.array(z.number()).min(1),
@@ -46,16 +55,23 @@ const weatherResponseSchema = z
 	})
 	.loose()
 
-export type WeatherResponse = z.infer<typeof weatherResponseSchema>
-
 const airQualityResponseSchema = z
 	.object({
 		hourly: z.object({
+			nitrogen_dioxide: optionalNullableNumberArraySchema,
+			ozone: optionalNullableNumberArraySchema,
+			pm2_5: optionalNullableNumberArraySchema,
+			pm10: optionalNullableNumberArraySchema,
 			time: z.array(z.number()),
-			uv_index: z.array(z.number().nullable()),
+			us_aqi: optionalNullableNumberArraySchema,
+			uv_index: optionalNullableNumberArraySchema,
 		}),
 	})
 	.loose()
+
+export type WeatherResponse = z.infer<typeof weatherResponseSchema> & {
+	airQuality?: AirQualityResponse | null
+}
 
 type AirQualityResponse = z.infer<typeof airQualityResponseSchema>
 
@@ -196,6 +212,9 @@ const normalizeNumber = ({
 	value: null | number | undefined
 }) => (typeof value === 'number' && Number.isFinite(value) ? value : fallback)
 
+const normalizeNullableNumber = (value: null | number | undefined) =>
+	typeof value === 'number' && Number.isFinite(value) ? value : null
+
 const normalizeUvValue = (uv: null | number | undefined) =>
 	normalizeNumber({ fallback: 0, value: uv })
 
@@ -217,7 +236,7 @@ const mergeUvData = ({
 	const airQualityUvByDay = buildAirQualityUvByDay({
 		dailyTimes: weather.daily.time,
 		hourlyTimes: airQualityTimes,
-		hourlyUv: airQuality.hourly.uv_index,
+		hourlyUv: airQuality.hourly.uv_index ?? [],
 	})
 
 	const mergedDailyUv = weather.daily.uv_index_max.map((value, index) => {
@@ -230,7 +249,7 @@ const mergeUvData = ({
 
 	const mergedHourlyUv = mergeHourlyUv({
 		airQualityTimes,
-		airQualityUv: airQuality.hourly.uv_index,
+		airQualityUv: airQuality.hourly.uv_index ?? [],
 		weatherTimes: weather.hourly.time,
 		weatherUv: weather.hourly.uv_index,
 	})
@@ -311,7 +330,7 @@ export const fetchWeatherResponse = async ({
 }): Promise<WeatherResponse> => {
 	try {
 		const encodedTimeZone = encodeURIComponent(timeZone)
-		const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max&timeformat=unixtime&timezone=${encodedTimeZone}&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,dew_point_2m,shortwave_radiation_instant,precipitation,precipitation_probability,uv_index,windspeed_10m,visibility,weathercode,windgusts_10m&forecast_days=${WEATHER_FORECAST_DAYS}`
+		const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max,sunrise,sunset,daylight_duration,sunshine_duration&timeformat=unixtime&timezone=${encodedTimeZone}&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,dew_point_2m,shortwave_radiation_instant,precipitation,precipitation_probability,uv_index,windspeed_10m,visibility,weathercode,windgusts_10m&forecast_days=${WEATHER_FORECAST_DAYS}`
 
 		const response = await fetch(weatherUrl, { signal })
 		if (!response.ok) {
@@ -325,35 +344,48 @@ export const fetchWeatherResponse = async ({
 		}
 
 		let airQualityData: AirQualityResponse | null = null
-		if (shouldUseAirQualityUv) {
-			const airQualityUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=uv_index&timeformat=unixtime&timezone=${encodedTimeZone}&forecast_days=${AIR_QUALITY_FORECAST_DAYS}`
+		const airQualityVariables = [
+			'pm10',
+			'pm2_5',
+			'ozone',
+			'nitrogen_dioxide',
+			'us_aqi',
+			'uv_index',
+		].join(',')
+		const airQualityUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=${airQualityVariables}&timeformat=unixtime&timezone=${encodedTimeZone}&forecast_days=${AIR_QUALITY_FORECAST_DAYS}`
 
-			try {
-				const airQualityResponse = await fetch(airQualityUrl, { signal })
-				if (!airQualityResponse.ok) {
-					throw new Error('Air quality fetch failed')
-				}
-
-				const airQualityJson = await airQualityResponse.json()
-				const airQualityParsed =
-					airQualityResponseSchema.safeParse(airQualityJson)
-				if (!airQualityParsed.success) {
-					throw new Error('Invalid air quality response')
-				}
-
-				airQualityData = airQualityParsed.data
-			} catch (airQualityError) {
-				if (isAbortError(airQualityError)) {
-					throw airQualityError
-				}
-				console.error('Air quality fetch error:', airQualityError)
+		try {
+			const airQualityResponse = await fetch(airQualityUrl, { signal })
+			if (!airQualityResponse.ok) {
+				throw new Error('Air quality fetch failed')
 			}
+
+			const airQualityJson = await airQualityResponse.json()
+			const airQualityParsed =
+				airQualityResponseSchema.safeParse(airQualityJson)
+			if (!airQualityParsed.success) {
+				throw new Error('Invalid air quality response')
+			}
+
+			airQualityData = airQualityParsed.data
+		} catch (airQualityError) {
+			if (isAbortError(airQualityError)) {
+				throw airQualityError
+			}
+			console.error('Air quality fetch error:', airQualityError)
 		}
 
-		return mergeUvData({
+		const mergedWeather = shouldUseAirQualityUv
+			? mergeUvData({
+					airQuality: airQualityData,
+					weather: parsed.data,
+				})
+			: parsed.data
+
+		return {
+			...mergedWeather,
 			airQuality: airQualityData,
-			weather: parsed.data,
-		})
+		}
 	} catch (fetchError) {
 		if (isAbortError(fetchError)) {
 			throw fetchError
@@ -493,16 +525,59 @@ export const mapWeatherResponseToNext24HoursData = ({
 		start + NEXT_24_HOURS_FORECAST_HOURS,
 	)
 	const next24HoursData: Next24HoursData = []
+	const airQualityIndexByTime = buildTimeIndex(
+		data.airQuality?.hourly.time ?? [],
+	)
 
 	for (let index = start; index < end; index += 1) {
+		const time = data.hourly.time[index]
+		if (typeof time !== 'number' || !Number.isFinite(time)) {
+			continue
+		}
+
 		const temperature = normalizeNumber({
 			fallback: 0,
 			value: data.hourly.temperature_2m[index],
 		})
+		const dailyIndex = getDailyWeatherIndexForTime({
+			dailyTimes: data.daily.time,
+			time,
+		})
+		const airQualityIndex = airQualityIndexByTime.get(time)
+		const airQuality = data.airQuality?.hourly
 		const point = {
+			airQualityAqi: normalizeNullableNumber(
+				airQualityIndex === undefined
+					? undefined
+					: airQuality?.us_aqi?.[airQualityIndex],
+			),
+			airQualityNitrogenDioxide: normalizeNullableNumber(
+				airQualityIndex === undefined
+					? undefined
+					: airQuality?.nitrogen_dioxide?.[airQualityIndex],
+			),
+			airQualityOzone: normalizeNullableNumber(
+				airQualityIndex === undefined
+					? undefined
+					: airQuality?.ozone?.[airQualityIndex],
+			),
+			airQualityPm10: normalizeNullableNumber(
+				airQualityIndex === undefined
+					? undefined
+					: airQuality?.pm10?.[airQualityIndex],
+			),
+			airQualityPm25: normalizeNullableNumber(
+				airQualityIndex === undefined
+					? undefined
+					: airQuality?.pm2_5?.[airQualityIndex],
+			),
 			apparentTemperature: normalizeNumber({
 				fallback: temperature,
 				value: data.hourly.apparent_temperature[index],
+			}),
+			daylightDuration: normalizeNumber({
+				fallback: 0,
+				value: data.daily.daylight_duration[dailyIndex],
 			}),
 			dewPoint: normalizeNumber({
 				fallback: temperature,
@@ -524,8 +599,14 @@ export const mapWeatherResponseToNext24HoursData = ({
 				fallback: 0,
 				value: data.hourly.shortwave_radiation_instant[index],
 			}),
+			sunrise: normalizeNullableNumber(data.daily.sunrise[dailyIndex]),
+			sunset: normalizeNullableNumber(data.daily.sunset[dailyIndex]),
+			sunshineDuration: normalizeNumber({
+				fallback: 0,
+				value: data.daily.sunshine_duration[dailyIndex],
+			}),
 			temperature,
-			time: data.hourly.time[index],
+			time,
 			uv: normalizeUvValue(data.hourly.uv_index[index]),
 			visibility: normalizeNumber({
 				fallback: 0,
@@ -545,10 +626,65 @@ export const mapWeatherResponseToNext24HoursData = ({
 			}),
 		}
 
-		if (Object.values(point).every(Number.isFinite)) {
+		if (
+			[
+				point.apparentTemperature,
+				point.daylightDuration,
+				point.dewPoint,
+				point.humidity,
+				point.precipitation,
+				point.precipitationProbability,
+				point.shortwaveRadiation,
+				point.sunshineDuration,
+				point.temperature,
+				point.time,
+				point.uv,
+				point.visibility,
+				point.weatherCode,
+				point.wind,
+				point.windGust,
+			].every(Number.isFinite)
+		) {
 			next24HoursData.push(point)
 		}
 	}
 
 	return next24HoursData
+}
+
+const buildTimeIndex = (times: number[]) => {
+	const indexByTime = new Map<number, number>()
+	for (let index = 0; index < times.length; index += 1) {
+		const time = times[index]
+		if (typeof time === 'number' && Number.isFinite(time)) {
+			indexByTime.set(time, index)
+		}
+	}
+
+	return indexByTime
+}
+
+const getDailyWeatherIndexForTime = ({
+	dailyTimes,
+	time,
+}: {
+	dailyTimes: number[]
+	time: number
+}) => {
+	let dailyIndex = 0
+
+	for (let index = 0; index < dailyTimes.length; index += 1) {
+		const dailyTime = dailyTimes[index]
+		if (typeof dailyTime !== 'number' || !Number.isFinite(dailyTime)) {
+			continue
+		}
+
+		if (dailyTime > time) {
+			break
+		}
+
+		dailyIndex = index
+	}
+
+	return dailyIndex
 }

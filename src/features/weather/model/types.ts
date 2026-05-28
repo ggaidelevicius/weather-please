@@ -31,12 +31,21 @@ export type Data = z.infer<typeof dataSchema>
 export const next24HoursDataSchema = z
 	.array(
 		z.object({
+			airQualityAqi: z.number().nullable().catch(null),
+			airQualityNitrogenDioxide: z.number().nullable().catch(null),
+			airQualityOzone: z.number().nullable().catch(null),
+			airQualityPm10: z.number().nullable().catch(null),
+			airQualityPm25: z.number().nullable().catch(null),
 			apparentTemperature: z.number(),
+			daylightDuration: z.number().catch(0),
 			dewPoint: z.number().catch(0),
 			humidity: z.number().catch(0),
 			precipitation: z.number(),
 			precipitationProbability: z.number(),
 			shortwaveRadiation: z.number().catch(0),
+			sunrise: z.number().nullable().catch(null),
+			sunset: z.number().nullable().catch(null),
+			sunshineDuration: z.number().catch(0),
 			temperature: z.number(),
 			time: z.number(),
 			uv: z.number(),
