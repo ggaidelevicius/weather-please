@@ -105,7 +105,7 @@ type ChartScale = {
 }
 
 type ChartTooltipState = {
-	seriesLabel: string
+	seriesLabel: ReactNode
 	time: number
 	value: ReactNode
 	x: number
@@ -146,14 +146,14 @@ type LineChartProps = {
 	onSeriesFocus?: (seriesId: null | WeatherDetailSeriesId) => void
 	points: number[]
 	primarySeriesId?: WeatherDetailSeriesId
-	primarySeriesLabel: string
+	primarySeriesLabel: ReactNode
 	primaryValueFormatter: (value: number) => ReactNode
 	scale: Required<ChartScale>
 	secondaryAccentClassName?: string
 	secondaryPoints?: number[]
 	secondaryScale?: Required<ChartScale>
 	secondarySeriesId?: WeatherDetailSeriesId
-	secondarySeriesLabel?: string
+	secondarySeriesLabel?: ReactNode
 	secondaryValueFormatter?: (value: number) => ReactNode
 	times: number[]
 }
@@ -381,7 +381,7 @@ export const Next24HoursDetailView = ({
 						accentStyle={{ stroke: temperatureAccentColor }}
 						points={temperatures}
 						primarySeriesId="temperature"
-						primarySeriesLabel="Temperature"
+						primarySeriesLabel={<Trans>Temperature</Trans>}
 						primaryValueFormatter={(value) =>
 							`${formatDecimal(value)}${temperatureUnitLabel}`
 						}
@@ -598,7 +598,7 @@ export const Next24HoursDetailView = ({
 						onSeriesFocus={setActiveSeriesId}
 						points={uv}
 						primarySeriesId="uv"
-						primarySeriesLabel="UV"
+						primarySeriesLabel={<Trans>UV</Trans>}
 						primaryValueFormatter={formatDecimal}
 						scale={uvScale}
 						times={times}
@@ -701,7 +701,7 @@ export const Next24HoursDetailView = ({
 							onSeriesFocus={setActiveSeriesId}
 							points={airQualityAqiValues}
 							primarySeriesId="airQualityAqi"
-							primarySeriesLabel="AQI"
+							primarySeriesLabel={<Trans>AQI</Trans>}
 							primaryValueFormatter={(value) => (
 								<Trans>
 									{Math.round(value)} · {getAqiCategory(value)}
@@ -799,7 +799,7 @@ export const Next24HoursDetailView = ({
 						onSeriesFocus={setActiveSeriesId}
 						points={wind}
 						primarySeriesId="wind"
-						primarySeriesLabel="Wind"
+						primarySeriesLabel={<Trans>Wind</Trans>}
 						primaryValueFormatter={(value) =>
 							`${formatDecimal(value)} ${windUnitLabel}`
 						}
@@ -807,7 +807,7 @@ export const Next24HoursDetailView = ({
 						secondaryAccentClassName="stroke-orange-300"
 						secondaryPoints={windGust}
 						secondarySeriesId="windGust"
-						secondarySeriesLabel="Gust"
+						secondarySeriesLabel={<Trans>Gust</Trans>}
 						secondaryValueFormatter={(value) =>
 							`${formatDecimal(value)} ${windUnitLabel}`
 						}
@@ -882,7 +882,7 @@ export const Next24HoursDetailView = ({
 					accentClassName="stroke-emerald-300"
 					points={visibility}
 					primarySeriesId="visibility"
-					primarySeriesLabel="Visibility"
+					primarySeriesLabel={<Trans>Visibility</Trans>}
 					primaryValueFormatter={(value) =>
 						`${formatDecimal(value)} ${visibilityUnitLabel}`
 					}
@@ -2178,7 +2178,7 @@ type ChartLineProps = {
 	points: number[]
 	scale: Required<ChartScale>
 	seriesId?: WeatherDetailSeriesId
-	seriesLabel: string
+	seriesLabel: ReactNode
 	strokeWidth: number
 	style?: CSSProperties
 	times: number[]
@@ -2290,7 +2290,7 @@ const ChartTooltip = ({
 		>
 			<span className="block font-semibold text-white">{tooltip.value}</span>
 			<span className="block text-dark-300">
-				{tooltip.seriesLabel} · {formatTooltipTime(tooltip.time)}
+				{tooltip.seriesLabel} · <WeekdayHourLabel time={tooltip.time} />
 			</span>
 		</div>
 	)
@@ -2338,7 +2338,7 @@ const PrecipitationChart = ({
 		}
 
 		setTooltip({
-			seriesLabel: 'Total precipitation',
+			seriesLabel: <Trans>Total precipitation</Trans>,
 			time,
 			value: amountValueFormatter(value),
 			x: getChartX(index, amountPoints.length),
@@ -2386,7 +2386,7 @@ const PrecipitationChart = ({
 					points={probabilityPoints}
 					scale={probabilityScale}
 					seriesId="precipitationProbability"
-					seriesLabel="Precipitation chance"
+					seriesLabel={<Trans>Precipitation chance</Trans>}
 					strokeWidth={2.5}
 					times={times}
 					valueFormatter={(value) => `${Math.round(value)}%`}
@@ -2654,8 +2654,6 @@ const formatWeekdayHour = (time: number) =>
 		hour: 'numeric',
 		weekday: 'short',
 	}).format(new Date(time * 1000))
-
-const formatTooltipTime = formatWeekdayHour
 
 const getNextSunEvent = ({
 	data,

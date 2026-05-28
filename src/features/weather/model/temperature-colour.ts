@@ -36,10 +36,10 @@ export const getTemperatureAccentColor = (temperature: number) => {
 const TEMPERATURE_COLOUR_STOPS = [
 	{ colour: { chroma: 0.23, hue: 258, lightness: 0.57 }, temperature: -25 },
 	{ colour: { chroma: 0.18, hue: 235, lightness: 0.72 }, temperature: 0 },
-	{ colour: { chroma: 0.14, hue: 198, lightness: 0.78 }, temperature: 10 },
-	{ colour: { chroma: 0.18, hue: 145, lightness: 0.78 }, temperature: 20 },
-	{ colour: { chroma: 0.17, hue: 95, lightness: 0.9 }, temperature: 28 },
-	{ colour: { chroma: 0.19, hue: 65, lightness: 0.82 }, temperature: 32 },
+	{ colour: { chroma: 0.16, hue: 170, lightness: 0.79 }, temperature: 10 },
+	{ colour: { chroma: 0.16, hue: 170, lightness: 0.79 }, temperature: 24 },
+	{ colour: { chroma: 0.17, hue: 95, lightness: 0.89 }, temperature: 28 },
+	{ colour: { chroma: 0.2, hue: 68, lightness: 0.83 }, temperature: 32 },
 	{ colour: { chroma: 0.22, hue: 45, lightness: 0.72 }, temperature: 36 },
 	{ colour: { chroma: 0.23, hue: 28, lightness: 0.62 }, temperature: 40 },
 ] as const
