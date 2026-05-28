@@ -105,7 +105,7 @@ type ChartScale = {
 type ChartTooltipState = {
 	seriesLabel: string
 	time: number
-	value: string
+	value: ReactNode
 	x: number
 	y: number
 }
@@ -143,14 +143,14 @@ type LineChartProps = {
 	points: number[]
 	primarySeriesId?: WeatherDetailSeriesId
 	primarySeriesLabel: string
-	primaryValueFormatter: (value: number) => string
+	primaryValueFormatter: (value: number) => ReactNode
 	scale: Required<ChartScale>
 	secondaryAccentClassName?: string
 	secondaryPoints?: number[]
 	secondaryScale?: Required<ChartScale>
 	secondarySeriesId?: WeatherDetailSeriesId
 	secondarySeriesLabel?: string
-	secondaryValueFormatter?: (value: number) => string
+	secondaryValueFormatter?: (value: number) => ReactNode
 	times: number[]
 }
 
@@ -623,7 +623,7 @@ export const Next24HoursDetailView = ({
 								value={
 									<Trans>
 										{Math.round(currentAqi ?? 0)} ·{' '}
-										{getUsAqiCategory(currentAqi ?? 0)}
+										{getAqiCategory(currentAqi ?? 0)}
 									</Trans>
 								}
 							/>
@@ -683,9 +683,11 @@ export const Next24HoursDetailView = ({
 							points={airQualityAqiValues}
 							primarySeriesId="airQualityAqi"
 							primarySeriesLabel="AQI"
-							primaryValueFormatter={(value) =>
-								`${Math.round(value)} · ${getUsAqiCategory(value)}`
-							}
+							primaryValueFormatter={(value) => (
+								<Trans>
+									{Math.round(value)} · {getAqiCategory(value)}
+								</Trans>
+							)}
 							scale={airQualityScale}
 							times={times}
 						/>
@@ -1057,6 +1059,39 @@ const RelativeHourLabel = ({
 	return formatWeekdayHour(time)
 }
 
+const WeekdayHourLabel = ({ time }: Readonly<{ time: number }>) => {
+	const weekday = new Intl.DateTimeFormat('en', { weekday: 'short' }).format(
+		new Date(time * 1000),
+	)
+	const hour = formatHour(time)
+
+	if (weekday === 'Mon') {
+		return <Trans>Mon {hour}</Trans>
+	}
+
+	if (weekday === 'Tue') {
+		return <Trans>Tue {hour}</Trans>
+	}
+
+	if (weekday === 'Wed') {
+		return <Trans>Wed {hour}</Trans>
+	}
+
+	if (weekday === 'Thu') {
+		return <Trans>Thu {hour}</Trans>
+	}
+
+	if (weekday === 'Fri') {
+		return <Trans>Fri {hour}</Trans>
+	}
+
+	if (weekday === 'Sat') {
+		return <Trans>Sat {hour}</Trans>
+	}
+
+	return <Trans>Sun {hour}</Trans>
+}
+
 const HourIntervalLabel = ({
 	index,
 	referenceTime,
@@ -1400,7 +1435,7 @@ const WeatherMap = ({
 							/>
 						</svg>
 						<div className="pointer-events-none absolute top-3 left-3 rounded-full border border-white/10 bg-dark-950/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md">
-							{formatTooltipTime(playback.time ?? selectedFrame.time)}
+							<WeekdayHourLabel time={playback.time ?? selectedFrame.time} />
 						</div>
 						<WeatherMapTooltip
 							dimensions={dimensions}
@@ -2113,7 +2148,7 @@ type ChartLineProps = {
 	seriesLabel: string
 	strokeWidth: number
 	times: number[]
-	valueFormatter: (value: number) => string
+	valueFormatter: (value: number) => ReactNode
 }
 
 const ChartLine = ({
@@ -2611,28 +2646,28 @@ const getNextSunEvent = ({
 	)
 }
 
-const getUsAqiCategory = (aqi: number) => {
+const getAqiCategory = (aqi: number) => {
 	if (aqi <= 50) {
-		return 'Good'
+		return <Trans>Good</Trans>
 	}
 
 	if (aqi <= 100) {
-		return 'Moderate'
+		return <Trans>Moderate</Trans>
 	}
 
 	if (aqi <= 150) {
-		return 'Unhealthy for sensitive groups'
+		return <Trans>Unhealthy for sensitive groups</Trans>
 	}
 
 	if (aqi <= 200) {
-		return 'Unhealthy'
+		return <Trans>Unhealthy</Trans>
 	}
 
 	if (aqi <= 300) {
-		return 'Very unhealthy'
+		return <Trans>Very unhealthy</Trans>
 	}
 
-	return 'Hazardous'
+	return <Trans>Hazardous</Trans>
 }
 
 const isSameLocalDate = (date: Date, comparisonDate: Date) =>

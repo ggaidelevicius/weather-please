@@ -19,8 +19,11 @@ msgid "{0}"
 msgstr "{0}"
 
 #. placeholder {0}: Math.round(currentAqi ?? 0)
-#. placeholder {1}: getUsAqiCategory(currentAqi ?? 0)
+#. placeholder {0}: Math.round(value)
+#. placeholder {1}: getAqiCategory(currentAqi ?? 0)
+#. placeholder {1}: getAqiCategory(value)
 #: src/features/weather/ui/next-24-hours-tile.tsx:624
+#: src/features/weather/ui/next-24-hours-tile.tsx:687
 msgid "{0} · {1}"
 msgstr "{0} · {1}"
 
@@ -35,8 +38,8 @@ msgstr "{0} · {1}"
 
 #. placeholder {0}: formatDecimal(bestVisibility.value)
 #. placeholder {0}: formatDecimal(lowestVisibility.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:821
-#: src/features/weather/ui/next-24-hours-tile.tsx:834
+#: src/features/weather/ui/next-24-hours-tile.tsx:823
+#: src/features/weather/ui/next-24-hours-tile.tsx:836
 msgid "{0} {visibilityUnitLabel} at <0/>"
 msgstr "{0} {visibilityUnitLabel}, <0/> पर"
 
@@ -58,26 +61,26 @@ msgstr "{0} {visibilityUnitLabel}, <0/> पर"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:738
-#: src/features/weather/ui/next-24-hours-tile.tsx:754
+#: src/features/weather/ui/next-24-hours-tile.tsx:740
+#: src/features/weather/ui/next-24-hours-tile.tsx:756
 msgid "{0} {windUnitLabel} at <0/>"
 msgstr "{0} {windUnitLabel}, <0/> पर"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1076
+#: src/features/weather/ui/next-24-hours-tile.tsx:1111
 msgid "{0} and {1}"
 msgstr "{0} और {1}"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1089
+#: src/features/weather/ui/next-24-hours-tile.tsx:1124
 msgid "{0} and {1} today"
 msgstr "आज {0} और {1}"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1097
+#: src/features/weather/ui/next-24-hours-tile.tsx:1132
 msgid "{0} and {1} tomorrow"
 msgstr "कल {0} और {1}"
 
@@ -133,12 +136,12 @@ msgid "{0} mph"
 msgstr "{0} मील प्रति घंटा"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1050
+#: src/features/weather/ui/next-24-hours-tile.tsx:1052
 msgid "{0} today"
 msgstr "आज {0}"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1054
+#: src/features/weather/ui/next-24-hours-tile.tsx:1056
 msgid "{0} tomorrow"
 msgstr "कल {0}"
 
@@ -289,7 +292,7 @@ msgstr "वायु गुणवत्ता"
 #~ msgid "Air quality forecast from Open-Meteo and CAMS atmospheric data."
 #~ msgstr "Open-Meteo और CAMS वायुमंडलीय डेटा से वायु गुणवत्ता पूर्वानुमान।"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:693
+#: src/features/weather/ui/next-24-hours-tile.tsx:695
 msgid "Air quality unavailable"
 msgstr "वायु गुणवत्ता उपलब्ध नहीं"
 
@@ -313,7 +316,7 @@ msgstr "स्टोनहेंज जैसे प्राचीन स्म
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "प्राचीन वेधशालाएँ वर्ष के इस मोड़ को सावधानी से ट्रैक करती थीं, ताकि बुवाई के चक्र, कैलेंडर, और मौसमी त्योहार तय किए जा सकें।"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1107
+#: src/features/weather/ui/next-24-hours-tile.tsx:1142
 msgid "and"
 msgstr "और"
 
@@ -358,7 +361,7 @@ msgstr "अगस्त"
 msgid "Autumn Equinox"
 msgstr "शरद विषुव"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1975
+#: src/features/weather/ui/next-24-hours-tile.tsx:2010
 msgid "Average wind"
 msgstr "औसत हवा"
 
@@ -395,7 +398,7 @@ msgstr "सेल्सियस (°C)"
 msgid "Centuries later, people still reach for pen and paper when a text won't do."
 msgstr "सदियों बाद भी, जब कोई संदेश काफ़ी नहीं होता, तो लोग अब भी कलम और कागज़ उठाते हैं।"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1814
+#: src/features/weather/ui/next-24-hours-tile.tsx:1849
 msgid "Chance"
 msgstr "संभावना"
 
@@ -416,7 +419,7 @@ msgstr "क्रिसमस दिवस यीशु के जन्म क�
 msgid "clear sky"
 msgstr "साफ़ आकाश"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:832
+#: src/features/weather/ui/next-24-hours-tile.tsx:834
 msgid "Clearest hour"
 msgstr "सबसे साफ़ घंटा"
 
@@ -436,7 +439,7 @@ msgstr "सामुदायिक सफ़ाई अभियान, पे�
 msgid "Compact weather alerts"
 msgstr "संक्षिप्त मौसम चेतावनियाँ"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:845
+#: src/features/weather/ui/next-24-hours-tile.tsx:847
 msgid "Conditions"
 msgstr "मौसम की स्थिति"
 
@@ -489,7 +492,7 @@ msgstr "घनी हिमबंदी बूंदाबंदी"
 msgid "depositing rime fog"
 msgstr "राइम कोहरा जमा हो रहा है"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1820
+#: src/features/weather/ui/next-24-hours-tile.tsx:1855
 msgid "Depth"
 msgstr "गहराई"
 
@@ -497,7 +500,7 @@ msgstr "गहराई"
 msgid "Developer"
 msgstr "डेवलपर"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:960
+#: src/features/weather/ui/next-24-hours-tile.tsx:962
 msgid "Direct sunlight is making it feel warmer than the measured temperature right now."
 msgstr "सीधी धूप अभी मापे गए तापमान से अधिक गर्म महसूस करा रही है।"
 
@@ -672,6 +675,10 @@ msgstr "कई हिंदुओं के लिए, यह त्योहा
 msgid "Forecast"
 msgstr "पूर्वानुमान"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:1085
+msgid "Fri {hour}"
+msgstr "शुक्र {hour}"
+
 #: src/features/weather/ui/tile.tsx:121
 msgid "Friday"
 msgstr "शुक्रवार"
@@ -719,6 +726,10 @@ msgstr "{timeUntilStrongWind} घंटों में शुरू होन�
 #: src/features/weather/ui/weather-alert.tsx:330
 msgid "Generally strong wind starting in 1 hour"
 msgstr "आम तौर पर तेज हवा एक घंटे में शुरू होगी"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:2651
+msgid "Good"
+msgstr "अच्छा"
 
 #: src/features/seasonal-events/events/autumn-equinox.tsx:123
 #: src/features/seasonal-events/events/black-hole.tsx:255
@@ -775,6 +786,10 @@ msgstr "हनुक्का"
 #: src/features/seasonal-events/events/hanukkah.tsx:71
 msgid "Hanukkah is a Jewish festival of lights, observed over eight nights."
 msgstr "हनुक्का रोशनी का यहूदी त्योहार है, जो आठ रातों तक मनाया जाता है।"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:2670
+msgid "Hazardous"
+msgstr "खतरनाक"
 
 #: src/features/seasonal-events/events/valentines.tsx:87
 msgid "Hearts, roses, and red ribbons became familiar symbols of devotion, warmth, and connection."
@@ -853,11 +868,11 @@ msgstr "होली रंगों का आनंदमय त्योह�
 msgid "Homes are carefully cleaned and decorated to clear away old luck and welcome prosperity for the year ahead."
 msgstr "घर सावधानी से साफ़ किए जाते हैं और सजाए जाते हैं, ताकि पुरानी किस्मत हटे और आने वाले वर्ष के लिए समृद्धि का स्वागत हो।"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:942
+#: src/features/weather/ui/next-24-hours-tile.tsx:944
 msgid "Humid air and direct sunlight are making it feel warmer than the measured temperature right now."
 msgstr "नमी भरी हवा और सीधी धूप अभी मापे गए तापमान से अधिक गर्म महसूस करा रहे हैं।"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:951
+#: src/features/weather/ui/next-24-hours-tile.tsx:953
 msgid "Humid air is making it feel warmer than the measured temperature right now."
 msgstr "नमी भरी हवा अभी मापे गए तापमान से अधिक गर्म महसूस करा रही है।"
 
@@ -1024,7 +1039,7 @@ msgstr "लाइव डेटा अस्थायी रूप से उप�
 #~ msgid "Live data is unavailable. Showing your last saved forecast instead."
 #~ msgstr "लाइव डेटा उपलब्ध नहीं है। इसके बजाय आपका अंतिम सहेजा गया पूर्वानुमान दिखाया जा रहा है।"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1225
+#: src/features/weather/ui/next-24-hours-tile.tsx:1260
 msgid "Local map"
 msgstr "स्थानीय मानचित्र"
 
@@ -1068,7 +1083,7 @@ msgstr "{timeUntilLowVisibility} घंटों में कम दृश्�
 msgid "Low visibility starting in 1 hour"
 msgstr "एक घंटे में कम दृश्यता शुरू होगी"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:819
+#: src/features/weather/ui/next-24-hours-tile.tsx:821
 msgid "Lowest visibility"
 msgstr "न्यूनतम दृश्यता"
 
@@ -1094,11 +1109,11 @@ msgstr "लाइरिड्स उल्का वर्षा"
 msgid "mainly clear"
 msgstr "मुख्य रूप से स्पष्ट"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1945
+#: src/features/weather/ui/next-24-hours-tile.tsx:1980
 msgid "Map"
 msgstr "मानचित्र"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1303
+#: src/features/weather/ui/next-24-hours-tile.tsx:1338
 msgid "Map data unavailable"
 msgstr "मानचित्र डेटा उपलब्ध नहीं"
 
@@ -1123,6 +1138,10 @@ msgstr "इस बीच, अरबों पक्षी प्रवास क
 msgid "Metric (km/h, mm)"
 msgstr "मेट्रिक (km/h, mm)"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:2655
+msgid "Moderate"
+msgstr "मध्यम"
+
 #: src/features/weather/ui/tile.tsx:92
 msgid "moderate drizzle"
 msgstr "मध्यम झीलन"
@@ -1138,6 +1157,10 @@ msgstr "मध्यम वर्षा की बौछारें"
 #: src/features/weather/ui/tile.tsx:102
 msgid "moderate snowfall"
 msgstr "मध्यम हिमपात"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1069
+msgid "Mon {hour}"
+msgstr "सोम {hour}"
 
 #: src/features/weather/ui/tile.tsx:117
 msgid "Monday"
@@ -1176,12 +1199,12 @@ msgstr "न्यूग्रेंज, आयरलैंड में 5,000 �
 #: src/features/weather/ui/next-24-hours-tile.tsx:404
 #: src/features/weather/ui/next-24-hours-tile.tsx:537
 #: src/features/weather/ui/next-24-hours-tile.tsx:613
-#: src/features/weather/ui/next-24-hours-tile.tsx:728
-#: src/features/weather/ui/next-24-hours-tile.tsx:814
+#: src/features/weather/ui/next-24-hours-tile.tsx:730
+#: src/features/weather/ui/next-24-hours-tile.tsx:816
 msgid "Next 24 hours"
 msgstr "अगले 24 घंटे"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1216
+#: src/features/weather/ui/next-24-hours-tile.tsx:1251
 msgid "Next 6 hours"
 msgstr "अगले 6 घंटे"
 
@@ -1312,11 +1335,11 @@ msgstr "अधिकतम AQI"
 msgid "Peak chance"
 msgstr "अधिकतम संभावना"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:750
+#: src/features/weather/ui/next-24-hours-tile.tsx:752
 msgid "Peak gust"
 msgstr "अधिकतम झोंका"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1966
+#: src/features/weather/ui/next-24-hours-tile.tsx:2001
 msgid "Peak precipitation chance"
 msgstr "अधिकतम वर्षा की संभावना"
 
@@ -1324,8 +1347,8 @@ msgstr "अधिकतम वर्षा की संभावना"
 msgid "Peak UV"
 msgstr "अधिकतम UV"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:734
-#: src/features/weather/ui/next-24-hours-tile.tsx:1984
+#: src/features/weather/ui/next-24-hours-tile.tsx:736
+#: src/features/weather/ui/next-24-hours-tile.tsx:2019
 msgid "Peak wind"
 msgstr "अधिकतम हवा"
 
@@ -1355,7 +1378,7 @@ msgstr "अभी PM2.5"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:455
 #: src/features/weather/ui/next-24-hours-tile.tsx:481
-#: src/features/weather/ui/next-24-hours-tile.tsx:1872
+#: src/features/weather/ui/next-24-hours-tile.tsx:1907
 msgid "Precipitation"
 msgstr "वर्षा"
 
@@ -1399,6 +1422,10 @@ msgstr "पुनः प्रयास करें"
 #: src/features/settings/ui/settings.tsx:255
 msgid "Reverse geocoding by OpenStreetMap contributors"
 msgstr "OpenStreetMap योगदानकर्ताओं द्वारा रिवर्स जियोकोडिंग"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1089
+msgid "Sat {hour}"
+msgstr "शनि {hour}"
 
 #: src/features/weather/ui/tile.tsx:122
 msgid "Saturday"
@@ -1671,6 +1698,10 @@ msgstr "ग्रीष्म अयनांत"
 #: src/features/weather/ui/next-24-hours-tile.tsx:570
 msgid "Sun"
 msgstr "सूर्य"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1092
+msgid "Sun {hour}"
+msgstr "रवि {hour}"
 
 #: src/features/weather/ui/tile.tsx:116
 msgid "Sunday"
@@ -2023,6 +2054,10 @@ msgstr "यही वायुमंडलीय छनाई, जो लाल 
 msgid "This three-way split is central to the holiday's meaning — the act of giving is built directly into the ritual itself."
 msgstr "यह तीन-तरफ़ा विभाजन त्योहार के अर्थ के लिए केंद्रीय है — देने का कार्य सीधे अनुष्ठान में ही निहित है।"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:1081
+msgid "Thu {hour}"
+msgstr "गुरु {hour}"
+
 #: src/features/weather/ui/tile.tsx:110
 msgid "thunderstorm"
 msgstr "आंधी तूफ़ान"
@@ -2095,6 +2130,10 @@ msgstr "नौरोज़ जैसी परंपराएँ आज भी �
 msgid "Try again"
 msgstr "दोबारा कोशिश करें"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:1073
+msgid "Tue {hour}"
+msgstr "मंगल {hour}"
+
 #: src/features/weather/ui/tile.tsx:118
 msgid "Tuesday"
 msgstr "मंगलवार"
@@ -2107,9 +2146,17 @@ msgstr "यदि Weather Please द्वारा बताया गया UV
 #~ msgid "Unable to fetch weather data. Please check your internet connection and try again."
 #~ msgstr "मौसम डेटा प्राप्त नहीं हो सका. कृपया अपना इंटरनेट कनेक्शन जांचें और फिर से प्रयास करें."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2576
+#: src/features/weather/ui/next-24-hours-tile.tsx:2611
 msgid "Unavailable"
 msgstr "उपलब्ध नहीं"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:2663
+msgid "Unhealthy"
+msgstr "अस्वस्थ"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:2659
+msgid "Unhealthy for sensitive groups"
+msgstr "संवेदनशील समूहों के लिए अस्वस्थ"
 
 #: src/features/weather/ui/tile.tsx:475
 #: src/features/weather/ui/tile.tsx:482
@@ -2142,6 +2189,10 @@ msgstr "वेलेंटाइन दिवस"
 msgid "Valentine’s Day celebrates affection in many forms, from romantic love to friendship and quiet acts of care."
 msgstr "वेलेंटाइन डे कई रूपों में स्नेह का उत्सव है — रोमांटिक प्रेम से लेकर दोस्ती और देखभाल के शांत कामों तक।"
 
+#: src/features/weather/ui/next-24-hours-tile.tsx:2667
+msgid "Very unhealthy"
+msgstr "बहुत अस्वस्थ"
+
 #: src/features/weather/ui/tile.tsx:107
 msgid "violent rain showers"
 msgstr "हिंसक वर्षा की बौछारें"
@@ -2150,7 +2201,7 @@ msgstr "हिंसक वर्षा की बौछारें"
 msgid "Waiting for air quality data"
 msgstr "वायु गुणवत्ता डेटा की प्रतीक्षा में"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1946
+#: src/features/weather/ui/next-24-hours-tile.tsx:1981
 msgid "Waiting for map data"
 msgstr "मानचित्र डेटा की प्रतीक्षा में"
 
@@ -2193,6 +2244,10 @@ msgstr "इस स्थान के लिए मौसम डेटा लो
 #: src/features/settings/ui/settings.tsx:790
 msgid "Weather Please uses the following third-party data sources and location services."
 msgstr "Weather Please निम्नलिखित तृतीय-पक्ष डेटा स्रोतों और स्थान सेवाओं का उपयोग करता है।"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:1077
+msgid "Wed {hour}"
+msgstr "बुध {hour}"
 
 #: src/features/weather/ui/tile.tsx:119
 msgid "Wednesday"
@@ -2242,12 +2297,12 @@ msgstr "यह लाल क्यों हो जाता है"
 msgid "Why the peak is brief"
 msgstr "चरम संक्षिप्त क्यों होता है"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:765
-#: src/features/weather/ui/next-24-hours-tile.tsx:1808
+#: src/features/weather/ui/next-24-hours-tile.tsx:767
+#: src/features/weather/ui/next-24-hours-tile.tsx:1843
 msgid "Wind"
 msgstr "हवा"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:969
+#: src/features/weather/ui/next-24-hours-tile.tsx:971
 msgid "Wind is making it feel cooler than the measured temperature right now."
 msgstr "हवा अभी मापे गए तापमान से अधिक ठंडा महसूस करा रही है।"
 
