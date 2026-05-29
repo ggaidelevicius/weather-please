@@ -4,6 +4,27 @@ import { fileURLToPath } from 'url'
 
 import { rootPath } from './lib/root.mjs'
 
+/**
+ * Why this exists: the extension build needs Pages Router output, not App
+ * Router output.
+ *
+ * The extension's new tab runs under the MV3 default Content Security Policy
+ * (`script-src 'self'`), which forbids inline `<script>` execution. App Router's
+ * static export emits inline, executable bootstrap and RSC "flight" scripts
+ * (e.g. `self.__next_f.push(...)`), so the browser blocks them and the page
+ * never hydrates. Pages Router instead keeps page data in a non-executable
+ * `<script type="application/json" id="__NEXT_DATA__">` block and loads behavior
+ * from external chunks, which satisfy `'self'`.
+ *
+ * `src/app` exists only for the Vercel-hosted bug page + server action. During
+ * the extension build we move `src/app` -> `src/_app` so Next builds Pages
+ * Router only, then restore it afterwards so Vercel still sees `app/`.
+ *
+ * This is deliberate — do not "simplify" it away. The only alternative is a
+ * post-export transform that externalizes App Router's inline scripts, which
+ * couples the build to Next's internal HTML emission format (fragile across
+ * upgrades) for no runtime benefit on a fully client-side page.
+ */
 const srcAppPath = path.join(rootPath, 'src', 'app')
 const destAppPath = path.join(rootPath, 'src', '_app')
 
