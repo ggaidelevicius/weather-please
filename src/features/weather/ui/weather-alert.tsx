@@ -475,7 +475,7 @@ export const WeatherAlert = ({
 						},
 					}}
 					aria-live="assertive"
-					className="fixed top-0 left-0 z-30 flex w-auto flex-col items-start gap-2 p-3"
+					className="fixed top-0 left-0 z-31 flex w-auto flex-col items-start gap-2 p-3"
 					exit={{ opacity: 0, scale: 0.95 }}
 					initial={{ opacity: 0 }}
 					role="alert"
@@ -503,7 +503,7 @@ export const WeatherAlert = ({
 					},
 				}}
 				aria-live="assertive"
-				className="fixed top-0 left-0 z-30 flex w-full flex-col"
+				className="fixed top-0 left-0 z-31 flex w-full flex-col"
 				exit={{ opacity: 0, scale: 0.95 }}
 				initial={{ opacity: 0 }}
 				role="alert"

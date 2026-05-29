@@ -1,8 +1,16 @@
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
 import { IconAlertTriangle } from '@tabler/icons-react'
-import { AnimatePresence, motion } from 'framer-motion'
 import {
+	AnimatePresence,
+	motion,
+	type MotionValue,
+	useMotionValue,
+	useSpring,
+	useTransform,
+} from 'framer-motion'
+import {
+	type MouseEvent as ReactMouseEvent,
 	type ReactNode,
 	type TouchEvent,
 	useEffect,
@@ -616,6 +624,16 @@ const VIEW_INDICATOR_LABELS: Record<ForecastViewId, string> = {
 	temperature: 'temperature',
 	wind: 'wind',
 }
+const VIEW_INDICATOR_LABEL_NODES: Record<ForecastViewId, ReactNode> = {
+	'air-quality': <Trans>air quality</Trans>,
+	conditions: <Trans>conditions</Trans>,
+	forecast: <Trans>forecast</Trans>,
+	map: <Trans>map</Trans>,
+	precipitation: <Trans>precipitation</Trans>,
+	sun: <Trans>sun</Trans>,
+	temperature: <Trans>temperature</Trans>,
+	wind: <Trans>wind</Trans>,
+}
 const DETAIL_FALLBACK_AURORA_GRADIENTS: Record<ForecastViewId, string> = {
 	'air-quality':
 		'radial-gradient(120% 80% at 15% 0%, rgba(20, 184, 166, 0.21), rgba(13, 148, 136, 0.1) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(45, 212, 191, 0.15), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(34, 197, 94, 0.11), rgba(15, 23, 42, 0) 70%)',
@@ -794,6 +812,13 @@ const getAdjacentViewId = ({
 	return viewIds[nextIndex] ?? 'forecast'
 }
 
+// Dock-style magnification tuning. `RADIUS` is how far (px) from the cursor a
+// dot starts to grow; sizes are the dot diameter in px at rest and at the
+// cursor's exact position.
+const VIEW_INDICATOR_MAGNIFY_RADIUS = 55
+const VIEW_INDICATOR_REST_SIZE = 10
+const VIEW_INDICATOR_MAX_SIZE = 32
+
 const ViewIndicator = ({
 	activeViewId,
 	isVisible,
@@ -808,52 +833,126 @@ const ViewIndicator = ({
 	onMouseLeave: () => void
 	onSelectView: (viewId: ForecastViewId) => void
 	viewIds: readonly ForecastViewId[]
-}>) => (
-	<motion.div
-		animate={{ opacity: isVisible ? 1 : 0 }}
-		aria-hidden={!isVisible}
-		aria-label="Weather view navigation"
-		className="absolute inset-y-0 left-0 z-30 flex w-8 flex-col items-center justify-center gap-2"
-		initial={false}
-		onMouseEnter={onMouseEnter}
-		onMouseLeave={onMouseLeave}
-		role="navigation"
-		transition={{ duration: 0.25 }}
-	>
-		{viewIds.map((viewId) => (
-			<ViewIndicatorDot
-				isActive={activeViewId === viewId}
-				isVisible={isVisible}
-				key={viewId}
-				onSelect={() => onSelectView(viewId)}
-				viewId={viewId}
-			/>
-		))}
-	</motion.div>
-)
+}>) => {
+	const pointerY = useMotionValue(Number.POSITIVE_INFINITY)
+
+	const handleMouseMove = (event: ReactMouseEvent) => {
+		pointerY.set(event.clientY)
+	}
+
+	const handleMouseLeave = () => {
+		pointerY.set(Number.POSITIVE_INFINITY)
+		onMouseLeave()
+	}
+
+	return (
+		<motion.div
+			animate={{ opacity: isVisible ? 1 : 0 }}
+			aria-hidden={!isVisible}
+			aria-label="Weather view navigation"
+			className="absolute inset-y-0 left-0 z-30 flex w-8 flex-col items-center justify-center"
+			initial={false}
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={handleMouseLeave}
+			onMouseMove={handleMouseMove}
+			role="navigation"
+			transition={{ duration: 0.25 }}
+		>
+			{viewIds.map((viewId) => (
+				<ViewIndicatorDot
+					isActive={activeViewId === viewId}
+					isVisible={isVisible}
+					key={viewId}
+					onSelect={() => onSelectView(viewId)}
+					pointerY={pointerY}
+					viewId={viewId}
+				/>
+			))}
+		</motion.div>
+	)
+}
 
 const ViewIndicatorDot = ({
 	isActive,
 	isVisible,
 	onSelect,
+	pointerY,
 	viewId,
 }: Readonly<{
 	isActive: boolean
 	isVisible: boolean
 	onSelect: () => void
+	pointerY: MotionValue<number>
 	viewId: ForecastViewId
-}>) => (
-	<motion.button
-		animate={{
-			opacity: isActive ? 1 : 0.45,
-			scale: isActive ? 1 : 0.6,
-		}}
-		aria-current={isActive ? 'page' : undefined}
-		aria-label={`Show ${VIEW_INDICATOR_LABELS[viewId]} view`}
-		className="size-2.5 cursor-pointer rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.45)] transition-shadow hover:shadow-[0_0_14px_rgba(255,255,255,0.7)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-		initial={false}
-		onClick={onSelect}
-		tabIndex={isVisible ? 0 : -1}
-		transition={{ damping: 24, stiffness: 420, type: 'spring' }}
-	/>
-)
+}>) => {
+	const dotRef = useRef<HTMLSpanElement>(null)
+
+	// Signed distance from the cursor to this dot's vertical center. Reading the
+	// bounding box on each frame keeps the effect correct as dots resize.
+	const distance = useTransform(pointerY, (y) => {
+		const bounds = dotRef.current?.getBoundingClientRect()
+		if (!bounds) return Number.POSITIVE_INFINITY
+		return y - (bounds.y + bounds.height / 2)
+	})
+
+	const sizeTarget = useTransform(
+		distance,
+		[-VIEW_INDICATOR_MAGNIFY_RADIUS, 0, VIEW_INDICATOR_MAGNIFY_RADIUS],
+		[
+			VIEW_INDICATOR_REST_SIZE,
+			VIEW_INDICATOR_MAX_SIZE,
+			VIEW_INDICATOR_REST_SIZE,
+		],
+		{ clamp: true },
+	)
+	const size = useSpring(sizeTarget, {
+		damping: 18,
+		mass: 0.1,
+		stiffness: 260,
+	})
+
+	const [isHovered, setIsHovered] = useState(false)
+
+	const handleMouseEnter = () => setIsHovered(true)
+	const handleMouseLeave = () => setIsHovered(false)
+
+	// The button fills its full slot (vertical padding, no gaps between slots) so
+	// the strip is one continuous hit target — like the macOS dock, the cursor is
+	// always over exactly one option and that option's label always shows.
+	return (
+		<button
+			aria-current={isActive ? 'page' : undefined}
+			aria-label={`Show ${VIEW_INDICATOR_LABELS[viewId]} view`}
+			className="group relative flex w-full cursor-pointer items-center justify-center py-1 focus:outline-none"
+			onBlur={handleMouseLeave}
+			onClick={onSelect}
+			onFocus={handleMouseEnter}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+			tabIndex={isVisible ? 0 : -1}
+			type="button"
+		>
+			<motion.span
+				animate={{ opacity: isActive ? 1 : 0.45, scale: isActive ? 1 : 0.6 }}
+				className="rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.45)] group-focus-visible:outline-2 group-focus-visible:outline-offset-4 group-focus-visible:outline-white"
+				initial={false}
+				ref={dotRef}
+				style={{ height: size, width: size }}
+				transition={{ damping: 24, stiffness: 420, type: 'spring' }}
+			/>
+			<AnimatePresence>
+				{isHovered ? (
+					<motion.span
+						animate={{ opacity: 1, x: 0 }}
+						className="pointer-events-none absolute top-1/2 left-full ml-1 -translate-y-1/2 rounded-md bg-black/55 px-2 py-1 text-xs whitespace-nowrap text-white capitalize backdrop-blur-sm before:absolute before:top-1/2 before:right-full before:-translate-y-1/2 before:border-6 before:border-transparent before:border-r-black/55 before:content-['']"
+						exit={{ opacity: 0, x: -4 }}
+						initial={{ opacity: 0, x: -4 }}
+						transition={{ duration: 0.15 }}
+					>
+						{VIEW_INDICATOR_LABEL_NODES[viewId]}
+					</motion.span>
+				) : null}
+			</AnimatePresence>
+		</button>
+	)
+}

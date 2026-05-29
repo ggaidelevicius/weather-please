@@ -22,8 +22,8 @@ msgstr "{0}"
 #. placeholder {0}: Math.round(value)
 #. placeholder {1}: getAqiCategory(currentAqi ?? 0)
 #. placeholder {1}: getAqiCategory(value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:643
-#: src/features/weather/ui/next-24-hours-tile.tsx:707
+#: src/features/weather/ui/next-24-hours-tile.tsx:647
+#: src/features/weather/ui/next-24-hours-tile.tsx:711
 msgid "{0} · {1}"
 msgstr "{0} · {1}"
 
@@ -38,8 +38,8 @@ msgstr "{0} · {1}"
 
 #. placeholder {0}: formatDecimal(bestVisibility.value)
 #. placeholder {0}: formatDecimal(lowestVisibility.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:846
-#: src/features/weather/ui/next-24-hours-tile.tsx:860
+#: src/features/weather/ui/next-24-hours-tile.tsx:850
+#: src/features/weather/ui/next-24-hours-tile.tsx:864
 msgid "{0} {visibilityUnitLabel} at <0/>"
 msgstr "{0} {visibilityUnitLabel} a las <0/>"
 
@@ -61,26 +61,26 @@ msgstr "{0} {visibilityUnitLabel} a las <0/>"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:761
-#: src/features/weather/ui/next-24-hours-tile.tsx:778
+#: src/features/weather/ui/next-24-hours-tile.tsx:765
+#: src/features/weather/ui/next-24-hours-tile.tsx:782
 msgid "{0} {windUnitLabel} at <0/>"
 msgstr "{0} {windUnitLabel} a las <0/>"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1143
+#: src/features/weather/ui/next-24-hours-tile.tsx:1147
 msgid "{0} and {1}"
 msgstr "{0} y {1}"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1156
+#: src/features/weather/ui/next-24-hours-tile.tsx:1160
 msgid "{0} and {1} today"
 msgstr "{0} y {1} hoy"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1164
+#: src/features/weather/ui/next-24-hours-tile.tsx:1168
 msgid "{0} and {1} tomorrow"
 msgstr "{0} y {1} mañana"
 
@@ -93,7 +93,7 @@ msgstr "{0} y {1} mañana"
 #. placeholder {0}: Math.round(peakAqi.value)
 #. placeholder {0}: Math.round(peakUv.value)
 #: src/features/weather/ui/next-24-hours-tile.tsx:564
-#: src/features/weather/ui/next-24-hours-tile.tsx:657
+#: src/features/weather/ui/next-24-hours-tile.tsx:661
 msgid "{0} at <0/>"
 msgstr "{0} a las <0/>"
 
@@ -136,12 +136,12 @@ msgid "{0} mph"
 msgstr "{0} mph"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1084
+#: src/features/weather/ui/next-24-hours-tile.tsx:1088
 msgid "{0} today"
 msgstr "{0} hoy"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1088
+#: src/features/weather/ui/next-24-hours-tile.tsx:1092
 msgid "{0} tomorrow"
 msgstr "{0} mañana"
 
@@ -215,7 +215,7 @@ msgstr "<0>Acceso a la ubicación denegado.</0> Haz clic en el icono de ubicaci�
 msgid "☕ Gift a coffee"
 msgstr "☕ Regala un café"
 
-#: src/pages/index.tsx:571
+#: src/pages/index.tsx:579
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ NUEVO: Prueba a desplazarte hacia abajo"
 
@@ -283,8 +283,12 @@ msgstr "En muchas culturas, tradiciones como Yule y Saturnalia ... celebraban la
 msgid "Acts of charity, the sharing of food, and care for family, neighbours, and those in need form the heart of the celebration."
 msgstr "Los actos de caridad, compartir comida y cuidar de la familia, ...neighbours, y quienes lo necesitan forman el corazón de la celebración."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:682
-#: src/features/weather/ui/next-24-hours-tile.tsx:687
+#: src/pages/index.tsx:628
+msgid "air quality"
+msgstr "calidad del aire"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:686
+#: src/features/weather/ui/next-24-hours-tile.tsx:691
 msgid "Air quality"
 msgstr "Calidad del aire"
 
@@ -292,7 +296,7 @@ msgstr "Calidad del aire"
 #~ msgid "Air quality forecast from Open-Meteo and CAMS atmospheric data."
 #~ msgstr "Previsión de calidad del aire de Open-Meteo y datos atmosféricos de CAMS."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:715
+#: src/features/weather/ui/next-24-hours-tile.tsx:719
 msgid "Air quality unavailable"
 msgstr "Calidad del aire no disponible"
 
@@ -316,7 +320,7 @@ msgstr "Monumentos antiguos como Stonehenge están alineados con el sol... y los
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "Antiguos observatorios siguieron cuidadosamente este punto de giro del... para orientar los ciclos de siembra, los calendarios y los festivales estacionales."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1174
+#: src/features/weather/ui/next-24-hours-tile.tsx:1178
 msgid "and"
 msgstr "y"
 
@@ -332,11 +336,11 @@ msgstr "Otra historia muy difundida celebra a Krishna, cuyos traviesos... de col
 msgid "April"
 msgstr "Abril"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:705
+#: src/features/weather/ui/next-24-hours-tile.tsx:709
 msgid "AQI"
 msgstr "AQI"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:628
+#: src/features/weather/ui/next-24-hours-tile.tsx:629
 msgid "AQI is measured on a scale of 0-500. Lower numbers mean cleaner air."
 msgstr "El AQI se mide en una escala de 0 a 500. Los números más bajos indican un aire más limpio."
 
@@ -369,7 +373,7 @@ msgstr "Agosto"
 msgid "Autumn Equinox"
 msgstr "Equinoccio de otoño"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2042
+#: src/features/weather/ui/next-24-hours-tile.tsx:2046
 msgid "Average wind"
 msgstr "Viento medio"
 
@@ -406,7 +410,7 @@ msgstr "Celsius (°C)"
 msgid "Centuries later, people still reach for pen and paper when a text won't do."
 msgstr "Siglos después, las personas aún recurren al papel y al bolígrafo cuando un mensaje de texto no es suficiente."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1881
+#: src/features/weather/ui/next-24-hours-tile.tsx:1885
 msgid "Chance"
 msgstr "Probabilidad"
 
@@ -427,7 +431,7 @@ msgstr "El día de Navidad marca la celebración del nacimiento de Jesús, ... y
 msgid "clear sky"
 msgstr "cielo despejado"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:858
+#: src/features/weather/ui/next-24-hours-tile.tsx:862
 msgid "Clearest hour"
 msgstr "Hora más despejada"
 
@@ -447,7 +451,11 @@ msgstr "Las limpiezas comunitarias, la plantación de árboles y la restauració
 msgid "Compact weather alerts"
 msgstr "Alertas meteorológicas compactas"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:871
+#: src/pages/index.tsx:629
+msgid "conditions"
+msgstr "condiciones"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:875
 msgid "Conditions"
 msgstr "Condiciones"
 
@@ -455,7 +463,7 @@ msgstr "Condiciones"
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "Los disfraces pueden ser heroicos, humorísticos o inquietantes, permitiendo a la gente asumir brevemente otros papeles."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:639
+#: src/features/weather/ui/next-24-hours-tile.tsx:643
 msgid "Current AQI"
 msgstr "AQI actual"
 
@@ -500,7 +508,7 @@ msgstr "llovizna helada densa"
 msgid "depositing rime fog"
 msgstr "niebla con escarcha depositada"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1887
+#: src/features/weather/ui/next-24-hours-tile.tsx:1891
 msgid "Depth"
 msgstr "Profundidad"
 
@@ -508,7 +516,7 @@ msgstr "Profundidad"
 msgid "Developer"
 msgstr "Desarrollador"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:989
+#: src/features/weather/ui/next-24-hours-tile.tsx:993
 msgid "Direct sunlight is making it feel warmer than the measured temperature right now."
 msgstr "La luz solar directa está haciendo que se sienta más caliente que la temperatura medida en este momento."
 
@@ -679,11 +687,15 @@ msgstr "Los alimentos fritos en aceite, incluidos los latkes y los sufganiyot, r
 msgid "For many Hindus, the festival marks the return of Rama, Sita, Lakshmana, and Hanuman to Ayodhya after their long exile."
 msgstr "Para muchos hindúes, el festival marca el regreso de Rama, Sita, Lakshmana y Hanuman a Ayodhya tras su largo exilio."
 
+#: src/pages/index.tsx:630
+msgid "forecast"
+msgstr "pronóstico"
+
 #: src/features/settings/ui/settings.tsx:606
 msgid "Forecast"
 msgstr "Pronóstico"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1117
+#: src/features/weather/ui/next-24-hours-tile.tsx:1121
 msgid "Fri {hour}"
 msgstr "Vie {hour}"
 
@@ -735,7 +747,7 @@ msgstr "Generalmente viento fuerte comenzando en {timeUntilStrongWind} horas"
 msgid "Generally strong wind starting in 1 hour"
 msgstr "Generalmente viento fuerte comenzando en 1 hora"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2686
+#: src/features/weather/ui/next-24-hours-tile.tsx:2690
 msgid "Good"
 msgstr "Buena"
 
@@ -769,7 +781,7 @@ msgstr "Buena"
 msgid "Good to know"
 msgstr "Bueno saber"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:811
+#: src/features/weather/ui/next-24-hours-tile.tsx:815
 msgid "Gust"
 msgstr "Ráfaga"
 
@@ -799,7 +811,7 @@ msgstr "Janucá"
 msgid "Hanukkah is a Jewish festival of lights, observed over eight nights."
 msgstr "Janucá es una festividad judía de las luces, observada durante ocho noches."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2705
+#: src/features/weather/ui/next-24-hours-tile.tsx:2709
 msgid "Hazardous"
 msgstr "Peligrosa"
 
@@ -880,11 +892,11 @@ msgstr "Holi es un alegre festival del color, celebrado con risas, música y com
 msgid "Homes are carefully cleaned and decorated to clear away old luck and welcome prosperity for the year ahead."
 msgstr "Los hogares se limpian y decoran con cuidado para alejar la mala suerte antigua y dar la bienvenida a la prosperidad del año que viene."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:971
+#: src/features/weather/ui/next-24-hours-tile.tsx:975
 msgid "Humid air and direct sunlight are making it feel warmer than the measured temperature right now."
 msgstr "El aire húmedo y la luz solar directa están haciendo que se sienta más caliente que la temperatura medida en este momento."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:980
+#: src/features/weather/ui/next-24-hours-tile.tsx:984
 msgid "Humid air is making it feel warmer than the measured temperature right now."
 msgstr "El aire húmedo está haciendo que se sienta más caliente que la temperatura medida en este momento."
 
@@ -1051,7 +1063,7 @@ msgstr "Los datos en tiempo real no están disponibles temporalmente. Se muestra
 #~ msgid "Live data is unavailable. Showing your last saved forecast instead."
 #~ msgstr "Los datos en tiempo real no están disponibles. Se muestra tu último pronóstico guardado en su lugar."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1292
+#: src/features/weather/ui/next-24-hours-tile.tsx:1296
 msgid "Local map"
 msgstr "Mapa local"
 
@@ -1095,7 +1107,7 @@ msgstr "Baja visibilidad comenzando en {timeUntilLowVisibility} horas"
 msgid "Low visibility starting in 1 hour"
 msgstr "Baja visibilidad comenzando en 1 hora"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:844
+#: src/features/weather/ui/next-24-hours-tile.tsx:848
 msgid "Lowest visibility"
 msgstr "Visibilidad mínima"
 
@@ -1121,11 +1133,15 @@ msgstr "Lluvia de meteoros de las Líridas"
 msgid "mainly clear"
 msgstr "principalmente despejado"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2012
+#: src/pages/index.tsx:631
+msgid "map"
+msgstr "mapa"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:2016
 msgid "Map"
 msgstr "Mapa"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1370
+#: src/features/weather/ui/next-24-hours-tile.tsx:1374
 msgid "Map data unavailable"
 msgstr "Datos del mapa no disponibles"
 
@@ -1150,7 +1166,7 @@ msgstr "Mientras tanto, miles de millones de aves están en plena migración, na
 msgid "Metric (km/h, mm)"
 msgstr "Métrico (km/h, mm)"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2690
+#: src/features/weather/ui/next-24-hours-tile.tsx:2694
 msgid "Moderate"
 msgstr "Moderada"
 
@@ -1170,7 +1186,7 @@ msgstr "lluvias moderadas"
 msgid "moderate snowfall"
 msgstr "nevada moderada"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1101
+#: src/features/weather/ui/next-24-hours-tile.tsx:1105
 msgid "Mon {hour}"
 msgstr "Lun {hour}"
 
@@ -1210,13 +1226,13 @@ msgstr "Newgrange, un túmulo de corredor de 5.000 años de antigüedad en Irlan
 #: src/features/weather/ui/next-24-hours-tile.tsx:352
 #: src/features/weather/ui/next-24-hours-tile.tsx:417
 #: src/features/weather/ui/next-24-hours-tile.tsx:553
-#: src/features/weather/ui/next-24-hours-tile.tsx:631
-#: src/features/weather/ui/next-24-hours-tile.tsx:750
-#: src/features/weather/ui/next-24-hours-tile.tsx:838
+#: src/features/weather/ui/next-24-hours-tile.tsx:635
+#: src/features/weather/ui/next-24-hours-tile.tsx:754
+#: src/features/weather/ui/next-24-hours-tile.tsx:842
 msgid "Next 24 hours"
 msgstr "Próximas 24 horas"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1283
+#: src/features/weather/ui/next-24-hours-tile.tsx:1287
 msgid "Next 6 hours"
 msgstr "Próximas 6 horas"
 
@@ -1339,7 +1355,7 @@ msgstr "Visión general"
 msgid "partly cloudy"
 msgstr "parcialmente nublado"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:653
+#: src/features/weather/ui/next-24-hours-tile.tsx:657
 msgid "Peak AQI"
 msgstr "AQI máximo"
 
@@ -1347,11 +1363,11 @@ msgstr "AQI máximo"
 msgid "Peak chance"
 msgstr "Probabilidad máxima"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:757
+#: src/features/weather/ui/next-24-hours-tile.tsx:761
 msgid "Peak gust"
 msgstr "Ráfaga máxima"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2033
+#: src/features/weather/ui/next-24-hours-tile.tsx:2037
 msgid "Peak precipitation chance"
 msgstr "Probabilidad máxima de precipitación"
 
@@ -1359,8 +1375,8 @@ msgstr "Probabilidad máxima de precipitación"
 msgid "Peak UV"
 msgstr "UV máximo"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:774
-#: src/features/weather/ui/next-24-hours-tile.tsx:2051
+#: src/features/weather/ui/next-24-hours-tile.tsx:778
+#: src/features/weather/ui/next-24-hours-tile.tsx:2055
 msgid "Peak wind"
 msgstr "Viento máximo"
 
@@ -1380,22 +1396,26 @@ msgstr "Lluvia de meteoros de las Perseidas"
 msgid "Perseids Meteor Shower"
 msgstr "Lluvia de meteoros de las Perseidas"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:675
+#: src/features/weather/ui/next-24-hours-tile.tsx:679
 msgid "PM10 / ozone / NO₂"
 msgstr "PM10 / ozono / NO₂"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:669
+#: src/features/weather/ui/next-24-hours-tile.tsx:673
 msgid "PM2.5 now"
 msgstr "PM2.5 ahora"
 
+#: src/pages/index.tsx:632
+msgid "precipitation"
+msgstr "precipitación"
+
 #: src/features/weather/ui/next-24-hours-tile.tsx:471
 #: src/features/weather/ui/next-24-hours-tile.tsx:497
-#: src/features/weather/ui/next-24-hours-tile.tsx:1939
+#: src/features/weather/ui/next-24-hours-tile.tsx:1943
 msgid "Precipitation"
 msgstr "Precipitación"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:444
-#: src/features/weather/ui/next-24-hours-tile.tsx:2390
+#: src/features/weather/ui/next-24-hours-tile.tsx:2394
 msgid "Precipitation chance"
 msgstr "Probabilidad de precipitación"
 
@@ -1427,8 +1447,8 @@ msgstr "Religioso y cultural"
 msgid "Report a bug"
 msgstr "Informar de un error"
 
-#: src/pages/index.tsx:505
-#: src/pages/index.tsx:519
+#: src/pages/index.tsx:513
+#: src/pages/index.tsx:527
 msgid "Retry"
 msgstr "Reintentar"
 
@@ -1436,7 +1456,7 @@ msgstr "Reintentar"
 msgid "Reverse geocoding by OpenStreetMap contributors"
 msgstr "Geocodificación inversa por colaboradores de OpenStreetMap"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1121
+#: src/features/weather/ui/next-24-hours-tile.tsx:1125
 msgid "Sat {hour}"
 msgstr "Sáb {hour}"
 
@@ -1633,7 +1653,7 @@ msgstr "Mostrar solsticio de invierno"
 #~ msgid "Showing a reduced saved forecast because the latest data couldn't be fetched."
 #~ msgstr "Se muestra un pronóstico guardado reducido porque no se pudieron obtener los últimos datos."
 
-#: src/pages/index.tsx:86
+#: src/pages/index.tsx:94
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Mostrando datos meteorológicos en caché. Reintente para actualizar el pronóstico más reciente."
 
@@ -1708,11 +1728,15 @@ msgstr "Enviar"
 msgid "Summer Solstice"
 msgstr "Solsticio de verano"
 
+#: src/pages/index.tsx:633
+msgid "sun"
+msgstr "sol"
+
 #: src/features/weather/ui/next-24-hours-tile.tsx:587
 msgid "Sun"
 msgstr "Sol"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1124
+#: src/features/weather/ui/next-24-hours-tile.tsx:1128
 msgid "Sun {hour}"
 msgstr "Dom {hour}"
 
@@ -1739,6 +1763,10 @@ msgstr "Símbolos y rituales"
 #: src/features/seasonal-events/events/lunar-new-year.tsx:99
 msgid "Symbols of luck"
 msgstr "Símbolos de buena suerte"
+
+#: src/pages/index.tsx:634
+msgid "temperature"
+msgstr "temperatura"
 
 #: src/features/settings/ui/initialisation.tsx:245
 #: src/features/settings/ui/settings.tsx:541
@@ -2068,7 +2096,7 @@ msgstr "Este mismo filtrado atmosférico que produce los atardeceres rojos le da
 msgid "This three-way split is central to the holiday's meaning — the act of giving is built directly into the ritual itself."
 msgstr "Esta división en tres partes es fundamental para el significado de la festividad: el acto de dar está incorporado directamente en el propio ritual."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1113
+#: src/features/weather/ui/next-24-hours-tile.tsx:1117
 msgid "Thu {hour}"
 msgstr "Jue {hour}"
 
@@ -2113,7 +2141,7 @@ msgid "Total Lunar Eclipse"
 msgstr "Eclipse lunar total"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:424
-#: src/features/weather/ui/next-24-hours-tile.tsx:2342
+#: src/features/weather/ui/next-24-hours-tile.tsx:2346
 msgid "Total precipitation"
 msgstr "Precipitación total"
 
@@ -2145,7 +2173,7 @@ msgstr "Tradiciones como Nowruz siguen celebrando temas de renovación en o alre
 msgid "Try again"
 msgstr "Intentar de nuevo"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1105
+#: src/features/weather/ui/next-24-hours-tile.tsx:1109
 msgid "Tue {hour}"
 msgstr "Mar {hour}"
 
@@ -2161,15 +2189,15 @@ msgstr "Active esta opción si el índice UV informado por Weather Please es con
 #~ msgid "Unable to fetch weather data. Please check your internet connection and try again."
 #~ msgstr "No se pudieron obtener los datos meteorológicos. Revisa tu conexión a internet y vuelve a intentarlo."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2648
+#: src/features/weather/ui/next-24-hours-tile.tsx:2652
 msgid "Unavailable"
 msgstr "No disponible"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2698
+#: src/features/weather/ui/next-24-hours-tile.tsx:2702
 msgid "Unhealthy"
 msgstr "Dañina a la salud"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2694
+#: src/features/weather/ui/next-24-hours-tile.tsx:2698
 msgid "Unhealthy for sensitive groups"
 msgstr "Dañina para los grupos sensibles"
 
@@ -2208,7 +2236,7 @@ msgstr "Día de San Valentín"
 msgid "Valentine’s Day celebrates affection in many forms, from romantic love to friendship and quiet acts of care."
 msgstr "El Día de San Valentín celebra el afecto en muchas formas, desde el amor romántico hasta la amistad y los actos discretos de cuidado."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2702
+#: src/features/weather/ui/next-24-hours-tile.tsx:2706
 msgid "Very unhealthy"
 msgstr "Muy dañina a la salud"
 
@@ -2216,15 +2244,15 @@ msgstr "Muy dañina a la salud"
 msgid "violent rain showers"
 msgstr "lluvias violentas"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:886
+#: src/features/weather/ui/next-24-hours-tile.tsx:890
 msgid "Visibility"
 msgstr "Visibilidad"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:683
+#: src/features/weather/ui/next-24-hours-tile.tsx:687
 msgid "Waiting for air quality data"
 msgstr "Esperando datos de calidad del aire"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2013
+#: src/features/weather/ui/next-24-hours-tile.tsx:2017
 msgid "Waiting for map data"
 msgstr "Esperando datos del mapa"
 
@@ -2236,7 +2264,7 @@ msgstr "Formas de observar"
 msgid "We couldn't reach the location service right now - this isn't an issue with your device. Please try again in a moment."
 msgstr "No pudimos conectar con el servicio de ubicación ahora mismo. Esto no es un problema de tu dispositivo. Inténtalo de nuevo en un momento."
 
-#: src/pages/index.tsx:127
+#: src/pages/index.tsx:135
 msgid "We couldn't reach the weather service. Please check your internet connection and try again."
 msgstr "No pudimos conectar con el servicio meteorológico. Revisa tu conexión a internet y vuelve a intentarlo."
 
@@ -2248,19 +2276,19 @@ msgstr "Clima / Tiempo"
 msgid "Weather data by Open-Meteo"
 msgstr "Datos meteorológicos de Open-Meteo"
 
-#: src/pages/index.tsx:118
+#: src/pages/index.tsx:126
 msgid "Weather data couldn't be loaded because the weather service could not be reached. This usually isn't a problem with your device. Please try again in a moment."
 msgstr "No se pudieron cargar los datos meteorológicos porque no se pudo contactar con el servicio meteorológico. Normalmente esto no es un problema con tu dispositivo. Inténtalo de nuevo en un momento."
 
-#: src/pages/index.tsx:99
+#: src/pages/index.tsx:107
 msgid "Weather data couldn't be loaded because the weather service is having trouble. This isn't a problem with your device. Please try again in a moment."
 msgstr "No se pudieron cargar los datos meteorológicos porque el servicio meteorológico está teniendo problemas. Esto no es un problema con tu dispositivo. Inténtalo de nuevo en un momento."
 
-#: src/pages/index.tsx:78
+#: src/pages/index.tsx:86
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "No se pudieron cargar los datos del tiempo debido a un problema del servicio — mostrando datos en caché. Inténtalo de nuevo en un momento."
 
-#: src/pages/index.tsx:109
+#: src/pages/index.tsx:117
 msgid "Weather data couldn't be loaded for this location. Please check your location settings and try again."
 msgstr "No se pudieron cargar los datos meteorológicos para esta ubicación. Revisa la configuración de ubicación y vuelve a intentarlo."
 
@@ -2268,7 +2296,7 @@ msgstr "No se pudieron cargar los datos meteorológicos para esta ubicación. Re
 msgid "Weather Please uses the following third-party data sources and location services."
 msgstr "Weather Please utiliza las siguientes fuentes de datos de terceros y servicios de ubicación."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1109
+#: src/features/weather/ui/next-24-hours-tile.tsx:1113
 msgid "Wed {hour}"
 msgstr "Mié {hour}"
 
@@ -2320,13 +2348,17 @@ msgstr "Por qué se vuelve roja"
 msgid "Why the peak is brief"
 msgstr "Por qué el pico es breve"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:789
-#: src/features/weather/ui/next-24-hours-tile.tsx:803
-#: src/features/weather/ui/next-24-hours-tile.tsx:1875
+#: src/pages/index.tsx:635
+msgid "wind"
+msgstr "viento"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:793
+#: src/features/weather/ui/next-24-hours-tile.tsx:807
+#: src/features/weather/ui/next-24-hours-tile.tsx:1879
 msgid "Wind"
 msgstr "Viento"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:998
+#: src/features/weather/ui/next-24-hours-tile.tsx:1002
 msgid "Wind is making it feel cooler than the measured temperature right now."
 msgstr "El viento está haciendo que se sienta más frío que la temperatura medida en este momento."
 
