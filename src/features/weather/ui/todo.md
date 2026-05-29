@@ -20,7 +20,7 @@ The three layers, as they exist today:
 
 The ~30 types declared at the top (lines 87–272) describe whichever of the three
 layers they belong to, but are currently grouped together as one
-undifferentiated block.
+undifferentiated block, detached from the code that uses them.
 
 ## Proposed structure
 
@@ -58,7 +58,6 @@ next-24-hours/
     wind-field.ts                # wind interpolation, nearest point, direction lerp
     playback.ts                  # frame/interpolation/playback state
     map-constants.ts
-    map-types.ts
   lib/
     units.ts                     # convertTemperature/Wind/Precipitation/Visibility
     format.ts                    # formatHour, formatDecimal, formatPollutant…, getAqiCategory
@@ -81,6 +80,12 @@ Rationale for the split:
   coverage.
 - **`views/` isolates per-view intent** so a change to, say, the air-quality
   view no longer requires scrolling past the map renderer.
+- **Types are co-located with first use, not centralised.** The current top-of-
+  file type block is dissolved rather than relocated into a `*-types.ts` file.
+  Each type is declared in the module that first uses it (e.g. `ChartScale` /
+  `LineChartProps` in `chart/`, the `WeatherMap*` types beside the map code that
+  consumes them), and exported from there only if another module needs it. No
+  standalone types module is introduced.
 
 ## The one abstraction worth introducing
 
@@ -164,6 +169,12 @@ is the actual design change.
 - **Imports / path conventions.** AGENTS.md mandates relative imports (no path
   aliases) and `import type` for type-only imports. New files must follow this;
   watch for relative-path depth changes when nesting under `next-24-hours/`.
+- **Type co-location over a shared types module.** Declare each type in the file
+  that first uses it; export it only when another module needs it (then import
+  with `import type`). Do not create a `*-types.ts` dumping ground — the goal is
+  to remove the existing detached type block, not relocate it. Shared types that
+  several modules genuinely need (e.g. `Next24HoursDetailViewId`) live with the
+  code they most belong to (`view-ids.ts`) and are imported from there.
 - **React Compiler.** Compiler is enabled — do not add `useMemo`/`useCallback`
   while moving code. The `useDetailViewContext` hook should compute plainly and
   let the compiler handle memoization.
