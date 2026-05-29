@@ -625,6 +625,11 @@ export const Next24HoursDetailView = ({
 		return (
 			<DetailViewShell
 				accentClassName="text-teal-200"
+				footer={
+					<Trans>
+						AQI is measured on a scale of 0-500. Lower numbers mean cleaner air.
+					</Trans>
+				}
 				icon={<IconLungs aria-hidden size={22} />}
 				isActive={isActive}
 				kicker={<Trans>Next 24 hours</Trans>}

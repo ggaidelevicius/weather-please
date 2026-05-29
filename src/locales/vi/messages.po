@@ -22,8 +22,8 @@ msgstr "{0}"
 #. placeholder {0}: Math.round(value)
 #. placeholder {1}: getAqiCategory(currentAqi ?? 0)
 #. placeholder {1}: getAqiCategory(value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:642
-#: src/features/weather/ui/next-24-hours-tile.tsx:706
+#: src/features/weather/ui/next-24-hours-tile.tsx:643
+#: src/features/weather/ui/next-24-hours-tile.tsx:707
 msgid "{0} · {1}"
 msgstr "{0} · {1}"
 
@@ -38,8 +38,8 @@ msgstr "{0} · {1}"
 
 #. placeholder {0}: formatDecimal(bestVisibility.value)
 #. placeholder {0}: formatDecimal(lowestVisibility.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:845
-#: src/features/weather/ui/next-24-hours-tile.tsx:859
+#: src/features/weather/ui/next-24-hours-tile.tsx:846
+#: src/features/weather/ui/next-24-hours-tile.tsx:860
 msgid "{0} {visibilityUnitLabel} at <0/>"
 msgstr "{0} {visibilityUnitLabel} lúc <0/>"
 
@@ -61,26 +61,26 @@ msgstr "{0} {visibilityUnitLabel} lúc <0/>"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:760
-#: src/features/weather/ui/next-24-hours-tile.tsx:777
+#: src/features/weather/ui/next-24-hours-tile.tsx:761
+#: src/features/weather/ui/next-24-hours-tile.tsx:778
 msgid "{0} {windUnitLabel} at <0/>"
 msgstr "{0} {windUnitLabel} lúc <0/>"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1142
+#: src/features/weather/ui/next-24-hours-tile.tsx:1143
 msgid "{0} and {1}"
 msgstr "{0} và {1}"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1155
+#: src/features/weather/ui/next-24-hours-tile.tsx:1156
 msgid "{0} and {1} today"
 msgstr "{0} và {1} hôm nay"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1163
+#: src/features/weather/ui/next-24-hours-tile.tsx:1164
 msgid "{0} and {1} tomorrow"
 msgstr "{0} và {1} ngày mai"
 
@@ -93,7 +93,7 @@ msgstr "{0} và {1} ngày mai"
 #. placeholder {0}: Math.round(peakAqi.value)
 #. placeholder {0}: Math.round(peakUv.value)
 #: src/features/weather/ui/next-24-hours-tile.tsx:564
-#: src/features/weather/ui/next-24-hours-tile.tsx:656
+#: src/features/weather/ui/next-24-hours-tile.tsx:657
 msgid "{0} at <0/>"
 msgstr "{0} lúc <0/>"
 
@@ -136,12 +136,12 @@ msgid "{0} mph"
 msgstr "{0} mph"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1083
+#: src/features/weather/ui/next-24-hours-tile.tsx:1084
 msgid "{0} today"
 msgstr "{0} hôm nay"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1087
+#: src/features/weather/ui/next-24-hours-tile.tsx:1088
 msgid "{0} tomorrow"
 msgstr "{0} ngày mai"
 
@@ -283,8 +283,8 @@ msgstr "Trong nhiều nền văn hoá, các truyền thống như Yule và Satur
 msgid "Acts of charity, the sharing of food, and care for family, neighbours, and those in need form the heart of the celebration."
 msgstr "Những hành động từ thiện, sẻ chia thức ăn và sự quan tâm tới gia đình, hàng xóm và những người cần giúp đỡ là trái tim của lễ kỷ niệm."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:681
-#: src/features/weather/ui/next-24-hours-tile.tsx:686
+#: src/features/weather/ui/next-24-hours-tile.tsx:682
+#: src/features/weather/ui/next-24-hours-tile.tsx:687
 msgid "Air quality"
 msgstr "Chất lượng không khí"
 
@@ -292,7 +292,7 @@ msgstr "Chất lượng không khí"
 #~ msgid "Air quality forecast from Open-Meteo and CAMS atmospheric data."
 #~ msgstr "Dự báo chất lượng không khí từ Open-Meteo và dữ liệu khí quyển CAMS."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:714
+#: src/features/weather/ui/next-24-hours-tile.tsx:715
 msgid "Air quality unavailable"
 msgstr "Chất lượng không khí không khả dụng"
 
@@ -316,7 +316,7 @@ msgstr "Những công trình cổ như Stonehenge được căn chỉnh theo hư
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "Các đài quan sát cổ đại đã theo dõi cẩn thận bước ngoặt này của năm để định hướng chu kỳ gieo trồng, lịch và các lễ hội theo mùa."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1173
+#: src/features/weather/ui/next-24-hours-tile.tsx:1174
 msgid "and"
 msgstr "và"
 
@@ -332,9 +332,13 @@ msgstr "Một câu chuyện được kể rộng rãi khác tôn vinh Krishna, v
 msgid "April"
 msgstr "Tháng 4"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:704
+#: src/features/weather/ui/next-24-hours-tile.tsx:705
 msgid "AQI"
 msgstr "AQI"
+
+#: src/features/weather/ui/next-24-hours-tile.tsx:628
+msgid "AQI is measured on a scale of 0-500. Lower numbers mean cleaner air."
+msgstr "AQI được đo trên thang điểm từ 0 đến 500. Số thấp hơn có nghĩa là không khí trong lành hơn."
 
 #: src/features/seasonal-events/events/total-lunar-eclipse.tsx:76
 msgid "As sunlight passes through Earth’s atmosphere, the shorter blue wavelengths scatter away while the longer red wavelengths bend toward the Moon."
@@ -365,7 +369,7 @@ msgstr "Tháng 8"
 msgid "Autumn Equinox"
 msgstr "Thu phân"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2041
+#: src/features/weather/ui/next-24-hours-tile.tsx:2042
 msgid "Average wind"
 msgstr "Gió trung bình"
 
@@ -402,7 +406,7 @@ msgstr "Celsius (°C)"
 msgid "Centuries later, people still reach for pen and paper when a text won't do."
 msgstr "Hàng thế kỷ sau, người ta vẫn với tay lấy bút và giấy khi một tin nhắn là chưa đủ."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1880
+#: src/features/weather/ui/next-24-hours-tile.tsx:1881
 msgid "Chance"
 msgstr "Xác suất"
 
@@ -423,7 +427,7 @@ msgstr "Ngày Giáng sinh đánh dấu lễ kỷ niệm sự ra đời của Ch�
 msgid "clear sky"
 msgstr "bầu trời quang đãng"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:857
+#: src/features/weather/ui/next-24-hours-tile.tsx:858
 msgid "Clearest hour"
 msgstr "Giờ quang đãng nhất"
 
@@ -443,7 +447,7 @@ msgstr "Dọn dẹp cộng đồng, trồng cây và phục hồi môi trường
 msgid "Compact weather alerts"
 msgstr "Cảnh báo thời tiết gọn nhẹ"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:870
+#: src/features/weather/ui/next-24-hours-tile.tsx:871
 msgid "Conditions"
 msgstr "Điều kiện"
 
@@ -451,7 +455,7 @@ msgstr "Điều kiện"
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "Trang phục có thể anh hùng, hài hước hoặc rờn rợn, cho phép mọi người tạm thời hoá thân vào những vai trò khác."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:638
+#: src/features/weather/ui/next-24-hours-tile.tsx:639
 msgid "Current AQI"
 msgstr "AQI hiện tại"
 
@@ -496,7 +500,7 @@ msgstr "mưa phùn đóng băng dày đặc"
 msgid "depositing rime fog"
 msgstr "sương muối đọng lại"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1886
+#: src/features/weather/ui/next-24-hours-tile.tsx:1887
 msgid "Depth"
 msgstr "Độ sâu"
 
@@ -504,7 +508,7 @@ msgstr "Độ sâu"
 msgid "Developer"
 msgstr "Nhà phát triển"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:988
+#: src/features/weather/ui/next-24-hours-tile.tsx:989
 msgid "Direct sunlight is making it feel warmer than the measured temperature right now."
 msgstr "Ánh nắng trực tiếp đang khiến trời cảm thấy nóng hơn nhiệt độ đo được hiện tại."
 
@@ -679,7 +683,7 @@ msgstr "Với nhiều người theo đạo Hindu, lễ hội đánh dấu sự t
 msgid "Forecast"
 msgstr "Dự báo"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1116
+#: src/features/weather/ui/next-24-hours-tile.tsx:1117
 msgid "Fri {hour}"
 msgstr "T6 {hour}"
 
@@ -731,7 +735,7 @@ msgstr "Gió mạnh bắt đầu trong {timeUntilStrongWind} giờ nữa"
 msgid "Generally strong wind starting in 1 hour"
 msgstr "Gió mạnh bắt đầu trong 1 giờ nữa"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2685
+#: src/features/weather/ui/next-24-hours-tile.tsx:2686
 msgid "Good"
 msgstr "Tốt"
 
@@ -765,7 +769,7 @@ msgstr "Tốt"
 msgid "Good to know"
 msgstr "Nên biết"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:810
+#: src/features/weather/ui/next-24-hours-tile.tsx:811
 msgid "Gust"
 msgstr "Gió giật"
 
@@ -795,7 +799,7 @@ msgstr "Hanukkah"
 msgid "Hanukkah is a Jewish festival of lights, observed over eight nights."
 msgstr "Hanukkah là lễ hội ánh sáng của Do Thái giáo, được cử hành trong tám đêm."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2704
+#: src/features/weather/ui/next-24-hours-tile.tsx:2705
 msgid "Hazardous"
 msgstr "Nguy hiểm"
 
@@ -876,11 +880,11 @@ msgstr "Holi là một lễ hội sắc màu vui tươi, được mừng bằng 
 msgid "Homes are carefully cleaned and decorated to clear away old luck and welcome prosperity for the year ahead."
 msgstr "Nhà cửa được dọn dẹp và trang trí kỹ lưỡng để gạt bỏ vận may cũ và đón thịnh vượng cho năm mới."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:970
+#: src/features/weather/ui/next-24-hours-tile.tsx:971
 msgid "Humid air and direct sunlight are making it feel warmer than the measured temperature right now."
 msgstr "Không khí ẩm và ánh nắng trực tiếp đang khiến trời cảm thấy nóng hơn nhiệt độ đo được hiện tại."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:979
+#: src/features/weather/ui/next-24-hours-tile.tsx:980
 msgid "Humid air is making it feel warmer than the measured temperature right now."
 msgstr "Không khí ẩm đang khiến trời cảm thấy nóng hơn nhiệt độ đo được hiện tại."
 
@@ -1047,7 +1051,7 @@ msgstr "Dữ liệu trực tiếp tạm thời không khả dụng. Đang hiển
 #~ msgid "Live data is unavailable. Showing your last saved forecast instead."
 #~ msgstr "Dữ liệu trực tiếp không khả dụng. Đang hiển thị dự báo đã lưu gần nhất."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1291
+#: src/features/weather/ui/next-24-hours-tile.tsx:1292
 msgid "Local map"
 msgstr "Bản đồ địa phương"
 
@@ -1091,7 +1095,7 @@ msgstr "Tầm nhìn thấp bắt đầu trong {timeUntilLowVisibility} giờ"
 msgid "Low visibility starting in 1 hour"
 msgstr "Tầm nhìn thấp bắt đầu trong 1 giờ"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:843
+#: src/features/weather/ui/next-24-hours-tile.tsx:844
 msgid "Lowest visibility"
 msgstr "Tầm nhìn thấp nhất"
 
@@ -1117,11 +1121,11 @@ msgstr "Mưa sao băng Lyrid"
 msgid "mainly clear"
 msgstr "chủ yếu quang đãng"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2011
+#: src/features/weather/ui/next-24-hours-tile.tsx:2012
 msgid "Map"
 msgstr "Bản đồ"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1369
+#: src/features/weather/ui/next-24-hours-tile.tsx:1370
 msgid "Map data unavailable"
 msgstr "Dữ liệu bản đồ không khả dụng"
 
@@ -1146,7 +1150,7 @@ msgstr "Trong khi đó, hàng tỷ con chim đang trong hành trình di cư, đ�
 msgid "Metric (km/h, mm)"
 msgstr "Hệ mét (km/h, mm)"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2689
+#: src/features/weather/ui/next-24-hours-tile.tsx:2690
 msgid "Moderate"
 msgstr "Trung bình"
 
@@ -1166,7 +1170,7 @@ msgstr "cơn mưa vừa"
 msgid "moderate snowfall"
 msgstr "tuyết rơi vừa"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1100
+#: src/features/weather/ui/next-24-hours-tile.tsx:1101
 msgid "Mon {hour}"
 msgstr "T2 {hour}"
 
@@ -1206,13 +1210,13 @@ msgstr "Newgrange, một ngôi mộ hành lang 5.000 năm tuổi ở Ireland, đ
 #: src/features/weather/ui/next-24-hours-tile.tsx:352
 #: src/features/weather/ui/next-24-hours-tile.tsx:417
 #: src/features/weather/ui/next-24-hours-tile.tsx:553
-#: src/features/weather/ui/next-24-hours-tile.tsx:630
-#: src/features/weather/ui/next-24-hours-tile.tsx:749
-#: src/features/weather/ui/next-24-hours-tile.tsx:837
+#: src/features/weather/ui/next-24-hours-tile.tsx:631
+#: src/features/weather/ui/next-24-hours-tile.tsx:750
+#: src/features/weather/ui/next-24-hours-tile.tsx:838
 msgid "Next 24 hours"
 msgstr "24 giờ tới"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1282
+#: src/features/weather/ui/next-24-hours-tile.tsx:1283
 msgid "Next 6 hours"
 msgstr "6 giờ tới"
 
@@ -1335,7 +1339,7 @@ msgstr "Tổng quan"
 msgid "partly cloudy"
 msgstr "trời có mây"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:652
+#: src/features/weather/ui/next-24-hours-tile.tsx:653
 msgid "Peak AQI"
 msgstr "AQI cao nhất"
 
@@ -1343,11 +1347,11 @@ msgstr "AQI cao nhất"
 msgid "Peak chance"
 msgstr "Xác suất cao nhất"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:756
+#: src/features/weather/ui/next-24-hours-tile.tsx:757
 msgid "Peak gust"
 msgstr "Gió giật cao nhất"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2032
+#: src/features/weather/ui/next-24-hours-tile.tsx:2033
 msgid "Peak precipitation chance"
 msgstr "Xác suất mưa cao nhất"
 
@@ -1355,8 +1359,8 @@ msgstr "Xác suất mưa cao nhất"
 msgid "Peak UV"
 msgstr "UV cao nhất"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:773
-#: src/features/weather/ui/next-24-hours-tile.tsx:2050
+#: src/features/weather/ui/next-24-hours-tile.tsx:774
+#: src/features/weather/ui/next-24-hours-tile.tsx:2051
 msgid "Peak wind"
 msgstr "Tốc độ gió cao nhất"
 
@@ -1376,22 +1380,22 @@ msgstr "Mưa sao băng Perseid"
 msgid "Perseids Meteor Shower"
 msgstr "Mưa sao băng Perseid"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:674
+#: src/features/weather/ui/next-24-hours-tile.tsx:675
 msgid "PM10 / ozone / NO₂"
 msgstr "PM10 / ozone / NO₂"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:668
+#: src/features/weather/ui/next-24-hours-tile.tsx:669
 msgid "PM2.5 now"
 msgstr "PM2.5 hiện tại"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:471
 #: src/features/weather/ui/next-24-hours-tile.tsx:497
-#: src/features/weather/ui/next-24-hours-tile.tsx:1938
+#: src/features/weather/ui/next-24-hours-tile.tsx:1939
 msgid "Precipitation"
 msgstr "Lượng mưa"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:444
-#: src/features/weather/ui/next-24-hours-tile.tsx:2389
+#: src/features/weather/ui/next-24-hours-tile.tsx:2390
 msgid "Precipitation chance"
 msgstr "Xác suất mưa"
 
@@ -1432,7 +1436,7 @@ msgstr "Thử lại"
 msgid "Reverse geocoding by OpenStreetMap contributors"
 msgstr "Mã hóa địa lý ngược bởi các đóng góp viên OpenStreetMap"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1120
+#: src/features/weather/ui/next-24-hours-tile.tsx:1121
 msgid "Sat {hour}"
 msgstr "T7 {hour}"
 
@@ -1708,7 +1712,7 @@ msgstr "Hạ chí"
 msgid "Sun"
 msgstr "Mặt trời"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1123
+#: src/features/weather/ui/next-24-hours-tile.tsx:1124
 msgid "Sun {hour}"
 msgstr "CN {hour}"
 
@@ -2064,7 +2068,7 @@ msgstr "Chính sự lọc khí quyển tạo nên hoàng hôn đỏ cũng mang l
 msgid "This three-way split is central to the holiday's meaning — the act of giving is built directly into the ritual itself."
 msgstr "Sự phân chia ba phần này là cốt lõi của ý nghĩa ngày lễ — hành động cho đi được tích hợp trực tiếp vào bản thân nghi lễ."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1112
+#: src/features/weather/ui/next-24-hours-tile.tsx:1113
 msgid "Thu {hour}"
 msgstr "T5 {hour}"
 
@@ -2109,7 +2113,7 @@ msgid "Total Lunar Eclipse"
 msgstr "Nguyệt thực toàn phần"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:424
-#: src/features/weather/ui/next-24-hours-tile.tsx:2341
+#: src/features/weather/ui/next-24-hours-tile.tsx:2342
 msgid "Total precipitation"
 msgstr "Tổng lượng mưa"
 
@@ -2141,7 +2145,7 @@ msgstr "Các truyền thống như Nowruz tiếp tục tôn vinh chủ đề tá
 msgid "Try again"
 msgstr "Thử lại"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1104
+#: src/features/weather/ui/next-24-hours-tile.tsx:1105
 msgid "Tue {hour}"
 msgstr "T3 {hour}"
 
@@ -2157,15 +2161,15 @@ msgstr "Bật tùy chọn này nếu chỉ số UV do Weather Please cung cấp 
 #~ msgid "Unable to fetch weather data. Please check your internet connection and try again."
 #~ msgstr "Không thể tải dữ liệu thời tiết. Vui lòng kiểm tra kết nối internet và thử lại."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2647
+#: src/features/weather/ui/next-24-hours-tile.tsx:2648
 msgid "Unavailable"
 msgstr "Không khả dụng"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2697
+#: src/features/weather/ui/next-24-hours-tile.tsx:2698
 msgid "Unhealthy"
 msgstr "Không tốt"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2693
+#: src/features/weather/ui/next-24-hours-tile.tsx:2694
 msgid "Unhealthy for sensitive groups"
 msgstr "Không tốt cho nhóm nhạy cảm"
 
@@ -2204,7 +2208,7 @@ msgstr "Ngày Valentine"
 msgid "Valentine’s Day celebrates affection in many forms, from romantic love to friendship and quiet acts of care."
 msgstr "Ngày Valentine tôn vinh tình cảm dưới nhiều dạng, từ tình yêu lãng mạn đến tình bạn và những hành động chăm sóc thầm lặng."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2701
+#: src/features/weather/ui/next-24-hours-tile.tsx:2702
 msgid "Very unhealthy"
 msgstr "Rất không tốt"
 
@@ -2212,15 +2216,15 @@ msgstr "Rất không tốt"
 msgid "violent rain showers"
 msgstr "cơn mưa lớn"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:885
+#: src/features/weather/ui/next-24-hours-tile.tsx:886
 msgid "Visibility"
 msgstr "Tầm nhìn"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:682
+#: src/features/weather/ui/next-24-hours-tile.tsx:683
 msgid "Waiting for air quality data"
 msgstr "Đang chờ dữ liệu chất lượng không khí"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2012
+#: src/features/weather/ui/next-24-hours-tile.tsx:2013
 msgid "Waiting for map data"
 msgstr "Đang chờ dữ liệu bản đồ"
 
@@ -2264,7 +2268,7 @@ msgstr "Không thể tải dữ liệu thời tiết cho vị trí này. Vui lò
 msgid "Weather Please uses the following third-party data sources and location services."
 msgstr "Weather Please sử dụng các nguồn dữ liệu của bên thứ ba và dịch vụ vị trí sau."
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1108
+#: src/features/weather/ui/next-24-hours-tile.tsx:1109
 msgid "Wed {hour}"
 msgstr "T4 {hour}"
 
@@ -2316,13 +2320,13 @@ msgstr "Vì sao nó chuyển đỏ"
 msgid "Why the peak is brief"
 msgstr "Vì sao đỉnh điểm ngắn"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:788
-#: src/features/weather/ui/next-24-hours-tile.tsx:802
-#: src/features/weather/ui/next-24-hours-tile.tsx:1874
+#: src/features/weather/ui/next-24-hours-tile.tsx:789
+#: src/features/weather/ui/next-24-hours-tile.tsx:803
+#: src/features/weather/ui/next-24-hours-tile.tsx:1875
 msgid "Wind"
 msgstr "Gió"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:997
+#: src/features/weather/ui/next-24-hours-tile.tsx:998
 msgid "Wind is making it feel cooler than the measured temperature right now."
 msgstr "Gió đang khiến trời cảm thấy mát hơn nhiệt độ đo được hiện tại."
 
