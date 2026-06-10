@@ -9,9 +9,13 @@ vi.mock('next/headers', () => ({
 	headers: vi.fn(),
 }))
 
-vi.mock('../../lib/rate-limit', () => ({
-	enforceRateLimit: vi.fn(),
-}))
+vi.mock(import('../../lib/rate-limit'), async (importOriginal) => {
+	const actual = await importOriginal()
+	return {
+		...actual,
+		enforceRateLimit: vi.fn(),
+	}
+})
 
 vi.mock('../../lib/prisma', () => ({
 	prisma: {

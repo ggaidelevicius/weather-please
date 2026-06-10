@@ -24,17 +24,19 @@ import {
 import { TileIdentifier } from '../model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../model/unit-system'
 
+// Coordinates come from `GeolocationCoordinates.toString()`, so any decimal
+// precision must be accepted. Single source of truth shared with
+// `hasValidCoordinates`.
+const LATITUDE_PATTERN = /^[-+]?(90(\.0+)?|[1-8]?\d(\.\d+)?)$/
+const LONGITUDE_PATTERN = /^[-+]?(180(\.0+)?|(1[0-7]\d|[1-9]?\d)(\.\d+)?)$/
+
 const configSchema = z.object({
 	daysToRetrieve: z.string(),
 	identifier: z.enum(TileIdentifier),
 	installed: z.number(),
 	lang: z.enum(Object.keys(locales) as [LocaleKey, ...LocaleKey[]]),
-	lat: z.string().regex(/^(\+|-)?(?:90(?:\.0{1,6})?|[1-8]?\d(?:\.\d{1,6})?)$/),
-	lon: z
-		.string()
-		.regex(
-			/^(\+|-)?(?:180(?:\.0{1,6})?|((1[0-7]\d)|([1-9]?\d))(?:\.\d{1,6})?)$/,
-		),
+	lat: z.string().regex(LATITUDE_PATTERN),
+	lon: z.string().regex(LONGITUDE_PATTERN),
 	seasonalEventOverride: z.union([
 		z.literal(SEASONAL_EVENT_OVERRIDE_NONE),
 		z.enum(SeasonalEventId),
@@ -129,10 +131,7 @@ const getInitialConfig = (): {
 }
 
 const hasValidCoordinates = ({ lat, lon }: Config) =>
-	Boolean(lat) &&
-	Boolean(lon) &&
-	/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(lat) &&
-	/^[-+]?((1[0-7]\d(\.\d+)?)|(180(\.0+)?|((\d{1,2}(\.\d+)?))))$/.test(lon)
+	LATITUDE_PATTERN.test(lat) && LONGITUDE_PATTERN.test(lon)
 
 const persistConfigInput = (input: Config) => {
 	if (typeof window === 'undefined' || !hasValidCoordinates(input)) {

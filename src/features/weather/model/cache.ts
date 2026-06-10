@@ -182,6 +182,9 @@ export const getCachedWeather = ({
 	}
 }
 
+export const hasCachedWeather = () =>
+	typeof window !== 'undefined' && Boolean(localStorage.getItem('data'))
+
 export const writeCachedWeather = ({
 	alertData,
 	lastUpdatedDate,

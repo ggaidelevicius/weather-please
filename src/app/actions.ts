@@ -4,7 +4,7 @@ import { headers } from 'next/headers'
 import { z } from 'zod'
 
 import { prisma } from '../lib/prisma'
-import { enforceRateLimit } from '../lib/rate-limit'
+import { enforceRateLimit, getClientIdentifier } from '../lib/rate-limit'
 import { locales } from '../shared/lib/i18n'
 
 const localeKeys = Object.keys(locales) as [
@@ -13,7 +13,7 @@ const localeKeys = Object.keys(locales) as [
 ]
 
 const formSchema = z.object({
-	email: z.string().email().optional(),
+	email: z.email().optional(),
 	locale: z.enum(localeKeys),
 	message: z.string().nonempty(),
 })
@@ -57,8 +57,7 @@ export const submitForm = async (
 	}
 
 	// Get IP for logging (after rate limit check)
-	const forwardedFor = requestHeaders.get('x-forwarded-for')
-	const ip = forwardedFor ? forwardedFor.split(',')[0]?.trim() : 'unknown'
+	const ip = getClientIdentifier(requestHeaders) ?? 'unknown'
 
 	// Retrieve the honeypot field name from the hidden field
 	const honeypotValidation = formData.get('validation')

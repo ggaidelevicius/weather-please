@@ -24,7 +24,7 @@ const RATE_LIMIT_RULES: Record<RateLimitScope, RateLimitRule> = {
 	},
 }
 
-const getClientIdentifier = (headers: Headers): null | string => {
+export const getClientIdentifier = (headers: Headers): null | string => {
 	const forwardedFor = headers.get('x-forwarded-for')
 	if (forwardedFor) {
 		const [ip] = forwardedFor.split(',')
@@ -62,7 +62,8 @@ export const enforceRateLimit = async (
 	const windowStart = new Date(now.getTime() - rule.windowMs)
 
 	try {
-		// Use a transaction to ensure atomicity
+		// Serializable isolation prevents concurrent requests from both passing
+		// the count check; a serialization conflict rejects and fails closed below.
 		const result = await prisma.$transaction(
 			async (tx: Prisma.TransactionClient) => {
 				// Count requests in the current window
@@ -105,6 +106,7 @@ export const enforceRateLimit = async (
 
 				return { ok: true as const }
 			},
+			{ isolationLevel: 'Serializable' },
 		)
 
 		// Probabilistic cleanup: ~1% of requests trigger cleanup

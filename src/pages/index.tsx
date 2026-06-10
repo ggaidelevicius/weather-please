@@ -34,6 +34,7 @@ import { ReviewPrompt } from '../features/settings/ui/review-prompt'
 import { Settings } from '../features/settings/ui/settings'
 import { usePeriodicLocationRefresh } from '../features/weather/hooks/use-periodic-location-refresh'
 import { useWeather } from '../features/weather/hooks/use-weather'
+import { hasCachedWeather } from '../features/weather/model/cache'
 import { getTemperatureAccentColor } from '../features/weather/model/temperature-colour'
 import {
 	Next24HoursDetailView,
@@ -228,8 +229,7 @@ const App = () => {
 		},
 	})
 
-	const hasCachedData =
-		typeof window !== 'undefined' && Boolean(localStorage.getItem('data'))
+	const hasCachedData = hasCachedWeather()
 
 	const isSeasonalEventEnabled = (eventId: SeasonalEventId) =>
 		input[SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId]]

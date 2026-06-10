@@ -357,6 +357,29 @@ describe('useConfig - Core Functionality', () => {
 		expect(result.current.config.lon).toBe('-74.0060')
 	})
 
+	it('accepts full-precision coordinates from geolocation', async () => {
+		// GeolocationCoordinates.toString() is not limited to 6 decimal places,
+		// so coordinates must persist and reload at any precision.
+		const lat = '-37.81362759861221'
+		const lon = '144.96305847167972'
+		const { result } = renderHook(() => useConfig())
+
+		act(() => {
+			result.current.handleChange('lat', lat)
+			result.current.handleChange('lon', lon)
+		})
+
+		expect(result.current.config.lat).toBe(lat)
+		expect(result.current.config.lon).toBe(lon)
+		expect(JSON.parse(localStorageMock.config)).toMatchObject({ lat, lon })
+
+		const { result: reloaded } = renderHook(() => useConfig())
+		await waitFor(() => {
+			expect(reloaded.current.config.lat).toBe(lat)
+			expect(reloaded.current.config.lon).toBe(lon)
+		})
+	})
+
 	it('does not save invalid lat/lon coordinates', () => {
 		const { result } = renderHook(() => useConfig())
 
