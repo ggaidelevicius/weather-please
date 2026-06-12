@@ -1,11 +1,56 @@
 html,
 body {
 	font-size: 100% !important; /* necessary because chrome injects (into extensions only for some reason) a font-size: 75% property */
+}
+
+/* The new tab app manages its own scrolling and view transitions; marketing
+   pages (landing, privacy) scroll normally. */
+html[data-weather-please-app],
+html[data-weather-please-app] body {
 	overflow: hidden;
 	overscroll-behavior: none;
 }
 
 @import 'tailwindcss';
+
+/* Ambient loops for the landing page feature showcase. */
+@keyframes landing-solstice-drift {
+	0% {
+		opacity: 0;
+		transform: translate3d(0, 0, 0) scale(0.9);
+	}
+	15% {
+		opacity: 0.75;
+	}
+	55% {
+		opacity: 0.55;
+		transform: translate3d(10px, -14px, 0) scale(1);
+	}
+	85% {
+		opacity: 0.75;
+	}
+	100% {
+		opacity: 0;
+		transform: translate3d(-8px, 12px, 0) scale(0.92);
+	}
+}
+
+@keyframes landing-packet {
+	0% {
+		left: 0%;
+		opacity: 0;
+	}
+	15% {
+		opacity: 1;
+	}
+	85% {
+		opacity: 1;
+	}
+	100% {
+		left: 92%;
+		opacity: 0;
+	}
+}
 
 @theme {
 	--color-dark-100: #c1c2c5;

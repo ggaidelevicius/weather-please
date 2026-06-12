@@ -624,7 +624,7 @@ const GeneralSettingsSection = ({
 const CALENDAR_CONNECTION_ERROR_MESSAGES = {
 	[CalendarConnectionError.AuthFailed]: (
 		<Trans>
-			We couldn&apos;t connect to your Microsoft account. Please try again.
+			We couldn&apos;t connect your calendar account. Please try again.
 		</Trans>
 	),
 	[CalendarConnectionError.EventsFailed]: (

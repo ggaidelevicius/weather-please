@@ -34,16 +34,16 @@ describe('i18n', () => {
 				expect(locale).toHaveProperty('privacy')
 				expect(typeof locale.label).toBe('string')
 				expect(typeof locale.privacy).toBe('string')
-				expect(locale.privacy).toMatch(/^https:\/\/github\.com\//)
+				expect(locale.privacy).toMatch(
+					/^https:\/\/(github\.com|weather-please\.app)\//,
+				)
 			})
 		})
 
 		it('privacy URLs follow expected pattern', () => {
 			Object.entries(locales).forEach(([key, locale]) => {
 				if (key === 'en') {
-					expect(locale.privacy).toBe(
-						'https://github.com/ggaidelevicius/weather-please/blob/main/PRIVACY.md',
-					)
+					expect(locale.privacy).toBe('https://weather-please.app/privacy')
 				} else if (key === 'zh') {
 					expect(locale.privacy).toBe(
 						'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/zh_CN/PRIVACY.md',

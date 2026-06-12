@@ -13,8 +13,7 @@ export const locales = {
 	},
 	en: {
 		label: 'English', // english
-		privacy:
-			'https://github.com/ggaidelevicius/weather-please/blob/main/PRIVACY.md',
+		privacy: 'https://weather-please.app/privacy',
 	},
 	es: {
 		label: 'Español', // spanish

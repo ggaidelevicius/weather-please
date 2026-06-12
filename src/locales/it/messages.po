@@ -134,11 +134,11 @@ msgstr "<0>Accesso alla posizione negato.</0> Fai clic sull'icona della posizion
 msgid "☕ Gift a coffee"
 msgstr "☕ Regala un caffè"
 
-#: src/pages/index.tsx:692
+#: src/pages/demo.tsx:695
 msgid "✨ NEW: Connect your Google or Microsoft calendar"
 msgstr ""
 
-#: src/pages/index.tsx:657
+#: src/pages/demo.tsx:660
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ NOVITÀ: Prova a scorrere verso il basso"
 
@@ -210,7 +210,7 @@ msgstr "Atti di carità, la condivisione del cibo e la cura per la famiglia, i v
 msgid "Add account"
 msgstr ""
 
-#: src/pages/index.tsx:739
+#: src/pages/demo.tsx:742
 msgid "air quality"
 msgstr "qualità dell'aria"
 
@@ -390,7 +390,7 @@ msgstr "Pulizie comunitarie, piantumazioni di alberi e ripristino degli habitat 
 msgid "Compact weather alerts"
 msgstr "Avvisi meteo compatti"
 
-#: src/pages/index.tsx:740
+#: src/pages/demo.tsx:743
 msgid "conditions"
 msgstr "condizioni"
 
@@ -471,7 +471,7 @@ msgstr "La luce solare diretta fa sì che si senta più caldo rispetto alla temp
 msgid "Disconnect"
 msgstr ""
 
-#: src/pages/index.tsx:700
+#: src/pages/demo.tsx:703
 msgid "Dismiss"
 msgstr ""
 
@@ -650,7 +650,7 @@ msgstr "Cibi fritti nell’olio, tra cui latkes e sufganiyot, richiamano il simb
 msgid "For many Hindus, the festival marks the return of Rama, Sita, Lakshmana, and Hanuman to Ayodhya after their long exile."
 msgstr "Per molti induisti, la festa segna il ritorno di Rama, Sita, Lakshmana e Hanuman ad Ayodhya dopo il loro lungo esilio."
 
-#: src/pages/index.tsx:741
+#: src/pages/demo.tsx:744
 msgid "forecast"
 msgstr "previsioni"
 
@@ -1088,7 +1088,7 @@ msgstr "Pioggia di meteore delle Liridi"
 msgid "mainly clear"
 msgstr "principalmente sereno"
 
-#: src/pages/index.tsx:742
+#: src/pages/demo.tsx:745
 msgid "map"
 msgstr "mappa"
 
@@ -1367,7 +1367,7 @@ msgstr "PM10 / ozono / NO₂"
 msgid "PM2.5 now"
 msgstr "PM2.5 ora"
 
-#: src/pages/index.tsx:743
+#: src/pages/demo.tsx:746
 msgid "precipitation"
 msgstr "precipitazioni"
 
@@ -1414,8 +1414,8 @@ msgstr "Religioso e culturale"
 msgid "Report a bug"
 msgstr "Segnala un bug"
 
-#: src/pages/index.tsx:568
-#: src/pages/index.tsx:582
+#: src/pages/demo.tsx:571
+#: src/pages/demo.tsx:585
 msgid "Retry"
 msgstr "Riprova"
 
@@ -1625,7 +1625,7 @@ msgstr "Mostra avvisi meteorologici"
 msgid "Show Winter Solstice event"
 msgstr "Mostra Solstizio d'inverno"
 
-#: src/pages/index.tsx:104
+#: src/pages/demo.tsx:97
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Visualizzazione dati meteo in cache. Riprova per aggiornare le previsioni più recenti."
 
@@ -1708,7 +1708,7 @@ msgstr "Invia"
 msgid "Summer Solstice"
 msgstr "Solstizio d'estate"
 
-#: src/pages/index.tsx:744
+#: src/pages/demo.tsx:747
 msgid "sun"
 msgstr "sole"
 
@@ -1744,7 +1744,7 @@ msgstr "Simboli e rituali"
 msgid "Symbols of luck"
 msgstr "Simboli di fortuna"
 
-#: src/pages/index.tsx:745
+#: src/pages/demo.tsx:748
 msgid "temperature"
 msgstr "temperatura"
 
@@ -2240,14 +2240,14 @@ msgid "Ways to observe"
 msgstr "Come osservare"
 
 #: src/features/settings/ui/settings.tsx:626
-msgid "We couldn't connect to your Microsoft account. Please try again."
+msgid "We couldn't connect your calendar account. Please try again."
 msgstr ""
 
 #: src/features/settings/ui/initialisation.tsx:162
 msgid "We couldn't reach the location service right now - this isn't an issue with your device. Please try again in a moment."
 msgstr "Non siamo riusciti a raggiungere il servizio di localizzazione al momento. Non è un problema del tuo dispositivo. Riprova tra un momento."
 
-#: src/pages/index.tsx:145
+#: src/pages/demo.tsx:138
 msgid "We couldn't reach the weather service. Please check your internet connection and try again."
 msgstr "Non è stato possibile raggiungere il servizio meteo. Controlla la tua connessione internet e riprova."
 
@@ -2259,19 +2259,19 @@ msgstr "Meteo"
 msgid "Weather data by Open-Meteo"
 msgstr "Dati meteo di Open-Meteo"
 
-#: src/pages/index.tsx:136
+#: src/pages/demo.tsx:129
 msgid "Weather data couldn't be loaded because the weather service could not be reached. This usually isn't a problem with your device. Please try again in a moment."
 msgstr "I dati meteo non hanno potuto essere caricati perché il servizio meteo non era raggiungibile. Di solito non è un problema con il tuo dispositivo. Riprova tra un momento."
 
-#: src/pages/index.tsx:117
+#: src/pages/demo.tsx:110
 msgid "Weather data couldn't be loaded because the weather service is having trouble. This isn't a problem with your device. Please try again in a moment."
 msgstr "I dati meteo non hanno potuto essere caricati perché il servizio meteo sta avendo problemi. Non è un problema con il tuo dispositivo. Riprova tra un momento."
 
-#: src/pages/index.tsx:96
+#: src/pages/demo.tsx:89
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "I dati meteo non possono essere caricati a causa di un problema del servizio — vengono mostrati i dati salvati nella cache. Riprova tra un momento."
 
-#: src/pages/index.tsx:127
+#: src/pages/demo.tsx:120
 msgid "Weather data couldn't be loaded for this location. Please check your location settings and try again."
 msgstr "I dati meteo non hanno potuto essere caricati per questa posizione. Controlla le impostazioni di posizione e riprova."
 
@@ -2327,7 +2327,7 @@ msgstr "Perché diventa rossa"
 msgid "Why the peak is brief"
 msgstr "Perché il picco è breve"
 
-#: src/pages/index.tsx:746
+#: src/pages/demo.tsx:749
 msgid "wind"
 msgstr "vento"
 
