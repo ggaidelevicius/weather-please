@@ -19,6 +19,9 @@ import {
 } from 'react'
 import { z } from 'zod'
 
+import { useCalendarConnection } from '../features/integrations/hooks/use-calendar-connection'
+import { createSpoofedCalendarData } from '../features/integrations/model/spoofed-calendar'
+import { UpcomingEvents } from '../features/integrations/ui/upcoming-events'
 import { IdentifiedLocationIndicator } from '../features/location/ui/identified-location-indicator'
 import { getEnabledSeasonalEvents } from '../features/seasonal-events/core/enabled-events'
 import { SeasonalEventId } from '../features/seasonal-events/core/types'
@@ -169,6 +172,16 @@ const App = () => {
 
 	const { config, handleChange, input, isHydrated, setInput, updateConfig } =
 		useConfig()
+	const calendarConnection = useCalendarConnection()
+	const [spoofedCalendarData] = useState(createSpoofedCalendarData)
+	const shouldSpoofCalendarEvents =
+		process.env.NODE_ENV === 'development' && config.spoofCalendarEvents
+	const calendarAccounts = shouldSpoofCalendarEvents
+		? spoofedCalendarData.accounts
+		: calendarConnection.accounts
+	const calendarEvents = shouldSpoofCalendarEvents
+		? spoofedCalendarData.events
+		: calendarConnection.events
 	const {
 		alertData,
 		degradedForecast,
@@ -537,6 +550,29 @@ const App = () => {
 							)}
 						</div>
 					</DirectionalView>
+					{config.showCalendarEvents && !isLoading ? (
+						<motion.div
+							animate={
+								activeAvailableViewId === 'forecast'
+									? { opacity: 1, x: 0 }
+									: { opacity: 0, x: 24 }
+							}
+							aria-hidden={activeAvailableViewId !== 'forecast'}
+							className="absolute top-4 right-4 z-10 will-change-[transform,opacity]"
+							initial={false}
+							style={{
+								pointerEvents:
+									activeAvailableViewId === 'forecast' ? 'auto' : 'none',
+							}}
+							transition={{ duration: 0.25, ease: 'easeOut' }}
+						>
+							<UpcomingEvents
+								accounts={calendarAccounts}
+								events={calendarEvents}
+								locale={config.lang}
+							/>
+						</motion.div>
+					) : null}
 					{canShowNext24HoursView
 						? NEXT_24_HOURS_DETAIL_VIEW_IDS.map((viewId) => (
 								<DirectionalView
@@ -591,7 +627,11 @@ const App = () => {
 				/>
 			</div>
 
-			<Settings handleChange={handleChange} input={input} />
+			<Settings
+				calendarConnection={calendarConnection}
+				handleChange={handleChange}
+				input={input}
+			/>
 		</>
 	)
 }

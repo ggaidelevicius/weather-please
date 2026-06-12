@@ -10,6 +10,7 @@ import {
 	IconCloud,
 	IconCode,
 	IconInfoCircle,
+	IconPlugConnected,
 	IconSettings,
 	IconShieldCheckFilled,
 	IconSparkles,
@@ -24,9 +25,19 @@ import { locales } from '../../../shared/lib/i18n'
 import { setSettingsModalOpenState } from '../../../shared/lib/settings-modal-state'
 import { Alert } from '../../../shared/ui/alert'
 import { AlertVariant } from '../../../shared/ui/alert-variant'
-import { IconButton } from '../../../shared/ui/button'
+import { Button, IconButton } from '../../../shared/ui/button'
 import { HelpPopover } from '../../../shared/ui/help-popover'
 import { Input, Select, Switch } from '../../../shared/ui/input'
+import {
+	type CalendarAccountSummary,
+	type CalendarConnection,
+	CalendarConnectionError,
+} from '../../integrations/hooks/use-calendar-connection'
+import {
+	CALENDAR_ACCOUNT_CATEGORIES,
+	CALENDAR_ACCOUNT_CATEGORY_STYLES,
+	CalendarAccountCategory,
+} from '../../integrations/model/account-category'
 import {
 	SEASONAL_EVENT_OVERRIDE_NONE,
 	SeasonalEventId,
@@ -48,6 +59,7 @@ type SeasonalEventSection = {
 }
 
 type SettingsContentProps = {
+	calendarConnection: CalendarConnection
 	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
 	hasSoftwareRenderer: boolean
 	input: Config
@@ -65,6 +77,7 @@ type SettingsSectionId =
 	| 'about'
 	| 'developer'
 	| 'general'
+	| 'integrations'
 	| 'seasonal'
 	| 'weather'
 
@@ -102,6 +115,11 @@ const SETTINGS_SECTIONS = [
 		icon: <IconSparkles aria-hidden size={18} />,
 		id: 'seasonal',
 		title: <Trans>Seasonal events</Trans>,
+	},
+	{
+		icon: <IconPlugConnected aria-hidden size={18} />,
+		id: 'integrations',
+		title: <Trans>Integrations</Trans>,
 	},
 	{
 		icon: <IconInfoCircle aria-hidden size={18} />,
@@ -299,11 +317,16 @@ const getVisibleSettingsSections = ({
 		: SETTINGS_SECTIONS.filter((section) => section.id !== 'developer')
 
 interface SettingsProps {
+	calendarConnection: CalendarConnection
 	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
 	input: Config
 }
 
-export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
+export const Settings = ({
+	calendarConnection,
+	handleChange,
+	input,
+}: Readonly<SettingsProps>) => {
 	const [activeSection, setActiveSection] =
 		useState<SettingsSectionId>('general')
 	const [isOpen, setIsOpen] = useState(false)
@@ -320,6 +343,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 		settingsSections.find((section) => section.id === activeSection) ??
 		settingsSections[0]
 	const contentProps = {
+		calendarConnection,
 		handleChange,
 		hasSoftwareRenderer,
 		input,
@@ -419,6 +443,7 @@ export const Settings = ({ handleChange, input }: Readonly<SettingsProps>) => {
 
 const renderActiveSection = ({
 	activeSection,
+	calendarConnection,
 	handleChange,
 	hasSoftwareRenderer,
 	input,
@@ -443,6 +468,14 @@ const renderActiveSection = ({
 					handleChange={handleChange}
 					input={input}
 					localeKeys={localeKeys}
+				/>
+			)
+		case 'integrations':
+			return (
+				<IntegrationsSettingsSection
+					calendarConnection={calendarConnection}
+					handleChange={handleChange}
+					input={input}
 				/>
 			)
 		case 'seasonal':
@@ -514,6 +547,12 @@ const DeveloperSettingsSection = ({
 				options={getSeasonalEventOverrideOptions()}
 				value={input.seasonalEventOverride}
 			/>
+			<Switch
+				checked={input.spoofCalendarEvents}
+				label={<Trans>Spoof upcoming calendar events</Trans>}
+				layout={SETTINGS_FIELD_LAYOUT}
+				onChange={(checked) => handleChange('spoofCalendarEvents', checked)}
+			/>
 		</SettingsSubsection>
 	</SettingsSectionLayout>
 )
@@ -555,6 +594,179 @@ const GeneralSettingsSection = ({
 				options={getUnitSystemOptions()}
 				value={input.unitSystem}
 			/>
+		</SettingsSubsection>
+	</SettingsSectionLayout>
+)
+
+const CALENDAR_CONNECTION_ERROR_MESSAGES = {
+	[CalendarConnectionError.AuthFailed]: (
+		<Trans>
+			We couldn&apos;t connect to your Microsoft account. Please try again.
+		</Trans>
+	),
+	[CalendarConnectionError.EventsFailed]: (
+		<Trans>
+			Some calendar events couldn&apos;t be loaded. Please try again in a
+			moment.
+		</Trans>
+	),
+} as const satisfies Record<CalendarConnectionError, ReactNode>
+
+const CALENDAR_ACCOUNT_CATEGORY_LABELS = {
+	[CalendarAccountCategory.Family]: <Trans>Family</Trans>,
+	[CalendarAccountCategory.Finance]: <Trans>Finance</Trans>,
+	[CalendarAccountCategory.Freelance]: <Trans>Freelance</Trans>,
+	[CalendarAccountCategory.Personal]: <Trans>Personal</Trans>,
+	[CalendarAccountCategory.School]: <Trans>School</Trans>,
+	[CalendarAccountCategory.Work]: <Trans>Work</Trans>,
+} as const satisfies Record<CalendarAccountCategory, ReactNode>
+
+const getCalendarAccountCategoryOptions = () =>
+	CALENDAR_ACCOUNT_CATEGORIES.map((category) => ({
+		label: CALENDAR_ACCOUNT_CATEGORY_LABELS[category],
+		value: category,
+	}))
+
+const CalendarAccountCard = ({
+	account,
+	calendarConnection,
+}: Readonly<{
+	account: CalendarAccountSummary
+	calendarConnection: CalendarConnection
+}>) => (
+	<div className="space-y-4 rounded-xl bg-dark-900/40 p-4 ring-1 ring-white/6">
+		<div className="flex items-center justify-between gap-3">
+			<div className="flex min-w-0 items-center gap-2.5">
+				<span
+					aria-hidden
+					className={clsx(
+						'size-2 shrink-0 rounded-full',
+						CALENDAR_ACCOUNT_CATEGORY_STYLES[account.category].dotClassName,
+					)}
+				/>
+				<div className="min-w-0">
+					<p className="truncate text-sm text-white">
+						{account.accountLabel ?? <Trans>Microsoft account</Trans>}
+					</p>
+					<p className="text-xs text-dark-200">Microsoft Outlook</p>
+				</div>
+			</div>
+			<Button
+				onClick={() => calendarConnection.disconnect(account.accountId)}
+				secondary
+			>
+				<Trans>Disconnect</Trans>
+			</Button>
+		</div>
+		{account.isSessionExpired ? (
+			<Alert icon={IconAlertTriangle} variant={AlertVariant.InfoRed}>
+				<div className="flex items-center justify-between gap-3">
+					<span>
+						<Trans>
+							This account&apos;s sign-in expired. Please reconnect it.
+						</Trans>
+					</span>
+					<Button
+						className="ml-auto"
+						disabled={calendarConnection.isConnecting}
+						onClick={() => {
+							void calendarConnection.connect()
+						}}
+					>
+						<Trans>Reconnect</Trans>
+					</Button>
+				</div>
+			</Alert>
+		) : null}
+		<Select
+			label={<Trans>Category</Trans>}
+			layout={SETTINGS_FIELD_LAYOUT}
+			onChange={(e) => {
+				calendarConnection.setAccountCategory(
+					account.accountId,
+					e.target.value as CalendarAccountCategory,
+				)
+			}}
+			options={getCalendarAccountCategoryOptions()}
+			value={account.category}
+		/>
+	</div>
+)
+
+const IntegrationsSettingsSection = ({
+	calendarConnection,
+	handleChange,
+	input,
+}: Pick<
+	SettingsContentProps,
+	'calendarConnection' | 'handleChange' | 'input'
+>) => (
+	<SettingsSectionLayout>
+		<SettingsSubsection
+			bodyClassName="space-y-4"
+			description={
+				<Trans>
+					See upcoming calendar events alongside your forecast. Weather Please
+					connects to Microsoft directly, and your events never pass through our
+					servers.
+				</Trans>
+			}
+			headerAccessory={
+				<span className="inline-flex items-center gap-1.5 rounded-full bg-linear-to-r from-blue-600 to-blue-500 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white shadow-sm">
+					<IconShieldCheckFilled aria-hidden size={14} />
+					<Trans>Securely stored</Trans>
+				</span>
+			}
+			title={<Trans>Calendar</Trans>}
+		>
+			{!calendarConnection.isConfigured ? (
+				<Alert icon={IconInfoCircle} variant={AlertVariant.LightBlue}>
+					<Trans>
+						Calendar connections aren&apos;t available in this build.
+					</Trans>
+				</Alert>
+			) : calendarConnection.accounts.length > 0 ? (
+				<>
+					{calendarConnection.accounts.map((account) => (
+						<CalendarAccountCard
+							account={account}
+							calendarConnection={calendarConnection}
+							key={account.accountId}
+						/>
+					))}
+					<Button
+						disabled={calendarConnection.isConnecting}
+						onClick={() => {
+							void calendarConnection.connect()
+						}}
+					>
+						<Trans>Add account</Trans>
+					</Button>
+					<Switch
+						checked={input.showCalendarEvents}
+						label={<Trans>Show calendar events</Trans>}
+						layout={SETTINGS_FIELD_LAYOUT}
+						onChange={(checked) => handleChange('showCalendarEvents', checked)}
+					/>
+				</>
+			) : (
+				<div className="flex items-center justify-between gap-3">
+					<p className="text-sm text-white">Microsoft Outlook</p>
+					<Button
+						disabled={calendarConnection.isConnecting}
+						onClick={() => {
+							void calendarConnection.connect()
+						}}
+					>
+						<Trans>Connect</Trans>
+					</Button>
+				</div>
+			)}
+			{calendarConnection.error ? (
+				<Alert icon={IconAlertTriangle} variant={AlertVariant.InfoRed}>
+					{CALENDAR_CONNECTION_ERROR_MESSAGES[calendarConnection.error]}
+				</Alert>
+			) : null}
 		</SettingsSubsection>
 	</SettingsSectionLayout>
 )

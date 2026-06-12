@@ -29,35 +29,10 @@ msgstr "{0} · {1}"
 
 #. placeholder {0}: formatDecimal(bestVisibility.value)
 #. placeholder {0}: formatDecimal(lowestVisibility.value)
-#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[bestVisibility.index]?.time, })
-#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[lowestVisibility.index]?.time, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:492
-#: src/features/weather/ui/next-24-hours-tile.tsx:508
-#~ msgid "{0} {visibilityUnitLabel} at {1}"
-#~ msgstr "{0} {visibilityUnitLabel} pukul {1}"
-
-#. placeholder {0}: formatDecimal(bestVisibility.value)
-#. placeholder {0}: formatDecimal(lowestVisibility.value)
 #: src/features/weather/ui/next-24-hours-tile.tsx:850
 #: src/features/weather/ui/next-24-hours-tile.tsx:864
 msgid "{0} {visibilityUnitLabel} at <0/>"
 msgstr "{0} {visibilityUnitLabel} pukul <0/>"
-
-#. placeholder {0}: Math.round(averageWind)
-#. placeholder {0}: Math.round(peakWind.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1805
-#: src/features/weather/ui/next-24-hours-tile.tsx:1814
-#~ msgid "{0} {windUnitLabel}"
-#~ msgstr "{0} {windUnitLabel}"
-
-#. placeholder {0}: Math.round(peakGust.value)
-#. placeholder {0}: Math.round(peakWind.value)
-#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakGust.index]?.time, })
-#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakWind.index]?.time, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:396
-#: src/features/weather/ui/next-24-hours-tile.tsx:412
-#~ msgid "{0} {windUnitLabel} at {1}"
-#~ msgstr "{0} {windUnitLabel} pukul {1}"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
@@ -84,24 +59,12 @@ msgstr "{0} dan {1} hari ini"
 msgid "{0} and {1} tomorrow"
 msgstr "{0} dan {1} besok"
 
-#. placeholder {0}: Math.round(peakUv.value)
-#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakUv.index]?.time, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:476
-#~ msgid "{0} at {1}"
-#~ msgstr "{0} pukul {1}"
-
 #. placeholder {0}: Math.round(peakAqi.value)
 #. placeholder {0}: Math.round(peakUv.value)
 #: src/features/weather/ui/next-24-hours-tile.tsx:564
 #: src/features/weather/ui/next-24-hours-tile.tsx:661
 msgid "{0} at <0/>"
 msgstr "{0} pukul <0/>"
-
-#. placeholder {0}: formatPrecipitationValue({ precipitation: peakAmount.value, usesMetricUnits, })
-#. placeholder {1}: formatHourInterval({ index: peakAmount.index, referenceTime, times, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:324
-#~ msgid "{0} between {1}"
-#~ msgstr "{0} antara {1}"
 
 #. placeholder {0}: formatPrecipitationValue({ precipitation: peakAmount.value, usesMetricUnits, })
 #: src/features/weather/ui/next-24-hours-tile.tsx:478
@@ -112,23 +75,6 @@ msgstr "{0} antara <0/>"
 #: src/features/weather/ui/tile.tsx:511
 msgid "{0} km/h"
 msgstr "{0} km/j"
-
-#. placeholder {0}: formatDecimal(sum(precipitation))
-#: src/features/weather/ui/next-24-hours-tile.tsx:245
-#~ msgid "{0} mm"
-#~ msgstr "{0} mm"
-
-#. placeholder {0}: formatDecimal(peakAmount.value)
-#. placeholder {1}: formatHour(data[peakAmount.index]?.time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:259
-#~ msgid "{0} mm at {1}"
-#~ msgstr "{0} mm pukul {1}"
-
-#. placeholder {0}: formatDecimal(peakAmount.value)
-#. placeholder {1}: formatHourInterval(times, peakAmount.index)
-#: src/features/weather/ui/next-24-hours-tile.tsx:278
-#~ msgid "{0} mm between {1}"
-#~ msgstr "{0} mm antara {1}"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
 #: src/features/weather/ui/tile.tsx:513
@@ -144,33 +90,6 @@ msgstr "{0} hari ini"
 #: src/features/weather/ui/next-24-hours-tile.tsx:1092
 msgid "{0} tomorrow"
 msgstr "{0} besok"
-
-#. placeholder {0}: Math.round(high.value)
-#. placeholder {0}: Math.round(low.value)
-#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[high.index]?.time, })
-#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[low.index]?.time, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:187
-#: src/features/weather/ui/next-24-hours-tile.tsx:201
-#~ msgid "{0}{temperatureUnitLabel} at {1}"
-#~ msgstr "{0}{temperatureUnitLabel} pukul {1}"
-
-#. placeholder {0}: Math.round(high.value)
-#. placeholder {0}: Math.round(low.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:315
-#: src/features/weather/ui/next-24-hours-tile.tsx:329
-#~ msgid "{0}{temperatureUnitLabel} at <0/>"
-#~ msgstr "{0}{temperatureUnitLabel} pukul <0/>"
-
-#. placeholder {0}: Math.round(peakChance.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1799
-#~ msgid "{0}%"
-#~ msgstr "{0}%"
-
-#. placeholder {0}: Math.round(peakProbability.value)
-#. placeholder {1}: formatRelativeHour({ referenceTime, time: data[peakProbability.index]?.time, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:298
-#~ msgid "{0}% at {1}"
-#~ msgstr "{0}% pukul {1}"
 
 #. placeholder {0}: Math.round(peakProbability.value)
 #: src/features/weather/ui/next-24-hours-tile.tsx:451
@@ -211,23 +130,23 @@ msgstr "<0>Akses lokasi ditolak.</0> Periksa pengaturan browser Anda untuk mengi
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Akses lokasi ditolak.</0> Klik ikon lokasi di bilah alamat, lalu pilih \"selalu izinkan akses ke lokasi Anda\". Kemudian klik tombol di bawah untuk mencoba lagi."
 
-#: src/features/settings/ui/settings.tsx:775
+#: src/features/settings/ui/settings.tsx:987
 msgid "☕ Gift a coffee"
 msgstr "☕ Berikan secangkir kopi"
 
-#: src/pages/index.tsx:579
+#: src/pages/index.tsx:592
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ BARU: Coba gulir ke bawah"
 
-#: src/features/settings/ui/settings.tsx:759
+#: src/features/settings/ui/settings.tsx:971
 msgid "🌟 Leave a review"
 msgstr "🌟 Tinggalkan ulasan"
 
-#: src/features/settings/ui/settings.tsx:767
+#: src/features/settings/ui/settings.tsx:979
 msgid "🐛 Report a bug"
 msgstr "🐛 Laporkan bug"
 
-#: src/features/settings/ui/settings.tsx:818
+#: src/features/settings/ui/settings.tsx:1030
 msgid "🔒 Privacy policy"
 msgstr "🔒 Kebijakan privasi"
 
@@ -247,7 +166,7 @@ msgstr "Gerhana Bulan total terjadi ketika Bumi bergerak tepat di antara Matahar
 msgid "A total solar eclipse occurs when the Moon moves directly in front of the Sun, briefly transforming daylight into twilight."
 msgstr "Gerhana Matahari total terjadi ketika Bulan bergerak tepat di depan Matahari, sejenak mengubah siang menjadi senja."
 
-#: src/features/settings/ui/settings.tsx:109
+#: src/features/settings/ui/settings.tsx:127
 msgid "About"
 msgstr "Tentang"
 
@@ -283,7 +202,11 @@ msgstr "Di banyak budaya, tradisi seperti Yule dan Saturnalia berkembang di seki
 msgid "Acts of charity, the sharing of food, and care for family, neighbours, and those in need form the heart of the celebration."
 msgstr "Tindakan amal, berbagi makanan, serta kepedulian pada keluarga, tetangga, dan mereka yang membutuhkan menjadi inti perayaan."
 
-#: src/pages/index.tsx:628
+#: src/features/settings/ui/settings.tsx:743
+msgid "Add account"
+msgstr ""
+
+#: src/pages/index.tsx:655
 msgid "air quality"
 msgstr "kualitas udara"
 
@@ -292,13 +215,13 @@ msgstr "kualitas udara"
 msgid "Air quality"
 msgstr "Kualitas udara"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:612
-#~ msgid "Air quality forecast from Open-Meteo and CAMS atmospheric data."
-#~ msgstr "Prakiraan kualitas udara dari Open-Meteo dan data atmosfer CAMS."
-
 #: src/features/weather/ui/next-24-hours-tile.tsx:719
 msgid "Air quality unavailable"
 msgstr "Kualitas udara tidak tersedia"
+
+#: src/features/integrations/ui/upcoming-events.tsx:210
+msgid "All day"
+msgstr ""
 
 #: src/features/seasonal-events/events/perseids.tsx:116
 msgid "Allow your eyes about twenty minutes to adjust, turn away from city lights, and let the wide sky do the work."
@@ -348,7 +271,7 @@ msgstr "AQI diukur pada skala 0–500. Angka yang lebih rendah berarti udara yan
 msgid "As sunlight passes through Earth’s atmosphere, the shorter blue wavelengths scatter away while the longer red wavelengths bend toward the Moon."
 msgstr "Saat sinar matahari melewati atmosfer Bumi, panjang gelombang biru yang lebih pendek tersebar, sementara panjang gelombang merah yang lebih panjang dibelokkan menuju Bulan."
 
-#: src/features/settings/ui/settings.tsx:216
+#: src/features/settings/ui/settings.tsx:234
 msgid "Astronomy"
 msgstr "Astronomi"
 
@@ -360,7 +283,7 @@ msgstr "Dengan kecepatan 66 km/s, ini termasuk meteor tercepat yang akan Anda li
 msgid "At each boundary, fireworks go up, bells ring, and strangers count down together. The same moment of anticipation, repeated twenty-four times."
 msgstr "Di setiap perbatasan, kembang api meluncur, lonceng berbunyi, dan orang-orang asing menghitung mundur bersama. Momen antisipasi yang sama, diulang dua puluh empat kali."
 
-#: src/features/settings/ui/settings.tsx:787
+#: src/features/settings/ui/settings.tsx:999
 msgid "Attributions"
 msgstr "Atribusi"
 
@@ -368,7 +291,7 @@ msgstr "Atribusi"
 msgid "August"
 msgstr "Agustus"
 
-#: src/features/settings/ui/settings.tsx:161
+#: src/features/settings/ui/settings.tsx:179
 #: src/features/weather/ui/tile.tsx:171
 msgid "Autumn Equinox"
 msgstr "Ekuinoks musim gugur"
@@ -397,12 +320,24 @@ msgstr "Menjelang siang, jalanan, tembok, dan setiap permukaan yang terlihat dip
 msgid "By the eighteenth century, handwritten notes and printed cards had helped turn the day into a ritual of letters and messages."
 msgstr "Pada abad kedelapan belas, catatan tulisan tangan dan kartu cetak membantu menjadikan hari itu sebagai ritual surat dan pesan."
 
+#: src/features/settings/ui/settings.tsx:720
+msgid "Calendar"
+msgstr ""
+
+#: src/features/settings/ui/settings.tsx:724
+msgid "Calendar connections aren't available in this build."
+msgstr ""
+
 #: src/features/seasonal-events/events/halloween.tsx:78
 msgid "Carved pumpkins, sweets, and playful scares echo much older customs of lanterns, bonfires, and protective charms."
 msgstr "Labu ukir, manisan, dan kejutan yang jenaka menggema kebiasaan yang jauh lebih tua tentang lentera, api unggun, dan jimat pelindung."
 
+#: src/features/settings/ui/settings.tsx:682
+msgid "Category"
+msgstr ""
+
 #: src/features/settings/ui/initialisation.tsx:48
-#: src/features/settings/ui/settings.tsx:263
+#: src/features/settings/ui/settings.tsx:281
 msgid "Celsius (°C)"
 msgstr "Celsius (°C)"
 
@@ -418,7 +353,7 @@ msgstr "Peluang"
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
 msgstr "Catatan Tiongkok dari tahun 687 SM menggambarkan \"bintang-bintang jatuh seperti hujan\" — laporan tertua yang diketahui tentang Lyrid, dan salah satu pengamatan meteor tertua yang pernah didokumentasikan."
 
-#: src/features/settings/ui/settings.tsx:162
+#: src/features/settings/ui/settings.tsx:180
 #: src/features/weather/ui/tile.tsx:172
 msgid "Christmas Day"
 msgstr "Hari Natal"
@@ -447,17 +382,21 @@ msgstr "Komet Thatcher, benda induk hujan meteor ini, tidak akan kembali ke tata
 msgid "Community cleanups, tree planting, and habitat restoration are among the most common activities."
 msgstr "Aksi bersih-bersih komunitas, penanaman pohon, dan pemulihan habitat termasuk kegiatan yang paling umum."
 
-#: src/features/settings/ui/settings.tsx:77
+#: src/features/settings/ui/settings.tsx:90
 msgid "Compact weather alerts"
 msgstr "Peringatan cuaca ringkas"
 
-#: src/pages/index.tsx:629
+#: src/pages/index.tsx:656
 msgid "conditions"
 msgstr "kondisi"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:875
 msgid "Conditions"
 msgstr "Kondisi"
+
+#: src/features/settings/ui/settings.tsx:761
+msgid "Connect"
+msgstr ""
 
 #: src/features/seasonal-events/events/halloween.tsx:84
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
@@ -467,19 +406,19 @@ msgstr "Kostum bisa heroik, lucu, atau menyeramkan, memungkinkan orang sejenak m
 msgid "Current AQI"
 msgstr "AQI saat ini"
 
-#: src/features/settings/ui/settings.tsx:641
+#: src/features/settings/ui/settings.tsx:853
 msgid "Data & alerts"
 msgstr "Data & peringatan"
 
-#: src/features/settings/ui/settings.tsx:632
+#: src/features/settings/ui/settings.tsx:844
 msgid "Date"
 msgstr "Tanggal"
 
-#: src/features/settings/ui/settings.tsx:628
+#: src/features/settings/ui/settings.tsx:840
 msgid "Day"
 msgstr "Hari"
 
-#: src/features/settings/ui/settings.tsx:163
+#: src/features/settings/ui/settings.tsx:181
 #: src/features/weather/ui/tile.tsx:173
 msgid "Day of the Dead"
 msgstr "Hari Orang Mati"
@@ -512,7 +451,7 @@ msgstr "kabut membeku"
 msgid "Depth"
 msgstr "Kedalaman"
 
-#: src/features/settings/ui/settings.tsx:114
+#: src/features/settings/ui/settings.tsx:132
 msgid "Developer"
 msgstr "Pengembang"
 
@@ -520,11 +459,15 @@ msgstr "Pengembang"
 msgid "Direct sunlight is making it feel warmer than the measured temperature right now."
 msgstr "Sinar matahari langsung membuat suhu terasa lebih panas dari suhu yang terukur saat ini."
 
-#: src/features/settings/ui/settings.tsx:693
+#: src/features/settings/ui/settings.tsx:658
+msgid "Disconnect"
+msgstr ""
+
+#: src/features/settings/ui/settings.tsx:905
 msgid "Display"
 msgstr "Tampilan"
 
-#: src/features/settings/ui/settings.tsx:164
+#: src/features/settings/ui/settings.tsx:182
 #: src/features/weather/ui/tile.tsx:174
 msgid "Diwali"
 msgstr "Diwali"
@@ -561,7 +504,7 @@ msgstr "Setiap malam, satu lilin lagi ditambahkan ke menorah, perlahan membangun
 msgid "Each Orionid meteor is a tiny grain of dust shed by Halley's Comet — the same object that people have been watching and recording since at least 240 BC."
 msgstr "Setiap meteor Orionid adalah butiran debu kecil yang ditinggalkan oleh Komet Halley — objek yang sama yang telah diamati dan dicatat orang sejak setidaknya tahun 240 SM."
 
-#: src/features/settings/ui/settings.tsx:165
+#: src/features/settings/ui/settings.tsx:183
 #: src/features/weather/ui/tile.tsx:175
 msgid "Earth Day"
 msgstr "Hari Bumi"
@@ -570,7 +513,7 @@ msgstr "Hari Bumi"
 msgid "Earth Day invites a pause to notice the planet that sustains us, and to consider how we care for it."
 msgstr "Hari Bumi mengajak berhenti sejenak untuk memperhatikan planet yang menopang kita, dan mempertimbangkan bagaimana kita merawatnya."
 
-#: src/features/settings/ui/settings.tsx:166
+#: src/features/settings/ui/settings.tsx:184
 #: src/features/weather/ui/tile.tsx:176
 msgid "Easter"
 msgstr "Paskah"
@@ -583,7 +526,7 @@ msgstr "Paskah berpusat pada tema pembaruan dan, dalam tradisi Kristen, kebangki
 msgid "Eclipse glasses are essential during all partial phases. Only during the brief seconds of total coverage is it safe to look with the naked eye."
 msgstr "Kacamata gerhana sangat penting selama semua fase parsial. Hanya selama beberapa detik singkat saat cakupan total sajalah aman untuk melihat dengan mata telanjang."
 
-#: src/features/settings/ui/settings.tsx:167
+#: src/features/settings/ui/settings.tsx:185
 #: src/features/weather/ui/tile.tsx:177
 msgid "Eid al-Adha"
 msgstr "Idul Adha"
@@ -592,7 +535,7 @@ msgstr "Idul Adha"
 msgid "Eid al-Adha is one of the most important festivals in Islam, closely linked to the season of the Hajj pilgrimage."
 msgstr "Idul Adha adalah salah satu festival terpenting dalam Islam, yang terkait erat dengan musim ibadah haji."
 
-#: src/features/settings/ui/settings.tsx:168
+#: src/features/settings/ui/settings.tsx:186
 #: src/features/weather/ui/tile.tsx:178
 msgid "Eid al-Fitr"
 msgstr "Idul Fitri"
@@ -601,7 +544,7 @@ msgstr "Idul Fitri"
 msgid "Eid al-Fitr marks the end of Ramadan, celebrating renewal, gratitude, and the strength of shared community."
 msgstr "Idul Fitri menandai berakhirnya Ramadan, merayakan pembaruan, rasa syukur, dan kekuatan komunitas bersama."
 
-#: src/features/settings/ui/settings.tsx:169
+#: src/features/settings/ui/settings.tsx:187
 msgid "Eta Aquariids meteor shower"
 msgstr "Hujan meteor Eta Aquariid"
 
@@ -613,7 +556,7 @@ msgstr "Hujan meteor Eta Aquariid"
 msgid "Even small choices — repairing, reusing, conserving, or simply walking a familiar trail — reflect its underlying spirit."
 msgstr "Bahkan pilihan kecil — memperbaiki, menggunakan kembali, menghemat, atau sekadar berjalan di jalur yang familiar — mencerminkan semangat dasarnya."
 
-#: src/features/settings/ui/settings.tsx:170
+#: src/features/settings/ui/settings.tsx:188
 #: src/features/weather/ui/tile.tsx:180
 msgid "Event Horizon Day"
 msgstr "Hari Cakrawala Peristiwa"
@@ -643,7 +586,7 @@ msgid "Extreme UV starting in 1 hour"
 msgstr "UV ekstrem dimulai dalam 1 jam"
 
 #: src/features/settings/ui/initialisation.tsx:52
-#: src/features/settings/ui/settings.tsx:267
+#: src/features/settings/ui/settings.tsx:285
 msgid "Fahrenheit (°F)"
 msgstr "Fahrenheit (°F)"
 
@@ -663,17 +606,25 @@ msgstr "Keluarga berkumpul untuk menyalakan menorah, bernyanyi, dan bermain perm
 msgid "Families spend the night in cemeteries, cleaning graves, laying marigold paths, and sharing meals beside the headstones. It's social, warm, and often funny — people tell stories and play music until morning."
 msgstr "Keluarga-keluarga menghabiskan malam di pemakaman, membersihkan makam, menabur jalan bunga marigold, dan berbagi makanan di samping nisan. Suasananya sosial, hangat, dan seringkali lucu — orang-orang bercerita dan bermain musik hingga pagi."
 
+#: src/features/settings/ui/settings.tsx:616
+msgid "Family"
+msgstr ""
+
 #: src/features/weather/ui/tile.tsx:127
 msgid "February"
 msgstr "Februari"
 
-#: src/features/settings/ui/settings.tsx:751
+#: src/features/settings/ui/settings.tsx:963
 msgid "Feedback"
 msgstr "Masukan"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:363
 msgid "Feels like now"
 msgstr "Terasa sekarang"
+
+#: src/features/settings/ui/settings.tsx:617
+msgid "Finance"
+msgstr ""
 
 #: src/features/seasonal-events/events/geminids.tsx:115
 msgid "Find a wide view of the sky, allow your eyes time to adjust, and settle in — the display often strengthens after midnight."
@@ -687,13 +638,17 @@ msgstr "Makanan yang digoreng dalam minyak, termasuk latkes dan sufganiyot, menc
 msgid "For many Hindus, the festival marks the return of Rama, Sita, Lakshmana, and Hanuman to Ayodhya after their long exile."
 msgstr "Bagi banyak umat Hindu, festival ini menandai kembalinya Rama, Sita, Lakshmana, dan Hanuman ke Ayodhya setelah pengasingan panjang mereka."
 
-#: src/pages/index.tsx:630
+#: src/pages/index.tsx:657
 msgid "forecast"
 msgstr "prakiraan"
 
-#: src/features/settings/ui/settings.tsx:606
+#: src/features/settings/ui/settings.tsx:818
 msgid "Forecast"
 msgstr "Prakiraan"
+
+#: src/features/settings/ui/settings.tsx:618
+msgid "Freelance"
+msgstr ""
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:1121
 msgid "Fri {hour}"
@@ -715,7 +670,7 @@ msgstr "Dari titik ini, setiap hari mendapatkan beberapa menit cahaya ekstra —
 msgid "Geminid meteors move slower than most showers, which is part of what makes them so striking — they linger long enough to actually follow with your eyes."
 msgstr "Meteor Geminid bergerak lebih lambat dari kebanyakan hujan meteor, yang menjadi salah satu alasan mengapa mereka begitu mencolok — mereka bertahan cukup lama sehingga Anda bisa benar-benar mengikutinya dengan mata."
 
-#: src/features/settings/ui/settings.tsx:171
+#: src/features/settings/ui/settings.tsx:189
 msgid "Geminids meteor shower"
 msgstr "Hujan meteor Geminid"
 
@@ -723,7 +678,7 @@ msgstr "Hujan meteor Geminid"
 msgid "Geminids Meteor Shower"
 msgstr "Hujan meteor Geminid"
 
-#: src/features/settings/ui/settings.tsx:94
+#: src/features/settings/ui/settings.tsx:107
 msgid "General"
 msgstr "Umum"
 
@@ -785,15 +740,11 @@ msgstr "Baik untuk diketahui"
 msgid "Gust"
 msgstr "Hembusan"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:330
-#~ msgid "Gust spread"
-#~ msgstr "Selisih hembusan"
-
 #: src/features/seasonal-events/events/eta-aquariids.tsx:99
 msgid "Halley’s Comet itself returns roughly every seventy-six years, but the stream of dust it leaves behind crosses Earth’s path each year."
 msgstr "Komet Halley sendiri kembali kira-kira setiap tujuh puluh enam tahun, tetapi aliran debu yang ditinggalkannya melintasi jalur Bumi setiap tahun."
 
-#: src/features/settings/ui/settings.tsx:172
+#: src/features/settings/ui/settings.tsx:190
 #: src/features/weather/ui/tile.tsx:182
 msgid "Halloween"
 msgstr "Halloween"
@@ -802,7 +753,7 @@ msgstr "Halloween"
 msgid "Halloween is a night shaped by costumes, stories, and a playful sense of unease."
 msgstr "Halloween adalah malam yang dibentuk oleh kostum, cerita, dan rasa tidak nyaman yang menyenangkan."
 
-#: src/features/settings/ui/settings.tsx:173
+#: src/features/settings/ui/settings.tsx:191
 #: src/features/weather/ui/tile.tsx:183
 msgid "Hanukkah"
 msgstr "Hanukkah"
@@ -838,10 +789,6 @@ msgstr "hujan salju lebat"
 #: src/features/weather/ui/tile.tsx:103
 msgid "heavy snowfall"
 msgstr "salju lebat"
-
-#: src/features/weather/ui/next-24-hours-tile.tsx:313
-#~ msgid "High"
-#~ msgstr "Tertinggi"
 
 #: src/features/seasonal-events/events/lyrids.tsx:98
 msgid "Historical Chinese records describe displays of Lyrid meteors more than two thousand six hundred years ago."
@@ -879,7 +826,7 @@ msgstr "Catatan sejarah tentang Perseid membentang hampir dua ribu tahun, menjad
 msgid "History and meaning"
 msgstr "Sejarah dan makna"
 
-#: src/features/settings/ui/settings.tsx:174
+#: src/features/settings/ui/settings.tsx:192
 #: src/features/weather/ui/tile.tsx:184
 msgid "Holi"
 msgstr "Holi"
@@ -900,7 +847,7 @@ msgstr "Udara lembap dan sinar matahari langsung membuat suhu terasa lebih panas
 msgid "Humid air is making it feel warmer than the measured temperature right now."
 msgstr "Udara lembap membuat suhu terasa lebih panas dari suhu yang terukur saat ini."
 
-#: src/features/settings/ui/settings.tsx:621
+#: src/features/settings/ui/settings.tsx:833
 msgid "Identifier"
 msgstr "Pengenal"
 
@@ -909,7 +856,7 @@ msgid "If your browser prompts you for location permissions, please select \"all
 msgstr "Jika browser Anda meminta izin lokasi, silakan pilih \"izinkan\"."
 
 #: src/features/settings/ui/initialisation.tsx:63
-#: src/features/settings/ui/settings.tsx:278
+#: src/features/settings/ui/settings.tsx:296
 msgid "Imperial (mph, in)"
 msgstr "Imperial (mph, in)"
 
@@ -924,6 +871,10 @@ msgstr "Dalam banyak tradisi, ekuinoks bukan hanya tentang apa yang telah dipane
 #: src/features/seasonal-events/events/leonids.tsx:132
 msgid "In most years, the Leonids produce only 10–15 meteors per hour. But during the 1966 storm, observers reported rates of thousands per minute — so many that some people thought the world was ending."
 msgstr "Di sebagian besar tahun, Leonid hanya menghasilkan 10–15 meteor per jam. Namun selama badai tahun 1966, para pengamat melaporkan tingkat ribuan per menit — begitu banyak sehingga beberapa orang mengira dunia akan berakhir."
+
+#: src/features/settings/ui/settings.tsx:122
+msgid "Integrations"
+msgstr ""
 
 #: src/shared/ui/input.tsx:203
 #: src/shared/ui/input.tsx:272
@@ -1011,11 +962,11 @@ msgid "June"
 msgstr "Juni"
 
 #: src/features/settings/ui/initialisation.tsx:234
-#: src/features/settings/ui/settings.tsx:529
+#: src/features/settings/ui/settings.tsx:568
 msgid "Language"
 msgstr "Bahasa"
 
-#: src/features/settings/ui/settings.tsx:578
+#: src/features/settings/ui/settings.tsx:790
 msgid "Latitude"
 msgstr "Lintang"
 
@@ -1023,7 +974,7 @@ msgstr "Lintang"
 msgid "Leave a review"
 msgstr "Tinggalkan ulasan"
 
-#: src/features/settings/ui/settings.tsx:811
+#: src/features/settings/ui/settings.tsx:1023
 msgid "Legal"
 msgstr "Legal"
 
@@ -1031,7 +982,7 @@ msgstr "Legal"
 msgid "Legends and customs"
 msgstr "Legenda dan tradisi"
 
-#: src/features/settings/ui/settings.tsx:175
+#: src/features/settings/ui/settings.tsx:193
 msgid "Leonids meteor shower"
 msgstr "Hujan meteor Leonid"
 
@@ -1059,19 +1010,15 @@ msgstr "Cahaya berubah menjadi nuansa keperakan, bayangan menajam, dan suhu dapa
 msgid "Live data is temporarily unavailable. Showing your last saved forecast instead."
 msgstr "Data langsung sementara tidak tersedia. Menampilkan prakiraan tersimpan terakhir Anda."
 
-#: src/features/weather/ui/weather-alert.tsx:197
-#~ msgid "Live data is unavailable. Showing your last saved forecast instead."
-#~ msgstr "Data langsung tidak tersedia. Menampilkan prakiraan tersimpan terakhir Anda."
-
 #: src/features/weather/ui/next-24-hours-tile.tsx:1296
 msgid "Local map"
 msgstr "Peta lokal"
 
-#: src/features/settings/ui/settings.tsx:527
+#: src/features/settings/ui/settings.tsx:566
 msgid "Locale"
 msgstr "Lokal"
 
-#: src/features/settings/ui/settings.tsx:575
+#: src/features/settings/ui/settings.tsx:787
 msgid "Location"
 msgstr "Lokasi"
 
@@ -1079,13 +1026,9 @@ msgstr "Lokasi"
 msgid "Location name unavailable"
 msgstr "Nama lokasi tidak tersedia"
 
-#: src/features/settings/ui/settings.tsx:587
+#: src/features/settings/ui/settings.tsx:799
 msgid "Longitude"
 msgstr "Bujur"
-
-#: src/features/weather/ui/next-24-hours-tile.tsx:327
-#~ msgid "Low"
-#~ msgstr "Terendah"
 
 #: src/features/weather/ui/weather-alert.tsx:421
 msgid "Low visibility for the next {durationOfLowVisibility} hours"
@@ -1111,7 +1054,7 @@ msgstr "Visibilitas rendah dimulai dalam 1 jam"
 msgid "Lowest visibility"
 msgstr "Jarak pandang terendah"
 
-#: src/features/settings/ui/settings.tsx:176
+#: src/features/settings/ui/settings.tsx:194
 #: src/features/weather/ui/tile.tsx:186
 msgid "Lunar New Year"
 msgstr "Tahun Baru Imlek"
@@ -1120,7 +1063,7 @@ msgstr "Tahun Baru Imlek"
 msgid "Lunar New Year begins with the first new moon of the lunar calendar and unfolds across a festival season lasting up to fifteen days."
 msgstr "Tahun Baru Imlek dimulai dengan bulan baru pertama dalam kalender lunar dan berlangsung sebagai musim festival hingga lima belas hari."
 
-#: src/features/settings/ui/settings.tsx:177
+#: src/features/settings/ui/settings.tsx:195
 msgid "Lyrids meteor shower"
 msgstr "Hujan meteor Lyrid"
 
@@ -1133,7 +1076,7 @@ msgstr "Hujan meteor Lyrid"
 msgid "mainly clear"
 msgstr "sebagian besar cerah"
 
-#: src/pages/index.tsx:631
+#: src/pages/index.tsx:658
 msgid "map"
 msgstr "peta"
 
@@ -1162,9 +1105,13 @@ msgid "Meanwhile, billions of birds are mid-migration, navigating by stars, magn
 msgstr "Sementara itu, miliaran burung sedang dalam proses migrasi, menavigasi menggunakan bintang, medan magnet, dan penanda yang diwariskan dari generasi ke generasi."
 
 #: src/features/settings/ui/initialisation.tsx:59
-#: src/features/settings/ui/settings.tsx:274
+#: src/features/settings/ui/settings.tsx:292
 msgid "Metric (km/h, mm)"
 msgstr "Metrik (km/h, mm)"
+
+#: src/features/settings/ui/settings.tsx:649
+msgid "Microsoft account"
+msgstr ""
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:2694
 msgid "Moderate"
@@ -1210,7 +1157,7 @@ msgstr "Pada kebanyakan tahun, pertunjukannya sederhana, tetapi hujan meteor ini
 msgid "Never show this again"
 msgstr "Jangan tampilkan ini lagi"
 
-#: src/features/settings/ui/settings.tsx:178
+#: src/features/settings/ui/settings.tsx:196
 #: src/features/weather/ui/tile.tsx:188
 msgid "New Year's Day"
 msgstr "Tahun Baru"
@@ -1252,7 +1199,7 @@ msgstr "Tidak ada curah hujan yang dapat diukur"
 msgid "No precipitation expected"
 msgstr "Tidak ada curah hujan yang diperkirakan"
 
-#: src/features/settings/ui/settings.tsx:285
+#: src/features/settings/ui/settings.tsx:303
 msgid "None"
 msgstr "Tidak ada"
 
@@ -1260,7 +1207,11 @@ msgstr "Tidak ada"
 msgid "November"
 msgstr "November"
 
-#: src/features/settings/ui/settings.tsx:609
+#: src/features/integrations/ui/upcoming-events.tsx:214
+msgid "Now"
+msgstr ""
+
+#: src/features/settings/ui/settings.tsx:821
 msgid "Number of days to forecast"
 msgstr "Jumlah hari untuk ramalan"
 
@@ -1284,7 +1235,7 @@ msgstr "Keesokan harinya, bubuk warna memenuhi udara saat orang-orang melampaui 
 msgid "On the longest day, twilight stretches out for hours and full darkness may never arrive."
 msgstr "Pada hari terpanjang, senja berlangsung selama berjam-jam dan kegelapan penuh mungkin tidak pernah tiba."
 
-#: src/features/settings/ui/settings.tsx:179
+#: src/features/settings/ui/settings.tsx:197
 msgid "Orionids meteor shower"
 msgstr "Hujan meteor Orionid"
 
@@ -1292,7 +1243,7 @@ msgstr "Hujan meteor Orionid"
 msgid "Orionids Meteor Shower"
 msgstr "Hujan meteor Orionid"
 
-#: src/features/settings/ui/settings.tsx:240
+#: src/features/settings/ui/settings.tsx:258
 msgid "Other holidays"
 msgstr "Hari libur lainnya"
 
@@ -1301,7 +1252,7 @@ msgid "Other traditions honour Lakshmi, the goddess of prosperity and fortune, w
 msgstr "Tradisi lain menghormati Lakshmi, dewi kemakmuran dan keberuntungan, sementara komunitas Jain dan Sikh mengamati Diwali melalui sejarah suci mereka sendiri."
 
 #: src/features/settings/ui/initialisation.tsx:253
-#: src/features/settings/ui/settings.tsx:550
+#: src/features/settings/ui/settings.tsx:589
 msgid "Other units"
 msgstr "Satuan lainnya"
 
@@ -1317,7 +1268,7 @@ msgstr "Seiring waktu, itu berkembang menjadi tradisi komunitas berupa kunjungan
 msgid "overcast"
 msgstr "berawan"
 
-#: src/features/settings/ui/settings.tsx:503
+#: src/features/settings/ui/settings.tsx:536
 msgid "Overrides"
 msgstr "Penimpaan"
 
@@ -1380,7 +1331,7 @@ msgstr "UV tertinggi"
 msgid "Peak wind"
 msgstr "Angin tertinggi"
 
-#: src/features/settings/ui/settings.tsx:599
+#: src/features/settings/ui/settings.tsx:811
 msgid "Periodically update location automatically"
 msgstr "Secara berkala perbarui lokasi secara otomatis"
 
@@ -1388,13 +1339,17 @@ msgstr "Secara berkala perbarui lokasi secara otomatis"
 msgid "Perseid meteors enter the atmosphere at roughly 60 km/s — fast enough that the larger ones compress the air ahead of them into a bright, explosive fireball."
 msgstr "Meteor Perseid memasuki atmosfer dengan kecepatan sekitar 60 km/s — cukup cepat sehingga yang lebih besar menekan udara di depannya menjadi bola api yang terang dan eksplosif."
 
-#: src/features/settings/ui/settings.tsx:180
+#: src/features/settings/ui/settings.tsx:198
 msgid "Perseids meteor shower"
 msgstr "Hujan meteor Perseid"
 
 #: src/features/weather/ui/tile.tsx:190
 msgid "Perseids Meteor Shower"
 msgstr "Hujan meteor Perseid"
+
+#: src/features/settings/ui/settings.tsx:619
+msgid "Personal"
+msgstr ""
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:679
 msgid "PM10 / ozone / NO₂"
@@ -1404,7 +1359,7 @@ msgstr "PM10 / ozon / NO₂"
 msgid "PM2.5 now"
 msgstr "PM2.5 sekarang"
 
-#: src/pages/index.tsx:632
+#: src/pages/index.tsx:659
 msgid "precipitation"
 msgstr "curah hujan"
 
@@ -1423,7 +1378,7 @@ msgstr "Peluang hujan"
 msgid "Precipitation includes rain and snow."
 msgstr "Curah hujan mencakup hujan dan salju."
 
-#: src/features/settings/ui/settings.tsx:181
+#: src/features/settings/ui/settings.tsx:199
 msgid "Quadrantids meteor shower"
 msgstr "Hujan meteor Quadrantid"
 
@@ -1435,11 +1390,15 @@ msgstr "Hujan meteor Quadrantid"
 msgid "Rather than a solemn farewell, it treats remembrance as something vibrant, communal, and alive."
 msgstr "Alih-alih perpisahan yang khidmat, tradisi ini memperlakukan mengenang sebagai sesuatu yang hidup, komunal, dan penuh warna."
 
+#: src/features/settings/ui/settings.tsx:676
+msgid "Reconnect"
+msgstr ""
+
 #: src/features/seasonal-events/events/lunar-new-year.tsx:102
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "Angpao merah, jeruk mandarin, dan kuplet kaligrafi menyampaikan harapan akan kelimpahan, kebahagiaan, dan awal yang segar."
 
-#: src/features/settings/ui/settings.tsx:230
+#: src/features/settings/ui/settings.tsx:248
 msgid "Religious & cultural"
 msgstr "Keagamaan & budaya"
 
@@ -1447,12 +1406,12 @@ msgstr "Keagamaan & budaya"
 msgid "Report a bug"
 msgstr "Laporkan bug"
 
-#: src/pages/index.tsx:513
-#: src/pages/index.tsx:527
+#: src/pages/index.tsx:526
+#: src/pages/index.tsx:540
 msgid "Retry"
 msgstr "Coba lagi"
 
-#: src/features/settings/ui/settings.tsx:255
+#: src/features/settings/ui/settings.tsx:273
 msgid "Reverse geocoding by OpenStreetMap contributors"
 msgstr "Geocoding terbalik oleh kontributor OpenStreetMap"
 
@@ -1464,29 +1423,34 @@ msgstr "Sab {hour}"
 msgid "Saturday"
 msgstr "Sabtu"
 
-#: src/features/settings/ui/settings.tsx:703
+#: src/features/settings/ui/settings.tsx:620
+msgid "School"
+msgstr ""
+
+#: src/features/settings/ui/settings.tsx:915
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "Efek musiman dinonaktifkan karena browser Anda tampaknya menggunakan renderer perangkat lunak. Aktifkan akselerasi perangkat keras untuk melihat efek ini."
 
-#: src/features/settings/ui/settings.tsx:506
+#: src/features/settings/ui/settings.tsx:539
 msgid "Seasonal event override"
 msgstr "Penimpaan acara musiman"
 
-#: src/features/settings/ui/settings.tsx:104
+#: src/features/settings/ui/settings.tsx:117
 msgid "Seasonal events"
 msgstr "Acara musiman"
 
-#: src/features/settings/ui/settings.tsx:200
+#: src/features/settings/ui/settings.tsx:218
 msgid "Seasons & nature"
 msgstr "Musim & alam"
 
-#: src/features/settings/ui/settings.tsx:271
-#~ msgid "Sections"
-#~ msgstr "Bagian"
-
-#: src/features/settings/ui/settings.tsx:572
+#: src/features/settings/ui/settings.tsx:717
+#: src/features/settings/ui/settings.tsx:784
 msgid "Securely stored"
 msgstr "Tersimpan dengan aman"
+
+#: src/features/settings/ui/settings.tsx:708
+msgid "See upcoming calendar events alongside your forecast. Weather Please connects to Microsoft directly, and your events never pass through our servers."
+msgstr ""
 
 #: src/features/seasonal-events/events/diwali.tsx:116
 msgid "Seen from above, cities during Diwali are transformed — rooftops, balconies, and streets are outlined in light, and the effect is visible from space in satellite imagery."
@@ -1500,8 +1464,8 @@ msgstr "September"
 msgid "Set my location"
 msgstr "Atur lokasi saya"
 
-#: src/features/settings/ui/settings.tsx:351
-#: src/features/settings/ui/settings.tsx:370
+#: src/features/settings/ui/settings.tsx:375
+#: src/features/settings/ui/settings.tsx:394
 msgid "Settings"
 msgstr "Pengaturan"
 
@@ -1509,119 +1473,123 @@ msgstr "Pengaturan"
 msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and personal."
 msgstr "Manisan bersama, bunga, dan hadiah kecil menjaga perayaan tetap intim dan personal."
 
-#: src/features/settings/ui/settings.tsx:119
+#: src/features/settings/ui/settings.tsx:137
 msgid "Show Autumn Equinox event"
 msgstr "Tampilkan Ekuinoks musim gugur"
 
-#: src/features/settings/ui/settings.tsx:120
+#: src/features/settings/ui/settings.tsx:747
+msgid "Show calendar events"
+msgstr ""
+
+#: src/features/settings/ui/settings.tsx:138
 msgid "Show Christmas Day event"
 msgstr "Tampilkan Hari Natal"
 
-#: src/features/settings/ui/settings.tsx:121
+#: src/features/settings/ui/settings.tsx:139
 msgid "Show Day of the Dead event"
 msgstr "Tampilkan Hari Orang Mati"
 
-#: src/features/settings/ui/settings.tsx:122
+#: src/features/settings/ui/settings.tsx:140
 msgid "Show Diwali event"
 msgstr "Tampilkan Diwali"
 
-#: src/features/settings/ui/settings.tsx:123
+#: src/features/settings/ui/settings.tsx:141
 msgid "Show Earth Day event"
 msgstr "Tampilkan Hari Bumi"
 
-#: src/features/settings/ui/settings.tsx:124
+#: src/features/settings/ui/settings.tsx:142
 msgid "Show Easter event"
 msgstr "Tampilkan Paskah"
 
-#: src/features/settings/ui/settings.tsx:125
+#: src/features/settings/ui/settings.tsx:143
 msgid "Show Eid al-Adha event"
 msgstr "Tampilkan Idul Adha"
 
-#: src/features/settings/ui/settings.tsx:126
+#: src/features/settings/ui/settings.tsx:144
 msgid "Show Eid al-Fitr event"
 msgstr "Tampilkan Idul Fitri"
 
-#: src/features/settings/ui/settings.tsx:128
+#: src/features/settings/ui/settings.tsx:146
 msgid "Show Eta Aquariids meteor shower event"
 msgstr "Tampilkan hujan meteor Eta Aquariid"
 
-#: src/features/settings/ui/settings.tsx:131
+#: src/features/settings/ui/settings.tsx:149
 msgid "Show Event Horizon Day event"
 msgstr "Tampilkan acara Hari Cakrawala Peristiwa"
 
-#: src/features/settings/ui/settings.tsx:78
+#: src/features/settings/ui/settings.tsx:91
 msgid "Show extreme UV alerts"
 msgstr "Tampilkan peringatan UV ekstrem"
 
-#: src/features/settings/ui/settings.tsx:133
+#: src/features/settings/ui/settings.tsx:151
 msgid "Show Geminids meteor shower event"
 msgstr "Tampilkan hujan meteor Geminid"
 
-#: src/features/settings/ui/settings.tsx:134
+#: src/features/settings/ui/settings.tsx:152
 msgid "Show Halloween event"
 msgstr "Tampilkan Halloween"
 
-#: src/features/settings/ui/settings.tsx:135
+#: src/features/settings/ui/settings.tsx:153
 msgid "Show Hanukkah event"
 msgstr "Tampilkan Hanukkah"
 
-#: src/features/settings/ui/settings.tsx:81
+#: src/features/settings/ui/settings.tsx:94
 msgid "Show high precipitation alerts"
 msgstr "Tampilkan peringatan presipitasi tinggi"
 
-#: src/features/settings/ui/settings.tsx:136
+#: src/features/settings/ui/settings.tsx:154
 msgid "Show Holi event"
 msgstr "Tampilkan Holi"
 
-#: src/features/settings/ui/settings.tsx:137
+#: src/features/settings/ui/settings.tsx:155
 msgid "Show Leonids meteor shower event"
 msgstr "Tampilkan hujan meteor Leonid"
 
-#: src/features/settings/ui/settings.tsx:86
+#: src/features/settings/ui/settings.tsx:99
 msgid "Show low visibility alerts"
 msgstr "Tampilkan peringatan visibilitas rendah"
 
-#: src/features/settings/ui/settings.tsx:138
+#: src/features/settings/ui/settings.tsx:156
 msgid "Show Lunar New Year event"
 msgstr "Tampilkan Tahun Baru Imlek"
 
-#: src/features/settings/ui/settings.tsx:139
+#: src/features/settings/ui/settings.tsx:157
 msgid "Show Lyrids meteor shower event"
 msgstr "Tampilkan hujan meteor Lyrid"
 
-#: src/features/settings/ui/settings.tsx:140
+#: src/features/settings/ui/settings.tsx:158
 msgid "Show New Year's Day event"
 msgstr "Tampilkan Tahun Baru"
 
-#: src/features/settings/ui/settings.tsx:141
+#: src/features/settings/ui/settings.tsx:159
 msgid "Show Orionids meteor shower event"
 msgstr "Tampilkan hujan meteor Orionid"
 
-#: src/features/settings/ui/settings.tsx:142
+#: src/features/settings/ui/settings.tsx:160
 msgid "Show Perseids meteor shower event"
 msgstr "Tampilkan hujan meteor Perseid"
 
-#: src/features/settings/ui/settings.tsx:144
+#: src/features/settings/ui/settings.tsx:162
 msgid "Show Quadrantids meteor shower event"
 msgstr "Tampilkan hujan meteor Quadrantid"
 
-#: src/features/settings/ui/settings.tsx:697
+#: src/features/settings/ui/settings.tsx:909
 msgid "Show seasonal events"
 msgstr "Tampilkan acara musiman"
 
-#: src/features/settings/ui/settings.tsx:713
+#: src/features/settings/ui/settings.tsx:925
 msgid "Show seasonal tile glow"
 msgstr "Tampilkan cahaya ubin musiman"
 
-#: src/features/settings/ui/settings.tsx:146
+#: src/features/settings/ui/settings.tsx:164
 msgid "Show Spring Equinox event"
 msgstr "Tampilkan Ekuinoks musim semi"
 
-#: src/features/settings/ui/settings.tsx:83
+#: src/features/settings/ui/settings.tsx:96
 msgid "Show strong wind alerts"
 msgstr "Tampilkan peringatan angin kencang"
 
-#: src/features/settings/ui/settings.tsx:147
+#: src/features/settings/ui/settings.tsx:165
 msgid "Show Summer Solstice event"
 msgstr "Tampilkan Solstis musim panas"
 
@@ -1629,31 +1597,27 @@ msgstr "Tampilkan Solstis musim panas"
 msgid "Show this event"
 msgstr "Tampilkan acara ini"
 
-#: src/features/settings/ui/settings.tsx:149
+#: src/features/settings/ui/settings.tsx:167
 msgid "Show total lunar eclipse event"
 msgstr "Tampilkan gerhana bulan total"
 
-#: src/features/settings/ui/settings.tsx:152
+#: src/features/settings/ui/settings.tsx:170
 msgid "Show total solar eclipse event"
 msgstr "Tampilkan gerhana matahari total"
 
-#: src/features/settings/ui/settings.tsx:155
+#: src/features/settings/ui/settings.tsx:173
 msgid "Show Valentine's Day event"
 msgstr "Tampilkan Hari Valentine"
 
-#: src/features/settings/ui/settings.tsx:659
+#: src/features/settings/ui/settings.tsx:871
 msgid "Show weather alerts"
 msgstr "Tampilkan peringatan cuaca"
 
-#: src/features/settings/ui/settings.tsx:157
+#: src/features/settings/ui/settings.tsx:175
 msgid "Show Winter Solstice event"
 msgstr "Tampilkan Solstis musim dingin"
 
-#: src/features/weather/ui/weather-alert.tsx:197
-#~ msgid "Showing a reduced saved forecast because the latest data couldn't be fetched."
-#~ msgstr "Prakiraan tersimpan yang diperkecil ditampilkan karena data terbaru tidak dapat diambil."
-
-#: src/pages/index.tsx:94
+#: src/pages/index.tsx:98
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Menampilkan data cuaca yang tersimpan di cache. Coba lagi untuk memperbarui prakiraan terbaru."
 
@@ -1690,7 +1654,15 @@ msgstr "Gerhana Matahari telah dicatat selama ribuan tahun, menginspirasi kekagu
 msgid "Some appear white, others yellow or blue-green. The colour depends on the mineral composition of each grain of dust as it burns up."
 msgstr "Beberapa tampak putih, yang lain kuning atau hijau kebiruan. Warnanya bergantung pada komposisi mineral setiap butiran debu saat terbakar."
 
-#: src/features/settings/ui/settings.tsx:182
+#: src/features/settings/ui/settings.tsx:608
+msgid "Some calendar events couldn't be loaded. Please try again in a moment."
+msgstr ""
+
+#: src/features/settings/ui/settings.tsx:552
+msgid "Spoof upcoming calendar events"
+msgstr ""
+
+#: src/features/settings/ui/settings.tsx:200
 #: src/features/weather/ui/tile.tsx:192
 msgid "Spring Equinox"
 msgstr "Ekuinoks musim semi"
@@ -1723,12 +1695,12 @@ msgstr "Hembusan angin kencang dimulai dalam 1 jam"
 msgid "Submit"
 msgstr "Kirim"
 
-#: src/features/settings/ui/settings.tsx:183
+#: src/features/settings/ui/settings.tsx:201
 #: src/features/weather/ui/tile.tsx:193
 msgid "Summer Solstice"
 msgstr "Solstis musim panas"
 
-#: src/pages/index.tsx:633
+#: src/pages/index.tsx:660
 msgid "sun"
 msgstr "matahari"
 
@@ -1764,12 +1736,12 @@ msgstr "Simbol dan ritual"
 msgid "Symbols of luck"
 msgstr "Simbol keberuntungan"
 
-#: src/pages/index.tsx:634
+#: src/pages/index.tsx:661
 msgid "temperature"
 msgstr "suhu"
 
 #: src/features/settings/ui/initialisation.tsx:245
-#: src/features/settings/ui/settings.tsx:541
+#: src/features/settings/ui/settings.tsx:580
 #: src/features/weather/ui/next-24-hours-tile.tsx:368
 #: src/features/weather/ui/next-24-hours-tile.tsx:384
 msgid "Temperature"
@@ -2080,6 +2052,10 @@ msgstr "Mereka biasanya merupakan hujan meteor yang lembut yang menghargai penga
 msgid "They peak in early May and are especially well seen from the southern hemisphere, though northern skies still catch their share of streaks."
 msgstr "Mereka memuncak pada awal Mei dan paling baik terlihat dari belahan bumi selatan, meski langit utara tetap kebagian garis-garisnya."
 
+#: src/features/settings/ui/settings.tsx:665
+msgid "This account's sign-in expired. Please reconnect it."
+msgstr ""
+
 #: src/features/seasonal-events/events/quadrantids.tsx:121
 msgid "This makes the period of strongest activity short, but it can be especially spectacular."
 msgstr "Ini membuat periode aktivitas terkuat menjadi singkat, tetapi bisa sangat spektakuler."
@@ -2116,13 +2092,13 @@ msgstr "badai petir dengan hujan es ringan"
 msgid "Thursday"
 msgstr "Kamis"
 
-#: src/features/settings/ui/initialisation.tsx:200
-#~ msgid "To get started, let's set your language and location."
-#~ msgstr "Untuk memulai, mari atur bahasa dan lokasi Anda."
-
 #: src/features/settings/ui/initialisation.tsx:223
 msgid "To get started, let's set your language, units, and location."
 msgstr "Untuk memulai, mari atur bahasa, satuan, dan lokasi Anda."
+
+#: src/features/integrations/ui/upcoming-events.tsx:190
+msgid "Today • {dateLabel}"
+msgstr ""
 
 #: src/features/seasonal-events/events/christmas.tsx:110
 msgid "Today, an estimated 350 million real Christmas trees are grown across Europe alone, most of them farmed specifically for the season."
@@ -2132,7 +2108,11 @@ msgstr "Saat ini, diperkirakan 350 juta pohon Natal nyata ditanam di seluruh Ero
 msgid "Today, many people travel great distances to stand within the path of totality."
 msgstr "Saat ini, banyak orang menempuh perjalanan jauh untuk berdiri di dalam jalur totalitas."
 
-#: src/features/settings/ui/settings.tsx:184
+#: src/features/integrations/ui/upcoming-events.tsx:194
+msgid "Tomorrow • {dateLabel}"
+msgstr ""
+
+#: src/features/settings/ui/settings.tsx:202
 msgid "Total lunar eclipse"
 msgstr "Gerhana Bulan Total"
 
@@ -2145,11 +2125,7 @@ msgstr "Gerhana Bulan Total"
 msgid "Total precipitation"
 msgstr "Total curah hujan"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:242
-#~ msgid "Total rain"
-#~ msgstr "Total hujan"
-
-#: src/features/settings/ui/settings.tsx:185
+#: src/features/settings/ui/settings.tsx:203
 msgid "Total solar eclipse"
 msgstr "Gerhana Matahari Total"
 
@@ -2181,13 +2157,9 @@ msgstr "Sel {hour}"
 msgid "Tuesday"
 msgstr "Selasa"
 
-#: src/features/settings/ui/settings.tsx:648
+#: src/features/settings/ui/settings.tsx:860
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Aktifkan ini jika indeks UV yang dilaporkan Weather Please secara konsisten lebih rendah daripada sumber lokal."
-
-#: src/pages/index.tsx:428
-#~ msgid "Unable to fetch weather data. Please check your internet connection and try again."
-#~ msgstr "Tidak dapat mengambil data cuaca. Periksa koneksi internet Anda dan coba lagi."
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:2652
 msgid "Unavailable"
@@ -2214,20 +2186,19 @@ msgstr "Tidak seperti gerhana matahari, gerhana bulan tidak memerlukan peralatan
 msgid "Unlike most meteor showers, the Geminids originate from the asteroid 3200 Phaethon rather than a comet."
 msgstr "Tidak seperti kebanyakan hujan meteor, Geminid berasal dari asteroid 3200 Phaethon, bukan dari komet."
 
-#: src/features/settings/ui/settings.tsx:645
+#: src/features/integrations/ui/upcoming-events.tsx:112
+msgid "Untitled event"
+msgstr ""
+
+#: src/features/settings/ui/settings.tsx:857
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "Gunakan Model Kimia Global (CAMS)"
-
-#: src/features/settings/ui/initialisation.tsx:223
-#: src/features/settings/ui/settings.tsx:402
-#~ msgid "Use metric number format"
-#~ msgstr "Gunakan format nomor metrik"
 
 #: src/features/weather/ui/next-24-hours-tile.tsx:601
 msgid "UV"
 msgstr "UV"
 
-#: src/features/settings/ui/settings.tsx:186
+#: src/features/settings/ui/settings.tsx:204
 #: src/features/weather/ui/tile.tsx:196
 msgid "Valentine's Day"
 msgstr "Hari Valentine"
@@ -2260,39 +2231,43 @@ msgstr "Menunggu data peta"
 msgid "Ways to observe"
 msgstr "Cara mengamati"
 
+#: src/features/settings/ui/settings.tsx:603
+msgid "We couldn't connect to your Microsoft account. Please try again."
+msgstr ""
+
 #: src/features/settings/ui/initialisation.tsx:162
 msgid "We couldn't reach the location service right now - this isn't an issue with your device. Please try again in a moment."
 msgstr "Kami tidak dapat menjangkau layanan lokasi saat ini. Ini bukan masalah pada perangkat Anda. Silakan coba lagi sebentar lagi."
 
-#: src/pages/index.tsx:135
+#: src/pages/index.tsx:139
 msgid "We couldn't reach the weather service. Please check your internet connection and try again."
 msgstr "Layanan cuaca tidak dapat dijangkau. Periksa koneksi internet Anda dan coba lagi."
 
-#: src/features/settings/ui/settings.tsx:99
+#: src/features/settings/ui/settings.tsx:112
 msgid "Weather"
 msgstr "Cuaca"
 
-#: src/features/settings/ui/settings.tsx:251
+#: src/features/settings/ui/settings.tsx:269
 msgid "Weather data by Open-Meteo"
 msgstr "Data cuaca oleh Open-Meteo"
 
-#: src/pages/index.tsx:126
+#: src/pages/index.tsx:130
 msgid "Weather data couldn't be loaded because the weather service could not be reached. This usually isn't a problem with your device. Please try again in a moment."
 msgstr "Data cuaca tidak dapat dimuat karena layanan cuaca tidak dapat dijangkau. Ini biasanya bukan masalah pada perangkat Anda. Coba lagi sebentar."
 
-#: src/pages/index.tsx:107
+#: src/pages/index.tsx:111
 msgid "Weather data couldn't be loaded because the weather service is having trouble. This isn't a problem with your device. Please try again in a moment."
 msgstr "Data cuaca tidak dapat dimuat karena layanan cuaca sedang mengalami masalah. Ini bukan masalah pada perangkat Anda. Coba lagi sebentar."
 
-#: src/pages/index.tsx:86
+#: src/pages/index.tsx:90
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "Data cuaca tidak dapat dimuat karena masalah layanan — menampilkan data yang tersimpan. Silakan coba lagi sebentar lagi."
 
-#: src/pages/index.tsx:117
+#: src/pages/index.tsx:121
 msgid "Weather data couldn't be loaded for this location. Please check your location settings and try again."
 msgstr "Data cuaca tidak dapat dimuat untuk lokasi ini. Periksa pengaturan lokasi Anda dan coba lagi."
 
-#: src/features/settings/ui/settings.tsx:790
+#: src/features/settings/ui/settings.tsx:1002
 msgid "Weather Please uses the following third-party data sources and location services."
 msgstr "Weather Please menggunakan sumber data pihak ketiga dan layanan lokasi berikut."
 
@@ -2303,10 +2278,6 @@ msgstr "Rab {hour}"
 #: src/features/weather/ui/tile.tsx:119
 msgid "Wednesday"
 msgstr "Rabu"
-
-#: src/features/weather/ui/next-24-hours-tile.tsx:257
-#~ msgid "Wettest hour"
-#~ msgstr "Jam paling basah"
 
 #: src/features/seasonal-events/events/total-solar-eclipse.tsx:64
 msgid "What it feels like"
@@ -2348,7 +2319,7 @@ msgstr "Mengapa berubah merah"
 msgid "Why the peak is brief"
 msgstr "Mengapa puncaknya singkat"
 
-#: src/pages/index.tsx:635
+#: src/pages/index.tsx:662
 msgid "wind"
 msgstr "angin"
 
@@ -2362,7 +2333,7 @@ msgstr "Angin"
 msgid "Wind is making it feel cooler than the measured temperature right now."
 msgstr "Angin membuat suhu terasa lebih dingin dari suhu yang terukur saat ini."
 
-#: src/features/settings/ui/settings.tsx:187
+#: src/features/settings/ui/settings.tsx:205
 #: src/features/weather/ui/tile.tsx:197
 msgid "Winter Solstice"
 msgstr "Solstis musim dingin"
@@ -2370,6 +2341,10 @@ msgstr "Solstis musim dingin"
 #: src/features/seasonal-events/events/holi.tsx:251
 msgid "Within minutes of stepping outside, everyone looks the same — drenched head to toe in colour, impossible to tell apart."
 msgstr "Dalam hitungan menit setelah keluar, semua orang terlihat sama — dibasahi warna dari kepala hingga kaki, mustahil untuk dibedakan."
+
+#: src/features/settings/ui/settings.tsx:621
+msgid "Work"
+msgstr ""
 
 #: src/features/settings/ui/review-prompt.tsx:36
 msgid "Would you like to leave a review?"

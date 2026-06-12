@@ -4,7 +4,9 @@ import { SeasonalEventId } from '../../seasonal-events/core/types'
 
 enum BooleanSettingCategory {
 	Alerts = 'alerts',
+	Developer = 'developer',
 	General = 'general',
+	Integrations = 'integrations',
 	Internal = 'internal',
 	Seasonal = 'seasonal',
 	SeasonalEvent = 'seasonal-event',
@@ -33,6 +35,16 @@ export const BOOLEAN_SETTINGS = [
 		category: BooleanSettingCategory.General,
 		defaultValue: true,
 		key: 'showAlerts',
+	},
+	{
+		category: BooleanSettingCategory.Integrations,
+		defaultValue: true,
+		key: 'showCalendarEvents',
+	},
+	{
+		category: BooleanSettingCategory.Developer,
+		defaultValue: false,
+		key: 'spoofCalendarEvents',
 	},
 	{
 		category: BooleanSettingCategory.Alerts,
