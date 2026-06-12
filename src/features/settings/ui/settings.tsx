@@ -38,6 +38,7 @@ import {
 	CALENDAR_ACCOUNT_CATEGORY_STYLES,
 	CalendarAccountCategory,
 } from '../../integrations/model/account-category'
+import { CalendarProvider } from '../../integrations/model/calendar-provider'
 import {
 	SEASONAL_EVENT_OVERRIDE_NONE,
 	SeasonalEventId,
@@ -316,16 +317,24 @@ const getVisibleSettingsSections = ({
 		? SETTINGS_SECTIONS
 		: SETTINGS_SECTIONS.filter((section) => section.id !== 'developer')
 
+export type IntegrationsPromo = {
+	onIntegrationsViewed: () => void
+	onSettingsOpened: () => void
+	shouldHighlightIntegrations: boolean
+}
+
 interface SettingsProps {
 	calendarConnection: CalendarConnection
 	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
 	input: Config
+	integrationsPromo: IntegrationsPromo
 }
 
 export const Settings = ({
 	calendarConnection,
 	handleChange,
 	input,
+	integrationsPromo,
 }: Readonly<SettingsProps>) => {
 	const [activeSection, setActiveSection] =
 		useState<SettingsSectionId>('general')
@@ -370,6 +379,7 @@ export const Settings = ({
 				onClick={() => {
 					setActiveSection('general')
 					setIsOpen(true)
+					integrationsPromo.onSettingsOpened()
 				}}
 			>
 				<Trans>Settings</Trans>
@@ -408,11 +418,24 @@ export const Settings = ({
 											key={section.id}
 											onClick={() => {
 												setActiveSection(section.id)
+												if (section.id === 'integrations') {
+													integrationsPromo.onIntegrationsViewed()
+												}
 											}}
 											type="button"
 										>
 											<span className="shrink-0">{section.icon}</span>
 											<span className="min-w-0">{section.title}</span>
+											{section.id === 'integrations' &&
+											integrationsPromo.shouldHighlightIntegrations ? (
+												<span
+													aria-hidden
+													className="relative ml-auto flex size-2 shrink-0"
+												>
+													<span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
+													<span className="relative inline-flex size-2 rounded-full bg-blue-400" />
+												</span>
+											) : null}
 										</button>
 									))}
 								</nav>
@@ -612,6 +635,12 @@ const CALENDAR_CONNECTION_ERROR_MESSAGES = {
 	),
 } as const satisfies Record<CalendarConnectionError, ReactNode>
 
+// Brand names are intentionally untranslated.
+const CALENDAR_PROVIDER_LABELS = {
+	[CalendarProvider.Google]: 'Google Calendar',
+	[CalendarProvider.Microsoft]: 'Microsoft Outlook',
+} as const satisfies Record<CalendarProvider, string>
+
 const CALENDAR_ACCOUNT_CATEGORY_LABELS = {
 	[CalendarAccountCategory.Family]: <Trans>Family</Trans>,
 	[CalendarAccountCategory.Finance]: <Trans>Finance</Trans>,
@@ -646,9 +675,11 @@ const CalendarAccountCard = ({
 				/>
 				<div className="min-w-0">
 					<p className="truncate text-sm text-white">
-						{account.accountLabel ?? <Trans>Microsoft account</Trans>}
+						{account.accountLabel ?? <Trans>Connected account</Trans>}
 					</p>
-					<p className="text-xs text-dark-200">Microsoft Outlook</p>
+					<p className="text-xs text-dark-200">
+						{CALENDAR_PROVIDER_LABELS[account.provider]}
+					</p>
 				</div>
 			</div>
 			<Button
@@ -670,7 +701,7 @@ const CalendarAccountCard = ({
 						className="ml-auto"
 						disabled={calendarConnection.isConnecting}
 						onClick={() => {
-							void calendarConnection.connect()
+							void calendarConnection.connect(account.provider)
 						}}
 					>
 						<Trans>Reconnect</Trans>
@@ -719,13 +750,13 @@ const IntegrationsSettingsSection = ({
 			}
 			title={<Trans>Calendar</Trans>}
 		>
-			{!calendarConnection.isConfigured ? (
+			{calendarConnection.configuredProviders.length === 0 ? (
 				<Alert icon={IconInfoCircle} variant={AlertVariant.LightBlue}>
 					<Trans>
 						Calendar connections aren&apos;t available in this build.
 					</Trans>
 				</Alert>
-			) : calendarConnection.accounts.length > 0 ? (
+			) : (
 				<>
 					{calendarConnection.accounts.map((account) => (
 						<CalendarAccountCard
@@ -734,33 +765,39 @@ const IntegrationsSettingsSection = ({
 							key={account.accountId}
 						/>
 					))}
-					<Button
-						disabled={calendarConnection.isConnecting}
-						onClick={() => {
-							void calendarConnection.connect()
-						}}
-					>
-						<Trans>Add account</Trans>
-					</Button>
-					<Switch
-						checked={input.showCalendarEvents}
-						label={<Trans>Show calendar events</Trans>}
-						layout={SETTINGS_FIELD_LAYOUT}
-						onChange={(checked) => handleChange('showCalendarEvents', checked)}
-					/>
+					{calendarConnection.configuredProviders.map((provider) => (
+						<div
+							className="flex items-center justify-between gap-3"
+							key={provider}
+						>
+							<p className="text-sm text-white">
+								{CALENDAR_PROVIDER_LABELS[provider]}
+							</p>
+							<Button
+								disabled={calendarConnection.isConnecting}
+								onClick={() => {
+									void calendarConnection.connect(provider)
+								}}
+							>
+								{calendarConnection.accounts.length > 0 ? (
+									<Trans>Add account</Trans>
+								) : (
+									<Trans>Connect</Trans>
+								)}
+							</Button>
+						</div>
+					))}
+					{calendarConnection.accounts.length > 0 ? (
+						<Switch
+							checked={input.showCalendarEvents}
+							label={<Trans>Show calendar events</Trans>}
+							layout={SETTINGS_FIELD_LAYOUT}
+							onChange={(checked) =>
+								handleChange('showCalendarEvents', checked)
+							}
+						/>
+					) : null}
 				</>
-			) : (
-				<div className="flex items-center justify-between gap-3">
-					<p className="text-sm text-white">Microsoft Outlook</p>
-					<Button
-						disabled={calendarConnection.isConnecting}
-						onClick={() => {
-							void calendarConnection.connect()
-						}}
-					>
-						<Trans>Connect</Trans>
-					</Button>
-				</div>
 			)}
 			{calendarConnection.error ? (
 				<Alert icon={IconAlertTriangle} variant={AlertVariant.InfoRed}>

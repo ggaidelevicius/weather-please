@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { MicrosoftReauthRequiredError } from '../microsoft-auth'
+import { CalendarReauthRequiredError } from '../calendar-reauth-error'
 import { fetchUpcomingCalendarEvents } from '../microsoft-calendar'
 
 const stubGraphResponse = (body: unknown, status = 200) => {
@@ -104,7 +104,7 @@ describe('fetchUpcomingCalendarEvents', () => {
 				accountId: 'account-1',
 				timeZone: 'Australia/Melbourne',
 			}),
-		).rejects.toBeInstanceOf(MicrosoftReauthRequiredError)
+		).rejects.toBeInstanceOf(CalendarReauthRequiredError)
 	})
 
 	it('throws on a malformed calendar response', async () => {

@@ -1,6 +1,6 @@
 import { i18n } from '@lingui/core'
 import { Trans } from '@lingui/react/macro'
-import { IconAlertTriangle } from '@tabler/icons-react'
+import { IconAlertTriangle, IconX } from '@tabler/icons-react'
 import {
 	AnimatePresence,
 	motion,
@@ -20,6 +20,12 @@ import {
 import { z } from 'zod'
 
 import { useCalendarConnection } from '../features/integrations/hooks/use-calendar-connection'
+import {
+	getHasDismissedCalendarPromo,
+	getHasSeenIntegrationsTab,
+	persistCalendarPromoDismissed,
+	persistIntegrationsTabSeen,
+} from '../features/integrations/lib/promo-state'
 import { createSpoofedCalendarData } from '../features/integrations/model/spoofed-calendar'
 import { UpcomingEvents } from '../features/integrations/ui/upcoming-events'
 import { IdentifiedLocationIndicator } from '../features/location/ui/identified-location-indicator'
@@ -182,6 +188,12 @@ const App = () => {
 	const calendarEvents = shouldSpoofCalendarEvents
 		? spoofedCalendarData.events
 		: calendarConnection.events
+	const [hasDismissedCalendarPromo, setHasDismissedCalendarPromo] = useState(
+		getHasDismissedCalendarPromo,
+	)
+	const [hasSeenIntegrationsTab, setHasSeenIntegrationsTab] = useState(
+		getHasSeenIntegrationsTab,
+	)
 	const {
 		alertData,
 		degradedForecast,
@@ -243,6 +255,36 @@ const App = () => {
 	})
 
 	const hasCachedData = hasCachedWeather()
+
+	const dismissCalendarPromo = () => {
+		setHasDismissedCalendarPromo(true)
+		persistCalendarPromoDismissed()
+	}
+
+	const handleSettingsOpened = () => {
+		if (!hasDismissedCalendarPromo) {
+			dismissCalendarPromo()
+		}
+	}
+
+	const handleIntegrationsViewed = () => {
+		if (!hasSeenIntegrationsTab) {
+			setHasSeenIntegrationsTab(true)
+			persistIntegrationsTabSeen()
+		}
+	}
+
+	// Only nudge users who can actually act on it: providers configured and
+	// no calendar connected yet.
+	const canPromoteCalendarConnections =
+		calendarConnection.configuredProviders.length > 0 &&
+		calendarConnection.accounts.length === 0 &&
+		!hasSeenIntegrationsTab
+	const shouldShowCalendarPromoPill =
+		isHydrated &&
+		isOnboarded &&
+		canPromoteCalendarConnections &&
+		!hasDismissedCalendarPromo
 
 	const isSeasonalEventEnabled = (eventId: SeasonalEventId) =>
 		input[SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId]]
@@ -631,7 +673,36 @@ const App = () => {
 				calendarConnection={calendarConnection}
 				handleChange={handleChange}
 				input={input}
+				integrationsPromo={{
+					onIntegrationsViewed: handleIntegrationsViewed,
+					onSettingsOpened: handleSettingsOpened,
+					shouldHighlightIntegrations: canPromoteCalendarConnections,
+				}}
 			/>
+
+			<AnimatePresence>
+				{shouldShowCalendarPromoPill ? (
+					<motion.div
+						animate={{ opacity: 1, y: 0 }}
+						className="fixed right-4 bottom-16 z-2 flex items-center gap-1.5 rounded-full border border-white/10 bg-dark-950/78 py-1.5 pr-1.5 pl-3.5 text-xs font-semibold text-white shadow-sm backdrop-blur-md"
+						exit={{ opacity: 0, y: 8 }}
+						initial={{ opacity: 0, y: 8 }}
+						transition={{ duration: 0.22 }}
+					>
+						<Trans>✨ NEW: Connect your Google or Microsoft calendar</Trans>
+						<button
+							className="cursor-pointer rounded-full p-1 text-dark-100 transition hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-blue-500"
+							onClick={dismissCalendarPromo}
+							type="button"
+						>
+							<IconX aria-hidden size={14} />
+							<span className="sr-only">
+								<Trans>Dismiss</Trans>
+							</span>
+						</button>
+					</motion.div>
+				) : null}
+			</AnimatePresence>
 		</>
 	)
 }

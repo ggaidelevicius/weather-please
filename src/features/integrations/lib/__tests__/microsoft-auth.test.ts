@@ -1,13 +1,13 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import { CalendarReauthRequiredError } from '../calendar-reauth-error'
 import {
 	buildMicrosoftAuthorizeUrl,
 	exchangeMicrosoftAuthorizationCode,
 	isMicrosoftAuthConfigured,
-	MicrosoftReauthRequiredError,
-	parseAuthCallbackCode,
 	refreshMicrosoftTokens,
 } from '../microsoft-auth'
+import { parseAuthCallbackCode } from '../oauth-callback'
 
 const CLIENT_ID = '11111111-2222-3333-4444-555555555555'
 const REDIRECT_URI = 'https://abcdefgh.chromiumapp.org/'
@@ -184,7 +184,7 @@ describe('refreshMicrosoftTokens', () => {
 			refreshMicrosoftTokens({
 				previousTokens: { ...previousTokens, refreshToken: null },
 			}),
-		).rejects.toBeInstanceOf(MicrosoftReauthRequiredError)
+		).rejects.toBeInstanceOf(CalendarReauthRequiredError)
 	})
 
 	it('requires reauthorisation when the refresh token is rejected', async () => {
@@ -192,6 +192,6 @@ describe('refreshMicrosoftTokens', () => {
 
 		await expect(
 			refreshMicrosoftTokens({ previousTokens }),
-		).rejects.toBeInstanceOf(MicrosoftReauthRequiredError)
+		).rejects.toBeInstanceOf(CalendarReauthRequiredError)
 	})
 })

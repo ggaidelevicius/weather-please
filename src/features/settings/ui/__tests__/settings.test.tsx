@@ -8,9 +8,11 @@ import type {
 	CalendarConnection,
 } from '../../../integrations/hooks/use-calendar-connection'
 import type { Config } from '../../hooks/use-config'
+import type { IntegrationsPromo } from '../settings'
 
 import { AsyncStatus } from '../../../../shared/hooks/async-status'
 import { CalendarAccountCategory } from '../../../integrations/model/account-category'
+import { CalendarProvider } from '../../../integrations/model/calendar-provider'
 import {
 	SEASONAL_EVENT_OVERRIDE_NONE,
 	SeasonalEventId,
@@ -27,15 +29,18 @@ vi.mock('@lingui/react/macro', () => ({
 const renderSettings = ({
 	calendarConnection = createCalendarConnection(),
 	handleChange = vi.fn(),
+	integrationsPromo = createIntegrationsPromo(),
 }: {
 	calendarConnection?: CalendarConnection
 	handleChange?: (k: keyof Config, v: Config[keyof Config]) => void
+	integrationsPromo?: IntegrationsPromo
 } = {}) =>
 	render(
 		<Settings
 			calendarConnection={calendarConnection}
 			handleChange={handleChange}
 			input={createConfig()}
+			integrationsPromo={integrationsPromo}
 		/>,
 	)
 
@@ -103,35 +108,12 @@ describe('Settings modal navigation', () => {
 		)
 	})
 
-	it('offers a Microsoft Outlook connect button in the integrations section', () => {
-		const calendarConnection = createCalendarConnection({ isConfigured: true })
-
-		renderSettings({ calendarConnection })
-
-		fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
-		fireEvent.click(screen.getByRole('button', { name: 'Integrations' }))
-
-		expect(screen.getByText('Microsoft Outlook')).toBeInTheDocument()
-
-		fireEvent.click(screen.getByRole('button', { name: 'Connect' }))
-
-		expect(calendarConnection.connect).toHaveBeenCalled()
-	})
-
-	it('lists connected accounts with per-account category and disconnect controls', () => {
+	it('offers a connect button per configured provider in the integrations section', () => {
 		const calendarConnection = createCalendarConnection({
-			accounts: [
-				createCalendarAccount({
-					accountId: 'personal-account',
-					accountLabel: 'gus@example.com',
-				}),
-				createCalendarAccount({
-					accountId: 'work-account',
-					accountLabel: 'gus@work.example',
-					category: CalendarAccountCategory.Work,
-				}),
+			configuredProviders: [
+				CalendarProvider.Google,
+				CalendarProvider.Microsoft,
 			],
-			isConfigured: true,
 		})
 
 		renderSettings({ calendarConnection })
@@ -139,8 +121,41 @@ describe('Settings modal navigation', () => {
 		fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
 		fireEvent.click(screen.getByRole('button', { name: 'Integrations' }))
 
-		expect(screen.getByText('gus@example.com')).toBeInTheDocument()
+		expect(screen.getByText('Google Calendar')).toBeInTheDocument()
+		expect(screen.getByText('Microsoft Outlook')).toBeInTheDocument()
+
+		fireEvent.click(screen.getAllByRole('button', { name: 'Connect' })[0]!)
+
+		expect(calendarConnection.connect).toHaveBeenCalledWith(
+			CalendarProvider.Google,
+		)
+	})
+
+	it('lists connected accounts with per-account category and disconnect controls', () => {
+		const calendarConnection = createCalendarConnection({
+			accounts: [
+				createCalendarAccount({
+					accountId: 'personal-account',
+					accountLabel: 'gus@gmail.com',
+					provider: CalendarProvider.Google,
+				}),
+				createCalendarAccount({
+					accountId: 'work-account',
+					accountLabel: 'gus@work.example',
+					category: CalendarAccountCategory.Work,
+				}),
+			],
+			configuredProviders: [CalendarProvider.Microsoft],
+		})
+
+		renderSettings({ calendarConnection })
+
+		fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
+		fireEvent.click(screen.getByRole('button', { name: 'Integrations' }))
+
+		expect(screen.getByText('gus@gmail.com')).toBeInTheDocument()
 		expect(screen.getByText('gus@work.example')).toBeInTheDocument()
+		expect(screen.getByText('Google Calendar')).toBeInTheDocument()
 		expect(
 			screen.getByRole('button', { name: 'Add account' }),
 		).toBeInTheDocument()
@@ -164,11 +179,12 @@ describe('Settings modal navigation', () => {
 		const calendarConnection = createCalendarConnection({
 			accounts: [
 				createCalendarAccount({
-					accountLabel: 'gus@example.com',
+					accountLabel: 'gus@gmail.com',
 					isSessionExpired: true,
+					provider: CalendarProvider.Google,
 				}),
 			],
-			isConfigured: true,
+			configuredProviders: [CalendarProvider.Google],
 		})
 
 		renderSettings({ calendarConnection })
@@ -178,7 +194,26 @@ describe('Settings modal navigation', () => {
 
 		fireEvent.click(screen.getByRole('button', { name: 'Reconnect' }))
 
-		expect(calendarConnection.connect).toHaveBeenCalled()
+		expect(calendarConnection.connect).toHaveBeenCalledWith(
+			CalendarProvider.Google,
+		)
+	})
+
+	it('reports settings opening and integrations views for the calendar promo', () => {
+		const integrationsPromo = createIntegrationsPromo({
+			shouldHighlightIntegrations: true,
+		})
+
+		renderSettings({ integrationsPromo })
+
+		fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
+
+		expect(integrationsPromo.onSettingsOpened).toHaveBeenCalled()
+		expect(integrationsPromo.onIntegrationsViewed).not.toHaveBeenCalled()
+
+		fireEvent.click(screen.getByRole('button', { name: 'Integrations' }))
+
+		expect(integrationsPromo.onIntegrationsViewed).toHaveBeenCalled()
 	})
 
 	it('shows the CAMS explainer in a help popover', () => {
@@ -210,6 +245,16 @@ const createCalendarAccount = (
 	accountLabel: 'gus@example.com',
 	category: CalendarAccountCategory.Personal,
 	isSessionExpired: false,
+	provider: CalendarProvider.Microsoft,
+	...overrides,
+})
+
+const createIntegrationsPromo = (
+	overrides: Partial<IntegrationsPromo> = {},
+): IntegrationsPromo => ({
+	onIntegrationsViewed: vi.fn(),
+	onSettingsOpened: vi.fn(),
+	shouldHighlightIntegrations: false,
 	...overrides,
 })
 
@@ -217,12 +262,12 @@ const createCalendarConnection = (
 	overrides: Partial<CalendarConnection> = {},
 ): CalendarConnection => ({
 	accounts: [],
+	configuredProviders: [],
 	connect: vi.fn(async () => {}),
 	disconnect: vi.fn(),
 	error: null,
 	events: [],
 	eventsStatus: AsyncStatus.Idle,
-	isConfigured: false,
 	isConnecting: false,
 	retryEvents: vi.fn(),
 	setAccountCategory: vi.fn(),

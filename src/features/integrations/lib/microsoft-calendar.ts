@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import type { CalendarEvent } from '../model/calendar-event'
 
-import { MicrosoftReauthRequiredError } from './microsoft-auth'
+import { CalendarReauthRequiredError } from './calendar-reauth-error'
 
 export const UPCOMING_EVENTS_WINDOW_HOURS = 48
 
@@ -39,7 +39,7 @@ export const fetchUpcomingCalendarEvents = async ({
 	)
 
 	if (response.status === 401) {
-		throw new MicrosoftReauthRequiredError()
+		throw new CalendarReauthRequiredError()
 	}
 
 	if (!response.ok) {

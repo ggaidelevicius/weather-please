@@ -5,17 +5,23 @@ import type { ProviderTokens } from './provider-tokens'
 import { CalendarReauthRequiredError } from './calendar-reauth-error'
 import { decodeJwtPayload } from './jwt'
 
-export const MICROSOFT_AUTH_SCOPES =
-	'openid profile email offline_access Calendars.Read'
+export const GOOGLE_AUTH_SCOPES =
+	'openid email https://www.googleapis.com/auth/calendar.events.readonly'
 
-// The application (client) id is public by design — PKCE keeps the flow
-// secure without a client secret.
-export const getMicrosoftClientId = () =>
-	process.env.NEXT_PUBLIC_MICROSOFT_CLIENT_ID ?? ''
+export const getGoogleClientId = () =>
+	process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ''
 
-export const isMicrosoftAuthConfigured = () => getMicrosoftClientId().length > 0
+// Google requires the client secret on token exchange even for public
+// clients. For installed applications Google treats it as non-confidential —
+// it cannot be kept secret in client-side code and the redirect-uri allowlist
+// is what protects the flow.
+export const getGoogleClientSecret = () =>
+	process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET ?? ''
 
-export const buildMicrosoftAuthorizeUrl = ({
+export const isGoogleAuthConfigured = () =>
+	getGoogleClientId().length > 0 && getGoogleClientSecret().length > 0
+
+export const buildGoogleAuthorizeUrl = ({
 	codeChallenge,
 	redirectUri,
 	state,
@@ -25,21 +31,23 @@ export const buildMicrosoftAuthorizeUrl = ({
 	state: string
 }>) => {
 	const params = new URLSearchParams({
-		client_id: getMicrosoftClientId(),
+		access_type: 'offline',
+		client_id: getGoogleClientId(),
 		code_challenge: codeChallenge,
 		code_challenge_method: 'S256',
-		prompt: 'select_account',
+		// `consent` guarantees a refresh token on every connect, including
+		// reconnects after expiry; Google only issues one on consent.
+		prompt: 'consent select_account',
 		redirect_uri: redirectUri,
-		response_mode: 'query',
 		response_type: 'code',
-		scope: MICROSOFT_AUTH_SCOPES,
+		scope: GOOGLE_AUTH_SCOPES,
 		state,
 	})
 
 	return `${AUTHORIZE_ENDPOINT}?${params.toString()}`
 }
 
-export const exchangeMicrosoftAuthorizationCode = async ({
+export const exchangeGoogleAuthorizationCode = async ({
 	code,
 	codeVerifier,
 	redirectUri,
@@ -48,16 +56,16 @@ export const exchangeMicrosoftAuthorizationCode = async ({
 	codeVerifier: string
 	redirectUri: string
 }>): Promise<ProviderTokens> =>
-	requestMicrosoftTokens({
-		client_id: getMicrosoftClientId(),
+	requestGoogleTokens({
+		client_id: getGoogleClientId(),
+		client_secret: getGoogleClientSecret(),
 		code,
 		code_verifier: codeVerifier,
 		grant_type: 'authorization_code',
 		redirect_uri: redirectUri,
-		scope: MICROSOFT_AUTH_SCOPES,
 	})
 
-export const refreshMicrosoftTokens = async ({
+export const refreshGoogleTokens = async ({
 	previousTokens,
 }: Readonly<{
 	previousTokens: ProviderTokens
@@ -66,11 +74,11 @@ export const refreshMicrosoftTokens = async ({
 		throw new CalendarReauthRequiredError()
 	}
 
-	const refreshedTokens = await requestMicrosoftTokens({
-		client_id: getMicrosoftClientId(),
+	const refreshedTokens = await requestGoogleTokens({
+		client_id: getGoogleClientId(),
+		client_secret: getGoogleClientSecret(),
 		grant_type: 'refresh_token',
 		refresh_token: previousTokens.refreshToken,
-		scope: MICROSOFT_AUTH_SCOPES,
 	})
 
 	return {
@@ -81,10 +89,8 @@ export const refreshMicrosoftTokens = async ({
 	}
 }
 
-const AUTHORIZE_ENDPOINT =
-	'https://login.microsoftonline.com/common/oauth2/v2.0/authorize'
-const TOKEN_ENDPOINT =
-	'https://login.microsoftonline.com/common/oauth2/v2.0/token'
+const AUTHORIZE_ENDPOINT = 'https://accounts.google.com/o/oauth2/v2/auth'
+const TOKEN_ENDPOINT = 'https://oauth2.googleapis.com/token'
 
 const tokenResponseSchema = z.object({
 	access_token: z.string().min(1),
@@ -97,17 +103,14 @@ const tokenErrorSchema = z.object({
 	error: z.string().optional(),
 })
 
-// `tid` + `oid` uniquely identify an account across tenants; `sub` is a
-// stable per-app fallback.
+// `sub` is Google's stable account identifier.
 const idTokenClaimsSchema = z.object({
+	email: z.string().optional(),
 	name: z.string().optional(),
-	oid: z.string().optional(),
-	preferred_username: z.string().optional(),
 	sub: z.string().optional(),
-	tid: z.string().optional(),
 })
 
-const requestMicrosoftTokens = async (
+const requestGoogleTokens = async (
 	body: Record<string, string>,
 ): Promise<ProviderTokens> => {
 	const response = await fetch(TOKEN_ENDPOINT, {
@@ -124,15 +127,15 @@ const requestMicrosoftTokens = async (
 			throw new CalendarReauthRequiredError()
 		}
 
-		throw new Error(`Microsoft token request failed: ${response.status}`)
+		throw new Error(`Google token request failed: ${response.status}`)
 	}
 
 	const parsed = tokenResponseSchema.safeParse(await response.json())
 	if (!parsed.success) {
-		throw new Error('Invalid Microsoft token response')
+		throw new Error('Invalid Google token response')
 	}
 
-	const accountInfo = decodeMicrosoftAccountInfo(parsed.data.id_token)
+	const accountInfo = decodeGoogleAccountInfo(parsed.data.id_token)
 
 	return {
 		accessToken: parsed.data.access_token,
@@ -143,7 +146,7 @@ const requestMicrosoftTokens = async (
 	}
 }
 
-const decodeMicrosoftAccountInfo = (
+const decodeGoogleAccountInfo = (
 	idToken: string | undefined,
 ): { accountId: null | string; accountLabel: null | string } => {
 	const claims = idTokenClaimsSchema.safeParse(
@@ -153,10 +156,8 @@ const decodeMicrosoftAccountInfo = (
 		return { accountId: null, accountLabel: null }
 	}
 
-	const { name, oid, preferred_username, sub, tid } = claims.data
-
 	return {
-		accountId: oid && tid ? `${tid}.${oid}` : (sub ?? null),
-		accountLabel: preferred_username ?? name ?? null,
+		accountId: claims.data.sub ?? null,
+		accountLabel: claims.data.email ?? claims.data.name ?? null,
 	}
 }

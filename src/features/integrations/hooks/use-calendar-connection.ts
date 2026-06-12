@@ -2,7 +2,7 @@ import type { Dispatch, RefObject, SetStateAction } from 'react'
 
 import { useEffect, useRef, useState } from 'react'
 
-import type { MicrosoftTokens } from '../lib/microsoft-auth'
+import type { ProviderTokens } from '../lib/provider-tokens'
 import type { CalendarEvent } from '../model/calendar-event'
 
 import { AsyncStatus } from '../../../shared/hooks/async-status'
@@ -11,6 +11,7 @@ import {
 	hasExtensionAuthSupport,
 	launchExtensionAuthFlow,
 } from '../lib/auth-environment'
+import { CalendarReauthRequiredError } from '../lib/calendar-reauth-error'
 import {
 	clearPendingWebAuth,
 	readPendingWebAuth,
@@ -20,17 +21,27 @@ import {
 	writeStoredCalendarAccounts,
 } from '../lib/connection-storage'
 import {
+	buildGoogleAuthorizeUrl,
+	exchangeGoogleAuthorizationCode,
+	isGoogleAuthConfigured,
+	refreshGoogleTokens,
+} from '../lib/google-auth'
+import { fetchUpcomingGoogleCalendarEvents } from '../lib/google-calendar'
+import {
 	buildMicrosoftAuthorizeUrl,
 	exchangeMicrosoftAuthorizationCode,
 	isMicrosoftAuthConfigured,
-	MicrosoftReauthRequiredError,
-	parseAuthCallbackCode,
 	refreshMicrosoftTokens,
 } from '../lib/microsoft-auth'
 import { fetchUpcomingCalendarEvents } from '../lib/microsoft-calendar'
+import { parseAuthCallbackCode } from '../lib/oauth-callback'
 import { createPkcePair, createRandomState } from '../lib/pkce'
 import { CalendarAccountCategory } from '../model/account-category'
 import { mergeCalendarEvents } from '../model/calendar-event'
+import {
+	CALENDAR_PROVIDERS,
+	CalendarProvider,
+} from '../model/calendar-provider'
 
 export enum CalendarConnectionError {
 	AuthFailed = 'auth-failed',
@@ -42,16 +53,17 @@ export type CalendarAccountSummary = {
 	accountLabel: null | string
 	category: CalendarAccountCategory
 	isSessionExpired: boolean
+	provider: CalendarProvider
 }
 
 export type CalendarConnection = {
 	accounts: CalendarAccountSummary[]
-	connect: () => Promise<void>
+	configuredProviders: CalendarProvider[]
+	connect: (provider: CalendarProvider) => Promise<void>
 	disconnect: (accountId: string) => void
 	error: CalendarConnectionError | null
 	events: CalendarEvent[]
 	eventsStatus: AsyncStatus
-	isConfigured: boolean
 	isConnecting: boolean
 	retryEvents: () => void
 	setAccountCategory: (
@@ -141,12 +153,12 @@ export const useCalendarConnection = (): CalendarConnection => {
 		setIsConnecting,
 	}
 
-	const connect = async () => {
+	const connect = async (provider: CalendarProvider) => {
 		if (isConnecting) {
 			return
 		}
 
-		await startConnect(connectionState)
+		await startConnect(connectionState, provider)
 	}
 
 	const disconnect = (accountId: string) => {
@@ -181,19 +193,22 @@ export const useCalendarConnection = (): CalendarConnection => {
 
 	return {
 		accounts: accounts.map(
-			({ accountId, accountLabel, category, isSessionExpired }) => ({
+			({ accountId, accountLabel, category, isSessionExpired, provider }) => ({
 				accountId,
 				accountLabel,
 				category,
 				isSessionExpired,
+				provider,
 			}),
+		),
+		configuredProviders: CALENDAR_PROVIDERS.filter((provider) =>
+			CALENDAR_PROVIDER_ADAPTERS[provider].isConfigured(),
 		),
 		connect,
 		disconnect,
 		error,
 		events,
 		eventsStatus,
-		isConfigured: isMicrosoftAuthConfigured(),
 		isConnecting,
 		retryEvents,
 		setAccountCategory,
@@ -208,6 +223,48 @@ type AccountLoadResult = {
 	account: StoredCalendarAccount
 	events: CalendarEvent[]
 	status: 'error' | 'reauth' | 'success'
+}
+
+type CalendarProviderAdapter = {
+	buildAuthorizeUrl: (params: {
+		codeChallenge: string
+		redirectUri: string
+		state: string
+	}) => string
+	exchangeAuthorizationCode: (params: {
+		code: string
+		codeVerifier: string
+		redirectUri: string
+	}) => Promise<ProviderTokens>
+	fetchUpcomingEvents: (params: {
+		accessToken: string
+		accountId: string
+		timeZone: string
+	}) => Promise<CalendarEvent[]>
+	isConfigured: () => boolean
+	refreshTokens: (params: {
+		previousTokens: ProviderTokens
+	}) => Promise<ProviderTokens>
+}
+
+const CALENDAR_PROVIDER_ADAPTERS: Record<
+	CalendarProvider,
+	CalendarProviderAdapter
+> = {
+	[CalendarProvider.Google]: {
+		buildAuthorizeUrl: buildGoogleAuthorizeUrl,
+		exchangeAuthorizationCode: exchangeGoogleAuthorizationCode,
+		fetchUpcomingEvents: fetchUpcomingGoogleCalendarEvents,
+		isConfigured: isGoogleAuthConfigured,
+		refreshTokens: refreshGoogleTokens,
+	},
+	[CalendarProvider.Microsoft]: {
+		buildAuthorizeUrl: buildMicrosoftAuthorizeUrl,
+		exchangeAuthorizationCode: exchangeMicrosoftAuthorizationCode,
+		fetchUpcomingEvents: fetchUpcomingCalendarEvents,
+		isConfigured: isMicrosoftAuthConfigured,
+		refreshTokens: refreshMicrosoftTokens,
+	},
 }
 
 type ConnectionState = {
@@ -286,9 +343,11 @@ const loadAccountEvents = async ({
 	account: StoredCalendarAccount
 	timeZone: string
 }>): Promise<AccountLoadResult> => {
+	const adapter = CALENDAR_PROVIDER_ADAPTERS[account.provider]
+
 	try {
 		const freshAccount = await ensureFreshAccount(account)
-		const events = await fetchUpcomingCalendarEvents({
+		const events = await adapter.fetchUpcomingEvents({
 			accessToken: freshAccount.accessToken,
 			accountId: freshAccount.accountId,
 			timeZone,
@@ -296,7 +355,7 @@ const loadAccountEvents = async ({
 
 		return { account: freshAccount, events, status: 'success' }
 	} catch (caughtError) {
-		if (caughtError instanceof MicrosoftReauthRequiredError) {
+		if (caughtError instanceof CalendarReauthRequiredError) {
 			return {
 				account: { ...account, isSessionExpired: true },
 				events: [],
@@ -309,8 +368,12 @@ const loadAccountEvents = async ({
 	}
 }
 
-const startConnect = async (connectionState: ConnectionState) => {
-	if (!isMicrosoftAuthConfigured()) {
+const startConnect = async (
+	connectionState: ConnectionState,
+	provider: CalendarProvider,
+) => {
+	const adapter = CALENDAR_PROVIDER_ADAPTERS[provider]
+	if (!adapter.isConfigured()) {
 		return
 	}
 
@@ -320,16 +383,17 @@ const startConnect = async (connectionState: ConnectionState) => {
 		const { codeChallenge, codeVerifier } = await createPkcePair()
 		const state = createRandomState()
 		const redirectUri = getAuthRedirectUri()
-		const authorizeUrl = buildMicrosoftAuthorizeUrl({
+		const authorizeUrl = adapter.buildAuthorizeUrl({
 			codeChallenge,
 			redirectUri,
 			state,
 		})
 
 		if (!hasExtensionAuthSupport()) {
-			// On the web build, the page round-trips through Microsoft's consent
-			// screen; the mount effect completes the exchange after the redirect.
-			writePendingWebAuth({ codeVerifier, redirectUri, state })
+			// On the web build, the page round-trips through the provider's
+			// consent screen; the mount effect completes the exchange after the
+			// redirect.
+			writePendingWebAuth({ codeVerifier, provider, redirectUri, state })
 			window.location.assign(authorizeUrl)
 			return
 		}
@@ -339,16 +403,16 @@ const startConnect = async (connectionState: ConnectionState) => {
 			expectedState: state,
 			url: callbackUrl,
 		})
-		const newTokens = await exchangeMicrosoftAuthorizationCode({
+		const newTokens = await adapter.exchangeAuthorizationCode({
 			code,
 			codeVerifier,
 			redirectUri,
 		})
-		addConnectedAccount(connectionState, newTokens)
+		addConnectedAccount(connectionState, { newTokens, provider })
 		void loadEvents(connectionState)
 	} catch (caughtError) {
 		if (!isUserCancelledAuthError(caughtError)) {
-			console.error('Microsoft sign-in error:', caughtError)
+			console.error('Calendar sign-in error:', caughtError)
 			connectionState.setError(CalendarConnectionError.AuthFailed)
 		}
 	} finally {
@@ -372,22 +436,26 @@ const completePendingWebAuth = async (connectionState: ConnectionState) => {
 
 	window.history.replaceState(null, '', window.location.pathname)
 
+	const adapter = CALENDAR_PROVIDER_ADAPTERS[pendingAuth.provider]
 	connectionState.setIsConnecting(true)
 	try {
 		const code = parseAuthCallbackCode({
 			expectedState: pendingAuth.state,
 			url: callbackUrl,
 		})
-		const newTokens = await exchangeMicrosoftAuthorizationCode({
+		const newTokens = await adapter.exchangeAuthorizationCode({
 			code,
 			codeVerifier: pendingAuth.codeVerifier,
 			redirectUri: pendingAuth.redirectUri,
 		})
-		addConnectedAccount(connectionState, newTokens)
+		addConnectedAccount(connectionState, {
+			newTokens,
+			provider: pendingAuth.provider,
+		})
 		void loadEvents(connectionState)
 	} catch (caughtError) {
 		if (!isUserCancelledAuthError(caughtError)) {
-			console.error('Microsoft sign-in error:', caughtError)
+			console.error('Calendar sign-in error:', caughtError)
 			connectionState.setError(CalendarConnectionError.AuthFailed)
 		}
 	} finally {
@@ -396,17 +464,22 @@ const completePendingWebAuth = async (connectionState: ConnectionState) => {
 }
 
 // Reconnecting an already-connected account replaces its tokens and keeps its
-// category; legacy entries without a real account id are matched by label.
+// category; legacy entries without a real account id are matched by label
+// within the same provider.
 const addConnectedAccount = (
 	connectionState: ConnectionState,
-	newTokens: MicrosoftTokens,
+	{
+		newTokens,
+		provider,
+	}: Readonly<{ newTokens: ProviderTokens; provider: CalendarProvider }>,
 ) => {
 	const accounts = connectionState.accountsRef.current
 	const accountId = newTokens.accountId ?? `account:${createRandomState()}`
 	const existingAccount = accounts.find(
 		(account) =>
 			account.accountId === accountId ||
-			(account.accountLabel !== null &&
+			(account.provider === provider &&
+				account.accountLabel !== null &&
 				account.accountLabel === newTokens.accountLabel),
 	)
 	const connectedAccount: StoredCalendarAccount = {
@@ -416,6 +489,7 @@ const addConnectedAccount = (
 		category: existingAccount?.category ?? CalendarAccountCategory.Personal,
 		expiresAt: newTokens.expiresAt,
 		isSessionExpired: false,
+		provider,
 		refreshToken: newTokens.refreshToken,
 	}
 
@@ -434,9 +508,9 @@ const ensureFreshAccount = async (account: StoredCalendarAccount) => {
 		return account
 	}
 
-	const refreshedTokens = await refreshMicrosoftTokens({
-		previousTokens: account,
-	})
+	const refreshedTokens = await CALENDAR_PROVIDER_ADAPTERS[
+		account.provider
+	].refreshTokens({ previousTokens: account })
 
 	return {
 		...account,
@@ -448,4 +522,4 @@ const ensureFreshAccount = async (account: StoredCalendarAccount) => {
 
 const isUserCancelledAuthError = (caughtError: unknown) =>
 	caughtError instanceof Error &&
-	/did not approve|cancel/i.test(caughtError.message)
+	/did not approve|cancel|access_denied/i.test(caughtError.message)

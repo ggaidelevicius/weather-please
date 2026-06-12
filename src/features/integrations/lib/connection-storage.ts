@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { CalendarAccountCategory } from '../model/account-category'
+import { CalendarProvider } from '../model/calendar-provider'
 
 export type PendingWebAuth = z.infer<typeof pendingWebAuthSchema>
 
@@ -32,6 +33,7 @@ export const readStoredCalendarAccounts = (): StoredCalendarAccount[] => {
 				accountId: `legacy:${legacyTokens.accountLabel ?? 'account'}`,
 				category: CalendarAccountCategory.Personal,
 				isSessionExpired: false,
+				provider: CalendarProvider.Microsoft,
 			},
 		]
 	}
@@ -79,6 +81,8 @@ const storedAccountSchema = z.object({
 	category: z.enum(CalendarAccountCategory),
 	expiresAt: z.number(),
 	isSessionExpired: z.boolean(),
+	// Accounts persisted before multi-provider support are all Microsoft.
+	provider: z.enum(CalendarProvider).default(CalendarProvider.Microsoft),
 	refreshToken: z.string().nullable(),
 })
 
@@ -96,6 +100,7 @@ const legacyStoredTokensSchema = z.object({
 
 const pendingWebAuthSchema = z.object({
 	codeVerifier: z.string().min(1),
+	provider: z.enum(CalendarProvider),
 	redirectUri: z.string().min(1),
 	state: z.string().min(1),
 })

@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest'
 
 import { CalendarAccountCategory } from '../../model/account-category'
+import { CalendarProvider } from '../../model/calendar-provider'
 import {
 	clearPendingWebAuth,
 	readPendingWebAuth,
@@ -24,6 +25,7 @@ describe('stored calendar accounts', () => {
 		category: CalendarAccountCategory.Work,
 		expiresAt: 1765500000000,
 		isSessionExpired: false,
+		provider: CalendarProvider.Microsoft,
 		refreshToken: 'refresh-token',
 	}
 
@@ -57,9 +59,21 @@ describe('stored calendar accounts', () => {
 				category: CalendarAccountCategory.Personal,
 				expiresAt: 1765500000000,
 				isSessionExpired: false,
+				provider: CalendarProvider.Microsoft,
 				refreshToken: 'refresh-token',
 			},
 		])
+	})
+
+	it('defaults accounts stored before multi-provider support to Microsoft', () => {
+		// `undefined` drops the key during serialisation.
+		const accountWithoutProvider = { ...account, provider: undefined }
+		localStorage.setItem(
+			STORAGE_KEY,
+			JSON.stringify({ accounts: [accountWithoutProvider] }),
+		)
+
+		expect(readStoredCalendarAccounts()).toEqual([account])
 	})
 
 	it('returns an empty list for malformed stored values', () => {
@@ -77,6 +91,7 @@ describe('pending web auth state', () => {
 	it('round-trips pending auth through sessionStorage', () => {
 		const pendingAuth = {
 			codeVerifier: 'verifier',
+			provider: CalendarProvider.Google,
 			redirectUri: 'https://weather-please.app/',
 			state: 'state-value',
 		}

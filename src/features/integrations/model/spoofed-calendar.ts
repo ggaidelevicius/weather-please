@@ -3,6 +3,7 @@ import type { CalendarEvent } from './calendar-event'
 
 import { CalendarAccountCategory } from './account-category'
 import { mergeCalendarEvents } from './calendar-event'
+import { CalendarProvider } from './calendar-provider'
 
 const MINUTE_MS = 60 * 1000
 const HOUR_MS = 60 * MINUTE_MS
@@ -25,12 +26,14 @@ export const createSpoofedCalendarData = (): {
 				accountLabel: 'spoof-personal@example.com',
 				category: CalendarAccountCategory.Personal,
 				isSessionExpired: false,
+				provider: CalendarProvider.Google,
 			},
 			{
 				accountId: 'spoof-work',
 				accountLabel: 'spoof-work@example.com',
 				category: CalendarAccountCategory.Work,
 				isSessionExpired: false,
+				provider: CalendarProvider.Microsoft,
 			},
 		],
 		events: mergeCalendarEvents([
