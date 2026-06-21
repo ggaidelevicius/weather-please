@@ -3,7 +3,7 @@ import { z } from 'zod'
 import type { CalendarEvent } from '../model/calendar-event'
 
 import { CalendarReauthRequiredError } from './calendar-reauth-error'
-import { UPCOMING_EVENTS_WINDOW_HOURS } from './microsoft-calendar'
+import { getUpcomingEventsWindowEnd } from './calendar-window'
 
 export const fetchUpcomingGoogleCalendarEvents = async ({
 	accessToken,
@@ -14,9 +14,7 @@ export const fetchUpcomingGoogleCalendarEvents = async ({
 	accountId: string
 	now?: Date
 }>): Promise<CalendarEvent[]> => {
-	const windowEnd = new Date(
-		now.getTime() + UPCOMING_EVENTS_WINDOW_HOURS * 60 * 60 * 1000,
-	)
+	const windowEnd = getUpcomingEventsWindowEnd({ now })
 	const params = new URLSearchParams({
 		maxResults: MAX_EVENTS.toString(),
 		orderBy: 'startTime',

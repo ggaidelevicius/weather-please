@@ -3,8 +3,7 @@ import { z } from 'zod'
 import type { CalendarEvent } from '../model/calendar-event'
 
 import { CalendarReauthRequiredError } from './calendar-reauth-error'
-
-export const UPCOMING_EVENTS_WINDOW_HOURS = 48
+import { getUpcomingEventsWindowEnd } from './calendar-window'
 
 export const fetchUpcomingCalendarEvents = async ({
 	accessToken,
@@ -17,9 +16,7 @@ export const fetchUpcomingCalendarEvents = async ({
 	now?: Date
 	timeZone: string
 }>): Promise<CalendarEvent[]> => {
-	const windowEnd = new Date(
-		now.getTime() + UPCOMING_EVENTS_WINDOW_HOURS * 60 * 60 * 1000,
-	)
+	const windowEnd = getUpcomingEventsWindowEnd({ now })
 	const params = new URLSearchParams({
 		$orderby: 'start/dateTime',
 		$select: 'id,iCalUId,subject,start,end,isAllDay,location,webLink',
