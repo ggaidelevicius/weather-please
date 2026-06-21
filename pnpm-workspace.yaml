@@ -3,3 +3,5 @@ allowBuilds:
   esbuild: true
   prisma: true
   sharp: true
+minimumReleaseAgeExclude:
+  - lint-staged@17.0.8
