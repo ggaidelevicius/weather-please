@@ -35,7 +35,7 @@ describe('fetchUpcomingCalendarEvents', () => {
 		await fetchUpcomingCalendarEvents({
 			accessToken: 'access-token',
 			accountId: 'account-1',
-			now: new Date('2026-06-12T00:00:00Z'),
+			now: new Date('2026-06-12T12:00:00Z'),
 			timeZone: 'Australia/Melbourne',
 		})
 
@@ -48,9 +48,9 @@ describe('fetchUpcomingCalendarEvents', () => {
 		expect(url.origin).toBe('https://graph.microsoft.com')
 		expect(url.pathname).toBe('/v1.0/me/calendarView')
 		expect(url.searchParams.get('startDateTime')).toBe(
-			'2026-06-12T00:00:00.000Z',
+			'2026-06-12T12:00:00.000Z',
 		)
-		expect(url.searchParams.get('endDateTime')).toBe('2026-06-14T00:00:00.000Z')
+		expect(url.searchParams.get('endDateTime')).toBe('2026-06-15T12:00:00.000Z')
 		expect(requestInit.headers).toMatchObject({
 			Authorization: 'Bearer access-token',
 			Prefer: 'outlook.timezone="Australia/Melbourne"',
