@@ -1,13 +1,8 @@
-import type { ReactNode } from 'react'
+import type { ReactNode, TouchEvent } from 'react'
 
 import { clsx } from 'clsx'
-import {
-	motion,
-	useMotionValueEvent,
-	useReducedMotion,
-	useScroll,
-} from 'framer-motion'
-import { useRef, useState } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
 
 import { createSpoofedCalendarData } from '../../integrations/model/spoofed-calendar'
 import { UpcomingEvents } from '../../integrations/ui/upcoming-events'
@@ -16,47 +11,195 @@ import { TileIdentifier } from '../../settings/model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../settings/model/unit-system'
 import { Tile } from '../../weather/ui/tile'
 
-// One viewport of scroll distance per scene; the stage stays pinned while
-// scroll progress drives the scene cross-fades. Native scrolling only — no
-// snapping or scroll hijacking.
+const SCENE_IDS = ['forecast', 'calendar', 'privacy', 'seasonal'] as const
+
+type SceneId = (typeof SCENE_IDS)[number]
+type SceneStepDirection = 'next' | 'previous'
+
 export const FeatureShowcase = () => {
-	const sectionRef = useRef<HTMLDivElement>(null)
-	const [progress, setProgress] = useState(0)
-	const { scrollYProgress } = useScroll({
-		offset: ['start start', 'end end'],
-		target: sectionRef,
+	const [activeSceneId, setActiveSceneId] = useState<SceneId>('forecast')
+	const [previousTransitionSceneId, setPreviousTransitionSceneId] =
+		useState<null | SceneId>(null)
+	const stageRef = useRef<HTMLDivElement | null>(null)
+	const handleStageWheelRef = useRef<(event: WheelEvent) => void>(() => {})
+	const sceneSwitchCooldownUntilRef = useRef(0)
+	const wheelGestureEndTimeoutRef = useRef<null | ReturnType<
+		typeof setTimeout
+	>>(null)
+	const transitionWillChangeTimeoutRef = useRef<null | ReturnType<
+		typeof setTimeout
+	>>(null)
+	const hasConsumedWheelGestureRef = useRef(false)
+	const lastWheelDirectionRef = useRef<null | SceneStepDirection>(null)
+	const lastWheelDeltaAbsRef = useRef(0)
+	const touchStartYRef = useRef<null | number>(null)
+
+	useEffect(
+		() => () => {
+			if (wheelGestureEndTimeoutRef.current) {
+				clearTimeout(wheelGestureEndTimeoutRef.current)
+			}
+			if (transitionWillChangeTimeoutRef.current) {
+				clearTimeout(transitionWillChangeTimeoutRef.current)
+			}
+		},
+		[],
+	)
+
+	const setActiveScene = (nextSceneId: SceneId) => {
+		if (nextSceneId === activeSceneId) {
+			return
+		}
+
+		setPreviousTransitionSceneId(activeSceneId)
+		setActiveSceneId(nextSceneId)
+		if (transitionWillChangeTimeoutRef.current) {
+			clearTimeout(transitionWillChangeTimeoutRef.current)
+		}
+		transitionWillChangeTimeoutRef.current = setTimeout(() => {
+			setPreviousTransitionSceneId(null)
+			transitionWillChangeTimeoutRef.current = null
+		}, SCENE_TRANSITION_WILL_CHANGE_MS)
+	}
+
+	const switchActiveSceneByStep = (direction: SceneStepDirection) => {
+		if (Date.now() < sceneSwitchCooldownUntilRef.current) {
+			return false
+		}
+
+		const nextSceneId = getAdjacentSceneId({ activeSceneId, direction })
+		if (nextSceneId === activeSceneId) {
+			return false
+		}
+
+		setActiveScene(nextSceneId)
+		sceneSwitchCooldownUntilRef.current = Date.now() + SCENE_SWITCH_COOLDOWN_MS
+
+		return true
+	}
+
+	const handleStageWheel = (event: WheelEvent) => {
+		if (!isViewportCenterInsideElement(stageRef.current)) {
+			return
+		}
+
+		if (
+			Math.abs(event.deltaY) < SCENE_SWITCH_SCROLL_DELTA_MIN ||
+			Math.abs(event.deltaY) <= Math.abs(event.deltaX)
+		) {
+			return
+		}
+
+		if (wheelGestureEndTimeoutRef.current) {
+			clearTimeout(wheelGestureEndTimeoutRef.current)
+		}
+		wheelGestureEndTimeoutRef.current = setTimeout(() => {
+			hasConsumedWheelGestureRef.current = false
+			lastWheelDeltaAbsRef.current = 0
+			lastWheelDirectionRef.current = null
+		}, SCENE_SWITCH_WHEEL_GESTURE_END_MS)
+
+		const direction = event.deltaY > 0 ? 'next' : 'previous'
+		if (shouldContainSceneScroll({ activeSceneId, direction })) {
+			event.preventDefault()
+		}
+
+		const deltaAbs = Math.abs(event.deltaY)
+		const hasNewImpulse =
+			Date.now() >= sceneSwitchCooldownUntilRef.current &&
+			(direction !== lastWheelDirectionRef.current ||
+				deltaAbs >=
+					Math.max(
+						SCENE_SWITCH_WHEEL_REIMPULSE_DELTA_MIN,
+						lastWheelDeltaAbsRef.current * SCENE_SWITCH_WHEEL_REIMPULSE_RATIO,
+					))
+		const shouldIgnoreWheelEvent =
+			hasConsumedWheelGestureRef.current && !hasNewImpulse
+
+		lastWheelDeltaAbsRef.current = deltaAbs
+		lastWheelDirectionRef.current = direction
+
+		if (shouldIgnoreWheelEvent) {
+			return
+		}
+
+		hasConsumedWheelGestureRef.current = true
+		switchActiveSceneByStep(direction)
+	}
+
+	useEffect(() => {
+		handleStageWheelRef.current = handleStageWheel
 	})
 
-	useMotionValueEvent(scrollYProgress, 'change', setProgress)
+	useEffect(() => {
+		const handleWheel = (event: WheelEvent) => {
+			handleStageWheelRef.current(event)
+		}
+
+		window.addEventListener('wheel', handleWheel, {
+			capture: true,
+			passive: false,
+		})
+
+		return () => {
+			window.removeEventListener('wheel', handleWheel, { capture: true })
+		}
+	}, [])
+
+	const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+		touchStartYRef.current = event.touches[0]?.clientY ?? null
+	}
+
+	const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+		if (touchStartYRef.current === null) {
+			return
+		}
+
+		const touchEndY = event.changedTouches[0]?.clientY
+		if (typeof touchEndY !== 'number') {
+			return
+		}
+
+		const deltaY = touchStartYRef.current - touchEndY
+		if (deltaY > SCENE_SWITCH_TOUCH_THRESHOLD) {
+			switchActiveSceneByStep('next')
+		}
+
+		if (deltaY < -SCENE_SWITCH_TOUCH_THRESHOLD) {
+			switchActiveSceneByStep('previous')
+		}
+
+		touchStartYRef.current = null
+	}
 
 	return (
 		<div
-			className="relative"
-			ref={sectionRef}
-			style={{ height: `${SCENES.length * 100}vh` }}
+			className="relative h-screen min-h-[42rem] overflow-hidden py-8"
+			onTouchEnd={handleTouchEnd}
+			onTouchStart={handleTouchStart}
+			ref={stageRef}
 		>
-			<div className="sticky top-0 flex h-screen items-center overflow-hidden py-8">
-				<div className="relative mx-auto h-full max-h-[44rem] w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-					{SCENES.map((scene, index) => (
-						<ShowcaseScene
-							index={index}
-							key={scene.id}
-							progress={progress}
-							scene={scene}
-							total={SCENES.length}
-						/>
-					))}
-				</div>
-				<div className="absolute inset-y-0 right-6 z-20 hidden flex-col items-center justify-center gap-2.5 lg:flex">
-					{SCENES.map((scene, index) => (
-						<SceneIndicatorDot
-							index={index}
-							key={scene.id}
-							progress={progress}
-							total={SCENES.length}
-						/>
-					))}
-				</div>
+			<div className="relative mx-auto h-full max-h-[44rem] w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+				{SCENES.map((scene, index) => (
+					<ShowcaseScene
+						activeSceneId={activeSceneId}
+						index={index}
+						key={scene.id}
+						previousTransitionSceneId={previousTransitionSceneId}
+						scene={scene}
+						total={SCENES.length}
+					/>
+				))}
+			</div>
+			<div className="absolute inset-y-0 right-6 z-20 hidden flex-col items-center justify-center gap-2.5 lg:flex">
+				{SCENES.map((scene) => (
+					<SceneIndicatorDot
+						isActive={activeSceneId === scene.id}
+						key={scene.id}
+						onSelect={() => setActiveScene(scene.id)}
+						scene={scene}
+					/>
+				))}
 			</div>
 		</div>
 	)
@@ -65,35 +208,54 @@ export const FeatureShowcase = () => {
 type Scene = {
 	description: string
 	eyebrow: string
-	id: string
+	id: SceneId
 	title: string
 	visual: ReactNode
 }
 
 const ShowcaseScene = ({
+	activeSceneId,
 	index,
-	progress,
+	previousTransitionSceneId,
 	scene,
 	total,
 }: Readonly<{
+	activeSceneId: SceneId
 	index: number
-	progress: number
+	previousTransitionSceneId: null | SceneId
 	scene: Scene
 	total: number
 }>) => {
-	const visibility = getSceneVisibility({ index, progress, total })
+	const isActive = activeSceneId === scene.id
+	const relativePosition = getSceneRelativePosition({
+		activeSceneId,
+		sceneId: scene.id,
+	})
+	const shouldWillChange =
+		isActive ||
+		Math.abs(relativePosition) === 1 ||
+		previousTransitionSceneId === scene.id
+	const y = relativePosition * SCENE_TRANSITION_DISTANCE
 
 	return (
 		<motion.div
-			aria-hidden={!visibility.isInteractive}
-			className="absolute inset-0 grid grid-rows-[auto_1fr] items-center gap-7 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:grid-rows-1 lg:gap-14 lg:px-8"
-			inert={!visibility.isInteractive}
-			style={{
-				opacity: visibility.opacity,
-				pointerEvents: visibility.isInteractive ? 'auto' : 'none',
-				scale: visibility.scale,
-				y: visibility.y,
+			animate={{
+				opacity: isActive ? 1 : 0,
+				scale: isActive ? 1 : 0.92,
+				y,
 			}}
+			aria-hidden={!isActive}
+			className={clsx(
+				'absolute inset-0 grid grid-rows-[auto_1fr] items-center gap-7 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:grid-rows-1 lg:gap-14 lg:px-8',
+				shouldWillChange && 'will-change-[transform,opacity]',
+			)}
+			inert={!isActive}
+			initial={false}
+			style={{
+				pointerEvents: isActive ? 'auto' : 'none',
+				zIndex: isActive ? 2 : 1,
+			}}
+			transition={{ damping: 32, stiffness: 280, type: 'spring' }}
 		>
 			<div className="relative z-10">
 				<p className="font-mono text-sm tracking-wide text-dark-300">
@@ -116,24 +278,41 @@ const ShowcaseScene = ({
 }
 
 const SceneIndicatorDot = ({
-	index,
-	progress,
-	total,
+	isActive,
+	onSelect,
+	scene,
 }: Readonly<{
-	index: number
-	progress: number
-	total: number
+	isActive: boolean
+	onSelect: () => void
+	scene: Scene
 }>) => {
-	const visibility = getSceneVisibility({ index, progress, total })
-
 	return (
-		<span
-			aria-hidden
-			className="size-1.5 rounded-full bg-white transition-opacity duration-150"
-			style={{ opacity: Math.max(0.25, visibility.opacity) }}
-		/>
+		<button
+			aria-current={isActive ? 'page' : undefined}
+			aria-label={`Show ${scene.title}`}
+			className="flex size-5 cursor-pointer items-center justify-center rounded-full focus:outline-none"
+			onClick={onSelect}
+			type="button"
+		>
+			<span
+				aria-hidden
+				className={clsx(
+					'rounded-full bg-white transition-[height,opacity,width] duration-150',
+					isActive ? 'size-2 opacity-100' : 'size-1.5 opacity-35',
+				)}
+			/>
+		</button>
 	)
 }
+
+const SCENE_TRANSITION_DISTANCE = 56
+const SCENE_TRANSITION_WILL_CHANGE_MS = 420
+const SCENE_SWITCH_SCROLL_DELTA_MIN = 1
+const SCENE_SWITCH_TOUCH_THRESHOLD = 80
+const SCENE_SWITCH_COOLDOWN_MS = 300
+const SCENE_SWITCH_WHEEL_GESTURE_END_MS = 180
+const SCENE_SWITCH_WHEEL_REIMPULSE_DELTA_MIN = 3
+const SCENE_SWITCH_WHEEL_REIMPULSE_RATIO = 1.6
 
 type LandingWeatherTileData = {
 	day: number
@@ -393,43 +572,57 @@ const SCENES = [
 	},
 ] as const satisfies ReadonlyArray<Scene>
 
-type SceneVisibilityParams = {
-	index: number
-	progress: number
-	total: number
+const getAdjacentSceneId = ({
+	activeSceneId,
+	direction,
+}: Readonly<{
+	activeSceneId: SceneId
+	direction: SceneStepDirection
+}>): SceneId => {
+	const currentIndex = Math.max(0, getSceneIndex(activeSceneId))
+	const nextIndex =
+		direction === 'next'
+			? Math.min(currentIndex + 1, SCENES.length - 1)
+			: Math.max(currentIndex - 1, 0)
+
+	return SCENES[nextIndex]?.id ?? 'forecast'
 }
 
-const getSceneVisibility = ({
-	index,
-	progress,
-	total,
-}: SceneVisibilityParams) => {
-	const scenePosition = progress * (total - 1)
-	const distance = Math.abs(scenePosition - index)
-	const opacity =
-		1 - smoothStep({ edgeEnd: 0.82, edgeStart: 0.08, value: distance })
+const getSceneRelativePosition = ({
+	activeSceneId,
+	sceneId,
+}: Readonly<{
+	activeSceneId: SceneId
+	sceneId: SceneId
+}>) => getSceneIndex(sceneId) - getSceneIndex(activeSceneId)
 
-	return {
-		isInteractive: distance < 0.42,
-		opacity,
-		scale: 0.98 + opacity * 0.02,
-		y: (index - scenePosition) * 36,
+const getSceneIndex = (sceneId: SceneId) =>
+	SCENES.findIndex((scene) => scene.id === sceneId)
+
+const shouldContainSceneScroll = ({
+	activeSceneId,
+	direction,
+}: Readonly<{
+	activeSceneId: SceneId
+	direction: SceneStepDirection
+}>) => {
+	const activeIndex = getSceneIndex(activeSceneId)
+
+	return direction === 'next'
+		? activeIndex < SCENES.length - 1
+		: activeIndex > 0
+}
+
+const isViewportCenterInsideElement = (element: HTMLElement | null) => {
+	if (!element) {
+		return false
 	}
+
+	const rect = element.getBoundingClientRect()
+	const viewportCenterY = window.innerHeight / 2
+
+	return rect.top <= viewportCenterY && rect.bottom >= viewportCenterY
 }
-
-type SmoothStepParams = {
-	edgeEnd: number
-	edgeStart: number
-	value: number
-}
-
-const smoothStep = ({ edgeEnd, edgeStart, value }: SmoothStepParams) => {
-	const t = clamp((value - edgeStart) / (edgeEnd - edgeStart))
-
-	return t * t * (3 - 2 * t)
-}
-
-const clamp = (value: number) => Math.min(1, Math.max(0, value))
 
 type UnixTimestampParams = {
 	day: number
