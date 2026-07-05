@@ -5,8 +5,6 @@ import { FeatureShowcase } from '../features/landing/ui/feature-showcase'
 
 const CHROME_STORE_URL =
 	'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn'
-const FIREFOX_STORE_URL =
-	'https://addons.mozilla.org/en-US/firefox/addon/weather-please/'
 const GITHUB_URL = 'https://github.com/ggaidelevicius/weather-please'
 
 const NAV_LINK_CLASS_NAME =
@@ -82,16 +80,8 @@ const LandingPage = () => (
 							>
 								Add to Chrome
 							</a>
-							<a
-								className="flex items-center justify-center rounded-lg border border-white/15 px-4 py-3 text-sm font-medium text-dark-100 transition-colors hover:border-white/30 hover:text-white"
-								href={FIREFOX_STORE_URL}
-								rel="noopener noreferrer"
-								target="_blank"
-							>
-								Add to Firefox
-							</a>
 							<Link
-								className="text-sm font-medium text-dark-100 transition-colors hover:text-white"
+								className="flex items-center justify-center rounded-lg border border-white/15 px-4 py-3 text-sm font-medium text-dark-100 transition-colors hover:border-white/30 hover:text-white"
 								href="/demo"
 							>
 								Try the live demo <span aria-hidden>→</span>
