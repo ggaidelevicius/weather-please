@@ -84,7 +84,7 @@ const LandingPage = () => (
 								className="flex items-center justify-center rounded-lg border border-white/15 px-4 py-3 text-sm font-medium text-dark-100 transition-colors hover:border-white/30 hover:text-white"
 								href="/demo"
 							>
-								Try the live demo <span aria-hidden>→</span>
+								Try the live demo
 							</Link>
 						</div>
 					</div>
