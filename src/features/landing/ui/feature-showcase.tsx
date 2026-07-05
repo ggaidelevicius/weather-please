@@ -282,10 +282,11 @@ const PRIVACY_LINK_PATHS = [
 
 const PRIVACY_BEAM_CYCLE_SECONDS = 5.4
 
-// Each path is normalised to length 100 with a "25 125" dash pattern, so the
-// streak is parked just before the path at offset 25 and just past it at
-// -100. Sliding between the two during the path's slot of the shared timeline
-// makes exactly one beam travel at a time.
+// Each path is normalised to length 100 with a "25 125" dash pattern. The
+// streak parks past the provider end at offset -105 and before the browser
+// end at 30 (5 units of clearance so the round line cap never peeks onto the
+// path), and slides provider-to-browser during its slot of the shared
+// timeline, so exactly one beam travels at a time.
 const getPrivacyBeamTiming = (index: number) => {
 	const total = PRIVACY_LINK_PATHS.length
 	const slotStart = Math.max(index / total, 0.001)
@@ -293,7 +294,7 @@ const getPrivacyBeamTiming = (index: number) => {
 
 	return {
 		keyTimes: `0;${slotStart};${slotEnd};1`,
-		values: '25;25;-100;-100',
+		values: '-105;-105;30;30',
 	}
 }
 
@@ -339,7 +340,7 @@ const PrivacyVisual = () => {
 												pathLength={100}
 												stroke="currentColor"
 												strokeDasharray="25 125"
-												strokeDashoffset={25}
+												strokeDashoffset={-105}
 												strokeLinecap="round"
 												strokeOpacity={layer.opacity}
 												strokeWidth={layer.width}
@@ -377,7 +378,7 @@ const PrivacyVisual = () => {
 			</div>
 			<p className="mx-auto mt-6 flex max-w-sm items-start justify-center gap-2 text-sm text-pretty text-dark-300">
 				<IconLock className="mt-0.5 shrink-0" size={15} />
-				Encrypted requests travel straight from your browser to each provider —
+				Your weather and calendar data arrive straight from each provider —
 				nothing passes through our servers.
 			</p>
 		</div>
