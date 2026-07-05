@@ -550,7 +550,7 @@ const App = () => {
 						viewId="forecast"
 					>
 						<div
-							className="relative grid w-fit max-w-[calc(100vw-2.5rem)] auto-rows-max grid-cols-1 items-start gap-5"
+							className="relative grid w-fit max-w-[calc(100vw-2.5rem)] auto-rows-max grid-cols-1 items-stretch gap-5"
 							style={gridStyle}
 						>
 							<Initialisation
