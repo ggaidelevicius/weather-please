@@ -35,24 +35,19 @@ html[data-weather-please-app] body {
 	}
 }
 
-@keyframes landing-packet {
-	0% {
-		left: 0%;
-		opacity: 0;
-	}
-	15% {
-		opacity: 1;
-	}
-	85% {
-		opacity: 1;
-	}
-	100% {
-		left: 92%;
-		opacity: 0;
-	}
-}
-
 @theme {
+	--animate-landing-seasonal-marquee: landing-seasonal-marquee 50s linear
+		infinite;
+
+	@keyframes landing-seasonal-marquee {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(-50%);
+		}
+	}
+
 	--color-dark-100: #c1c2c5;
 	--color-dark-200: #a6a7ab;
 	--color-dark-300: #909296;
