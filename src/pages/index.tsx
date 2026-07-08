@@ -66,10 +66,9 @@ const LandingPage = () => (
 							Your forecast and your day, in every new tab.
 						</h1>
 						<p className="mt-6 text-lg text-pretty text-dark-100">
-							Weather Please is a free, open-source browser extension that
-							replaces your new tab page with an at-a-glance local weather
-							forecast — and, if you choose to connect one, the next events from
-							your Google or Microsoft calendar.
+							Weather Please is a free, open-source browser extension that turns
+							your new tab page into an at-a-glance view of the weather and your
+							day, with optional Google or Microsoft calendar sync.
 						</p>
 						<div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
 							<a

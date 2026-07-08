@@ -1,6 +1,11 @@
 import type { ReactNode } from 'react'
 
-import { IconLock } from '@tabler/icons-react'
+import {
+	IconCalendarEvent,
+	IconCloudRain,
+	IconLock,
+	IconSparkles,
+} from '@tabler/icons-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useState } from 'react'
 
@@ -24,6 +29,7 @@ export const FeatureShowcase = () => (
 type Scene = {
 	description: string
 	eyebrow: string
+	icon: typeof IconLock
 	id: SceneId
 	title: string
 	visual: ReactNode
@@ -51,7 +57,10 @@ const ShowcaseScene = ({
 				<p className="mt-4 max-w-md text-pretty text-dark-100">
 					{scene.description}
 				</p>
-				<p className="mt-2 text-sm text-dark-300">{scene.eyebrow}</p>
+				<div className="mt-10 inline-flex items-center gap-1.5 rounded-full border border-sky-400/20 bg-sky-400/10 px-3 py-1.5 text-xs font-medium text-sky-300">
+					<scene.icon className="shrink-0" size={14} />
+					{scene.eyebrow}
+				</div>
 			</div>
 			<div className="flex min-h-0 items-center justify-center overflow-hidden">
 				{scene.visual}
@@ -384,8 +393,8 @@ const SCENES = [
 	{
 		description:
 			'A multi-day local forecast with hourly detail views and severe weather alerts, powered by Open-Meteo.',
-		eyebrow:
-			'Scroll through detail views for temperature, rain, wind and more.',
+		eyebrow: 'Swipe for temperature, rain, wind, and more.',
+		icon: IconCloudRain,
 		id: 'forecast',
 		title: 'Your local forecast',
 		visual: <ForecastVisual />,
@@ -393,7 +402,8 @@ const SCENES = [
 	{
 		description:
 			'Optionally connect Google Calendar or Microsoft Outlook to see your upcoming events beside the forecast.',
-		eyebrow: 'Colour-coded by account — personal, work, school, and more.',
+		eyebrow: 'Colour-coded by account — personal, work, more.',
+		icon: IconCalendarEvent,
 		id: 'calendar',
 		title: 'Your day at a glance',
 		visual: <CalendarVisual />,
@@ -402,6 +412,7 @@ const SCENES = [
 		description:
 			'Your location and calendar data travel directly from your browser to the weather and calendar providers.',
 		eyebrow: 'Open source, no accounts, no ads, no tracking.',
+		icon: IconLock,
 		id: 'privacy',
 		title: 'Private by design',
 		visual: <PrivacyVisual />,
@@ -410,6 +421,7 @@ const SCENES = [
 		description:
 			'Subtle seasonal effects for solstices, meteor showers, holidays, and more — all of which can be turned off.',
 		eyebrow: 'A little delight, never a distraction.',
+		icon: IconSparkles,
 		id: 'seasonal',
 		title: 'Seasonal touches',
 		visual: <SeasonalVisual />,
