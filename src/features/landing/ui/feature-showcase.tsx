@@ -45,7 +45,7 @@ const ShowcaseScene = ({
 			whileInView={{ opacity: 1, y: 0 }}
 		>
 			<div className="relative z-10">
-				<h3 className="mt-3 text-2xl font-medium tracking-tight text-pretty text-white sm:text-3xl">
+				<h3 className="text-2xl font-medium tracking-tight text-pretty text-white sm:text-3xl">
 					{scene.title}
 				</h3>
 				<p className="mt-4 max-w-md text-pretty text-dark-100">
