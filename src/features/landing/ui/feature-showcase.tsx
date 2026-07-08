@@ -11,19 +11,12 @@ import { TileIdentifier } from '../../settings/model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../settings/model/unit-system'
 import { Tile } from '../../weather/ui/tile'
 
-const SCENE_IDS = ['forecast', 'calendar', 'privacy', 'seasonal'] as const
-
-type SceneId = (typeof SCENE_IDS)[number]
+type SceneId = 'calendar' | 'forecast' | 'privacy' | 'seasonal'
 
 export const FeatureShowcase = () => (
 	<div className="py-4 sm:py-8">
-		{SCENES.map((scene, index) => (
-			<ShowcaseScene
-				index={index}
-				key={scene.id}
-				scene={scene}
-				total={SCENES.length}
-			/>
+		{SCENES.map((scene) => (
+			<ShowcaseScene key={scene.id} scene={scene} />
 		))}
 	</div>
 )
@@ -37,13 +30,9 @@ type Scene = {
 }
 
 const ShowcaseScene = ({
-	index,
 	scene,
-	total,
 }: Readonly<{
-	index: number
 	scene: Scene
-	total: number
 }>) => {
 	const shouldReduceMotion = useReducedMotion()
 
@@ -56,10 +45,6 @@ const ShowcaseScene = ({
 			whileInView={{ opacity: 1, y: 0 }}
 		>
 			<div className="relative z-10">
-				<p className="font-mono text-sm tracking-wide text-dark-300">
-					{String(index + 1).padStart(2, '0')} /{' '}
-					{String(total).padStart(2, '0')}
-				</p>
 				<h3 className="mt-3 text-2xl font-medium tracking-tight text-pretty text-white sm:text-3xl">
 					{scene.title}
 				</h3>
