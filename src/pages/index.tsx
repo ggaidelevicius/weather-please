@@ -62,13 +62,14 @@ const LandingPage = () => (
 			<section className="pt-16 pb-20 sm:pt-24 sm:pb-28">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 					<div className="max-w-2xl">
-						<h1 className="text-4xl font-medium tracking-tight text-pretty text-white sm:text-5xl">
-							Your forecast and your day, in every new tab.
+						<h1 className="text-4xl font-medium tracking-tight text-white sm:text-5xl">
+							Your forecast. Your day.
 						</h1>
 						<p className="mt-6 text-lg text-pretty text-dark-100">
-							Weather Please is a free, open-source browser extension that turns
-							your new tab page into an at-a-glance view of the weather and your
-							day, with optional Google or Microsoft calendar sync.
+							Weather Please is a free, open-source new-tab extension that shows
+							your weather and day at a glance, with optional Google or
+							Microsoft calendar sync. No accounts, ads, or tracking—just what
+							helps you start the day.
 						</p>
 						<div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
 							<a
@@ -91,15 +92,12 @@ const LandingPage = () => (
 			</section>
 			<section className="border-t border-white/10" id="features">
 				<div className="mx-auto max-w-7xl px-4 pt-16 sm:px-6 sm:pt-24 lg:px-8">
-					<div className="max-w-2xl">
-						<h2 className="text-3xl font-medium tracking-tight text-white">
-							Everything you need from a new tab. Nothing you don&apos;t.
-						</h2>
-						<p className="mt-4 text-lg text-dark-100">
-							No accounts, no ads, no tracking — just the information that helps
-							you start the day.
-						</p>
-					</div>
+					<h2 className="mx-auto flex flex-col gap-2 text-center text-3xl font-medium tracking-tight">
+						<span className="text-white">
+							Everything you need from a new tab.
+						</span>
+						<span className="text-white/75">Nothing you don&apos;t.</span>
+					</h2>
 				</div>
 				<FeatureShowcase />
 				<div className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 sm:pb-24 lg:px-8">

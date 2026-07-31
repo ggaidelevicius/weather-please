@@ -7,11 +7,11 @@ import {
 	IconSparkles,
 } from '@tabler/icons-react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { createSpoofedCalendarData } from '../../integrations/model/spoofed-calendar'
 import { UpcomingEvents } from '../../integrations/ui/upcoming-events'
-import { Hemisphere, SeasonalEventId } from '../../seasonal-events/core/types'
+import { Hemisphere } from '../../seasonal-events/core/types'
 import { TileIdentifier } from '../../settings/model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../settings/model/unit-system'
 import { Tile } from '../../weather/ui/tile'
@@ -123,34 +123,29 @@ const ForecastVisual = () => (
 
 const LandingWeatherTile = ({
 	index,
-	seasonalEventId,
 	tile,
 }: Readonly<{
 	index: number
-	seasonalEventId?: SeasonalEventId
 	tile: LandingWeatherTileData
 }>) => (
 	<div className="relative w-64 shrink-0">
 		<Tile
 			{...tile}
 			delayBaseline={0}
-			enabledSeasonalEvents={
-				seasonalEventId ? new Set([seasonalEventId]) : undefined
-			}
 			hemisphere={Hemisphere.Southern}
 			identifier={TileIdentifier.Day}
 			index={index}
-			isSeasonalEventEnabled={(eventId) => eventId === seasonalEventId}
+			isSeasonalEventEnabled={isSeasonalEventDisabled}
 			onToggleSeasonalEvent={ignoreSeasonalEventToggle}
-			seasonalEventOverride={seasonalEventId}
-			showSeasonalEvents={Boolean(seasonalEventId)}
-			showSeasonalTileGlow={Boolean(seasonalEventId)}
+			showSeasonalEvents={false}
+			showSeasonalTileGlow={false}
 			temperatureUnit={TemperatureUnit.Celsius}
 			unitSystem={UnitSystem.Metric}
 		/>
 	</div>
 )
 
+const isSeasonalEventDisabled = () => false
 const ignoreSeasonalEventToggle = () => undefined
 
 // Mirrors every seasonal event the app ships, in the same order as the
@@ -185,34 +180,163 @@ const SEASONAL_EVENT_BADGES = [
 	{ emoji: '🕳️', label: 'Event Horizon Day' },
 ] as const
 
+const SEASONAL_BACKGROUNDS = [
+	{
+		background:
+			'radial-gradient(120% 80% at 15% 0%, rgba(59, 130, 246, 0.22), rgba(14, 116, 144, 0.1) 45%, rgba(15, 23, 42, 0) 72%), radial-gradient(90% 60% at 80% 8%, rgba(129, 140, 248, 0.18), rgba(15, 23, 42, 0) 70%), radial-gradient(70% 50% at 45% 0%, rgba(52, 211, 153, 0.13), rgba(15, 23, 42, 0) 70%)',
+		glowColors: ['#e2e8f0', '#c7d2fe', '#bae6fd', '#e0f2fe', '#e2e8f0'],
+		id: 'winter-solstice',
+		particles: {
+			animationName: 'landing-winter-drift',
+			background: 'rgba(224, 242, 254, 0.9)',
+			borderRadius: '9999px',
+			boxShadow: '0 0 7px rgba(125, 211, 252, 0.55)',
+			durationScale: 1,
+			heightScale: 1,
+			widthScale: 1,
+		},
+	},
+	{
+		background:
+			'radial-gradient(120% 90% at 50% 100%, rgba(187, 247, 208, 0.3), rgba(52, 211, 153, 0.14) 40%, rgba(15, 23, 42, 0) 75%), radial-gradient(90% 80% at 20% 90%, rgba(251, 207, 232, 0.26), rgba(15, 23, 42, 0) 70%)',
+		glowColors: ['#f7c9df', '#f3a6c8', '#b7e4c7', '#95d5b2', '#f7c9df'],
+		id: 'spring-equinox',
+		particles: {
+			animationName: 'landing-spring-flutter',
+			background: 'rgba(251, 207, 232, 0.88)',
+			borderRadius: '70% 30% 65% 35%',
+			boxShadow: '0 0 6px rgba(244, 114, 182, 0.35)',
+			durationScale: 0.9,
+			heightScale: 0.8,
+			widthScale: 1.7,
+		},
+	},
+	{
+		background:
+			'radial-gradient(circle at 18% 18%, rgba(251, 191, 36, 0.24), rgba(251, 191, 36, 0.06) 35%, rgba(251, 191, 36, 0) 70%), radial-gradient(circle at 85% 90%, rgba(253, 186, 116, 0.18), rgba(253, 186, 116, 0) 65%)',
+		glowColors: ['#fef3c7', '#fde68a', '#fdba74', '#f59e0b', '#fef3c7'],
+		id: 'summer-solstice',
+		particles: {
+			animationName: 'landing-summer-mote',
+			background: 'rgba(254, 240, 138, 0.82)',
+			borderRadius: '9999px',
+			boxShadow: '0 0 9px rgba(250, 204, 21, 0.5)',
+			durationScale: 1.1,
+			heightScale: 1.2,
+			widthScale: 1.2,
+		},
+	},
+	{
+		background:
+			'radial-gradient(120% 90% at 18% 70%, rgba(251, 191, 36, 0.28), rgba(249, 115, 22, 0.14) 50%, rgba(15, 23, 42, 0) 80%), radial-gradient(85% 70% at 85% 25%, rgba(244, 114, 182, 0.18), rgba(15, 23, 42, 0) 70%)',
+		glowColors: ['#fde68a', '#f59e0b', '#fb7185', '#f97316', '#fde68a'],
+		id: 'diwali',
+		particles: {
+			animationName: 'landing-diwali-spark',
+			background: 'rgba(253, 224, 71, 0.95)',
+			borderRadius: '1px',
+			boxShadow: '0 0 8px rgba(249, 115, 22, 0.75)',
+			durationScale: 0.7,
+			heightScale: 1.7,
+			widthScale: 0.7,
+		},
+	},
+] as const
+
+const SEASONAL_BACKGROUND_INTERVAL_MS = 12_000
+const SEASONAL_BACKGROUND_TRANSITION_MS = 3_500
+
 const SeasonalVisual = () => {
 	const shouldReduceMotion = useReducedMotion()
+	const [activeBackgroundIndex, setActiveBackgroundIndex] = useState(0)
+	const displayedBackgroundIndex = shouldReduceMotion
+		? 0
+		: activeBackgroundIndex
+
+	useEffect(() => {
+		if (shouldReduceMotion) return
+
+		const intervalId = window.setInterval(() => {
+			setActiveBackgroundIndex(
+				(currentIndex) => (currentIndex + 1) % SEASONAL_BACKGROUNDS.length,
+			)
+		}, SEASONAL_BACKGROUND_INTERVAL_MS)
+
+		return () => window.clearInterval(intervalId)
+	}, [shouldReduceMotion])
 
 	return (
 		<div className="relative overflow-hidden rounded-[2rem] px-6 py-10 sm:px-10">
-			<div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_15%_0%,rgba(59,130,246,0.22),rgba(14,116,144,0.1)_45%,rgba(15,23,42,0)_72%),radial-gradient(90%_60%_at_80%_8%,rgba(129,140,248,0.18),rgba(15,23,42,0)_70%),radial-gradient(70%_50%_at_45%_0%,rgba(52,211,153,0.13),rgba(15,23,42,0)_70%)]" />
-			{!shouldReduceMotion
-				? SOLSTICE_PARTICLES.map((particle) => (
-						<span
-							aria-hidden
-							className="absolute rounded-full bg-sky-100 opacity-0"
-							key={particle.id}
-							style={{
-								animation: `landing-solstice-drift ${particle.durationSeconds}s ease-in-out ${particle.delaySeconds}s infinite`,
-								height: particle.sizePixels,
-								left: `${particle.leftPercent}%`,
-								top: `${particle.topPercent}%`,
-								width: particle.sizePixels,
-							}}
-						/>
-					))
-				: null}
+			{SEASONAL_BACKGROUNDS.map((seasonalBackground, index) => (
+				<div
+					aria-hidden
+					className="absolute inset-0 transition-opacity ease-in-out will-change-[opacity]"
+					data-seasonal-background={seasonalBackground.id}
+					key={seasonalBackground.id}
+					style={{
+						background: seasonalBackground.background,
+						opacity: index === displayedBackgroundIndex ? 1 : 0,
+						transitionDuration: `${SEASONAL_BACKGROUND_TRANSITION_MS}ms`,
+					}}
+				>
+					{!shouldReduceMotion
+						? SOLSTICE_PARTICLES.map((particle) => (
+								<span
+									className="absolute opacity-0"
+									key={particle.id}
+									style={{
+										animation: `${seasonalBackground.particles.animationName} ${particle.durationSeconds * seasonalBackground.particles.durationScale}s ease-in-out ${particle.delaySeconds}s infinite`,
+										background: seasonalBackground.particles.background,
+										borderRadius: seasonalBackground.particles.borderRadius,
+										boxShadow: seasonalBackground.particles.boxShadow,
+										height:
+											particle.sizePixels *
+											seasonalBackground.particles.heightScale,
+										left: `${(particle.leftPercent + index * 19) % 100}%`,
+										top: `${(particle.topPercent + index * 13) % 88}%`,
+										width:
+											particle.sizePixels *
+											seasonalBackground.particles.widthScale,
+									}}
+								/>
+							))
+						: null}
+				</div>
+			))}
 			<div className="relative flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
-				<LandingWeatherTile
-					index={0}
-					seasonalEventId={SeasonalEventId.WinterSolstice}
-					tile={WINTER_SOLSTICE_TILE}
-				/>
+				<div className="relative w-64 shrink-0">
+					{SEASONAL_BACKGROUNDS.map((seasonalBackground, index) => (
+						<div
+							aria-hidden
+							className="pointer-events-none absolute inset-0 transition-opacity ease-in-out will-change-[opacity]"
+							data-seasonal-tile-glow={seasonalBackground.id}
+							key={seasonalBackground.id}
+							style={{
+								opacity: index === displayedBackgroundIndex ? 1 : 0,
+								transitionDuration: `${SEASONAL_BACKGROUND_TRANSITION_MS}ms`,
+							}}
+						>
+							{[-1.5, -0.5].map((inset) => (
+								<div
+									className={
+										inset === -1.5
+											? 'absolute rounded-3xl opacity-60 blur-sm saturate-200'
+											: 'absolute rounded-2xl'
+									}
+									key={inset}
+									style={{
+										animation: shouldReduceMotion
+											? undefined
+											: 'landing-seasonal-border-spin 12s linear infinite',
+										background: `conic-gradient(from var(--landing-seasonal-border-angle), ${seasonalBackground.glowColors.join(', ')})`,
+										inset,
+									}}
+								/>
+							))}
+						</div>
+					))}
+					<LandingWeatherTile index={0} tile={WINTER_SOLSTICE_TILE} />
+				</div>
 				<div
 					aria-hidden
 					className="h-56 overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_18%,black_82%,transparent)]"
@@ -393,7 +517,7 @@ const SCENES = [
 	{
 		description:
 			'A multi-day local forecast with hourly detail views and severe weather alerts, powered by Open-Meteo.',
-		eyebrow: 'Swipe for temperature, rain, wind, and more.',
+		eyebrow: 'Scroll for temperature, rain, wind, and more.',
 		icon: IconCloudRain,
 		id: 'forecast',
 		title: 'Your local forecast',
@@ -420,7 +544,7 @@ const SCENES = [
 	{
 		description:
 			'Subtle seasonal effects for solstices, meteor showers, holidays, and more — all of which can be turned off.',
-		eyebrow: 'A little delight, never a distraction.',
+		eyebrow: 'Backgrounds that change throughout the year.',
 		icon: IconSparkles,
 		id: 'seasonal',
 		title: 'Seasonal touches',
