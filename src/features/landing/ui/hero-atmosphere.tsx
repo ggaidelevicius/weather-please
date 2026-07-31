@@ -30,8 +30,9 @@ export const HeroAtmosphere = () => {
 					isSurfaceVisible ? 'opacity-100' : 'opacity-0'
 				}`}
 			>
-				<div className="absolute top-0 bottom-[12%] left-0 w-2/5 bg-[radial-gradient(ellipse_at_left,rgba(239,68,68,0.1),transparent_72%)]" />
-				<div className="absolute top-0 right-0 bottom-[12%] w-2/5 bg-[radial-gradient(ellipse_at_right,rgba(239,68,68,0.12),transparent_72%)]" />
+				<div className="absolute inset-y-0 left-0 w-2/5 bg-[radial-gradient(ellipse_at_left,rgba(167,139,250,0.12),transparent_72%)]" />
+				<div className="absolute inset-y-0 right-0 w-2/5 bg-[radial-gradient(ellipse_at_right,rgba(103,232,249,0.1),transparent_72%)]" />
+				<div className="absolute right-0 bottom-0 h-2/5 w-1/3 bg-[radial-gradient(ellipse_at_bottom_right,rgba(251,146,182,0.08),transparent_70%)]" />
 				{isWebGLAvailable ? (
 					<Canvas
 						camera={{ fov: 42, position: [0, 0, 5.4] }}
@@ -155,44 +156,50 @@ float softBlob(vec2 point, vec2 center, float radius) {
 
 void main() {
 	vec3 charcoal = vec3(0.075, 0.079, 0.09);
-	vec3 deepRed = vec3(0.76, 0.08, 0.055);
-	vec3 coral = vec3(0.96, 0.25, 0.22);
-	vec3 warm = vec3(1.0, 0.63, 0.31);
-	vec3 cool = vec3(0.25, 0.56, 0.74);
+	vec3 lavender = vec3(0.54, 0.42, 0.86);
+	vec3 blush = vec3(0.95, 0.48, 0.68);
+	vec3 peach = vec3(0.98, 0.7, 0.46);
+	vec3 mint = vec3(0.4, 0.8, 0.68);
+	vec3 cyan = vec3(0.3, 0.7, 0.84);
 
-	vec2 redCenter = vec2(
+	vec2 lavenderCenter = vec2(
 		0.34 + sin(uTime * 0.11) * 0.08,
 		0.58 + cos(uTime * 0.09) * 0.07
 	);
-	vec2 warmCenter = vec2(
+	vec2 peachCenter = vec2(
 		0.72 + cos(uTime * 0.075) * 0.06,
 		0.34 + sin(uTime * 0.085) * 0.08
 	);
-	vec2 coolCenter = vec2(
+	vec2 cyanCenter = vec2(
 		0.73 + sin(uTime * 0.065) * 0.07,
 		0.75 + cos(uTime * 0.055) * 0.06
 	);
 
-	float redField = softBlob(vUv, redCenter, 0.74);
-	float warmField = softBlob(vUv, warmCenter, 0.46);
-	float coolField = softBlob(vUv, coolCenter, 0.52);
+	float lavenderField = softBlob(vUv, lavenderCenter, 0.74);
+	float peachField = softBlob(vUv, peachCenter, 0.46);
+	float cyanField = softBlob(vUv, cyanCenter, 0.52);
 	float raised = smoothstep(-0.28, 0.34, vElevation);
 
-	vec3 color = mix(charcoal, deepRed, redField * 0.64);
-	color = mix(color, coral, raised * 0.36 + redField * 0.08);
-	color = mix(color, warm, warmField * 0.12);
-	color = mix(color, cool, coolField * 0.08 * (1.0 - redField));
+	vec3 color = mix(charcoal, lavender, lavenderField * 0.48);
+	color = mix(color, blush, raised * 0.23 + lavenderField * 0.045);
+	color = mix(color, peach, peachField * 0.14);
+	color = mix(color, mint, cyanField * 0.055);
+	color = mix(
+		color,
+		cyan,
+		cyanField * 0.13 * (1.0 - lavenderField)
+	);
 
 	float contourCoordinate = (vElevation + 0.52) * 11.0;
 	float contourDistance = abs(fract(contourCoordinate) - 0.5);
 	float contour = 1.0 - smoothstep(0.035, 0.09, contourDistance);
-	color += contour * vec3(1.0, 0.74, 0.68) * 0.085;
+	color += contour * vec3(0.88, 0.82, 1.0) * 0.075;
 
 	float distanceFromCenter = abs(vUv.x - 0.5) * 2.0;
 	float peripheralFade = smoothstep(0.3, 0.9, distanceFromCenter);
 	float verticalFade =
 		1.0 - smoothstep(0.28, 0.48, abs(vUv.y - 0.5));
-	float atmosphere = 0.055 + redField * 0.2 + raised * 0.035;
+	float atmosphere = 0.055 + lavenderField * 0.18 + raised * 0.03;
 
 	gl_FragColor = vec4(color, verticalFade * peripheralFade * atmosphere);
 }
