@@ -35,9 +35,6 @@ importers:
       '@vercel/analytics':
         specifier: ^2.0.1
         version: 2.0.1(next@16.2.12(@babel/core@7.28.5(supports-color@7.2.0))(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
-      babel-plugin-macros:
-        specifier: ^3.1.0
-        version: 3.1.0
       canvas-confetti:
         specifier: ^1.9.4
         version: 1.9.4
@@ -72,6 +69,9 @@ importers:
       '@eslint/eslintrc':
         specifier: ^3.3.6
         version: 3.3.6(supports-color@7.2.0)
+      '@lingui/babel-plugin-lingui-macro':
+        specifier: ^6.6.0
+        version: 6.6.0(@babel/core@7.28.5(supports-color@7.2.0))(@babel/types@7.28.5)
       '@lingui/cli':
         specifier: ^6.6.0
         version: 6.6.0(babel-plugin-macros@3.1.0)(supports-color@7.2.0)
