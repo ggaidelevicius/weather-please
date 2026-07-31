@@ -22,11 +22,11 @@ export const HeroAtmosphere = () => {
 	return (
 		<div
 			aria-hidden
-			className="pointer-events-none absolute -top-24 bottom-0 left-1/2 z-0 w-screen -translate-x-1/2 overflow-hidden"
+			className="pointer-events-none absolute -inset-y-40 left-1/2 z-0 w-screen -translate-x-1/2"
 			data-hero-atmosphere
 		>
 			<div
-				className={`absolute inset-0 transition-opacity duration-1000 ease-out motion-reduce:transition-none ${
+				className={`absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_70%,transparent_100%)] transition-opacity duration-1000 ease-out motion-reduce:transition-none ${
 					isSurfaceVisible ? 'opacity-100' : 'opacity-0'
 				}`}
 			>
@@ -190,7 +190,8 @@ void main() {
 
 	float distanceFromCenter = abs(vUv.x - 0.5) * 2.0;
 	float peripheralFade = smoothstep(0.3, 0.9, distanceFromCenter);
-	float verticalFade = smoothstep(0.04, 0.3, vUv.y);
+	float verticalFade =
+		1.0 - smoothstep(0.28, 0.48, abs(vUv.y - 0.5));
 	float atmosphere = 0.055 + redField * 0.2 + raised * 0.035;
 
 	gl_FragColor = vec4(color, verticalFade * peripheralFade * atmosphere);
