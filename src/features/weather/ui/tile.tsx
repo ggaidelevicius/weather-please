@@ -377,7 +377,7 @@ export const Tile = ({
 					type: 'spring',
 				},
 			}}
-			className="group relative isolate will-change-[transform,opacity]"
+			className="group relative isolate h-full will-change-[transform,opacity]"
 			exit={{ opacity: 0, scale: 0.95 }}
 			initial={{ opacity: 0, scale: 0.95 }}
 		>
@@ -395,7 +395,7 @@ export const Tile = ({
 					/>
 				</>
 			)}
-			<div className="relative z-10 flex flex-col rounded-2xl border border-white/3 bg-[#24252b] p-5.5 shadow-md select-none">
+			<div className="relative z-10 flex h-full flex-col rounded-2xl border border-white/3 bg-[#24252b] p-5.5 shadow-md select-none">
 				{seasonalBadgeId && (
 					<div className="absolute top-3 right-3">
 						<div className="group/seasonal relative">
@@ -428,7 +428,7 @@ export const Tile = ({
 				<span className="absolute origin-left scale-95 text-2xl font-bold text-white opacity-0 transition-[scale,opacity] duration-300 will-change-[opacity,scale] group-hover:scale-100 group-hover:opacity-100 group-hover:delay-300">
 					{hiddenIdentifier}
 				</span>
-				<div className="mt-3 flex items-center justify-between gap-4">
+				<div className="my-auto flex items-center justify-between gap-4 pt-3">
 					<div className="flex flex-col">
 						<div className="flex items-baseline gap-2">
 							<span aria-hidden className="text-3xl text-dark-100">
@@ -495,7 +495,7 @@ export const Tile = ({
 						width={56}
 					/>
 				</div>
-				<div className="mt-4.5 flex flex-row justify-between gap-3">
+				<div className="flex flex-row justify-between gap-3 pt-4.5">
 					<div className="flex flex-row items-center gap-1">
 						<IconUvIndex aria-hidden className="text-dark-100" size={18} />
 						<span aria-hidden className="text-sm text-dark-100">

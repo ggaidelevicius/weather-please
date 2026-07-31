@@ -3,3 +3,8 @@ allowBuilds:
   esbuild: true
   prisma: true
   sharp: true
+minimumReleaseAgeExclude:
+  - lint-staged@17.0.8
+  - eslint-plugin-perfectionist@5.10.0
+  - '@types/react-dom@19.2.4'
+  - '@types/react@19.2.18'

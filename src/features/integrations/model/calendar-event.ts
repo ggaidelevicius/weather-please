@@ -1,5 +1,6 @@
 export type CalendarEvent = {
 	accountId: string
+	description: null | string
 	endTimestamp: number
 	icalUid: null | string
 	id: string

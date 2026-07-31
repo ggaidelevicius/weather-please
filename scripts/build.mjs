@@ -26,8 +26,10 @@ export const buildExtensionOutput = () => {
 		fs.writeFileSync(file, content, 'utf-8')
 	}
 
+	// The marketing landing page lives at the site root; the extension's new
+	// tab page is the app exported from the /demo route.
 	fs.moveSync(
-		path.join('out', 'index.html'),
+		path.join('out', 'demo.html'),
 		path.join(extensionPath, 'index.html'),
 	)
 	fs.moveSync(

@@ -40,6 +40,8 @@ export const createSpoofedCalendarData = (): {
 			[
 				{
 					accountId: 'spoof-work',
+					description:
+						'Share yesterday’s progress, today’s plan, and anything blocking the team.',
 					endTimestamp: now + 20 * MINUTE_MS,
 					icalUid: null,
 					id: 'spoof-standup',
@@ -51,6 +53,8 @@ export const createSpoofedCalendarData = (): {
 				},
 				{
 					accountId: 'spoof-personal',
+					description:
+						'Routine clean and check-up. Remember to bring the new insurance card.',
 					endTimestamp: now + 3 * HOUR_MS,
 					icalUid: null,
 					id: 'spoof-dentist',
@@ -62,6 +66,8 @@ export const createSpoofedCalendarData = (): {
 				},
 				{
 					accountId: 'spoof-work',
+					description:
+						'Align on next quarter’s priorities, owners, and delivery milestones.\n\nBring any open questions for the roadmap workshop.',
 					endTimestamp: startOfTomorrow.getTime() + 24 * HOUR_MS,
 					icalUid: null,
 					id: 'spoof-conference',
@@ -73,6 +79,7 @@ export const createSpoofedCalendarData = (): {
 				},
 				{
 					accountId: 'spoof-personal',
+					description: null,
 					endTimestamp: startOfTomorrow.getTime() + 10.5 * HOUR_MS,
 					icalUid: null,
 					id: 'spoof-coffee',
@@ -84,6 +91,7 @@ export const createSpoofedCalendarData = (): {
 				},
 				{
 					accountId: 'spoof-personal',
+					description: 'Booking reference: WP1234',
 					endTimestamp: startOfTomorrow.getTime() + 26 * HOUR_MS,
 					icalUid: null,
 					id: 'spoof-flight',
@@ -95,6 +103,7 @@ export const createSpoofedCalendarData = (): {
 				},
 				{
 					accountId: 'spoof-work',
+					description: null,
 					endTimestamp: startOfTomorrow.getTime() + 12 * HOUR_MS,
 					icalUid: null,
 					id: 'spoof-one-on-one',
@@ -106,6 +115,7 @@ export const createSpoofedCalendarData = (): {
 				},
 				{
 					accountId: 'spoof-personal',
+					description: null,
 					endTimestamp: startOfTomorrow.getTime() + 14 * HOUR_MS,
 					icalUid: null,
 					id: 'spoof-gym',
@@ -117,6 +127,8 @@ export const createSpoofedCalendarData = (): {
 				},
 				{
 					accountId: 'spoof-work',
+					description:
+						'Review the latest interaction flows and agree on what is ready for engineering.',
 					endTimestamp: startOfTomorrow.getTime() + 16 * HOUR_MS,
 					icalUid: null,
 					id: 'spoof-design-review',
@@ -129,6 +141,7 @@ export const createSpoofedCalendarData = (): {
 				},
 				{
 					accountId: 'spoof-personal',
+					description: null,
 					endTimestamp: startOfTomorrow.getTime() + 21 * HOUR_MS,
 					icalUid: null,
 					id: 'spoof-dinner',

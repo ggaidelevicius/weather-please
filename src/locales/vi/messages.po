@@ -134,11 +134,11 @@ msgstr "<0>Đã từ chối quyền truy cập vị trí.</0> Nhấp vào biểu
 msgid "☕ Gift a coffee"
 msgstr "☕ Tặng một cốc cà phê"
 
-#: src/pages/index.tsx:692
+#: src/pages/demo.tsx:695
 msgid "✨ NEW: Connect your Google or Microsoft calendar"
 msgstr ""
 
-#: src/pages/index.tsx:657
+#: src/pages/demo.tsx:660
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ MỚI: Hãy thử cuộn xuống"
 
@@ -210,7 +210,7 @@ msgstr "Những hành động từ thiện, sẻ chia thức ăn và sự quan t
 msgid "Add account"
 msgstr ""
 
-#: src/pages/index.tsx:739
+#: src/pages/demo.tsx:742
 msgid "air quality"
 msgstr "chất lượng không khí"
 
@@ -390,7 +390,7 @@ msgstr "Dọn dẹp cộng đồng, trồng cây và phục hồi môi trường
 msgid "Compact weather alerts"
 msgstr "Cảnh báo thời tiết gọn nhẹ"
 
-#: src/pages/index.tsx:740
+#: src/pages/demo.tsx:743
 msgid "conditions"
 msgstr "điều kiện"
 
@@ -471,7 +471,7 @@ msgstr "Ánh nắng trực tiếp đang khiến trời cảm thấy nóng hơn n
 msgid "Disconnect"
 msgstr ""
 
-#: src/pages/index.tsx:700
+#: src/pages/demo.tsx:703
 msgid "Dismiss"
 msgstr ""
 
@@ -650,7 +650,7 @@ msgstr "Những món chiên trong dầu, gồm latkes và sufganiyot, phản chi
 msgid "For many Hindus, the festival marks the return of Rama, Sita, Lakshmana, and Hanuman to Ayodhya after their long exile."
 msgstr "Với nhiều người theo đạo Hindu, lễ hội đánh dấu sự trở về của Rama, Sita, Lakshmana và Hanuman đến Ayodhya sau thời gian lưu đày dài."
 
-#: src/pages/index.tsx:741
+#: src/pages/demo.tsx:744
 msgid "forecast"
 msgstr "dự báo"
 
@@ -1088,7 +1088,7 @@ msgstr "Mưa sao băng Lyrid"
 msgid "mainly clear"
 msgstr "chủ yếu quang đãng"
 
-#: src/pages/index.tsx:742
+#: src/pages/demo.tsx:745
 msgid "map"
 msgstr "bản đồ"
 
@@ -1367,7 +1367,7 @@ msgstr "PM10 / ozone / NO₂"
 msgid "PM2.5 now"
 msgstr "PM2.5 hiện tại"
 
-#: src/pages/index.tsx:743
+#: src/pages/demo.tsx:746
 msgid "precipitation"
 msgstr "lượng mưa"
 
@@ -1414,8 +1414,8 @@ msgstr "Tôn giáo & văn hóa"
 msgid "Report a bug"
 msgstr "Báo cáo lỗi"
 
-#: src/pages/index.tsx:568
-#: src/pages/index.tsx:582
+#: src/pages/demo.tsx:571
+#: src/pages/demo.tsx:585
 msgid "Retry"
 msgstr "Thử lại"
 
@@ -1625,7 +1625,7 @@ msgstr "Hiển thị cảnh báo thời tiết"
 msgid "Show Winter Solstice event"
 msgstr "Hiển thị Đông chí"
 
-#: src/pages/index.tsx:104
+#: src/pages/demo.tsx:97
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Đang hiển thị dữ liệu thời tiết đã lưu trong bộ nhớ đệm. Thử lại để làm mới dự báo mới nhất."
 
@@ -1708,7 +1708,7 @@ msgstr "Gửi"
 msgid "Summer Solstice"
 msgstr "Hạ chí"
 
-#: src/pages/index.tsx:744
+#: src/pages/demo.tsx:747
 msgid "sun"
 msgstr "mặt trời"
 
@@ -1744,7 +1744,7 @@ msgstr "Biểu tượng và nghi thức"
 msgid "Symbols of luck"
 msgstr "Biểu tượng may mắn"
 
-#: src/pages/index.tsx:745
+#: src/pages/demo.tsx:748
 msgid "temperature"
 msgstr "nhiệt độ"
 
@@ -2240,14 +2240,14 @@ msgid "Ways to observe"
 msgstr "Cách quan sát"
 
 #: src/features/settings/ui/settings.tsx:626
-msgid "We couldn't connect to your Microsoft account. Please try again."
+msgid "We couldn't connect your calendar account. Please try again."
 msgstr ""
 
 #: src/features/settings/ui/initialisation.tsx:162
 msgid "We couldn't reach the location service right now - this isn't an issue with your device. Please try again in a moment."
 msgstr "Chúng tôi không thể kết nối với dịch vụ vị trí ngay bây giờ. Đây không phải là vấn đề với thiết bị của bạn. Vui lòng thử lại sau một lúc."
 
-#: src/pages/index.tsx:145
+#: src/pages/demo.tsx:138
 msgid "We couldn't reach the weather service. Please check your internet connection and try again."
 msgstr "Không thể kết nối dịch vụ thời tiết. Vui lòng kiểm tra kết nối internet và thử lại."
 
@@ -2259,19 +2259,19 @@ msgstr "Thời tiết"
 msgid "Weather data by Open-Meteo"
 msgstr "Dữ liệu thời tiết bởi Open-Meteo"
 
-#: src/pages/index.tsx:136
+#: src/pages/demo.tsx:129
 msgid "Weather data couldn't be loaded because the weather service could not be reached. This usually isn't a problem with your device. Please try again in a moment."
 msgstr "Không thể tải dữ liệu thời tiết vì không thể kết nối dịch vụ thời tiết. Thường thì đây không phải lỗi thiết bị của bạn. Vui lòng thử lại sau."
 
-#: src/pages/index.tsx:117
+#: src/pages/demo.tsx:110
 msgid "Weather data couldn't be loaded because the weather service is having trouble. This isn't a problem with your device. Please try again in a moment."
 msgstr "Không thể tải dữ liệu thời tiết vì dịch vụ thời tiết đang gặp sự cố. Đây không phải lỗi thiết bị của bạn. Vui lòng thử lại sau."
 
-#: src/pages/index.tsx:96
+#: src/pages/demo.tsx:89
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "Không thể tải dữ liệu thời tiết do sự cố dịch vụ — đang hiển thị dữ liệu đã lưu trong bộ nhớ đệm. Vui lòng thử lại sau một lúc."
 
-#: src/pages/index.tsx:127
+#: src/pages/demo.tsx:120
 msgid "Weather data couldn't be loaded for this location. Please check your location settings and try again."
 msgstr "Không thể tải dữ liệu thời tiết cho vị trí này. Vui lòng kiểm tra cài đặt vị trí và thử lại."
 
@@ -2327,7 +2327,7 @@ msgstr "Vì sao nó chuyển đỏ"
 msgid "Why the peak is brief"
 msgstr "Vì sao đỉnh điểm ngắn"
 
-#: src/pages/index.tsx:746
+#: src/pages/demo.tsx:749
 msgid "wind"
 msgstr "gió"
 

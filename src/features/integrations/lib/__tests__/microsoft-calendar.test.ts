@@ -15,6 +15,7 @@ const stubGraphResponse = (body: unknown, status = 200) => {
 }
 
 const createGraphEvent = (overrides: Record<string, unknown> = {}) => ({
+	bodyPreview: 'Discuss progress and blockers',
 	end: { dateTime: '2026-06-12T11:00:00.0000000' },
 	id: 'event-1',
 	isAllDay: false,
@@ -47,6 +48,7 @@ describe('fetchUpcomingCalendarEvents', () => {
 
 		expect(url.origin).toBe('https://graph.microsoft.com')
 		expect(url.pathname).toBe('/v1.0/me/calendarView')
+		expect(url.searchParams.get('$select')).toContain('bodyPreview')
 		expect(url.searchParams.get('startDateTime')).toBe(
 			'2026-06-12T12:00:00.000Z',
 		)
@@ -67,6 +69,7 @@ describe('fetchUpcomingCalendarEvents', () => {
 					start: { dateTime: '2026-06-12T15:00:00.0000000' },
 				}),
 				createGraphEvent({
+					bodyPreview: '   ',
 					iCalUId: null,
 					id: 'earlier',
 					start: { dateTime: '2026-06-12T09:00:00.0000000' },
@@ -84,11 +87,13 @@ describe('fetchUpcomingCalendarEvents', () => {
 
 		expect(events.map((event) => event.id)).toEqual(['earlier', 'later'])
 		expect(events[0]?.accountId).toBe('account-1')
+		expect(events[0]?.description).toBeNull()
 		expect(events[0]?.icalUid).toBeNull()
 		expect(events[0]?.location).toBeNull()
 		expect(events[0]?.subject).toBe('')
 		expect(events[0]?.webLink).toBeNull()
 		expect(events[1]?.icalUid).toBe('ical-later')
+		expect(events[1]?.description).toBe('Discuss progress and blockers')
 		expect(events[1]?.location).toBe('Meeting room 3')
 		expect(events[1]?.startTimestamp).toBe(
 			new Date('2026-06-12T15:00:00').getTime(),

@@ -1,6 +1,9 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+	experimental: {
+		useTypeScriptCli: true,
+	},
 	images: { qualities: [100] },
 	reactCompiler: true,
 }

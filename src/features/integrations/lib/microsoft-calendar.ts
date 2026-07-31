@@ -19,7 +19,8 @@ export const fetchUpcomingCalendarEvents = async ({
 	const windowEnd = getUpcomingEventsWindowEnd({ now })
 	const params = new URLSearchParams({
 		$orderby: 'start/dateTime',
-		$select: 'id,iCalUId,subject,start,end,isAllDay,location,webLink',
+		$select:
+			'id,iCalUId,subject,bodyPreview,start,end,isAllDay,location,webLink',
 		$top: MAX_EVENTS.toString(),
 		endDateTime: windowEnd.toISOString(),
 		startDateTime: now.toISOString(),
@@ -62,6 +63,7 @@ const graphDateTimeSchema = z.object({
 })
 
 const graphEventSchema = z.object({
+	bodyPreview: z.string().nullable().optional(),
 	end: graphDateTimeSchema,
 	iCalUId: z.string().nullable().optional(),
 	id: z.string().min(1),
@@ -87,6 +89,7 @@ const mapGraphEvent = ({
 	event: z.infer<typeof graphEventSchema>
 }>): CalendarEvent => ({
 	accountId,
+	description: event.bodyPreview?.trim() || null,
 	endTimestamp: parseGraphDateTime(event.end.dateTime),
 	icalUid: event.iCalUId ?? null,
 	id: event.id,
