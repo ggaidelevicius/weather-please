@@ -62,6 +62,7 @@ const googleEventTimeSchema = z.object({
 })
 
 const googleEventSchema = z.object({
+	description: z.string().nullable().optional(),
 	end: googleEventTimeSchema,
 	htmlLink: z.string().nullable().optional(),
 	iCalUID: z.string().nullable().optional(),
@@ -84,6 +85,7 @@ const mapGoogleEvent = ({
 	event: z.infer<typeof googleEventSchema>
 }>): CalendarEvent => ({
 	accountId,
+	description: event.description?.trim() || null,
 	endTimestamp: parseGoogleEventTime(event.end),
 	icalUid: event.iCalUID ?? null,
 	id: event.id,

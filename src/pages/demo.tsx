@@ -603,7 +603,9 @@ const App = () => {
 									: { opacity: 0, x: 24 }
 							}
 							aria-hidden={activeAvailableViewId !== 'forecast'}
-							className="absolute top-4 right-4 z-10 will-change-[transform,opacity]"
+							// An opacity compositing hint creates a backdrop root and prevents
+							// descendant cards from blurring the forecast behind this overlay.
+							className="absolute top-4 right-4 z-10 will-change-transform"
 							initial={false}
 							style={{
 								pointerEvents:

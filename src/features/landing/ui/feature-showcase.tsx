@@ -526,7 +526,7 @@ const SCENES = [
 	{
 		description:
 			'Optionally connect Google Calendar or Microsoft Outlook to see your upcoming events beside the forecast.',
-		eyebrow: 'Colour-coded by account — personal, work, more.',
+		eyebrow: 'Colour-coded by account - personal, work, more.',
 		icon: IconCalendarEvent,
 		id: 'calendar',
 		title: 'Your day at a glance',
@@ -543,7 +543,7 @@ const SCENES = [
 	},
 	{
 		description:
-			'Subtle seasonal effects for solstices, meteor showers, holidays, and more — all of which can be turned off.',
+			'Subtle seasonal effects for solstices, meteor showers, holidays, and more - all of which can be turned off.',
 		eyebrow: 'Backgrounds that change throughout the year.',
 		icon: IconSparkles,
 		id: 'seasonal',

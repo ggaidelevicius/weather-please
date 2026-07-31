@@ -1,9 +1,14 @@
 import type { ReactNode } from 'react'
 
 import { Trans } from '@lingui/react/macro'
+import {
+	IconChevronDown,
+	IconExternalLink,
+	IconMapPin,
+} from '@tabler/icons-react'
 import { clsx } from 'clsx'
-import { motion } from 'framer-motion'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Fragment, useEffect, useId, useRef, useState } from 'react'
 
 import type { CalendarAccountSummary } from '../hooks/use-calendar-connection'
 import type { CalendarEvent } from '../model/calendar-event'
@@ -16,7 +21,10 @@ import {
 const NOW_TICK_INTERVAL_MS = 60_000
 
 const EVENT_CARD_CLASS_NAME =
-	'flex w-full items-center gap-3 rounded-xl border border-white/10 bg-dark-950/70 p-3 shadow-sm backdrop-blur-md'
+	'w-full shrink-0 overflow-hidden rounded-xl border border-white/10 bg-dark-950/85 shadow-sm backdrop-blur-xl'
+
+const EVENT_ACTION_CLASS_NAME =
+	'flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-white/5 text-dark-200 shadow-sm transition-colors hover:border-white/20 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-blue-500'
 
 export const UpcomingEvents = ({
 	accounts,
@@ -71,6 +79,10 @@ export const UpcomingEvents = ({
 			)
 		}
 		section.addEventListener('scroll', updateBottomOverflow, { passive: true })
+		const resizeObserver = new ResizeObserver(updateBottomOverflow)
+		for (const child of section.children) {
+			resizeObserver.observe(child)
+		}
 		const initialMeasureFrame = requestAnimationFrame(updateBottomOverflow)
 
 		return () => {
@@ -78,6 +90,7 @@ export const UpcomingEvents = ({
 				section.removeEventListener(eventName, stopPropagation)
 			}
 			section.removeEventListener('scroll', updateBottomOverflow)
+			resizeObserver.disconnect()
 			cancelAnimationFrame(initialMeasureFrame)
 		}
 	}, [hasVisibleEvents, visibleEventCount])
@@ -96,7 +109,7 @@ export const UpcomingEvents = ({
 			animate={{ opacity: 1, x: 0 }}
 			aria-label="Upcoming calendar events"
 			className={clsx(
-				'flex max-h-[75vh] w-80 max-w-[calc(100vw-2rem)] [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent] flex-col items-stretch gap-2 overflow-y-auto overscroll-contain pr-1',
+				'flex max-h-[75vh] w-[21rem] max-w-[calc(100vw-2rem)] [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent] flex-col items-stretch gap-2 overflow-y-auto overscroll-contain pr-1',
 				hasMoreBelow &&
 					'[mask-image:linear-gradient(to_bottom,black_calc(100%-3rem),transparent)]',
 			)}
@@ -140,6 +153,10 @@ const EventCard = ({
 	now: number
 }>) => {
 	const category = account?.category ?? CalendarAccountCategory.Personal
+	const descriptionId = useId()
+	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
+	const hasActions = Boolean(event.description || event.webLink)
+	const hasFooter = Boolean(event.location || hasActions)
 	const durationLabel = event.isAllDay
 		? null
 		: formatDurationLabel(event.startTimestamp, event.endTimestamp)
@@ -164,30 +181,107 @@ const EventCard = ({
 				<p className="text-sm font-semibold break-words text-white">
 					{event.subject || <Trans>Untitled event</Trans>}
 				</p>
-				{event.location ? (
-					<p className="text-xs break-words text-dark-200">{event.location}</p>
-				) : null}
 			</div>
 		</>
 	)
 
-	return event.webLink ? (
-		<a
-			className={`${EVENT_CARD_CLASS_NAME} transition hover:border-white/25`}
-			href={event.webLink}
-			rel="noopener noreferrer"
-			target="_blank"
-			title={account?.accountLabel ?? undefined}
-		>
-			{cardContent}
-		</a>
-	) : (
-		<div
+	return (
+		<motion.article
 			className={EVENT_CARD_CLASS_NAME}
+			layout="position"
 			title={account?.accountLabel ?? undefined}
 		>
-			{cardContent}
-		</div>
+			<div
+				className={clsx(
+					'flex min-w-0 items-center gap-3 px-3 pt-3',
+					hasFooter ? 'pb-2' : 'pb-3',
+				)}
+			>
+				{cardContent}
+			</div>
+			{hasFooter ? (
+				<div className="flex min-h-6 items-end gap-2 px-3 pb-2">
+					{event.location ? (
+						<div className="flex min-w-0 flex-1 items-center gap-1.5 text-xs text-dark-200">
+							<IconMapPin
+								aria-hidden
+								className="shrink-0"
+								size={13}
+								strokeWidth={1.75}
+							/>
+							<p className="min-w-0 break-words">{event.location}</p>
+						</div>
+					) : null}
+					{hasActions ? (
+						<div className="ml-auto flex shrink-0 items-center gap-1">
+							{event.webLink ? (
+								<a
+									className={EVENT_ACTION_CLASS_NAME}
+									href={event.webLink}
+									rel="noopener noreferrer"
+									target="_blank"
+								>
+									<IconExternalLink aria-hidden size={14} strokeWidth={1.75} />
+									<span className="sr-only">
+										<Trans>View source event</Trans>
+									</span>
+								</a>
+							) : null}
+							{event.description ? (
+								<button
+									aria-controls={descriptionId}
+									aria-expanded={isDescriptionExpanded}
+									className={clsx(
+										EVENT_ACTION_CLASS_NAME,
+										isDescriptionExpanded &&
+											'border-white/20 bg-white/10 text-white',
+									)}
+									onClick={() =>
+										setIsDescriptionExpanded(
+											(currentIsExpanded) => !currentIsExpanded,
+										)
+									}
+									type="button"
+								>
+									<motion.span
+										animate={{ rotate: isDescriptionExpanded ? 180 : 0 }}
+										className="flex"
+										initial={false}
+										transition={{
+											damping: 24,
+											stiffness: 320,
+											type: 'spring',
+										}}
+									>
+										<IconChevronDown aria-hidden size={14} strokeWidth={1.75} />
+									</motion.span>
+									<span className="sr-only">
+										<Trans>Event description</Trans>
+									</span>
+								</button>
+							) : null}
+						</div>
+					) : null}
+				</div>
+			) : null}
+			<AnimatePresence initial={false}>
+				{event.description && isDescriptionExpanded ? (
+					<motion.div
+						animate={{ height: 'auto', opacity: 1 }}
+						exit={{ height: 0, opacity: 0 }}
+						id={descriptionId}
+						initial={{ height: 0, opacity: 0 }}
+						transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+					>
+						<div className="border-t border-white/8 px-3 py-3">
+							<p className="text-xs leading-relaxed whitespace-pre-wrap text-dark-100">
+								{event.description}
+							</p>
+						</div>
+					</motion.div>
+				) : null}
+			</AnimatePresence>
+		</motion.article>
 	)
 }
 

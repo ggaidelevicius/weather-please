@@ -15,6 +15,7 @@ const stubEventsResponse = (body: unknown, status = 200) => {
 }
 
 const createGoogleEvent = (overrides: Record<string, unknown> = {}) => ({
+	description: 'Discuss the weekend itinerary',
 	end: { dateTime: '2026-06-12T11:00:00+10:00' },
 	htmlLink: 'https://www.google.com/calendar/event?eid=1',
 	iCalUID: 'event-1@google.com',
@@ -64,6 +65,7 @@ describe('fetchUpcomingGoogleCalendarEvents', () => {
 					status: 'cancelled',
 				}),
 				createGoogleEvent({
+					description: '   ',
 					end: { date: '2026-06-14' },
 					htmlLink: null,
 					iCalUID: null,
@@ -85,6 +87,7 @@ describe('fetchUpcomingGoogleCalendarEvents', () => {
 
 		const timedEvent = events[0]
 		expect(timedEvent?.accountId).toBe('google-account')
+		expect(timedEvent?.description).toBe('Discuss the weekend itinerary')
 		expect(timedEvent?.icalUid).toBe('event-1@google.com')
 		expect(timedEvent?.isAllDay).toBe(false)
 		expect(timedEvent?.location).toBe('Patricia Coffee Brewers')
@@ -94,6 +97,7 @@ describe('fetchUpcomingGoogleCalendarEvents', () => {
 		expect(timedEvent?.subject).toBe('Coffee with Alex')
 
 		const allDayEvent = events[1]
+		expect(allDayEvent?.description).toBeNull()
 		expect(allDayEvent?.isAllDay).toBe(true)
 		expect(allDayEvent?.location).toBeNull()
 		expect(allDayEvent?.startTimestamp).toBe(new Date(2026, 5, 13).getTime())

@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 import { FeatureShowcase } from '../features/landing/ui/feature-showcase'
+import { HeroAtmosphere } from '../features/landing/ui/hero-atmosphere'
 
 const CHROME_STORE_URL =
 	'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn'
@@ -18,8 +19,9 @@ const LandingPage = () => (
 				content="Weather Please is a free, open-source browser extension that shows your local weather forecast and upcoming calendar events on every new tab."
 				name="description"
 			/>
+			<style>{'body { overflow-x: clip; }'}</style>
 		</Head>
-		<header>
+		<header className="relative z-20">
 			<nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-8 sm:px-6 lg:px-8">
 				<div className="flex items-center gap-16">
 					<Link aria-label="Home" className="flex items-center" href="/">
@@ -59,16 +61,17 @@ const LandingPage = () => (
 			</nav>
 		</header>
 		<main>
-			<section className="pt-16 pb-20 sm:pt-24 sm:pb-28">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-					<div className="max-w-2xl">
+			<section className="relative isolate pt-16 pb-20 sm:pt-24 sm:pb-28">
+				<HeroAtmosphere />
+				<div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+					<div className="max-w-xl">
 						<h1 className="text-4xl font-medium tracking-tight text-white sm:text-5xl">
 							Your forecast. Your day.
 						</h1>
 						<p className="mt-6 text-lg text-pretty text-dark-100">
 							Weather Please is a free, open-source new-tab extension that shows
 							your weather and day at a glance, with optional Google or
-							Microsoft calendar sync. No accounts, ads, or tracking—just what
+							Microsoft calendar sync. No accounts, ads, or tracking - just what
 							helps you start the day.
 						</p>
 						<div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
@@ -127,7 +130,18 @@ const LandingPage = () => (
 		</main>
 		<footer className="border-t border-white/10">
 			<div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-8 text-sm text-dark-200 sm:px-6 lg:px-8">
-				<p>© Gus Gaidelevicius</p>
+				<div className="flex flex-wrap items-center gap-x-2">
+					<p>© Gus Gaidelevicius</p>
+					<span aria-hidden>·</span>
+					<a
+						className="transition-colors hover:text-white"
+						href="https://ggaidelevicius.com"
+						rel="noopener noreferrer"
+						target="_blank"
+					>
+						ggaidelevicius.com
+					</a>
+				</div>
 				<nav className="flex flex-wrap gap-x-6 gap-y-2">
 					<Link className="transition-colors hover:text-white" href="/privacy">
 						Privacy policy

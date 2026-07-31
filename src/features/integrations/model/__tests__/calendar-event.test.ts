@@ -8,6 +8,7 @@ const createEvent = (
 	overrides: Partial<CalendarEvent> = {},
 ): CalendarEvent => ({
 	accountId: 'account-1',
+	description: null,
 	endTimestamp: 2000,
 	icalUid: null,
 	id: 'event-1',
