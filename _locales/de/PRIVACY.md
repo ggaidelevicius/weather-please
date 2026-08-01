@@ -1,88 +1,147 @@
-# Datenschutzrichtlinie für die "Weather Please" Browsererweiterung
+# Datenschutzrichtlinie für die Browsererweiterung „Weather Please“
 
-_Letzte Aktualisierung: 12. Juni 2026_
+_Letzte Aktualisierung: 1. August 2026_
 
-Ihre Privatsphäre ist uns wichtig. Diese Richtlinie beschreibt, welche Daten die
-"Weather Please" Browsererweiterung erfassen kann und wie diese genutzt werden.
+Diese Richtlinie erläutert, auf welche Daten die Browsererweiterung „Weather
+Please“ zugreift, wie sie diese Daten verwendet und schützt und welche
+Wahlmöglichkeiten Sie haben.
 
-## 1. Welche Daten wir nicht sammeln
+## 1. Welche Daten wir nicht erfassen
 
-"Weather Please" sammelt, speichert oder überträgt keine personenbezogenen Daten
-zu Ihrem Surfverhalten. Wir erfassen keine IP-Adressen, Browserverläufe oder
-persönlich identifizierbare Informationen.
+Die Erweiterung greift nicht auf Ihren Browserverlauf, die Inhalte besuchter
+Websites, Kontakte, Dateien oder Werbekennungen zu und erfasst diese nicht. Wir
+betreiben keinen Server, der Daten Ihres Google-Kontos oder Google Kalenders
+empfängt oder speichert.
 
-## 2. Standortdaten und Drittanbieter
+## 2. Standortdaten und Drittanbieterdienste
 
-Um lokale Wetterdaten bereitzustellen, benötigt "Weather Please" Zugriff auf die
-Standortdaten Ihres Geräts (Breiten- und Längengrad). Bei der Installation
-werden Sie um Erlaubnis zur Standortfreigabe gebeten. Wenn Sie diese verweigern,
-funktioniert die Erweiterung nicht.
+Für lokale Wetterinformationen benötigt „Weather Please“ den Standort Ihres
+Geräts (Breiten- und Längengrad). Wenn Sie den Zugriff ablehnen, funktioniert
+die Erweiterung nicht.
 
-Ihre Standortdaten werden direkt an Drittanbieter weitergeleitet, um
-Wetterinformationen abzurufen und einen benutzerfreundlichen Ortsnamen
-anzuzeigen. Diese Drittanbieter haben ihre eigenen Datenschutzrichtlinien, die
-Sie hier einsehen können:
+Standortdaten werden direkt an Drittanbieterdienste gesendet, um Wetterdaten und
+einen lesbaren Ortsnamen abzurufen. Es gelten deren eigene
+Datenschutzrichtlinien:
 
-- [Open-Meteo Datenschutzrichtlinie](https://open-meteo.com/en/terms)
-- [Nominatim (OpenStreetMap) Datenschutzrichtlinie](https://osmfoundation.org/wiki/Privacy_Policy)
+- [Open-Meteo-Datenschutzrichtlinie](https://open-meteo.com/en/terms)
+- [Nominatim-/OpenStreetMap-Datenschutzrichtlinie](https://osmfoundation.org/wiki/Privacy_Policy)
 
-Nominatim wird verwendet, um Ihre Koordinaten in einen lesbaren Ortsnamen
-umzuwandeln (Reverse Geocoding). "Weather Please" speichert oder überträgt Ihre
-Standortdaten nicht über diese Anfragen hinaus.
+Nominatim wandelt Koordinaten in einen Ortsnamen um (Reverse Geocoding).
+„Weather Please“ überträgt Standortdaten nur für diese Anfragen.
 
-## 3. Kalenderdaten (optional)
+## 3. Google-Nutzerdaten und Kalenderintegration (optional)
 
-"Weather Please" kann optional mit Ihrem Google Kalender- oder Microsoft
-Outlook-Konto verbunden werden, um Ihre bevorstehenden Termine anzuzeigen. Wenn
-Sie ein Konto verbinden:
+Sie können ein Google-Konto verbinden, um anstehende Termine auf der
+Neuer-Tab-Seite anzuzeigen. Die Erweiterung verwendet Google OAuth 2.0 und
+fordert den Bereich `calendar.events.readonly` an. Die Wetterfunktionen können
+ohne Kalenderzugriff genutzt werden.
 
-- Die Authentifizierung erfolgt direkt zwischen Ihrem Browser und Google oder
-  Microsoft über das branchenübliche OAuth-2.0-Protokoll. Wir sehen oder
-  speichern Ihr Passwort niemals.
-- Die Erweiterung fordert nur den mindestens erforderlichen Lesezugriff an, um
-  Ihre bevorstehenden Termine aufzulisten. Sie kann keine Termine erstellen,
-  bearbeiten oder löschen.
-- Termindaten (Titel, Uhrzeiten und Orte) werden direkt von Ihrem Anbieter
-  abgerufen und lokal auf Ihrer Neuer-Tab-Seite angezeigt. Sie werden niemals an
-  unsere Server übertragen, dort verarbeitet oder gespeichert.
-- Anmeldetoken werden lokal in Ihrem Browser gespeichert und gelöscht, wenn Sie
-  das Konto trennen.
-- Sie können ein Konto jederzeit in den Einstellungen der Erweiterung trennen
-  und den Zugriff der Erweiterung zusätzlich in den Sicherheitseinstellungen
-  Ihres Google- oder Microsoft-Kontos widerrufen.
+<a id="google-user-data-access"></a>
 
-Die Verarbeitung Ihrer Daten durch Google und Microsoft unterliegt den
-jeweiligen Datenschutzrichtlinien:
+### 3.1 Google-Nutzerdaten, auf die wir zugreifen
 
-- [Google-Datenschutzrichtlinie](https://policies.google.com/privacy)
-- [Microsoft-Datenschutzerklärung](https://privacy.microsoft.com/privacystatement)
+Wenn Sie ein Google-Konto verbinden, greifen wir auf Folgendes zu:
+
+- stabile Google-Kontokennung sowie E-Mail-Adresse oder Name, ausschließlich zur
+  Identifizierung und Beschriftung des verbundenen Kontos;
+- OAuth-Zugriffs- und Aktualisierungstoken zur Authentifizierung und
+  Aufrechterhaltung der Verbindung;
+- bis zu 10 anstehende Termine aus Ihrem primären Google Kalender innerhalb der
+  nächsten drei Tage: Titel, Beschreibung, Beginn und Ende, Ganztagsstatus, Ort,
+  Terminstatus, Terminkennungen und Google-Kalender-Quelllink.
+
+Der Zugriff ist schreibgeschützt. Die Erweiterung kann keine Kalender oder
+Termine erstellen, bearbeiten oder löschen.
+
+<a id="google-user-data-use"></a>
+
+### 3.2 Verwendung von Google-Nutzerdaten
+
+Kontodaten und OAuth-Token werden nur zum Verbinden des Kontos, Erneuern der
+Verbindung und für autorisierte Leseanfragen verwendet. Termindaten werden nur
+angezeigt, gruppiert, sortiert und dedupliziert; außerdem wird ein Link zum
+Quelltermin bereitgestellt.
+
+Google-Nutzerdaten werden nicht für Werbung, Profilbildung,
+Bonitäts-/Berechtigungsentscheidungen oder zum Entwickeln, Verbessern oder
+Trainieren allgemeiner KI- oder Machine-Learning-Modelle verwendet.
+
+<a id="google-user-data-sharing"></a>
+
+### 3.3 Weitergabe, Übertragung und Offenlegung
+
+Google-Nutzerdaten werden direkt zwischen Google und der Erweiterung in Ihrem
+Browser übertragen und nicht an unsere Server gesendet. Wir verkaufen,
+vermieten, teilen, übertragen oder offenbaren sie nicht gegenüber Dritten,
+Werbetreibenden, Datenhändlern oder anderen Nutzern. Menschen erhalten keinen
+Zugriff auf Ihre Google-Nutzerdaten.
+
+<a id="google-user-data-protection"></a>
+
+### 3.4 Speicherung und Datenschutz
+
+Die Authentifizierung verwendet den OAuth-2.0-Autorisierungscodefluss mit PKCE;
+die Erweiterung erhält oder speichert Ihr Google-Passwort daher nie. Anfragen an
+Google verwenden HTTPS/TLS, und es wird nur der erforderliche Lesezugriff
+angefordert.
+
+Termindetails werden nur im Browserspeicher gehalten und nicht dauerhaft
+gespeichert. OAuth-Token, Kontokennung und Kontobezeichnung werden lokal im
+Browserspeicher abgelegt, sind auf den Ursprung der Erweiterung beschränkt und
+durch Browserprofil und Betriebssystemzugriff geschützt. Google-Nutzerdaten
+werden nicht in Analysen, Diagnoseberichten oder Anwendungsprotokollen erfasst.
+
+<a id="google-user-data-retention"></a>
+
+### 3.5 Aufbewahrung und Löschung
+
+Termindetails werden verworfen, wenn die Seite geschlossen oder neu geladen
+wird, aktualisierte Daten sie ersetzen oder das Konto getrennt wird. Token und
+Kontoinformationen bleiben nur solange lokal gespeichert, wie das Konto
+verbunden ist. Durch Trennen des Kontos werden diese Werte gelöscht. Das
+Entfernen der Erweiterung löscht auch ihren lokalen Erweiterungsspeicher.
+
+Sie können den Zugriff außerdem unter
+[Verknüpfungen Ihres Google-Kontos](https://myaccount.google.com/connections)
+widerrufen. Dadurch wird die Autorisierung ungültig. Da wir keine
+Google-Nutzerdaten auf Servern oder in Server-Backups speichern, gibt es keine
+weitere serverseitige Kopie zu löschen.
+
+### 3.6 Google API Services User Data Policy
 
 Die Nutzung und Übertragung von über Google APIs erhaltenen Informationen durch
-"Weather Please" entspricht der
+„Weather Please“ entspricht der
 [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy),
-einschließlich der Anforderungen zur eingeschränkten Nutzung (Limited Use).
+einschließlich der Anforderungen zur eingeschränkten Nutzung.
 
-## 4. Wie wir Ihre Daten verwenden
+## 4. Microsoft-Outlook-Daten (optional)
 
-Wir sammeln, speichern oder teilen keine persönlichen Daten. Ihre
-Standortinformationen werden ausschließlich verwendet, um Wetterdaten von
-Drittanbietern abzurufen, und der Kalenderzugriff wird ausschließlich verwendet,
-um Ihre bevorstehenden Termine auf Ihrer Neuer-Tab-Seite anzuzeigen.
+Sie können ein Microsoft-Outlook-Konto verbinden. Die Authentifizierung erfolgt
+direkt mit Microsoft über OAuth 2.0; wir sehen oder speichern Ihr Passwort nie.
+Die Erweiterung fordert nur Lesezugriff an und kann keine Termine ändern.
+Termine werden direkt von Microsoft abgerufen und lokal angezeigt. Token werden
+lokal gespeichert und beim Trennen gelöscht. Sie können den Zugriff zusätzlich
+in den Sicherheitseinstellungen Ihres Microsoft-Kontos widerrufen. Es gilt die
+[Microsoft-Datenschutzerklärung](https://privacy.microsoft.com/privacystatement).
 
-## 5. Ihre Wahlmöglichkeiten
+## 5. Verwendung anderer Informationen
 
-Sie können beim Installationsvorgang entscheiden, ob Sie den Standortzugriff
-erlauben. Ohne Ihre Zustimmung funktioniert die Erweiterung nicht. Durch die
-Kalenderverbindungen sind vollständig optional, und die Erweiterung funktioniert
-auch ohne sie vollständig. Durch die Nutzung von "Weather Please" stimmen Sie
-diesen Anforderungen zu.
+Ihr Standort wird nur zum Abrufen lokaler Wetterdaten und eines Ortsnamens
+verwendet. Wetterdaten, Einstellungen und Standortcache können lokal gespeichert
+werden, damit die Erweiterung schnell lädt und Ihre Einstellungen beibehält.
 
-## 6. Änderungen dieser Datenschutzrichtlinie
+## 6. Ihre Wahlmöglichkeiten
 
-Diese Datenschutzrichtlinie kann gelegentlich aktualisiert werden. Änderungen
-werden auf dieser Seite veröffentlicht und treten sofort in Kraft.
+Sie entscheiden, ob Sie Standortzugriff gewähren; ohne ihn funktioniert die
+Erweiterung nicht. Kalenderverbindungen sind vollständig optional. Konten können
+jederzeit in den Einstellungen getrennt werden.
 
-## 7. Kontaktieren Sie uns
+## 7. Änderungen dieser Datenschutzrichtlinie
 
-Bei Fragen oder Anregungen kontaktieren Sie uns bitte unter
+Wir können diese Richtlinie aktualisieren. Änderungen werden auf dieser Seite
+veröffentlicht und gelten ab ihrer Veröffentlichung.
+
+## 8. Kontakt
+
+Bei Fragen kontaktieren Sie uns unter
 [contact@weather-please.app](mailto:contact@weather-please.app).

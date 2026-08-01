@@ -1,87 +1,142 @@
-# Política de Privacidad de la Extensión del Navegador "Weather Please"
+# Política de privacidad de la extensión de navegador "Weather Please"
 
-_Última actualización: 12 de junio de 2026_
+_Última actualización: 1 de agosto de 2026_
 
-Tu privacidad es importante para nosotros. Esta política explica qué datos puede
-recopilar la extensión del navegador "Weather Please" y cómo se utilizan.
+Esta política explica a qué datos accede la extensión "Weather Please", cómo los
+utiliza y protege, y las opciones disponibles para ti.
 
 ## 1. Información que no recopilamos
 
-"Weather Please" **no** recopila, almacena ni transmite ningún dato personal
-sobre tu actividad de navegación. No accedemos, retenemos ni compartimos
-direcciones IP, historial de navegación ni información de identificación
-personal.
+La extensión no accede ni recopila tu historial de navegación, el contenido de
+los sitios que visitas, contactos, archivos ni identificadores publicitarios. No
+operamos ningún servidor que reciba o almacene datos de tu cuenta de Google o de
+Google Calendar.
 
-## 2. Datos de geolocalización y servicios de terceros
+## 2. Geolocalización y servicios de terceros
 
-Para obtener información meteorológica local, "Weather Please" necesita acceso a
-la geolocalización de tu dispositivo (latitud y longitud). Al instalar la
-extensión, se te pedirá permiso para acceder a tu ubicación. Si rechazas, la
+Para obtener información meteorológica local, "Weather Please" necesita la
+ubicación de tu dispositivo (latitud y longitud). Si rechazas el acceso, la
 extensión no funcionará.
 
-Los datos de ubicación se envían directamente a servicios de terceros para
-recuperar la información del clima y mostrar un nombre de ubicación fácil de
-entender. Estos servicios operan bajo sus propias políticas de privacidad, que
-puedes consultar aquí:
+La ubicación se envía directamente a servicios de terceros para obtener datos
+meteorológicos y un nombre de lugar legible. Se aplican sus propias políticas:
 
-- [Política de privacidad de Open-Meteo](https://open-meteo.com/en/terms)
-- [Política de privacidad de Nominatim (OpenStreetMap)](https://osmfoundation.org/wiki/Privacy_Policy)
+- [Política de Open-Meteo](https://open-meteo.com/en/terms)
+- [Política de Nominatim/OpenStreetMap](https://osmfoundation.org/wiki/Privacy_Policy)
 
-Nominatim se utiliza para convertir tus coordenadas en un nombre de ubicación
-legible (geocodificación inversa). "Weather Please" no almacena ni transmite tus
-datos de ubicación más allá de estas solicitudes.
+Nominatim convierte las coordenadas en un nombre de lugar (geocodificación
+inversa). "Weather Please" solo transmite la ubicación para estas solicitudes.
 
-## 3. Datos del calendario (opcional)
+## 3. Datos de usuario de Google e integración con Calendar (opcional)
 
-"Weather Please" puede conectarse opcionalmente a tu cuenta de Google Calendar o
-Microsoft Outlook para mostrar tus próximos eventos. Si decides conectar una
-cuenta:
+Puedes conectar una cuenta de Google para mostrar próximos eventos en la página
+de nueva pestaña. La extensión usa Google OAuth 2.0 y solicita el alcance
+`calendar.events.readonly`. Las funciones meteorológicas no requieren acceso al
+calendario.
 
-- La autenticación se realiza directamente entre tu navegador y Google o
-  Microsoft mediante el protocolo OAuth 2.0 estándar del sector. Nunca vemos ni
-  almacenamos tu contraseña.
-- La extensión solicita el acceso mínimo de solo lectura necesario para enumerar
-  tus próximos eventos. No puede crear, editar ni eliminar eventos.
-- Los datos de los eventos (títulos, horas y ubicaciones) se obtienen
-  directamente de tu proveedor y se muestran localmente en la página de nueva
-  pestaña. Nunca se transmiten, procesan ni almacenan en nuestros servidores.
-- Los tokens de inicio de sesión se almacenan localmente en tu navegador y se
-  eliminan cuando desconectas la cuenta.
-- Puedes desconectar una cuenta en cualquier momento desde la configuración de
-  la extensión y también revocar el acceso de la extensión desde la
-  configuración de seguridad de tu cuenta de Google o Microsoft.
+<a id="google-user-data-access"></a>
 
-El tratamiento de tus datos por parte de Google y Microsoft se rige por sus
-respectivas políticas de privacidad:
+### 3.1 Datos de usuario de Google a los que accedemos
 
-- [Política de privacidad de Google](https://policies.google.com/privacy)
-- [Declaración de privacidad de Microsoft](https://privacy.microsoft.com/privacystatement)
+Si conectas una cuenta, accedemos a:
 
-El uso y la transferencia de la información recibida de las APIs de Google por
-parte de "Weather Please" cumplen con la
+- el identificador estable de la cuenta y su correo electrónico o nombre, solo
+  para identificar y etiquetar la cuenta conectada;
+- tokens de acceso y actualización OAuth, para autenticar solicitudes y mantener
+  la conexión;
+- hasta 10 eventos próximos del calendario principal durante los próximos tres
+  días: título, descripción, inicio y fin, estado de día completo, ubicación,
+  estado e identificadores del evento y enlace de origen de Google Calendar.
+
+El acceso es de solo lectura. La extensión no puede crear, editar ni eliminar
+eventos o calendarios.
+
+<a id="google-user-data-use"></a>
+
+### 3.2 Cómo usamos los datos de usuario de Google
+
+Los datos de cuenta y tokens se usan únicamente para conectar la cuenta, renovar
+la conexión y realizar solicitudes de lectura autorizadas. Los eventos solo se
+muestran, agrupan, ordenan y deduplican, y se ofrece un enlace al evento
+original.
+
+No usamos datos de Google para publicidad, elaboración de perfiles, decisiones
+crediticias o de elegibilidad, ni para desarrollar, mejorar o entrenar modelos
+generales de IA o aprendizaje automático.
+
+<a id="google-user-data-sharing"></a>
+
+### 3.3 Uso compartido, transferencia y divulgación
+
+Los datos viajan directamente entre Google y la extensión en tu navegador y no
+se envían a nuestros servidores. No los vendemos, alquilamos, compartimos,
+transferimos ni divulgamos a terceros, anunciantes, corredores de datos u otros
+usuarios. No permitimos que personas lean tus datos de Google.
+
+<a id="google-user-data-protection"></a>
+
+### 3.4 Almacenamiento y protección
+
+La autenticación utiliza el flujo de código de autorización OAuth 2.0 con PKCE;
+la extensión nunca recibe ni almacena tu contraseña de Google. Las solicitudes
+usan HTTPS/TLS y solo se pide el alcance de lectura necesario.
+
+Los detalles de eventos se mantienen únicamente en la memoria del navegador. Los
+tokens, el identificador y la etiqueta de cuenta se guardan localmente en el
+almacenamiento del navegador, aislados al origen de la extensión y protegidos
+por el perfil del navegador y los controles del sistema operativo. Los datos de
+Google no se incluyen en analíticas, diagnósticos ni registros.
+
+<a id="google-user-data-retention"></a>
+
+### 3.5 Conservación y eliminación
+
+Los detalles de eventos se descartan al cerrar o recargar la página, al ser
+reemplazados por datos actualizados o al desconectar la cuenta. Los tokens y
+datos de cuenta se conservan localmente solo mientras exista la conexión.
+Desconectar la cuenta los elimina; desinstalar la extensión elimina también su
+almacenamiento local.
+
+También puedes revocar el acceso en
+[Conexiones de tu cuenta de Google](https://myaccount.google.com/connections),
+lo que invalida la autorización. No guardamos datos de Google en servidores ni
+copias de seguridad, por lo que no existe otra copia del servidor que eliminar.
+
+### 3.6 Política de datos de usuario de los servicios de API de Google
+
+El uso y la transferencia de información de las APIs de Google por "Weather
+Please" cumplen la
 [Política de datos de usuario de los servicios de API de Google](https://developers.google.com/terms/api-services-user-data-policy),
 incluidos los requisitos de Uso limitado.
 
-## 4. Cómo usamos tu información
+## 4. Datos de Microsoft Outlook (opcional)
 
-No recopilamos, almacenamos ni compartimos datos personales. Tu ubicación solo
-se utiliza para obtener información meteorológica de servicios de terceros, y el
-acceso al calendario solo se utiliza para mostrar tus próximos eventos en la
-página de nueva pestaña.
+También puedes conectar Outlook. La autenticación se realiza directamente con
+Microsoft mediante OAuth 2.0; nunca vemos ni guardamos tu contraseña. La
+extensión solicita solo lectura y no puede modificar eventos. Los eventos se
+obtienen directamente de Microsoft y se muestran localmente. Los tokens se
+guardan localmente y se eliminan al desconectar. También puedes revocar el
+acceso en Microsoft. Se aplica la
+[Declaración de privacidad de Microsoft](https://privacy.microsoft.com/privacystatement).
 
-## 5. Tus opciones
+## 5. Cómo usamos otra información
 
-Puedes elegir si otorgar acceso a tu ubicación cuando se te solicite. Si no lo
-permites, la extensión no funcionará. Las conexiones de calendario son
-totalmente opcionales y la extensión funciona plenamente sin ellas. Al usar
-"Weather Please", aceptas estos requisitos.
+La ubicación solo se usa para obtener el tiempo local y un nombre de lugar. Los
+datos meteorológicos, ajustes y caché de ubicación pueden guardarse localmente
+para cargar más rápido y recordar tus preferencias.
 
-## 6. Cambios en esta Política de Privacidad
+## 6. Tus opciones
 
-Podemos actualizar esta política periódicamente. Los cambios se publicarán en
-esta página y serán efectivos inmediatamente.
+Tú decides si permites la ubicación; sin ella, la extensión no funciona. Las
+conexiones de calendario son totalmente opcionales y pueden desconectarse en
+cualquier momento.
 
-## 7. Contáctanos
+## 7. Cambios en esta política
 
-Si tienes preguntas o sugerencias, contáctanos en
+Podemos actualizar esta política. Los cambios se publicarán aquí y entrarán en
+vigor al publicarse.
+
+## 8. Contacto
+
+Para cualquier consulta, escribe a
 [contact@weather-please.app](mailto:contact@weather-please.app).

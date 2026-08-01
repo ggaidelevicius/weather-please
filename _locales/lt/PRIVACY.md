@@ -1,82 +1,124 @@
-# "Weather Please" naršyklės plėtinio privatumo politika
+# „Weather Please“ naršyklės plėtinio privatumo politika
 
-_Paskutinį kartą atnaujinta: 2026 m. birželio 12 d._
+_Paskutinį kartą atnaujinta: 2026 m. rugpjūčio 1 d._
 
-Jūsų privatumas mums svarbus. Ši politika aprašo, kokius duomenis gali rinkti
-"Weather Please" naršyklės plėtinys ir kaip jie naudojami.
+Šioje politikoje paaiškinama, kokius duomenis plėtinys pasiekia, kaip juos
+naudoja ir saugo bei kokias teises turite.
 
-## 1. Kokios informacijos nerenkame
+## 1. Informacija, kurios nerenkame
 
-"Weather Please" **nerenka, nesaugo ir neperduoda jokių jūsų naršymo veiklai
-susijusių asmens duomenų**. Mes nerenkame IP adresų, naršymo istorijos ar jokios
-asmeniškai identifikuojamos informacijos.
+Plėtinys nepasiekia ir nerenka naršymo istorijos, lankomų svetainių turinio,
+kontaktų, failų ar reklamos identifikatorių. Neturime serverio, kuris gautų ar
+saugotų jūsų „Google“ paskyros ar „Google Calendar“ duomenis.
 
-## 2. Geolokacijos duomenys ir trečiųjų šalių paslaugos
+## 2. Geolokacija ir trečiųjų šalių paslaugos
 
-Norint gauti vietinę orų informaciją, "Weather Please" reikia prieigos prie jūsų
-įrenginio geolokacijos (platuma ir ilguma). Įdiegimo metu jums bus pasiūlyta
-suteikti prieigą prie vietos nustatymo. Jei atsisakysite, plėtinys neveiks.
+Vietiniams orams naudojama įrenginio platuma ir ilguma. Nesuteikus leidimo
+plėtinys neveiks. Vieta tiesiogiai siunčiama orų ir vietovės pavadinimo
+paslaugoms, kurioms taikomos jų politikos:
 
-Jūsų buvimo vietos duomenys siunčiami tiesiogiai trečiųjų šalių paslaugoms, kad
-būtų gauta orų informacija ir rodomas patogus vietos pavadinimas. Šios paslaugos
-turi savo privatumo politiką, kurią galite peržiūrėti čia:
+- [Open-Meteo](https://open-meteo.com/en/terms)
+- [Nominatim/OpenStreetMap](https://osmfoundation.org/wiki/Privacy_Policy)
 
-- [Open-Meteo privatumo politika](https://open-meteo.com/en/terms)
-- [Nominatim (OpenStreetMap) privatumo politika](https://osmfoundation.org/wiki/Privacy_Policy)
+„Nominatim“ paverčia koordinates vietovės pavadinimu (atvirkštinis
+geokodavimas). Vieta perduodama tik šioms užklausoms.
 
-Nominatim naudojamas jūsų koordinatėms paversti į skaitomą vietos pavadinimą
-(atvirkštinis geokodavimas). "Weather Please" nesaugo ir neperduoda jūsų vietos
-duomenų už šių užklausų ribų.
+## 3. „Google“ naudotojo duomenys ir kalendorius (neprivaloma)
 
-## 3. Kalendoriaus duomenys (neprivaloma)
+Galite prijungti „Google“ paskyrą būsimiems įvykiams rodyti naujame skirtuke.
+Naudojami „Google OAuth 2.0“ ir `calendar.events.readonly`. Orų funkcijoms
+kalendoriaus prieigos nereikia.
 
-"Weather Please" gali pasirinktinai prisijungti prie jūsų "Google Calendar" arba
-"Microsoft Outlook" paskyros ir rodyti būsimus įvykius. Jei nuspręsite prijungti
-paskyrą:
+<a id="google-user-data-access"></a>
 
-- Autentifikavimas vyksta tiesiogiai tarp jūsų naršyklės ir "Google" arba
-  "Microsoft", naudojant pramonės standartą OAuth 2.0. Mes niekada nematome ir
-  nesaugome jūsų slaptažodžio.
-- Plėtinys prašo tik minimalios skaitymo prieigos, reikalingos būsimiems
-  įvykiams išvardyti. Jis negali kurti, redaguoti ar trinti įvykių.
-- Įvykių duomenys (pavadinimai, laikas ir vietos) gaunami tiesiogiai iš jūsų
-  paslaugų teikėjo ir rodomi vietoje naujo skirtuko puslapyje. Jie niekada
-  neperduodami į mūsų serverius, juose neapdorojami ir nesaugomi.
-- Prisijungimo prieigos raktai saugomi vietoje jūsų naršyklėje ir ištrinami
-  atjungus paskyrą.
-- Paskyrą galite bet kada atjungti plėtinio nustatymuose, taip pat galite
-  atšaukti plėtinio prieigą savo "Google" arba "Microsoft" paskyros saugos
-  nustatymuose.
+### 3.1 Pasiekiami „Google“ duomenys
 
-"Google" ir "Microsoft" jūsų duomenis tvarko pagal savo privatumo politiką:
+- pastovus paskyros ID ir el. paštas arba vardas – tik prijungtai paskyrai
+  atpažinti ir pažymėti;
+- OAuth prieigos ir atnaujinimo žetonai – užklausoms patvirtinti ir ryšiui
+  palaikyti;
+- iki 10 pagrindinio kalendoriaus įvykių per artimiausias tris dienas:
+  pavadinimas, aprašymas, pradžia ir pabaiga, visos dienos būsena, vieta,
+  būsena, identifikatoriai ir šaltinio nuoroda.
 
-- ["Google" privatumo politika](https://policies.google.com/privacy)
-- ["Microsoft" privatumo pareiškimas](https://privacy.microsoft.com/privacystatement)
+Prieiga tik skaitymo. Plėtinys negali kurti, keisti ar trinti įvykių ar
+kalendorių.
 
-"Weather Please" iš "Google" API gautą informaciją naudoja ir perduoda
-laikydamasi
-["Google" API paslaugų naudotojų duomenų politikos](https://developers.google.com/terms/api-services-user-data-policy),
-įskaitant Riboto naudojimo reikalavimus.
+<a id="google-user-data-use"></a>
 
-## 4. Kaip naudojame jūsų informaciją
+### 3.2 Kaip naudojame „Google“ duomenis
 
-Mes nerenkame, nesaugome ir nebendriname jokių asmens duomenų. Jūsų geolokacija
-naudojama tik orų duomenims gauti iš trečiųjų šalių paslaugų, o prieiga prie
-kalendoriaus naudojama tik būsimiems įvykiams rodyti naujo skirtuko puslapyje.
+Paskyros duomenys ir žetonai naudojami tik paskyrai prijungti, ryšiui atnaujinti
+ir leistinoms skaitymo užklausoms. Įvykiai tik rodomi, grupuojami, rūšiuojami,
+šalinami dublikatai ir pateikiama šaltinio nuoroda.
 
-## 5. Jūsų pasirinkimai
+Duomenys nenaudojami reklamai, profiliavimui, kredito ar tinkamumo sprendimams
+ar bendrųjų DI/mašininio mokymosi modelių kūrimui, tobulinimui ar mokymui.
 
-Jūs galite pasirinkti, ar leisti prieigą prie vietos nustatymo. Jei neleisite,
-plėtinys neveiks. Kalendoriaus prijungimas yra visiškai neprivalomas, o plėtinys
-veikia visapusiškai ir be jo. Naudodamiesi "Weather Please", jūs sutinkate su
-šiais reikalavimais.
+<a id="google-user-data-sharing"></a>
 
-## 6. Privatumo politikos pakeitimai
+### 3.3 Bendrinimas, perdavimas ir atskleidimas
 
-Mes galime atnaujinti šią privatumo politiką. Pakeitimai bus paskelbti šiame
-puslapyje ir įsigalios nedelsiant.
+Duomenys keliauja tiesiogiai tarp „Google“ ir plėtinio naršyklėje, o ne į mūsų
+serverius. Jų neparduodame, nenuomojame, nebendriname, neperduodame ir
+neatskleidžiame tretiesiems asmenims, reklamuotojams, duomenų tarpininkams ar
+kitiems naudotojams ir neleidžiame žmonėms jų skaityti.
 
-## 7. Susisiekite su mumis
+<a id="google-user-data-protection"></a>
 
-Jei turite klausimų ar pasiūlymų, kreipkitės el. paštu
-[contact@weather-please.app](mailto:contact@weather-please.app).
+### 3.4 Saugojimas ir apsauga
+
+Naudojamas OAuth 2.0 Authorization Code su PKCE, todėl „Google“ slaptažodis
+negaunamas ir nesaugomas. Užklausos naudoja HTTPS/TLS, prašoma tik būtinos
+skaitymo prieigos.
+
+Įvykiai laikomi tik naršyklės atmintyje. Žetonai, paskyros ID ir žyma saugomi
+vietinėje naršyklės saugykloje, izoliuotoje plėtinio kilmės, ir apsaugoti
+naršyklės profilio bei OS valdikliais. Duomenys nepatenka į analitiką,
+diagnostiką ar žurnalus.
+
+<a id="google-user-data-retention"></a>
+
+### 3.5 Saugojimo trukmė ir ištrynimas
+
+Įvykiai pašalinami uždarius ar perkrovus puslapį, juos pakeitus naujais
+duomenimis arba atjungus paskyrą. Žetonai ir paskyros informacija vietoje
+laikomi tik iki atjungimo ir tada ištrinami. Pašalinus plėtinį ištrinama jo
+vietinė saugykla.
+
+Prieigą taip pat galite atšaukti
+[„Google“ paskyros ryšiuose](https://myaccount.google.com/connections).
+Serveriuose ar atsarginėse kopijose duomenų nesaugome, todėl serverio kopijų
+ištrinti nereikia.
+
+### 3.6 „Google API Services User Data Policy“
+
+„Google“ API duomenys naudojami pagal
+[Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy),
+įskaitant riboto naudojimo reikalavimus.
+
+## 4. „Microsoft Outlook“ duomenys (neprivaloma)
+
+Galite prijungti „Outlook“. OAuth 2.0 vyksta tiesiogiai su „Microsoft“;
+slaptažodžio negauname ir nesaugome. Prieiga tik skaitymo, įvykiai rodomi
+vietoje, o žetonai ištrinami atjungus. Prieigą galite atšaukti „Microsoft“.
+Taikomas
+[„Microsoft“ privatumo pareiškimas](https://privacy.microsoft.com/privacystatement).
+
+## 5. Kitos informacijos naudojimas
+
+Vieta naudojama tik orams ir vietovės pavadinimui. Orų duomenys, nustatymai ir
+vietos talpykla gali būti saugomi vietoje greitesniam įkėlimui.
+
+## 6. Jūsų pasirinkimai
+
+Galite neleisti vietos, bet plėtinys neveiks. Kalendoriaus ryšys visiškai
+neprivalomas ir bet kada atjungiamas.
+
+## 7. Pakeitimai
+
+Politika gali būti atnaujinta. Pakeitimai įsigalioja paskelbus šiame puslapyje.
+
+## 8. Kontaktai
+
+[contact@weather-please.app](mailto:contact@weather-please.app)
