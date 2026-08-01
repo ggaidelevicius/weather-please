@@ -517,7 +517,7 @@ const SCENES = [
 	{
 		description:
 			'A multi-day local forecast with hourly detail views and severe weather alerts, powered by Open-Meteo.',
-		eyebrow: 'Scroll for temperature, rain, wind, and more.',
+		eyebrow: 'Temperature, rain, wind, and more.',
 		icon: IconCloudRain,
 		id: 'forecast',
 		title: 'Your local forecast',
@@ -526,7 +526,7 @@ const SCENES = [
 	{
 		description:
 			'Optionally connect Google Calendar or Microsoft Outlook to see your upcoming events beside the forecast.',
-		eyebrow: 'Colour-coded by account - personal, work, more.',
+		eyebrow: 'Personal, work, and everything in between.',
 		icon: IconCalendarEvent,
 		id: 'calendar',
 		title: 'Your day at a glance',
@@ -544,7 +544,7 @@ const SCENES = [
 	{
 		description:
 			'Subtle seasonal effects for solstices, meteor showers, holidays, and more - all of which can be turned off.',
-		eyebrow: 'Backgrounds that change throughout the year.',
+		eyebrow: 'Backgrounds that mark special occasions.',
 		icon: IconSparkles,
 		id: 'seasonal',
 		title: 'Seasonal touches',
