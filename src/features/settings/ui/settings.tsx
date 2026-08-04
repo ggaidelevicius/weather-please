@@ -656,73 +656,138 @@ const getCalendarAccountCategoryOptions = () =>
 		value: category,
 	}))
 
-const CalendarAccountCard = ({
+const getVisibleCalendarProviders = ({
+	accounts,
+	configuredProviders,
+}: Pick<CalendarConnection, 'accounts' | 'configuredProviders'>) => [
+	...new Set([
+		...configuredProviders,
+		...accounts.map((account) => account.provider),
+	]),
+]
+
+const CalendarAccountRow = ({
 	account,
 	calendarConnection,
 }: Readonly<{
 	account: CalendarAccountSummary
 	calendarConnection: CalendarConnection
 }>) => (
-	<div className="space-y-4 rounded-xl bg-dark-900/40 p-4 ring-1 ring-white/6">
-		<div className="flex items-center justify-between gap-3">
-			<div className="flex min-w-0 items-center gap-2.5">
-				<span
-					aria-hidden
-					className={clsx(
-						'size-2 shrink-0 rounded-full',
-						CALENDAR_ACCOUNT_CATEGORY_STYLES[account.category].dotClassName,
-					)}
-				/>
-				<div className="min-w-0">
-					<p className="truncate text-sm text-white">
+	<article
+		aria-labelledby={`calendar-account-${account.accountId}`}
+		className="border-t border-white/6 px-4 py-3.5 first:border-t-0"
+	>
+		<div className="space-y-3">
+			<div className="flex items-center justify-between gap-3">
+				<div className="flex min-w-0 items-center gap-2.5">
+					<span
+						aria-hidden
+						className={clsx(
+							'size-2 shrink-0 rounded-full',
+							CALENDAR_ACCOUNT_CATEGORY_STYLES[account.category].dotClassName,
+						)}
+					/>
+					<p
+						className="truncate text-sm text-white"
+						id={`calendar-account-${account.accountId}`}
+					>
 						{account.accountLabel ?? <Trans>Connected account</Trans>}
 					</p>
-					<p className="text-xs text-dark-200">
-						{CALENDAR_PROVIDER_LABELS[account.provider]}
-					</p>
 				</div>
+				<Button
+					className="shrink-0 justify-center"
+					onClick={() => calendarConnection.disconnect(account.accountId)}
+					secondary
+				>
+					<Trans>Disconnect</Trans>
+				</Button>
 			</div>
-			<Button
-				onClick={() => calendarConnection.disconnect(account.accountId)}
-				secondary
-			>
-				<Trans>Disconnect</Trans>
-			</Button>
+			<div>
+				<Select
+					label={<Trans>Category</Trans>}
+					layout={SETTINGS_FIELD_LAYOUT}
+					onChange={(e) => {
+						calendarConnection.setAccountCategory(
+							account.accountId,
+							e.target.value as CalendarAccountCategory,
+						)
+					}}
+					options={getCalendarAccountCategoryOptions()}
+					value={account.category}
+				/>
+			</div>
 		</div>
 		{account.isSessionExpired ? (
-			<Alert icon={IconAlertTriangle} variant={AlertVariant.InfoRed}>
-				<div className="flex items-center justify-between gap-3">
-					<span>
-						<Trans>
-							This account&apos;s sign-in expired. Please reconnect it.
-						</Trans>
-					</span>
+			<div className="mt-3">
+				<Alert icon={IconAlertTriangle} variant={AlertVariant.InfoRed}>
+					<div className="flex items-center justify-between gap-3">
+						<span>
+							<Trans>
+								This account&apos;s sign-in expired. Please reconnect it.
+							</Trans>
+						</span>
+						<Button
+							className="ml-auto"
+							disabled={calendarConnection.isConnecting}
+							onClick={() => {
+								void calendarConnection.connect(account.provider)
+							}}
+						>
+							<Trans>Reconnect</Trans>
+						</Button>
+					</div>
+				</Alert>
+			</div>
+		) : null}
+	</article>
+)
+
+const CalendarProviderSection = ({
+	accounts,
+	calendarConnection,
+	provider,
+}: Readonly<{
+	accounts: CalendarAccountSummary[]
+	calendarConnection: CalendarConnection
+	provider: CalendarProvider
+}>) => {
+	const isConfigured = calendarConnection.configuredProviders.includes(provider)
+
+	return (
+		<section
+			aria-label={CALENDAR_PROVIDER_LABELS[provider]}
+			className="overflow-hidden rounded-xl bg-dark-900/30 ring-1 ring-white/6"
+		>
+			<div className="flex items-center justify-between gap-3 bg-white/[0.015] px-4 py-3">
+				<h4 className="text-sm font-medium text-white">
+					{CALENDAR_PROVIDER_LABELS[provider]}
+				</h4>
+				{isConfigured ? (
 					<Button
-						className="ml-auto"
 						disabled={calendarConnection.isConnecting}
 						onClick={() => {
-							void calendarConnection.connect(account.provider)
+							void calendarConnection.connect(provider)
 						}}
+						secondary={accounts.length > 0}
 					>
-						<Trans>Reconnect</Trans>
+						{accounts.length > 0 ? (
+							<Trans>Add account</Trans>
+						) : (
+							<Trans>Connect</Trans>
+						)}
 					</Button>
-				</div>
-			</Alert>
-		) : null}
-		<Select
-			label={<Trans>Category</Trans>}
-			layout={SETTINGS_FIELD_LAYOUT}
-			onChange={(e) => {
-				calendarConnection.setAccountCategory(
-					account.accountId,
-					e.target.value as CalendarAccountCategory,
-				)
-			}}
-			options={getCalendarAccountCategoryOptions()}
-			value={account.category}
-		/>
-	</div>
-)
+				) : null}
+			</div>
+			{accounts.map((account) => (
+				<CalendarAccountRow
+					account={account}
+					calendarConnection={calendarConnection}
+					key={account.accountId}
+				/>
+			))}
+		</section>
+	)
+}
 
 const IntegrationsSettingsSection = ({
 	calendarConnection,
@@ -731,82 +796,71 @@ const IntegrationsSettingsSection = ({
 }: Pick<
 	SettingsContentProps,
 	'calendarConnection' | 'handleChange' | 'input'
->) => (
-	<SettingsSectionLayout>
-		<SettingsSubsection
-			bodyClassName="space-y-4"
-			description={
-				<Trans>
-					See upcoming calendar events alongside your forecast. Weather Please
-					connects to Microsoft directly, and your events never pass through our
-					servers.
-				</Trans>
-			}
-			headerAccessory={
-				<span className="inline-flex items-center gap-1.5 rounded-full bg-linear-to-r from-blue-600 to-blue-500 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white shadow-sm">
-					<IconShieldCheckFilled aria-hidden size={14} />
-					<Trans>Securely stored</Trans>
-				</span>
-			}
-			title={<Trans>Calendar</Trans>}
-		>
-			{calendarConnection.configuredProviders.length === 0 ? (
-				<Alert icon={IconInfoCircle} variant={AlertVariant.LightBlue}>
+>) => {
+	const providers = getVisibleCalendarProviders(calendarConnection)
+
+	return (
+		<SettingsSectionLayout>
+			<SettingsSubsection
+				bodyClassName="space-y-4"
+				description={
 					<Trans>
-						Calendar connections aren&apos;t available in this build.
+						See upcoming calendar events alongside your forecast. Weather Please
+						connects to Microsoft directly, and your events never pass through
+						our servers.
 					</Trans>
-				</Alert>
-			) : (
-				<>
-					{calendarConnection.accounts.map((account) => (
-						<CalendarAccountCard
-							account={account}
-							calendarConnection={calendarConnection}
-							key={account.accountId}
-						/>
-					))}
-					{calendarConnection.configuredProviders.map((provider) => (
-						<div
-							className="flex items-center justify-between gap-3"
-							key={provider}
-						>
-							<p className="text-sm text-white">
-								{CALENDAR_PROVIDER_LABELS[provider]}
-							</p>
-							<Button
-								disabled={calendarConnection.isConnecting}
-								onClick={() => {
-									void calendarConnection.connect(provider)
-								}}
-							>
-								{calendarConnection.accounts.length > 0 ? (
-									<Trans>Add account</Trans>
-								) : (
-									<Trans>Connect</Trans>
-								)}
-							</Button>
+				}
+				headerAccessory={
+					<span className="inline-flex items-center gap-1.5 rounded-full bg-linear-to-r from-blue-600 to-blue-500 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white shadow-sm">
+						<IconShieldCheckFilled aria-hidden size={14} />
+						<Trans>Securely stored</Trans>
+					</span>
+				}
+				title={<Trans>Calendar</Trans>}
+			>
+				{providers.length === 0 ? (
+					<Alert icon={IconInfoCircle} variant={AlertVariant.LightBlue}>
+						<Trans>
+							Calendar connections aren&apos;t available in this build.
+						</Trans>
+					</Alert>
+				) : (
+					<>
+						<div className="space-y-3">
+							{providers.map((provider) => (
+								<CalendarProviderSection
+									accounts={calendarConnection.accounts.filter(
+										(account) => account.provider === provider,
+									)}
+									calendarConnection={calendarConnection}
+									key={provider}
+									provider={provider}
+								/>
+							))}
 						</div>
-					))}
-					{calendarConnection.accounts.length > 0 ? (
-						<Switch
-							checked={input.showCalendarEvents}
-							label={<Trans>Show calendar events</Trans>}
-							layout={SETTINGS_FIELD_LAYOUT}
-							onChange={(checked) =>
-								handleChange('showCalendarEvents', checked)
-							}
-						/>
-					) : null}
-				</>
-			)}
-			{calendarConnection.error ? (
-				<Alert icon={IconAlertTriangle} variant={AlertVariant.InfoRed}>
-					{CALENDAR_CONNECTION_ERROR_MESSAGES[calendarConnection.error]}
-				</Alert>
-			) : null}
-		</SettingsSubsection>
-	</SettingsSectionLayout>
-)
+						{calendarConnection.accounts.length > 0 ? (
+							<div className="border-t border-white/6 pt-4">
+								<Switch
+									checked={input.showCalendarEvents}
+									label={<Trans>Show calendar events</Trans>}
+									layout={SETTINGS_FIELD_LAYOUT}
+									onChange={(checked) =>
+										handleChange('showCalendarEvents', checked)
+									}
+								/>
+							</div>
+						) : null}
+					</>
+				)}
+				{calendarConnection.error ? (
+					<Alert icon={IconAlertTriangle} variant={AlertVariant.InfoRed}>
+						{CALENDAR_CONNECTION_ERROR_MESSAGES[calendarConnection.error]}
+					</Alert>
+				) : null}
+			</SettingsSubsection>
+		</SettingsSectionLayout>
+	)
+}
 
 const WeatherSettingsSection = ({
 	handleChange,

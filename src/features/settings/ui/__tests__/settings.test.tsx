@@ -1,6 +1,12 @@
 import type { ReactNode } from 'react'
 
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import {
+	cleanup,
+	fireEvent,
+	render,
+	screen,
+	within,
+} from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import type {
@@ -160,17 +166,31 @@ describe('Settings modal navigation', () => {
 			screen.getByRole('button', { name: 'Add account' }),
 		).toBeInTheDocument()
 		expect(screen.getByLabelText('Show calendar events')).toBeInTheDocument()
+		expect(
+			within(screen.getByRole('region', { name: 'Google Calendar' })).getByText(
+				'gus@gmail.com',
+			),
+		).toBeInTheDocument()
 
-		fireEvent.change(screen.getAllByLabelText('Category')[0]!, {
-			target: { value: CalendarAccountCategory.School },
-		})
+		fireEvent.change(
+			within(
+				screen.getByRole('article', { name: 'gus@gmail.com' }),
+			).getByLabelText('Category'),
+			{
+				target: { value: CalendarAccountCategory.School },
+			},
+		)
 
 		expect(calendarConnection.setAccountCategory).toHaveBeenCalledWith(
 			'personal-account',
 			CalendarAccountCategory.School,
 		)
 
-		fireEvent.click(screen.getAllByRole('button', { name: 'Disconnect' })[1]!)
+		fireEvent.click(
+			within(
+				screen.getByRole('article', { name: 'gus@work.example' }),
+			).getByRole('button', { name: 'Disconnect' }),
+		)
 
 		expect(calendarConnection.disconnect).toHaveBeenCalledWith('work-account')
 	})
