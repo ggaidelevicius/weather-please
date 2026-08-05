@@ -39,6 +39,7 @@ export const UpcomingEvents = ({
 	// ticks every minute to keep labels honest and drop events that ended.
 	const [now, setNow] = useState(() => Date.now())
 	const [hasMoreBelow, setHasMoreBelow] = useState(false)
+	const sectionHeadingId = useId()
 	const sectionRef = useRef<HTMLElement | null>(null)
 	const visibleEvents = events.filter((event) => event.endTimestamp > now)
 	const hasVisibleEvents = visibleEvents.length > 0
@@ -107,7 +108,7 @@ export const UpcomingEvents = ({
 	return (
 		<motion.section
 			animate={{ opacity: 1, x: 0 }}
-			aria-label="Upcoming calendar events"
+			aria-labelledby={sectionHeadingId}
 			className={clsx(
 				'flex max-h-[75vh] w-[21rem] max-w-[calc(100vw-2rem)] [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent] flex-col items-stretch gap-2 overflow-y-auto overscroll-contain pr-1',
 				hasMoreBelow &&
@@ -117,6 +118,9 @@ export const UpcomingEvents = ({
 			ref={sectionRef}
 			transition={{ duration: 0.3 }}
 		>
+			<h2 className="sr-only" id={sectionHeadingId}>
+				<Trans>Upcoming calendar events</Trans>
+			</h2>
 			{dayGroups.map((dayGroup) => (
 				<Fragment key={dayGroup.dayStartTimestamp}>
 					<p className="px-1 pt-1 text-xs font-semibold tracking-wide text-dark-100">
@@ -367,16 +371,24 @@ const getEventTimeLabel = ({
 const formatDurationLabel = (
 	startTimestamp: number,
 	endTimestamp: number,
-): string => {
+): ReactNode => {
 	const totalMinutes = Math.round((endTimestamp - startTimestamp) / 60_000)
 	const hours = Math.floor(totalMinutes / 60)
 	const minutes = totalMinutes % 60
 
 	if (hours === 0) {
-		return `${minutes}m`
+		return <Trans>{minutes}m</Trans>
 	}
 
-	return minutes === 0 ? `${hours}h` : `${hours}h ${minutes}m`
+	if (minutes === 0) {
+		return <Trans>{hours}h</Trans>
+	}
+
+	return (
+		<Trans>
+			{hours}h {minutes}m
+		</Trans>
+	)
 }
 
 const formatEventTime = (date: Date, locale: string) =>

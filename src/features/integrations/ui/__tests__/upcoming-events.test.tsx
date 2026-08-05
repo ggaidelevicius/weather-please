@@ -48,6 +48,9 @@ describe('UpcomingEvents', () => {
 		)
 
 		expect(
+			screen.getByRole('region', { name: 'Upcoming calendar events' }),
+		).toBeInTheDocument()
+		expect(
 			screen.queryByText('Review progress and anything blocking the team.'),
 		).not.toBeInTheDocument()
 

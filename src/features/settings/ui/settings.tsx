@@ -75,12 +75,7 @@ type SettingsSectionDefinition = {
 }
 
 type SettingsSectionId =
-	| 'about'
-	| 'developer'
-	| 'general'
-	| 'integrations'
-	| 'seasonal'
-	| 'weather'
+	'about' | 'developer' | 'general' | 'integrations' | 'seasonal' | 'weather'
 
 type SwitchDefinition<K extends BooleanConfigKey = BooleanConfigKey> = {
 	key: K
@@ -806,8 +801,8 @@ const IntegrationsSettingsSection = ({
 				description={
 					<Trans>
 						See upcoming calendar events alongside your forecast. Weather Please
-						connects to Microsoft directly, and your events never pass through
-						our servers.
+						connects directly to your calendar provider, and your events never
+						pass through our servers.
 					</Trans>
 				}
 				headerAccessory={
