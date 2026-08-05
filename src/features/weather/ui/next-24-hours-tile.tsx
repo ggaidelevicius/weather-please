@@ -1490,7 +1490,7 @@ const WeatherMap = ({
 							rel="noreferrer"
 							target="_blank"
 						>
-							© OpenStreetMap
+							© OpenStreetMap contributors
 						</a>
 					</>
 				) : null}

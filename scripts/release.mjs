@@ -11,6 +11,11 @@ const EXTENSION_DIR = 'extension'
 const MANIFEST_PATH = 'manifest.json'
 const PACKAGE_PATH = 'package.json'
 const EXTENSION_MANIFEST_PATH = path.join(EXTENSION_DIR, MANIFEST_PATH)
+const OPENSTREETMAP_TILE_RULES_PATH = 'openstreetmap-tile-rules.json'
+const EXTENSION_OPENSTREETMAP_TILE_RULES_PATH = path.join(
+	EXTENSION_DIR,
+	OPENSTREETMAP_TILE_RULES_PATH,
+)
 
 const args = process.argv.slice(2)
 const releaseType = args[0]
@@ -113,23 +118,57 @@ const processReleaseType = (releaseType) => {
 	})
 	processZipCreation(EXTENSION_DIR, newVersion, '')
 
-	updateExtensionManifest({
-		attributesToAdd: {
-			browser_specific_settings: {
-				gecko: {
-					id: '{9282bc49-b1b4-4f46-b135-1dfe00f182c9}',
-				},
-			},
-		},
-		attributesToRemove: ['background'],
-		baseManifest: baseExtensionManifest,
-	})
-	processZipCreation(EXTENSION_DIR, newVersion, '-firefox')
-
-	writeExtensionManifest(baseExtensionManifest)
+	processFirefoxRelease({ baseExtensionManifest, newVersion })
 
 	packageSource()
 	process.exit(0)
+}
+
+const processFirefoxRelease = ({ baseExtensionManifest, newVersion }) => {
+	const permissions = [
+		...(baseExtensionManifest.permissions ?? []),
+		'declarativeNetRequestWithHostAccess',
+	]
+	const hostPermissions = [
+		...(baseExtensionManifest.host_permissions ?? []),
+		'https://tile.openstreetmap.org/*',
+	]
+
+	fs.copyFileSync(
+		OPENSTREETMAP_TILE_RULES_PATH,
+		EXTENSION_OPENSTREETMAP_TILE_RULES_PATH,
+	)
+
+	try {
+		updateExtensionManifest({
+			attributesToAdd: {
+				browser_specific_settings: {
+					gecko: {
+						id: '{9282bc49-b1b4-4f46-b135-1dfe00f182c9}',
+					},
+				},
+				declarative_net_request: {
+					rule_resources: [
+						{
+							enabled: true,
+							id: 'openstreetmap_tile_headers',
+							path: OPENSTREETMAP_TILE_RULES_PATH,
+						},
+					],
+				},
+				host_permissions: [...new Set(hostPermissions)],
+				permissions: [...new Set(permissions)],
+			},
+			attributesToRemove: ['background'],
+			baseManifest: baseExtensionManifest,
+		})
+		processZipCreation(EXTENSION_DIR, newVersion, '-firefox')
+	} finally {
+		writeExtensionManifest(baseExtensionManifest)
+		if (fs.existsSync(EXTENSION_OPENSTREETMAP_TILE_RULES_PATH)) {
+			fs.unlinkSync(EXTENSION_OPENSTREETMAP_TILE_RULES_PATH)
+		}
+	}
 }
 
 const processZipCreation = (contentPath, newVersion, fileNameSuffix) => {
