@@ -22,5 +22,6 @@ export default defineConfig({
 		'ru',
 		'bn',
 		'id',
+		'pt',
 	],
 })

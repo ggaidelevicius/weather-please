@@ -55,6 +55,11 @@ export const locales = {
 		privacy:
 			'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/lt/PRIVACY.md',
 	},
+	pt: {
+		label: 'Português (Brasil)', // brazilian portuguese
+		privacy:
+			'https://github.com/ggaidelevicius/weather-please/blob/main/_locales/pt_BR/PRIVACY.md',
+	},
 	ru: {
 		label: 'Русский', // russian
 		privacy:
@@ -90,6 +95,7 @@ const localeMessageLoaders = {
 	ja: () => import('../../locales/ja/messages.js'),
 	ko: () => import('../../locales/ko/messages.js'),
 	lt: () => import('../../locales/lt/messages.js'),
+	pt: () => import('../../locales/pt/messages.js'),
 	ru: () => import('../../locales/ru/messages.js'),
 	vi: () => import('../../locales/vi/messages.js'),
 	zh: () => import('../../locales/zh/messages.js'),
