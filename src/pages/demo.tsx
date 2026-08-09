@@ -10,6 +10,7 @@ import {
 } from 'framer-motion'
 import {
 	type MouseEvent as ReactMouseEvent,
+	type RefObject,
 	type ReactNode,
 	type TouchEvent,
 	useEffect,
@@ -44,6 +45,7 @@ import { usePeriodicLocationRefresh } from '../features/weather/hooks/use-period
 import { useWeather } from '../features/weather/hooks/use-weather'
 import { hasCachedWeather } from '../features/weather/model/cache'
 import { getTemperatureAccentColor } from '../features/weather/model/temperature-colour'
+import { getMagnifiedSizes } from '../features/weather/model/view-indicator-magnification'
 import {
 	Next24HoursDetailView,
 	type Next24HoursDetailViewId,
@@ -934,6 +936,7 @@ const getAdjacentViewId = ({
 const VIEW_INDICATOR_MAGNIFY_RADIUS = 55
 const VIEW_INDICATOR_REST_SIZE = 10
 const VIEW_INDICATOR_MAX_SIZE = 32
+const VIEW_INDICATOR_TOTAL_GROWTH = 40
 
 const ViewIndicator = ({
 	activeViewId,
@@ -951,6 +954,7 @@ const ViewIndicator = ({
 	viewIds: readonly ForecastViewId[]
 }>) => {
 	const pointerY = useMotionValue(Number.POSITIVE_INFINITY)
+	const indicatorRef = useRef<HTMLDivElement>(null)
 
 	const handleMouseMove = (event: ReactMouseEvent) => {
 		pointerY.set(event.clientY)
@@ -971,11 +975,14 @@ const ViewIndicator = ({
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={handleMouseLeave}
 			onMouseMove={handleMouseMove}
+			ref={indicatorRef}
 			role="navigation"
 			transition={{ duration: 0.25 }}
 		>
-			{viewIds.map((viewId) => (
+			{viewIds.map((viewId, index) => (
 				<ViewIndicatorDot
+					index={index}
+					indicatorRef={indicatorRef}
 					isActive={activeViewId === viewId}
 					isVisible={isVisible}
 					key={viewId}
@@ -989,38 +996,44 @@ const ViewIndicator = ({
 }
 
 const ViewIndicatorDot = ({
+	index,
+	indicatorRef,
 	isActive,
 	isVisible,
 	onSelect,
 	pointerY,
 	viewId,
 }: Readonly<{
+	index: number
+	indicatorRef: RefObject<HTMLDivElement | null>
 	isActive: boolean
 	isVisible: boolean
 	onSelect: () => void
 	pointerY: MotionValue<number>
 	viewId: ForecastViewId
 }>) => {
-	const dotRef = useRef<HTMLSpanElement>(null)
+	// Normalizing every dot against one growth budget keeps the stack's total
+	// height fixed while the magnified region moves toward either end.
+	const sizeTarget = useTransform(pointerY, (y) => {
+		const dots = indicatorRef.current?.querySelectorAll<HTMLElement>(
+			'[data-view-indicator-dot]',
+		)
+		if (!dots) return VIEW_INDICATOR_REST_SIZE
 
-	// Signed distance from the cursor to this dot's vertical center. Reading the
-	// bounding box on each frame keeps the effect correct as dots resize.
-	const distance = useTransform(pointerY, (y) => {
-		const bounds = dotRef.current?.getBoundingClientRect()
-		if (!bounds) return Number.POSITIVE_INFINITY
-		return y - (bounds.y + bounds.height / 2)
+		const distances = Array.from(dots, (dot) => {
+			const bounds = dot.getBoundingClientRect()
+			return y - (bounds.y + bounds.height / 2)
+		})
+		const sizes = getMagnifiedSizes({
+			distances,
+			maxSize: VIEW_INDICATOR_MAX_SIZE,
+			radius: VIEW_INDICATOR_MAGNIFY_RADIUS,
+			restSize: VIEW_INDICATOR_REST_SIZE,
+			totalGrowth: VIEW_INDICATOR_TOTAL_GROWTH,
+		})
+
+		return sizes[index] ?? VIEW_INDICATOR_REST_SIZE
 	})
-
-	const sizeTarget = useTransform(
-		distance,
-		[-VIEW_INDICATOR_MAGNIFY_RADIUS, 0, VIEW_INDICATOR_MAGNIFY_RADIUS],
-		[
-			VIEW_INDICATOR_REST_SIZE,
-			VIEW_INDICATOR_MAX_SIZE,
-			VIEW_INDICATOR_REST_SIZE,
-		],
-		{ clamp: true },
-	)
 	const size = useSpring(sizeTarget, {
 		damping: 18,
 		mass: 0.1,
@@ -1051,8 +1064,8 @@ const ViewIndicatorDot = ({
 			<motion.span
 				animate={{ opacity: isActive ? 1 : 0.45, scale: isActive ? 1 : 0.6 }}
 				className="rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.45)] group-focus-visible:outline-2 group-focus-visible:outline-offset-4 group-focus-visible:outline-white"
+				data-view-indicator-dot
 				initial={false}
-				ref={dotRef}
 				style={{ height: size, width: size }}
 				transition={{ damping: 24, stiffness: 420, type: 'spring' }}
 			/>
