@@ -12,17 +12,17 @@ import { Button } from './button'
 
 interface SeasonalEventModalProps {
 	children: ReactNode
+	footerActions?: ReactNode
 	isOpen: boolean
 	onClose: () => void
-	quickHeaderActions?: ReactNode
 	title: ReactNode
 }
 
 export const SeasonalEventModal = ({
 	children,
+	footerActions,
 	isOpen,
 	onClose,
-	quickHeaderActions,
 	title,
 }: Readonly<SeasonalEventModalProps>) => (
 	<Dialog className="relative z-50" onClose={onClose} open={isOpen}>
@@ -35,20 +35,21 @@ export const SeasonalEventModal = ({
 				className="m-auto w-full max-w-xl space-y-6 rounded-2xl bg-dark-800 p-12 transition duration-400 will-change-[transform,opacity,filter] data-closed:scale-97 data-closed:opacity-0 data-closed:blur-xs"
 				transition
 			>
-				<div className="flex items-start justify-between gap-3">
-					<DialogTitle as="h1" className="text-3xl font-bold text-white">
-						{title}
-					</DialogTitle>
-					{quickHeaderActions ? (
-						<div className="flex shrink-0 items-center gap-2">
-							{quickHeaderActions}
-						</div>
-					) : null}
-				</div>
+				<DialogTitle
+					as="h1"
+					className="text-3xl font-bold text-balance text-white"
+				>
+					{title}
+				</DialogTitle>
 				<div className="text-sm leading-relaxed text-dark-100 [&_a]:text-blue-400 [&_a]:underline [&_h2]:mt-7 [&_h2]:text-xl [&_h2]:font-medium [&_h2]:text-white [&_img]:w-full [&_img]:rounded-lg [&_img]:shadow-md [&_p]:mt-2 [&_ul]:list-disc [&_ul]:pl-5">
 					{children}
 				</div>
-				<div className="flex justify-end">
+				<div className="flex flex-wrap items-center justify-end gap-3">
+					{footerActions ? (
+						<div className="mr-auto flex items-center gap-2">
+							{footerActions}
+						</div>
+					) : null}
 					<Button onClick={onClose}>
 						<Trans>Close</Trans>
 					</Button>

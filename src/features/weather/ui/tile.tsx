@@ -3,7 +3,13 @@ import type { ReactElement } from 'react'
 
 import { Switch as HeadlessSwitch } from '@headlessui/react'
 import { Trans } from '@lingui/react/macro'
-import { IconCloudRain, IconUvIndex, IconWind } from '@tabler/icons-react'
+import {
+	IconCloudRain,
+	IconPhoto,
+	IconPower,
+	IconUvIndex,
+	IconWind,
+} from '@tabler/icons-react'
 import {
 	animate,
 	motion,
@@ -207,7 +213,8 @@ const DefaultSeasonalEventDetails = () => (
 	<p>Details for this event are coming soon.</p>
 )
 
-interface HeaderSwitchProps {
+interface FooterSwitchProps {
+	icon: ReactElement
 	isEnabled: boolean
 	label: ReactElement
 	onToggle: (enabled: boolean) => void
@@ -240,22 +247,30 @@ interface TileProps {
 	wind: number
 }
 
-const HeaderSwitch = ({
+const FooterSwitch = ({
+	icon,
 	isEnabled,
 	label,
 	onToggle,
-}: Readonly<HeaderSwitchProps>) => (
-	<div className="flex items-center gap-1.5">
-		<span className="text-xs font-medium whitespace-nowrap text-dark-300">
-			{label}
+}: Readonly<FooterSwitchProps>) => (
+	<div className="group/setting relative flex items-center gap-1.5">
+		<span aria-hidden className="text-dark-300">
+			{icon}
 		</span>
 		<HeadlessSwitch
 			checked={isEnabled}
 			className="group inline-flex h-5 w-9 items-center rounded-full bg-dark-500/80 transition-[background-color] select-none focus:outline-2 focus:outline-offset-2 focus:outline-blue-500 data-checked:bg-blue-600/85"
 			onChange={onToggle}
 		>
+			<span className="sr-only">{label}</span>
 			<span className="size-3 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-5" />
 		</HeadlessSwitch>
+		<span
+			aria-hidden="true"
+			className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded-full border border-white/10 bg-dark-900/95 px-2 py-1 text-xs whitespace-nowrap text-dark-100 opacity-0 shadow-md transition duration-200 group-focus-within/setting:opacity-100 group-hover/setting:opacity-100"
+		>
+			{label}
+		</span>
 	</div>
 )
 
@@ -554,26 +569,28 @@ export const Tile = ({
 			</div>
 			{seasonalBadgeId && (
 				<SeasonalEventModal
-					isOpen={isEventOpen}
-					onClose={() => setIsEventOpen(false)}
-					quickHeaderActions={
-						<div className="flex flex-wrap justify-end gap-1.5">
-							<HeaderSwitch
-								isEnabled={isCurrentSeasonalEventBackgroundEnabled}
-								label={<Trans>Background</Trans>}
-								onToggle={(enabled) =>
-									onToggleSeasonalEventBackground(seasonalBadgeId, enabled)
-								}
-							/>
-							<HeaderSwitch
+					footerActions={
+						<div className="flex items-center gap-4">
+							<FooterSwitch
+								icon={<IconPower size={17} />}
 								isEnabled={isCurrentSeasonalEventEnabled}
 								label={<Trans>Show this event</Trans>}
 								onToggle={(enabled) =>
 									onToggleSeasonalEvent(seasonalBadgeId, enabled)
 								}
 							/>
+							<FooterSwitch
+								icon={<IconPhoto size={17} />}
+								isEnabled={isCurrentSeasonalEventBackgroundEnabled}
+								label={<Trans>Background</Trans>}
+								onToggle={(enabled) =>
+									onToggleSeasonalEventBackground(seasonalBadgeId, enabled)
+								}
+							/>
 						</div>
 					}
+					isOpen={isEventOpen}
+					onClose={() => setIsEventOpen(false)}
 					title={renderSeasonalLabel(seasonalBadgeId)}
 				>
 					<EventDetails />

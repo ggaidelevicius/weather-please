@@ -1,4 +1,5 @@
 import AdmZip from 'adm-zip'
+import { spawnSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
@@ -10,6 +11,8 @@ setCwdToRoot()
 const EXTENSION_DIR = 'extension'
 const MANIFEST_PATH = 'manifest.json'
 const PACKAGE_PATH = 'package.json'
+const NEXT_BUILD_DIR = path.join(process.cwd(), '.next')
+const APP_PATH = path.join('src', 'pages', '_app.tsx')
 const EXTENSION_MANIFEST_PATH = path.join(EXTENSION_DIR, MANIFEST_PATH)
 const OPENSTREETMAP_TILE_RULES_PATH = 'openstreetmap-tile-rules.json'
 const EXTENSION_OPENSTREETMAP_TILE_RULES_PATH = path.join(
@@ -19,6 +22,50 @@ const EXTENSION_OPENSTREETMAP_TILE_RULES_PATH = path.join(
 
 const args = process.argv.slice(2)
 const releaseType = args[0]
+const pnpmCommand = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm'
+
+const ANALYTICS_IMPORT = "import { Analytics } from '@vercel/analytics/react'"
+const COMMENTED_ANALYTICS_IMPORT =
+	"// import { Analytics } from '@vercel/analytics/react'"
+const ANALYTICS_COMPONENT = '\t\t\t<Analytics />'
+const COMMENTED_ANALYTICS_COMPONENT = '\t\t\t{/* <Analytics /> */}'
+
+const buildRelease = () => {
+	const originalAppSource = fs.readFileSync(APP_PATH, 'utf8')
+	if (!originalAppSource.includes(ANALYTICS_IMPORT)) {
+		throw new Error(`Could not find the Analytics import in ${APP_PATH}`)
+	}
+	if (!originalAppSource.includes(ANALYTICS_COMPONENT)) {
+		throw new Error(`Could not find the Analytics component in ${APP_PATH}`)
+	}
+
+	const appSourceWithoutAnalytics = originalAppSource
+		.replace(ANALYTICS_IMPORT, COMMENTED_ANALYTICS_IMPORT)
+		.replace(ANALYTICS_COMPONENT, COMMENTED_ANALYTICS_COMPONENT)
+
+	fs.rmSync(NEXT_BUILD_DIR, { force: true, recursive: true })
+	fs.writeFileSync(APP_PATH, appSourceWithoutAnalytics)
+
+	try {
+		const result = spawnSync(pnpmCommand, ['build'], {
+			cwd: process.cwd(),
+			stdio: 'inherit',
+		})
+
+		if (result.error) {
+			throw result.error
+		}
+
+		if (result.status !== 0) {
+			const exitReason = result.signal
+				? `signal ${result.signal}`
+				: `code ${result.status}`
+			throw new Error(`pnpm build exited with ${exitReason}`)
+		}
+	} finally {
+		fs.writeFileSync(APP_PATH, originalAppSource)
+	}
+}
 
 const bumpVersion = (currentVersion, releaseType) => {
 	const [major, minor, patch] = currentVersion.split('.').map(Number)
@@ -95,6 +142,8 @@ const processReleaseType = (releaseType) => {
 		)
 		process.exit(1)
 	}
+
+	buildRelease()
 
 	const manifestContent = readJson({ filePath: MANIFEST_PATH })
 	const packageContent = readJson({ filePath: PACKAGE_PATH })
