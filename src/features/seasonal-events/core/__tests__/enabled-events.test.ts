@@ -1,14 +1,17 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+	getEnabledSeasonalEventBackgrounds,
 	getEnabledSeasonalEvents,
 	type SeasonalEventSettings,
 } from '../enabled-events'
 import { SeasonalEventId } from '../types'
+import { BOOLEAN_CONFIG_DEFAULTS } from '../../../settings/model/boolean-settings'
 
 const createConfig = (
 	overrides: Partial<SeasonalEventSettings> = {},
 ): SeasonalEventSettings => ({
+	...BOOLEAN_CONFIG_DEFAULTS,
 	showAutumnEquinoxEvent: false,
 	showChristmasEvent: false,
 	showDayOfTheDeadEvent: false,
@@ -69,5 +72,29 @@ describe('getEnabledSeasonalEvents', () => {
 				SeasonalEventId.NewYearsDay,
 			]),
 		)
+	})
+
+	it('resolves background preferences independently from event preferences', () => {
+		const config = createConfig({
+			showChristmasEvent: false,
+			showChristmasEventBackground: true,
+			showHoliEvent: true,
+			showHoliEventBackground: false,
+		})
+
+		expect(getEnabledSeasonalEvents(config).has(SeasonalEventId.Holi)).toBe(
+			true,
+		)
+		expect(
+			getEnabledSeasonalEvents(config).has(SeasonalEventId.ChristmasDay),
+		).toBe(false)
+		expect(
+			getEnabledSeasonalEventBackgrounds(config).has(
+				SeasonalEventId.ChristmasDay,
+			),
+		).toBe(true)
+		expect(
+			getEnabledSeasonalEventBackgrounds(config).has(SeasonalEventId.Holi),
+		).toBe(false)
 	})
 })

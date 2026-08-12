@@ -51,6 +51,18 @@ export const useSeasonalEvents = ({
 		seasonalEventOverride !== SEASONAL_EVENT_OVERRIDE_NONE
 
 	useEffect(() => {
+		if (!enabledEvents) {
+			return
+		}
+
+		for (const triggeredEvent of triggeredEvents.current) {
+			if (!enabledEvents.has(triggeredEvent)) {
+				triggeredEvents.current.delete(triggeredEvent)
+			}
+		}
+	}, [enabledEvents])
+
+	useEffect(() => {
 		if (!shouldResolveActiveEvent) {
 			return
 		}

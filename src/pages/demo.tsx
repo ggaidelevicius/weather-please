@@ -29,7 +29,10 @@ import {
 import { createSpoofedCalendarData } from '../features/integrations/model/spoofed-calendar'
 import { UpcomingEvents } from '../features/integrations/ui/upcoming-events'
 import { IdentifiedLocationIndicator } from '../features/location/ui/identified-location-indicator'
-import { getEnabledSeasonalEvents } from '../features/seasonal-events/core/enabled-events'
+import {
+	getEnabledSeasonalEventBackgrounds,
+	getEnabledSeasonalEvents,
+} from '../features/seasonal-events/core/enabled-events'
 import { SeasonalEventId } from '../features/seasonal-events/core/types'
 import {
 	getHemisphereFromLatitude,
@@ -37,7 +40,10 @@ import {
 } from '../features/seasonal-events/core/utils'
 import { useSeasonalEvents } from '../features/seasonal-events/hooks/use-seasonal-events'
 import { useConfig } from '../features/settings/hooks/use-config'
-import { SEASONAL_EVENT_TOGGLE_KEY_BY_ID } from '../features/settings/model/seasonal-event-toggle-map'
+import {
+	SEASONAL_EVENT_BACKGROUND_TOGGLE_KEY_BY_ID,
+	SEASONAL_EVENT_TOGGLE_KEY_BY_ID,
+} from '../features/settings/model/seasonal-event-toggle-map'
 import { Initialisation } from '../features/settings/ui/initialisation'
 import { ReviewPrompt } from '../features/settings/ui/review-prompt'
 import { Settings } from '../features/settings/ui/settings'
@@ -221,6 +227,8 @@ const App = () => {
 	const isSoftwareRenderer = isLikelySoftwareRenderer()
 	const canShowSeasonalEvents =
 		config.showSeasonalEvents && isHydrated && isOnboarded
+	const enabledSeasonalEventBackgrounds =
+		getEnabledSeasonalEventBackgrounds(config)
 	const enabledSeasonalEvents = getEnabledSeasonalEvents(config)
 	const canShowNext24HoursView = next24HoursData.length > 0
 	const activeAvailableViewId = canShowNext24HoursView
@@ -232,7 +240,7 @@ const App = () => {
 	const shouldBlurSeasonalEffects = activeAvailableViewId !== 'forecast'
 
 	const activeSeasonalEvent = useSeasonalEvents({
-		enabledEvents: enabledSeasonalEvents,
+		enabledEvents: enabledSeasonalEventBackgrounds,
 		hemisphere,
 		isEnabled: config.showSeasonalEvents,
 		isHydrated,
@@ -293,9 +301,17 @@ const App = () => {
 
 	const isSeasonalEventEnabled = (eventId: SeasonalEventId) =>
 		input[SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId]]
+	const isSeasonalEventBackgroundEnabled = (eventId: SeasonalEventId) =>
+		input[SEASONAL_EVENT_BACKGROUND_TOGGLE_KEY_BY_ID[eventId]]
 
 	const toggleSeasonalEvent = (eventId: SeasonalEventId, enabled: boolean) => {
 		handleChange(SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId], enabled)
+	}
+	const toggleSeasonalEventBackground = (
+		eventId: SeasonalEventId,
+		enabled: boolean,
+	) => {
+		handleChange(SEASONAL_EVENT_BACKGROUND_TOGGLE_KEY_BY_ID[eventId], enabled)
 	}
 
 	const tiles = weatherData
@@ -310,8 +326,10 @@ const App = () => {
 					hemisphere={hemisphere}
 					identifier={config.identifier}
 					index={index}
+					isSeasonalEventBackgroundEnabled={isSeasonalEventBackgroundEnabled}
 					isSeasonalEventEnabled={isSeasonalEventEnabled}
 					key={day.day}
+					onToggleSeasonalEventBackground={toggleSeasonalEventBackground}
 					onToggleSeasonalEvent={toggleSeasonalEvent}
 					seasonalEventOverride={config.seasonalEventOverride}
 					showSeasonalEvents={canShowSeasonalEvents}

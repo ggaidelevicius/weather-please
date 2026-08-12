@@ -1,10 +1,14 @@
 import { isLocationInAustralia } from '../../../shared/lib/location'
+import { SEASONAL_EVENT_BACKGROUND_BOOLEAN_SETTINGS } from '../model/boolean-settings'
+import { SEASONAL_EVENT_TOGGLE_KEY_BY_ID } from '../model/seasonal-event-toggle-map'
 import { TemperatureUnit, UnitSystem } from '../model/unit-system'
 
 export const CONFIG_MIGRATION_STATE_STORAGE_KEY =
 	'weather-please:config-migration-state'
 
-export const CURRENT_CONFIG_VERSION = '2026.04.10' as const
+const PREVIOUS_CONFIG_VERSION = '2026.04.10' as const
+
+export const CURRENT_CONFIG_VERSION = '2026.08.12' as const
 
 export type ConfigMigrationState = {
 	completedMigrationIds: string[]
@@ -16,13 +20,14 @@ export type ConfigMigrationState = {
 
 export type ConfigMigrationStatus = 'completed' | 'failed' | 'skipped'
 
-export type ConfigVersion = 'legacy' | CurrentConfigVersion
+export type ConfigVersion =
+	'legacy' | CurrentConfigVersion | PreviousConfigVersion
 
 type ConfigMigration = {
 	fromVersion: ConfigVersion
 	id: string
 	migrate: (input: Record<string, unknown>) => ConfigMigrationResult
-	toVersion: CurrentConfigVersion
+	toVersion: CurrentConfigVersion | PreviousConfigVersion
 }
 
 type ConfigMigrationResult = {
@@ -31,15 +36,19 @@ type ConfigMigrationResult = {
 }
 
 type CurrentConfigVersion = typeof CURRENT_CONFIG_VERSION
+type PreviousConfigVersion = typeof PREVIOUS_CONFIG_VERSION
 
 export const LEGACY_TO_2026_04_10_MIGRATION_ID = 'legacy-to-2026.04.10'
+export const ADD_SEASONAL_EVENT_BACKGROUND_SETTINGS_MIGRATION_ID =
+	'add-seasonal-event-background-settings'
 
-const isCurrentConfigVersion = (
+const isKnownConfigVersion = (
 	value: unknown,
-): value is CurrentConfigVersion => value === CURRENT_CONFIG_VERSION
+): value is CurrentConfigVersion | PreviousConfigVersion =>
+	value === CURRENT_CONFIG_VERSION || value === PREVIOUS_CONFIG_VERSION
 
 const getConfigVersion = (input: Record<string, unknown>): ConfigVersion =>
-	isCurrentConfigVersion(input.configVersion) ? input.configVersion : 'legacy'
+	isKnownConfigVersion(input.configVersion) ? input.configVersion : 'legacy'
 
 const getLegacyUnitPreferences = (input: Record<string, unknown>) => {
 	if (!('useMetric' in input)) {
@@ -103,10 +112,42 @@ const legacyTo20260410Migration: ConfigMigration = {
 			status: didChangeSettings ? 'completed' : 'skipped',
 		}
 	},
+	toVersion: PREVIOUS_CONFIG_VERSION,
+}
+
+const addSeasonalEventBackgroundSettingsMigration: ConfigMigration = {
+	fromVersion: PREVIOUS_CONFIG_VERSION,
+	id: ADD_SEASONAL_EVENT_BACKGROUND_SETTINGS_MIGRATION_ID,
+	migrate: (input) => {
+		let hasAddedSetting = false
+		const nextConfig = { ...input }
+
+		for (const setting of SEASONAL_EVENT_BACKGROUND_BOOLEAN_SETTINGS) {
+			if (typeof input[setting.key] === 'boolean') {
+				continue
+			}
+
+			const eventToggleKey =
+				SEASONAL_EVENT_TOGGLE_KEY_BY_ID[setting.seasonalEventId]
+			nextConfig[setting.key] =
+				typeof input[eventToggleKey] === 'boolean'
+					? input[eventToggleKey]
+					: setting.defaultValue
+			hasAddedSetting = true
+		}
+
+		return {
+			nextConfig,
+			status: hasAddedSetting ? 'completed' : 'skipped',
+		}
+	},
 	toVersion: CURRENT_CONFIG_VERSION,
 }
 
-const CONFIG_MIGRATIONS: ConfigMigration[] = [legacyTo20260410Migration]
+const CONFIG_MIGRATIONS: ConfigMigration[] = [
+	legacyTo20260410Migration,
+	addSeasonalEventBackgroundSettingsMigration,
+]
 
 type MigrateConfigResult =
 	| {

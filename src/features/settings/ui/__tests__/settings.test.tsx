@@ -114,6 +114,27 @@ describe('Settings modal navigation', () => {
 		)
 	})
 
+	it('updates event backgrounds and tile events independently', () => {
+		const handleChange = vi.fn()
+
+		renderSettings({ handleChange })
+
+		fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
+		fireEvent.click(screen.getByRole('button', { name: 'Seasonal events' }))
+		const christmasSettings = screen.getByRole('group', {
+			name: 'Christmas Day',
+		})
+
+		fireEvent.click(within(christmasSettings).getByLabelText('Background'))
+		fireEvent.click(within(christmasSettings).getByLabelText('Show this event'))
+
+		expect(handleChange).toHaveBeenCalledWith(
+			'showChristmasEventBackground',
+			false,
+		)
+		expect(handleChange).toHaveBeenCalledWith('showChristmasEvent', false)
+	})
+
 	it('offers a connect button per configured provider in the integrations section', () => {
 		const calendarConnection = createCalendarConnection({
 			configuredProviders: [

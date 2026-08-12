@@ -3,10 +3,15 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { SEASONAL_EVENT_OVERRIDE_NONE } from '../../../seasonal-events/core/types'
 import {
+	ADD_SEASONAL_EVENT_BACKGROUND_SETTINGS_MIGRATION_ID,
 	CONFIG_MIGRATION_STATE_STORAGE_KEY,
 	CURRENT_CONFIG_VERSION,
 	LEGACY_TO_2026_04_10_MIGRATION_ID,
 } from '../../migrations/config-migrations'
+import {
+	BOOLEAN_CONFIG_DEFAULTS,
+	SEASONAL_EVENT_BACKGROUND_BOOLEAN_SETTINGS,
+} from '../../model/boolean-settings'
 import { TileIdentifier } from '../../model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../model/unit-system'
 import { type Config, useConfig } from '../use-config'
@@ -55,6 +60,7 @@ vi.mock('../../../../shared/lib/helpers', () => ({
 }))
 
 const mockValidConfig: Config = {
+	...BOOLEAN_CONFIG_DEFAULTS,
 	daysToRetrieve: '3',
 	displayedReviewPrompt: false,
 	identifier: TileIdentifier.Day,
@@ -121,6 +127,7 @@ describe('useConfig - Core Functionality', () => {
 		const { result } = renderHook(() => useConfig())
 
 		expect(result.current.config).toEqual({
+			...BOOLEAN_CONFIG_DEFAULTS,
 			daysToRetrieve: '3',
 			displayedReviewPrompt: false,
 			identifier: TileIdentifier.Day,
@@ -193,7 +200,37 @@ describe('useConfig - Core Functionality', () => {
 			completedMigrationIds: [],
 			currentVersion: CURRENT_CONFIG_VERSION,
 			failedMigrationIds: [],
-			skippedMigrationIds: [LEGACY_TO_2026_04_10_MIGRATION_ID],
+			skippedMigrationIds: [
+				LEGACY_TO_2026_04_10_MIGRATION_ID,
+				ADD_SEASONAL_EVENT_BACKGROUND_SETTINGS_MIGRATION_ID,
+			],
+		})
+	})
+
+	it('preserves disabled events when adding background preferences', async () => {
+		const previousConfig = {
+			...mockValidConfig,
+			configVersion: '2026.04.10',
+			showChristmasEvent: false,
+		} as Record<string, unknown>
+		for (const setting of SEASONAL_EVENT_BACKGROUND_BOOLEAN_SETTINGS) {
+			delete previousConfig[setting.key]
+		}
+		localStorageMock.config = JSON.stringify(previousConfig)
+
+		const { result } = renderHook(() => useConfig())
+
+		await waitFor(() => {
+			expect(result.current.config.showChristmasEvent).toBe(false)
+			expect(result.current.config.showChristmasEventBackground).toBe(false)
+			expect(result.current.config.showHoliEventBackground).toBe(true)
+		})
+
+		expect(readMigrationState()).toMatchObject({
+			completedMigrationIds: [
+				ADD_SEASONAL_EVENT_BACKGROUND_SETTINGS_MIGRATION_ID,
+			],
+			currentVersion: CURRENT_CONFIG_VERSION,
 		})
 	})
 
@@ -240,7 +277,9 @@ describe('useConfig - Core Functionality', () => {
 			completedMigrationIds: [LEGACY_TO_2026_04_10_MIGRATION_ID],
 			currentVersion: CURRENT_CONFIG_VERSION,
 			failedMigrationIds: [],
-			skippedMigrationIds: [],
+			skippedMigrationIds: [
+				ADD_SEASONAL_EVENT_BACKGROUND_SETTINGS_MIGRATION_ID,
+			],
 		})
 	})
 

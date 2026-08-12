@@ -10,6 +10,7 @@ enum BooleanSettingCategory {
 	Internal = 'internal',
 	Seasonal = 'seasonal',
 	SeasonalEvent = 'seasonal-event',
+	SeasonalEventBackground = 'seasonal-event-background',
 	Weather = 'weather',
 }
 
@@ -19,6 +20,160 @@ type BooleanSettingDefinition = {
 	key: string
 	seasonalEventId?: SeasonalEventId
 }
+
+const SEASONAL_EVENT_SETTING_DEFINITIONS = [
+	{
+		backgroundKey: 'showNewYearsEventBackground',
+		eventKey: 'showNewYearsEvent',
+		seasonalEventId: SeasonalEventId.NewYearsDay,
+	},
+	{
+		backgroundKey: 'showValentinesEventBackground',
+		eventKey: 'showValentinesEvent',
+		seasonalEventId: SeasonalEventId.ValentinesDay,
+	},
+	{
+		backgroundKey: 'showLunarNewYearEventBackground',
+		eventKey: 'showLunarNewYearEvent',
+		seasonalEventId: SeasonalEventId.LunarNewYear,
+	},
+	{
+		backgroundKey: 'showEasterEventBackground',
+		eventKey: 'showEasterEvent',
+		seasonalEventId: SeasonalEventId.Easter,
+	},
+	{
+		backgroundKey: 'showSpringEquinoxEventBackground',
+		eventKey: 'showSpringEquinoxEvent',
+		seasonalEventId: SeasonalEventId.SpringEquinox,
+	},
+	{
+		backgroundKey: 'showAutumnEquinoxEventBackground',
+		eventKey: 'showAutumnEquinoxEvent',
+		seasonalEventId: SeasonalEventId.AutumnEquinox,
+	},
+	{
+		backgroundKey: 'showDiwaliEventBackground',
+		eventKey: 'showDiwaliEvent',
+		seasonalEventId: SeasonalEventId.Diwali,
+	},
+	{
+		backgroundKey: 'showHoliEventBackground',
+		eventKey: 'showHoliEvent',
+		seasonalEventId: SeasonalEventId.Holi,
+	},
+	{
+		backgroundKey: 'showEarthDayEventBackground',
+		eventKey: 'showEarthDayEvent',
+		seasonalEventId: SeasonalEventId.EarthDay,
+	},
+	{
+		backgroundKey: 'showSummerSolsticeEventBackground',
+		eventKey: 'showSummerSolsticeEvent',
+		seasonalEventId: SeasonalEventId.SummerSolstice,
+	},
+	{
+		backgroundKey: 'showWinterSolsticeEventBackground',
+		eventKey: 'showWinterSolsticeEvent',
+		seasonalEventId: SeasonalEventId.WinterSolstice,
+	},
+	{
+		backgroundKey: 'showHalloweenEventBackground',
+		eventKey: 'showHalloweenEvent',
+		seasonalEventId: SeasonalEventId.Halloween,
+	},
+	{
+		backgroundKey: 'showDayOfTheDeadEventBackground',
+		eventKey: 'showDayOfTheDeadEvent',
+		seasonalEventId: SeasonalEventId.DayOfTheDead,
+	},
+	{
+		backgroundKey: 'showPerseidsEventBackground',
+		eventKey: 'showPerseidsEvent',
+		seasonalEventId: SeasonalEventId.Perseids,
+	},
+	{
+		backgroundKey: 'showQuadrantidsEventBackground',
+		eventKey: 'showQuadrantidsEvent',
+		seasonalEventId: SeasonalEventId.Quadrantids,
+	},
+	{
+		backgroundKey: 'showLyridsEventBackground',
+		eventKey: 'showLyridsEvent',
+		seasonalEventId: SeasonalEventId.Lyrids,
+	},
+	{
+		backgroundKey: 'showEtaAquariidsEventBackground',
+		eventKey: 'showEtaAquariidsEvent',
+		seasonalEventId: SeasonalEventId.EtaAquariids,
+	},
+	{
+		backgroundKey: 'showOrionidsEventBackground',
+		eventKey: 'showOrionidsEvent',
+		seasonalEventId: SeasonalEventId.Orionids,
+	},
+	{
+		backgroundKey: 'showLeonidsEventBackground',
+		eventKey: 'showLeonidsEvent',
+		seasonalEventId: SeasonalEventId.Leonids,
+	},
+	{
+		backgroundKey: 'showTotalSolarEclipseEventBackground',
+		eventKey: 'showTotalSolarEclipseEvent',
+		seasonalEventId: SeasonalEventId.TotalSolarEclipse,
+	},
+	{
+		backgroundKey: 'showTotalLunarEclipseEventBackground',
+		eventKey: 'showTotalLunarEclipseEvent',
+		seasonalEventId: SeasonalEventId.TotalLunarEclipse,
+	},
+	{
+		backgroundKey: 'showGeminidsEventBackground',
+		eventKey: 'showGeminidsEvent',
+		seasonalEventId: SeasonalEventId.Geminids,
+	},
+	{
+		backgroundKey: 'showEidAlFitrEventBackground',
+		eventKey: 'showEidAlFitrEvent',
+		seasonalEventId: SeasonalEventId.EidAlFitr,
+	},
+	{
+		backgroundKey: 'showEidAlAdhaEventBackground',
+		eventKey: 'showEidAlAdhaEvent',
+		seasonalEventId: SeasonalEventId.EidAlAdha,
+	},
+	{
+		backgroundKey: 'showHanukkahEventBackground',
+		eventKey: 'showHanukkahEvent',
+		seasonalEventId: SeasonalEventId.Hanukkah,
+	},
+	{
+		backgroundKey: 'showChristmasEventBackground',
+		eventKey: 'showChristmasEvent',
+		seasonalEventId: SeasonalEventId.ChristmasDay,
+	},
+	{
+		backgroundKey: 'showEventHorizonDayEventBackground',
+		eventKey: 'showEventHorizonDayEvent',
+		seasonalEventId: SeasonalEventId.EventHorizonDay,
+	},
+] as const
+
+export const SEASONAL_EVENT_BOOLEAN_SETTINGS =
+	SEASONAL_EVENT_SETTING_DEFINITIONS.map((setting) => ({
+		category: BooleanSettingCategory.SeasonalEvent,
+		defaultValue: true,
+		key: setting.eventKey,
+		seasonalEventId: setting.seasonalEventId,
+	}))
+
+export const SEASONAL_EVENT_BACKGROUND_BOOLEAN_SETTINGS =
+	SEASONAL_EVENT_SETTING_DEFINITIONS.map((setting) => ({
+		category: BooleanSettingCategory.SeasonalEventBackground,
+		defaultValue: true,
+		key: setting.backgroundKey,
+		seasonalEventId: setting.seasonalEventId,
+	}))
 
 export const BOOLEAN_SETTINGS = [
 	{
@@ -86,168 +241,8 @@ export const BOOLEAN_SETTINGS = [
 		defaultValue: true,
 		key: 'showSeasonalTileGlow',
 	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showNewYearsEvent',
-		seasonalEventId: SeasonalEventId.NewYearsDay,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showValentinesEvent',
-		seasonalEventId: SeasonalEventId.ValentinesDay,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showLunarNewYearEvent',
-		seasonalEventId: SeasonalEventId.LunarNewYear,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showEasterEvent',
-		seasonalEventId: SeasonalEventId.Easter,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showSpringEquinoxEvent',
-		seasonalEventId: SeasonalEventId.SpringEquinox,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showAutumnEquinoxEvent',
-		seasonalEventId: SeasonalEventId.AutumnEquinox,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showDiwaliEvent',
-		seasonalEventId: SeasonalEventId.Diwali,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showHoliEvent',
-		seasonalEventId: SeasonalEventId.Holi,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showEarthDayEvent',
-		seasonalEventId: SeasonalEventId.EarthDay,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showSummerSolsticeEvent',
-		seasonalEventId: SeasonalEventId.SummerSolstice,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showWinterSolsticeEvent',
-		seasonalEventId: SeasonalEventId.WinterSolstice,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showHalloweenEvent',
-		seasonalEventId: SeasonalEventId.Halloween,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showDayOfTheDeadEvent',
-		seasonalEventId: SeasonalEventId.DayOfTheDead,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showPerseidsEvent',
-		seasonalEventId: SeasonalEventId.Perseids,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showQuadrantidsEvent',
-		seasonalEventId: SeasonalEventId.Quadrantids,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showLyridsEvent',
-		seasonalEventId: SeasonalEventId.Lyrids,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showEtaAquariidsEvent',
-		seasonalEventId: SeasonalEventId.EtaAquariids,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showOrionidsEvent',
-		seasonalEventId: SeasonalEventId.Orionids,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showLeonidsEvent',
-		seasonalEventId: SeasonalEventId.Leonids,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showTotalSolarEclipseEvent',
-		seasonalEventId: SeasonalEventId.TotalSolarEclipse,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showTotalLunarEclipseEvent',
-		seasonalEventId: SeasonalEventId.TotalLunarEclipse,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showGeminidsEvent',
-		seasonalEventId: SeasonalEventId.Geminids,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showEidAlFitrEvent',
-		seasonalEventId: SeasonalEventId.EidAlFitr,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showEidAlAdhaEvent',
-		seasonalEventId: SeasonalEventId.EidAlAdha,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showHanukkahEvent',
-		seasonalEventId: SeasonalEventId.Hanukkah,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showChristmasEvent',
-		seasonalEventId: SeasonalEventId.ChristmasDay,
-	},
-	{
-		category: BooleanSettingCategory.SeasonalEvent,
-		defaultValue: true,
-		key: 'showEventHorizonDayEvent',
-		seasonalEventId: SeasonalEventId.EventHorizonDay,
-	},
+	...SEASONAL_EVENT_BOOLEAN_SETTINGS,
+	...SEASONAL_EVENT_BACKGROUND_BOOLEAN_SETTINGS,
 ] as const satisfies ReadonlyArray<BooleanSettingDefinition>
 
 type ObjectFromEntries<
@@ -271,17 +266,3 @@ export const BOOLEAN_CONFIG_DEFAULTS = fromEntries(
 export const BOOLEAN_CONFIG_SCHEMA_SHAPE = fromEntries(
 	BOOLEAN_SETTINGS.map((setting) => [setting.key, z.boolean()] as const),
 ) as Record<BooleanConfigKey, z.ZodBoolean>
-
-export const SEASONAL_EVENT_BOOLEAN_SETTINGS = BOOLEAN_SETTINGS.filter(
-	(
-		setting,
-	): setting is Extract<
-		(typeof BOOLEAN_SETTINGS)[number],
-		{ seasonalEventId: SeasonalEventId }
-	> => 'seasonalEventId' in setting,
-) as ReadonlyArray<
-	Extract<
-		(typeof BOOLEAN_SETTINGS)[number],
-		{ seasonalEventId: SeasonalEventId }
-	>
->

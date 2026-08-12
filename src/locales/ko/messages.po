@@ -72,12 +72,12 @@ msgid "{0} between <0/>"
 msgstr "{0} (<0/> 사이)"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:521
 msgid "{0} km/h"
 msgstr "{0} km/h"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:513
+#: src/features/weather/ui/tile.tsx:523
 msgid "{0} mph"
 msgstr "{0} mph"
 
@@ -142,27 +142,27 @@ msgstr "<0>위치 접근이 거부되었습니다.</0> 브라우저 설정에서
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>위치 접근이 거부되었습니다.</0> 주소 표시줄의 위치 아이콘을 클릭하고 \"항상 위치 접근 허용\"을 선택하세요. 그런 다음 아래 버튼을 클릭해 다시 시도하세요."
 
-#: src/features/settings/ui/settings.tsx:1073
+#: src/features/settings/ui/settings.tsx:1054
 msgid "☕ Gift a coffee"
 msgstr "☕ 커피 선물하기"
 
-#: src/pages/demo.tsx:697
+#: src/pages/demo.tsx:717
 msgid "✨ NEW: Connect your Google or Microsoft calendar"
 msgstr "✨ 새로운 기능: Google 또는 Microsoft 캘린더 연결"
 
-#: src/pages/demo.tsx:662
+#: src/pages/demo.tsx:682
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ 새 기능: 아래로 스크롤해 보세요"
 
-#: src/features/settings/ui/settings.tsx:1057
+#: src/features/settings/ui/settings.tsx:1038
 msgid "🌟 Leave a review"
 msgstr "🌟 리뷰 남기기"
 
-#: src/features/settings/ui/settings.tsx:1065
+#: src/features/settings/ui/settings.tsx:1046
 msgid "🐛 Report a bug"
 msgstr "🐛 버그 신고"
 
-#: src/features/settings/ui/settings.tsx:1116
+#: src/features/settings/ui/settings.tsx:1097
 msgid "🔒 Privacy policy"
 msgstr "🔒 개인정보 처리방침"
 
@@ -182,7 +182,7 @@ msgstr "개기월식은 지구가 태양과 달 사이를 정확히 지나며 �
 msgid "A total solar eclipse occurs when the Moon moves directly in front of the Sun, briefly transforming daylight into twilight."
 msgstr "개기일식은 달이 태양 앞을 정확히 가로지르며, 잠시 한낮을 황혼으로 바꿉니다."
 
-#: src/features/settings/ui/settings.tsx:123
+#: src/features/settings/ui/settings.tsx:126
 msgid "About"
 msgstr "정보"
 
@@ -218,11 +218,11 @@ msgstr "율(Yule)과 사투르날리아(Saturnalia) 같은 전통은 이 순간�
 msgid "Acts of charity, the sharing of food, and care for family, neighbours, and those in need form the heart of the celebration."
 msgstr "자선의 실천, 음식 나눔, 가족과 이웃, 도움이 필요한 사람들을 돌보는 일이 축제의 중심을 이룹니다."
 
-#: src/features/settings/ui/settings.tsx:769
+#: src/features/settings/ui/settings.tsx:730
 msgid "Add account"
 msgstr "계정 추가"
 
-#: src/pages/demo.tsx:744
+#: src/pages/demo.tsx:764
 msgid "air quality"
 msgstr "공기질"
 
@@ -287,7 +287,7 @@ msgstr "AQI는 0에서 500의 척도로 측정됩니다. 숫자가 낮을수록 
 msgid "As sunlight passes through Earth’s atmosphere, the shorter blue wavelengths scatter away while the longer red wavelengths bend toward the Moon."
 msgstr "햇빛이 지구 대기를 통과할 때 짧은 파장의 푸른빛은 산란되고, 더 긴 파장의 붉은빛은 굴절돼 달로 향합니다."
 
-#: src/features/settings/ui/settings.tsx:230
+#: src/features/settings/ui/settings.tsx:191
 msgid "Astronomy"
 msgstr "천문학"
 
@@ -299,7 +299,7 @@ msgstr "초속 66km의 속도로, 이들은 볼 수 있는 가장 빠른 유성 
 msgid "At each boundary, fireworks go up, bells ring, and strangers count down together. The same moment of anticipation, repeated twenty-four times."
 msgstr "각 경계에서 불꽃이 터지고, 종이 울리고, 낯선 사람들이 함께 카운트다운을 합니다. 같은 기대의 순간이 스물네 번 반복됩니다."
 
-#: src/features/settings/ui/settings.tsx:1085
+#: src/features/settings/ui/settings.tsx:1066
 msgid "Attributions"
 msgstr "출처"
 
@@ -307,7 +307,7 @@ msgstr "출처"
 msgid "August"
 msgstr "8월"
 
-#: src/features/settings/ui/settings.tsx:175
+#: src/features/settings/ui/settings.tsx:136
 #: src/features/weather/ui/tile.tsx:171
 msgid "Autumn Equinox"
 msgstr "추분"
@@ -315,6 +315,11 @@ msgstr "추분"
 #: src/features/weather/ui/next-24-hours-tile.tsx:2046
 msgid "Average wind"
 msgstr "평균 풍속"
+
+#: src/features/settings/ui/settings.tsx:997
+#: src/features/weather/ui/tile.tsx:563
+msgid "Background"
+msgstr "배경"
 
 #: src/features/seasonal-events/events/black-hole.tsx:231
 msgid "Because gravity bends light paths, parts of the disk appear warped and wrapped above and below the black hole."
@@ -336,11 +341,11 @@ msgstr "정오가 되면 거리, 벽, 눈에 보이는 모든 표면이 분홍, 
 msgid "By the eighteenth century, handwritten notes and printed cards had helped turn the day into a ritual of letters and messages."
 msgstr "18세기에는 손글씨 쪽지와 인쇄 카드가 이 날을 편지와 메시지의 의식으로 굳히는 데 한몫했습니다."
 
-#: src/features/settings/ui/settings.tsx:814
+#: src/features/settings/ui/settings.tsx:775
 msgid "Calendar"
 msgstr "캘린더"
 
-#: src/features/settings/ui/settings.tsx:818
+#: src/features/settings/ui/settings.tsx:779
 msgid "Calendar connections aren't available in this build."
 msgstr "이 빌드에서는 캘린더 연결을 사용할 수 없습니다."
 
@@ -348,12 +353,12 @@ msgstr "이 빌드에서는 캘린더 연결을 사용할 수 없습니다."
 msgid "Carved pumpkins, sweets, and playful scares echo much older customs of lanterns, bonfires, and protective charms."
 msgstr "호박등, 사탕, 장난스런 공포는 등불과 모닥불, 보호 부적 같은 더 오래된 풍습을 떠올리게 합니다."
 
-#: src/features/settings/ui/settings.tsx:702
+#: src/features/settings/ui/settings.tsx:663
 msgid "Category"
 msgstr "카테고리"
 
 #: src/features/settings/ui/initialisation.tsx:48
-#: src/features/settings/ui/settings.tsx:277
+#: src/features/settings/ui/settings.tsx:238
 msgid "Celsius (°C)"
 msgstr "섭씨 (°C)"
 
@@ -369,7 +374,7 @@ msgstr "확률"
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
 msgstr "기원전 687년 중국 기록에는 \"별들이 비처럼 쏟아졌다\"고 묘사되어 있습니다 — 가장 오래된 거문고자리 유성우 기록이자 어떤 종류의 유성 관측 중에서도 가장 오래된 기록 중 하나입니다."
 
-#: src/features/settings/ui/settings.tsx:176
+#: src/features/settings/ui/settings.tsx:137
 #: src/features/weather/ui/tile.tsx:172
 msgid "Christmas Day"
 msgstr "크리스마스"
@@ -398,11 +403,11 @@ msgstr "유성우의 모혜성인 대처 혜성은 대략 2283년까지 내태�
 msgid "Community cleanups, tree planting, and habitat restoration are among the most common activities."
 msgstr "지역 청소, 나무 심기, 서식지 복원은 가장 흔한 활동들입니다."
 
-#: src/features/settings/ui/settings.tsx:86
+#: src/features/settings/ui/settings.tsx:89
 msgid "Compact weather alerts"
 msgstr "간결한 날씨 경보"
 
-#: src/pages/demo.tsx:745
+#: src/pages/demo.tsx:765
 msgid "conditions"
 msgstr "조건"
 
@@ -410,11 +415,11 @@ msgstr "조건"
 msgid "Conditions"
 msgstr "날씨 상태"
 
-#: src/features/settings/ui/settings.tsx:771
+#: src/features/settings/ui/settings.tsx:732
 msgid "Connect"
 msgstr "연결"
 
-#: src/features/settings/ui/settings.tsx:689
+#: src/features/settings/ui/settings.tsx:650
 msgid "Connected account"
 msgstr "연결된 계정"
 
@@ -426,19 +431,19 @@ msgstr "의상은 영웅적일 수도, 유쾌할 수도, 오싹할 수도 있어
 msgid "Current AQI"
 msgstr "현재 AQI"
 
-#: src/features/settings/ui/settings.tsx:939
+#: src/features/settings/ui/settings.tsx:900
 msgid "Data & alerts"
 msgstr "데이터 및 알림"
 
-#: src/features/settings/ui/settings.tsx:930
+#: src/features/settings/ui/settings.tsx:891
 msgid "Date"
 msgstr "날짜"
 
-#: src/features/settings/ui/settings.tsx:926
+#: src/features/settings/ui/settings.tsx:887
 msgid "Day"
 msgstr "날"
 
-#: src/features/settings/ui/settings.tsx:177
+#: src/features/settings/ui/settings.tsx:138
 #: src/features/weather/ui/tile.tsx:173
 msgid "Day of the Dead"
 msgstr "망자의 날"
@@ -471,7 +476,7 @@ msgstr "서리가 앉는 안개"
 msgid "Depth"
 msgstr "강수 깊이"
 
-#: src/features/settings/ui/settings.tsx:128
+#: src/features/settings/ui/settings.tsx:131
 msgid "Developer"
 msgstr "개발자"
 
@@ -479,19 +484,19 @@ msgstr "개발자"
 msgid "Direct sunlight is making it feel warmer than the measured temperature right now."
 msgstr "직사광선으로 인해 현재 측정된 기온보다 더 덥게 느껴집니다."
 
-#: src/features/settings/ui/settings.tsx:697
+#: src/features/settings/ui/settings.tsx:658
 msgid "Disconnect"
 msgstr "연결 해제"
 
-#: src/pages/demo.tsx:705
+#: src/pages/demo.tsx:725
 msgid "Dismiss"
 msgstr "닫기"
 
-#: src/features/settings/ui/settings.tsx:991
+#: src/features/settings/ui/settings.tsx:952
 msgid "Display"
 msgstr "화면"
 
-#: src/features/settings/ui/settings.tsx:178
+#: src/features/settings/ui/settings.tsx:139
 #: src/features/weather/ui/tile.tsx:174
 msgid "Diwali"
 msgstr "디왈리"
@@ -528,7 +533,7 @@ msgstr "매일 저녁 메노라에 촛불을 하나씩 더해, 빛의 장식이 
 msgid "Each Orionid meteor is a tiny grain of dust shed by Halley's Comet — the same object that people have been watching and recording since at least 240 BC."
 msgstr "오리온자리 유성우의 각 유성은 핼리 혜성이 흘린 아주 작은 먼지 알갱이입니다 — 적어도 기원전 240년부터 사람들이 관측하고 기록해 온 바로 그 천체입니다."
 
-#: src/features/settings/ui/settings.tsx:179
+#: src/features/settings/ui/settings.tsx:140
 #: src/features/weather/ui/tile.tsx:175
 msgid "Earth Day"
 msgstr "지구의 날"
@@ -537,7 +542,7 @@ msgstr "지구의 날"
 msgid "Earth Day invites a pause to notice the planet that sustains us, and to consider how we care for it."
 msgstr "지구의 날은 우리를 지탱하는 행성을 잠시 바라보고, 우리가 어떻게 돌볼지 생각해 보게 합니다."
 
-#: src/features/settings/ui/settings.tsx:180
+#: src/features/settings/ui/settings.tsx:141
 #: src/features/weather/ui/tile.tsx:176
 msgid "Easter"
 msgstr "부활절"
@@ -550,7 +555,7 @@ msgstr "부활절은 새로움의 주제를 중심에 두며, 기독교 전통�
 msgid "Eclipse glasses are essential during all partial phases. Only during the brief seconds of total coverage is it safe to look with the naked eye."
 msgstr "부분 일식의 모든 단계에서 일식 안경은 필수입니다. 완전히 가려지는 짧은 순간에만 맨눈으로 봐도 안전합니다."
 
-#: src/features/settings/ui/settings.tsx:181
+#: src/features/settings/ui/settings.tsx:142
 #: src/features/weather/ui/tile.tsx:177
 msgid "Eid al-Adha"
 msgstr "이드 알아드하"
@@ -559,7 +564,7 @@ msgstr "이드 알아드하"
 msgid "Eid al-Adha is one of the most important festivals in Islam, closely linked to the season of the Hajj pilgrimage."
 msgstr "이드 알아드하는 이슬람에서 가장 중요한 축제 중 하나로, 하지(Hajj) 순례의 시기와 밀접하게 연결돼 있습니다."
 
-#: src/features/settings/ui/settings.tsx:182
+#: src/features/settings/ui/settings.tsx:143
 #: src/features/weather/ui/tile.tsx:178
 msgid "Eid al-Fitr"
 msgstr "이드 알피트르"
@@ -568,7 +573,7 @@ msgstr "이드 알피트르"
 msgid "Eid al-Fitr marks the end of Ramadan, celebrating renewal, gratitude, and the strength of shared community."
 msgstr "이드 알피트르는 라마단의 끝을 알리며, 새로움과 감사, 공동체의 힘을 기념합니다."
 
-#: src/features/settings/ui/settings.tsx:183
+#: src/features/settings/ui/settings.tsx:144
 msgid "Eta Aquariids meteor shower"
 msgstr "물병자리 에타 유성우"
 
@@ -584,7 +589,7 @@ msgstr "수리하고 재사용하고 아끼거나, 익숙한 산책로를 걷는
 msgid "Event description"
 msgstr "일정 설명"
 
-#: src/features/settings/ui/settings.tsx:184
+#: src/features/settings/ui/settings.tsx:145
 #: src/features/weather/ui/tile.tsx:180
 msgid "Event Horizon Day"
 msgstr "이벤트 호라이즌 데이"
@@ -614,7 +619,7 @@ msgid "Extreme UV starting in 1 hour"
 msgstr "1시간 후에 극심한 자외선이 시작됩니다"
 
 #: src/features/settings/ui/initialisation.tsx:52
-#: src/features/settings/ui/settings.tsx:281
+#: src/features/settings/ui/settings.tsx:242
 msgid "Fahrenheit (°F)"
 msgstr "화씨 (°F)"
 
@@ -634,7 +639,7 @@ msgstr "가족이 모여 메노라에 불을 밝히고, 노래를 부르며, 드
 msgid "Families spend the night in cemeteries, cleaning graves, laying marigold paths, and sharing meals beside the headstones. It's social, warm, and often funny — people tell stories and play music until morning."
 msgstr "가족들은 묘지에서 밤을 보내며 무덤을 청소하고 금잔화 꽃길을 깔고 묘비 옆에서 함께 식사를 합니다. 따뜻하고 사교적이며 종종 유쾌합니다 — 사람들은 아침까지 이야기를 나누고 음악을 연주합니다."
 
-#: src/features/settings/ui/settings.tsx:640
+#: src/features/settings/ui/settings.tsx:601
 msgid "Family"
 msgstr "가족"
 
@@ -642,7 +647,7 @@ msgstr "가족"
 msgid "February"
 msgstr "2월"
 
-#: src/features/settings/ui/settings.tsx:1049
+#: src/features/settings/ui/settings.tsx:1030
 msgid "Feedback"
 msgstr "피드백"
 
@@ -650,7 +655,7 @@ msgstr "피드백"
 msgid "Feels like now"
 msgstr "현재 체감 온도"
 
-#: src/features/settings/ui/settings.tsx:641
+#: src/features/settings/ui/settings.tsx:602
 msgid "Finance"
 msgstr "재정"
 
@@ -666,15 +671,15 @@ msgstr "라트케와 수프가니요트처럼 기름에 튀긴 음식은 이야�
 msgid "For many Hindus, the festival marks the return of Rama, Sita, Lakshmana, and Hanuman to Ayodhya after their long exile."
 msgstr "많은 힌두교 전통에서 이 축제는 라마, 시타, 락슈마나, 하누만이 긴 유배 끝에 아요디야로 돌아온 일을 기념합니다."
 
-#: src/pages/demo.tsx:746
+#: src/pages/demo.tsx:766
 msgid "forecast"
 msgstr "일기예보"
 
-#: src/features/settings/ui/settings.tsx:904
+#: src/features/settings/ui/settings.tsx:865
 msgid "Forecast"
 msgstr "예보"
 
-#: src/features/settings/ui/settings.tsx:642
+#: src/features/settings/ui/settings.tsx:603
 msgid "Freelance"
 msgstr "프리랜스"
 
@@ -698,7 +703,7 @@ msgstr "이 시점부터 매일 몇 분씩 빛이 더해집니다 — 하루하�
 msgid "Geminid meteors move slower than most showers, which is part of what makes them so striking — they linger long enough to actually follow with your eyes."
 msgstr "쌍둥이자리 유성우는 대부분의 유성우보다 느리게 움직이는데, 이것이 눈길을 끄는 이유 중 하나입니다 — 눈으로 따라갈 수 있을 만큼 충분히 오래 머뭅니다."
 
-#: src/features/settings/ui/settings.tsx:185
+#: src/features/settings/ui/settings.tsx:146
 msgid "Geminids meteor shower"
 msgstr "쌍둥이자리 유성우"
 
@@ -706,7 +711,7 @@ msgstr "쌍둥이자리 유성우"
 msgid "Geminids Meteor Shower"
 msgstr "쌍둥이자리 유성우"
 
-#: src/features/settings/ui/settings.tsx:103
+#: src/features/settings/ui/settings.tsx:106
 msgid "General"
 msgstr "일반"
 
@@ -772,7 +777,7 @@ msgstr "돌풍"
 msgid "Halley’s Comet itself returns roughly every seventy-six years, but the stream of dust it leaves behind crosses Earth’s path each year."
 msgstr "핼리 혜성은 약 76년마다 돌아오지만, 그가 남긴 먼지의 흐름은 매년 지구의 궤도를 가로지릅니다."
 
-#: src/features/settings/ui/settings.tsx:186
+#: src/features/settings/ui/settings.tsx:147
 #: src/features/weather/ui/tile.tsx:182
 msgid "Halloween"
 msgstr "할로윈"
@@ -781,7 +786,7 @@ msgstr "할로윈"
 msgid "Halloween is a night shaped by costumes, stories, and a playful sense of unease."
 msgstr "할로윈은 의상과 이야기, 장난스러운 불안감이 빚어내는 밤입니다."
 
-#: src/features/settings/ui/settings.tsx:187
+#: src/features/settings/ui/settings.tsx:148
 #: src/features/weather/ui/tile.tsx:183
 msgid "Hanukkah"
 msgstr "하누카"
@@ -854,7 +859,7 @@ msgstr "페르세우스자리 유성우의 기록은 거의 2,000년 전까지 �
 msgid "History and meaning"
 msgstr "역사와 의미"
 
-#: src/features/settings/ui/settings.tsx:188
+#: src/features/settings/ui/settings.tsx:149
 #: src/features/weather/ui/tile.tsx:184
 msgid "Holi"
 msgstr "홀리"
@@ -875,7 +880,7 @@ msgstr "습한 공기와 직사광선으로 인해 현재 측정된 기온보다
 msgid "Humid air is making it feel warmer than the measured temperature right now."
 msgstr "습한 공기로 인해 현재 측정된 기온보다 더 덥게 느껴집니다."
 
-#: src/features/settings/ui/settings.tsx:919
+#: src/features/settings/ui/settings.tsx:880
 msgid "Identifier"
 msgstr "식별자"
 
@@ -884,7 +889,7 @@ msgid "If your browser prompts you for location permissions, please select \"all
 msgstr "브라우저가 위치 권한을 요청하면, \"허용\"을 선택해주세요."
 
 #: src/features/settings/ui/initialisation.tsx:63
-#: src/features/settings/ui/settings.tsx:292
+#: src/features/settings/ui/settings.tsx:253
 msgid "Imperial (mph, in)"
 msgstr "영국식 (mph, in)"
 
@@ -900,7 +905,7 @@ msgstr "많은 전통에서 춘분·추분은 거둔 것만을 뜻하지 않습�
 msgid "In most years, the Leonids produce only 10–15 meteors per hour. But during the 1966 storm, observers reported rates of thousands per minute — so many that some people thought the world was ending."
 msgstr "대부분의 해에 사자자리 유성우는 시간당 10~15개의 유성만을 만들어냅니다. 하지만 1966년 폭풍 때는 분당 수천 개가 관측되어 세상이 끝나는 줄 알았던 사람들도 있었습니다."
 
-#: src/features/settings/ui/settings.tsx:118
+#: src/features/settings/ui/settings.tsx:121
 msgid "Integrations"
 msgstr "연동"
 
@@ -990,11 +995,11 @@ msgid "June"
 msgstr "6월"
 
 #: src/features/settings/ui/initialisation.tsx:234
-#: src/features/settings/ui/settings.tsx:586
+#: src/features/settings/ui/settings.tsx:547
 msgid "Language"
 msgstr "언어"
 
-#: src/features/settings/ui/settings.tsx:876
+#: src/features/settings/ui/settings.tsx:837
 msgid "Latitude"
 msgstr "위도"
 
@@ -1002,7 +1007,7 @@ msgstr "위도"
 msgid "Leave a review"
 msgstr "리뷰를 남겨주세요"
 
-#: src/features/settings/ui/settings.tsx:1109
+#: src/features/settings/ui/settings.tsx:1090
 msgid "Legal"
 msgstr "법적"
 
@@ -1010,7 +1015,7 @@ msgstr "법적"
 msgid "Legends and customs"
 msgstr "전설과 풍습"
 
-#: src/features/settings/ui/settings.tsx:189
+#: src/features/settings/ui/settings.tsx:150
 msgid "Leonids meteor shower"
 msgstr "사자자리 유성우"
 
@@ -1042,11 +1047,11 @@ msgstr "실시간 데이터를 일시적으로 사용할 수 없습니다. 마�
 msgid "Local map"
 msgstr "주변 지도"
 
-#: src/features/settings/ui/settings.tsx:584
+#: src/features/settings/ui/settings.tsx:545
 msgid "Locale"
 msgstr "로케일"
 
-#: src/features/settings/ui/settings.tsx:873
+#: src/features/settings/ui/settings.tsx:834
 msgid "Location"
 msgstr "위치"
 
@@ -1054,7 +1059,7 @@ msgstr "위치"
 msgid "Location name unavailable"
 msgstr "위치 이름을 사용할 수 없습니다"
 
-#: src/features/settings/ui/settings.tsx:885
+#: src/features/settings/ui/settings.tsx:846
 msgid "Longitude"
 msgstr "경도"
 
@@ -1082,7 +1087,7 @@ msgstr "1시간 후 저시력이 시작됩니다"
 msgid "Lowest visibility"
 msgstr "최저 가시거리"
 
-#: src/features/settings/ui/settings.tsx:190
+#: src/features/settings/ui/settings.tsx:151
 #: src/features/weather/ui/tile.tsx:186
 msgid "Lunar New Year"
 msgstr "음력 새해"
@@ -1091,7 +1096,7 @@ msgstr "음력 새해"
 msgid "Lunar New Year begins with the first new moon of the lunar calendar and unfolds across a festival season lasting up to fifteen days."
 msgstr "음력 새해는 음력 첫 초승달(신월)로 시작해, 최대 15일에 이르는 축제 기간으로 이어집니다."
 
-#: src/features/settings/ui/settings.tsx:191
+#: src/features/settings/ui/settings.tsx:152
 msgid "Lyrids meteor shower"
 msgstr "거문고자리 유성우"
 
@@ -1104,7 +1109,7 @@ msgstr "거문고자리 유성우"
 msgid "mainly clear"
 msgstr "대체로 맑음"
 
-#: src/pages/demo.tsx:747
+#: src/pages/demo.tsx:767
 msgid "map"
 msgstr "지도"
 
@@ -1133,7 +1138,7 @@ msgid "Meanwhile, billions of birds are mid-migration, navigating by stars, magn
 msgstr "한편 수십억 마리의 새들이 이동 중이며, 별, 자기장, 세대를 거쳐 전해진 지형지물을 따라 길을 찾습니다."
 
 #: src/features/settings/ui/initialisation.tsx:59
-#: src/features/settings/ui/settings.tsx:288
+#: src/features/settings/ui/settings.tsx:249
 msgid "Metric (km/h, mm)"
 msgstr "미터법 (km/h, mm)"
 
@@ -1181,7 +1186,7 @@ msgstr "대부분의 해에는 규모가 크지 않지만, 이 유성우는 드�
 msgid "Never show this again"
 msgstr "다시 보지 않기"
 
-#: src/features/settings/ui/settings.tsx:192
+#: src/features/settings/ui/settings.tsx:153
 #: src/features/weather/ui/tile.tsx:188
 msgid "New Year's Day"
 msgstr "새해 첫날"
@@ -1223,7 +1228,7 @@ msgstr "유의미한 강수 없음"
 msgid "No precipitation expected"
 msgstr "강수 없음"
 
-#: src/features/settings/ui/settings.tsx:299
+#: src/features/settings/ui/settings.tsx:260
 msgid "None"
 msgstr "없음"
 
@@ -1235,7 +1240,7 @@ msgstr "11월"
 msgid "Now"
 msgstr "지금"
 
-#: src/features/settings/ui/settings.tsx:907
+#: src/features/settings/ui/settings.tsx:868
 msgid "Number of days to forecast"
 msgstr "예보 할 일수"
 
@@ -1259,7 +1264,7 @@ msgstr "다음 날에는 색가루가 공기 가득 퍼지며, 사람들은 사�
 msgid "On the longest day, twilight stretches out for hours and full darkness may never arrive."
 msgstr "가장 긴 날에는 황혼이 몇 시간씩 이어지고 완전한 어둠은 오지 않을 수도 있습니다."
 
-#: src/features/settings/ui/settings.tsx:193
+#: src/features/settings/ui/settings.tsx:154
 msgid "Orionids meteor shower"
 msgstr "오리온자리 유성우"
 
@@ -1267,7 +1272,7 @@ msgstr "오리온자리 유성우"
 msgid "Orionids Meteor Shower"
 msgstr "오리온자리 유성우"
 
-#: src/features/settings/ui/settings.tsx:254
+#: src/features/settings/ui/settings.tsx:215
 msgid "Other holidays"
 msgstr "기타 공휴일"
 
@@ -1276,7 +1281,7 @@ msgid "Other traditions honour Lakshmi, the goddess of prosperity and fortune, w
 msgstr "다른 전통에서는 번영과 행운의 여신 락슈미를 기리고, 자이나교와 시크교 공동체는 자신들의 성스러운 역사 속에서 디왈리를 기념합니다."
 
 #: src/features/settings/ui/initialisation.tsx:253
-#: src/features/settings/ui/settings.tsx:607
+#: src/features/settings/ui/settings.tsx:568
 msgid "Other units"
 msgstr "기타 단위"
 
@@ -1292,7 +1297,7 @@ msgstr "시간이 지나며 방문과 변장, 함께 나누는 간식의 공동�
 msgid "overcast"
 msgstr "흐림"
 
-#: src/features/settings/ui/settings.tsx:554
+#: src/features/settings/ui/settings.tsx:515
 msgid "Overrides"
 msgstr "재정의"
 
@@ -1355,7 +1360,7 @@ msgstr "최대 UV"
 msgid "Peak wind"
 msgstr "최대 풍속"
 
-#: src/features/settings/ui/settings.tsx:897
+#: src/features/settings/ui/settings.tsx:858
 msgid "Periodically update location automatically"
 msgstr "주기적으로 위치 자동 업데이트"
 
@@ -1363,7 +1368,7 @@ msgstr "주기적으로 위치 자동 업데이트"
 msgid "Perseid meteors enter the atmosphere at roughly 60 km/s — fast enough that the larger ones compress the air ahead of them into a bright, explosive fireball."
 msgstr "페르세우스자리 유성우의 유성은 초속 약 60km로 대기권에 진입합니다 — 큰 것들은 앞의 공기를 압축하여 밝고 폭발적인 화구를 만들 만큼 빠릅니다."
 
-#: src/features/settings/ui/settings.tsx:194
+#: src/features/settings/ui/settings.tsx:155
 msgid "Perseids meteor shower"
 msgstr "페르세우스자리 유성우"
 
@@ -1371,7 +1376,7 @@ msgstr "페르세우스자리 유성우"
 msgid "Perseids Meteor Shower"
 msgstr "페르세우스자리 유성우"
 
-#: src/features/settings/ui/settings.tsx:643
+#: src/features/settings/ui/settings.tsx:604
 msgid "Personal"
 msgstr "개인"
 
@@ -1383,7 +1388,7 @@ msgstr "PM10 / 오존 / NO₂"
 msgid "PM2.5 now"
 msgstr "현재 PM2.5"
 
-#: src/pages/demo.tsx:748
+#: src/pages/demo.tsx:768
 msgid "precipitation"
 msgstr "강수"
 
@@ -1402,7 +1407,7 @@ msgstr "강수 확률"
 msgid "Precipitation includes rain and snow."
 msgstr "강수량에는 비와 눈이 포함됩니다."
 
-#: src/features/settings/ui/settings.tsx:195
+#: src/features/settings/ui/settings.tsx:156
 msgid "Quadrantids meteor shower"
 msgstr "사분의자리 유성우"
 
@@ -1414,7 +1419,7 @@ msgstr "사분의자리 유성우"
 msgid "Rather than a solemn farewell, it treats remembrance as something vibrant, communal, and alive."
 msgstr "엄숙한 작별이라기보다, 기억을 생동감 있고 공동체적이며 살아 있는 것으로 다룹니다."
 
-#: src/features/settings/ui/settings.tsx:731
+#: src/features/settings/ui/settings.tsx:692
 msgid "Reconnect"
 msgstr "다시 연결"
 
@@ -1422,7 +1427,7 @@ msgstr "다시 연결"
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "붉은 봉투, 귤, 서예 대련은 풍요와 행복, 새로운 시작을 기원하는 마음을 담습니다."
 
-#: src/features/settings/ui/settings.tsx:244
+#: src/features/settings/ui/settings.tsx:205
 msgid "Religious & cultural"
 msgstr "종교 및 문화"
 
@@ -1430,12 +1435,12 @@ msgstr "종교 및 문화"
 msgid "Report a bug"
 msgstr "버그 신고하기"
 
-#: src/pages/demo.tsx:571
-#: src/pages/demo.tsx:585
+#: src/pages/demo.tsx:591
+#: src/pages/demo.tsx:605
 msgid "Retry"
 msgstr "다시 시도"
 
-#: src/features/settings/ui/settings.tsx:269
+#: src/features/settings/ui/settings.tsx:230
 msgid "Reverse geocoding by OpenStreetMap contributors"
 msgstr "OpenStreetMap 기여자들의 역지오코딩"
 
@@ -1447,32 +1452,32 @@ msgstr "토 {hour}"
 msgid "Saturday"
 msgstr "토요일"
 
-#: src/features/settings/ui/settings.tsx:644
+#: src/features/settings/ui/settings.tsx:605
 msgid "School"
 msgstr "학교"
 
-#: src/features/settings/ui/settings.tsx:1001
+#: src/features/settings/ui/settings.tsx:962
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "브라우저가 소프트웨어 렌더러를 사용하는 것으로 보여 계절 효과가 비활성화되었습니다. 이 효과를 보려면 하드웨어 가속을 활성화하세요."
 
-#: src/features/settings/ui/settings.tsx:557
+#: src/features/settings/ui/settings.tsx:518
 msgid "Seasonal event override"
 msgstr "계절 이벤트 재정의"
 
-#: src/features/settings/ui/settings.tsx:113
+#: src/features/settings/ui/settings.tsx:116
 msgid "Seasonal events"
 msgstr "계절 이벤트"
 
-#: src/features/settings/ui/settings.tsx:214
+#: src/features/settings/ui/settings.tsx:175
 msgid "Seasons & nature"
 msgstr "계절과 자연"
 
-#: src/features/settings/ui/settings.tsx:811
-#: src/features/settings/ui/settings.tsx:870
+#: src/features/settings/ui/settings.tsx:772
+#: src/features/settings/ui/settings.tsx:831
 msgid "Securely stored"
 msgstr "안전하게 저장됨"
 
-#: src/features/settings/ui/settings.tsx:802
+#: src/features/settings/ui/settings.tsx:763
 msgid "See upcoming calendar events alongside your forecast. Weather Please connects directly to your calendar provider, and your events never pass through our servers."
 msgstr "일기예보와 함께 예정된 캘린더 일정을 확인하세요. Weather Please는 캘린더 제공업체에 직접 연결되며 일정은 당사 서버를 거치지 않습니다."
 
@@ -1492,8 +1497,8 @@ msgstr "9월"
 msgid "Set my location"
 msgstr "내 위치 설정"
 
-#: src/features/settings/ui/settings.tsx:380
-#: src/features/settings/ui/settings.tsx:399
+#: src/features/settings/ui/settings.tsx:341
+#: src/features/settings/ui/settings.tsx:360
 msgid "Settings"
 msgstr "설정"
 
@@ -1502,150 +1507,151 @@ msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and
 msgstr "함께 나누는 달콤한 간식과 꽃, 작은 선물은 축제를 친밀하고 개인적인 것으로 유지해 줍니다."
 
 #: src/features/settings/ui/settings.tsx:133
-msgid "Show Autumn Equinox event"
-msgstr "추분 표시"
+#~ msgid "Show Autumn Equinox event"
+#~ msgstr "추분 표시"
 
-#: src/features/settings/ui/settings.tsx:840
+#: src/features/settings/ui/settings.tsx:801
 msgid "Show calendar events"
 msgstr "캘린더 일정 표시"
 
 #: src/features/settings/ui/settings.tsx:134
-msgid "Show Christmas Day event"
-msgstr "크리스마스 표시"
+#~ msgid "Show Christmas Day event"
+#~ msgstr "크리스마스 표시"
 
 #: src/features/settings/ui/settings.tsx:135
-msgid "Show Day of the Dead event"
-msgstr "망자의 날 표시"
+#~ msgid "Show Day of the Dead event"
+#~ msgstr "망자의 날 표시"
 
 #: src/features/settings/ui/settings.tsx:136
-msgid "Show Diwali event"
-msgstr "디왈리 표시"
+#~ msgid "Show Diwali event"
+#~ msgstr "디왈리 표시"
 
 #: src/features/settings/ui/settings.tsx:137
-msgid "Show Earth Day event"
-msgstr "지구의 날 표시"
+#~ msgid "Show Earth Day event"
+#~ msgstr "지구의 날 표시"
 
 #: src/features/settings/ui/settings.tsx:138
-msgid "Show Easter event"
-msgstr "부활절 표시"
+#~ msgid "Show Easter event"
+#~ msgstr "부활절 표시"
 
 #: src/features/settings/ui/settings.tsx:139
-msgid "Show Eid al-Adha event"
-msgstr "이드 알아드하 표시"
+#~ msgid "Show Eid al-Adha event"
+#~ msgstr "이드 알아드하 표시"
 
 #: src/features/settings/ui/settings.tsx:140
-msgid "Show Eid al-Fitr event"
-msgstr "이드 알피트르 표시"
+#~ msgid "Show Eid al-Fitr event"
+#~ msgstr "이드 알피트르 표시"
 
 #: src/features/settings/ui/settings.tsx:142
-msgid "Show Eta Aquariids meteor shower event"
-msgstr "물병자리 에타 유성우 표시"
+#~ msgid "Show Eta Aquariids meteor shower event"
+#~ msgstr "물병자리 에타 유성우 표시"
 
 #: src/features/settings/ui/settings.tsx:145
-msgid "Show Event Horizon Day event"
-msgstr "이벤트 호라이즌 데이 이벤트 표시"
+#~ msgid "Show Event Horizon Day event"
+#~ msgstr "이벤트 호라이즌 데이 이벤트 표시"
 
-#: src/features/settings/ui/settings.tsx:87
+#: src/features/settings/ui/settings.tsx:90
 msgid "Show extreme UV alerts"
 msgstr "극한의 UV 경보 표시"
 
 #: src/features/settings/ui/settings.tsx:147
-msgid "Show Geminids meteor shower event"
-msgstr "쌍둥이자리 유성우 표시"
+#~ msgid "Show Geminids meteor shower event"
+#~ msgstr "쌍둥이자리 유성우 표시"
 
 #: src/features/settings/ui/settings.tsx:148
-msgid "Show Halloween event"
-msgstr "할로윈 표시"
+#~ msgid "Show Halloween event"
+#~ msgstr "할로윈 표시"
 
 #: src/features/settings/ui/settings.tsx:149
-msgid "Show Hanukkah event"
-msgstr "하누카 표시"
+#~ msgid "Show Hanukkah event"
+#~ msgstr "하누카 표시"
 
-#: src/features/settings/ui/settings.tsx:90
+#: src/features/settings/ui/settings.tsx:93
 msgid "Show high precipitation alerts"
 msgstr "강수량이 많은 경보 표시"
 
 #: src/features/settings/ui/settings.tsx:150
-msgid "Show Holi event"
-msgstr "홀리 표시"
+#~ msgid "Show Holi event"
+#~ msgstr "홀리 표시"
 
 #: src/features/settings/ui/settings.tsx:151
-msgid "Show Leonids meteor shower event"
-msgstr "사자자리 유성우 표시"
+#~ msgid "Show Leonids meteor shower event"
+#~ msgstr "사자자리 유성우 표시"
 
-#: src/features/settings/ui/settings.tsx:95
+#: src/features/settings/ui/settings.tsx:98
 msgid "Show low visibility alerts"
 msgstr "저시력 경보 표시"
 
 #: src/features/settings/ui/settings.tsx:152
-msgid "Show Lunar New Year event"
-msgstr "음력 새해 표시"
+#~ msgid "Show Lunar New Year event"
+#~ msgstr "음력 새해 표시"
 
 #: src/features/settings/ui/settings.tsx:153
-msgid "Show Lyrids meteor shower event"
-msgstr "거문고자리 유성우 표시"
+#~ msgid "Show Lyrids meteor shower event"
+#~ msgstr "거문고자리 유성우 표시"
 
 #: src/features/settings/ui/settings.tsx:154
-msgid "Show New Year's Day event"
-msgstr "새해 첫날 표시"
+#~ msgid "Show New Year's Day event"
+#~ msgstr "새해 첫날 표시"
 
 #: src/features/settings/ui/settings.tsx:155
-msgid "Show Orionids meteor shower event"
-msgstr "오리온자리 유성우 표시"
+#~ msgid "Show Orionids meteor shower event"
+#~ msgstr "오리온자리 유성우 표시"
 
 #: src/features/settings/ui/settings.tsx:156
-msgid "Show Perseids meteor shower event"
-msgstr "페르세우스자리 유성우 표시"
+#~ msgid "Show Perseids meteor shower event"
+#~ msgstr "페르세우스자리 유성우 표시"
 
 #: src/features/settings/ui/settings.tsx:158
-msgid "Show Quadrantids meteor shower event"
-msgstr "사분의자리 유성우 표시"
+#~ msgid "Show Quadrantids meteor shower event"
+#~ msgstr "사분의자리 유성우 표시"
 
-#: src/features/settings/ui/settings.tsx:995
+#: src/features/settings/ui/settings.tsx:956
 msgid "Show seasonal events"
 msgstr "계절 이벤트 표시"
 
-#: src/features/settings/ui/settings.tsx:1011
+#: src/features/settings/ui/settings.tsx:972
 msgid "Show seasonal tile glow"
 msgstr "계절 타일 글로우 표시"
 
 #: src/features/settings/ui/settings.tsx:160
-msgid "Show Spring Equinox event"
-msgstr "춘분 표시"
+#~ msgid "Show Spring Equinox event"
+#~ msgstr "춘분 표시"
 
-#: src/features/settings/ui/settings.tsx:92
+#: src/features/settings/ui/settings.tsx:95
 msgid "Show strong wind alerts"
 msgstr "강풍 경보 보이기"
 
 #: src/features/settings/ui/settings.tsx:161
-msgid "Show Summer Solstice event"
-msgstr "하지 표시"
+#~ msgid "Show Summer Solstice event"
+#~ msgstr "하지 표시"
 
-#: src/features/weather/ui/tile.tsx:553
+#: src/features/settings/ui/settings.tsx:1008
+#: src/features/weather/ui/tile.tsx:570
 msgid "Show this event"
 msgstr "이 이벤트 표시"
 
 #: src/features/settings/ui/settings.tsx:163
-msgid "Show total lunar eclipse event"
-msgstr "개기월식 표시"
+#~ msgid "Show total lunar eclipse event"
+#~ msgstr "개기월식 표시"
 
 #: src/features/settings/ui/settings.tsx:166
-msgid "Show total solar eclipse event"
-msgstr "개기일식 표시"
+#~ msgid "Show total solar eclipse event"
+#~ msgstr "개기일식 표시"
 
 #: src/features/settings/ui/settings.tsx:169
-msgid "Show Valentine's Day event"
-msgstr "발렌타인데이 표시"
+#~ msgid "Show Valentine's Day event"
+#~ msgstr "발렌타인데이 표시"
 
-#: src/features/settings/ui/settings.tsx:957
+#: src/features/settings/ui/settings.tsx:918
 msgid "Show weather alerts"
 msgstr "날씨 경보 표시"
 
 #: src/features/settings/ui/settings.tsx:171
-msgid "Show Winter Solstice event"
-msgstr "동지 표시"
+#~ msgid "Show Winter Solstice event"
+#~ msgstr "동지 표시"
 
-#: src/pages/demo.tsx:97
+#: src/pages/demo.tsx:105
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "캐시된 날씨 데이터를 표시하고 있습니다. 최신 예보를 새로 고치려면 다시 시도하세요."
 
@@ -1682,15 +1688,15 @@ msgstr "일식은 수천 년 전부터 기록돼 왔고, 경이와 불안, 그�
 msgid "Some appear white, others yellow or blue-green. The colour depends on the mineral composition of each grain of dust as it burns up."
 msgstr "어떤 것은 흰색으로, 다른 것은 노란색이나 청록색으로 보입니다. 색깔은 각 먼지 알갱이가 타오를 때의 광물 성분에 따라 다릅니다."
 
-#: src/features/settings/ui/settings.tsx:626
+#: src/features/settings/ui/settings.tsx:587
 msgid "Some calendar events couldn't be loaded. Please try again in a moment."
 msgstr "일부 캘린더 일정을 불러올 수 없습니다. 잠시 후 다시 시도하세요."
 
-#: src/features/settings/ui/settings.tsx:570
+#: src/features/settings/ui/settings.tsx:531
 msgid "Spoof upcoming calendar events"
 msgstr "예정된 캘린더 일정 모의 표시"
 
-#: src/features/settings/ui/settings.tsx:196
+#: src/features/settings/ui/settings.tsx:157
 #: src/features/weather/ui/tile.tsx:192
 msgid "Spring Equinox"
 msgstr "춘분"
@@ -1723,12 +1729,12 @@ msgstr "1시간 후 강한 바람이 시작됩니다"
 msgid "Submit"
 msgstr "제출"
 
-#: src/features/settings/ui/settings.tsx:197
+#: src/features/settings/ui/settings.tsx:158
 #: src/features/weather/ui/tile.tsx:193
 msgid "Summer Solstice"
 msgstr "하지"
 
-#: src/pages/demo.tsx:749
+#: src/pages/demo.tsx:769
 msgid "sun"
 msgstr "태양"
 
@@ -1764,12 +1770,12 @@ msgstr "상징과 의식"
 msgid "Symbols of luck"
 msgstr "행운의 상징"
 
-#: src/pages/demo.tsx:750
+#: src/pages/demo.tsx:770
 msgid "temperature"
 msgstr "온도"
 
 #: src/features/settings/ui/initialisation.tsx:245
-#: src/features/settings/ui/settings.tsx:598
+#: src/features/settings/ui/settings.tsx:559
 #: src/features/weather/ui/next-24-hours-tile.tsx:368
 #: src/features/weather/ui/next-24-hours-tile.tsx:384
 msgid "Temperature"
@@ -1816,7 +1822,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "정확한 빨간색 음영은 그 시점에 지구 대기에 무엇이 있느냐에 달려 있습니다. 대형 화산 폭발 후에는 달이 특히 짙고 거의 갈색빛 빨간색으로 변할 수 있습니다."
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:479
+#: src/features/weather/ui/tile.tsx:489
 msgid "The expected type of weather is {0}."
 msgstr "예상되는 날씨 유형은 {0}입니다."
 
@@ -1885,27 +1891,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "수치는 뜻밖에 희망적입니다 — 1970년부터 지구의 날에 심어진 나무는 이제 수십억 그루에 달합니다."
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:441
+#: src/features/weather/ui/tile.tsx:451
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "최고 기온은 {0}도 섭씨가 될 것입니다."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:447
+#: src/features/weather/ui/tile.tsx:457
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "최고 기온은 {0}도 화씨가 될 것입니다."
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:505
+#: src/features/weather/ui/tile.tsx:515
 msgid "The maximum UV index will be {0}."
 msgstr "최대 UV 지수는 {0}이 될 것입니다."
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:518
+#: src/features/weather/ui/tile.tsx:528
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "최대 풍속은 {0}킬로미터/시간이 될 것입니다."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:524
+#: src/features/weather/ui/tile.tsx:534
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "최대 풍속은 {0}마일/시간이 될 것입니다."
 
@@ -1922,12 +1928,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "유성들은 초속 약 66km로 대기권에 진입합니다 — 연간 유성우 중 가장 빠른 편에 속하며, 이 때문에 종종 오래 지속되는 빛나는 흔적을 남깁니다."
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:460
+#: src/features/weather/ui/tile.tsx:470
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "최저 기온은 {0}도 섭씨가 될 것입니다."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:466
+#: src/features/weather/ui/tile.tsx:476
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "최저 기온은 {0}도 화씨가 될 것입니다."
 
@@ -2056,7 +2062,7 @@ msgid "Their radiant lies in the constellation Perseus, and the shower is especi
 msgstr "복사점은 페르세우스자리(Perseus)에 있으며, 특히 북반구에서 두드러지지만 전 세계에서 볼 수 있습니다."
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:538
+#: src/features/weather/ui/tile.tsx:548
 msgid "There is a {0}% chance of precipitation."
 msgstr "강수 확률은 {0}%입니다."
 
@@ -2080,7 +2086,7 @@ msgstr "대체로 조용한 유성우로, 인내심 있는 하늘 관측에 보�
 msgid "They peak in early May and are especially well seen from the southern hemisphere, though northern skies still catch their share of streaks."
 msgstr "절정은 5월 초에 오며 남반구에서 특히 잘 보이지만, 북반구에서도 꽤 많은 유성을 볼 수 있습니다."
 
-#: src/features/settings/ui/settings.tsx:720
+#: src/features/settings/ui/settings.tsx:681
 msgid "This account's sign-in expired. Please reconnect it."
 msgstr "이 계정의 로그인이 만료되었습니다. 다시 연결하세요."
 
@@ -2140,7 +2146,7 @@ msgstr "오늘날 많은 사람들은 개기 경로 안에 서기 위해 먼 거
 msgid "Tomorrow • {dateLabel}"
 msgstr "내일 • {dateLabel}"
 
-#: src/features/settings/ui/settings.tsx:198
+#: src/features/settings/ui/settings.tsx:159
 msgid "Total lunar eclipse"
 msgstr "개기월식"
 
@@ -2153,7 +2159,7 @@ msgstr "개기월식"
 msgid "Total precipitation"
 msgstr "총 강수량"
 
-#: src/features/settings/ui/settings.tsx:199
+#: src/features/settings/ui/settings.tsx:160
 msgid "Total solar eclipse"
 msgstr "개기일식"
 
@@ -2185,7 +2191,7 @@ msgstr "화 {hour}"
 msgid "Tuesday"
 msgstr "화요일"
 
-#: src/features/settings/ui/settings.tsx:946
+#: src/features/settings/ui/settings.tsx:907
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Weather Please에서 제공하는 UV 지수가 지역 स्रोत보다 지속적으로 낮다면 이 옵션을 켜세요."
 
@@ -2201,8 +2207,8 @@ msgstr "나쁨"
 msgid "Unhealthy for sensitive groups"
 msgstr "민감군에 나쁨"
 
-#: src/features/weather/ui/tile.tsx:475
-#: src/features/weather/ui/tile.tsx:482
+#: src/features/weather/ui/tile.tsx:485
+#: src/features/weather/ui/tile.tsx:492
 msgid "unknown conditions"
 msgstr "알 수 없는 상태"
 
@@ -2222,7 +2228,7 @@ msgstr "제목 없는 일정"
 msgid "Upcoming calendar events"
 msgstr "예정된 캘린더 일정"
 
-#: src/features/settings/ui/settings.tsx:943
+#: src/features/settings/ui/settings.tsx:904
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "글로벌 화학 모델(CAMS) 사용"
 
@@ -2230,7 +2236,7 @@ msgstr "글로벌 화학 모델(CAMS) 사용"
 msgid "UV"
 msgstr "UV"
 
-#: src/features/settings/ui/settings.tsx:200
+#: src/features/settings/ui/settings.tsx:161
 #: src/features/weather/ui/tile.tsx:196
 msgid "Valentine's Day"
 msgstr "발렌타인데이"
@@ -2267,7 +2273,7 @@ msgstr "지도 데이터 불러오는 중"
 msgid "Ways to observe"
 msgstr "관측 방법"
 
-#: src/features/settings/ui/settings.tsx:621
+#: src/features/settings/ui/settings.tsx:582
 msgid "We couldn't connect your calendar account. Please try again."
 msgstr "캘린더 계정에 연결할 수 없습니다. 다시 시도하세요."
 
@@ -2275,35 +2281,35 @@ msgstr "캘린더 계정에 연결할 수 없습니다. 다시 시도하세요."
 msgid "We couldn't reach the location service right now - this isn't an issue with your device. Please try again in a moment."
 msgstr "현재 위치 서비스에 연결할 수 없습니다. 기기 문제가 아닙니다. 잠시 후 다시 시도해 주세요."
 
-#: src/pages/demo.tsx:138
+#: src/pages/demo.tsx:146
 msgid "We couldn't reach the weather service. Please check your internet connection and try again."
 msgstr "날씨 서비스에 연결할 수 없습니다. 인터넷 연결을 확인하고 다시 시도해 주세요."
 
-#: src/features/settings/ui/settings.tsx:108
+#: src/features/settings/ui/settings.tsx:111
 msgid "Weather"
 msgstr "날씨"
 
-#: src/features/settings/ui/settings.tsx:265
+#: src/features/settings/ui/settings.tsx:226
 msgid "Weather data by Open-Meteo"
 msgstr "Open-Meteo의 날씨 데이터"
 
-#: src/pages/demo.tsx:129
+#: src/pages/demo.tsx:137
 msgid "Weather data couldn't be loaded because the weather service could not be reached. This usually isn't a problem with your device. Please try again in a moment."
 msgstr "날씨 서비스에 연결할 수 없어 날씨 데이터를 불러오지 못했습니다. 보통 기기 문제가 아닙니다. 잠시 후 다시 시도해 주세요."
 
-#: src/pages/demo.tsx:110
+#: src/pages/demo.tsx:118
 msgid "Weather data couldn't be loaded because the weather service is having trouble. This isn't a problem with your device. Please try again in a moment."
 msgstr "날씨 서비스에 문제가 발생하여 날씨 데이터를 불러오지 못했습니다. 기기 문제가 아닙니다. 잠시 후 다시 시도해 주세요."
 
-#: src/pages/demo.tsx:89
+#: src/pages/demo.tsx:97
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "서비스 문제로 날씨 데이터를 불러올 수 없습니다 — 캐시된 데이터를 표시하고 있습니다. 잠시 후 다시 시도해 주세요."
 
-#: src/pages/demo.tsx:120
+#: src/pages/demo.tsx:128
 msgid "Weather data couldn't be loaded for this location. Please check your location settings and try again."
 msgstr "이 위치의 날씨 데이터를 불러오지 못했습니다. 위치 설정을 확인하고 다시 시도해 주세요."
 
-#: src/features/settings/ui/settings.tsx:1088
+#: src/features/settings/ui/settings.tsx:1069
 msgid "Weather Please uses the following third-party data sources and location services."
 msgstr "Weather Please는 다음과 같은 서드파티 데이터 소스 및 위치 서비스를 사용합니다."
 
@@ -2355,7 +2361,7 @@ msgstr "붉게 변하는 이유"
 msgid "Why the peak is brief"
 msgstr "절정이 짧은 이유"
 
-#: src/pages/demo.tsx:751
+#: src/pages/demo.tsx:771
 msgid "wind"
 msgstr "바람"
 
@@ -2369,7 +2375,7 @@ msgstr "바람"
 msgid "Wind is making it feel cooler than the measured temperature right now."
 msgstr "바람으로 인해 현재 측정된 기온보다 더 시원하게 느껴집니다."
 
-#: src/features/settings/ui/settings.tsx:201
+#: src/features/settings/ui/settings.tsx:162
 #: src/features/weather/ui/tile.tsx:197
 msgid "Winter Solstice"
 msgstr "동지"
@@ -2378,7 +2384,7 @@ msgstr "동지"
 msgid "Within minutes of stepping outside, everyone looks the same — drenched head to toe in colour, impossible to tell apart."
 msgstr "밖에 나선 지 몇 분 안에 모든 사람이 똑같이 보입니다 — 머리부터 발끝까지 색으로 흠뻑 젖어 구별할 수 없습니다."
 
-#: src/features/settings/ui/settings.tsx:645
+#: src/features/settings/ui/settings.tsx:606
 msgid "Work"
 msgstr "직장"
 

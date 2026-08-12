@@ -72,12 +72,12 @@ msgid "{0} between <0/>"
 msgstr "{0} в период <0/>"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:521
 msgid "{0} km/h"
 msgstr "{0} км/ч"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:513
+#: src/features/weather/ui/tile.tsx:523
 msgid "{0} mph"
 msgstr "{0} миль/ч"
 
@@ -142,27 +142,27 @@ msgstr "<0>Доступ к геолокации запрещен.</0> Прове
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Доступ к геолокации запрещен.</0> Нажмите значок геолокации в адресной строке и выберите \"всегда разрешать доступ к вашему местоположению\". Затем нажмите кнопку ниже, чтобы попробовать снова."
 
-#: src/features/settings/ui/settings.tsx:1073
+#: src/features/settings/ui/settings.tsx:1054
 msgid "☕ Gift a coffee"
 msgstr "☕ Подарить кофе"
 
-#: src/pages/demo.tsx:697
+#: src/pages/demo.tsx:717
 msgid "✨ NEW: Connect your Google or Microsoft calendar"
 msgstr "✨ НОВОЕ: подключите календарь Google или Microsoft"
 
-#: src/pages/demo.tsx:662
+#: src/pages/demo.tsx:682
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ НОВОЕ: Попробуйте прокрутить вниз"
 
-#: src/features/settings/ui/settings.tsx:1057
+#: src/features/settings/ui/settings.tsx:1038
 msgid "🌟 Leave a review"
 msgstr "🌟 Оставить отзыв"
 
-#: src/features/settings/ui/settings.tsx:1065
+#: src/features/settings/ui/settings.tsx:1046
 msgid "🐛 Report a bug"
 msgstr "🐛 Сообщить об ошибке"
 
-#: src/features/settings/ui/settings.tsx:1116
+#: src/features/settings/ui/settings.tsx:1097
 msgid "🔒 Privacy policy"
 msgstr "🔒 Политика конфиденциальности"
 
@@ -182,7 +182,7 @@ msgstr "Полное лунное затмение происходит, ког�
 msgid "A total solar eclipse occurs when the Moon moves directly in front of the Sun, briefly transforming daylight into twilight."
 msgstr "Полное солнечное затмение происходит, когда Луна проходит прямо перед Солнцем, на мгновение превращая день в сумерки."
 
-#: src/features/settings/ui/settings.tsx:123
+#: src/features/settings/ui/settings.tsx:126
 msgid "About"
 msgstr "О приложении"
 
@@ -218,11 +218,11 @@ msgstr "Во многих культурах традиции вроде Юля 
 msgid "Acts of charity, the sharing of food, and care for family, neighbours, and those in need form the heart of the celebration."
 msgstr "В основе праздника — благотворительность, совместная трапеза и забота о семье, соседях и тех, кто нуждается в помощи."
 
-#: src/features/settings/ui/settings.tsx:769
+#: src/features/settings/ui/settings.tsx:730
 msgid "Add account"
 msgstr "Добавить аккаунт"
 
-#: src/pages/demo.tsx:744
+#: src/pages/demo.tsx:764
 msgid "air quality"
 msgstr "качество воздуха"
 
@@ -287,7 +287,7 @@ msgstr "AQI измеряется по шкале от 0 до 500. Меньшие
 msgid "As sunlight passes through Earth’s atmosphere, the shorter blue wavelengths scatter away while the longer red wavelengths bend toward the Moon."
 msgstr "Когда солнечный свет проходит через атмосферу Земли, короткие синие волны рассеиваются... а более длинные красные изгибаются в сторону Луны."
 
-#: src/features/settings/ui/settings.tsx:230
+#: src/features/settings/ui/settings.tsx:191
 msgid "Astronomy"
 msgstr "Астрономия"
 
@@ -299,7 +299,7 @@ msgstr "На скорости 66 км/с это одни из самых быс�
 msgid "At each boundary, fireworks go up, bells ring, and strangers count down together. The same moment of anticipation, repeated twenty-four times."
 msgstr "На каждой границе взлетают фейерверки, звонят колокола, и незнакомые люди вместе ведут обратный отсчёт. Один и тот же момент ожидания, повторённый двадцать четыре раза."
 
-#: src/features/settings/ui/settings.tsx:1085
+#: src/features/settings/ui/settings.tsx:1066
 msgid "Attributions"
 msgstr "Авторство"
 
@@ -307,7 +307,7 @@ msgstr "Авторство"
 msgid "August"
 msgstr "Август"
 
-#: src/features/settings/ui/settings.tsx:175
+#: src/features/settings/ui/settings.tsx:136
 #: src/features/weather/ui/tile.tsx:171
 msgid "Autumn Equinox"
 msgstr "Осеннее равноденствие"
@@ -315,6 +315,11 @@ msgstr "Осеннее равноденствие"
 #: src/features/weather/ui/next-24-hours-tile.tsx:2046
 msgid "Average wind"
 msgstr "Средний ветер"
+
+#: src/features/settings/ui/settings.tsx:997
+#: src/features/weather/ui/tile.tsx:563
+msgid "Background"
+msgstr "Фон"
 
 #: src/features/seasonal-events/events/black-hole.tsx:231
 msgid "Because gravity bends light paths, parts of the disk appear warped and wrapped above and below the black hole."
@@ -336,11 +341,11 @@ msgstr "К полудню улицы, стены и все видимые пов
 msgid "By the eighteenth century, handwritten notes and printed cards had helped turn the day into a ritual of letters and messages."
 msgstr "К XVIII веку рукописные записки и печатные открытки... превратили этот день в ритуал писем и посланий."
 
-#: src/features/settings/ui/settings.tsx:814
+#: src/features/settings/ui/settings.tsx:775
 msgid "Calendar"
 msgstr "Календарь"
 
-#: src/features/settings/ui/settings.tsx:818
+#: src/features/settings/ui/settings.tsx:779
 msgid "Calendar connections aren't available in this build."
 msgstr "Подключение календарей недоступно в этой сборке."
 
@@ -348,12 +353,12 @@ msgstr "Подключение календарей недоступно в эт
 msgid "Carved pumpkins, sweets, and playful scares echo much older customs of lanterns, bonfires, and protective charms."
 msgstr "Вырезанные тыквы, сладости и шуточные страшилки перекликаются с куда более древними обычаями фонарей, костров и защитных оберегов."
 
-#: src/features/settings/ui/settings.tsx:702
+#: src/features/settings/ui/settings.tsx:663
 msgid "Category"
 msgstr "Категория"
 
 #: src/features/settings/ui/initialisation.tsx:48
-#: src/features/settings/ui/settings.tsx:277
+#: src/features/settings/ui/settings.tsx:238
 msgid "Celsius (°C)"
 msgstr "Цельсий (°C)"
 
@@ -369,7 +374,7 @@ msgstr "Вероятность"
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
 msgstr "Китайские записи 687 года до н. э. описывают \"звёзды, падающие как дождь\" — старейшее известное упоминание Лиридов и одно из старейших задокументированных наблюдений метеоров вообще."
 
-#: src/features/settings/ui/settings.tsx:176
+#: src/features/settings/ui/settings.tsx:137
 #: src/features/weather/ui/tile.tsx:172
 msgid "Christmas Day"
 msgstr "Рождество"
@@ -398,11 +403,11 @@ msgstr "Комета Тэтчер, родительское тело этого 
 msgid "Community cleanups, tree planting, and habitat restoration are among the most common activities."
 msgstr "Субботники, посадка деревьев и восстановление среды обитания — одни из самых распространённых занятий."
 
-#: src/features/settings/ui/settings.tsx:86
+#: src/features/settings/ui/settings.tsx:89
 msgid "Compact weather alerts"
 msgstr "Компактные погодные предупреждения"
 
-#: src/pages/demo.tsx:745
+#: src/pages/demo.tsx:765
 msgid "conditions"
 msgstr "условия"
 
@@ -410,11 +415,11 @@ msgstr "условия"
 msgid "Conditions"
 msgstr "Условия"
 
-#: src/features/settings/ui/settings.tsx:771
+#: src/features/settings/ui/settings.tsx:732
 msgid "Connect"
 msgstr "Подключить"
 
-#: src/features/settings/ui/settings.tsx:689
+#: src/features/settings/ui/settings.tsx:650
 msgid "Connected account"
 msgstr "Подключенный аккаунт"
 
@@ -426,19 +431,19 @@ msgstr "Костюмы могут быть героическими, смешн�
 msgid "Current AQI"
 msgstr "Текущий AQI"
 
-#: src/features/settings/ui/settings.tsx:939
+#: src/features/settings/ui/settings.tsx:900
 msgid "Data & alerts"
 msgstr "Данные и оповещения"
 
-#: src/features/settings/ui/settings.tsx:930
+#: src/features/settings/ui/settings.tsx:891
 msgid "Date"
 msgstr "Дата"
 
-#: src/features/settings/ui/settings.tsx:926
+#: src/features/settings/ui/settings.tsx:887
 msgid "Day"
 msgstr "День"
 
-#: src/features/settings/ui/settings.tsx:177
+#: src/features/settings/ui/settings.tsx:138
 #: src/features/weather/ui/tile.tsx:173
 msgid "Day of the Dead"
 msgstr "День мертвых"
@@ -471,7 +476,7 @@ msgstr "осаждение инея в тумане"
 msgid "Depth"
 msgstr "Глубина"
 
-#: src/features/settings/ui/settings.tsx:128
+#: src/features/settings/ui/settings.tsx:131
 msgid "Developer"
 msgstr "Разработчик"
 
@@ -479,19 +484,19 @@ msgstr "Разработчик"
 msgid "Direct sunlight is making it feel warmer than the measured temperature right now."
 msgstr "Прямые солнечные лучи сейчас делают ощущаемую температуру выше измеренной."
 
-#: src/features/settings/ui/settings.tsx:697
+#: src/features/settings/ui/settings.tsx:658
 msgid "Disconnect"
 msgstr "Отключить"
 
-#: src/pages/demo.tsx:705
+#: src/pages/demo.tsx:725
 msgid "Dismiss"
 msgstr "Закрыть"
 
-#: src/features/settings/ui/settings.tsx:991
+#: src/features/settings/ui/settings.tsx:952
 msgid "Display"
 msgstr "Отображение"
 
-#: src/features/settings/ui/settings.tsx:178
+#: src/features/settings/ui/settings.tsx:139
 #: src/features/weather/ui/tile.tsx:174
 msgid "Diwali"
 msgstr "Дивали"
@@ -528,7 +533,7 @@ msgstr "Каждый вечер к ханукии добавляют ещё од
 msgid "Each Orionid meteor is a tiny grain of dust shed by Halley's Comet — the same object that people have been watching and recording since at least 240 BC."
 msgstr "Каждый метеор Орионид — крошечная пылинка, отброшенная кометой Галлея — тем же объектом, который люди наблюдают и записывают как минимум с 240 года до н. э."
 
-#: src/features/settings/ui/settings.tsx:179
+#: src/features/settings/ui/settings.tsx:140
 #: src/features/weather/ui/tile.tsx:175
 msgid "Earth Day"
 msgstr "День Земли"
@@ -537,7 +542,7 @@ msgstr "День Земли"
 msgid "Earth Day invites a pause to notice the planet that sustains us, and to consider how we care for it."
 msgstr "День Земли предлагает остановиться, заметить планету, которая нас поддерживает, и задуматься о том, как мы о ней заботимся."
 
-#: src/features/settings/ui/settings.tsx:180
+#: src/features/settings/ui/settings.tsx:141
 #: src/features/weather/ui/tile.tsx:176
 msgid "Easter"
 msgstr "Пасха"
@@ -550,7 +555,7 @@ msgstr "Пасха посвящена темам обновления и, в х�
 msgid "Eclipse glasses are essential during all partial phases. Only during the brief seconds of total coverage is it safe to look with the naked eye."
 msgstr "Очки для наблюдения за затмением необходимы на всех фазах частного затмения. Только в краткие секунды полного перекрытия безопасно смотреть невооружённым глазом."
 
-#: src/features/settings/ui/settings.tsx:181
+#: src/features/settings/ui/settings.tsx:142
 #: src/features/weather/ui/tile.tsx:177
 msgid "Eid al-Adha"
 msgstr "Ид аль-Адха"
@@ -559,7 +564,7 @@ msgstr "Ид аль-Адха"
 msgid "Eid al-Adha is one of the most important festivals in Islam, closely linked to the season of the Hajj pilgrimage."
 msgstr "Ид аль-Адха — один из важнейших праздников в исламе, тесно связанный с сезоном хаджа."
 
-#: src/features/settings/ui/settings.tsx:182
+#: src/features/settings/ui/settings.tsx:143
 #: src/features/weather/ui/tile.tsx:178
 msgid "Eid al-Fitr"
 msgstr "Ид аль-Фитр"
@@ -568,7 +573,7 @@ msgstr "Ид аль-Фитр"
 msgid "Eid al-Fitr marks the end of Ramadan, celebrating renewal, gratitude, and the strength of shared community."
 msgstr "Ид аль-Фитр знаменует окончание Рамадана, празднуя обновление, благодарность и силу общины."
 
-#: src/features/settings/ui/settings.tsx:183
+#: src/features/settings/ui/settings.tsx:144
 msgid "Eta Aquariids meteor shower"
 msgstr "Метеорный поток Эта-Аквариды"
 
@@ -584,7 +589,7 @@ msgstr "Даже небольшие выборы — починить, испо�
 msgid "Event description"
 msgstr "Описание события"
 
-#: src/features/settings/ui/settings.tsx:184
+#: src/features/settings/ui/settings.tsx:145
 #: src/features/weather/ui/tile.tsx:180
 msgid "Event Horizon Day"
 msgstr "День горизонта событий"
@@ -614,7 +619,7 @@ msgid "Extreme UV starting in 1 hour"
 msgstr "Экстремальный УФ начнется через 1 час"
 
 #: src/features/settings/ui/initialisation.tsx:52
-#: src/features/settings/ui/settings.tsx:281
+#: src/features/settings/ui/settings.tsx:242
 msgid "Fahrenheit (°F)"
 msgstr "Фаренгейт (°F)"
 
@@ -634,7 +639,7 @@ msgstr "Семьи собираются, чтобы зажечь менору, �
 msgid "Families spend the night in cemeteries, cleaning graves, laying marigold paths, and sharing meals beside the headstones. It's social, warm, and often funny — people tell stories and play music until morning."
 msgstr "Семьи проводят ночь на кладбищах, убирая могилы, выкладывая тропинки из бархатцев и разделяя трапезу у надгробий. Это тепло, по-семейному и нередко весело — люди рассказывают истории и играют музыку до утра."
 
-#: src/features/settings/ui/settings.tsx:640
+#: src/features/settings/ui/settings.tsx:601
 msgid "Family"
 msgstr "Семья"
 
@@ -642,7 +647,7 @@ msgstr "Семья"
 msgid "February"
 msgstr "Февраль"
 
-#: src/features/settings/ui/settings.tsx:1049
+#: src/features/settings/ui/settings.tsx:1030
 msgid "Feedback"
 msgstr "Обратная связь"
 
@@ -650,7 +655,7 @@ msgstr "Обратная связь"
 msgid "Feels like now"
 msgstr "Ощущается сейчас"
 
-#: src/features/settings/ui/settings.tsx:641
+#: src/features/settings/ui/settings.tsx:602
 msgid "Finance"
 msgstr "Финансы"
 
@@ -666,15 +671,15 @@ msgstr "Блюда, жаренные в масле, включая латкес 
 msgid "For many Hindus, the festival marks the return of Rama, Sita, Lakshmana, and Hanuman to Ayodhya after their long exile."
 msgstr "Для многих индуистов праздник отмечает возвращение Рамы, Ситы, Лакшманы и Ханумана в Айодхью после долгого изгнания."
 
-#: src/pages/demo.tsx:746
+#: src/pages/demo.tsx:766
 msgid "forecast"
 msgstr "прогноз"
 
-#: src/features/settings/ui/settings.tsx:904
+#: src/features/settings/ui/settings.tsx:865
 msgid "Forecast"
 msgstr "Прогноз"
 
-#: src/features/settings/ui/settings.tsx:642
+#: src/features/settings/ui/settings.tsx:603
 msgid "Freelance"
 msgstr "Фриланс"
 
@@ -698,7 +703,7 @@ msgstr "С этого момента каждый день прибавляет 
 msgid "Geminid meteors move slower than most showers, which is part of what makes them so striking — they linger long enough to actually follow with your eyes."
 msgstr "Метеоры Геминид движутся медленнее, чем большинство потоков, — это отчасти и делает их такими впечатляющими: они задерживаются достаточно долго, чтобы их можно было проследить глазами."
 
-#: src/features/settings/ui/settings.tsx:185
+#: src/features/settings/ui/settings.tsx:146
 msgid "Geminids meteor shower"
 msgstr "Метеорный поток Геминиды"
 
@@ -706,7 +711,7 @@ msgstr "Метеорный поток Геминиды"
 msgid "Geminids Meteor Shower"
 msgstr "Метеорный поток Геминиды"
 
-#: src/features/settings/ui/settings.tsx:103
+#: src/features/settings/ui/settings.tsx:106
 msgid "General"
 msgstr "Общие"
 
@@ -772,7 +777,7 @@ msgstr "Порыв"
 msgid "Halley’s Comet itself returns roughly every seventy-six years, but the stream of dust it leaves behind crosses Earth’s path each year."
 msgstr "Сама комета Галлея возвращается примерно раз в 76 лет... но поток оставленной ею пыли пересекает орбиту Земли каждый год."
 
-#: src/features/settings/ui/settings.tsx:186
+#: src/features/settings/ui/settings.tsx:147
 #: src/features/weather/ui/tile.tsx:182
 msgid "Halloween"
 msgstr "Хэллоуин"
@@ -781,7 +786,7 @@ msgstr "Хэллоуин"
 msgid "Halloween is a night shaped by costumes, stories, and a playful sense of unease."
 msgstr "Хэллоуин — ночь костюмов, историй и игривого ощущения тревожности."
 
-#: src/features/settings/ui/settings.tsx:187
+#: src/features/settings/ui/settings.tsx:148
 #: src/features/weather/ui/tile.tsx:183
 msgid "Hanukkah"
 msgstr "Ханука"
@@ -854,7 +859,7 @@ msgstr "Исторические записи о Персеидах уходят
 msgid "History and meaning"
 msgstr "История и значение"
 
-#: src/features/settings/ui/settings.tsx:188
+#: src/features/settings/ui/settings.tsx:149
 #: src/features/weather/ui/tile.tsx:184
 msgid "Holi"
 msgstr "Холи"
@@ -875,7 +880,7 @@ msgstr "Влажный воздух и прямые солнечные лучи 
 msgid "Humid air is making it feel warmer than the measured temperature right now."
 msgstr "Влажный воздух сейчас делает ощущаемую температуру выше измеренной."
 
-#: src/features/settings/ui/settings.tsx:919
+#: src/features/settings/ui/settings.tsx:880
 msgid "Identifier"
 msgstr "Идентификатор"
 
@@ -884,7 +889,7 @@ msgid "If your browser prompts you for location permissions, please select \"all
 msgstr "Если ваш браузер запрашивает разрешение на доступ к местоположению, выберите \"разрешить\"."
 
 #: src/features/settings/ui/initialisation.tsx:63
-#: src/features/settings/ui/settings.tsx:292
+#: src/features/settings/ui/settings.tsx:253
 msgid "Imperial (mph, in)"
 msgstr "Имперская система (mph, in)"
 
@@ -900,7 +905,7 @@ msgstr "Во многих традициях равноденствие — эт
 msgid "In most years, the Leonids produce only 10–15 meteors per hour. But during the 1966 storm, observers reported rates of thousands per minute — so many that some people thought the world was ending."
 msgstr "В большинстве лет Леониды дают всего 10–15 метеоров в час. Но во время шторма 1966 года наблюдатели сообщали о тысячах в минуту — столько, что некоторые решили, будто наступает конец света."
 
-#: src/features/settings/ui/settings.tsx:118
+#: src/features/settings/ui/settings.tsx:121
 msgid "Integrations"
 msgstr "Интеграции"
 
@@ -990,11 +995,11 @@ msgid "June"
 msgstr "Июнь"
 
 #: src/features/settings/ui/initialisation.tsx:234
-#: src/features/settings/ui/settings.tsx:586
+#: src/features/settings/ui/settings.tsx:547
 msgid "Language"
 msgstr "Язык"
 
-#: src/features/settings/ui/settings.tsx:876
+#: src/features/settings/ui/settings.tsx:837
 msgid "Latitude"
 msgstr "Широта"
 
@@ -1002,7 +1007,7 @@ msgstr "Широта"
 msgid "Leave a review"
 msgstr "Оставить отзыв"
 
-#: src/features/settings/ui/settings.tsx:1109
+#: src/features/settings/ui/settings.tsx:1090
 msgid "Legal"
 msgstr "Юридический"
 
@@ -1010,7 +1015,7 @@ msgstr "Юридический"
 msgid "Legends and customs"
 msgstr "Легенды и обычаи"
 
-#: src/features/settings/ui/settings.tsx:189
+#: src/features/settings/ui/settings.tsx:150
 msgid "Leonids meteor shower"
 msgstr "Метеорный поток Леониды"
 
@@ -1042,11 +1047,11 @@ msgstr "Актуальные данные временно недоступны.
 msgid "Local map"
 msgstr "Местная карта"
 
-#: src/features/settings/ui/settings.tsx:584
+#: src/features/settings/ui/settings.tsx:545
 msgid "Locale"
 msgstr "Локаль"
 
-#: src/features/settings/ui/settings.tsx:873
+#: src/features/settings/ui/settings.tsx:834
 msgid "Location"
 msgstr "Местоположение"
 
@@ -1054,7 +1059,7 @@ msgstr "Местоположение"
 msgid "Location name unavailable"
 msgstr "Название местоположения недоступно"
 
-#: src/features/settings/ui/settings.tsx:885
+#: src/features/settings/ui/settings.tsx:846
 msgid "Longitude"
 msgstr "Долгота"
 
@@ -1082,7 +1087,7 @@ msgstr "Плохая видимость начнется через 1 час"
 msgid "Lowest visibility"
 msgstr "Наименьшая видимость"
 
-#: src/features/settings/ui/settings.tsx:190
+#: src/features/settings/ui/settings.tsx:151
 #: src/features/weather/ui/tile.tsx:186
 msgid "Lunar New Year"
 msgstr "Лунный Новый год"
@@ -1091,7 +1096,7 @@ msgstr "Лунный Новый год"
 msgid "Lunar New Year begins with the first new moon of the lunar calendar and unfolds across a festival season lasting up to fifteen days."
 msgstr "Лунный Новый год начинается с первого новолуния лунного... цикла и разворачивается как праздничный сезон, длящийся до пятнадцати дней."
 
-#: src/features/settings/ui/settings.tsx:191
+#: src/features/settings/ui/settings.tsx:152
 msgid "Lyrids meteor shower"
 msgstr "Метеорный поток Лириды"
 
@@ -1104,7 +1109,7 @@ msgstr "Метеорный поток Лириды"
 msgid "mainly clear"
 msgstr "преимущественно ясно"
 
-#: src/pages/demo.tsx:747
+#: src/pages/demo.tsx:767
 msgid "map"
 msgstr "карта"
 
@@ -1133,7 +1138,7 @@ msgid "Meanwhile, billions of birds are mid-migration, navigating by stars, magn
 msgstr "Тем временем миллиарды птиц находятся в разгаре миграции, ориентируясь по звёздам, магнитным полям и ориентирам, передаваемым из поколения в поколение."
 
 #: src/features/settings/ui/initialisation.tsx:59
-#: src/features/settings/ui/settings.tsx:288
+#: src/features/settings/ui/settings.tsx:249
 msgid "Metric (km/h, mm)"
 msgstr "Метрическая система (km/h, mm)"
 
@@ -1181,7 +1186,7 @@ msgstr "В большинстве лет зрелище скромное, но �
 msgid "Never show this again"
 msgstr "Больше не показывать это"
 
-#: src/features/settings/ui/settings.tsx:192
+#: src/features/settings/ui/settings.tsx:153
 #: src/features/weather/ui/tile.tsx:188
 msgid "New Year's Day"
 msgstr "Новый год"
@@ -1223,7 +1228,7 @@ msgstr "Измеримых осадков не ожидается"
 msgid "No precipitation expected"
 msgstr "Осадков не ожидается"
 
-#: src/features/settings/ui/settings.tsx:299
+#: src/features/settings/ui/settings.tsx:260
 msgid "None"
 msgstr "Нет"
 
@@ -1235,7 +1240,7 @@ msgstr "Ноябрь"
 msgid "Now"
 msgstr "Сейчас"
 
-#: src/features/settings/ui/settings.tsx:907
+#: src/features/settings/ui/settings.tsx:868
 msgid "Number of days to forecast"
 msgstr "Количество дней для прогноза"
 
@@ -1259,7 +1264,7 @@ msgstr "На следующий день в воздух летит цветна
 msgid "On the longest day, twilight stretches out for hours and full darkness may never arrive."
 msgstr "В самый длинный день сумерки растягиваются на часы, а полная темнота может так и не наступить."
 
-#: src/features/settings/ui/settings.tsx:193
+#: src/features/settings/ui/settings.tsx:154
 msgid "Orionids meteor shower"
 msgstr "Метеорный поток Ориониды"
 
@@ -1267,7 +1272,7 @@ msgstr "Метеорный поток Ориониды"
 msgid "Orionids Meteor Shower"
 msgstr "Метеорный поток Ориониды"
 
-#: src/features/settings/ui/settings.tsx:254
+#: src/features/settings/ui/settings.tsx:215
 msgid "Other holidays"
 msgstr "Другие праздники"
 
@@ -1276,7 +1281,7 @@ msgid "Other traditions honour Lakshmi, the goddess of prosperity and fortune, w
 msgstr "Другие традиции почитают Лакшми, богиню процветания... а также то, как разные общины отмечают Дивали в рамках своих священных историй."
 
 #: src/features/settings/ui/initialisation.tsx:253
-#: src/features/settings/ui/settings.tsx:607
+#: src/features/settings/ui/settings.tsx:568
 msgid "Other units"
 msgstr "Другие единицы"
 
@@ -1292,7 +1297,7 @@ msgstr "Со временем это превратилось в общинну�
 msgid "overcast"
 msgstr "пасмурно"
 
-#: src/features/settings/ui/settings.tsx:554
+#: src/features/settings/ui/settings.tsx:515
 msgid "Overrides"
 msgstr "Переопределения"
 
@@ -1355,7 +1360,7 @@ msgstr "Пиковый UV"
 msgid "Peak wind"
 msgstr "Максимальный ветер"
 
-#: src/features/settings/ui/settings.tsx:897
+#: src/features/settings/ui/settings.tsx:858
 msgid "Periodically update location automatically"
 msgstr "Периодически обновлять местоположение автоматически"
 
@@ -1363,7 +1368,7 @@ msgstr "Периодически обновлять местоположение
 msgid "Perseid meteors enter the atmosphere at roughly 60 km/s — fast enough that the larger ones compress the air ahead of them into a bright, explosive fireball."
 msgstr "Метеоры Персеид входят в атмосферу примерно на скорости 60 км/с — достаточно быстро, чтобы крупные из них сжимали воздух перед собой в яркий взрывной огненный шар."
 
-#: src/features/settings/ui/settings.tsx:194
+#: src/features/settings/ui/settings.tsx:155
 msgid "Perseids meteor shower"
 msgstr "Метеорный поток Персеиды"
 
@@ -1371,7 +1376,7 @@ msgstr "Метеорный поток Персеиды"
 msgid "Perseids Meteor Shower"
 msgstr "Метеорный поток Персеиды"
 
-#: src/features/settings/ui/settings.tsx:643
+#: src/features/settings/ui/settings.tsx:604
 msgid "Personal"
 msgstr "Личное"
 
@@ -1383,7 +1388,7 @@ msgstr "PM10 / озон / NO₂"
 msgid "PM2.5 now"
 msgstr "PM2.5 сейчас"
 
-#: src/pages/demo.tsx:748
+#: src/pages/demo.tsx:768
 msgid "precipitation"
 msgstr "осадки"
 
@@ -1402,7 +1407,7 @@ msgstr "Вероятность осадков"
 msgid "Precipitation includes rain and snow."
 msgstr "Осадки включают дождь и снег."
 
-#: src/features/settings/ui/settings.tsx:195
+#: src/features/settings/ui/settings.tsx:156
 msgid "Quadrantids meteor shower"
 msgstr "Метеорный поток Квадрантиды"
 
@@ -1414,7 +1419,7 @@ msgstr "Метеорный поток Квадрантиды"
 msgid "Rather than a solemn farewell, it treats remembrance as something vibrant, communal, and alive."
 msgstr "Вместо торжественного прощания он делает память чем-то ярким, общим и живым."
 
-#: src/features/settings/ui/settings.tsx:731
+#: src/features/settings/ui/settings.tsx:692
 msgid "Reconnect"
 msgstr "Подключить снова"
 
@@ -1422,7 +1427,7 @@ msgstr "Подключить снова"
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "Красные конверты, мандарины и каллиграфические парные надписи выражают пожелания изобилия, счастья и новых начал."
 
-#: src/features/settings/ui/settings.tsx:244
+#: src/features/settings/ui/settings.tsx:205
 msgid "Religious & cultural"
 msgstr "Религиозные и культурные"
 
@@ -1430,12 +1435,12 @@ msgstr "Религиозные и культурные"
 msgid "Report a bug"
 msgstr "Сообщить об ошибке"
 
-#: src/pages/demo.tsx:571
-#: src/pages/demo.tsx:585
+#: src/pages/demo.tsx:591
+#: src/pages/demo.tsx:605
 msgid "Retry"
 msgstr "Повторить"
 
-#: src/features/settings/ui/settings.tsx:269
+#: src/features/settings/ui/settings.tsx:230
 msgid "Reverse geocoding by OpenStreetMap contributors"
 msgstr "Обратное геокодирование от участников OpenStreetMap"
 
@@ -1447,32 +1452,32 @@ msgstr "Сб {hour}"
 msgid "Saturday"
 msgstr "Суббота"
 
-#: src/features/settings/ui/settings.tsx:644
+#: src/features/settings/ui/settings.tsx:605
 msgid "School"
 msgstr "Учеба"
 
-#: src/features/settings/ui/settings.tsx:1001
+#: src/features/settings/ui/settings.tsx:962
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "Сезонные эффекты отключены, потому что ваш браузер, похоже, использует программный рендерер. Включите аппаратное ускорение, чтобы увидеть эти эффекты."
 
-#: src/features/settings/ui/settings.tsx:557
+#: src/features/settings/ui/settings.tsx:518
 msgid "Seasonal event override"
 msgstr "Переопределение сезонного события"
 
-#: src/features/settings/ui/settings.tsx:113
+#: src/features/settings/ui/settings.tsx:116
 msgid "Seasonal events"
 msgstr "Сезонные события"
 
-#: src/features/settings/ui/settings.tsx:214
+#: src/features/settings/ui/settings.tsx:175
 msgid "Seasons & nature"
 msgstr "Времена года и природа"
 
-#: src/features/settings/ui/settings.tsx:811
-#: src/features/settings/ui/settings.tsx:870
+#: src/features/settings/ui/settings.tsx:772
+#: src/features/settings/ui/settings.tsx:831
 msgid "Securely stored"
 msgstr "Надёжно сохранено"
 
-#: src/features/settings/ui/settings.tsx:802
+#: src/features/settings/ui/settings.tsx:763
 msgid "See upcoming calendar events alongside your forecast. Weather Please connects directly to your calendar provider, and your events never pass through our servers."
 msgstr "Просматривайте предстоящие события рядом с прогнозом. Weather Please подключается напрямую к поставщику календаря, и события никогда не проходят через наши серверы."
 
@@ -1492,8 +1497,8 @@ msgstr "Сентябрь"
 msgid "Set my location"
 msgstr "Установить мое местоположение"
 
-#: src/features/settings/ui/settings.tsx:380
-#: src/features/settings/ui/settings.tsx:399
+#: src/features/settings/ui/settings.tsx:341
+#: src/features/settings/ui/settings.tsx:360
 msgid "Settings"
 msgstr "Настройки"
 
@@ -1502,150 +1507,151 @@ msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and
 msgstr "Общие сладости, цветы и небольшие подарки сохраняют праздник камерным и личным."
 
 #: src/features/settings/ui/settings.tsx:133
-msgid "Show Autumn Equinox event"
-msgstr "Показывать осеннее равноденствие"
+#~ msgid "Show Autumn Equinox event"
+#~ msgstr "Показывать осеннее равноденствие"
 
-#: src/features/settings/ui/settings.tsx:840
+#: src/features/settings/ui/settings.tsx:801
 msgid "Show calendar events"
 msgstr "Показывать события календаря"
 
 #: src/features/settings/ui/settings.tsx:134
-msgid "Show Christmas Day event"
-msgstr "Показывать Рождество"
+#~ msgid "Show Christmas Day event"
+#~ msgstr "Показывать Рождество"
 
 #: src/features/settings/ui/settings.tsx:135
-msgid "Show Day of the Dead event"
-msgstr "Показывать День мертвых"
+#~ msgid "Show Day of the Dead event"
+#~ msgstr "Показывать День мертвых"
 
 #: src/features/settings/ui/settings.tsx:136
-msgid "Show Diwali event"
-msgstr "Показывать Дивали"
+#~ msgid "Show Diwali event"
+#~ msgstr "Показывать Дивали"
 
 #: src/features/settings/ui/settings.tsx:137
-msgid "Show Earth Day event"
-msgstr "Показывать День Земли"
+#~ msgid "Show Earth Day event"
+#~ msgstr "Показывать День Земли"
 
 #: src/features/settings/ui/settings.tsx:138
-msgid "Show Easter event"
-msgstr "Показывать Пасху"
+#~ msgid "Show Easter event"
+#~ msgstr "Показывать Пасху"
 
 #: src/features/settings/ui/settings.tsx:139
-msgid "Show Eid al-Adha event"
-msgstr "Показывать Ид аль-Адха"
+#~ msgid "Show Eid al-Adha event"
+#~ msgstr "Показывать Ид аль-Адха"
 
 #: src/features/settings/ui/settings.tsx:140
-msgid "Show Eid al-Fitr event"
-msgstr "Показывать Ид аль-Фитр"
+#~ msgid "Show Eid al-Fitr event"
+#~ msgstr "Показывать Ид аль-Фитр"
 
 #: src/features/settings/ui/settings.tsx:142
-msgid "Show Eta Aquariids meteor shower event"
-msgstr "Показывать метеорный поток Эта-Аквариды"
+#~ msgid "Show Eta Aquariids meteor shower event"
+#~ msgstr "Показывать метеорный поток Эта-Аквариды"
 
 #: src/features/settings/ui/settings.tsx:145
-msgid "Show Event Horizon Day event"
-msgstr "Показать событие Дня горизонта событий"
+#~ msgid "Show Event Horizon Day event"
+#~ msgstr "Показать событие Дня горизонта событий"
 
-#: src/features/settings/ui/settings.tsx:87
+#: src/features/settings/ui/settings.tsx:90
 msgid "Show extreme UV alerts"
 msgstr "Показывать предупреждения об экстремальном УФ"
 
 #: src/features/settings/ui/settings.tsx:147
-msgid "Show Geminids meteor shower event"
-msgstr "Показывать метеорный поток Геминиды"
+#~ msgid "Show Geminids meteor shower event"
+#~ msgstr "Показывать метеорный поток Геминиды"
 
 #: src/features/settings/ui/settings.tsx:148
-msgid "Show Halloween event"
-msgstr "Показывать Хэллоуин"
+#~ msgid "Show Halloween event"
+#~ msgstr "Показывать Хэллоуин"
 
 #: src/features/settings/ui/settings.tsx:149
-msgid "Show Hanukkah event"
-msgstr "Показывать Хануку"
+#~ msgid "Show Hanukkah event"
+#~ msgstr "Показывать Хануку"
 
-#: src/features/settings/ui/settings.tsx:90
+#: src/features/settings/ui/settings.tsx:93
 msgid "Show high precipitation alerts"
 msgstr "Показывать предупреждения о больших осадках"
 
 #: src/features/settings/ui/settings.tsx:150
-msgid "Show Holi event"
-msgstr "Показывать Холи"
+#~ msgid "Show Holi event"
+#~ msgstr "Показывать Холи"
 
 #: src/features/settings/ui/settings.tsx:151
-msgid "Show Leonids meteor shower event"
-msgstr "Показывать метеорный поток Леониды"
+#~ msgid "Show Leonids meteor shower event"
+#~ msgstr "Показывать метеорный поток Леониды"
 
-#: src/features/settings/ui/settings.tsx:95
+#: src/features/settings/ui/settings.tsx:98
 msgid "Show low visibility alerts"
 msgstr "Показывать предупреждения о низкой видимости"
 
 #: src/features/settings/ui/settings.tsx:152
-msgid "Show Lunar New Year event"
-msgstr "Показывать Лунный Новый год"
+#~ msgid "Show Lunar New Year event"
+#~ msgstr "Показывать Лунный Новый год"
 
 #: src/features/settings/ui/settings.tsx:153
-msgid "Show Lyrids meteor shower event"
-msgstr "Показывать метеорный поток Лириды"
+#~ msgid "Show Lyrids meteor shower event"
+#~ msgstr "Показывать метеорный поток Лириды"
 
 #: src/features/settings/ui/settings.tsx:154
-msgid "Show New Year's Day event"
-msgstr "Показывать Новый год"
+#~ msgid "Show New Year's Day event"
+#~ msgstr "Показывать Новый год"
 
 #: src/features/settings/ui/settings.tsx:155
-msgid "Show Orionids meteor shower event"
-msgstr "Показывать метеорный поток Ориониды"
+#~ msgid "Show Orionids meteor shower event"
+#~ msgstr "Показывать метеорный поток Ориониды"
 
 #: src/features/settings/ui/settings.tsx:156
-msgid "Show Perseids meteor shower event"
-msgstr "Показывать метеорный поток Персеиды"
+#~ msgid "Show Perseids meteor shower event"
+#~ msgstr "Показывать метеорный поток Персеиды"
 
 #: src/features/settings/ui/settings.tsx:158
-msgid "Show Quadrantids meteor shower event"
-msgstr "Показывать метеорный поток Квадрантиды"
+#~ msgid "Show Quadrantids meteor shower event"
+#~ msgstr "Показывать метеорный поток Квадрантиды"
 
-#: src/features/settings/ui/settings.tsx:995
+#: src/features/settings/ui/settings.tsx:956
 msgid "Show seasonal events"
 msgstr "Показывать сезонные события"
 
-#: src/features/settings/ui/settings.tsx:1011
+#: src/features/settings/ui/settings.tsx:972
 msgid "Show seasonal tile glow"
 msgstr "Показывать сезонное свечение плиток"
 
 #: src/features/settings/ui/settings.tsx:160
-msgid "Show Spring Equinox event"
-msgstr "Показывать весеннее равноденствие"
+#~ msgid "Show Spring Equinox event"
+#~ msgstr "Показывать весеннее равноденствие"
 
-#: src/features/settings/ui/settings.tsx:92
+#: src/features/settings/ui/settings.tsx:95
 msgid "Show strong wind alerts"
 msgstr "Показать предупреждения о сильном ветре"
 
 #: src/features/settings/ui/settings.tsx:161
-msgid "Show Summer Solstice event"
-msgstr "Показывать летнее солнцестояние"
+#~ msgid "Show Summer Solstice event"
+#~ msgstr "Показывать летнее солнцестояние"
 
-#: src/features/weather/ui/tile.tsx:553
+#: src/features/settings/ui/settings.tsx:1008
+#: src/features/weather/ui/tile.tsx:570
 msgid "Show this event"
 msgstr "Показать это событие"
 
 #: src/features/settings/ui/settings.tsx:163
-msgid "Show total lunar eclipse event"
-msgstr "Показывать полное лунное затмение"
+#~ msgid "Show total lunar eclipse event"
+#~ msgstr "Показывать полное лунное затмение"
 
 #: src/features/settings/ui/settings.tsx:166
-msgid "Show total solar eclipse event"
-msgstr "Показывать полное солнечное затмение"
+#~ msgid "Show total solar eclipse event"
+#~ msgstr "Показывать полное солнечное затмение"
 
 #: src/features/settings/ui/settings.tsx:169
-msgid "Show Valentine's Day event"
-msgstr "Показывать День святого Валентина"
+#~ msgid "Show Valentine's Day event"
+#~ msgstr "Показывать День святого Валентина"
 
-#: src/features/settings/ui/settings.tsx:957
+#: src/features/settings/ui/settings.tsx:918
 msgid "Show weather alerts"
 msgstr "Показывать метеопредупреждения"
 
 #: src/features/settings/ui/settings.tsx:171
-msgid "Show Winter Solstice event"
-msgstr "Показывать зимнее солнцестояние"
+#~ msgid "Show Winter Solstice event"
+#~ msgstr "Показывать зимнее солнцестояние"
 
-#: src/pages/demo.tsx:97
+#: src/pages/demo.tsx:105
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Отображаются кешированные данные о погоде. Повторите попытку, чтобы обновить последний прогноз."
 
@@ -1682,15 +1688,15 @@ msgstr "Солнечные затмения записывают уже тыся
 msgid "Some appear white, others yellow or blue-green. The colour depends on the mineral composition of each grain of dust as it burns up."
 msgstr "Одни выглядят белыми, другие — жёлтыми или сине-зелёными. Цвет зависит от минерального состава каждой пылинки при сгорании."
 
-#: src/features/settings/ui/settings.tsx:626
+#: src/features/settings/ui/settings.tsx:587
 msgid "Some calendar events couldn't be loaded. Please try again in a moment."
 msgstr "Не удалось загрузить некоторые события. Повторите попытку через несколько секунд."
 
-#: src/features/settings/ui/settings.tsx:570
+#: src/features/settings/ui/settings.tsx:531
 msgid "Spoof upcoming calendar events"
 msgstr "Имитировать предстоящие события"
 
-#: src/features/settings/ui/settings.tsx:196
+#: src/features/settings/ui/settings.tsx:157
 #: src/features/weather/ui/tile.tsx:192
 msgid "Spring Equinox"
 msgstr "Весеннее равноденствие"
@@ -1723,12 +1729,12 @@ msgstr "Сильные порывы ветра начнутся через 1 ч�
 msgid "Submit"
 msgstr "Отправить"
 
-#: src/features/settings/ui/settings.tsx:197
+#: src/features/settings/ui/settings.tsx:158
 #: src/features/weather/ui/tile.tsx:193
 msgid "Summer Solstice"
 msgstr "Летнее солнцестояние"
 
-#: src/pages/demo.tsx:749
+#: src/pages/demo.tsx:769
 msgid "sun"
 msgstr "солнце"
 
@@ -1764,12 +1770,12 @@ msgstr "Символы и ритуалы"
 msgid "Symbols of luck"
 msgstr "Символы удачи"
 
-#: src/pages/demo.tsx:750
+#: src/pages/demo.tsx:770
 msgid "temperature"
 msgstr "температура"
 
 #: src/features/settings/ui/initialisation.tsx:245
-#: src/features/settings/ui/settings.tsx:598
+#: src/features/settings/ui/settings.tsx:559
 #: src/features/weather/ui/next-24-hours-tile.tsx:368
 #: src/features/weather/ui/next-24-hours-tile.tsx:384
 msgid "Temperature"
@@ -1816,7 +1822,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "Точный оттенок красного зависит от того, что в данный момент находится в атмосфере Земли. После крупных вулканических извержений Луна может приобрести особенно тёмный, почти коричневато-красный цвет."
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:479
+#: src/features/weather/ui/tile.tsx:489
 msgid "The expected type of weather is {0}."
 msgstr "Ожидаемый тип погоды — {0}."
 
@@ -1885,27 +1891,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "Цифры неожиданно обнадёживают: деревья, посаженные в День Земли с 1970 года, теперь насчитываются миллиардами."
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:441
+#: src/features/weather/ui/tile.tsx:451
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "Максимальная температура составит {0} градусов по Цельсию."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:447
+#: src/features/weather/ui/tile.tsx:457
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "Максимальная температура составит {0} градусов по Фаренгейту."
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:505
+#: src/features/weather/ui/tile.tsx:515
 msgid "The maximum UV index will be {0}."
 msgstr "Максимальный индекс УФ будет {0}."
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:518
+#: src/features/weather/ui/tile.tsx:528
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "Максимальная скорость ветра составит {0} километров в час."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:524
+#: src/features/weather/ui/tile.tsx:534
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "Максимальная скорость ветра составит {0} миль в час."
 
@@ -1922,12 +1928,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "Метеоры входят в атмосферу примерно на скорости 66 км/с — это одни из самых быстрых среди всех ежегодных потоков, поэтому они нередко оставляют стойкие светящиеся следы."
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:460
+#: src/features/weather/ui/tile.tsx:470
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "Минимальная температура будет {0} градусов по Цельсию."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:466
+#: src/features/weather/ui/tile.tsx:476
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "Минимальная температура будет {0} градусов по Фаренгейту."
 
@@ -2056,7 +2062,7 @@ msgid "Their radiant lies in the constellation Perseus, and the shower is especi
 msgstr "Их радиант находится в созвездии Персея, и поток... наиболее заметен в северном полушарии, хотя виден по всему миру."
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:538
+#: src/features/weather/ui/tile.tsx:548
 msgid "There is a {0}% chance of precipitation."
 msgstr "Вероятность осадков составляет {0}%."
 
@@ -2080,7 +2086,7 @@ msgstr "Обычно это мягкий поток, который вознаг
 msgid "They peak in early May and are especially well seen from the southern hemisphere, though northern skies still catch their share of streaks."
 msgstr "Пик приходится на начало мая, и лучше всего они видны в... южном полушарии, хотя и северное небо тоже ловит свою долю следов."
 
-#: src/features/settings/ui/settings.tsx:720
+#: src/features/settings/ui/settings.tsx:681
 msgid "This account's sign-in expired. Please reconnect it."
 msgstr "Срок входа в этот аккаунт истек. Подключите его снова."
 
@@ -2140,7 +2146,7 @@ msgstr "Сегодня многие преодолевают большие ра
 msgid "Tomorrow • {dateLabel}"
 msgstr "Завтра • {dateLabel}"
 
-#: src/features/settings/ui/settings.tsx:198
+#: src/features/settings/ui/settings.tsx:159
 msgid "Total lunar eclipse"
 msgstr "Полное лунное затмение"
 
@@ -2153,7 +2159,7 @@ msgstr "Полное лунное затмение"
 msgid "Total precipitation"
 msgstr "Всего осадков"
 
-#: src/features/settings/ui/settings.tsx:199
+#: src/features/settings/ui/settings.tsx:160
 msgid "Total solar eclipse"
 msgstr "Полное солнечное затмение"
 
@@ -2185,7 +2191,7 @@ msgstr "Вт {hour}"
 msgid "Tuesday"
 msgstr "Вторник"
 
-#: src/features/settings/ui/settings.tsx:946
+#: src/features/settings/ui/settings.tsx:907
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Включите это, если индекс УФ, сообщаемый Weather Please, постоянно ниже, чем у местных источников."
 
@@ -2201,8 +2207,8 @@ msgstr "Вредное"
 msgid "Unhealthy for sensitive groups"
 msgstr "Вредное для чувствительных групп"
 
-#: src/features/weather/ui/tile.tsx:475
-#: src/features/weather/ui/tile.tsx:482
+#: src/features/weather/ui/tile.tsx:485
+#: src/features/weather/ui/tile.tsx:492
 msgid "unknown conditions"
 msgstr "неизвестные условия"
 
@@ -2222,7 +2228,7 @@ msgstr "Событие без названия"
 msgid "Upcoming calendar events"
 msgstr "Предстоящие события календаря"
 
-#: src/features/settings/ui/settings.tsx:943
+#: src/features/settings/ui/settings.tsx:904
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "Использовать глобальные химические модели (CAMS)"
 
@@ -2230,7 +2236,7 @@ msgstr "Использовать глобальные химические мо�
 msgid "UV"
 msgstr "UV"
 
-#: src/features/settings/ui/settings.tsx:200
+#: src/features/settings/ui/settings.tsx:161
 #: src/features/weather/ui/tile.tsx:196
 msgid "Valentine's Day"
 msgstr "День святого Валентина"
@@ -2267,7 +2273,7 @@ msgstr "Ожидание данных карты"
 msgid "Ways to observe"
 msgstr "Как наблюдать"
 
-#: src/features/settings/ui/settings.tsx:621
+#: src/features/settings/ui/settings.tsx:582
 msgid "We couldn't connect your calendar account. Please try again."
 msgstr "Не удалось подключить аккаунт календаря. Повторите попытку."
 
@@ -2275,35 +2281,35 @@ msgstr "Не удалось подключить аккаунт календар
 msgid "We couldn't reach the location service right now - this isn't an issue with your device. Please try again in a moment."
 msgstr "Нам не удалось подключиться к службе геолокации. Это не проблема вашего устройства. Повторите попытку через мгновение."
 
-#: src/pages/demo.tsx:138
+#: src/pages/demo.tsx:146
 msgid "We couldn't reach the weather service. Please check your internet connection and try again."
 msgstr "Не удалось подключиться к службе погоды. Проверьте интернет-соединение и попробуйте снова."
 
-#: src/features/settings/ui/settings.tsx:108
+#: src/features/settings/ui/settings.tsx:111
 msgid "Weather"
 msgstr "Погода"
 
-#: src/features/settings/ui/settings.tsx:265
+#: src/features/settings/ui/settings.tsx:226
 msgid "Weather data by Open-Meteo"
 msgstr "Данные о погоде от Open-Meteo"
 
-#: src/pages/demo.tsx:129
+#: src/pages/demo.tsx:137
 msgid "Weather data couldn't be loaded because the weather service could not be reached. This usually isn't a problem with your device. Please try again in a moment."
 msgstr "Не удалось загрузить данные о погоде, так как служба погоды была недоступна. Обычно это не связано с вашим устройством. Повторите попытку через некоторое время."
 
-#: src/pages/demo.tsx:110
+#: src/pages/demo.tsx:118
 msgid "Weather data couldn't be loaded because the weather service is having trouble. This isn't a problem with your device. Please try again in a moment."
 msgstr "Не удалось загрузить данные о погоде из-за проблем со службой погоды. Это не связано с вашим устройством. Повторите попытку через некоторое время."
 
-#: src/pages/demo.tsx:89
+#: src/pages/demo.tsx:97
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "Данные о погоде не удалось загрузить из-за проблемы с сервисом — отображаются кэшированные данные. Повторите попытку через мгновение."
 
-#: src/pages/demo.tsx:120
+#: src/pages/demo.tsx:128
 msgid "Weather data couldn't be loaded for this location. Please check your location settings and try again."
 msgstr "Не удалось загрузить данные о погоде для этого местоположения. Проверьте настройки местоположения и попробуйте снова."
 
-#: src/features/settings/ui/settings.tsx:1088
+#: src/features/settings/ui/settings.tsx:1069
 msgid "Weather Please uses the following third-party data sources and location services."
 msgstr "Weather Please использует следующие сторонние источники данных и службы определения местоположения."
 
@@ -2355,7 +2361,7 @@ msgstr "Почему она краснеет"
 msgid "Why the peak is brief"
 msgstr "Почему пик краток"
 
-#: src/pages/demo.tsx:751
+#: src/pages/demo.tsx:771
 msgid "wind"
 msgstr "ветер"
 
@@ -2369,7 +2375,7 @@ msgstr "Ветер"
 msgid "Wind is making it feel cooler than the measured temperature right now."
 msgstr "Ветер сейчас делает ощущаемую температуру ниже измеренной."
 
-#: src/features/settings/ui/settings.tsx:201
+#: src/features/settings/ui/settings.tsx:162
 #: src/features/weather/ui/tile.tsx:197
 msgid "Winter Solstice"
 msgstr "Зимнее солнцестояние"
@@ -2378,7 +2384,7 @@ msgstr "Зимнее солнцестояние"
 msgid "Within minutes of stepping outside, everyone looks the same — drenched head to toe in colour, impossible to tell apart."
 msgstr "Через несколько минут после выхода на улицу все выглядят одинаково — с головы до ног залитые краской, неотличимые друг от друга."
 
-#: src/features/settings/ui/settings.tsx:645
+#: src/features/settings/ui/settings.tsx:606
 msgid "Work"
 msgstr "Работа"
 

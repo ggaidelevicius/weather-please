@@ -221,9 +221,14 @@ interface TileProps {
 	hemisphere: Hemisphere
 	identifier: TileIdentifier
 	index: number
+	isSeasonalEventBackgroundEnabled: (eventId: SeasonalEventId) => boolean
 	isSeasonalEventEnabled: (eventId: SeasonalEventId) => boolean
 	max: number
 	min: number
+	onToggleSeasonalEventBackground: (
+		eventId: SeasonalEventId,
+		enabled: boolean,
+	) => void
 	onToggleSeasonalEvent: (eventId: SeasonalEventId, enabled: boolean) => void
 	rain: number
 	seasonalEventOverride?: SeasonalEventOverride
@@ -262,9 +267,11 @@ export const Tile = ({
 	hemisphere,
 	identifier,
 	index,
+	isSeasonalEventBackgroundEnabled,
 	isSeasonalEventEnabled,
 	max,
 	min,
+	onToggleSeasonalEventBackground,
 	onToggleSeasonalEvent,
 	rain,
 	seasonalEventOverride,
@@ -340,6 +347,9 @@ export const Tile = ({
 	const seasonalBadgeId = seasonalEvent ? seasonalEvent.id : null
 	const isCurrentSeasonalEventEnabled = seasonalBadgeId
 		? isSeasonalEventEnabled(seasonalBadgeId)
+		: false
+	const isCurrentSeasonalEventBackgroundEnabled = seasonalBadgeId
+		? isSeasonalEventBackgroundEnabled(seasonalBadgeId)
 		: false
 	const EventDetails = seasonalEvent?.details ?? DefaultSeasonalEventDetails
 	const [isEventOpen, setIsEventOpen] = useState(false)
@@ -548,6 +558,13 @@ export const Tile = ({
 					onClose={() => setIsEventOpen(false)}
 					quickHeaderActions={
 						<div className="flex flex-wrap justify-end gap-1.5">
+							<HeaderSwitch
+								isEnabled={isCurrentSeasonalEventBackgroundEnabled}
+								label={<Trans>Background</Trans>}
+								onToggle={(enabled) =>
+									onToggleSeasonalEventBackground(seasonalBadgeId, enabled)
+								}
+							/>
 							<HeaderSwitch
 								isEnabled={isCurrentSeasonalEventEnabled}
 								label={<Trans>Show this event</Trans>}

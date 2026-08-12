@@ -45,7 +45,10 @@ import {
 	type SeasonalEventOverride,
 } from '../../seasonal-events/core/types'
 import { isLikelySoftwareRenderer } from '../../seasonal-events/core/utils'
-import { SEASONAL_EVENT_TOGGLE_KEY_BY_ID } from '../model/seasonal-event-toggle-map'
+import {
+	SEASONAL_EVENT_BACKGROUND_TOGGLE_KEY_BY_ID,
+	SEASONAL_EVENT_TOGGLE_KEY_BY_ID,
+} from '../model/seasonal-event-toggle-map'
 import { TileIdentifier } from '../model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../model/unit-system'
 
@@ -128,48 +131,6 @@ const SETTINGS_SECTIONS = [
 		title: <Trans>Developer</Trans>,
 	},
 ] as const satisfies ReadonlyArray<SettingsSectionDefinition>
-
-const SEASONAL_EVENT_LABELS = {
-	[SeasonalEventId.AutumnEquinox]: <Trans>Show Autumn Equinox event</Trans>,
-	[SeasonalEventId.ChristmasDay]: <Trans>Show Christmas Day event</Trans>,
-	[SeasonalEventId.DayOfTheDead]: <Trans>Show Day of the Dead event</Trans>,
-	[SeasonalEventId.Diwali]: <Trans>Show Diwali event</Trans>,
-	[SeasonalEventId.EarthDay]: <Trans>Show Earth Day event</Trans>,
-	[SeasonalEventId.Easter]: <Trans>Show Easter event</Trans>,
-	[SeasonalEventId.EidAlAdha]: <Trans>Show Eid al-Adha event</Trans>,
-	[SeasonalEventId.EidAlFitr]: <Trans>Show Eid al-Fitr event</Trans>,
-	[SeasonalEventId.EtaAquariids]: (
-		<Trans>Show Eta Aquariids meteor shower event</Trans>
-	),
-	[SeasonalEventId.EventHorizonDay]: (
-		<Trans>Show Event Horizon Day event</Trans>
-	),
-	[SeasonalEventId.Geminids]: <Trans>Show Geminids meteor shower event</Trans>,
-	[SeasonalEventId.Halloween]: <Trans>Show Halloween event</Trans>,
-	[SeasonalEventId.Hanukkah]: <Trans>Show Hanukkah event</Trans>,
-	[SeasonalEventId.Holi]: <Trans>Show Holi event</Trans>,
-	[SeasonalEventId.Leonids]: <Trans>Show Leonids meteor shower event</Trans>,
-	[SeasonalEventId.LunarNewYear]: <Trans>Show Lunar New Year event</Trans>,
-	[SeasonalEventId.Lyrids]: <Trans>Show Lyrids meteor shower event</Trans>,
-	[SeasonalEventId.NewYearsDay]: <Trans>Show New Year&apos;s Day event</Trans>,
-	[SeasonalEventId.Orionids]: <Trans>Show Orionids meteor shower event</Trans>,
-	[SeasonalEventId.Perseids]: <Trans>Show Perseids meteor shower event</Trans>,
-	[SeasonalEventId.Quadrantids]: (
-		<Trans>Show Quadrantids meteor shower event</Trans>
-	),
-	[SeasonalEventId.SpringEquinox]: <Trans>Show Spring Equinox event</Trans>,
-	[SeasonalEventId.SummerSolstice]: <Trans>Show Summer Solstice event</Trans>,
-	[SeasonalEventId.TotalLunarEclipse]: (
-		<Trans>Show total lunar eclipse event</Trans>
-	),
-	[SeasonalEventId.TotalSolarEclipse]: (
-		<Trans>Show total solar eclipse event</Trans>
-	),
-	[SeasonalEventId.ValentinesDay]: (
-		<Trans>Show Valentine&apos;s Day event</Trans>
-	),
-	[SeasonalEventId.WinterSolstice]: <Trans>Show Winter Solstice event</Trans>,
-} as const satisfies Record<SeasonalEventId, ReactNode>
 
 const SEASONAL_EVENT_OPTION_LABELS = {
 	[SeasonalEventId.AutumnEquinox]: <Trans>Autumn Equinox</Trans>,
@@ -1022,18 +983,38 @@ const SeasonalSettingsSection = ({
 						title={section.title}
 					>
 						{section.eventIds.map((eventId) => (
-							<Switch
-								checked={input[SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId]]}
+							<fieldset
+								className="space-y-3 rounded-xl border border-white/5 bg-white/[0.02] px-3.5 pt-1.5 pb-3.5"
 								key={eventId}
-								label={SEASONAL_EVENT_LABELS[eventId]}
-								layout={SETTINGS_FIELD_LAYOUT}
-								onChange={(checked) =>
-									handleChange(
-										SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId],
-										checked,
-									)
-								}
-							/>
+							>
+								<legend className="px-1 text-sm font-medium text-white">
+									{SEASONAL_EVENT_OPTION_LABELS[eventId]}
+								</legend>
+								<Switch
+									checked={
+										input[SEASONAL_EVENT_BACKGROUND_TOGGLE_KEY_BY_ID[eventId]]
+									}
+									label={<Trans>Background</Trans>}
+									layout={SETTINGS_FIELD_LAYOUT}
+									onChange={(checked) =>
+										handleChange(
+											SEASONAL_EVENT_BACKGROUND_TOGGLE_KEY_BY_ID[eventId],
+											checked,
+										)
+									}
+								/>
+								<Switch
+									checked={input[SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId]]}
+									label={<Trans>Show this event</Trans>}
+									layout={SETTINGS_FIELD_LAYOUT}
+									onChange={(checked) =>
+										handleChange(
+											SEASONAL_EVENT_TOGGLE_KEY_BY_ID[eventId],
+											checked,
+										)
+									}
+								/>
+							</fieldset>
 						))}
 					</SettingsSubsection>
 				))
