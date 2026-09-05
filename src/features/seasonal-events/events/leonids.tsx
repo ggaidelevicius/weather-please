@@ -1,168 +1,56 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
 import { createAdaptiveDprController, randomInRange } from '../core/utils'
 
-const LEONIDS_PEAK_DATES = new Set([
-	'2026-11-17',
-	'2026-11-18',
-	'2027-11-17',
-	'2027-11-18',
-	'2028-11-17',
-	'2028-11-18',
-	'2029-11-17',
-	'2029-11-18',
-	'2030-11-17',
-	'2030-11-18',
-	'2031-11-17',
-	'2031-11-18',
-	'2032-11-17',
-	'2032-11-18',
-	'2033-11-17',
-	'2033-11-18',
-	'2034-11-17',
-	'2034-11-18',
-	'2035-11-17',
-	'2035-11-18',
-	'2036-11-17',
-	'2036-11-18',
-	'2037-11-17',
-	'2037-11-18',
-	'2038-11-17',
-	'2038-11-18',
-	'2039-11-17',
-	'2039-11-18',
-	'2040-11-17',
-	'2040-11-18',
-	'2041-11-17',
-	'2041-11-18',
-	'2042-11-17',
-	'2042-11-18',
-	'2043-11-17',
-	'2043-11-18',
-])
 const LEONIDS_MOUNT_DELAY_MS = 900
+
 const LEONIDS_OVERLAY_OPACITY = '0.78'
+
 const LEONIDS_OVERLAY_FILTER = 'saturate(132%)'
+
 const LEONIDS_MAX_DPR = 2
+
 const LEONIDS_METEOR_COUNT = 12
+
 const LEONIDS_STAR_COUNT = 140
+
 const LEONIDS_METEOR_LENGTH_RANGE = { max: 260, min: 150 }
+
 const LEONIDS_METEOR_WIDTH_RANGE = { max: 2.4, min: 1 }
+
 const LEONIDS_METEOR_SPEED_RANGE = { max: 940, min: 620 }
+
 const LEONIDS_METEOR_ANGLE_RANGE = { max: 0.42, min: 0.24 }
+
 const LEONIDS_METEOR_SPAWN_DELAY_RANGE = { max: 2000, min: 700 }
+
 const LEONIDS_METEOR_LIFETIME_RANGE = { max: 2000, min: 1200 }
+
 const LEONIDS_METEOR_SPAWN_X = { max: 0.6, min: -0.2 }
+
 const LEONIDS_METEOR_SPAWN_Y = { max: 0.2, min: -0.35 }
+
 const LEONIDS_METEOR_GLOW_RANGE = { max: 26, min: 12 }
+
 const LEONIDS_METEOR_COLORS = [
 	'rgba(252, 211, 77, 1)',
 	'rgba(251, 191, 36, 1)',
 	'rgba(249, 115, 22, 1)',
 	'rgba(148, 163, 184, 1)',
 ]
+
 const LEONIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
+
 const LEONIDS_STAR_RADIUS_RANGE = { max: 1.4, min: 0.5 }
+
 const LEONIDS_STAR_OPACITY_RANGE = { max: 0.55, min: 0.2 }
+
 const LEONIDS_STAR_TWINKLE_RANGE = { max: 0.0014, min: 0.0006 }
+
 const LEONIDS_STAR_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+
 const LEONIDS_STAR_FADE_IN_DURATION_RANGE = { max: 2200, min: 1200 }
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The Leonids are a November meteor shower, named for their radiant in the
-				constellation Leo.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Most years the display is modest, but the shower is famous for its
-				capacity to produce rare and spectacular surprises.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The Leonids are renowned for historic meteor storms, most notably in
-				1833 and 1966, when observers described the sky as seeming to rain
-				stars.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				These events played an important role in the development of scientific
-				understanding of meteor showers.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Why it can storm</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The Leonids originate from Comet Tempel–Tuttle, and every few decades
-				Earth passes through especially dense streams of its debris.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				When this occurs, meteor rates can rise dramatically for a short period
-				of time.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				In most years, the Leonids produce only 10–15 meteors per hour. But
-				during the 1966 storm, observers reported rates of thousands per minute
-				— so many that some people thought the world was ending.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				The next potential Leonid storm window is in the 2030s, when Earth is
-				expected to pass through a particularly dense ribbon of Tempel–Tuttle
-				debris.
-			</Trans>
-		</p>
-	</>
-)
-
-export const leonidsEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.Leonids,
-	isActive: isLeonidsPeak,
-	run: launchLeonidsShower,
-	tileAccent: {
-		colors: ['#fcd34d', '#fbbf24', '#f97316', '#94a3b8', '#fcd34d'],
-	},
-}
-
-function isLeonidsPeak({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	return LEONIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
-}
-
-async function launchLeonidsShower() {
+export async function launchLeonidsShower() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

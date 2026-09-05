@@ -4,9 +4,10 @@ Repository-specific guidance for agents working in this codebase.
 
 ## Stack
 
-- Next.js 16 App Router
+- Next.js 16: Pages Router for the dashboard and website; App Router for the
+  hosted bug form
 - React 19 with React Compiler enabled
-- TypeScript 6
+- TypeScript 7
 - Vitest
 
 ## Working Style

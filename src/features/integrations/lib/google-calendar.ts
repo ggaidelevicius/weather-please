@@ -9,10 +9,12 @@ export const fetchUpcomingGoogleCalendarEvents = async ({
 	accessToken,
 	accountId,
 	now = new Date(),
+	signal,
 }: Readonly<{
 	accessToken: string
 	accountId: string
 	now?: Date
+	signal?: AbortSignal
 }>): Promise<CalendarEvent[]> => {
 	const windowEnd = getUpcomingEventsWindowEnd({ now })
 	const params = new URLSearchParams({
@@ -24,6 +26,7 @@ export const fetchUpcomingGoogleCalendarEvents = async ({
 	})
 
 	const response = await fetch(`${EVENTS_ENDPOINT}?${params.toString()}`, {
+		signal,
 		headers: {
 			Authorization: `Bearer ${accessToken}`,
 		},

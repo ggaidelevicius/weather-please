@@ -3,24 +3,26 @@ import { globSync } from 'glob'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import { setCwdToRoot } from './lib/root.mjs'
+import { rootPath } from './lib/root.mjs'
 
-export const buildExtensionOutput = () => {
-	setCwdToRoot()
+export const buildExtensionOutput = ({ rootDirectory = rootPath } = {}) => {
+	const fromRoot = (...parts) => path.join(rootDirectory, ...parts)
 
-	const sourcePath = 'out/_next'
-	const destinationPath = 'out/next'
+	const sourcePath = fromRoot('out', '_next')
+	const destinationPath = fromRoot('out', 'next')
 	fs.moveSync(sourcePath, destinationPath, { overwrite: true })
 	console.log('Moved _next directory to next.')
 
-	const extensionPath = 'extension'
+	const extensionPath = fromRoot('extension')
 	fs.ensureDirSync(extensionPath)
 
 	for (const file of fs.readdirSync(extensionPath)) {
 		fs.removeSync(path.join(extensionPath, file))
 	}
 
-	for (const file of globSync('out/**/*.{html,js}', { nodir: true })) {
+	for (const file of globSync(fromRoot('out/**/*.{html,js}'), {
+		nodir: true,
+	})) {
 		let content = fs.readFileSync(file, 'utf-8')
 		content = content.replace(/\/_next\//g, '/next/')
 		fs.writeFileSync(file, content, 'utf-8')
@@ -29,17 +31,20 @@ export const buildExtensionOutput = () => {
 	// The marketing landing page lives at the site root; the extension's new
 	// tab page is the app exported from the /demo route.
 	fs.moveSync(
-		path.join('out', 'demo.html'),
+		fromRoot('out', 'demo.html'),
 		path.join(extensionPath, 'index.html'),
 	)
 	fs.moveSync(
-		path.join('out', 'favicon.png'),
+		fromRoot('out', 'favicon.png'),
 		path.join(extensionPath, 'favicon.png'),
 	)
-	fs.copySync(path.join('out', 'next'), path.join(extensionPath, 'next'))
-	fs.copySync(path.join('_locales'), path.join(extensionPath, '_locales'))
-	fs.removeSync('out')
-	fs.copySync('manifest.json', path.join(extensionPath, 'manifest.json'))
+	fs.copySync(fromRoot('out', 'next'), path.join(extensionPath, 'next'))
+	fs.copySync(fromRoot('_locales'), path.join(extensionPath, '_locales'))
+	fs.removeSync(fromRoot('out'))
+	fs.copySync(
+		fromRoot('manifest.json'),
+		path.join(extensionPath, 'manifest.json'),
+	)
 
 	console.log('Processing completed.')
 }

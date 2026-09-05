@@ -1,156 +1,63 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	Hemisphere,
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
-import { getCanvasDpr, randomInRange } from '../core/utils'
+import { randomInRange, getCanvasDpr } from '../core/utils'
 
-const SPRING_EQUINOX_DATES_NORTHERN = new Set([
-	'2026-03-20',
-	'2027-03-20',
-	'2028-03-20',
-	'2029-03-20',
-	'2030-03-20',
-	'2031-03-20',
-	'2032-03-20',
-	'2033-03-20',
-	'2034-03-20',
-	'2035-03-20',
-	'2036-03-20',
-	'2037-03-20',
-	'2038-03-20',
-	'2039-03-20',
-	'2040-03-20',
-	'2041-03-20',
-	'2042-03-20',
-	'2043-03-20',
-])
-const SPRING_EQUINOX_DATES_SOUTHERN = new Set([
-	'2026-09-22',
-	'2027-09-22',
-	'2028-09-22',
-	'2029-09-22',
-	'2030-09-22',
-	'2031-09-22',
-	'2032-09-22',
-	'2033-09-22',
-	'2034-09-22',
-	'2035-09-22',
-	'2036-09-22',
-	'2037-09-22',
-	'2038-09-22',
-	'2039-09-22',
-	'2040-09-22',
-	'2041-09-22',
-	'2042-09-22',
-	'2043-09-22',
-])
 const SPRING_MOUNT_DELAY_MS = 900
+
 const SPRING_FIELD_OPACITY = '0.7'
+
 const SPRING_FIELD_FILTER = 'saturate(135%)'
+
 const SPRING_FIELD_MAX_DPR = 2
+
 const SPRING_FIELD_MARGIN = 160
+
 const SPRING_PARTICLE_COUNT = 70
+
 const SPRING_FADE_IN_DELAY_RANGE = { max: 2400, min: 0 }
+
 const SPRING_FADE_IN_DURATION_RANGE = { max: 1900, min: 1000 }
+
 const SPRING_SCALE_RANGE = { max: 0.9, min: 0.5 }
+
 const SPRING_SIZE_RANGE = { max: 30, min: 16 }
+
 const SPRING_VELOCITY_X_RANGE = { max: 8, min: -8 }
+
 const SPRING_VELOCITY_Y_RANGE = { max: -3, min: -10 }
+
 const SPRING_FLOAT_VELOCITY_Y_RANGE = { max: 1.5, min: -1.5 }
+
 const SPRING_FLOAT_CHANCE = 0.4
+
 const SPRING_SWAY_RANGE = { max: 8, min: 2.5 }
+
 const SPRING_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
+
 const SPRING_SWAY_SPEED_X = 0.00055
+
 const SPRING_SWAY_SPEED_Y = 0.00045
+
 const SPRING_GLOW_RANGE = { max: 16, min: 6 }
+
 const SPRING_EMOJIS = ['🌱', '🌿', '🍃', '🌷', '🌸']
+
 const SPRING_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
+
 const SPRING_SPAWN_Y_RANGE = { max: 0.9, min: 0.45 }
+
 const SPRING_HAZE_OPACITY = '0.5'
+
 const SPRING_HAZE_GRADIENT =
 	'radial-gradient(120% 90% at 50% 100%, rgba(187, 247, 208, 0.45), rgba(52, 211, 153, 0.2) 40%, rgba(15, 23, 42, 0) 75%), radial-gradient(90% 80% at 20% 90%, rgba(251, 207, 232, 0.35), rgba(15, 23, 42, 0) 70%)'
+
 const SPRING_GLOW_COLORS = [
 	'rgba(167, 243, 208, 0.45)',
 	'rgba(244, 114, 182, 0.4)',
 	'rgba(147, 197, 253, 0.35)',
 ]
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The spring equinox marks the moment when day and night stand in
-				near-perfect balance.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Ancient observatories carefully tracked this turning point of the year
-				to guide planting cycles, calendars, and seasonal festivals.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Traditions such as Nowruz continue to celebrate themes of renewal on or
-				around the equinox.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				From this point, each day gains a few minutes of light — a shift
-				that&apos;s barely noticeable day to day, but adds up to hours within
-				weeks.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				The old tradition of balancing an egg on its end at the equinox is a
-				myth (you can do it any day of the year), but people keep trying anyway.
-				It&apos;s become its own kind of ritual.
-			</Trans>
-		</p>
-	</>
-)
-
-export const springEquinoxEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.SpringEquinox,
-	isActive: isSpringEquinox,
-	run: launchSpringEquinoxGrowth,
-	tileAccent: {
-		colors: ['#f7c9df', '#f3a6c8', '#b7e4c7', '#95d5b2', '#f7c9df'],
-	},
-}
-
-function isSpringEquinox({ date, hemisphere }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	const equinoxDates =
-		hemisphere === Hemisphere.Southern
-			? SPRING_EQUINOX_DATES_SOUTHERN
-			: SPRING_EQUINOX_DATES_NORTHERN
-	return equinoxDates.has(`${year}-${month}-${day}`)
-}
-
-async function launchSpringEquinoxGrowth() {
+export async function launchSpringEquinoxGrowth() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

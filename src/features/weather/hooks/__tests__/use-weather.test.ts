@@ -2,6 +2,7 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useWeather } from '../use-weather'
+import { getCachedWeather } from '../../model/cache'
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -356,7 +357,14 @@ describe('useWeather - Core Functionality', () => {
 			})
 		})
 		expect(fetchMock).toHaveBeenCalledTimes(1)
-		expect(localStorageMock.getItem('weatherMapData')).not.toBeNull()
+		expect(
+			getCachedWeather({
+				lat: '40.7128',
+				lon: '-74.0060',
+				timeZone: userTimeZone,
+				shouldUseAirQualityUv: false,
+			})?.weatherMapData,
+		).not.toBeNull()
 	})
 
 	it('shows weather data before fresh map data finishes loading', async () => {
@@ -490,7 +498,15 @@ describe('useWeather - Core Functionality', () => {
 		expect(result.current.weatherMapData?.frames).toEqual([
 			cachedWeatherMapData.frames[1],
 		])
-		expect(localStorageMock.getItem('weatherCacheDegraded')).toBe('true')
+		expect(
+			getCachedWeather({
+				lat: '40.7128',
+				lon: '-74.0060',
+				timeZone: userTimeZone,
+				shouldUseAirQualityUv: false,
+				allowStale: true,
+			})?.isDegraded,
+		).toBe(true)
 		expect(result.current.alertData.hoursOfStrongWind[0]).toBe(true)
 		expect(result.current.alertData.hoursOfStrongWindGusts[0]).toBe(true)
 	})

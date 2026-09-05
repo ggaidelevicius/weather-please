@@ -1,127 +1,54 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
-import { getCanvasDpr, randomInRange } from '../core/utils'
+import { randomInRange, getCanvasDpr } from '../core/utils'
 
-const HALLOWEEN_MONTH = 9
-const HALLOWEEN_DAY = 31
 const HALLOWEEN_MOUNT_DELAY_MS = 900
+
 const HALLOWEEN_FIELD_OPACITY = '0.7'
+
 const HALLOWEEN_FIELD_FILTER = 'saturate(120%)'
+
 const HALLOWEEN_FIELD_MAX_DPR = 2
+
 const HALLOWEEN_FIELD_MARGIN = 160
+
 const HALLOWEEN_PARTICLE_COUNT = 72
+
 const HALLOWEEN_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+
 const HALLOWEEN_FADE_IN_DURATION_RANGE = { max: 1600, min: 900 }
+
 const HALLOWEEN_SCALE_RANGE = { max: 0.85, min: 0.45 }
+
 const HALLOWEEN_SIZE_RANGE = { max: 34, min: 18 }
+
 const HALLOWEEN_VELOCITY_X_RANGE = { max: 10, min: -10 }
+
 const HALLOWEEN_VELOCITY_Y_RANGE = { max: 9, min: -8 }
+
 const HALLOWEEN_SWAY_RANGE = { max: 9, min: 2.5 }
+
 const HALLOWEEN_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
+
 const HALLOWEEN_SWAY_SPEED_X = 0.0006
+
 const HALLOWEEN_SWAY_SPEED_Y = 0.0005
+
 const HALLOWEEN_GLOW_RANGE = { max: 18, min: 8 }
+
 const HALLOWEEN_GLOW_COLORS = [
 	'rgba(251, 146, 60, 0.5)',
 	'rgba(168, 85, 247, 0.45)',
 	'rgba(248, 250, 252, 0.35)',
 ]
+
 const HALLOWEEN_EMOJIS = ['🎃', '👻', '🦇', '💀', '🦴', '🕷️', '🕸️']
+
 const HALLOWEEN_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
+
 const HALLOWEEN_MOON_OPACITY = '0.45'
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Halloween is a night shaped by costumes, stories, and a playful sense of
-				unease.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				It invites friendly fear, shared laughter, and a little mischief.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The celebration grew from the ancient festival of Samhain and the later
-				observance of All Hallows’ Eve, blending seasonal rites with remembrance
-				of the dead.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Over time it evolved into a community tradition of visiting, disguises,
-				and shared treats.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Symbols and rituals</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Carved pumpkins, sweets, and playful scares echo much older customs of
-				lanterns, bonfires, and protective charms.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Costumes may be heroic, humorous, or unsettling, allowing people to step
-				briefly into different roles.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Jack-o&apos;-lanterns were originally carved from turnips in Ireland and
-				Scotland — the pumpkin version is a North American adaptation, chosen
-				because pumpkins were bigger and easier to hollow out.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				The tradition of trick-or-treating in its modern form only became
-				widespread in the 1950s, though the custom of going door to door in
-				disguise is centuries older.
-			</Trans>
-		</p>
-	</>
-)
-
-export const halloweenEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.Halloween,
-	isActive: isHalloween,
-	run: launchHalloweenSpirits,
-	tileAccent: {
-		colors: ['#f8fafc', '#e2e8f0', '#94a3b8', '#cbd5f5', '#f8fafc'],
-	},
-}
-
-function isHalloween({ date }: SeasonalEventContext) {
-	return date.getMonth() === HALLOWEEN_MONTH && date.getDate() === HALLOWEEN_DAY
-}
-
-async function launchHalloweenSpirits() {
+export async function launchHalloweenSpirits() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

@@ -13,7 +13,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 import type { LocaleKey } from '../../../shared/lib/i18n'
-import type { Config } from '../hooks/use-config'
+import type { Config } from '../model/config'
 
 import Favicon from '../../../../public/favicon.png'
 import { AsyncStatus } from '../../../shared/hooks/async-status'

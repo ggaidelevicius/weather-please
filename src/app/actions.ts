@@ -3,8 +3,8 @@
 import { headers } from 'next/headers'
 import { z } from 'zod'
 
-import { prisma } from '../lib/prisma'
-import { enforceRateLimit, getClientIdentifier } from '../lib/rate-limit'
+import { prisma } from '../server/prisma'
+import { enforceRateLimit, getClientIdentifier } from '../server/rate-limit'
 import { locales } from '../shared/lib/i18n'
 
 const localeKeys = Object.keys(locales) as [

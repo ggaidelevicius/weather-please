@@ -1,59 +1,53 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
-import { getCanvasDpr, randomInRange } from '../core/utils'
+import { randomInRange, getCanvasDpr } from '../core/utils'
 
-const HANUKKAH_START_DATES = new Set([
-	'2026-12-04',
-	'2027-11-25',
-	'2028-12-12',
-	'2029-12-01',
-	'2030-12-20',
-	'2031-12-10',
-	'2032-11-28',
-	'2033-12-17',
-	'2034-12-07',
-	'2035-12-26',
-	'2036-12-14',
-	'2037-12-03',
-	'2038-12-22',
-	'2039-12-12',
-	'2040-11-30',
-	'2041-12-19',
-	'2042-12-08',
-	'2043-12-27',
-])
 const HANUKKAH_MOUNT_DELAY_MS = 900
+
 const HANUKKAH_OVERLAY_OPACITY = '0.72'
+
 const HANUKKAH_OVERLAY_FILTER = 'saturate(130%)'
+
 const HANUKKAH_MAX_DPR = 2
+
 const HANUKKAH_SCENE_FADE_DELAY_MS = 300
+
 const HANUKKAH_SCENE_FADE_DURATION_MS = 1400
+
 const HANUKKAH_STAR_COUNT = 140
+
 const HANUKKAH_STAR_RADIUS_RANGE = { max: 1.4, min: 0.5 }
+
 const HANUKKAH_STAR_OPACITY_RANGE = { max: 0.6, min: 0.2 }
+
 const HANUKKAH_STAR_TWINKLE_RANGE = { max: 0.0012, min: 0.0005 }
+
 const HANUKKAH_CANDLE_COUNT = 9
+
 const HANUKKAH_CANDLE_SIZE_RANGE = { max: 18, min: 12 }
+
 const HANUKKAH_CANDLE_FLICKER_RANGE = { max: 0.0015, min: 0.0008 }
+
 const HANUKKAH_SPARK_COUNT = 26
+
 const HANUKKAH_SPARK_SIZE_RANGE = { max: 5, min: 2 }
+
 const HANUKKAH_SPARK_SPEED_RANGE = { max: 16, min: 7 }
+
 const HANUKKAH_SPARK_SWAY_RANGE = { max: 14, min: 5 }
+
 const HANUKKAH_SPARK_OPACITY_RANGE = { max: 0.75, min: 0.3 }
+
 const HANUKKAH_SPARK_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+
 const HANUKKAH_SPARK_FADE_IN_DURATION_RANGE = { max: 2000, min: 900 }
+
 const HANUKKAH_SPARK_COLORS = [
 	'rgba(226, 232, 240, 0.8)',
 	'rgba(191, 219, 254, 0.75)',
 	'rgba(96, 165, 250, 0.7)',
 	'rgba(251, 191, 36, 0.65)',
 ]
+
 const HANUKKAH_CANDLE_COLORS = [
 	{ core: 'rgba(253, 230, 138, 0.92)', mid: 'rgba(253, 230, 138, 0.45)' },
 	{ core: 'rgba(96, 165, 250, 0.78)', mid: 'rgba(96, 165, 250, 0.35)' },
@@ -62,94 +56,7 @@ const HANUKKAH_CANDLE_COLORS = [
 	{ core: 'rgba(251, 191, 36, 0.82)', mid: 'rgba(251, 191, 36, 0.4)' },
 ]
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Hanukkah is a Jewish festival of lights, observed over eight nights.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Each evening, another candle is added to the menorah, gradually building
-				the display of light.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The festival commemorates the rededication of the Second Temple in
-				Jerusalem.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				According to tradition, a small supply of oil, meant for one day, lasted
-				eight.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Traditions</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Families gather to light the menorah, sing songs, and play games such as
-				dreidel.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Foods fried in oil, including latkes and sufganiyot, reflect the central
-				symbol of the story.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The menorah is placed in a window or doorway so the light faces outward
-				— the tradition is specifically about making the flames visible to
-				passersby.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Dreidel, often dismissed as a children&apos;s game, was historically
-				used as a cover for Torah study during periods when it was outlawed.
-				Each Hebrew letter on its sides forms an acronym: &quot;A great miracle
-				happened there.&quot;
-			</Trans>
-		</p>
-	</>
-)
-
-export const hanukkahEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.Hanukkah,
-	isActive: isHanukkah,
-	run: launchHanukkahGlow,
-	tileAccent: {
-		colors: ['#e0f2fe', '#60a5fa', '#fbbf24', '#fde68a', '#e0f2fe'],
-	},
-}
-
-function isHanukkah({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	return HANUKKAH_START_DATES.has(`${year}-${month}-${day}`)
-}
-
-async function launchHanukkahGlow() {
+export async function launchHanukkahGlow() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

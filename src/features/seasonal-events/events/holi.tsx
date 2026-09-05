@@ -1,62 +1,69 @@
 import type { Points, ShaderMaterial } from 'three'
-
-import { Trans } from '@lingui/react/macro'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { useEffect, useRef, useState } from 'react'
-import { AdditiveBlending, Color } from 'three'
-
+import { Color, AdditiveBlending } from 'three'
+import { randomInRange, getCanvasDpr } from '../core/utils'
+import { useRef, useState, useEffect } from 'react'
+import { useFrame, Canvas } from '@react-three/fiber'
 import {
 	isSettingsModalOpen,
 	onSettingsModalStateChange,
 } from '../../../shared/lib/settings-modal-state'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
-import { getCanvasDpr, randomInRange } from '../core/utils'
 
-const HOLI_DATES = new Set([
-	'2026-03-04',
-	'2027-03-22',
-	'2028-03-11',
-	'2029-03-01',
-	'2030-03-20',
-	'2031-03-09',
-	'2032-03-27',
-	'2033-03-16',
-	'2034-03-05',
-	'2035-03-24',
-	'2036-03-12',
-])
 const HOLI_MOUNT_DELAY_MS = 900
+
 const HOLI_CANVAS_OPACITY = '0.9'
+
 const HOLI_CANVAS_FILTER = 'saturate(175%)'
+
 const HOLI_CANVAS_MAX_DPR = 1.6
+
 const HOLI_PARTICLE_COUNT = 11000
+
 const HOLI_POINT_SIZE = 46
+
 const HOLI_RADIUS_RANGE = { max: 1.95, min: 0.2 }
+
 const HOLI_JITTER_RANGE = { max: 0.08, min: 0.02 }
+
 const HOLI_SCALE_RANGE = { max: 0.85, min: 0.35 }
+
 const HOLI_SHAPE_ATTRACT = 0.86
+
 const HOLI_SHAPE_DEPTH = 0.22
+
 const HOLI_LOTUS_SCALE = 1.35
+
 const HOLI_MANDALA_SCALE = 1.85
+
 const HOLI_LOTUS_PETALS = 7
+
 const HOLI_MANDALA_SPOKES = 16
+
 const HOLI_REVEAL_SPREAD = 3.6
+
 const HOLI_REVEAL_MIN_DURATION = 0.55
+
 const HOLI_REVEAL_MAX_DURATION = 1.35
+
 const HOLI_REVEAL_END_TIME = HOLI_REVEAL_SPREAD + HOLI_REVEAL_MAX_DURATION + 0.6
+
 const HOLI_MORPH_SPEED = 0.03
+
 const HOLI_RING_CYCLE_SECONDS = 13.5
+
 const HOLI_RING_WIDTH = 0.28
+
 const HOLI_RING_MAX_RADIUS = 2.35
+
 const HOLI_RING2_CYCLE_SECONDS = 20.0
+
 const HOLI_RING2_WIDTH = 0.42
+
 const HOLI_RING2_MAX_RADIUS = 2.35
+
 const HOLI_COLOR_DRIFT_SPEED = 0.03
+
 const HOLI_WARM_CORE = 'vec3(1.0, 0.96, 0.88)'
+
 const HOLI_PALETTE = [
 	'#ff5a1f',
 	'#ff3b30',
@@ -194,85 +201,6 @@ void main() {
 }
 `
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Holi is a joyful festival of colour, celebrated with laughter, music,
-				and shared community.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				It is closely associated with the arrival of spring in much of the world
-				where the tradition first formed.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Stories surrounding Holi vary by region, including the tale of Prahlad
-				and Holika, which speaks to the triumph of devotion and good over harm.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Another widely told story celebrates Krishna, whose playful exchanges of
-				colour are said to have inspired the festival’s most famous custom.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Symbols and rituals</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The night before Holi features Holika Dahan, a ceremonial bonfire that
-				symbolises the passing of winter and the renewal of life.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				On the following day, coloured powders fill the air as people cross
-				social boundaries in a shared expression of joy.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Within minutes of stepping outside, everyone looks the same — drenched
-				head to toe in colour, impossible to tell apart.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				By midday, the streets, the walls, and every surface in sight are
-				stained in layers of pink, green, yellow, and blue. It takes days to
-				wash out.
-			</Trans>
-		</p>
-	</>
-)
-
-export const holiEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.Holi,
-	isActive: isHoli,
-	run: launchHoliColors,
-	tileAccent: {
-		colors: ['#fbcfe8', '#bfdbfe', '#fde68a', '#bbf7d0', '#fbcfe8'],
-	},
-}
-
 type HoliAttributes = {
 	colors: Float32Array
 	colors2: Float32Array
@@ -352,13 +280,6 @@ const createHoliAttributes = (): HoliAttributes => {
 		scales,
 		seeds,
 	}
-}
-
-function isHoli({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	return HOLI_DATES.has(`${year}-${month}-${day}`)
 }
 
 const HoliParticles = ({ isAnimated }: HoliParticlesProps) => {
@@ -480,7 +401,7 @@ const HoliCanvasScene = ({ dpr, shouldAnimate }: HoliCanvasSceneProps) => {
 	)
 }
 
-async function launchHoliColors() {
+export async function launchHoliColors() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

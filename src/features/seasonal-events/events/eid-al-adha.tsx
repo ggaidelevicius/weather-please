@@ -1,43 +1,40 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
-import { getCanvasDpr, randomInRange } from '../core/utils'
+import { randomInRange, getCanvasDpr } from '../core/utils'
 
-const EID_AL_ADHA_DATES = new Set([
-	'2026-05-27',
-	'2027-05-17',
-	'2028-05-05',
-	'2029-04-24',
-	'2030-04-14',
-	'2031-04-02',
-	'2032-03-22',
-	'2033-03-11',
-	'2034-03-01',
-	'2035-02-18',
-	'2036-02-07',
-])
 const EID_ADHA_MOUNT_DELAY_MS = 900
+
 const EID_ADHA_OVERLAY_OPACITY = '0.72'
+
 const EID_ADHA_OVERLAY_FILTER = 'saturate(120%)'
+
 const EID_ADHA_MAX_DPR = 2
+
 const EID_ADHA_STAR_COUNT = 140
+
 const EID_ADHA_STAR_RADIUS_RANGE = { max: 1.5, min: 0.5 }
+
 const EID_ADHA_STAR_OPACITY_RANGE = { max: 0.55, min: 0.2 }
+
 const EID_ADHA_STAR_TWINKLE_RANGE = { max: 0.0013, min: 0.0005 }
+
 const EID_ADHA_EMBER_COUNT = 26
+
 const EID_ADHA_EMBER_SIZE_RANGE = { max: 14, min: 6 }
+
 const EID_ADHA_EMBER_SPEED_RANGE = { max: 18, min: 8 }
+
 const EID_ADHA_EMBER_SWAY_RANGE = { max: 16, min: 6 }
+
 const EID_ADHA_EMBER_OPACITY_RANGE = { max: 0.75, min: 0.35 }
+
 const EID_ADHA_EMBER_FADE_IN_DELAY_RANGE = { max: 2000, min: 0 }
+
 const EID_ADHA_EMBER_FADE_IN_DURATION_RANGE = { max: 2200, min: 1100 }
+
 const EID_ADHA_SCENE_FADE_DELAY_MS = 300
+
 const EID_ADHA_SCENE_FADE_DURATION_MS = 1400
+
 const EID_ADHA_EMBER_COLORS = [
 	'rgba(254, 243, 199, 0.9)',
 	'rgba(253, 230, 138, 0.85)',
@@ -46,77 +43,7 @@ const EID_ADHA_EMBER_COLORS = [
 	'rgba(52, 211, 153, 0.6)',
 ]
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Eid al-Adha is one of the most important festivals in Islam, closely
-				linked to the season of the Hajj pilgrimage.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				It centres on devotion, sacrifice, and the responsibility of generosity
-				toward others.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The holiday commemorates the story of Ibrahim and his willingness to
-				sacrifice in obedience to God.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Acts of charity, the sharing of food, and care for family, neighbours,
-				and those in need form the heart of the celebration.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The meat from the sacrifice is traditionally divided into three equal
-				parts: one for the family, one for friends and neighbours, and one for
-				those in need.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				This three-way split is central to the holiday&apos;s meaning — the act
-				of giving is built directly into the ritual itself.
-			</Trans>
-		</p>
-	</>
-)
-
-export const eidAlAdhaEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.EidAlAdha,
-	isActive: isEidAlAdha,
-	run: launchEidAlAdhaGlow,
-	tileAccent: {
-		colors: ['#fef3c7', '#fbbf24', '#f59e0b', '#34d399', '#fef3c7'],
-	},
-}
-
-function isEidAlAdha({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	return EID_AL_ADHA_DATES.has(`${year}-${month}-${day}`)
-}
-
-async function launchEidAlAdhaGlow() {
+export async function launchEidAlAdhaGlow() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

@@ -26,59 +26,71 @@
 		"lint": "pnpm tsc && pnpm prettier . --write && pnpm eslint --fix",
 		"release": "node scripts/release.mjs",
 		"prepare": "husky",
-		"test": "vitest run"
+		"test": "vitest run",
+		"build:extension": "node scripts/build-extension.mjs",
+		"build:web": "pnpm db:generate && next build --webpack",
+		"typecheck": "tsc --noEmit",
+		"format:check": "prettier . --check",
+		"format:fix": "prettier . --write",
+		"db:generate": "prisma generate",
+		"db:migrate": "prisma migrate dev",
+		"db:deploy": "prisma migrate deploy",
+		"test:browser": "playwright test",
+		"source:archive": "node scripts/package-source.mjs",
+		"source:verify": "node scripts/verify-source-build.mjs"
 	},
 	"dependencies": {
 		"@headlessui/react": "^2.2.10",
 		"@lingui/core": "^6.6.0",
 		"@lingui/react": "^6.6.0",
-		"@prisma/adapter-pg": "^7.9.1",
-		"@prisma/client": "^7.9.1",
+		"@prisma/adapter-pg": "^7.10.0",
+		"@prisma/client": "^7.10.0",
 		"@react-three/fiber": "^9.7.0",
 		"@tabler/icons-react": "^3.46.0",
 		"@tailwindcss/postcss": "^4.3.3",
 		"@vercel/analytics": "^2.0.1",
 		"canvas-confetti": "^1.9.4",
 		"clsx": "^2.1.1",
-		"framer-motion": "^13.0.0",
-		"next": "16.3.0",
-		"postcss": "^8.5.26",
+		"framer-motion": "^13.2.0",
+		"next": "16.3.4",
+		"postcss": "^8.5.28",
 		"react": "19.2.8",
 		"react-dom": "19.2.8",
 		"tailwindcss": "^4.3.3",
 		"three": "^0.185.1",
-		"zod": "^4.4.3"
+		"zod": "^4.5.4"
 	},
 	"devDependencies": {
-		"@eslint/eslintrc": "^3.3.6",
+		"@eslint/eslintrc": "^3.3.7",
 		"@lingui/babel-plugin-lingui-macro": "^6.6.0",
 		"@lingui/cli": "^6.6.0",
-		"@testing-library/jest-dom": "^7.0.0",
-		"@testing-library/react": "^16.3.2",
+		"@playwright/test": "^1.63.0",
+		"@testing-library/jest-dom": "^7.0.1",
+		"@testing-library/react": "^16.3.3",
 		"@types/canvas-confetti": "^1.9.0",
-		"@types/node": "^26.2.0",
+		"@types/node": "^26.4.1",
 		"@types/react": "^19.2.18",
-		"@types/react-dom": "^19.2.4",
+		"@types/react-dom": "^19.2.7",
 		"@types/three": "^0.185.4",
 		"adm-zip": "^0.6.0",
 		"babel-plugin-react-compiler": "19.1.0-rc.2",
 		"dotenv": "^17.4.2",
 		"eslint": "^9",
-		"eslint-config-next": "16.3.0",
+		"eslint-config-next": "16.3.4",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-perfectionist": "^5.10.1",
+		"eslint-plugin-perfectionist": "^5.11.0",
 		"fs-extra": "^11.4.0",
 		"glob": "^13.0.6",
 		"husky": "^9.1.7",
 		"jsdom": "^30.0.1",
-		"lint-staged": "^17.3.0",
+		"lint-staged": "^17.4.1",
 		"prettier": "^3.9.6",
 		"prettier-plugin-tailwindcss": "^0.8.1",
-		"prisma": "^7.9.1",
+		"prisma": "^7.10.0",
 		"typescript": "^7.0.2",
-		"vitest": "^4.1.10"
+		"vitest": "^5.0.0"
 	},
-	"packageManager": "pnpm@11.20.0",
+	"packageManager": "pnpm@11.25.0",
 	"lint-staged": {
 		"*.{js,jsx,mjs,cjs}": [
 			"eslint --fix",
@@ -90,5 +102,14 @@
 			"bash -c 'tsc --noEmit'"
 		],
 		"*.{json,css,md}": "prettier --write"
-	}
+	},
+	"engines": {
+		"node": ">=24"
+	},
+	"browserslist": [
+		"chrome >= 111",
+		"edge >= 111",
+		"firefox >= 111",
+		"safari >= 16.4"
+	]
 }

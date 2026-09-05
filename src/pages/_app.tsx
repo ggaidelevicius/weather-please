@@ -23,7 +23,9 @@ const App = ({ Component, pageProps }: Readonly<AppProps>) => {
 				<link href="/favicon.png" rel="icon" />
 			</Head>
 			<Component {...pageProps} />
-			<Analytics />
+			{process.env.NEXT_PUBLIC_WEATHER_PLEASE_BUILD_TARGET !== 'extension' ? (
+				<Analytics />
+			) : null}
 		</I18nProvider>
 	)
 }

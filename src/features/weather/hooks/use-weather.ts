@@ -285,7 +285,10 @@ export const useWeather = (
 
 		void weatherRequest
 			.then((responseData) => {
-				if (latestRequestRef.current !== requestId) {
+				if (
+					controller.signal.aborted ||
+					latestRequestRef.current !== requestId
+				) {
 					return
 				}
 				const now = new Date()
@@ -298,6 +301,13 @@ export const useWeather = (
 					data: responseData,
 				})
 				const alertData = deriveAlertsFromWeather(responseData, currentHour)
+				dispatch({
+					alertData,
+					next24HoursData,
+					type: 'fetch-success',
+					weatherData,
+					weatherMapData: null,
+				})
 				writeCachedWeather({
 					alertData,
 					lastUpdatedDate: now,
@@ -309,13 +319,6 @@ export const useWeather = (
 					weatherData,
 					weatherMapData: null,
 				})
-				dispatch({
-					alertData,
-					next24HoursData,
-					type: 'fetch-success',
-					weatherData,
-					weatherMapData: null,
-				})
 
 				void fetchWeatherMapData({
 					lat,
@@ -324,11 +327,20 @@ export const useWeather = (
 					timeZone: userTimeZone,
 				})
 					.then((weatherMapData) => {
-						if (latestRequestRef.current !== requestId) {
+						if (
+							controller.signal.aborted ||
+							latestRequestRef.current !== requestId
+						) {
 							return
 						}
 
-						writeCachedWeatherMapData({ weatherMapData })
+						writeCachedWeatherMapData({
+							weatherMapData,
+							lat,
+							lon,
+							timeZone: userTimeZone,
+							shouldUseAirQualityUv,
+						})
 						dispatch({ type: 'fetch-map-success', weatherMapData })
 					})
 					.catch((weatherMapError) => {
@@ -339,7 +351,10 @@ export const useWeather = (
 					})
 			})
 			.catch((fetchError) => {
-				if (latestRequestRef.current !== requestId) {
+				if (
+					controller.signal.aborted ||
+					latestRequestRef.current !== requestId
+				) {
 					return
 				}
 				if (isAbortError(fetchError)) {
@@ -363,7 +378,12 @@ export const useWeather = (
 					: null
 
 				if (cached && reducedCached) {
-					writeCachedWeatherDegraded()
+					writeCachedWeatherDegraded({
+						lat,
+						lon,
+						timeZone: userTimeZone,
+						shouldUseAirQualityUv,
+					})
 					dispatch({
 						alertData: reducedCached.alertData,
 						error,
@@ -437,7 +457,14 @@ export const useWeather = (
 			timeZone: userTimeZone,
 		})
 			.then((weatherMapData) => {
-				writeCachedWeatherMapData({ weatherMapData })
+				if (controller.signal.aborted) return
+				writeCachedWeatherMapData({
+					weatherMapData,
+					lat,
+					lon,
+					timeZone: userTimeZone,
+					shouldUseAirQualityUv,
+				})
 				dispatch({ type: 'fetch-map-success', weatherMapData })
 			})
 			.catch((weatherMapError) => {
@@ -450,6 +477,8 @@ export const useWeather = (
 
 		return () => {
 			controller.abort()
+			if (missingMapRequestKeyRef.current === requestKey)
+				missingMapRequestKeyRef.current = null
 		}
 	}, [
 		lat,

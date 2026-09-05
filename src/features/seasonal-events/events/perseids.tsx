@@ -1,168 +1,56 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
 import { createAdaptiveDprController, randomInRange } from '../core/utils'
 
-const PERSEIDS_PEAK_DATES = new Set([
-	'2026-08-13',
-	'2027-08-12',
-	'2027-08-13',
-	'2028-08-12',
-	'2028-08-13',
-	'2029-08-12',
-	'2029-08-13',
-	'2030-08-12',
-	'2030-08-13',
-	'2031-08-12',
-	'2031-08-13',
-	'2032-08-12',
-	'2032-08-13',
-	'2033-08-12',
-	'2033-08-13',
-	'2034-08-12',
-	'2034-08-13',
-	'2035-08-12',
-	'2035-08-13',
-	'2036-08-12',
-	'2036-08-13',
-	'2037-08-12',
-	'2037-08-13',
-	'2038-08-12',
-	'2038-08-13',
-	'2039-08-12',
-	'2039-08-13',
-	'2040-08-12',
-	'2040-08-13',
-	'2041-08-12',
-	'2041-08-13',
-	'2042-08-12',
-	'2042-08-13',
-	'2043-08-12',
-	'2043-08-13',
-])
 const PERSEIDS_MOUNT_DELAY_MS = 900
+
 const PERSEIDS_OVERLAY_OPACITY = '0.8'
+
 const PERSEIDS_OVERLAY_FILTER = 'saturate(130%)'
+
 const PERSEIDS_MAX_DPR = 2
+
 const PERSEIDS_METEOR_COUNT = 12
+
 const PERSEIDS_STAR_COUNT = 140
+
 const PERSEIDS_METEOR_LENGTH_RANGE = { max: 260, min: 140 }
+
 const PERSEIDS_METEOR_WIDTH_RANGE = { max: 2.6, min: 1.1 }
+
 const PERSEIDS_METEOR_SPEED_RANGE = { max: 820, min: 520 }
+
 const PERSEIDS_METEOR_ANGLE_RANGE = { max: 0.42, min: 0.25 }
+
 const PERSEIDS_METEOR_SPAWN_DELAY_RANGE = { max: 2000, min: 720 }
+
 const PERSEIDS_METEOR_LIFETIME_RANGE = { max: 2200, min: 1400 }
+
 const PERSEIDS_METEOR_SPAWN_X = { max: 0.6, min: -0.2 }
+
 const PERSEIDS_METEOR_SPAWN_Y = { max: 0.2, min: -0.35 }
+
 const PERSEIDS_METEOR_GLOW_RANGE = { max: 22, min: 12 }
+
 const PERSEIDS_METEOR_COLORS = [
 	'rgba(248, 250, 252, 1)',
 	'rgba(191, 219, 254, 1)',
 	'rgba(129, 140, 248, 1)',
 	'rgba(167, 139, 250, 1)',
 ]
+
 const PERSEIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
+
 const PERSEIDS_STAR_RADIUS_RANGE = { max: 1.6, min: 0.6 }
+
 const PERSEIDS_STAR_OPACITY_RANGE = { max: 0.6, min: 0.2 }
+
 const PERSEIDS_STAR_TWINKLE_RANGE = { max: 0.0014, min: 0.0006 }
+
 const PERSEIDS_STAR_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+
 const PERSEIDS_STAR_FADE_IN_DURATION_RANGE = { max: 2200, min: 1200 }
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The Perseids are a bright annual meteor shower formed from debris left
-				by Comet Swift–Tuttle.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Their radiant lies in the constellation Perseus, and the shower is
-				especially prominent in the northern hemisphere, though visible
-				worldwide.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The Perseids are sometimes known as the Tears of Saint Lawrence, as
-				their peak often falls near the feast day of Saint Lawrence in
-				mid-August.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Historical records of the Perseids extend back nearly two thousand
-				years, making them one of the longest observed meteor showers.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Skywatching tips</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Allow your eyes about twenty minutes to adjust, turn away from city
-				lights, and let the wide sky do the work.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				A comfortable chair or blanket is more useful than a telescope, as
-				meteors can appear anywhere overhead.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Perseid meteors enter the atmosphere at roughly 60 km/s — fast enough
-				that the larger ones compress the air ahead of them into a bright,
-				explosive fireball.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				On a good night near peak, you can expect a meteor every minute or two.
-				The best rates come after midnight, when your side of the Earth faces
-				into the debris stream.
-			</Trans>
-		</p>
-	</>
-)
-
-export const perseidsEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.Perseids,
-	isActive: isPerseidsPeak,
-	run: launchPerseidsShower,
-	tileAccent: {
-		colors: ['#e0f2fe', '#7dd3fc', '#60a5fa', '#a78bfa', '#e0f2fe'],
-	},
-}
-
-function isPerseidsPeak({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	return PERSEIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
-}
-
-async function launchPerseidsShower() {
+export async function launchPerseidsShower() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

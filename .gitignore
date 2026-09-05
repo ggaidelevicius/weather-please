@@ -132,3 +132,8 @@ iOSInjectionProject/
 /src/generated/prisma
 
 .env
+# Browser test output and local environment overrides
+/playwright-report/
+/test-results/
+.env.*
+!.env.example

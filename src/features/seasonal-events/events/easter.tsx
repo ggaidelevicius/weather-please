@@ -1,144 +1,54 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
-import { getCanvasDpr, randomInRange } from '../core/utils'
+import { randomInRange, getCanvasDpr } from '../core/utils'
 
 const EASTER_MOUNT_DELAY_MS = 900
+
 const EASTER_FIELD_OPACITY = '0.72'
+
 const EASTER_FIELD_FILTER = 'saturate(135%)'
+
 const EASTER_FIELD_MAX_DPR = 2
+
 const EASTER_FIELD_MARGIN = 160
+
 const EASTER_PARTICLE_COUNT = 70
+
 const EASTER_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+
 const EASTER_FADE_IN_DURATION_RANGE = { max: 1900, min: 1000 }
+
 const EASTER_SCALE_RANGE = { max: 0.85, min: 0.45 }
+
 const EASTER_SIZE_RANGE = { max: 30, min: 16 }
+
 const EASTER_VELOCITY_X_RANGE = { max: 8, min: -8 }
+
 const EASTER_VELOCITY_Y_RANGE = { max: 6, min: -7 }
+
 const EASTER_SWAY_RANGE = { max: 8, min: 2.5 }
+
 const EASTER_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
+
 const EASTER_SWAY_SPEED_X = 0.00055
+
 const EASTER_SWAY_SPEED_Y = 0.00045
+
 const EASTER_GLOW_RANGE = { max: 16, min: 6 }
+
 const EASTER_GLOW_COLORS = [
 	'rgba(244, 114, 182, 0.45)',
 	'rgba(167, 139, 250, 0.4)',
 	'rgba(147, 197, 253, 0.4)',
 ]
+
 const EASTER_EMOJIS = ['🥚', '🐣', '🐰', '🌷', '🌼', '🌸']
+
 const EASTER_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
+
 const EASTER_HALO_OPACITY = '0.5'
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Easter centres on themes of renewal and, in Christian tradition, the
-				resurrection of Jesus.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				It is a movable feast, its date determined by the cycle of the moon and
-				the arrival of spring in the northern hemisphere.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				From its earliest observances, Christian calendars aligned Easter with
-				the spring season and the full moon following the equinox.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Across many cultures, older symbols of rebirth — such as eggs, blossoms,
-				and new growth — became woven into the celebration.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Sunrise services draw people outdoors before the day has fully started,
-				and egg hunts send children tearing across gardens and parks.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				There&apos;s a reason the holiday lands in spring — it borrows heavily
-				from the season&apos;s own sense of things starting over.
-			</Trans>
-		</p>
-	</>
-)
-
-export const easterEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.Easter,
-	isActive: isEaster,
-	run: launchEaster,
-	tileAccent: {
-		colors: ['#fce7f3', '#fbcfe8', '#a5b4fc', '#93c5fd', '#fce7f3'],
-	},
-}
-
-function getWesternEasterDate(
-	year: number,
-): null | { day: number; month: number } {
-	if (!Number.isFinite(year)) {
-		return null
-	}
-
-	const a = year % 19
-	const b = Math.floor(year / 100)
-	const c = year % 100
-	const d = Math.floor(b / 4)
-	const e = b % 4
-	const f = Math.floor((b + 8) / 25)
-	const g = Math.floor((b - f + 1) / 3)
-	const h = (19 * a + b - d - g + 15) % 30
-	const i = Math.floor(c / 4)
-	const k = c % 4
-	const l = (32 + 2 * e + 2 * i - h - k) % 7
-	const m = Math.floor((a + 11 * h + 22 * l) / 451)
-	const month = Math.floor((h + l - 7 * m + 114) / 31) - 1
-	const day = ((h + l - 7 * m + 114) % 31) + 1
-
-	if (month < 0 || month > 11) {
-		return null
-	}
-
-	return { day, month }
-}
-
-function isEaster({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const easterDate = getWesternEasterDate(year)
-	if (!easterDate) {
-		return false
-	}
-
-	return (
-		date.getMonth() === easterDate.month && date.getDate() === easterDate.day
-	)
-}
-
-async function launchEaster() {
+export async function launchEaster() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

@@ -1,78 +1,52 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	Hemisphere,
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
-import { getCanvasDpr, randomInRange } from '../core/utils'
+import { randomInRange, getCanvasDpr } from '../core/utils'
 
-const AUTUMN_EQUINOX_DATES_NORTHERN = new Set([
-	'2026-09-23',
-	'2027-09-23',
-	'2028-09-22',
-	'2029-09-23',
-	'2030-09-23',
-	'2031-09-23',
-	'2032-09-22',
-	'2033-09-23',
-	'2034-09-23',
-	'2035-09-23',
-	'2036-09-22',
-	'2037-09-22',
-	'2038-09-23',
-	'2039-09-23',
-	'2040-09-22',
-	'2041-09-22',
-	'2042-09-22',
-	'2043-09-23',
-])
-const AUTUMN_EQUINOX_DATES_SOUTHERN = new Set([
-	'2026-03-20',
-	'2027-03-20',
-	'2028-03-20',
-	'2029-03-20',
-	'2030-03-20',
-	'2031-03-20',
-	'2032-03-20',
-	'2033-03-20',
-	'2034-03-20',
-	'2035-03-20',
-	'2036-03-20',
-	'2037-03-20',
-	'2038-03-20',
-	'2039-03-20',
-	'2040-03-20',
-	'2041-03-20',
-	'2042-03-20',
-	'2043-03-20',
-])
 const AUTUMN_MOUNT_DELAY_MS = 900
+
 const AUTUMN_FIELD_OPACITY = '0.65'
+
 const AUTUMN_FIELD_FILTER = 'saturate(120%)'
+
 const AUTUMN_FIELD_MAX_DPR = 2
+
 const AUTUMN_FIELD_MARGIN = 160
+
 const AUTUMN_PARTICLE_COUNT = 62
+
 const AUTUMN_FADE_IN_DELAY_RANGE = { max: 2400, min: 0 }
+
 const AUTUMN_FADE_IN_DURATION_RANGE = { max: 2000, min: 1100 }
+
 const AUTUMN_SCALE_RANGE = { max: 0.95, min: 0.55 }
+
 const AUTUMN_SIZE_RANGE = { max: 34, min: 18 }
+
 const AUTUMN_VELOCITY_X_RANGE = { max: 12, min: -12 }
+
 const AUTUMN_VELOCITY_Y_RANGE = { max: 20, min: 9 }
+
 const AUTUMN_SWAY_RANGE = { max: 10, min: 3 }
+
 const AUTUMN_ROTATION_SPEED_RANGE = { max: 0.45, min: -0.45 }
+
 const AUTUMN_SWAY_SPEED_X = 0.00055
+
 const AUTUMN_SWAY_SPEED_Y = 0.00045
+
 const AUTUMN_GLOW_RANGE = { max: 20, min: 10 }
+
 const AUTUMN_EMOJIS = ['🍁', '🍂']
+
 const AUTUMN_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
+
 const AUTUMN_SPAWN_Y_MAX_RATIO = 0.7
+
 const AUTUMN_HAZE_OPACITY = '0.5'
+
 const AUTUMN_HAZE_GRADIENT =
 	'radial-gradient(120% 85% at 18% 0%, rgba(251, 191, 36, 0.38), rgba(251, 146, 60, 0.18) 45%, rgba(15, 23, 42, 0) 75%), radial-gradient(80% 70% at 78% 20%, rgba(249, 115, 22, 0.28), rgba(15, 23, 42, 0) 70%)'
+
 const AUTUMN_GLOW_COLORS = [
 	'rgba(251, 191, 36, 0.5)',
 	'rgba(248, 113, 113, 0.45)',
@@ -80,86 +54,7 @@ const AUTUMN_GLOW_COLORS = [
 	'rgba(248, 250, 252, 0.25)',
 ]
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The autumn equinox marks a moment of near-perfect balance, when day and
-				night stand equal before the long shift toward darker evenings.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Across many ancient cultures, this point in the year was closely tied to
-				harvest celebrations, gratitude, and preparation for winter.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				It has often been observed alongside lunar cycles, communal feasts, and
-				rituals honouring both abundance and change.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>A time of turning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				In many traditions, the equinox is not only about what has been
-				gathered, but about what lies ahead — a pause to take stock before the
-				quieter months arrive.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The colour change in autumn leaves isn’t new pigment appearing — it’s
-				the green chlorophyll withdrawing, revealing yellows and oranges that
-				were there all along.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Meanwhile, billions of birds are mid-migration, navigating by stars,
-				magnetic fields, and landmarks passed down through generations.
-			</Trans>
-		</p>
-	</>
-)
-
-export const autumnEquinoxEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.AutumnEquinox,
-	isActive: isAutumnEquinox,
-	run: launchAutumnEquinoxLeaves,
-	tileAccent: {
-		colors: ['#fed7aa', '#f97316', '#fb7185', '#facc15', '#fed7aa'],
-	},
-}
-
-function isAutumnEquinox({ date, hemisphere }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	const equinoxDates =
-		hemisphere === Hemisphere.Southern
-			? AUTUMN_EQUINOX_DATES_SOUTHERN
-			: AUTUMN_EQUINOX_DATES_NORTHERN
-	return equinoxDates.has(`${year}-${month}-${day}`)
-}
-
-async function launchAutumnEquinoxLeaves() {
+export async function launchAutumnEquinoxLeaves() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

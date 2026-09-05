@@ -1,36 +1,47 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
-import { getCanvasDpr, randomInRange } from '../core/utils'
+import { randomInRange, getCanvasDpr } from '../core/utils'
 
-const CHRISTMAS_MONTH = 11
-const CHRISTMAS_DAY = 25
 const CHRISTMAS_MOUNT_DELAY_MS = 900
+
 const CHRISTMAS_FIELD_OPACITY = '0.7'
+
 const CHRISTMAS_FIELD_FILTER = 'saturate(135%)'
+
 const CHRISTMAS_FIELD_MAX_DPR = 2
+
 const CHRISTMAS_FIELD_MARGIN = 160
+
 const CHRISTMAS_PARTICLE_COUNT = 120
+
 const CHRISTMAS_FADE_IN_DELAY_RANGE = { max: 2400, min: 0 }
+
 const CHRISTMAS_FADE_IN_DURATION_RANGE = { max: 2200, min: 1200 }
+
 const CHRISTMAS_SCALE_RANGE = { max: 0.9, min: 0.45 }
+
 const CHRISTMAS_SIZE_RANGE = { max: 6.5, min: 2.5 }
+
 const CHRISTMAS_VELOCITY_X_RANGE = { max: 4.5, min: -4.5 }
+
 const CHRISTMAS_VELOCITY_Y_RANGE = { max: 20, min: 10 }
+
 const CHRISTMAS_SWAY_RANGE = { max: 4, min: 1.2 }
+
 const CHRISTMAS_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
+
 const CHRISTMAS_SWAY_SPEED_X = 0.00045
+
 const CHRISTMAS_SWAY_SPEED_Y = 0.00025
+
 const CHRISTMAS_GLOW_RANGE = { max: 18, min: 10 }
+
 const CHRISTMAS_SPARKLE_CHANCE = 0.3
+
 const CHRISTMAS_LIGHTS_OPACITY = '0.5'
+
 const CHRISTMAS_LIGHTS_GRADIENT =
 	'radial-gradient(30% 30% at 15% 10%, rgba(250, 204, 21, 0.22), rgba(15, 23, 42, 0) 70%), radial-gradient(25% 25% at 50% -5%, rgba(248, 113, 113, 0.18), rgba(15, 23, 42, 0) 70%), radial-gradient(28% 30% at 80% 12%, rgba(74, 222, 128, 0.2), rgba(15, 23, 42, 0) 70%)'
+
 const CHRISTMAS_COLORS = [
 	'#f8fafc',
 	'#e2e8f0',
@@ -40,96 +51,7 @@ const CHRISTMAS_COLORS = [
 	'#86efac',
 ]
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Christmas Day marks the celebration of the birth of Jesus, and for many
-				people it has also become a broader season of generosity, reflection,
-				and togetherness.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				It is observed around the world in both deeply religious and entirely
-				secular ways, often blending the two.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The holiday we recognise today grew from early Christian tradition,
-				layered over much older European midwinter customs tied to light,
-				renewal, and community.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Across centuries and cultures, distinctive local practices emerged —
-				from midnight services and carolling to bustling festive markets and
-				public celebrations.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Symbols and rituals</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Evergreens, candles, bells, and stars echo a shared theme drawn from
-				those early traditions: light enduring through the darkest part of the
-				year in the cultures where the holiday first formed.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Decorated trees, stockings, gift-giving, and shared meals now connect
-				people across many climates and continents in a sense of home and
-				continuity.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The tradition of a decorated Christmas tree only became widespread in
-				the English-speaking world after an 1848 illustration of Queen Victoria
-				and Prince Albert’s tree was published — and went viral, by Victorian
-				standards.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Today, an estimated 350 million real Christmas trees are grown across
-				Europe alone, most of them farmed specifically for the season.
-			</Trans>
-		</p>
-	</>
-)
-
-export const christmasEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.ChristmasDay,
-	isActive: isChristmasDay,
-	run: launchChristmasSnowfall,
-	tileAccent: {
-		colors: ['#fef3c7', '#fca5a5', '#86efac', '#fde68a', '#fef3c7'],
-	},
-}
-
-function isChristmasDay({ date }: SeasonalEventContext) {
-	return date.getMonth() === CHRISTMAS_MONTH && date.getDate() === CHRISTMAS_DAY
-}
-
-async function launchChristmasSnowfall() {
+export async function launchChristmasSnowfall() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

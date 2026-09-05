@@ -1,15 +1,15 @@
 import { headers } from 'next/headers'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { prisma } from '../../lib/prisma'
-import { enforceRateLimit } from '../../lib/rate-limit'
+import { prisma } from '../../server/prisma'
+import { enforceRateLimit } from '../../server/rate-limit'
 import { submitForm } from '../actions'
 
 vi.mock('next/headers', () => ({
 	headers: vi.fn(),
 }))
 
-vi.mock(import('../../lib/rate-limit'), async (importOriginal) => {
+vi.mock(import('../../server/rate-limit'), async (importOriginal) => {
 	const actual = await importOriginal()
 	return {
 		...actual,
@@ -17,7 +17,7 @@ vi.mock(import('../../lib/rate-limit'), async (importOriginal) => {
 	}
 })
 
-vi.mock('../../lib/prisma', () => ({
+vi.mock('../../server/prisma', () => ({
 	prisma: {
 		formSubmission: {
 			create: vi.fn(),

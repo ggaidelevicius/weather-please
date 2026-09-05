@@ -9,11 +9,13 @@ export const fetchUpcomingCalendarEvents = async ({
 	accessToken,
 	accountId,
 	now = new Date(),
+	signal,
 	timeZone,
 }: Readonly<{
 	accessToken: string
 	accountId: string
 	now?: Date
+	signal?: AbortSignal
 	timeZone: string
 }>): Promise<CalendarEvent[]> => {
 	const windowEnd = getUpcomingEventsWindowEnd({ now })
@@ -29,6 +31,7 @@ export const fetchUpcomingCalendarEvents = async ({
 	const response = await fetch(
 		`${CALENDAR_VIEW_ENDPOINT}?${params.toString()}`,
 		{
+			signal,
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 				Prefer: `outlook.timezone="${timeZone}"`,

@@ -53,8 +53,7 @@ export type SeasonalEventContext = {
 export type SeasonalEventDetails = () => ReactElement
 
 export type SeasonalEventOverride =
-	| SeasonalEventId
-	| typeof SEASONAL_EVENT_OVERRIDE_NONE
+	SeasonalEventId | typeof SEASONAL_EVENT_OVERRIDE_NONE
 
 export type SeasonalEventTileAccent = {
 	colors: readonly string[]

@@ -328,11 +328,21 @@ export const fetchWeatherResponse = async ({
 	signal?: AbortSignal
 	timeZone: string
 }): Promise<WeatherResponse> => {
+	const enrichmentController = new AbortController()
+	const abortEnrichment = () => enrichmentController.abort()
+	signal?.addEventListener('abort', abortEnrichment, { once: true })
 	try {
+		signal?.throwIfAborted()
 		const encodedTimeZone = encodeURIComponent(timeZone)
 		const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,windspeed_10m_max,sunrise,sunset,daylight_duration,sunshine_duration&timeformat=unixtime&timezone=${encodedTimeZone}&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,dew_point_2m,shortwave_radiation_instant,precipitation,precipitation_probability,uv_index,windspeed_10m,visibility,weathercode,windgusts_10m&forecast_days=${WEATHER_FORECAST_DAYS}`
 
-		const response = await fetch(weatherUrl, { signal })
+		const weatherRequest = fetch(weatherUrl, { signal })
+		const airQualityUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=pm10,pm2_5,ozone,nitrogen_dioxide,us_aqi,uv_index&timeformat=unixtime&timezone=${encodedTimeZone}&forecast_days=${AIR_QUALITY_FORECAST_DAYS}`
+		const airQualityRequest = fetchOptionalAirQuality({
+			url: airQualityUrl,
+			signal: enrichmentController.signal,
+		})
+		const response = await weatherRequest
 		if (!response.ok) {
 			throw new Error(`Weather fetch failed: ${response.status}`)
 		}
@@ -343,37 +353,8 @@ export const fetchWeatherResponse = async ({
 			throw new Error('Invalid weather response')
 		}
 
-		let airQualityData: AirQualityResponse | null = null
-		const airQualityVariables = [
-			'pm10',
-			'pm2_5',
-			'ozone',
-			'nitrogen_dioxide',
-			'us_aqi',
-			'uv_index',
-		].join(',')
-		const airQualityUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=${airQualityVariables}&timeformat=unixtime&timezone=${encodedTimeZone}&forecast_days=${AIR_QUALITY_FORECAST_DAYS}`
-
-		try {
-			const airQualityResponse = await fetch(airQualityUrl, { signal })
-			if (!airQualityResponse.ok) {
-				throw new Error('Air quality fetch failed')
-			}
-
-			const airQualityJson = await airQualityResponse.json()
-			const airQualityParsed =
-				airQualityResponseSchema.safeParse(airQualityJson)
-			if (!airQualityParsed.success) {
-				throw new Error('Invalid air quality response')
-			}
-
-			airQualityData = airQualityParsed.data
-		} catch (airQualityError) {
-			if (isAbortError(airQualityError)) {
-				throw airQualityError
-			}
-			console.error('Air quality fetch error:', airQualityError)
-		}
+		const airQualityData = await airQualityRequest
+		signal?.throwIfAborted()
 
 		const mergedWeather = shouldUseAirQualityUv
 			? mergeUvData({
@@ -393,6 +374,9 @@ export const fetchWeatherResponse = async ({
 		const errorMessage =
 			fetchError instanceof Error ? fetchError.message : 'Weather fetch failed'
 		throw new Error(errorMessage, { cause: fetchError })
+	} finally {
+		signal?.removeEventListener('abort', abortEnrichment)
+		enrichmentController.abort()
 	}
 }
 
@@ -688,3 +672,44 @@ const getDailyWeatherIndexForTime = ({
 
 	return dailyIndex
 }
+
+export const AIR_QUALITY_TIMEOUT_MS = 2500
+
+const fetchOptionalAirQuality = ({
+	url,
+	signal,
+}: {
+	url: string
+	signal: AbortSignal
+}): Promise<AirQualityResponse | null> =>
+	new Promise((resolve) => {
+		const controller = new AbortController()
+		let isSettled = false
+		const finish = (data: AirQualityResponse | null) => {
+			if (isSettled) return
+			isSettled = true
+			clearTimeout(timeout)
+			signal.removeEventListener('abort', handleAbort)
+			controller.abort()
+			resolve(data)
+		}
+		const handleAbort = () => finish(null)
+		const timeout = setTimeout(handleAbort, AIR_QUALITY_TIMEOUT_MS)
+		signal.addEventListener('abort', handleAbort, { once: true })
+		if (signal.aborted) {
+			handleAbort()
+			return
+		}
+		void fetch(url, { signal: controller.signal })
+			.then(async (response) => {
+				if (!response.ok)
+					throw new Error(`Air quality fetch failed: ${response.status}`)
+				return airQualityResponseSchema.parse(await response.json())
+			})
+			.then(finish)
+			.catch((error) => {
+				if (!controller.signal.aborted)
+					console.error('Air quality fetch error:', error)
+				finish(null)
+			})
+	})

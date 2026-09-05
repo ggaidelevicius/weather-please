@@ -1,4 +1,4 @@
-import type { Config } from '../../settings/hooks/use-config'
+import type { Config } from '../../settings/model/config'
 import type { SeasonalEventId } from './types'
 
 import {

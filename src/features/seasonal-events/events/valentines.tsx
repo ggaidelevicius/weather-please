@@ -1,39 +1,53 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
-import { getCanvasDpr, randomInRange } from '../core/utils'
+import { randomInRange, getCanvasDpr } from '../core/utils'
 
-const VALENTINES_MONTH = 1
-const VALENTINES_DAY = 14
 const HEARTS_MOUNT_DELAY_MS = 900
+
 const HEARTS_FIELD_OPACITY = '0.78'
+
 const HEARTS_FIELD_FILTER = 'saturate(170%) contrast(110%)'
+
 const HEARTS_FIELD_MAX_DPR = 2
+
 const HEARTS_FIELD_MARGIN = 140
+
 const HEARTS_FIELD_COUNT = 72
+
 const HEARTS_GLOW_OPACITY = '0.4'
+
 const HEARTS_GLOW_GRADIENT =
 	'radial-gradient(120% 90% at 50% 100%, rgba(244, 114, 182, 0.5), rgba(251, 113, 133, 0.25) 45%, rgba(15, 23, 42, 0) 75%)'
+
 const HEARTS_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+
 const HEARTS_FADE_IN_DURATION_RANGE = { max: 1600, min: 900 }
+
 const HEARTS_SCALE_RANGE = { max: 0.75, min: 0.4 }
+
 const HEARTS_SIZE_RANGE = { max: 26, min: 12 }
+
 const HEARTS_VELOCITY_X_RANGE = { max: 6, min: -6 }
+
 const HEARTS_VELOCITY_Y_RANGE = { max: -1, min: -6 }
+
 const HEARTS_SWAY_RANGE = { max: 8, min: 2 }
+
 const HEARTS_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
+
 const HEARTS_GLOW_RANGE = { max: 28, min: 16 }
+
 const HEARTS_CLOUD_CHANCE = 0.33
+
 const HEARTS_CLOUD_SIZE_FACTOR = 1.22
+
 const HEARTS_CLOUD_BASE_SPAN = 34
+
 const HEARTS_CLOUD_FILL_RANGE = { max: 1.02, min: 0.95 }
+
 const HEARTS_CLOUD_JITTER_FACTOR_RANGE = { max: 0.06, min: 0.02 }
+
 const HEARTS_CLOUD_T_JITTER = 0.15
+
 const HEARTS_GRADIENTS = [
 	{ inner: '#ffe1f2', mid: '#ff8fc1', outer: '#e11d48' },
 	{ inner: '#ffd1e8', mid: '#ff6ea8', outer: '#d81b60' },
@@ -44,94 +58,10 @@ const HEARTS_GRADIENTS = [
 	{ inner: '#ffd6d6', mid: '#fb7185', outer: '#be123c' },
 	{ inner: '#ffe4e6', mid: '#fb7185', outer: '#e11d48' },
 ] as const
+
 const HEARTS_SHAPES = ['parametric', 'arc'] as const
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Valentine’s Day celebrates affection in many forms, from romantic love
-				to friendship and quiet acts of care.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				It&apos;s often less about grand gestures and more about letting someone
-				know they&apos;re on your mind.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The holiday draws on legends of Saint Valentine and the traditions of
-				medieval courtly love.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				By the eighteenth century, handwritten notes and printed cards had
-				helped turn the day into a ritual of letters and messages.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Symbols and rituals</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Hearts, roses, and red ribbons became familiar symbols of devotion,
-				warmth, and connection.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Shared sweets, flowers, and small gifts keep the celebration intimate
-				and personal.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The oldest known Valentine is a fifteenth-century poem, written from a
-				cell in the Tower of London — a love letter composed under the worst
-				possible circumstances.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Centuries later, people still reach for pen and paper when a text
-				won&apos;t do.
-			</Trans>
-		</p>
-	</>
-)
-
-export const valentinesEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.ValentinesDay,
-	isActive: isValentinesDay,
-	run: launchValentinesHearts,
-	tileAccent: {
-		colors: ['#fbcfe8', '#f9a8d4', '#f472b6', '#fb7185', '#fbcfe8'],
-	},
-}
-
-function isValentinesDay({ date }: SeasonalEventContext) {
-	return (
-		date.getMonth() === VALENTINES_MONTH && date.getDate() === VALENTINES_DAY
-	)
-}
-
-async function launchValentinesHearts() {
+export async function launchValentinesHearts() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

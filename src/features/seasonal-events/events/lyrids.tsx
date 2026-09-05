@@ -1,149 +1,56 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
 import { createAdaptiveDprController, randomInRange } from '../core/utils'
 
-const LYRIDS_PEAK_DATES = new Set([
-	'2026-04-22',
-	'2026-04-23',
-	'2027-04-22',
-	'2027-04-23',
-	'2028-04-22',
-	'2028-04-23',
-	'2029-04-22',
-	'2029-04-23',
-	'2030-04-22',
-	'2030-04-23',
-	'2031-04-22',
-	'2031-04-23',
-	'2032-04-22',
-	'2032-04-23',
-	'2033-04-22',
-	'2033-04-23',
-	'2034-04-22',
-	'2034-04-23',
-	'2035-04-22',
-	'2035-04-23',
-	'2036-04-22',
-	'2036-04-23',
-	'2037-04-22',
-	'2037-04-23',
-	'2038-04-22',
-	'2038-04-23',
-	'2039-04-22',
-	'2039-04-23',
-	'2040-04-22',
-	'2040-04-23',
-	'2041-04-22',
-	'2041-04-23',
-	'2042-04-22',
-	'2042-04-23',
-	'2043-04-22',
-	'2043-04-23',
-])
 const LYRIDS_MOUNT_DELAY_MS = 900
+
 const LYRIDS_OVERLAY_OPACITY = '0.78'
+
 const LYRIDS_OVERLAY_FILTER = 'saturate(125%)'
+
 const LYRIDS_MAX_DPR = 2
+
 const LYRIDS_METEOR_COUNT = 10
+
 const LYRIDS_STAR_COUNT = 140
+
 const LYRIDS_METEOR_LENGTH_RANGE = { max: 240, min: 130 }
+
 const LYRIDS_METEOR_WIDTH_RANGE = { max: 2.2, min: 1 }
+
 const LYRIDS_METEOR_SPEED_RANGE = { max: 780, min: 480 }
+
 const LYRIDS_METEOR_ANGLE_RANGE = { max: 0.44, min: 0.26 }
+
 const LYRIDS_METEOR_SPAWN_DELAY_RANGE = { max: 2400, min: 900 }
+
 const LYRIDS_METEOR_LIFETIME_RANGE = { max: 2300, min: 1400 }
+
 const LYRIDS_METEOR_SPAWN_X = { max: 0.6, min: -0.2 }
+
 const LYRIDS_METEOR_SPAWN_Y = { max: 0.2, min: -0.35 }
+
 const LYRIDS_METEOR_GLOW_RANGE = { max: 22, min: 12 }
+
 const LYRIDS_METEOR_COLORS = [
 	'rgba(226, 232, 240, 1)',
 	'rgba(191, 219, 254, 1)',
 	'rgba(148, 163, 184, 1)',
 	'rgba(252, 211, 77, 1)',
 ]
+
 const LYRIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
+
 const LYRIDS_STAR_RADIUS_RANGE = { max: 1.4, min: 0.5 }
+
 const LYRIDS_STAR_OPACITY_RANGE = { max: 0.55, min: 0.2 }
+
 const LYRIDS_STAR_TWINKLE_RANGE = { max: 0.0014, min: 0.0006 }
+
 const LYRIDS_STAR_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+
 const LYRIDS_STAR_FADE_IN_DURATION_RANGE = { max: 2200, min: 1200 }
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The Lyrids appear each year in late April, with meteors radiating from
-				the constellation Lyra.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				They are typically a gentle shower that rewards patient skywatching.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Historical Chinese records describe displays of Lyrid meteors more than
-				two thousand six hundred years ago.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				The shower originates from Comet Thatcher, which returns to the inner
-				solar system roughly every four hundred and fifteen years.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Chinese records from 687 BC describe &quot;stars falling like rain&quot;
-				— the oldest known account of the Lyrids, and one of the oldest
-				documented meteor observations of any kind.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Comet Thatcher, the shower&apos;s parent body, won&apos;t return to the
-				inner solar system until roughly the year 2283.
-			</Trans>
-		</p>
-	</>
-)
-
-export const lyridsEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.Lyrids,
-	isActive: isLyridsPeak,
-	run: launchLyridsShower,
-	tileAccent: {
-		colors: ['#e2e8f0', '#fcd34d', '#93c5fd', '#60a5fa', '#e2e8f0'],
-	},
-}
-
-function isLyridsPeak({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	return LYRIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
-}
-
-async function launchLyridsShower() {
+export async function launchLyridsShower() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

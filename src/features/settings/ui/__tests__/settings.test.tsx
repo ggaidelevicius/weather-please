@@ -13,7 +13,7 @@ import type {
 	CalendarAccountSummary,
 	CalendarConnection,
 } from '../../../integrations/hooks/use-calendar-connection'
-import type { Config } from '../../hooks/use-config'
+import type { Config } from '../../model/config'
 import type { IntegrationsPromo } from '../settings'
 
 import { AsyncStatus } from '../../../../shared/hooks/async-status'

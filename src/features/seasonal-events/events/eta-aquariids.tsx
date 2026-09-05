@@ -1,150 +1,59 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
 import { createAdaptiveDprController, randomInRange } from '../core/utils'
 
-const ETA_AQUARIIDS_PEAK_DATES = new Set([
-	'2026-05-05',
-	'2026-05-06',
-	'2027-05-05',
-	'2027-05-06',
-	'2028-05-05',
-	'2028-05-06',
-	'2029-05-05',
-	'2029-05-06',
-	'2030-05-05',
-	'2030-05-06',
-	'2031-05-05',
-	'2031-05-06',
-	'2032-05-05',
-	'2032-05-06',
-	'2033-05-05',
-	'2033-05-06',
-	'2034-05-05',
-	'2034-05-06',
-	'2035-05-05',
-	'2035-05-06',
-	'2036-05-05',
-	'2036-05-06',
-	'2037-05-05',
-	'2037-05-06',
-	'2038-05-05',
-	'2038-05-06',
-	'2039-05-05',
-	'2039-05-06',
-	'2040-05-05',
-	'2040-05-06',
-	'2041-05-05',
-	'2041-05-06',
-	'2042-05-05',
-	'2042-05-06',
-	'2043-05-05',
-	'2043-05-06',
-])
 const ETA_AQUARIIDS_MOUNT_DELAY_MS = 900
+
 const ETA_AQUARIIDS_OVERLAY_OPACITY = '0.78'
+
 const ETA_AQUARIIDS_OVERLAY_FILTER = 'saturate(130%)'
+
 const ETA_AQUARIIDS_MAX_DPR = 2
+
 const ETA_AQUARIIDS_METEOR_COUNT = 11
+
 const ETA_AQUARIIDS_STAR_COUNT = 140
+
 const ETA_AQUARIIDS_METEOR_LENGTH_RANGE = { max: 250, min: 140 }
+
 const ETA_AQUARIIDS_METEOR_WIDTH_RANGE = { max: 2.3, min: 1 }
+
 const ETA_AQUARIIDS_METEOR_SPEED_RANGE = { max: 860, min: 560 }
+
 const ETA_AQUARIIDS_METEOR_ANGLE_RANGE = { max: 0.42, min: 0.25 }
+
 const ETA_AQUARIIDS_METEOR_SPAWN_DELAY_RANGE = { max: 2200, min: 760 }
+
 const ETA_AQUARIIDS_METEOR_LIFETIME_RANGE = { max: 2100, min: 1300 }
+
 const ETA_AQUARIIDS_METEOR_SPAWN_X = { max: 0.6, min: -0.2 }
+
 const ETA_AQUARIIDS_METEOR_SPAWN_Y = { max: 0.2, min: -0.35 }
+
 const ETA_AQUARIIDS_METEOR_GLOW_RANGE = { max: 24, min: 12 }
+
 const ETA_AQUARIIDS_METEOR_COLORS = [
 	'rgba(191, 219, 254, 1)',
 	'rgba(125, 211, 252, 1)',
 	'rgba(96, 165, 250, 1)',
 	'rgba(59, 130, 246, 1)',
 ]
+
 const ETA_AQUARIIDS_STAR_COLOR = 'rgba(226, 232, 240, 1)'
+
 const ETA_AQUARIIDS_STAR_RADIUS_RANGE = { max: 1.4, min: 0.5 }
+
 const ETA_AQUARIIDS_STAR_OPACITY_RANGE = { max: 0.55, min: 0.2 }
+
 const ETA_AQUARIIDS_STAR_TWINKLE_RANGE = { max: 0.0014, min: 0.0006 }
+
 const ETA_AQUARIIDS_STAR_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
-const ETA_AQUARIIDS_STAR_FADE_IN_DURATION_RANGE = { max: 2200, min: 1200 }
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The Eta Aquariids are a major meteor shower formed from the debris of
-				Halley’s Comet.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				They peak in early May and are especially well seen from the southern
-				hemisphere, though northern skies still catch their share of streaks.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Halley’s Comet itself returns roughly every seventy-six years, but the
-				stream of dust it leaves behind crosses Earth’s path each year.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				The shower’s radiant lies near the constellation Aquarius, rising before
-				dawn when viewing conditions are at their best.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The Eta Aquariids and the Orionids are sibling showers — both are born
-				from Halley&apos;s Comet, but Earth crosses different parts of the
-				debris trail six months apart.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				At 66 km/s, these are among the fastest meteors you&apos;ll see. Their
-				trails can persist for several seconds after the meteor itself is gone.
-			</Trans>
-		</p>
-	</>
-)
-
-export const etaAquariidsEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.EtaAquariids,
-	isActive: isEtaAquariidsPeak,
-	run: launchEtaAquariidsShower,
-	tileAccent: {
-		colors: ['#bae6fd', '#7dd3fc', '#60a5fa', '#3b82f6', '#bae6fd'],
-	},
+const ETA_AQUARIIDS_STAR_FADE_IN_DURATION_RANGE = {
+	max: 2200,
+	min: 1200,
 }
 
-function isEtaAquariidsPeak({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	return ETA_AQUARIIDS_PEAK_DATES.has(`${year}-${month}-${day}`)
-}
-
-async function launchEtaAquariidsShower() {
+export async function launchEtaAquariidsShower() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

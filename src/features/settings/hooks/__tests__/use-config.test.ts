@@ -14,7 +14,8 @@ import {
 } from '../../model/boolean-settings'
 import { TileIdentifier } from '../../model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../model/unit-system'
-import { type Config, useConfig } from '../use-config'
+import { useConfig } from '../use-config'
+import type { Config } from '../../model/config'
 
 // Mock localStorage
 const localStorageMock = (() => {

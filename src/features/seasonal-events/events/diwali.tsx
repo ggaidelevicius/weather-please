@@ -1,56 +1,50 @@
-import { Trans } from '@lingui/react/macro'
-
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
-import { getCanvasDpr, randomInRange } from '../core/utils'
+import { randomInRange, getCanvasDpr } from '../core/utils'
 
-const DIWALI_DATES = new Set([
-	'2026-11-08',
-	'2027-10-29',
-	'2028-10-17',
-	'2029-11-05',
-	'2030-10-26',
-	'2031-11-14',
-	'2032-11-02',
-	'2033-10-22',
-	'2034-11-10',
-	'2035-10-30',
-	'2036-10-19',
-	'2037-11-07',
-	'2038-10-27',
-	'2039-10-17',
-	'2040-11-04',
-	'2041-10-25',
-	'2042-11-12',
-	'2043-11-01',
-])
 const DIWALI_MOUNT_DELAY_MS = 900
+
 const DIWALI_FIELD_OPACITY = '0.7'
+
 const DIWALI_FIELD_FILTER = 'saturate(130%)'
+
 const DIWALI_FIELD_MAX_DPR = 2
+
 const DIWALI_FIELD_MARGIN = 150
+
 const DIWALI_PARTICLE_COUNT = 54
+
 const DIWALI_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
+
 const DIWALI_FADE_IN_DURATION_RANGE = { max: 1900, min: 1100 }
+
 const DIWALI_SCALE_RANGE = { max: 0.95, min: 0.55 }
+
 const DIWALI_SIZE_RANGE = { max: 32, min: 18 }
+
 const DIWALI_VELOCITY_X_RANGE = { max: 7, min: -7 }
+
 const DIWALI_VELOCITY_Y_RANGE = { max: 6, min: -4 }
+
 const DIWALI_SWAY_RANGE = { max: 9, min: 2.5 }
+
 const DIWALI_ROTATION_SPEED_RANGE = { max: 0.28, min: -0.28 }
+
 const DIWALI_SWAY_SPEED_X = 0.00055
+
 const DIWALI_SWAY_SPEED_Y = 0.0005
+
 const DIWALI_GLOW_RANGE = { max: 20, min: 10 }
+
 const DIWALI_EMOJIS = ['🪔', '✨']
+
 const DIWALI_FONT =
 	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
+
 const DIWALI_HAZE_OPACITY = '0.6'
+
 const DIWALI_HAZE_GRADIENT =
 	'radial-gradient(120% 90% at 18% 70%, rgba(251, 191, 36, 0.4), rgba(249, 115, 22, 0.2) 50%, rgba(15, 23, 42, 0) 80%), radial-gradient(85% 70% at 85% 25%, rgba(244, 114, 182, 0.22), rgba(15, 23, 42, 0) 70%)'
+
 const DIWALI_GLOW_COLORS = [
 	'rgba(251, 191, 36, 0.6)',
 	'rgba(249, 115, 22, 0.52)',
@@ -58,94 +52,7 @@ const DIWALI_GLOW_COLORS = [
 	'rgba(248, 250, 252, 0.25)',
 ]
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Diwali is the festival of lights, celebrating renewal, hope, and the
-				enduring triumph of light over darkness.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				It is observed by millions across India and by communities around the
-				world.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>History and meaning</Trans>
-		</h2>
-		<p>
-			<Trans>
-				For many Hindus, the festival marks the return of Rama, Sita, Lakshmana,
-				and Hanuman to Ayodhya after their long exile.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Other traditions honour Lakshmi, the goddess of prosperity and fortune,
-				while Jain and Sikh communities observe Diwali through their own sacred
-				histories.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Symbols and rituals</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Diyas and candles glow along doorways and windows, while rangoli
-				patterns bloom across thresholds in colour and light.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Families exchange sweets and gifts, clean and decorate their homes, and
-				offer prayers for health, prosperity, and a bright year ahead.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Seen from above, cities during Diwali are transformed — rooftops,
-				balconies, and streets are outlined in light, and the effect is visible
-				from space in satellite imagery.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				The festival is also one of the biggest shopping seasons in India, with
-				markets staying open late and fireworks continuing well past midnight.
-			</Trans>
-		</p>
-	</>
-)
-
-export const diwaliEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.Diwali,
-	isActive: isDiwali,
-	run: launchDiwaliLights,
-	tileAccent: {
-		colors: ['#fde68a', '#f59e0b', '#fb7185', '#f97316', '#fde68a'],
-	},
-}
-
-function isDiwali({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	return DIWALI_DATES.has(`${year}-${month}-${day}`)
-}
-
-async function launchDiwaliLights() {
+export async function launchDiwaliLights() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

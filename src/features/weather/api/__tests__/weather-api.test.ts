@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import type { WeatherResponse } from '../weather-api'
+import { createWeatherResponse } from '../../testing/weather-response'
 
 import {
 	fetchWeatherMapData,
@@ -235,39 +235,34 @@ describe('mapWeatherResponseToNext24HoursData', () => {
 	})
 })
 
-const createWeatherResponse = (): WeatherResponse => ({
-	daily: {
-		daylight_duration: [43_200],
-		precipitation_probability_max: [10],
-		sunrise: [21_600],
-		sunset: [64_800],
-		sunshine_duration: [36_000],
-		temperature_2m_max: [30],
-		temperature_2m_min: [20],
-		time: [0],
-		uv_index_max: [8],
-		weathercode: [1],
-		windspeed_10m_max: [15],
-	},
-	hourly: {
-		apparent_temperature: Array.from({ length: 30 }, (_, index) => index + 10),
-		dew_point_2m: Array.from({ length: 30 }, (_, index) => index + 5),
-		precipitation: Array.from({ length: 30 }, (_, index) => index),
-		precipitation_probability: Array.from(
-			{ length: 30 },
-			(_, index) => index * 2,
-		),
-		relative_humidity_2m: Array.from({ length: 30 }, (_, index) => index + 50),
-		shortwave_radiation_instant: Array.from(
-			{ length: 30 },
-			(_, index) => index * 10 + 100,
-		),
-		temperature_2m: Array.from({ length: 30 }, (_, index) => index + 20),
-		time: Array.from({ length: 30 }, (_, index) => index),
-		uv_index: Array.from({ length: 30 }, (_, index) => index),
-		visibility: Array.from({ length: 30 }, (_, index) => 1000 - index),
-		weathercode: Array.from({ length: 30 }, (_, index) => index),
-		windgusts_10m: Array.from({ length: 30 }, (_, index) => index + 20),
-		windspeed_10m: Array.from({ length: 30 }, (_, index) => index + 10),
-	},
+describe('optional air quality enrichment', () => {
+	it('starts both requests together and bounds the wait for air quality', async () => {
+		vi.useFakeTimers()
+		const urls: string[] = []
+		const fetchSpy = vi
+			.spyOn(global, 'fetch')
+			.mockImplementation(async (url) => {
+				urls.push(String(url))
+				if (String(url).includes('air-quality'))
+					return new Promise<Response>(() => {})
+				return Response.json(createWeatherResponse())
+			})
+		try {
+			const request = fetchWeatherResponse({
+				lat: '40',
+				lon: '-74',
+				shouldUseAirQualityUv: false,
+				timeZone: 'UTC',
+			})
+			expect(urls).toHaveLength(2)
+			await vi.advanceTimersByTimeAsync(2500)
+			await expect(request).resolves.toMatchObject({
+				airQuality: null,
+				daily: { temperature_2m_max: [30] },
+			})
+		} finally {
+			fetchSpy.mockRestore()
+			vi.useRealTimers()
+		}
+	})
 })

@@ -5,14 +5,13 @@ import path from 'path'
 
 import { readJson, writeJson } from './lib/json.mjs'
 import { setCwdToRoot } from './lib/root.mjs'
+import { createSourceArchive } from './lib/source-archive.mjs'
 
 setCwdToRoot()
 
 const EXTENSION_DIR = 'extension'
 const MANIFEST_PATH = 'manifest.json'
 const PACKAGE_PATH = 'package.json'
-const NEXT_BUILD_DIR = path.join(process.cwd(), '.next')
-const APP_PATH = path.join('src', 'pages', '_app.tsx')
 const EXTENSION_MANIFEST_PATH = path.join(EXTENSION_DIR, MANIFEST_PATH)
 const OPENSTREETMAP_TILE_RULES_PATH = 'openstreetmap-tile-rules.json'
 const EXTENSION_OPENSTREETMAP_TILE_RULES_PATH = path.join(
@@ -24,47 +23,14 @@ const args = process.argv.slice(2)
 const releaseType = args[0]
 const pnpmCommand = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm'
 
-const ANALYTICS_IMPORT = "import { Analytics } from '@vercel/analytics/react'"
-const COMMENTED_ANALYTICS_IMPORT =
-	"// import { Analytics } from '@vercel/analytics/react'"
-const ANALYTICS_COMPONENT = '\t\t\t<Analytics />'
-const COMMENTED_ANALYTICS_COMPONENT = '\t\t\t{/* <Analytics /> */}'
-
 const buildRelease = () => {
-	const originalAppSource = fs.readFileSync(APP_PATH, 'utf8')
-	if (!originalAppSource.includes(ANALYTICS_IMPORT)) {
-		throw new Error(`Could not find the Analytics import in ${APP_PATH}`)
-	}
-	if (!originalAppSource.includes(ANALYTICS_COMPONENT)) {
-		throw new Error(`Could not find the Analytics component in ${APP_PATH}`)
-	}
-
-	const appSourceWithoutAnalytics = originalAppSource
-		.replace(ANALYTICS_IMPORT, COMMENTED_ANALYTICS_IMPORT)
-		.replace(ANALYTICS_COMPONENT, COMMENTED_ANALYTICS_COMPONENT)
-
-	fs.rmSync(NEXT_BUILD_DIR, { force: true, recursive: true })
-	fs.writeFileSync(APP_PATH, appSourceWithoutAnalytics)
-
-	try {
-		const result = spawnSync(pnpmCommand, ['build'], {
-			cwd: process.cwd(),
-			stdio: 'inherit',
-		})
-
-		if (result.error) {
-			throw result.error
-		}
-
-		if (result.status !== 0) {
-			const exitReason = result.signal
-				? `signal ${result.signal}`
-				: `code ${result.status}`
-			throw new Error(`pnpm build exited with ${exitReason}`)
-		}
-	} finally {
-		fs.writeFileSync(APP_PATH, originalAppSource)
-	}
+	const result = spawnSync(pnpmCommand, ['build'], {
+		cwd: process.cwd(),
+		stdio: 'inherit',
+	})
+	if (result.error) throw result.error
+	if (result.status !== 0)
+		throw new Error(`Build failed: ${result.signal ?? result.status}`)
 }
 
 const bumpVersion = (currentVersion, releaseType) => {
@@ -169,7 +135,7 @@ const processReleaseType = (releaseType) => {
 
 	processFirefoxRelease({ baseExtensionManifest, newVersion })
 
-	packageSource()
+	createSourceArchive()
 	process.exit(0)
 }
 
@@ -227,53 +193,6 @@ const processZipCreation = (contentPath, newVersion, fileNameSuffix) => {
 		contentPath,
 		`weather-please-${newVersion}${fileNameSuffix}.zip`,
 	)
-}
-
-const packageSource = () => {
-	const zip = new AdmZip()
-
-	// function to recursively add files and folders to the zip
-	const addContentToZip = (dir, zipDir) => {
-		const entries = fs.readdirSync(dir)
-
-		entries.forEach((entry) => {
-			const fullPath = dir + '/' + entry
-			const zipPath = zipDir + '/' + entry
-
-			if (fs.statSync(fullPath).isDirectory()) {
-				// add the directory itself (for empty folders too)
-				zip.addFile(zipPath + '/', Buffer.alloc(0))
-
-				// recursively add its content
-				addContentToZip(fullPath, zipPath)
-			} else if (
-				!fullPath.includes('extension') &&
-				fullPath.slice(-4) !== '.zip'
-			) {
-				zip.addLocalFile(fullPath, zipDir)
-			}
-		})
-	}
-
-	// add all FILES from the root directory
-	fs.readdirSync('./').forEach((file) => {
-		const fullPath = './' + file
-		if (
-			fs.statSync(fullPath).isFile() &&
-			fullPath.slice(-4) !== '.zip' &&
-			fullPath !== './.env.local'
-		) {
-			zip.addLocalFile(fullPath)
-		}
-	})
-
-	// add 'src' and 'public' folders, preserving their structure
-	addContentToZip('./src', 'src')
-	addContentToZip('./public', 'public')
-
-	const zipFileName = 'src.zip'
-	zip.writeZip(zipFileName)
-	fs.renameSync(zipFileName, EXTENSION_DIR + '/' + zipFileName)
 }
 
 if (!releaseType) {

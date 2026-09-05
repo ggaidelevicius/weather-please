@@ -83,16 +83,18 @@ export const useCalendarConnection = (): CalendarConnection => {
 	const accountsRef = useRef(accounts)
 	const lastEventsFetchAtRef = useRef(0)
 	const hasHydratedRef = useRef(false)
+	const requestsRef = useRef({
+		isMounted: true,
+		generation: 0,
+		controller: null as AbortController | null,
+	})
 
 	useEffect(() => {
-		if (hasHydratedRef.current) {
-			return
-		}
-		hasHydratedRef.current = true
-
+		requestsRef.current.isMounted = true
 		const connectionState = {
 			accountsRef,
 			lastEventsFetchAtRef,
+			requestsRef,
 			setAccounts,
 			setError,
 			setEvents,
@@ -103,7 +105,15 @@ export const useCalendarConnection = (): CalendarConnection => {
 			void loadEvents(connectionState)
 		}
 
-		void completePendingWebAuth(connectionState)
+		if (!hasHydratedRef.current) {
+			hasHydratedRef.current = true
+			void completePendingWebAuth(connectionState)
+		}
+		return () => {
+			requestsRef.current.isMounted = false
+			requestsRef.current.generation += 1
+			requestsRef.current.controller?.abort()
+		}
 	}, [])
 
 	// Long-lived tabs would otherwise keep showing the events fetched at
@@ -113,6 +123,7 @@ export const useCalendarConnection = (): CalendarConnection => {
 		const connectionState = {
 			accountsRef,
 			lastEventsFetchAtRef,
+			requestsRef,
 			setAccounts,
 			setError,
 			setEvents,
@@ -146,6 +157,7 @@ export const useCalendarConnection = (): CalendarConnection => {
 	const connectionState: ConnectionState = {
 		accountsRef,
 		lastEventsFetchAtRef,
+		requestsRef,
 		setAccounts,
 		setError,
 		setEvents,
@@ -237,6 +249,7 @@ type CalendarProviderAdapter = {
 		redirectUri: string
 	}) => Promise<ProviderTokens>
 	fetchUpcomingEvents: (params: {
+		signal?: AbortSignal
 		accessToken: string
 		accountId: string
 		timeZone: string
@@ -270,6 +283,11 @@ const CALENDAR_PROVIDER_ADAPTERS: Record<
 type ConnectionState = {
 	accountsRef: RefObject<StoredCalendarAccount[]>
 	lastEventsFetchAtRef: RefObject<number>
+	requestsRef: RefObject<{
+		isMounted: boolean
+		generation: number
+		controller: AbortController | null
+	}>
 	setAccounts: Dispatch<SetStateAction<StoredCalendarAccount[]>>
 	setError: Dispatch<SetStateAction<CalendarConnectionError | null>>
 	setEvents: Dispatch<SetStateAction<CalendarEvent[]>>
@@ -287,6 +305,12 @@ const applyAccounts = (
 }
 
 const loadEvents = async (connectionState: ConnectionState) => {
+	const requests = connectionState.requestsRef.current
+	if (!requests.isMounted) return
+	const generation = ++requests.generation
+	requests.controller?.abort()
+	const controller = new AbortController()
+	requests.controller = controller
 	const activeAccounts = connectionState.accountsRef.current.filter(
 		(account) => !account.isSessionExpired,
 	)
@@ -300,27 +324,57 @@ const loadEvents = async (connectionState: ConnectionState) => {
 	connectionState.setEventsStatus(AsyncStatus.Loading)
 	const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 	const results = await Promise.all(
-		activeAccounts.map((account) => loadAccountEvents({ account, timeZone })),
+		activeAccounts.map((account) =>
+			loadAccountEvents({ account, timeZone, signal: controller.signal }),
+		),
 	)
 
-	// Accounts may have been added or removed while the fetches were in
-	// flight; merge results back into the current list instead of replacing.
+	if (!requests.isMounted || requests.generation !== generation) return
+	// Preserve local edits, and ignore results for removed or reconnected accounts.
+	const activeById = new Map(
+		activeAccounts.map((account) => [account.accountId, account]),
+	)
+	const currentAccounts = connectionState.accountsRef.current
+	const acceptedResults = results.filter((result) => {
+		const current = currentAccounts.find(
+			(account) => account.accountId === result.account.accountId,
+		)
+		const original = activeById.get(result.account.accountId)
+		return (
+			current &&
+			original &&
+			current.accessToken === original.accessToken &&
+			current.expiresAt === original.expiresAt
+		)
+	})
 	const resultsByAccountId = new Map(
-		results.map((result) => [result.account.accountId, result]),
+		acceptedResults.map((result) => [result.account.accountId, result]),
 	)
 	applyAccounts(
 		connectionState,
-		connectionState.accountsRef.current.map(
-			(account) =>
-				resultsByAccountId.get(account.accountId)?.account ?? account,
-		),
+		currentAccounts.map((account) => {
+			const result = resultsByAccountId.get(account.accountId)
+			return result
+				? { ...result.account, category: account.category }
+				: account
+		}),
 	)
-	connectionState.setEvents(
-		mergeCalendarEvents(results.map((result) => result.events)),
+	connectionState.setEvents((currentEvents) =>
+		mergeCalendarEvents([
+			currentEvents.filter(
+				(event) =>
+					currentAccounts.some(
+						(account) => account.accountId === event.accountId,
+					) && !resultsByAccountId.has(event.accountId),
+			),
+			...acceptedResults.map((result) => result.events),
+		]),
 	)
 
-	const hasSuccess = results.some((result) => result.status === 'success')
-	const hasError = results.some((result) => result.status === 'error')
+	const hasSuccess = acceptedResults.some(
+		(result) => result.status === 'success',
+	)
+	const hasError = acceptedResults.some((result) => result.status === 'error')
 	if (hasSuccess) {
 		connectionState.setEventsStatus(AsyncStatus.Success)
 		connectionState.setError(
@@ -339,15 +393,19 @@ const loadEvents = async (connectionState: ConnectionState) => {
 const loadAccountEvents = async ({
 	account,
 	timeZone,
+	signal,
 }: Readonly<{
 	account: StoredCalendarAccount
 	timeZone: string
+	signal: AbortSignal
 }>): Promise<AccountLoadResult> => {
 	const adapter = CALENDAR_PROVIDER_ADAPTERS[account.provider]
 
 	try {
 		const freshAccount = await ensureFreshAccount(account)
+		signal.throwIfAborted()
 		const events = await adapter.fetchUpcomingEvents({
+			signal,
 			accessToken: freshAccount.accessToken,
 			accountId: freshAccount.accountId,
 			timeZone,
@@ -363,7 +421,8 @@ const loadAccountEvents = async ({
 			}
 		}
 
-		console.error('Calendar events fetch error:', caughtError)
+		if (!signal.aborted)
+			console.error('Calendar events fetch error:', caughtError)
 		return { account, events: [], status: 'error' }
 	}
 }
@@ -473,6 +532,7 @@ const addConnectedAccount = (
 		provider,
 	}: Readonly<{ newTokens: ProviderTokens; provider: CalendarProvider }>,
 ) => {
+	if (!connectionState.requestsRef.current.isMounted) return
 	const accounts = connectionState.accountsRef.current
 	const accountId = newTokens.accountId ?? `account:${createRandomState()}`
 	const existingAccount = accounts.find(

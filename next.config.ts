@@ -6,9 +6,15 @@ const nextConfig: NextConfig = {
 	},
 	images: { qualities: [100] },
 	reactCompiler: true,
+	env: {
+		NEXT_PUBLIC_WEATHER_PLEASE_BUILD_TARGET:
+			process.env.WEATHER_PLEASE_BUILD_TARGET === 'extension'
+				? 'extension'
+				: 'web',
+	},
 }
 
-if (process.env.VERCEL !== '1') {
+if (process.env.WEATHER_PLEASE_BUILD_TARGET === 'extension') {
 	Object.assign(nextConfig, {
 		assetPrefix: '.',
 		images: {

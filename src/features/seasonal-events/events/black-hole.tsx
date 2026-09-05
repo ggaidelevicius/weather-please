@@ -1,49 +1,33 @@
-import { Trans } from '@lingui/react/macro'
-import {
-	Camera,
-	ClampToEdgeWrapping,
-	LinearFilter,
-	Mesh,
-	PlaneGeometry,
-	RepeatWrapping,
-	Scene,
-	ShaderMaterial,
-	TextureLoader,
-	Vector2,
-	Vector3,
-	WebGLRenderer,
-} from 'three'
-
 import {
 	isSettingsModalOpen,
 	onSettingsModalStateChange,
 } from '../../../shared/lib/settings-modal-state'
-import accretionDiskData from '../assets/accretion_disk.png'
+import {
+	WebGLRenderer,
+	Scene,
+	Camera,
+	Vector2,
+	TextureLoader,
+	LinearFilter,
+	ClampToEdgeWrapping,
+	RepeatWrapping,
+	Vector3,
+	ShaderMaterial,
+	Mesh,
+	PlaneGeometry,
+} from 'three'
 import milkywayData from '../assets/milkyway.jpg'
 import starNoiseData from '../assets/star_noise.png'
-import {
-	type SeasonalEvent,
-	type SeasonalEventContext,
-	SeasonalEventId,
-} from '../core/types'
+import accretionDiskData from '../assets/accretion_disk.png'
 
-const EVENT_HORIZON_DAY_DATES = new Set([
-	'2026-04-10',
-	'2027-04-10',
-	'2028-04-10',
-	'2029-04-10',
-	'2030-04-10',
-	'2031-04-10',
-	'2032-04-10',
-	'2033-04-10',
-	'2034-04-10',
-	'2035-04-10',
-	'2036-04-10',
-])
 const BLACK_HOLE_MOUNT_DELAY_MS = 900
+
 const BLACK_HOLE_CANVAS_MAX_DPR = 1.2
+
 const BLACK_HOLE_CANVAS_OPACITY = '0.94'
+
 const BLACK_HOLE_CANVAS_FILTER = 'saturate(115%) contrast(105%)'
+
 // Accretion disk rotation speed multiplier (1.0 = shader default)
 const DISK_ROTATION_SPEED = 0.05
 
@@ -200,93 +184,7 @@ void main() {
 }
 `
 
-const EventDetails = () => (
-	<>
-		<h2>
-			<Trans>Overview</Trans>
-		</h2>
-		<p>
-			<Trans>
-				Event Horizon Day highlights the first direct image of a black hole,
-				captured in 2019 by the Event Horizon Telescope collaboration.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				It represents a major milestone in astronomy, combining global
-				cooperation, radio interferometry, and years of data processing.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>What you are seeing</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The dark center is the event horizon silhouette, while the bright ring
-				is light from superheated material in the accretion flow around it.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				Because gravity bends light paths, parts of the disk appear warped and
-				wrapped above and below the black hole.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Why it matters</Trans>
-		</h2>
-		<p>
-			<Trans>
-				This observation gave direct visual evidence of extreme spacetime
-				curvature near a supermassive black hole and strongly matched the
-				predictions of general relativity.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				It also opened a new era of black-hole imaging, with continued work on
-				sharper reconstructions and time-varying dynamics.
-			</Trans>
-		</p>
-
-		<h2>
-			<Trans>Good to know</Trans>
-		</h2>
-		<p>
-			<Trans>
-				The original image was not a conventional photograph. It was computed
-				from synchronized radio data recorded by observatories around Earth.
-			</Trans>
-		</p>
-		<p>
-			<Trans>
-				The target was M87*, a black hole with a mass of billions of Suns,
-				located about 55 million light-years away.
-			</Trans>
-		</p>
-	</>
-)
-
-export const blackHoleEvent: SeasonalEvent = {
-	details: EventDetails,
-	id: SeasonalEventId.EventHorizonDay,
-	isActive: isEventHorizonDay,
-	run: launchBlackHoleEvent,
-	tileAccent: {
-		colors: ['#020617', '#1e293b', '#f97316', '#f8fafc', '#020617'],
-	},
-}
-
-function isEventHorizonDay({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	return EVENT_HORIZON_DAY_DATES.has(`${year}-${month}-${day}`)
-}
-
-async function launchBlackHoleEvent() {
+export async function launchBlackHoleEvent() {
 	try {
 		if (typeof window === 'undefined') {
 			return () => {}

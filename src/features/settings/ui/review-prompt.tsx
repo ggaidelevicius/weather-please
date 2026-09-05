@@ -2,7 +2,7 @@ import type { Dispatch, SetStateAction } from 'react'
 
 import { Trans } from '@lingui/react/macro'
 
-import type { Config } from '../hooks/use-config'
+import type { Config } from '../model/config'
 
 import { Button } from '../../../shared/ui/button'
 

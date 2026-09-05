@@ -37,6 +37,7 @@ Weather Please is available in the following languages:
 - Japanese
 - Korean
 - Lithuanian
+- Portuguese (Brazil)
 - Russian
 - Vietnamese
 - Chinese
@@ -49,11 +50,41 @@ Weather Please is built using [Next.js](https://nextjs.org/). It uses
 [Framer Motion](https://www.framer.com/motion/). [Lingui](https://lingui.dev/)
 is used for translations.
 
-To run the development environment locally, first clone this repo and ensure
-that you have [Node.js](https://nodejs.org) >= 20.5.1 installed. Next, run
-`pnpm i`, and finally `pnpm dev`.
+Use Node.js 24 or newer and the pnpm version pinned in `package.json`.
 
-There are no environment variables to configure.
+```bash
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Open `/demo` for the weather dashboard. The weather dashboard needs no account
+or API key. The optional hosted bug form and calendar integrations are described
+in [the development guide](docs/development.md), including environment
+variables, database setup, and OAuth redirect configuration.
+
+```bash
+pnpm db:generate       # Requires DATABASE_URL; generating does not connect to it
+pnpm typecheck
+pnpm test
+pnpm format:check
+pnpm build:extension   # Writes the unpacked extension to extension/
+pnpm build:web         # Builds the hosted website; requires DATABASE_URL
+pnpm start             # Serves the website build
+```
+
+`pnpm build` remains an alias for the extension build. Extension builds run in a
+temporary staging directory and do not rename source directories or rewrite
+analytics imports. Website builds include analytics; extension builds exclude
+it. Vercel uses `pnpm build:web` through `vercel.json`.
+
+ESLint compatibility with the current TypeScript version is deferred. CI checks
+types, formatting, tests, both build targets, browser behavior, and
+source-archive reproducibility without invoking ESLint. `pnpm lint` remains a
+mutating local command and still invokes ESLint.
+
+See [architecture](docs/architecture.md) for module boundaries and
+[development and release instructions](docs/development.md) for browser smoke
+tests and packaging.
 
 ## Feedback
 

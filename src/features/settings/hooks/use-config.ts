@@ -1,71 +1,28 @@
 import type { Dispatch, SetStateAction } from 'react'
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { z } from 'zod'
-
-import type { LocaleKey } from '../../../shared/lib/i18n'
-
-import { mergeObjects } from '../../../shared/lib/helpers'
-import { changeLocalisation, locales } from '../../../shared/lib/i18n'
-import { isLocationInAustralia } from '../../../shared/lib/location'
+import { changeLocalisation } from '../../../shared/lib/i18n'
 import {
-	SEASONAL_EVENT_OVERRIDE_NONE,
-	SeasonalEventId,
-} from '../../seasonal-events/core/types'
+	readLocalStorage,
+	writeLocalStorage,
+} from '../../../shared/lib/local-storage'
+import { isLocationInAustralia } from '../../../shared/lib/location'
 import {
 	CONFIG_MIGRATION_STATE_STORAGE_KEY,
 	CURRENT_CONFIG_VERSION,
 	migrateConfig,
 } from '../migrations/config-migrations'
 import {
-	BOOLEAN_CONFIG_DEFAULTS,
-	BOOLEAN_CONFIG_SCHEMA_SHAPE,
-} from '../model/boolean-settings'
-import { TileIdentifier } from '../model/tile-identifier'
-import { TemperatureUnit, UnitSystem } from '../model/unit-system'
+	type Config,
+	type PersistedConfig,
+	configSchema,
+	createDefaultConfig,
+	hasValidCoordinates,
+	persistedConfigSchema,
+	repairConfig,
+} from '../model/config'
 
-// Coordinates come from `GeolocationCoordinates.toString()`, so any decimal
-// precision must be accepted. Single source of truth shared with
-// `hasValidCoordinates`.
-const LATITUDE_PATTERN = /^[-+]?(90(\.0+)?|[1-8]?\d(\.\d+)?)$/
-const LONGITUDE_PATTERN = /^[-+]?(180(\.0+)?|(1[0-7]\d|[1-9]?\d)(\.\d+)?)$/
-
-const configSchema = z.object({
-	daysToRetrieve: z.string(),
-	identifier: z.enum(TileIdentifier),
-	installed: z.number(),
-	lang: z.enum(Object.keys(locales) as [LocaleKey, ...LocaleKey[]]),
-	lat: z.string().regex(LATITUDE_PATTERN),
-	lon: z.string().regex(LONGITUDE_PATTERN),
-	seasonalEventOverride: z.union([
-		z.literal(SEASONAL_EVENT_OVERRIDE_NONE),
-		z.enum(SeasonalEventId),
-	]),
-	temperatureUnit: z.enum(TemperatureUnit),
-	unitSystem: z.enum(UnitSystem),
-	...BOOLEAN_CONFIG_SCHEMA_SHAPE,
-})
-
-const persistedConfigSchema = configSchema.extend({
-	configVersion: z.literal(CURRENT_CONFIG_VERSION),
-})
-
-export type Config = z.infer<typeof configSchema>
-
-type PersistedConfig = z.infer<typeof persistedConfigSchema>
-
-const initialState: Config = {
-	lang: 'en',
-	lat: '',
-	lon: '',
-	seasonalEventOverride: SEASONAL_EVENT_OVERRIDE_NONE,
-	...BOOLEAN_CONFIG_DEFAULTS,
-	daysToRetrieve: '3',
-	identifier: TileIdentifier.Day,
-	installed: new Date().getTime(),
-	temperatureUnit: TemperatureUnit.Celsius,
-	unitSystem: UnitSystem.Metric,
-}
+const initialState = createDefaultConfig()
 
 const useIsomorphicLayoutEffect =
 	typeof window === 'undefined' ? useEffect : useLayoutEffect
@@ -80,10 +37,10 @@ const persistMigrationState = (state: unknown) => {
 		return
 	}
 
-	localStorage.setItem(
-		CONFIG_MIGRATION_STATE_STORAGE_KEY,
-		JSON.stringify(state),
-	)
+	writeLocalStorage({
+		key: CONFIG_MIGRATION_STATE_STORAGE_KEY,
+		value: JSON.stringify(state),
+	})
 }
 
 const getInitialConfig = (): {
@@ -95,7 +52,7 @@ const getInitialConfig = (): {
 	}
 
 	try {
-		const storedData = localStorage.getItem('config')
+		const storedData = readLocalStorage('config')
 		if (!storedData) {
 			return { config: initialState, nextStoredConfig: null }
 		}
@@ -118,7 +75,7 @@ const getInitialConfig = (): {
 			}
 		}
 
-		const merged = mergeObjects(migrated.config, initialState) as Config
+		const merged = repairConfig(migrated.config)
 
 		return {
 			config: merged,
@@ -130,15 +87,12 @@ const getInitialConfig = (): {
 	}
 }
 
-const hasValidCoordinates = ({ lat, lon }: Config) =>
-	LATITUDE_PATTERN.test(lat) && LONGITUDE_PATTERN.test(lon)
-
 const persistConfigInput = (input: Config) => {
-	if (typeof window === 'undefined' || !hasValidCoordinates(input)) {
+	if (!configSchema.safeParse(input).success || !hasValidCoordinates(input)) {
 		return { nextConfig: null, nextInput: input }
 	}
 
-	const hasStoredConfig = Boolean(localStorage.getItem('config'))
+	const hasStoredConfig = Boolean(readLocalStorage('config'))
 	const shouldEnableAirQualityUv =
 		!hasStoredConfig &&
 		!input.useAirQualityUvOverride &&
@@ -147,7 +101,10 @@ const persistConfigInput = (input: Config) => {
 		? { ...input, useAirQualityUvOverride: true }
 		: input
 
-	localStorage.setItem('config', JSON.stringify(toPersistedConfig(nextConfig)))
+	writeLocalStorage({
+		key: 'config',
+		value: JSON.stringify(toPersistedConfig(nextConfig)),
+	})
 
 	return {
 		nextConfig,
@@ -164,7 +121,10 @@ export const useConfig = () => {
 	useIsomorphicLayoutEffect(() => {
 		const { config: storedConfig, nextStoredConfig } = getInitialConfig()
 		if (nextStoredConfig) {
-			localStorage.setItem('config', JSON.stringify(nextStoredConfig))
+			writeLocalStorage({
+				key: 'config',
+				value: JSON.stringify(nextStoredConfig),
+			})
 		}
 		inputRef.current = storedConfig
 		setConfig(storedConfig)
