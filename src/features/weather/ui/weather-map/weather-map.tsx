@@ -176,7 +176,7 @@ export const WeatherMap = ({
 
 	if (!weatherMapData || !selectedFrame) {
 		return (
-			<div className="flex h-96 items-center justify-center rounded-lg border border-white/8 bg-white/[0.03] text-sm text-dark-200">
+			<div className="flex h-96 items-center justify-center rounded-lg border border-white/8 bg-white/3 text-sm text-dark-200">
 				<Trans>Map data unavailable</Trans>
 			</div>
 		)

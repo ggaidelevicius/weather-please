@@ -268,7 +268,7 @@ const SeasonalVisual = () => {
 	}, [shouldReduceMotion])
 
 	return (
-		<div className="relative overflow-hidden rounded-[2rem] px-6 py-10 sm:px-10">
+		<div className="relative overflow-hidden rounded-4xl px-6 py-10 sm:px-10">
 			{SEASONAL_BACKGROUNDS.map((seasonalBackground, index) => (
 				<div
 					aria-hidden
@@ -341,7 +341,7 @@ const SeasonalVisual = () => {
 				</div>
 				<div
 					aria-hidden
-					className="h-56 overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_18%,black_82%,transparent)]"
+					className="h-56 overflow-hidden mask-[linear-gradient(to_bottom,transparent,black_18%,black_82%,transparent)]"
 				>
 					<div
 						className={
@@ -376,7 +376,7 @@ const CalendarVisual = () => {
 	return (
 		<div
 			aria-hidden
-			className="pointer-events-none max-h-[40vh] overflow-hidden [mask-image:linear-gradient(to_bottom,black_70%,transparent)] lg:max-h-[26rem]"
+			className="pointer-events-none max-h-[40vh] overflow-hidden mask-[linear-gradient(to_bottom,black_70%,transparent)] lg:max-h-104"
 		>
 			<UpcomingEvents
 				accounts={spoofedCalendarData.accounts}

@@ -1,6 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react'
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+
 import { changeLocalisation } from '../../../shared/lib/i18n'
 import {
 	readLocalStorage,
@@ -14,10 +15,10 @@ import {
 } from '../migrations/config-migrations'
 import {
 	type Config,
-	type PersistedConfig,
 	configSchema,
 	createDefaultConfig,
 	hasValidCoordinates,
+	type PersistedConfig,
 	persistedConfigSchema,
 	repairConfig,
 } from '../model/config'

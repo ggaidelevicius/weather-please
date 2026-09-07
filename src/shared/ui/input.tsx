@@ -65,10 +65,10 @@ const getControlWrapperClassName = ({
 			: undefined,
 		layout === 'split' && controlType === 'input' ? 'md:w-[18.5ch]' : undefined,
 		layout === 'split' && controlType === 'select'
-			? 'md:w-[10.75rem]'
+			? 'md:w-43'
 			: undefined,
 		layout === 'split' && controlType === 'textarea'
-			? 'md:w-[28rem]'
+			? 'md:w-md'
 			: undefined,
 		layout === 'split' && controlType === 'switch'
 			? 'flex flex-col items-end'

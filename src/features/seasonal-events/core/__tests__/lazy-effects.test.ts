@@ -7,8 +7,8 @@ import {
 import { SeasonalEventId } from '../types'
 
 const effect = vi.hoisted(() => ({
-	isLoaded: false,
 	cleanup: vi.fn(),
+	isLoaded: false,
 	launch: vi.fn(),
 }))
 

@@ -1,4 +1,5 @@
 import type { Next24HoursDetailViewId } from '../../weather/model/detail-types'
+
 import { NEXT_24_HOURS_DETAIL_VIEW_IDS } from '../../weather/model/detail-types'
 
 export const FORECAST_VIEW_BACKGROUND_COLOR = '#1a1b1e'

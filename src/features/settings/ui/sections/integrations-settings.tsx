@@ -165,7 +165,7 @@ export const CalendarProviderSection = ({
 			aria-label={CALENDAR_PROVIDER_LABELS[provider]}
 			className="overflow-hidden rounded-xl bg-dark-900/30 ring-1 ring-white/6"
 		>
-			<div className="flex items-center justify-between gap-3 bg-white/[0.015] px-4 py-3">
+			<div className="flex items-center justify-between gap-3 bg-white/1.5 px-4 py-3">
 				<h4 className="text-sm font-medium text-white">
 					{CALENDAR_PROVIDER_LABELS[provider]}
 				</h4>

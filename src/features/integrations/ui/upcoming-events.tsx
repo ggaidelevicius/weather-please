@@ -110,9 +110,9 @@ export const UpcomingEvents = ({
 			animate={{ opacity: 1, x: 0 }}
 			aria-labelledby={sectionHeadingId}
 			className={clsx(
-				'flex max-h-[75vh] w-[21rem] max-w-[calc(100vw-2rem)] [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent] flex-col items-stretch gap-2 overflow-y-auto overscroll-contain pr-1',
+				'flex max-h-[75vh] w-84 max-w-[calc(100vw-2rem)] scrollbar-thin [scrollbar-color:rgba(255,255,255,0.25)_transparent] flex-col items-stretch gap-2 overflow-y-auto overscroll-contain pr-1',
 				hasMoreBelow &&
-					'[mask-image:linear-gradient(to_bottom,black_calc(100%-3rem),transparent)]',
+					'mask-[linear-gradient(to_bottom,black_calc(100%-3rem),transparent)]',
 			)}
 			initial={{ opacity: 0, x: 8 }}
 			ref={sectionRef}
@@ -182,7 +182,7 @@ const EventCard = ({
 				)}
 			/>
 			<div className="min-w-0 flex-1">
-				<p className="text-sm font-semibold break-words text-white">
+				<p className="text-sm font-semibold wrap-break-word text-white">
 					{event.subject || <Trans>Untitled event</Trans>}
 				</p>
 			</div>
@@ -213,7 +213,7 @@ const EventCard = ({
 								size={13}
 								strokeWidth={1.75}
 							/>
-							<p className="min-w-0 break-words">{event.location}</p>
+							<p className="min-w-0 wrap-break-word">{event.location}</p>
 						</div>
 					) : null}
 					{hasActions ? (

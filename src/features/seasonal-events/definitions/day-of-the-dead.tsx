@@ -1,5 +1,7 @@
 import { Trans } from '@lingui/react/macro'
+
 import type { SeasonalEvent, SeasonalEventContext } from '../core/types'
+
 import { SeasonalEventId } from '../core/types'
 
 const DAY_OF_THE_DEAD_MONTH = 10

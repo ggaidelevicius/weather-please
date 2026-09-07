@@ -1,6 +1,9 @@
 import type { ReactNode } from 'react'
-import type { SettingsContentProps } from '../settings-types'
+
 import { Trans } from '@lingui/react/macro'
+
+import type { SettingsContentProps } from '../settings-types'
+
 import { locales } from '../../../../shared/lib/i18n'
 import { SettingsSectionLayout, SettingsSubsection } from './section-layout'
 

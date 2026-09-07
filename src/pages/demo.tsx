@@ -1,63 +1,64 @@
+import { Trans } from '@lingui/react/macro'
+import { IconAlertTriangle, IconX } from '@tabler/icons-react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { useConfig } from '../features/settings/hooks/use-config'
+
+import { useViewNavigation } from '../features/dashboard/hooks/use-view-navigation'
+import {
+	FORECAST_VIEW_IDS,
+	getViewBackgroundColor,
+} from '../features/dashboard/model/view-navigation'
+import { DetailFallbackGlow } from '../features/dashboard/ui/detail-fallback-glow'
+import { DirectionalView } from '../features/dashboard/ui/directional-view'
+import { ViewIndicator } from '../features/dashboard/ui/view-indicator'
+import {
+	getBlockingWeatherErrorMessage,
+	getInlineWeatherErrorMessage,
+} from '../features/dashboard/ui/weather-errors'
 import { useCalendarConnection } from '../features/integrations/hooks/use-calendar-connection'
-import { createSpoofedCalendarData } from '../features/integrations/model/spoofed-calendar'
 import {
 	getHasDismissedCalendarPromo,
 	getHasSeenIntegrationsTab,
 	persistCalendarPromoDismissed,
 	persistIntegrationsTabSeen,
 } from '../features/integrations/lib/promo-state'
-import { useWeather } from '../features/weather/hooks/use-weather'
-import {
-	getHemisphereFromLatitude,
-	isLikelySoftwareRenderer,
-} from '../features/seasonal-events/core/utils'
+import { createSpoofedCalendarData } from '../features/integrations/model/spoofed-calendar'
+import { UpcomingEvents } from '../features/integrations/ui/upcoming-events'
+import { IdentifiedLocationIndicator } from '../features/location/ui/identified-location-indicator'
 import {
 	getEnabledSeasonalEventBackgrounds,
 	getEnabledSeasonalEvents,
 } from '../features/seasonal-events/core/enabled-events'
-import { getTemperatureAccentColor } from '../features/weather/model/temperature-colour'
-import { useSeasonalEvents } from '../features/seasonal-events/hooks/use-seasonal-events'
-import { usePeriodicLocationRefresh } from '../features/weather/hooks/use-periodic-location-refresh'
-import { hasCachedWeather } from '../features/weather/model/cache'
 import { SeasonalEventId } from '../features/seasonal-events/core/types'
 import {
-	SEASONAL_EVENT_TOGGLE_KEY_BY_ID,
+	getHemisphereFromLatitude,
+	isLikelySoftwareRenderer,
+} from '../features/seasonal-events/core/utils'
+import { useSeasonalEvents } from '../features/seasonal-events/hooks/use-seasonal-events'
+import { useConfig } from '../features/settings/hooks/use-config'
+import {
 	SEASONAL_EVENT_BACKGROUND_TOGGLE_KEY_BY_ID,
+	SEASONAL_EVENT_TOGGLE_KEY_BY_ID,
 } from '../features/settings/model/seasonal-event-toggle-map'
+import { Initialisation } from '../features/settings/ui/initialisation'
+import { ReviewPrompt } from '../features/settings/ui/review-prompt'
+import { Settings } from '../features/settings/ui/settings'
+import { usePeriodicLocationRefresh } from '../features/weather/hooks/use-periodic-location-refresh'
+import { useWeather } from '../features/weather/hooks/use-weather'
+import { hasCachedWeather } from '../features/weather/model/cache'
+import { getTemperatureAccentColor } from '../features/weather/model/temperature-colour'
+import {
+	Next24HoursDetailView,
+	NEXT_24_HOURS_DETAIL_VIEW_IDS,
+} from '../features/weather/ui/next-24-hours-tile'
 import { Tile } from '../features/weather/ui/tile'
 import { useWeatherTileGrid } from '../features/weather/ui/use-weather-tile-grid'
-import { AsyncStatus } from '../shared/hooks/async-status'
-import { AnimatePresence, motion } from 'framer-motion'
 import { WeatherAlert } from '../features/weather/ui/weather-alert'
-import { ReviewPrompt } from '../features/settings/ui/review-prompt'
-import { RingLoader } from '../shared/ui/loader'
-import { Initialisation } from '../features/settings/ui/initialisation'
+import { AsyncStatus } from '../shared/hooks/async-status'
 import { Alert } from '../shared/ui/alert'
-import { IconAlertTriangle, IconX } from '@tabler/icons-react'
 import { AlertVariant } from '../shared/ui/alert-variant'
 import { Button } from '../shared/ui/button'
-import { Trans } from '@lingui/react/macro'
-import { UpcomingEvents } from '../features/integrations/ui/upcoming-events'
-import {
-	NEXT_24_HOURS_DETAIL_VIEW_IDS,
-	Next24HoursDetailView,
-} from '../features/weather/ui/next-24-hours-tile'
-import { IdentifiedLocationIndicator } from '../features/location/ui/identified-location-indicator'
-import { Settings } from '../features/settings/ui/settings'
-import { useViewNavigation } from '../features/dashboard/hooks/use-view-navigation'
-import {
-	getBlockingWeatherErrorMessage,
-	getInlineWeatherErrorMessage,
-} from '../features/dashboard/ui/weather-errors'
-import {
-	getViewBackgroundColor,
-	FORECAST_VIEW_IDS,
-} from '../features/dashboard/model/view-navigation'
-import { DetailFallbackGlow } from '../features/dashboard/ui/detail-fallback-glow'
-import { DirectionalView } from '../features/dashboard/ui/directional-view'
-import { ViewIndicator } from '../features/dashboard/ui/view-indicator'
+import { RingLoader } from '../shared/ui/loader'
 
 const TILE_STAGGER_DELAY_BASELINE = 0.75
 
@@ -120,16 +121,16 @@ const WeatherDashboard = () => {
 	const canShowNext24HoursView = next24HoursData.length > 0
 	const {
 		activeAvailableViewId,
-		previousTransitionViewId,
-		isViewIndicatorHovered,
-		isViewIndicatorVisible,
 		handleViewIndicatorMouseEnter,
 		handleViewIndicatorMouseLeave,
 		handleViewIndicatorSelect,
-		handleViewTouchStart,
 		handleViewTouchEnd,
-		viewFrameRef,
+		handleViewTouchStart,
+		isViewIndicatorHovered,
+		isViewIndicatorVisible,
+		previousTransitionViewId,
 		shouldShowScrollHint,
+		viewFrameRef,
 	} = useViewNavigation({ canShowNext24HoursView })
 
 	const temperatureAccentColor = getTemperatureAccentColor(
@@ -227,8 +228,8 @@ const WeatherDashboard = () => {
 					isSeasonalEventBackgroundEnabled={isSeasonalEventBackgroundEnabled}
 					isSeasonalEventEnabled={isSeasonalEventEnabled}
 					key={day.day}
-					onToggleSeasonalEventBackground={toggleSeasonalEventBackground}
 					onToggleSeasonalEvent={toggleSeasonalEvent}
+					onToggleSeasonalEventBackground={toggleSeasonalEventBackground}
 					seasonalEventOverride={config.seasonalEventOverride}
 					showSeasonalEvents={canShowSeasonalEvents}
 					showSeasonalTileGlow={

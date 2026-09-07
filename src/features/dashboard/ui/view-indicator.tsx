@@ -1,16 +1,19 @@
-import type { ReactNode, MouseEvent as ReactMouseEvent, RefObject } from 'react'
-import { useRef, useState } from 'react'
-import { Trans } from '@lingui/react/macro'
 import type { MotionValue } from 'framer-motion'
+import type { MouseEvent as ReactMouseEvent, ReactNode, RefObject } from 'react'
+
+import { Trans } from '@lingui/react/macro'
 import {
-	useMotionValue,
-	motion,
-	useTransform,
-	useSpring,
 	AnimatePresence,
+	motion,
+	useMotionValue,
+	useSpring,
+	useTransform,
 } from 'framer-motion'
-import { getMagnifiedSizes } from '../../weather/model/view-indicator-magnification'
+import { useRef, useState } from 'react'
+
 import type { ForecastViewId } from '../model/view-navigation'
+
+import { getMagnifiedSizes } from '../../weather/model/view-indicator-magnification'
 
 const VIEW_INDICATOR_LABELS: Record<ForecastViewId, string> = {
 	'air-quality': 'air quality',

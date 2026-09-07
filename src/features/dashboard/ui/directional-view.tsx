@@ -1,6 +1,9 @@
 import type { ReactNode } from 'react'
+
 import { motion } from 'framer-motion'
+
 import type { ForecastViewId } from '../model/view-navigation'
+
 import { getViewRelativePosition } from '../model/view-navigation'
 
 const VIEW_TRANSITION_DISTANCE = 120

@@ -153,7 +153,7 @@ export const SeasonalSettingsSection = ({
 					>
 						{section.eventIds.map((eventId) => (
 							<fieldset
-								className="space-y-3 rounded-xl border border-white/5 bg-white/[0.02] px-3.5 pt-1.5 pb-3.5"
+								className="space-y-3 rounded-xl border border-white/5 bg-white/2 px-3.5 pt-1.5 pb-3.5"
 								key={eventId}
 							>
 								<legend className="px-1 text-sm font-medium text-white">

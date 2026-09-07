@@ -10,9 +10,8 @@ export const HeroAtmosphere = () => {
 	const [isSurfaceVisible, setIsSurfaceVisible] = useState(false)
 
 	useEffect(() => {
-		setIsWebGLAvailable('WebGLRenderingContext' in window)
-
 		const frameId = window.requestAnimationFrame(() => {
+			setIsWebGLAvailable('WebGLRenderingContext' in window)
 			setIsSurfaceVisible(true)
 		})
 
@@ -26,7 +25,7 @@ export const HeroAtmosphere = () => {
 			data-hero-atmosphere
 		>
 			<div
-				className={`absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_70%,transparent_100%)] transition-opacity duration-1000 ease-out motion-reduce:transition-none ${
+				className={`absolute inset-0 mask-[linear-gradient(to_bottom,transparent_0%,black_18%,black_70%,transparent_100%)] transition-opacity duration-1000 ease-out motion-reduce:transition-none ${
 					isSurfaceVisible ? 'opacity-100' : 'opacity-0'
 				}`}
 			>

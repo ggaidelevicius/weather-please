@@ -1,14 +1,17 @@
 import type { TouchEvent } from 'react'
-import { useState, useRef, useEffect } from 'react'
+
+import { useEffect, useRef, useState } from 'react'
+
 import type {
 	ForecastViewId,
 	ViewStepDirection,
 } from '../model/view-navigation'
-import { getAdjacentViewId } from '../model/view-navigation'
+
 import {
 	getHasDismissedScrollHint,
 	persistScrollHintDismissed,
 } from '../model/scroll-hint'
+import { getAdjacentViewId } from '../model/view-navigation'
 
 const VIEW_SWITCH_SCROLL_DELTA_MIN = 1
 
@@ -239,15 +242,15 @@ export const useViewNavigation = ({
 
 	return {
 		activeAvailableViewId,
-		previousTransitionViewId,
-		isViewIndicatorHovered,
-		isViewIndicatorVisible,
 		handleViewIndicatorMouseEnter,
 		handleViewIndicatorMouseLeave,
 		handleViewIndicatorSelect,
-		handleViewTouchStart,
 		handleViewTouchEnd,
-		viewFrameRef,
+		handleViewTouchStart,
+		isViewIndicatorHovered,
+		isViewIndicatorVisible,
+		previousTransitionViewId,
 		shouldShowScrollHint,
+		viewFrameRef,
 	}
 }

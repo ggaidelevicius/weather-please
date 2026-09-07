@@ -1,14 +1,15 @@
 import { act, renderHook, waitFor } from '@testing-library/react'
-import { StrictMode, type ReactNode } from 'react'
+import { type ReactNode, StrictMode } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import type { CalendarEvent } from '../../model/calendar-event'
+
 import {
-	writeStoredCalendarAccounts,
 	readStoredCalendarAccounts,
+	writeStoredCalendarAccounts,
 } from '../../lib/connection-storage'
 import { CalendarAccountCategory } from '../../model/account-category'
 import { CalendarProvider } from '../../model/calendar-provider'
-import type { CalendarEvent } from '../../model/calendar-event'
 import { useCalendarConnection } from '../use-calendar-connection'
 
 const { fetchEvents } = vi.hoisted(() => ({ fetchEvents: vi.fn() }))
@@ -25,27 +26,27 @@ const createDeferred = () => {
 }
 const event = (id: string): CalendarEvent => ({
 	accountId: 'account-a',
-	id,
-	subject: id,
-	startTimestamp: Date.now(),
-	endTimestamp: Date.now() + 3600000,
 	description: null,
+	endTimestamp: Date.now() + 3600000,
 	icalUid: null,
+	id,
 	isAllDay: false,
 	location: null,
+	startTimestamp: Date.now(),
+	subject: id,
 	webLink: null,
 })
 const seedAccount = () =>
 	writeStoredCalendarAccounts([
 		{
+			accessToken: 'test-token',
 			accountId: 'account-a',
 			accountLabel: 'Example',
-			accessToken: 'test-token',
-			refreshToken: null,
+			category: CalendarAccountCategory.Personal,
 			expiresAt: Date.now() + 3600000,
 			isSessionExpired: false,
 			provider: CalendarProvider.Google,
-			category: CalendarAccountCategory.Personal,
+			refreshToken: null,
 		},
 	])
 

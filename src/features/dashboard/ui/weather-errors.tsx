@@ -1,8 +1,9 @@
+import { Trans } from '@lingui/react/macro'
+
 import {
 	getHttpErrorStatusCode,
 	isServerErrorStatusCode,
 } from '../../../shared/lib/http-error-status'
-import { Trans } from '@lingui/react/macro'
 
 export const getInlineWeatherErrorMessage = (error: Error) => {
 	const httpStatusCode = getHttpErrorStatusCode(error.message)

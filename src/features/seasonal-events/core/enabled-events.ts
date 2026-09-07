@@ -6,15 +6,15 @@ import {
 	SEASONAL_EVENT_BOOLEAN_SETTINGS,
 } from '../../settings/model/boolean-settings'
 
-type SeasonalEventBackgroundToggleKey =
-	(typeof SEASONAL_EVENT_BACKGROUND_BOOLEAN_SETTINGS)[number]['key']
-
 export type SeasonalEventSettings = Pick<
 	Config,
 	| 'showSeasonalEvents'
 	| SeasonalEventBackgroundToggleKey
 	| SeasonalEventToggleKey
 >
+
+type SeasonalEventBackgroundToggleKey =
+	(typeof SEASONAL_EVENT_BACKGROUND_BOOLEAN_SETTINGS)[number]['key']
 
 type SeasonalEventToggleKey =
 	(typeof SEASONAL_EVENT_BOOLEAN_SETTINGS)[number]['key']

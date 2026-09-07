@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+
 import type { ForecastViewId } from '../model/view-navigation'
 
 const DETAIL_FALLBACK_AURORA_GRADIENTS: Record<ForecastViewId, string> = {
@@ -44,7 +45,7 @@ export const DetailFallbackGlow = ({
 				opacity: isVisible ? 0.68 : 0,
 			}}
 			aria-hidden="true"
-			className="pointer-events-none absolute -top-[15%] right-[-10%] bottom-0 left-[-10%] z-1 mix-blend-screen"
+			className="pointer-events-none absolute top-[-15%] right-[-10%] bottom-0 left-[-10%] z-1 mix-blend-screen"
 			initial={false}
 			style={{
 				background: activeGradient,

@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
 
+import { BOOLEAN_CONFIG_DEFAULTS } from '../../../settings/model/boolean-settings'
 import {
 	getEnabledSeasonalEventBackgrounds,
 	getEnabledSeasonalEvents,
 	type SeasonalEventSettings,
 } from '../enabled-events'
 import { SeasonalEventId } from '../types'
-import { BOOLEAN_CONFIG_DEFAULTS } from '../../../settings/model/boolean-settings'
 
 const createConfig = (
 	overrides: Partial<SeasonalEventSettings> = {},

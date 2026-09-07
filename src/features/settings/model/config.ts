@@ -1,5 +1,7 @@
 import { z } from 'zod'
+
 import type { LocaleKey } from '../../../shared/lib/i18n'
+
 import { locales } from '../../../shared/lib/i18n'
 import {
 	SEASONAL_EVENT_OVERRIDE_NONE,
