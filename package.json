@@ -29,7 +29,7 @@
 		"test": "vitest run",
 		"build:extension": "node scripts/build-extension.mjs",
 		"build:web": "pnpm db:generate && next build --webpack",
-		"typecheck": "tsc --noEmit",
+		"typecheck": "next typegen && tsc --noEmit",
 		"format:check": "prettier . --check",
 		"format:fix": "prettier . --write",
 		"db:generate": "prisma generate",
