@@ -1,419 +1,256 @@
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import { randomInRange, getCanvasDpr } from '../core/utils'
+import { getCanvasDpr, randomInRange } from '../core/utils'
+import { createHanukkahArtwork } from './hanukkah-artwork'
 
-const HANUKKAH_MOUNT_DELAY_MS = 900
+type Light = {
+	phase: number
+	size: number
+	x: number
+	y: number
+}
 
-const HANUKKAH_OVERLAY_OPACITY = '0.72'
+export async function launchHanukkahGlow(): Promise<() => void> {
+	if (typeof window === 'undefined') return () => {}
 
-const HANUKKAH_OVERLAY_FILTER = 'saturate(130%)'
-
-const HANUKKAH_MAX_DPR = 2
-
-const HANUKKAH_SCENE_FADE_DELAY_MS = 300
-
-const HANUKKAH_SCENE_FADE_DURATION_MS = 1400
-
-const HANUKKAH_STAR_COUNT = 140
-
-const HANUKKAH_STAR_RADIUS_RANGE = { max: 1.4, min: 0.5 }
-
-const HANUKKAH_STAR_OPACITY_RANGE = { max: 0.6, min: 0.2 }
-
-const HANUKKAH_STAR_TWINKLE_RANGE = { max: 0.0012, min: 0.0005 }
-
-const HANUKKAH_CANDLE_COUNT = 9
-
-const HANUKKAH_CANDLE_SIZE_RANGE = { max: 18, min: 12 }
-
-const HANUKKAH_CANDLE_FLICKER_RANGE = { max: 0.0015, min: 0.0008 }
-
-const HANUKKAH_SPARK_COUNT = 26
-
-const HANUKKAH_SPARK_SIZE_RANGE = { max: 5, min: 2 }
-
-const HANUKKAH_SPARK_SPEED_RANGE = { max: 16, min: 7 }
-
-const HANUKKAH_SPARK_SWAY_RANGE = { max: 14, min: 5 }
-
-const HANUKKAH_SPARK_OPACITY_RANGE = { max: 0.75, min: 0.3 }
-
-const HANUKKAH_SPARK_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
-
-const HANUKKAH_SPARK_FADE_IN_DURATION_RANGE = { max: 2000, min: 900 }
-
-const HANUKKAH_SPARK_COLORS = [
-	'rgba(226, 232, 240, 0.8)',
-	'rgba(191, 219, 254, 0.75)',
-	'rgba(96, 165, 250, 0.7)',
-	'rgba(251, 191, 36, 0.65)',
-]
-
-const HANUKKAH_CANDLE_COLORS = [
-	{ core: 'rgba(253, 230, 138, 0.92)', mid: 'rgba(253, 230, 138, 0.45)' },
-	{ core: 'rgba(96, 165, 250, 0.78)', mid: 'rgba(96, 165, 250, 0.35)' },
-	{ core: 'rgba(248, 250, 252, 0.75)', mid: 'rgba(248, 250, 252, 0.3)' },
-	{ core: 'rgba(59, 130, 246, 0.7)', mid: 'rgba(59, 130, 246, 0.3)' },
-	{ core: 'rgba(251, 191, 36, 0.82)', mid: 'rgba(251, 191, 36, 0.4)' },
-]
-
-export async function launchHanukkahGlow() {
-	try {
-		if (typeof window === 'undefined') {
-			return () => {}
-		}
-
-		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
-			.matches
-		const animationController = createSettingsModalAnimationController({
-			shouldAnimate,
-		})
-		const overlay = document.createElement('div')
-		const canvas = document.createElement('canvas')
-		const context = canvas.getContext('2d')
-		if (!context) {
-			throw new Error('Unable to create 2D context for Hanukkah canvas')
-		}
-
-		type Star = {
-			opacity: number
-			phase: number
-			radius: number
-			twinkle: number
-			x: number
-			y: number
-		}
-		type Candle = {
-			color: { core: string; mid: string }
-			flickerPhase: number
-			flickerSpeed: number
-			isShamash: boolean
-			radius: number
-			x: number
-			y: number
-		}
-		type Spark = {
-			baseX: number
-			birthTime: number
-			color: string
-			fadeDuration: number
-			opacity: number
-			phase: number
-			size: number
-			sway: number
-			vy: number
-			y: number
-		}
-
-		let timeoutId: null | number = null
-		let animationFrameId: null | number = null
-		let width = window.innerWidth
-		let height = window.innerHeight
-		let stars: Star[] = []
-		let candles: Candle[] = []
-		let sparks: Spark[] = []
-		let lastTime = performance.now()
-		let sceneFadeStart = performance.now()
-
-		const createStar = (): Star => ({
-			opacity: randomInRange(HANUKKAH_STAR_OPACITY_RANGE),
-			phase: Math.random() * Math.PI * 2,
-			radius: randomInRange(HANUKKAH_STAR_RADIUS_RANGE),
-			twinkle: randomInRange(HANUKKAH_STAR_TWINKLE_RANGE),
-			x: Math.random() * width,
-			y: Math.random() * height,
-		})
-
-		const createCandles = (): Candle[] => {
-			const rowWidth = Math.min(width * 0.6, 440)
-			const spacing = rowWidth / (HANUKKAH_CANDLE_COUNT - 1)
-			const startX = width / 2 - rowWidth / 2
-			const baseY = height * 0.78
-			const shamashIndex = Math.floor(HANUKKAH_CANDLE_COUNT / 2)
-
-			return Array.from({ length: HANUKKAH_CANDLE_COUNT }, (_, index) => {
-				const radius = randomInRange(HANUKKAH_CANDLE_SIZE_RANGE)
-				const color =
-					HANUKKAH_CANDLE_COLORS[index % HANUKKAH_CANDLE_COLORS.length]
-				const yOffset = index === shamashIndex ? radius * 0.65 : 0
-				const sizeBoost = index === shamashIndex ? 1.12 : 1
-
-				return {
-					color,
-					flickerPhase: Math.random() * Math.PI * 2,
-					flickerSpeed: randomInRange(HANUKKAH_CANDLE_FLICKER_RANGE),
-					isShamash: index === shamashIndex,
-					radius: radius * sizeBoost,
-					x: startX + spacing * index,
-					y: baseY - yOffset,
-				}
-			})
-		}
-
-		const randomSparkColor = () =>
-			HANUKKAH_SPARK_COLORS[
-				Math.floor(Math.random() * HANUKKAH_SPARK_COLORS.length)
-			]
-
-		const createSpark = (time: number): Spark => ({
-			baseX: Math.random() * width,
-			birthTime: time + randomInRange(HANUKKAH_SPARK_FADE_IN_DELAY_RANGE),
-			color: randomSparkColor(),
-			fadeDuration: randomInRange(HANUKKAH_SPARK_FADE_IN_DURATION_RANGE),
-			opacity: randomInRange(HANUKKAH_SPARK_OPACITY_RANGE),
-			phase: Math.random() * Math.PI * 2,
-			size: randomInRange(HANUKKAH_SPARK_SIZE_RANGE),
-			sway: randomInRange(HANUKKAH_SPARK_SWAY_RANGE),
-			vy: randomInRange(HANUKKAH_SPARK_SPEED_RANGE),
-			y: height + Math.random() * height * 0.25,
-		})
-
-		const resetField = (time: number) => {
-			stars = Array.from({ length: HANUKKAH_STAR_COUNT }, createStar)
-			candles = createCandles()
-			sparks = Array.from({ length: HANUKKAH_SPARK_COUNT }, () =>
-				createSpark(time),
-			)
-		}
-
-		const resizeCanvas = () => {
-			width = window.innerWidth
-			height = window.innerHeight
-			const dpr = getCanvasDpr({ height, maxDpr: HANUKKAH_MAX_DPR, width })
-			canvas.width = Math.round(width * dpr)
-			canvas.height = Math.round(height * dpr)
-			canvas.style.width = `${width}px`
-			canvas.style.height = `${height}px`
-			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-			resetField(performance.now())
-		}
-
-		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
-
-		const drawStars = (time: number, alpha: number) => {
-			context.fillStyle = 'rgba(226, 232, 240, 1)'
-			for (const star of stars) {
-				const twinkle = 0.6 + 0.4 * Math.sin(time * star.twinkle + star.phase)
-				context.globalAlpha = alpha * star.opacity * twinkle
-				context.beginPath()
-				context.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
-				context.fill()
-			}
-		}
-
-		const drawCandles = (time: number, alpha: number) => {
-			const sorted = [...candles].sort((a, b) => a.x - b.x)
-			const left = sorted[0]
-			const right = sorted[sorted.length - 1]
-			const spacing = right.x - left.x
-			const baseY = Math.max(
-				...candles.map((candle) => candle.y + candle.radius * 0.7),
-			)
-			const shamash = candles.find((candle) => candle.isShamash)
-
-			if (left && right) {
-				const barH = Math.max(6, spacing * 0.025)
-
-				const shamashIndex = Math.floor(HANUKKAH_CANDLE_COUNT / 2)
-				const pairCount = Math.floor(HANUKKAH_CANDLE_COUNT / 2)
-				for (let pair = 1; pair <= pairCount; pair += 1) {
-					const leftCandle = sorted[shamashIndex - pair]
-					const rightCandle = sorted[shamashIndex + pair]
-					if (!leftCandle || !rightCandle) {
-						continue
-					}
-
-					const endY = baseY + barH * 0.25
-					const archDepth = spacing * (0.4 + pair * 0.12)
-					const midY = baseY + archDepth
-					const inset = spacing * 0.12
-
-					context.save()
-					context.globalAlpha = alpha * 0.42
-					context.strokeStyle = 'rgba(148, 163, 184, 0.55)'
-					context.lineWidth = Math.max(2, spacing * 0.014)
-					context.shadowColor = 'rgba(59, 130, 246, 0.35)'
-					context.shadowBlur = barH * 1.6
-					context.lineCap = 'round'
-					context.beginPath()
-					context.moveTo(leftCandle.x, endY)
-					context.quadraticCurveTo(
-						leftCandle.x,
-						midY,
-						leftCandle.x + inset,
-						midY,
-					)
-					context.lineTo(rightCandle.x - inset, midY)
-					context.quadraticCurveTo(rightCandle.x, midY, rightCandle.x, endY)
-					context.stroke()
-					context.restore()
-				}
-
-				if (shamash) {
-					const stemTop = shamash.y + shamash.radius * 1.8
-					const stemBottom = baseY + spacing * 0.95
-					context.save()
-					context.globalAlpha = alpha * 0.8
-					context.strokeStyle = 'rgba(226, 232, 240, 0.7)'
-					context.lineWidth = Math.max(3.5, spacing * 0.024)
-					context.lineCap = 'round'
-					context.beginPath()
-					context.moveTo(shamash.x, stemTop)
-					context.lineTo(shamash.x, stemBottom)
-					context.stroke()
-					context.restore()
-				}
-			}
-
-			for (const candle of candles) {
-				const stemHeight = candle.radius * 1.6
-				context.globalAlpha = alpha * (candle.isShamash ? 0.8 : 0.6)
-				context.strokeStyle = candle.isShamash
-					? 'rgba(226, 232, 240, 0.65)'
-					: 'rgba(147, 197, 253, 0.45)'
-				context.lineWidth = Math.max(3, candle.radius * 0.28)
-				context.lineCap = 'round'
-				context.beginPath()
-				context.moveTo(candle.x, baseY)
-				context.lineTo(candle.x, candle.y + stemHeight * 0.75)
-				context.stroke()
-			}
-
-			for (const candle of candles) {
-				const flicker =
-					0.85 +
-					0.15 * Math.sin(time * candle.flickerSpeed + candle.flickerPhase)
-				const glowRadius = candle.radius * (1.7 + flicker * 0.45)
-				const gradient = context.createRadialGradient(
-					candle.x,
-					candle.y,
-					0,
-					candle.x,
-					candle.y,
-					glowRadius,
-				)
-				gradient.addColorStop(0, candle.color.core)
-				gradient.addColorStop(0.5, candle.color.mid)
-				gradient.addColorStop(1, 'rgba(15, 23, 42, 0)')
-				context.globalAlpha = alpha * (0.75 + flicker * 0.25)
-				context.fillStyle = gradient
-				context.beginPath()
-				context.arc(candle.x, candle.y, glowRadius, 0, Math.PI * 2)
-				context.fill()
-			}
-		}
-
-		const drawSpark = (
-			spark: Spark,
-			time: number,
-			alpha: number,
-			sceneAlpha: number,
-		) => {
-			const sway = Math.sin(time * 0.0006 + spark.phase) * spark.sway
-			const x = spark.baseX + sway
-			const y = spark.y
-			const radius = spark.size * 2.2
-			const gradient = context.createRadialGradient(x, y, 0, x, y, radius)
-			gradient.addColorStop(0, spark.color)
-			gradient.addColorStop(0.6, spark.color.replace('0.', '0.25'))
-			gradient.addColorStop(1, 'rgba(15, 23, 42, 0)')
-			context.globalAlpha = alpha * sceneAlpha
-			context.fillStyle = gradient
-			context.beginPath()
-			context.arc(x, y, radius, 0, Math.PI * 2)
-			context.fill()
-		}
-
-		const tick = (time: number) => {
-			const delta = Math.min(time - lastTime, 48)
-			lastTime = time
-			const sceneFadeProgress = Math.min(
-				Math.max((time - sceneFadeStart) / HANUKKAH_SCENE_FADE_DURATION_MS, 0),
-				1,
-			)
-			const sceneAlpha = easeOutCubic(sceneFadeProgress)
-			context.clearRect(0, 0, width, height)
-			context.globalCompositeOperation = 'lighter'
-			drawCandles(time, sceneAlpha)
-			drawStars(time, sceneAlpha)
-
-			for (const spark of sparks) {
-				spark.y -= (spark.vy * delta) / 1000
-				if (spark.y < -spark.size * 2) {
-					Object.assign(spark, createSpark(time))
-				}
-
-				const fadeProgress = Math.min(
-					Math.max((time - spark.birthTime) / spark.fadeDuration, 0),
-					1,
-				)
-				const fade = easeOutCubic(fadeProgress)
-				drawSpark(spark, time, spark.opacity * fade, sceneAlpha)
-			}
-
-			if (shouldAnimate) {
-				animationFrameId = animationController.requestAnimationFrame(tick)
-			}
-		}
-
-		const drawStatic = () => {
-			const now = performance.now()
-			context.clearRect(0, 0, width, height)
-			context.globalCompositeOperation = 'lighter'
-			drawCandles(now, 1)
-			drawStars(now, 1)
-			for (let i = 0; i < Math.min(8, sparks.length); i += 1) {
-				const spark = createSpark(now)
-				spark.baseX = width * (0.2 + i * 0.08)
-				spark.y = height * (0.7 - i * 0.03)
-				drawSpark(spark, now, spark.opacity, 1)
-			}
-		}
-
-		overlay.style.position = 'fixed'
-		overlay.style.inset = '0'
-		overlay.style.pointerEvents = 'none'
-		overlay.style.zIndex = '0'
-		overlay.style.opacity = HANUKKAH_OVERLAY_OPACITY
-		overlay.style.filter = HANUKKAH_OVERLAY_FILTER
-		overlay.appendChild(canvas)
-
-		const mount = () => {
-			document.body.appendChild(overlay)
-			resizeCanvas()
-			sceneFadeStart = performance.now() + HANUKKAH_SCENE_FADE_DELAY_MS
-			if (shouldAnimate) {
-				lastTime = performance.now()
-				animationFrameId = animationController.requestAnimationFrame(tick)
-			} else {
-				drawStatic()
-			}
-		}
-
-		timeoutId = window.setTimeout(mount, HANUKKAH_MOUNT_DELAY_MS)
-
-		const handleResize = () => {
-			resizeCanvas()
-			if (!shouldAnimate) {
-				drawStatic()
-			}
-		}
-		window.addEventListener('resize', handleResize)
-
-		return () => {
-			animationController.dispose()
-			if (timeoutId !== null) {
-				window.clearTimeout(timeoutId)
-			}
-			if (animationFrameId !== null) {
-				animationController.cancelAnimationFrame(animationFrameId)
-			}
-			window.removeEventListener('resize', handleResize)
-			if (overlay.parentElement) {
-				overlay.parentElement.removeChild(overlay)
-			}
-		}
-	} catch (error) {
-		console.error('Failed to launch Hanukkah glow', error)
-		return () => {}
+	const canvas = document.createElement('canvas')
+	const context = canvas.getContext('2d')
+	if (!context) {
+		throw new Error('Unable to create 2D context for Hanukkah canvas')
 	}
+
+	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+	const flame = createFlameSprite()
+	const glow = createGlowSprite()
+	const stars = Array.from({ length: 90 }, createLight)
+	const embers = Array.from({ length: 32 }, createLight)
+	let artwork: ReturnType<typeof createHanukkahArtwork> | null = null
+	let artworkDpr = 0
+	let width = window.innerWidth
+	let height = window.innerHeight
+	let elapsed = 0
+	let lastTime = performance.now()
+	let shouldAnimate = !motionPreference.matches
+	let hasCanceled = false
+	let animationFrameId: null | number = null
+	let animationGeneration = 0
+
+	canvas.setAttribute('aria-hidden', 'true')
+	canvas.setAttribute('data-hanukkah', 'true')
+	Object.assign(canvas.style, {
+		background:
+			'radial-gradient(ellipse at 50% 100%, #c48a3030, transparent 48%), radial-gradient(ellipse at 12% 24%, #3254a42b, transparent 60%), radial-gradient(ellipse at 90% 50%, #28467f20, transparent 58%)',
+		inset: '0',
+		mixBlendMode: 'screen',
+		pointerEvents: 'none',
+		position: 'fixed',
+		zIndex: '0',
+	})
+	document.body.appendChild(canvas)
+	const animationController = createSettingsModalAnimationController()
+
+	const drawScene = () => {
+		if (!artwork) return
+		context.clearRect(0, 0, width, height)
+		const reveal = shouldAnimate ? Math.min(1, elapsed / 1.8) : 1
+		const opacity = 1 - (1 - reveal) ** 3
+		const scale = Math.min(width / 780, height / 920, 1)
+		const sceneWidth = artwork.width * scale
+		const sceneHeight = artwork.height * scale
+		const sceneX = (width - sceneWidth) / 2
+		const sceneY = height - artwork.baseY * scale + 1
+
+		context.fillStyle = '#c5d8f5'
+		for (const star of stars) {
+			const shimmer = 0.68 + Math.sin(elapsed * 0.55 + star.phase) * 0.2
+			context.globalAlpha = opacity * shimmer * 0.4
+			context.fillRect(star.x * width, star.y * height, star.size, star.size)
+		}
+
+		// A broad pool of reflected candlelight anchors the menorah in the scene.
+		context.globalAlpha = opacity * 0.19
+		context.drawImage(
+			glow,
+			width / 2 - sceneWidth * 0.62,
+			sceneY + sceneHeight * 0.64,
+			sceneWidth * 1.24,
+			sceneHeight * 0.57,
+		)
+		context.globalAlpha = opacity
+		context.drawImage(artwork.canvas, sceneX, sceneY, sceneWidth, sceneHeight)
+
+		for (const [index, ember] of embers.entries()) {
+			const candle = artwork.candles[index % artwork.candles.length]
+			const progress = (ember.y + elapsed * (0.022 + ember.size * 0.005)) % 1
+			const rise = progress * Math.min(height * 0.52, 380)
+			const drift =
+				Math.sin(elapsed * 0.32 + ember.phase) * 14 +
+				(ember.x - 0.5) * progress * 110
+			const x = sceneX + candle.x * scale + drift
+			const y = sceneY + candle.y * scale - rise
+			context.globalAlpha = Math.sin(progress * Math.PI) * opacity * 0.32
+			context.fillStyle = index % 3 === 0 ? '#c6d7f2' : '#edc783'
+			context.beginPath()
+			context.arc(x, y, ember.size * 0.6, 0, Math.PI * 2)
+			context.fill()
+			if (ember.size > 1.1) {
+				context.globalAlpha *= 0.28
+				context.drawImage(glow, x - 5, y - 5, 10, 10)
+			}
+		}
+
+		for (const candle of artwork.candles) {
+			const x = sceneX + candle.x * scale
+			const y = sceneY + candle.y * scale
+			const flicker =
+				Math.sin(elapsed * 2.3 + candle.phase) * 0.035 +
+				Math.sin(elapsed * 3.7 + candle.phase * 2) * 0.02
+			const lean = Math.sin(elapsed * 1.6 + candle.phase) * 0.7 * scale
+			const flameHeight = 31 * scale * (1 + flicker)
+			const flameWidth = 17 * scale * (1 - flicker * 0.6)
+			const haloSize = 100 * scale
+			context.globalAlpha = opacity * (0.26 + flicker)
+			context.drawImage(
+				glow,
+				x - haloSize / 2,
+				y - haloSize * 0.66,
+				haloSize,
+				haloSize,
+			)
+			context.globalAlpha = opacity * 0.94
+			context.drawImage(
+				flame,
+				x - flameWidth / 2 + lean,
+				y - flameHeight,
+				flameWidth,
+				flameHeight,
+			)
+		}
+		context.globalAlpha = 1
+	}
+
+	const resizeCanvas = () => {
+		width = Math.max(1, window.innerWidth)
+		height = Math.max(1, window.innerHeight)
+		const dpr = getCanvasDpr({ height, maxDpr: 2, width })
+		canvas.width = Math.round(width * dpr)
+		canvas.height = Math.round(height * dpr)
+		canvas.style.width = `${width}px`
+		canvas.style.height = `${height}px`
+		context.setTransform(dpr, 0, 0, dpr, 0, 0)
+		if (!artwork || artworkDpr !== dpr) {
+			artwork = createHanukkahArtwork({ dpr })
+			artworkDpr = dpr
+		}
+		drawScene()
+	}
+
+	const renderFrame = (time: number, generation: number) => {
+		// Resumed settings callbacks can outlive their original queued frame ID.
+		if (hasCanceled || generation !== animationGeneration) return
+		animationFrameId = null
+		if (!shouldAnimate || document.hidden) return
+		if (!animationController.isPaused()) {
+			elapsed += Math.min((time - lastTime) / 1000, 0.05)
+			lastTime = time
+			drawScene()
+		}
+		animationFrameId = animationController.requestAnimationFrame((nextTime) =>
+			renderFrame(nextTime, generation),
+		)
+	}
+
+	const syncAnimation = () => {
+		animationGeneration += 1
+		if (animationFrameId !== null) {
+			animationController.cancelAnimationFrame(animationFrameId)
+			animationFrameId = null
+		}
+		shouldAnimate = !motionPreference.matches
+		lastTime = performance.now()
+		if (!shouldAnimate) {
+			drawScene()
+		} else if (!document.hidden) {
+			const generation = animationGeneration
+			animationFrameId = animationController.requestAnimationFrame((time) =>
+				renderFrame(time, generation),
+			)
+		}
+	}
+
+	const cleanup = () => {
+		hasCanceled = true
+		if (animationFrameId !== null) {
+			animationController.cancelAnimationFrame(animationFrameId)
+		}
+		animationController.dispose()
+		window.removeEventListener('resize', resizeCanvas)
+		document.removeEventListener('visibilitychange', syncAnimation)
+		motionPreference.removeEventListener('change', syncAnimation)
+		canvas.remove()
+	}
+
+	try {
+		resizeCanvas()
+		window.addEventListener('resize', resizeCanvas)
+		document.addEventListener('visibilitychange', syncAnimation)
+		motionPreference.addEventListener('change', syncAnimation)
+		syncAnimation()
+	} catch (error) {
+		cleanup()
+		throw error
+	}
+	return cleanup
+}
+
+function createLight(): Light {
+	return {
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ min: 0.5, max: 1.4 }),
+		x: Math.random(),
+		y: Math.random(),
+	}
+}
+
+function createFlameSprite(): HTMLCanvasElement {
+	const canvas = document.createElement('canvas')
+	canvas.width = 48
+	canvas.height = 88
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Hanukkah candle flame')
+	const flame = context.createLinearGradient(0, 0, 0, 88)
+	flame.addColorStop(0, '#ffe9a6')
+	flame.addColorStop(0.45, '#ffcb5f')
+	flame.addColorStop(0.8, '#f5a72f')
+	flame.addColorStop(1, '#8fa5e0')
+	context.fillStyle = flame
+	context.beginPath()
+	context.moveTo(25, 2)
+	context.bezierCurveTo(26, 28, 44, 46, 42, 64)
+	context.bezierCurveTo(40, 91, 7, 92, 6, 67)
+	context.bezierCurveTo(3, 46, 22, 31, 25, 2)
+	context.fill()
+	context.fillStyle = '#fff5cf'
+	context.beginPath()
+	context.moveTo(23, 33)
+	context.bezierCurveTo(21, 51, 35, 63, 32, 75)
+	context.bezierCurveTo(30, 86, 15, 85, 15, 75)
+	context.bezierCurveTo(14, 60, 21, 49, 23, 33)
+	context.fill()
+	return canvas
+}
+
+function createGlowSprite(): HTMLCanvasElement {
+	const canvas = document.createElement('canvas')
+	canvas.width = 128
+	canvas.height = 128
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Hanukkah candle glow')
+	const glow = context.createRadialGradient(64, 64, 0, 64, 64, 64)
+	glow.addColorStop(0, '#ffd994')
+	glow.addColorStop(0.18, '#f4b85f9c')
+	glow.addColorStop(0.48, '#d78d342b')
+	glow.addColorStop(1, '#d78d3400')
+	context.fillStyle = glow
+	context.fillRect(0, 0, 128, 128)
+	return canvas
 }
