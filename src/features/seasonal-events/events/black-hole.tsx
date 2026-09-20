@@ -1,433 +1,217 @@
 import {
+	ClampToEdgeWrapping,
+	LinearFilter,
+	RepeatWrapping,
+	TextureLoader,
+	WebGLRenderer,
+} from 'three'
+import type { Texture } from 'three'
+import {
 	isSettingsModalOpen,
 	onSettingsModalStateChange,
 } from '../../../shared/lib/settings-modal-state'
-import {
-	WebGLRenderer,
-	Scene,
-	Camera,
-	Vector2,
-	TextureLoader,
-	LinearFilter,
-	ClampToEdgeWrapping,
-	RepeatWrapping,
-	Vector3,
-	ShaderMaterial,
-	Mesh,
-	PlaneGeometry,
-} from 'three'
 import milkywayData from '../assets/milkyway.jpg'
 import starNoiseData from '../assets/star_noise.png'
-import accretionDiskData from '../assets/accretion_disk.png'
+import { getCanvasDpr } from '../core/utils'
+import { createBlackHoleScene } from './black-hole-scene'
 
 const BLACK_HOLE_MOUNT_DELAY_MS = 900
+const BLACK_HOLE_TEXTURE_TIMEOUT_MS = 15_000
+const DISK_ROTATION_SPEED = 0.02
 
-const BLACK_HOLE_CANVAS_MAX_DPR = 1.2
+export async function launchBlackHoleEvent(): Promise<() => void> {
+	if (typeof window === 'undefined') return () => {}
 
-const BLACK_HOLE_CANVAS_OPACITY = '0.94'
+	let hasCanceled = false
+	let lastTime: number | null = null
+	let animationFrameId: number | null = null
+	let animationGeneration = 0
+	let elapsed = 0
+	let rotation = 0
+	let width = Math.max(1, window.innerWidth)
+	let height = Math.max(1, window.innerHeight)
+	let dpr = 1
+	let renderer: WebGLRenderer | null = null
+	let scene: ReturnType<typeof createBlackHoleScene> | null = null
+	let unsubscribeSettings = () => {}
+	const textures = new Set<Texture>()
+	const pendingLoads = new Set<() => void>()
+	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+	let hasRevealed = motionPreference.matches
+	const canvas = document.createElement('canvas')
+	canvas.dataset.blackHole = 'true'
+	canvas.setAttribute('aria-hidden', 'true')
+	Object.assign(canvas.style, {
+		inset: '0',
+		pointerEvents: 'none',
+		position: 'fixed',
+		zIndex: '0',
+	})
 
-const BLACK_HOLE_CANVAS_FILTER = 'saturate(115%) contrast(105%)'
-
-// Accretion disk rotation speed multiplier (1.0 = shader default)
-const DISK_ROTATION_SPEED = 0.05
-
-const BLACK_HOLE_VERTEX_SHADER = `
-void main() {
-	gl_Position = vec4(position, 1.0);
-}
-`
-
-// Schwarzschild geodesic ray tracer with flat accretion disk.
-// Ported from https://github.com/vlwkaos/threejs-blackhole (MIT license).
-const BLACK_HOLE_FRAGMENT_SHADER = `
-#define STEP 0.05
-#define NSTEPS 600
-
-#define PI 3.141592653589793238462643383279
-#define DEG_TO_RAD (PI/180.0)
-
-uniform float time;
-uniform vec2 resolution;
-
-uniform vec3 cam_pos;
-uniform vec3 cam_dir;
-uniform vec3 cam_up;
-uniform float fov;
-uniform vec3 cam_vel;
-
-const float MIN_TEMPERATURE = 1000.0;
-const float TEMPERATURE_RANGE = 39000.0;
-
-const float DISK_IN = 2.0;
-const float DISK_WIDTH = 4.0;
-
-uniform sampler2D bg_texture;
-uniform sampler2D star_texture;
-uniform sampler2D disk_texture;
-
-vec2 square_frame(vec2 screen_size) {
-	return 2.0 * (gl_FragCoord.xy / screen_size.xy) - 1.0;
-}
-
-vec2 to_spherical(vec3 cartesian_coord) {
-	vec2 uv = vec2(atan(cartesian_coord.z, cartesian_coord.x), asin(cartesian_coord.y));
-	uv *= vec2(1.0 / (2.0 * PI), 1.0 / PI);
-	uv += 0.5;
-	return uv;
-}
-
-vec3 temp_to_color(float temp_kelvin) {
-	vec3 color;
-	temp_kelvin = clamp(temp_kelvin, 1000.0, 40000.0) / 100.0;
-	if (temp_kelvin <= 66.0) {
-		color.r = 255.0;
-		color.g = 99.4708025861 * log(temp_kelvin) - 161.1195681661;
-		if (color.g < 0.0) color.g = 0.0;
-		if (color.g > 255.0) color.g = 255.0;
-	} else {
-		color.r = 329.698727446 * pow(temp_kelvin - 60.0, -0.1332047592);
-		if (color.r < 0.0) color.r = 0.0;
-		if (color.r > 255.0) color.r = 255.0;
-		color.g = 288.1221695283 * pow(temp_kelvin - 60.0, -0.0755148492);
-		if (color.g > 255.0) color.g = 255.0;
-	}
-	if (temp_kelvin >= 66.0) {
-		color.b = 255.0;
-	} else if (temp_kelvin <= 19.0) {
-		color.b = 0.0;
-	} else {
-		color.b = 138.5177312231 * log(temp_kelvin - 10.0) - 305.0447927307;
-		if (color.b < 0.0) color.b = 0.0;
-		if (color.b > 255.0) color.b = 255.0;
-	}
-	color /= 255.0;
-	return color;
-}
-
-void main() {
-	float uvfov = tan(fov / 2.0 * DEG_TO_RAD);
-	vec2 uv = square_frame(resolution);
-	uv *= vec2(resolution.x / resolution.y, 1.0);
-
-	vec3 forward = normalize(cam_dir);
-	vec3 up = normalize(cam_up);
-	vec3 nright = normalize(cross(forward, up));
-	up = cross(nright, forward);
-
-	vec3 pixel_pos = cam_pos + forward + nright * uv.x * uvfov + up * uv.y * uvfov;
-	vec3 ray_dir = normalize(pixel_pos - cam_pos);
-
-	vec4 color = vec4(0.0, 0.0, 0.0, 1.0);
-
-	vec3 point = cam_pos;
-	vec3 velocity = ray_dir;
-	vec3 c = cross(point, velocity);
-	float h2 = dot(c, c);
-
-	vec3 oldpoint;
-	float distance = length(point);
-
-	for (int i = 0; i < NSTEPS; i++) {
-		oldpoint = point;
-		point += velocity * STEP;
-		vec3 accel = -1.5 * h2 * point / pow(dot(point, point), 2.5);
-		velocity += accel * STEP;
-		distance = length(point);
-
-		bool horizon_mask = distance < 1.0 && length(oldpoint) > 1.0;
-		if (horizon_mask) {
-			color += vec4(0.0, 0.0, 0.0, 1.0);
-			break;
-		}
-
-		if (oldpoint.y * point.y < 0.0) {
-			float lambda = -oldpoint.y / velocity.y;
-			vec3 intersection = oldpoint + lambda * velocity;
-			float r = length(intersection);
-
-			if (DISK_IN <= r && r <= DISK_IN + DISK_WIDTH) {
-				float phi = atan(intersection.x, intersection.z);
-
-				vec3 disk_velocity = vec3(-intersection.x, 0.0, intersection.z)
-					/ sqrt(2.0 * max(r - 1.0, 0.001)) / (r * r);
-
-				phi -= time;
-				phi = mod(phi, PI * 2.0);
-
-				float disk_gamma = 1.0 / sqrt(max(1.0 - dot(disk_velocity, disk_velocity), 0.001));
-				float disk_doppler_factor = disk_gamma * (1.0 + dot(ray_dir / distance, disk_velocity));
-
-				vec2 tex_coord = vec2(mod(phi, 2.0 * PI) / (2.0 * PI), 1.0 - (r - DISK_IN) / DISK_WIDTH);
-				vec4 disk_color = texture2D(disk_texture, tex_coord) / disk_doppler_factor;
-				float disk_alpha = clamp(dot(disk_color, disk_color) / 4.5, 0.0, 1.0);
-				disk_alpha /= pow(max(disk_doppler_factor, 0.15), 3.0);
-				// Soft fade at inner and outer radial edges to avoid hard borders.
-				float t = (r - DISK_IN) / DISK_WIDTH;
-				disk_alpha *= smoothstep(0.0, 0.08, t) * smoothstep(1.0, 0.75, t);
-				color += vec4(disk_color) * disk_alpha;
+	const loadTexture = (url: string, shouldRepeat = false) =>
+		new Promise<Texture>((resolve, reject) => {
+			let hasSettled = false
+			const finish = (texture: Texture | null, error?: unknown) => {
+				if (hasSettled) return
+				hasSettled = true
+				window.clearTimeout(timeoutId)
+				pendingLoads.delete(cancel)
+				if (texture) resolve(texture)
+				else reject(error)
 			}
-		}
-	}
-
-	if (distance > 1.0) {
-		ray_dir = normalize(point - oldpoint);
-		vec2 tex_coord = to_spherical(ray_dir);
-		vec4 star_color = texture2D(star_texture, tex_coord * 2.0);
-		if (star_color.g > 0.0) {
-			float star_temperature = MIN_TEMPERATURE + TEMPERATURE_RANGE * star_color.r;
-			color += vec4(temp_to_color(star_temperature), 1.0) * star_color.g * 0.033;
-		}
-		color += texture2D(bg_texture, tex_coord) * 0.004;
-	}
-
-	gl_FragColor = color;
-}
-`
-
-export async function launchBlackHoleEvent() {
-	try {
-		if (typeof window === 'undefined') {
-			return () => {}
-		}
-
-		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
-			.matches
-		let isPausedForModal = shouldAnimate && isSettingsModalOpen()
-
-		const container = document.createElement('div')
-		container.style.position = 'fixed'
-		container.style.inset = '0'
-		container.style.pointerEvents = 'none'
-		container.style.zIndex = '0'
-		container.style.opacity = '0'
-		container.style.transition = 'opacity 1.8s ease-in'
-		container.style.filter = BLACK_HOLE_CANVAS_FILTER
-		container.style.mixBlendMode = 'screen'
-
-		const dpr = Math.min(
-			window.devicePixelRatio || 1,
-			BLACK_HOLE_CANVAS_MAX_DPR,
-		)
-
-		// Vanilla Three.js — no React Three Fiber so we can use EffectComposer/bloom
-		const renderer = new WebGLRenderer({
-			alpha: true,
-			antialias: true,
-			powerPreference: 'low-power',
-		})
-		renderer.setClearColor(0x000000, 0)
-		renderer.setPixelRatio(dpr)
-		renderer.setSize(window.innerWidth, window.innerHeight)
-		renderer.autoClear = false
-		renderer.domElement.style.position = 'absolute'
-		renderer.domElement.style.inset = '0'
-		renderer.domElement.style.pointerEvents = 'none'
-		container.appendChild(renderer.domElement)
-
-		const scene = new Scene()
-		// Base Camera at z=1 — projection handled entirely in the fragment shader
-		const camera = new Camera()
-		camera.position.z = 1
-
-		// Postprocessing (bundled with three, no extra dependency needed)
-		const [
-			{ EffectComposer },
-			{ RenderPass },
-			{ UnrealBloomPass },
-			{ OutputPass },
-		] = await Promise.all([
-			import('three/examples/jsm/postprocessing/EffectComposer.js'),
-			import('three/examples/jsm/postprocessing/RenderPass.js'),
-			import('three/examples/jsm/postprocessing/UnrealBloomPass.js'),
-			import('three/examples/jsm/postprocessing/OutputPass.js'),
-		])
-
-		const composer = new EffectComposer(renderer)
-		composer.addPass(new RenderPass(scene, camera))
-		// strength=1.0, radius=0.5, threshold=0.6 — matching reference datGUI defaults
-		composer.addPass(new UnrealBloomPass(new Vector2(128, 128), 1.0, 0.5, 0.6))
-		composer.addPass(new OutputPass())
-
-		// Load textures
-		const textureLoader = new TextureLoader()
-		const loadTex = (url: string) =>
-			new Promise<ReturnType<TextureLoader['load']>>((resolve) => {
-				textureLoader.load(url, (tex) => {
-					tex.magFilter = LinearFilter
-					tex.minFilter = LinearFilter
-					tex.wrapS = ClampToEdgeWrapping
-					tex.wrapT = ClampToEdgeWrapping
-					resolve(tex)
-				})
-			})
-
-		const loadRepeatTex = (url: string) =>
-			new Promise<ReturnType<TextureLoader['load']>>((resolve) => {
-				textureLoader.load(url, (tex) => {
-					tex.magFilter = LinearFilter
-					tex.minFilter = LinearFilter
-					tex.wrapS = RepeatWrapping
-					tex.wrapT = RepeatWrapping
-					resolve(tex)
-				})
-			})
-
-		const [bgTexture, starTexture, diskTexture] = await Promise.all([
-			loadTex(milkywayData.src),
-			loadRepeatTex(starNoiseData.src),
-			loadTex(accretionDiskData.src),
-		])
-
-		// Camera nearly in the disk plane (y=0), looking directly at the BH (origin).
-		// Small y elevation gives the Interstellar-style horizontal disk sweep.
-		// cam_dir = normalize(-cam_pos) so BH is always centered.
-		// cam_up = (0,1,0) keeps the disk horizontal. Orbit rotates around y-axis.
-		const REF_CAM_POS = new Vector3(0, 0.5, 8)
-		const REF_CAM_DIR = new Vector3(0, -0.0499, -0.9988)
-		const REF_CAM_UP = new Vector3(0, 1, 0)
-		const THETA_INITIAL = Math.atan2(REF_CAM_POS.x, REF_CAM_POS.z)
-
-		const uniforms = {
-			bg_texture: { value: bgTexture },
-			cam_dir: { value: new Vector3() },
-			cam_pos: { value: new Vector3() },
-			cam_up: { value: new Vector3() },
-			disk_texture: { value: diskTexture },
-			fov: { value: 70.0 },
-			// Resolution must be in physical pixels (CSS * DPR) to match gl_FragCoord.
-			resolution: {
-				value: new Vector2(window.innerWidth * dpr, window.innerHeight * dpr),
-			},
-			star_texture: { value: starTexture },
-			time: { value: 0.0 },
-		}
-
-		const updateCamera = (theta: number) => {
-			const dTheta = theta - THETA_INITIAL
-			const cosD = Math.cos(dTheta)
-			const sinD = Math.sin(dTheta)
-			uniforms.cam_pos.value.set(
-				REF_CAM_POS.x * cosD + REF_CAM_POS.z * sinD,
-				REF_CAM_POS.y,
-				-REF_CAM_POS.x * sinD + REF_CAM_POS.z * cosD,
+			const cancel = () =>
+				finish(null, new Error('Black hole texture loading canceled'))
+			const timeoutId = window.setTimeout(
+				() => finish(null, new Error('Black hole texture loading timed out')),
+				BLACK_HOLE_TEXTURE_TIMEOUT_MS,
 			)
-			uniforms.cam_dir.value.set(
-				REF_CAM_DIR.x * cosD + REF_CAM_DIR.z * sinD,
-				REF_CAM_DIR.y,
-				-REF_CAM_DIR.x * sinD + REF_CAM_DIR.z * cosD,
-			)
-			uniforms.cam_up.value.set(
-				REF_CAM_UP.x * cosD + REF_CAM_UP.z * sinD,
-				REF_CAM_UP.y,
-				-REF_CAM_UP.x * sinD + REF_CAM_UP.z * cosD,
-			)
-		}
-
-		updateCamera(THETA_INITIAL)
-
-		const material = new ShaderMaterial({
-			fragmentShader: BLACK_HOLE_FRAGMENT_SHADER,
-			uniforms,
-			vertexShader: BLACK_HOLE_VERTEX_SHADER,
-		})
-		const mesh = new Mesh(new PlaneGeometry(2, 2), material)
-		scene.add(mesh)
-
-		let animFrameId: null | number = null
-		let lastTime = 0
-		let isMounted = false
-		let timeoutId: null | number = null
-
-		const animate = (now: number) => {
-			if (isPausedForModal) {
-				animFrameId = null
-				return
+			pendingLoads.add(cancel)
+			try {
+				const texture = new TextureLoader().load(
+					url,
+					(loaded) => {
+						if (hasCanceled || hasSettled) return
+						loaded.magFilter = LinearFilter
+						loaded.minFilter = LinearFilter
+						loaded.wrapS = shouldRepeat ? RepeatWrapping : ClampToEdgeWrapping
+						loaded.wrapT = shouldRepeat ? RepeatWrapping : ClampToEdgeWrapping
+						finish(loaded)
+					},
+					undefined,
+					(error) => finish(null, error),
+				)
+				textures.add(texture)
+			} catch (error) {
+				finish(null, error)
 			}
-
-			const delta = lastTime === 0 ? 0 : (now - lastTime) / 1000
-			lastTime = now
-
-			const w = window.innerWidth
-			const h = window.innerHeight
-			renderer.setSize(w, h)
-			// Pass CSS pixels — EffectComposer internally multiplies by its stored
-			// pixelRatio (= dpr). Passing w*dpr here would double-apply the scale.
-			composer.setSize(w, h)
-			uniforms.resolution.value.set(w * dpr, h * dpr)
-
-			if (shouldAnimate) {
-				// Wrap time into [0, 2π] to prevent float precision loss in the
-				// shader — large time values cause phi - time to lose mantissa bits.
-				uniforms.time.value =
-					(uniforms.time.value + delta * DISK_ROTATION_SPEED) % (Math.PI * 2)
-			}
-
-			composer.render()
-			animFrameId = requestAnimationFrame(animate)
-		}
-
-		const pauseAnimation = () => {
-			if (animFrameId !== null) {
-				cancelAnimationFrame(animFrameId)
-				animFrameId = null
-			}
-		}
-
-		const resumeAnimation = () => {
-			if (!shouldAnimate || !isMounted || animFrameId !== null) {
-				return
-			}
-			lastTime = 0
-			animFrameId = requestAnimationFrame(animate)
-		}
-
-		const unsubscribeModalState = onSettingsModalStateChange((isOpen) => {
-			if (!shouldAnimate) {
-				return
-			}
-
-			isPausedForModal = isOpen
-
-			if (isOpen) {
-				pauseAnimation()
-				return
-			}
-
-			resumeAnimation()
 		})
 
-		const mount = () => {
-			if (isMounted) return
-			isMounted = true
-			document.body.appendChild(container)
-			// Double-rAF ensures the browser paints opacity:0 before transitioning.
-			// A single rAF batches both style changes into the same frame.
-			requestAnimationFrame(() => {
-				requestAnimationFrame(() => {
-					container.style.opacity = BLACK_HOLE_CANVAS_OPACITY
-				})
-			})
-			composer.render()
-			resumeAnimation()
+	const drawScene = () => {
+		scene?.render({
+			width,
+			height,
+			dpr,
+			time: rotation,
+			reveal: hasRevealed ? 1 : 1 - (1 - Math.min(1, elapsed / 2.8)) ** 3,
+		})
+	}
+	const resizeScene = () => {
+		if (hasCanceled || !renderer || !scene) return
+		try {
+			width = Math.max(1, window.innerWidth)
+			height = Math.max(1, window.innerHeight)
+			dpr = getCanvasDpr({ height, width, maxDpr: 1.2, maxPixels: 1_600_000 })
+			renderer.setPixelRatio(dpr)
+			renderer.setSize(width, height, false)
+			canvas.style.width = `${width}px`
+			canvas.style.height = `${height}px`
+			drawScene()
+		} catch (error) {
+			handleFailure(error)
 		}
-
-		timeoutId = window.setTimeout(mount, BLACK_HOLE_MOUNT_DELAY_MS)
-
-		return () => {
-			if (timeoutId !== null) window.clearTimeout(timeoutId)
-			if (animFrameId !== null) cancelAnimationFrame(animFrameId)
-			unsubscribeModalState()
-			renderer.dispose()
-			material.dispose()
-			mesh.geometry.dispose()
-			bgTexture.dispose()
-			starTexture.dispose()
-			diskTexture.dispose()
-			if (container.parentElement)
-				container.parentElement.removeChild(container)
+	}
+	const canAnimate = () =>
+		!motionPreference.matches && !document.hidden && !isSettingsModalOpen()
+	const renderFrame = (time: number, generation: number) => {
+		if (hasCanceled || generation !== animationGeneration) return
+		animationFrameId = null
+		if (!canAnimate()) return
+		const delta =
+			lastTime === null ? 0 : Math.max(0, Math.min(50, time - lastTime)) / 1000
+		lastTime = time
+		elapsed += delta
+		rotation = (rotation + delta * DISK_ROTATION_SPEED) % (Math.PI * 2)
+		try {
+			drawScene()
+			animationFrameId = window.requestAnimationFrame((nextTime) =>
+				renderFrame(nextTime, generation),
+			)
+		} catch (error) {
+			handleFailure(error)
 		}
-	} catch (error) {
+	}
+	const syncAnimation = () => {
+		if (hasCanceled || !scene) return
+		animationGeneration += 1
+		if (animationFrameId !== null) {
+			window.cancelAnimationFrame(animationFrameId)
+			animationFrameId = null
+		}
+		lastTime = null
+		try {
+			if (motionPreference.matches) {
+				hasRevealed = true
+				drawScene()
+			} else if (canAnimate()) {
+				const generation = animationGeneration
+				animationFrameId = window.requestAnimationFrame((time) =>
+					renderFrame(time, generation),
+				)
+			}
+		} catch (error) {
+			handleFailure(error)
+		}
+	}
+	const cleanup = () => {
+		if (hasCanceled) return
+		hasCanceled = true
+		window.clearTimeout(timeoutId)
+		if (animationFrameId !== null) {
+			window.cancelAnimationFrame(animationFrameId)
+			animationFrameId = null
+		}
+		for (const cancel of pendingLoads) cancel()
+		pendingLoads.clear()
+		unsubscribeSettings()
+		window.removeEventListener('resize', resizeScene)
+		document.removeEventListener('visibilitychange', syncAnimation)
+		motionPreference.removeEventListener('change', syncAnimation)
+		canvas.remove()
+		scene?.dispose()
+		for (const texture of textures) texture.dispose()
+		textures.clear()
+		renderer?.dispose()
+		renderer?.forceContextLoss()
+	}
+	const handleFailure = (error: unknown) => {
+		if (hasCanceled) return
+		cleanup()
 		console.error('Failed to launch Event Horizon Day scene', error)
-		return () => {}
 	}
+	const mount = async () => {
+		try {
+			const [bgTexture, starTexture] = await Promise.all([
+				loadTexture(milkywayData.src),
+				loadTexture(starNoiseData.src, true),
+			])
+			if (hasCanceled) return
+			renderer = new WebGLRenderer({
+				canvas,
+				alpha: true,
+				antialias: false,
+				powerPreference: 'low-power',
+			})
+			renderer.setClearColor(0x000000, 0)
+			scene = createBlackHoleScene({
+				renderer,
+				bgTexture,
+				starTexture,
+			})
+			hasRevealed = motionPreference.matches
+			document.body.appendChild(canvas)
+			resizeScene()
+			if (hasCanceled) return
+			window.addEventListener('resize', resizeScene)
+			document.addEventListener('visibilitychange', syncAnimation)
+			motionPreference.addEventListener('change', syncAnimation)
+			unsubscribeSettings = onSettingsModalStateChange(syncAnimation)
+			syncAnimation()
+		} catch (error) {
+			handleFailure(error)
+		}
+	}
+	const timeoutId = window.setTimeout(() => {
+		if (!hasCanceled) void mount()
+	}, BLACK_HOLE_MOUNT_DELAY_MS)
+	return cleanup
 }
