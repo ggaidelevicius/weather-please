@@ -1,311 +1,372 @@
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import { randomInRange, getCanvasDpr } from '../core/utils'
+import {
+	isSettingsModalOpen,
+	onSettingsModalStateChange,
+} from '../../../shared/lib/settings-modal-state'
+import { getCanvasDpr, randomInRange } from '../core/utils'
+import { createEidAlFitrArtwork } from './eid-al-fitr-artwork'
 
 const EID_MOUNT_DELAY_MS = 900
 
-const EID_OVERLAY_OPACITY = '0.75'
+type EidArtwork = ReturnType<typeof createEidAlFitrArtwork>
 
-const EID_OVERLAY_FILTER = 'saturate(125%)'
+export async function launchEidAlFitrGlow(): Promise<() => void> {
+	if (typeof window === 'undefined') return () => {}
 
-const EID_MAX_DPR = 2
-
-const EID_STAR_COUNT = 140
-
-const EID_STAR_RADIUS_RANGE = { max: 1.6, min: 0.5 }
-
-const EID_STAR_OPACITY_RANGE = { max: 0.55, min: 0.18 }
-
-const EID_STAR_TWINKLE_RANGE = { max: 0.0015, min: 0.0006 }
-
-const EID_LANTERN_COUNT = 22
-
-const EID_LANTERN_SIZE_RANGE = { max: 36, min: 18 }
-
-const EID_LANTERN_SPEED_RANGE = { max: 20, min: 8 }
-
-const EID_LANTERN_SWAY_RANGE = { max: 14, min: 4 }
-
-const EID_LANTERN_OPACITY_RANGE = { max: 0.75, min: 0.35 }
-
-const EID_LANTERN_FADE_IN_DELAY_RANGE = { max: 1800, min: 0 }
-
-const EID_LANTERN_FADE_IN_DURATION_RANGE = { max: 2000, min: 1000 }
-
-const EID_SCENE_FADE_DELAY_MS = 300
-
-const EID_SCENE_FADE_DURATION_MS = 1400
-
-const EID_LANTERN_COLORS = [
-	'rgba(253, 230, 138, 0.9)',
-	'rgba(251, 191, 36, 0.85)',
-	'rgba(94, 234, 212, 0.75)',
-	'rgba(167, 139, 250, 0.7)',
-]
-
-export async function launchEidAlFitrGlow() {
-	try {
-		if (typeof window === 'undefined') {
-			return () => {}
+	let disposeScene = () => {}
+	let hasCanceled = false
+	const timeoutId = window.setTimeout(() => {
+		if (hasCanceled) return
+		try {
+			disposeScene = mountEidAlFitr()
+		} catch (error) {
+			console.error('Failed to launch Eid al-Fitr glow', error)
 		}
-
-		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
-			.matches
-		const animationController = createSettingsModalAnimationController({
-			shouldAnimate,
-		})
-		const overlay = document.createElement('div')
-		const canvas = document.createElement('canvas')
-		const context = canvas.getContext('2d')
-		if (!context) {
-			throw new Error('Unable to create 2D context for Eid canvas')
-		}
-
-		type Star = {
-			opacity: number
-			phase: number
-			radius: number
-			twinkle: number
-			x: number
-			y: number
-		}
-		type Lantern = {
-			baseX: number
-			birthTime: number
-			color: string
-			fadeDuration: number
-			opacity: number
-			phase: number
-			size: number
-			sway: number
-			vy: number
-			y: number
-		}
-
-		let timeoutId: null | number = null
-		let animationFrameId: null | number = null
-		let width = window.innerWidth
-		let height = window.innerHeight
-		let stars: Star[] = []
-		let lanterns: Lantern[] = []
-		let lastTime = performance.now()
-		let sceneFadeStart = performance.now()
-
-		const randomLanternColor = () =>
-			EID_LANTERN_COLORS[Math.floor(Math.random() * EID_LANTERN_COLORS.length)]
-
-		const createStar = (): Star => ({
-			opacity: randomInRange(EID_STAR_OPACITY_RANGE),
-			phase: Math.random() * Math.PI * 2,
-			radius: randomInRange(EID_STAR_RADIUS_RANGE),
-			twinkle: randomInRange(EID_STAR_TWINKLE_RANGE),
-			x: Math.random() * width,
-			y: Math.random() * height,
-		})
-
-		const createLantern = (time: number): Lantern => ({
-			baseX: Math.random() * width,
-			birthTime: time + randomInRange(EID_LANTERN_FADE_IN_DELAY_RANGE),
-			color: randomLanternColor(),
-			fadeDuration: randomInRange(EID_LANTERN_FADE_IN_DURATION_RANGE),
-			opacity: randomInRange(EID_LANTERN_OPACITY_RANGE),
-			phase: Math.random() * Math.PI * 2,
-			size: randomInRange(EID_LANTERN_SIZE_RANGE),
-			sway: randomInRange(EID_LANTERN_SWAY_RANGE),
-			vy: randomInRange(EID_LANTERN_SPEED_RANGE),
-			y: height + Math.random() * height * 0.3,
-		})
-
-		const resetField = (time: number) => {
-			stars = Array.from({ length: EID_STAR_COUNT }, createStar)
-			lanterns = Array.from({ length: EID_LANTERN_COUNT }, () =>
-				createLantern(time),
-			)
-		}
-
-		const resizeCanvas = () => {
-			width = window.innerWidth
-			height = window.innerHeight
-			const dpr = getCanvasDpr({ height, maxDpr: EID_MAX_DPR, width })
-			canvas.width = Math.round(width * dpr)
-			canvas.height = Math.round(height * dpr)
-			canvas.style.width = `${width}px`
-			canvas.style.height = `${height}px`
-			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-			resetField(performance.now())
-		}
-
-		const drawCrescent = (alpha: number) => {
-			const radius = Math.min(width, height) * 0.18
-			const cx = width * 0.16
-			const cy = height * 0.2
-			context.save()
-			context.globalAlpha = alpha
-			context.globalCompositeOperation = 'source-over'
-			const glow = context.createRadialGradient(
-				cx,
-				cy,
-				radius * 0.2,
-				cx,
-				cy,
-				radius,
-			)
-			glow.addColorStop(0, 'rgba(255, 246, 214, 0.95)')
-			glow.addColorStop(0.55, 'rgba(255, 236, 179, 0.55)')
-			glow.addColorStop(1, 'rgba(255, 236, 179, 0)')
-			context.fillStyle = glow
-			context.beginPath()
-			context.arc(cx, cy, radius, 0, Math.PI * 2)
-			context.fill()
-			context.globalAlpha = 1
-			const mask = context.createRadialGradient(
-				cx + radius * 0.42,
-				cy - radius * 0.12,
-				radius * 0.2,
-				cx + radius * 0.42,
-				cy - radius * 0.12,
-				radius * 0.95,
-			)
-			mask.addColorStop(0, '#1a1b1e')
-			mask.addColorStop(0.82, '#1a1b1e')
-			mask.addColorStop(1, 'rgba(26, 27, 30, 0)')
-			context.fillStyle = mask
-			context.beginPath()
-			context.arc(
-				cx + radius * 0.42,
-				cy - radius * 0.12,
-				radius * 0.95,
-				0,
-				Math.PI * 2,
-			)
-			context.fill()
-			context.restore()
-		}
-
-		const drawStars = (time: number, alpha: number) => {
-			context.fillStyle = 'rgba(226, 232, 240, 1)'
-			for (const star of stars) {
-				const twinkle = 0.6 + 0.4 * Math.sin(time * star.twinkle + star.phase)
-				context.globalAlpha = alpha * star.opacity * twinkle
-				context.beginPath()
-				context.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
-				context.fill()
-			}
-		}
-
-		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
-
-		const drawLantern = (
-			lantern: Lantern,
-			time: number,
-			alpha: number,
-			sceneAlpha: number,
-		) => {
-			const sway = Math.sin(time * 0.0004 + lantern.phase) * lantern.sway
-			const x = lantern.baseX + sway
-			const y = lantern.y
-			const radius = lantern.size * 1.2
-			const gradient = context.createRadialGradient(x, y, 0, x, y, radius)
-			gradient.addColorStop(0, lantern.color)
-			gradient.addColorStop(0.7, lantern.color.replace('0.', '0.25'))
-			gradient.addColorStop(1, 'rgba(15, 23, 42, 0)')
-			context.globalAlpha = alpha * sceneAlpha
-			context.fillStyle = gradient
-			context.beginPath()
-			context.arc(x, y, radius, 0, Math.PI * 2)
-			context.fill()
-		}
-
-		const tick = (time: number) => {
-			const delta = Math.min(time - lastTime, 48)
-			lastTime = time
-			const sceneFadeProgress = Math.min(
-				Math.max((time - sceneFadeStart) / EID_SCENE_FADE_DURATION_MS, 0),
-				1,
-			)
-			const sceneAlpha = easeOutCubic(sceneFadeProgress)
-			context.clearRect(0, 0, width, height)
-			drawCrescent(sceneAlpha)
-			context.globalCompositeOperation = 'lighter'
-			drawStars(time, sceneAlpha)
-
-			for (const lantern of lanterns) {
-				lantern.y -= (lantern.vy * delta) / 1000
-				if (lantern.y < -lantern.size * 2) {
-					Object.assign(lantern, createLantern(time))
-				}
-
-				const fadeProgress = Math.min(
-					Math.max((time - lantern.birthTime) / lantern.fadeDuration, 0),
-					1,
-				)
-				const fade = easeOutCubic(fadeProgress)
-				drawLantern(lantern, time, lantern.opacity * fade, sceneAlpha)
-			}
-
-			if (shouldAnimate) {
-				animationFrameId = animationController.requestAnimationFrame(tick)
-			}
-		}
-
-		const drawStatic = () => {
-			const now = performance.now()
-			context.clearRect(0, 0, width, height)
-			drawCrescent(1)
-			context.globalCompositeOperation = 'lighter'
-			drawStars(now, 1)
-			for (let i = 0; i < Math.min(8, lanterns.length); i += 1) {
-				const lantern = createLantern(now)
-				lantern.baseX = width * (0.1 + i * 0.1)
-				lantern.y = height * (0.85 - i * 0.06)
-				drawLantern(lantern, now, lantern.opacity, 1)
-			}
-		}
-
-		overlay.style.position = 'fixed'
-		overlay.style.inset = '0'
-		overlay.style.pointerEvents = 'none'
-		overlay.style.zIndex = '0'
-		overlay.style.opacity = EID_OVERLAY_OPACITY
-		overlay.style.filter = EID_OVERLAY_FILTER
-		overlay.appendChild(canvas)
-
-		const mount = () => {
-			document.body.appendChild(overlay)
-			resizeCanvas()
-			sceneFadeStart = performance.now() + EID_SCENE_FADE_DELAY_MS
-			if (shouldAnimate) {
-				lastTime = performance.now()
-				animationFrameId = animationController.requestAnimationFrame(tick)
-			} else {
-				drawStatic()
-			}
-		}
-
-		timeoutId = window.setTimeout(mount, EID_MOUNT_DELAY_MS)
-
-		const handleResize = () => {
-			resizeCanvas()
-			if (!shouldAnimate) {
-				drawStatic()
-			}
-		}
-		window.addEventListener('resize', handleResize)
-
-		return () => {
-			animationController.dispose()
-			if (timeoutId !== null) {
-				window.clearTimeout(timeoutId)
-			}
-			if (animationFrameId !== null) {
-				animationController.cancelAnimationFrame(animationFrameId)
-			}
-			window.removeEventListener('resize', handleResize)
-			if (overlay.parentElement) {
-				overlay.parentElement.removeChild(overlay)
-			}
-		}
-	} catch (error) {
-		console.error('Failed to launch Eid al-Fitr glow', error)
-		return () => {}
+	}, EID_MOUNT_DELAY_MS)
+	return () => {
+		if (hasCanceled) return
+		hasCanceled = true
+		window.clearTimeout(timeoutId)
+		disposeScene()
 	}
+}
+
+function mountEidAlFitr() {
+	const canvas = document.createElement('canvas')
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Eid al-Fitr canvas')
+	const artwork = createEidAlFitrArtwork({ dpr: 2 })
+	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+	const stars = Array.from({ length: 125 }, (_, index) => ({
+		x: Math.random(),
+		y: Math.random(),
+		size: randomInRange({ min: 2.5, max: index % 11 === 0 ? 11 : 5.5 }),
+		opacity: randomInRange({ min: 0.13, max: 0.56 }),
+		phase: Math.random() * Math.PI * 2,
+		speed: randomInRange({ min: 0.35, max: 0.75 }),
+	}))
+	const motes = Array.from({ length: 22 }, (_, index) => ({
+		x:
+			index % 2
+				? randomInRange({ min: 0.04, max: 0.27 })
+				: randomInRange({ min: 0.76, max: 0.96 }),
+		progress: Math.random(),
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ min: 9, max: 24 }),
+		speed: randomInRange({ min: 0.004, max: 0.01 }),
+		opacity: randomInRange({ min: 0.17, max: 0.4 }),
+	}))
+	let width = Math.max(1, window.innerWidth)
+	let height = Math.max(1, window.innerHeight)
+	let elapsed = 0
+	let hasRevealed = motionPreference.matches
+	let lastTime: number | null = null
+	let animationFrameId: number | null = null
+	let animationGeneration = 0
+	let hasCanceled = false
+	let unsubscribeSettings = () => {}
+
+	canvas.dataset.eidAlFitr = 'true'
+	canvas.setAttribute('aria-hidden', 'true')
+	Object.assign(canvas.style, {
+		inset: '0',
+		pointerEvents: 'none',
+		position: 'fixed',
+		zIndex: '0',
+	})
+
+	const drawScene = () => {
+		context.clearRect(0, 0, width, height)
+		const reveal = hasRevealed ? 1 : easeOut(elapsed / 3.2)
+		const isCompact = width < 600
+		const sceneScale = Math.min(1, height / 650)
+		const drift = Math.sin(elapsed * 0.075) * width * 0.025
+		context.globalAlpha = reveal * 0.35
+		context.drawImage(
+			artwork.haze.canvas,
+			-width * 0.45 + drift,
+			height * 0.1,
+			width * 1.8,
+			height * 1.4,
+		)
+		context.globalAlpha = reveal * 0.25
+		context.drawImage(
+			artwork.haze.canvas,
+			width * 0.2 - drift,
+			-height * 0.7,
+			width * 1.1,
+			height * 1.35,
+		)
+
+		const rosetteSize = (isCompact ? 250 : 410) * sceneScale
+		context.globalAlpha = reveal * 0.2
+		context.drawImage(
+			artwork.rosette.canvas,
+			-rosetteSize * 0.52,
+			height - rosetteSize * 0.48,
+			rosetteSize,
+			rosetteSize,
+		)
+		context.globalAlpha = reveal * 0.13
+		context.drawImage(
+			artwork.rosette.canvas,
+			width - rosetteSize * 0.42,
+			height - rosetteSize * 0.46,
+			rosetteSize,
+			rosetteSize,
+		)
+
+		const starCount = isCompact ? 72 : stars.length
+		for (let index = 0; index < starCount; index += 1) {
+			const star = stars[index]
+			const isCentral =
+				star.x > 0.3 && star.x < 0.7 && star.y > 0.3 && star.y < 0.7
+			const twinkle = 0.68 + Math.sin(elapsed * star.speed + star.phase) * 0.32
+			const size = star.size * (isCompact ? 0.82 : 1)
+			context.globalAlpha =
+				reveal * star.opacity * twinkle * (isCentral ? 0.35 : 1)
+			context.drawImage(
+				artwork.star.canvas,
+				star.x * width - size / 2,
+				star.y * height - size / 2,
+				size,
+				size,
+			)
+		}
+
+		const moonSize =
+			(isCompact
+				? Math.min(148, width * 0.4)
+				: Math.min(310, width * 0.24, height * 0.39)) * sceneScale
+		const moonX = width * (isCompact ? 0.23 : 0.17)
+		const moonY = height * (isCompact ? 0.17 : 0.22)
+		context.globalAlpha = reveal * 0.13
+		context.drawImage(
+			artwork.glow.canvas,
+			moonX - moonSize,
+			moonY - moonSize,
+			moonSize * 2,
+			moonSize * 2,
+		)
+		context.globalAlpha = reveal * 0.87
+		context.drawImage(
+			artwork.crescent.canvas,
+			moonX - moonSize / 2,
+			moonY - moonSize / 2,
+			moonSize,
+			moonSize,
+		)
+
+		const moteCount = isCompact ? 13 : motes.length
+		for (let index = 0; index < moteCount; index += 1) {
+			const mote = motes[index]
+			const progress = wrap(mote.progress + elapsed * mote.speed)
+			const x = mote.x * width + Math.sin(elapsed * 0.3 + mote.phase) * 14
+			const y = (1 - progress) * (height + 50) - 25
+			const edge = Math.min(1, progress * 8, (1 - progress) * 8)
+			const pulse = 0.78 + Math.sin(elapsed * 0.8 + mote.phase) * 0.22
+			const size = mote.size * (isCompact ? 0.85 : 1)
+			context.globalAlpha = reveal * mote.opacity * edge * pulse
+			context.drawImage(
+				artwork.glow.canvas,
+				x - size / 2,
+				y - size / 2,
+				size,
+				size,
+			)
+		}
+
+		const lanterns = isCompact
+			? [
+					{ x: width * 0.77, scale: 0.39, cord: 58, variant: 0 },
+					{ x: width * 0.945, scale: 0.27, cord: 12, variant: 1 },
+				]
+			: [
+					{ x: width * 0.755, scale: 0.42, cord: 35, variant: 1 },
+					{ x: width * 0.865, scale: 0.65, cord: 84, variant: 0 },
+					{ x: width * 0.96, scale: 0.39, cord: 16, variant: 2 },
+				]
+		for (const [index, lantern] of lanterns.entries()) {
+			drawHangingLantern({
+				context,
+				artwork,
+				...lantern,
+				scale: lantern.scale * sceneScale,
+				cord: lantern.cord * sceneScale,
+				time: elapsed,
+				phase: index * 2.1,
+				opacity: reveal,
+			})
+		}
+		context.globalAlpha = 1
+	}
+	const resizeScene = () => {
+		if (hasCanceled) return
+		width = Math.max(1, window.innerWidth)
+		height = Math.max(1, window.innerHeight)
+		const dpr = getCanvasDpr({ height, width, maxDpr: 2, maxPixels: 4_000_000 })
+		canvas.width = Math.round(width * dpr)
+		canvas.height = Math.round(height * dpr)
+		canvas.style.width = `${width}px`
+		canvas.style.height = `${height}px`
+		context.setTransform(dpr, 0, 0, dpr, 0, 0)
+		drawScene()
+	}
+	const canAnimate = () =>
+		!motionPreference.matches && !document.hidden && !isSettingsModalOpen()
+	const renderFrame = (time: number, generation: number) => {
+		if (hasCanceled || generation !== animationGeneration) return
+		animationFrameId = null
+		if (!canAnimate()) return
+		const delta =
+			lastTime === null ? 0 : Math.max(0, Math.min(50, time - lastTime))
+		lastTime = time
+		elapsed += delta / 1000
+		try {
+			drawScene()
+			animationFrameId = window.requestAnimationFrame((nextTime) =>
+				renderFrame(nextTime, generation),
+			)
+		} catch (error) {
+			handleFailure(error)
+		}
+	}
+	const syncAnimation = () => {
+		if (hasCanceled) return
+		animationGeneration += 1
+		if (animationFrameId !== null) window.cancelAnimationFrame(animationFrameId)
+		animationFrameId = null
+		lastTime = null
+		if (motionPreference.matches) {
+			hasRevealed = true
+			drawScene()
+		} else if (canAnimate()) {
+			const generation = animationGeneration
+			animationFrameId = window.requestAnimationFrame((time) =>
+				renderFrame(time, generation),
+			)
+		}
+	}
+	const handleResize = () => {
+		try {
+			resizeScene()
+		} catch (error) {
+			handleFailure(error)
+		}
+	}
+	const handleAnimationChange = () => {
+		try {
+			syncAnimation()
+		} catch (error) {
+			handleFailure(error)
+		}
+	}
+	const cleanup = () => {
+		if (hasCanceled) return
+		hasCanceled = true
+		if (animationFrameId !== null) window.cancelAnimationFrame(animationFrameId)
+		animationFrameId = null
+		unsubscribeSettings()
+		window.removeEventListener('resize', handleResize)
+		document.removeEventListener('visibilitychange', handleAnimationChange)
+		motionPreference.removeEventListener('change', handleAnimationChange)
+		canvas.remove()
+		for (const surface of [
+			canvas,
+			...artwork.lanterns.map((sprite) => sprite.canvas),
+			artwork.crescent.canvas,
+			artwork.glow.canvas,
+			artwork.haze.canvas,
+			artwork.star.canvas,
+			artwork.rosette.canvas,
+		]) {
+			surface.width = 0
+			surface.height = 0
+		}
+	}
+	const handleFailure = (error: unknown) => {
+		cleanup()
+		console.error('Failed to render Eid al-Fitr glow', error)
+	}
+	try {
+		document.body.appendChild(canvas)
+		resizeScene()
+		window.addEventListener('resize', handleResize)
+		document.addEventListener('visibilitychange', handleAnimationChange)
+		motionPreference.addEventListener('change', handleAnimationChange)
+		unsubscribeSettings = onSettingsModalStateChange(handleAnimationChange)
+		syncAnimation()
+	} catch (error) {
+		cleanup()
+		throw error
+	}
+	return cleanup
+}
+
+function drawHangingLantern({
+	context,
+	artwork,
+	x,
+	scale,
+	cord,
+	variant,
+	time,
+	phase,
+	opacity,
+}: {
+	context: CanvasRenderingContext2D
+	artwork: EidArtwork
+	x: number
+	scale: number
+	cord: number
+	variant: number
+	time: number
+	phase: number
+	opacity: number
+}) {
+	const sprite = artwork.lanterns[variant % artwork.lanterns.length]
+	const angle =
+		Math.sin(time * 0.48 + phase) * 0.018 +
+		Math.sin(time * 0.21 + phase) * 0.009
+	const light =
+		0.92 +
+		Math.sin(time * 1.1 + phase) * 0.055 +
+		Math.sin(time * 3.5 + phase) * 0.025
+	const lightX = (sprite.lightX - sprite.anchorX) * scale
+	const lightY = cord + (sprite.lightY - sprite.anchorY) * scale
+	const glowSize = 450 * scale
+	context.save()
+	context.translate(x, -8)
+	context.rotate(angle)
+	context.globalAlpha = opacity * 0.58
+	context.strokeStyle = '#c6a467'
+	context.lineWidth = 0.85
+	context.beginPath()
+	context.moveTo(0, 0)
+	context.lineTo(0, cord)
+	context.stroke()
+	context.globalAlpha = opacity * light * 0.65
+	context.drawImage(
+		artwork.glow.canvas,
+		lightX - glowSize / 2,
+		lightY - glowSize / 2,
+		glowSize,
+		glowSize,
+	)
+	context.globalAlpha = opacity * light
+	context.drawImage(
+		sprite.canvas,
+		-sprite.anchorX * scale,
+		cord - sprite.anchorY * scale,
+		sprite.width * scale,
+		sprite.height * scale,
+	)
+	context.restore()
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
+function wrap(value: number) {
+	return ((value % 1) + 1) % 1
 }
