@@ -1,458 +1,294 @@
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import { randomInRange, getCanvasDpr } from '../core/utils'
+import {
+	isSettingsModalOpen,
+	onSettingsModalStateChange,
+} from '../../../shared/lib/settings-modal-state'
+import { getCanvasDpr, randomInRange } from '../core/utils'
+import { createValentinesArtwork } from './valentines-artwork'
 
-const HEARTS_MOUNT_DELAY_MS = 900
+const VALENTINES_MOUNT_DELAY_MS = 900
+const VALENTINES_HEART_COUNT = 72
+const VALENTINES_COMPACT_HEART_COUNT = 44
+const VALENTINES_LIGHT_COUNT = 12
+const VALENTINES_CLOUD_DRIFT_RATE = 0.12
 
-const HEARTS_FIELD_OPACITY = '0.78'
+type ValentinesArtwork = ReturnType<typeof createValentinesArtwork>
+type ParticleKind = 'heart' | 'light'
 
-const HEARTS_FIELD_FILTER = 'saturate(170%) contrast(110%)'
+export async function launchValentinesHearts(): Promise<() => void> {
+	if (typeof window === 'undefined') return () => {}
 
-const HEARTS_FIELD_MAX_DPR = 2
-
-const HEARTS_FIELD_MARGIN = 140
-
-const HEARTS_FIELD_COUNT = 72
-
-const HEARTS_GLOW_OPACITY = '0.4'
-
-const HEARTS_GLOW_GRADIENT =
-	'radial-gradient(120% 90% at 50% 100%, rgba(244, 114, 182, 0.5), rgba(251, 113, 133, 0.25) 45%, rgba(15, 23, 42, 0) 75%)'
-
-const HEARTS_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
-
-const HEARTS_FADE_IN_DURATION_RANGE = { max: 1600, min: 900 }
-
-const HEARTS_SCALE_RANGE = { max: 0.75, min: 0.4 }
-
-const HEARTS_SIZE_RANGE = { max: 26, min: 12 }
-
-const HEARTS_VELOCITY_X_RANGE = { max: 6, min: -6 }
-
-const HEARTS_VELOCITY_Y_RANGE = { max: -1, min: -6 }
-
-const HEARTS_SWAY_RANGE = { max: 8, min: 2 }
-
-const HEARTS_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
-
-const HEARTS_GLOW_RANGE = { max: 28, min: 16 }
-
-const HEARTS_CLOUD_CHANCE = 0.33
-
-const HEARTS_CLOUD_SIZE_FACTOR = 1.22
-
-const HEARTS_CLOUD_BASE_SPAN = 34
-
-const HEARTS_CLOUD_FILL_RANGE = { max: 1.02, min: 0.95 }
-
-const HEARTS_CLOUD_JITTER_FACTOR_RANGE = { max: 0.06, min: 0.02 }
-
-const HEARTS_CLOUD_T_JITTER = 0.15
-
-const HEARTS_GRADIENTS = [
-	{ inner: '#ffe1f2', mid: '#ff8fc1', outer: '#e11d48' },
-	{ inner: '#ffd1e8', mid: '#ff6ea8', outer: '#d81b60' },
-	{ inner: '#ffbfe3', mid: '#ff5faa', outer: '#c2185b' },
-	{ inner: '#ffb3e1', mid: '#ff4da0', outer: '#b3125e' },
-	{ inner: '#ff9ad5', mid: '#ff3b86', outer: '#ad1457' },
-	{ inner: '#ffc1c1', mid: '#ff6b6b', outer: '#b91c1c' },
-	{ inner: '#ffd6d6', mid: '#fb7185', outer: '#be123c' },
-	{ inner: '#ffe4e6', mid: '#fb7185', outer: '#e11d48' },
-] as const
-
-const HEARTS_SHAPES = ['parametric', 'arc'] as const
-
-export async function launchValentinesHearts() {
-	try {
-		if (typeof window === 'undefined') {
-			return () => {}
+	let disposeScene = () => {}
+	let hasCanceled = false
+	const timeoutId = window.setTimeout(() => {
+		if (hasCanceled) return
+		try {
+			disposeScene = mountValentines()
+		} catch (error) {
+			console.error('Failed to launch Valentine’s Day effect', error)
 		}
+	}, VALENTINES_MOUNT_DELAY_MS)
 
-		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
-			.matches
-		const animationController = createSettingsModalAnimationController({
-			shouldAnimate,
-		})
-		const canvas = document.createElement('canvas')
-		const context = canvas.getContext('2d')
-		if (!context) {
-			throw new Error('Unable to create 2D context for valentines canvas')
-		}
+	return () => {
+		hasCanceled = true
+		window.clearTimeout(timeoutId)
+		disposeScene()
+	}
+}
 
-		type HeartParticle = {
-			birthTime: number
-			fadeDuration: number
-			glow: number
-			gradient: (typeof HEARTS_GRADIENTS)[number]
-			opacity: number
-			phase: number
-			rotation: number
-			rotationSpeed: number
-			scaleFrom: number
-			shape: (typeof HEARTS_SHAPES)[number]
-			size: number
-			sway: number
-			vx: number
-			vy: number
-			x: number
-			y: number
-		}
-		type HeartSeed = {
-			x: number
-			y: number
-		}
+function mountValentines() {
+	const canvas = document.createElement('canvas')
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Valentine’s Day canvas')
+	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+	const shouldFormHeartCloud = Math.random() < 0.33
+	const cloudAngleOffset = Math.random() * Math.PI * 2
+	const particles = [
+		...Array.from({ length: VALENTINES_LIGHT_COUNT }, (_, index) =>
+			createParticle({ index, kind: 'light', cloudAngleOffset }),
+		),
+		...Array.from({ length: VALENTINES_HEART_COUNT }, (_, index) =>
+			createParticle({ index, kind: 'heart', cloudAngleOffset }),
+		),
+	]
+	let artwork: ValentinesArtwork | null = null
+	let artworkDpr = 0
+	let width = Math.max(1, window.innerWidth)
+	let height = Math.max(1, window.innerHeight)
+	let elapsed = 0
+	let hasRevealed = motionPreference.matches
+	let lastTime: number | null = null
+	let animationFrameId: number | null = null
+	let animationGeneration = 0
+	let hasCanceled = false
+	let unsubscribeSettings = () => {}
 
-		let timeoutId: null | number = null
-		let animationFrameId: null | number = null
-		let hasCanceled = false
-		let width = window.innerWidth
-		let height = window.innerHeight
-		let particles: HeartParticle[] = []
-		let lastTime = performance.now()
-		let overlay: HTMLDivElement | null = null
-		let styleEl: HTMLStyleElement | null = null
-		let shouldFormHeartCloud = Math.random() < HEARTS_CLOUD_CHANCE
+	canvas.dataset.valentines = 'true'
+	canvas.setAttribute('aria-hidden', 'true')
+	Object.assign(canvas.style, {
+		inset: '0',
+		mixBlendMode: 'screen',
+		pointerEvents: 'none',
+		position: 'fixed',
+		zIndex: '0',
+	})
 
-		const randomGradient = () =>
-			HEARTS_GRADIENTS[Math.floor(Math.random() * HEARTS_GRADIENTS.length)]
-		const randomShape = () =>
-			HEARTS_SHAPES[Math.floor(Math.random() * HEARTS_SHAPES.length)]
-		const createHeartPoint = (t: number) => {
-			const sinT = Math.sin(t)
-			const cosT = Math.cos(t)
-			return {
-				x: 16 * Math.pow(sinT, 3),
-				y: -(
-					13 * cosT -
-					5 * Math.cos(2 * t) -
-					2 * Math.cos(3 * t) -
-					Math.cos(4 * t)
-				),
-			}
-		}
-		const createHeartCloudSeeds = (): HeartSeed[] => {
-			const minDimension = Math.min(width, height)
-			const scale =
-				(minDimension * HEARTS_CLOUD_SIZE_FACTOR) / HEARTS_CLOUD_BASE_SPAN
-			const centerX = width / 2
-			const centerY = height / 2
-			const angleOffset = Math.random() * Math.PI * 2
+	const drawScene = () => {
+		if (!artwork) return
+		context.clearRect(0, 0, width, height)
+		const reveal = hasRevealed ? 1 : easeOut(elapsed / 4)
+		const isCompact = width < 600
+		const breeze = Math.sin(elapsed * 0.17) * 12 + Math.sin(elapsed * 0.08) * 5
+		context.globalAlpha = reveal * 0.36
+		context.drawImage(
+			artwork.haze,
+			-width * 0.5 + breeze,
+			height * 0.24,
+			width * 2,
+			height * 1.55,
+		)
 
-			return Array.from({ length: HEARTS_FIELD_COUNT }, (_, index) => {
-				const t =
-					angleOffset +
-					((index + Math.random() * HEARTS_CLOUD_T_JITTER) /
-						HEARTS_FIELD_COUNT) *
-						Math.PI *
-						2
-				const { x, y } = createHeartPoint(t)
-				const fill = randomInRange(HEARTS_CLOUD_FILL_RANGE)
-				const jitter =
-					minDimension * randomInRange(HEARTS_CLOUD_JITTER_FACTOR_RANGE)
-				const spreadAngle = Math.random() * Math.PI * 2
-				const spread = randomInRange({ max: jitter, min: 0 })
-
-				return {
-					x: centerX + x * scale * fill + Math.cos(spreadAngle) * spread,
-					y: centerY + y * scale * fill + Math.sin(spreadAngle) * spread,
-				}
-			})
-		}
-		const createParticle = (time: number, seed?: HeartSeed): HeartParticle => ({
-			birthTime: time + randomInRange(HEARTS_FADE_IN_DELAY_RANGE),
-			fadeDuration: randomInRange(HEARTS_FADE_IN_DURATION_RANGE),
-			glow: randomInRange(HEARTS_GLOW_RANGE),
-			gradient: randomGradient(),
-			opacity: randomInRange({ max: 0.85, min: 0.45 }),
-			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
-			rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
-			rotationSpeed: randomInRange(HEARTS_ROTATION_SPEED_RANGE),
-			scaleFrom: randomInRange(HEARTS_SCALE_RANGE),
-			shape: randomShape(),
-			size: randomInRange(HEARTS_SIZE_RANGE),
-			sway: randomInRange(HEARTS_SWAY_RANGE),
-			vx: randomInRange(HEARTS_VELOCITY_X_RANGE),
-			vy: randomInRange(HEARTS_VELOCITY_Y_RANGE),
-			x:
-				seed?.x ??
-				randomInRange({
-					max: width + HEARTS_FIELD_MARGIN,
-					min: -HEARTS_FIELD_MARGIN,
-				}),
-			y:
-				seed?.y ??
-				randomInRange({
-					max: height + HEARTS_FIELD_MARGIN,
-					min: -HEARTS_FIELD_MARGIN,
-				}),
-		})
-		const resetParticles = (time: number) => {
-			const seeds = shouldFormHeartCloud ? createHeartCloudSeeds() : null
-			particles = Array.from({ length: HEARTS_FIELD_COUNT }, (_, index) =>
-				createParticle(time, seeds?.[index]),
+		const margin = isCompact ? 65 : 100
+		const cloudScale = Math.min(width, height)
+		for (const particle of particles) {
+			const { kind, index } = particle
+			if (
+				isCompact &&
+				index >= (kind === 'heart' ? VALENTINES_COMPACT_HEART_COUNT : 6)
 			)
-			shouldFormHeartCloud = false
-		}
-		const respawnParticle = (particle: HeartParticle, time: number) => {
-			Object.assign(particle, createParticle(time))
-		}
-		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
-		const resizeCanvas = () => {
-			const nextWidth = window.innerWidth
-			const nextHeight = window.innerHeight
-			const prevWidth = width
-			const prevHeight = height
-			width = nextWidth
-			height = nextHeight
-			const dpr = getCanvasDpr({ height, maxDpr: HEARTS_FIELD_MAX_DPR, width })
-
-			canvas.width = Math.round(width * dpr)
-			canvas.height = Math.round(height * dpr)
-			canvas.style.width = `${width}px`
-			canvas.style.height = `${height}px`
-			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-
-			const now = performance.now()
-			if (particles.length === 0) {
-				resetParticles(now)
-				return
-			}
-
-			const scaleX = prevWidth > 0 ? width / prevWidth : 1
-			const scaleY = prevHeight > 0 ? height / prevHeight : 1
-			for (const particle of particles) {
-				particle.x = (particle.x - prevWidth / 2) * scaleX + width / 2
-				particle.y = (particle.y - prevHeight / 2) * scaleY + height / 2
-
-				if (
-					particle.x < -HEARTS_FIELD_MARGIN ||
-					particle.x > width + HEARTS_FIELD_MARGIN ||
-					particle.y < -HEARTS_FIELD_MARGIN ||
-					particle.y > height + HEARTS_FIELD_MARGIN
-				) {
-					respawnParticle(particle, now)
-				}
-			}
-		}
-		const revealParticles = (time: number) => {
-			for (const particle of particles) {
-				particle.birthTime = time - particle.fadeDuration
-			}
-		}
-		const drawHeart = (size: number, shape: (typeof HEARTS_SHAPES)[number]) => {
-			if (shape === 'arc') {
-				const radius = size * 0.46
-				const centerY = -size * 0.08
-				const bottom = size * 0.95
-				const leftCenterX = -radius
-				const rightCenterX = radius
-
-				context.beginPath()
-				context.moveTo(0, bottom)
-				context.quadraticCurveTo(
-					-size * 1.05,
-					size * 0.45,
-					leftCenterX - radius,
-					centerY,
-				)
-				context.arc(leftCenterX, centerY, radius, Math.PI, 0, false)
-				context.arc(rightCenterX, centerY, radius, Math.PI, 0, false)
-				context.quadraticCurveTo(size * 1.05, size * 0.45, 0, bottom)
-				context.closePath()
-				context.fill()
-				return
-			}
-
-			const steps = 52
-			const scale = size / 22
-
-			context.beginPath()
-			for (let i = 0; i <= steps; i += 1) {
-				const t = (i / steps) * Math.PI * 2
-				const sinT = Math.sin(t)
-				const cosT = Math.cos(t)
-				const x = 16 * Math.pow(sinT, 3)
-				const y = -(
-					13 * cosT -
-					5 * Math.cos(2 * t) -
-					2 * Math.cos(3 * t) -
-					Math.cos(4 * t)
-				)
-				const px = x * scale
-				const py = y * scale
-				if (i === 0) {
-					context.moveTo(px, py)
-				} else {
-					context.lineTo(px, py)
-				}
-			}
-			context.closePath()
-			context.fill()
-		}
-		const drawParticle = (particle: HeartParticle, time: number) => {
-			const lifeProgress = (time - particle.birthTime) / particle.fadeDuration
-			if (lifeProgress < 0) {
-				return
-			}
-
-			const eased = easeOutCubic(Math.min(1, lifeProgress))
-			const pulse =
-				0.75 + Math.sin(time * 0.001 + particle.phase) * particle.sway * 0.05
-			const scale = particle.scaleFrom + (1 - particle.scaleFrom) * eased
-
+				continue
+			const appearance = hasRevealed
+				? 1
+				: easeOut((elapsed - particle.delay) / 1.8)
+			if (appearance === 0) continue
+			const isInHeartCloud = shouldFormHeartCloud && kind === 'heart'
+			const cloud = isCompact ? particle.compactCloud : particle.cloud
+			const originX = isInHeartCloud
+				? width / 2 + cloud.x * cloudScale
+				: particle.x * (width + margin * 2) - margin
+			const originY = isInHeartCloud
+				? height / 2 + cloud.y * cloudScale
+				: particle.y * (height + margin * 2) - margin
+			const driftTime =
+				elapsed * (isInHeartCloud ? VALENTINES_CLOUD_DRIFT_RATE : 1)
+			const horizontal = wrap(
+				(originX + margin) / (width + margin * 2) + driftTime * particle.speedX,
+			)
+			const vertical = wrap(
+				(originY + margin) / (height + margin * 2) +
+					driftTime * particle.speedY,
+			)
+			const edge = Math.min(
+				1,
+				horizontal * 16,
+				(1 - horizontal) * 16,
+				vertical * 16,
+				(1 - vertical) * 16,
+			)
+			const sway = Math.sin(driftTime * 0.42 + particle.phase)
+			const swaySize = particle.sway * (isInHeartCloud ? 0.45 : 1)
+			const x =
+				horizontal * (width + margin * 2) -
+				margin +
+				breeze * particle.depth +
+				sway * swaySize
+			const y =
+				vertical * (height + margin * 2) -
+				margin +
+				Math.cos(driftTime * 0.31 + particle.phase) * swaySize * 0.35
+			const opening = 0.7 + appearance * 0.3
+			const size = particle.size * (isCompact ? 0.8 : 1) * opening
+			const turn = 0.96 + Math.sin(elapsed * 0.35 + particle.phase) * 0.04
+			const rotation = particle.rotation + sway * 0.16
+			const pulse = 0.91 + Math.sin(elapsed * 0.65 + particle.phase) * 0.09
+			const sprite =
+				kind === 'heart'
+					? artwork.hearts[index % artwork.hearts.length]
+					: artwork.bokeh
 			context.save()
-			context.translate(particle.x, particle.y)
-			context.rotate(particle.rotation)
-			context.scale(scale, scale)
-			context.globalAlpha = particle.opacity * eased * pulse
-			const gradient = context.createRadialGradient(
-				0,
-				0,
-				particle.size * 0.15,
-				0,
-				0,
-				particle.size,
-			)
-			gradient.addColorStop(0, particle.gradient.inner)
-			gradient.addColorStop(0.55, particle.gradient.mid)
-			gradient.addColorStop(1, particle.gradient.outer)
-			context.fillStyle = gradient
-			context.shadowColor = particle.gradient.mid
-			context.shadowBlur = particle.glow * 1.5
-			drawHeart(particle.size, particle.shape)
+			context.translate(x, y)
+			context.rotate(rotation)
+			context.scale(turn, 1)
+			context.globalAlpha = particle.opacity * appearance * edge * pulse
+			context.drawImage(sprite, -size, -size, size * 2, size * 2)
 			context.restore()
 		}
-		const updateParticle = (
-			particle: HeartParticle,
-			delta: number,
-			time: number,
-		) => {
-			if (time < particle.birthTime) {
-				return
-			}
-
-			const sway = Math.sin(time * 0.001 + particle.phase) * particle.sway
-			const lift =
-				Math.cos(time * 0.0014 + particle.phase) * particle.sway * 0.5
-
-			particle.x += (particle.vx + sway) * delta
-			particle.y += (particle.vy + lift) * delta
-			particle.rotation += particle.rotationSpeed * delta
-
-			if (
-				particle.x < -HEARTS_FIELD_MARGIN ||
-				particle.x > width + HEARTS_FIELD_MARGIN ||
-				particle.y < -HEARTS_FIELD_MARGIN ||
-				particle.y > height + HEARTS_FIELD_MARGIN
-			) {
-				respawnParticle(particle, time)
-			}
-		}
-		const renderFrame = (time: number) => {
-			if (hasCanceled) return
-			const delta = Math.min(0.05, (time - lastTime) / 1000)
-			lastTime = time
-
-			context.clearRect(0, 0, width, height)
-			for (const particle of particles) {
-				updateParticle(particle, delta, time)
-				drawParticle(particle, time)
-			}
-
-			animationFrameId = animationController.requestAnimationFrame(renderFrame)
-		}
-		const drawStaticFrame = () => {
-			revealParticles(performance.now())
-			context.clearRect(0, 0, width, height)
-			for (const particle of particles) {
-				drawParticle(particle, performance.now())
-			}
-		}
-
-		const mountHearts = () => {
-			if (hasCanceled) return
-			const style = document.createElement('style')
-			const overlayNode = document.createElement('div')
-			const glow = document.createElement('div')
-
-			style.setAttribute('data-valentines', 'glow')
-			style.textContent = `
-@keyframes valentines-glow-reveal {
-	0% { opacity: 0; transform: translate3d(0, 2%, 0) scale(1.02); }
-	100% { opacity: ${HEARTS_GLOW_OPACITY}; transform: translate3d(0, 0, 0) scale(1); }
-}
-`
-
-			overlayNode.setAttribute('aria-hidden', 'true')
-			overlayNode.style.position = 'fixed'
-			overlayNode.style.inset = '0'
-			overlayNode.style.pointerEvents = 'none'
-			overlayNode.style.zIndex = '0'
-			overlayNode.style.mixBlendMode = 'screen'
-
-			glow.style.position = 'absolute'
-			glow.style.inset = '40% -10% -30% -10%'
-			glow.style.background = HEARTS_GLOW_GRADIENT
-			glow.style.opacity = shouldAnimate ? '0' : HEARTS_GLOW_OPACITY
-			glow.style.filter = 'blur(26px)'
-			glow.style.willChange = 'opacity, transform'
-
-			if (shouldAnimate) {
-				glow.style.animation =
-					'valentines-glow-reveal 4s ease-out 0.8s forwards'
-			}
-
-			overlayNode.appendChild(glow)
-			document.head.appendChild(style)
-			document.body.appendChild(overlayNode)
-			overlay = overlayNode
-			styleEl = style
-
-			canvas.setAttribute('aria-hidden', 'true')
-			canvas.style.position = 'fixed'
-			canvas.style.inset = '0'
-			canvas.style.pointerEvents = 'none'
-			canvas.style.zIndex = '1'
-			canvas.style.opacity = HEARTS_FIELD_OPACITY
-			canvas.style.filter = HEARTS_FIELD_FILTER
-			canvas.style.mixBlendMode = 'screen'
-
-			document.body.appendChild(canvas)
-			resizeCanvas()
-			window.addEventListener('resize', resizeCanvas)
-
-			if (shouldAnimate) {
-				lastTime = performance.now()
-				animationFrameId =
-					animationController.requestAnimationFrame(renderFrame)
-			} else {
-				drawStaticFrame()
-			}
-		}
-
-		timeoutId = window.setTimeout(mountHearts, HEARTS_MOUNT_DELAY_MS)
-
-		return () => {
-			animationController.dispose()
-			hasCanceled = true
-			if (timeoutId !== null) {
-				window.clearTimeout(timeoutId)
-			}
-			if (animationFrameId !== null) {
-				animationController.cancelAnimationFrame(animationFrameId)
-			}
-			window.removeEventListener('resize', resizeCanvas)
-			if (document.body.contains(canvas)) {
-				document.body.removeChild(canvas)
-			}
-			if (overlay && overlay.parentElement) {
-				overlay.parentElement.removeChild(overlay)
-			}
-			if (styleEl && styleEl.parentElement) {
-				styleEl.parentElement.removeChild(styleEl)
-			}
-		}
-	} catch (error) {
-		console.error('Failed to launch valentines hearts', error)
-		return () => {}
+		context.globalAlpha = 1
 	}
+	const resizeScene = () => {
+		width = Math.max(1, window.innerWidth)
+		height = Math.max(1, window.innerHeight)
+		const dpr = getCanvasDpr({ height, maxDpr: 2, width })
+		canvas.width = Math.round(width * dpr)
+		canvas.height = Math.round(height * dpr)
+		canvas.style.width = `${width}px`
+		canvas.style.height = `${height}px`
+		context.setTransform(dpr, 0, 0, dpr, 0, 0)
+		if (!artwork || artworkDpr !== dpr) {
+			artwork = createValentinesArtwork({ dpr })
+			artworkDpr = dpr
+		}
+		drawScene()
+	}
+	const canAnimate = () =>
+		!motionPreference.matches && !document.hidden && !isSettingsModalOpen()
+	const renderFrame = (time: number, generation: number) => {
+		if (hasCanceled || generation !== animationGeneration) return
+		animationFrameId = null
+		if (!canAnimate()) return
+		const delta =
+			lastTime === null ? 0 : Math.max(0, Math.min(50, time - lastTime))
+		lastTime = time
+		elapsed += delta / 1000
+		drawScene()
+		animationFrameId = window.requestAnimationFrame((nextTime) =>
+			renderFrame(nextTime, generation),
+		)
+	}
+	const syncAnimation = () => {
+		animationGeneration += 1
+		if (animationFrameId !== null) {
+			window.cancelAnimationFrame(animationFrameId)
+			animationFrameId = null
+		}
+		lastTime = null
+		if (motionPreference.matches) {
+			hasRevealed = true
+			drawScene()
+		} else if (canAnimate()) {
+			const generation = animationGeneration
+			animationFrameId = window.requestAnimationFrame((time) =>
+				renderFrame(time, generation),
+			)
+		}
+	}
+	const cleanup = () => {
+		hasCanceled = true
+		if (animationFrameId !== null) {
+			window.cancelAnimationFrame(animationFrameId)
+			animationFrameId = null
+		}
+		unsubscribeSettings()
+		window.removeEventListener('resize', resizeScene)
+		document.removeEventListener('visibilitychange', syncAnimation)
+		motionPreference.removeEventListener('change', syncAnimation)
+		canvas.remove()
+	}
+
+	try {
+		document.body.appendChild(canvas)
+		resizeScene()
+		window.addEventListener('resize', resizeScene)
+		document.addEventListener('visibilitychange', syncAnimation)
+		motionPreference.addEventListener('change', syncAnimation)
+		unsubscribeSettings = onSettingsModalStateChange(syncAnimation)
+		syncAnimation()
+	} catch (error) {
+		cleanup()
+		throw error
+	}
+	return cleanup
+}
+
+function createParticle({
+	index,
+	kind,
+	cloudAngleOffset,
+}: {
+	index: number
+	kind: ParticleKind
+	cloudAngleOffset: number
+}) {
+	const depth = index % 6 === 0 ? 1.15 : index % 3 === 0 ? 0.6 : 0.88
+	const isLight = kind === 'light'
+	const cloudPosition = index + Math.random() * 0.15
+	const cloudFill = randomInRange({ min: 0.95, max: 1.02 })
+	const cloudJitter = randomInRange({ min: 0.02, max: 0.06 })
+	const spreadAngle = Math.random() * Math.PI * 2
+	const spread = randomInRange({ min: 0, max: cloudJitter })
+	const getCloudPoint = (count: number) => {
+		const angle = cloudAngleOffset + (cloudPosition / count) * Math.PI * 2
+		const scale = (1.22 / 34) * cloudFill
+		return {
+			x: 16 * Math.sin(angle) ** 3 * scale + Math.cos(spreadAngle) * spread,
+			y:
+				(-13 * Math.cos(angle) +
+					5 * Math.cos(angle * 2) +
+					2 * Math.cos(angle * 3) +
+					Math.cos(angle * 4)) *
+					scale +
+				Math.sin(spreadAngle) * spread,
+		}
+	}
+
+	return {
+		index,
+		kind,
+		depth,
+		x: Math.random(),
+		y: Math.random(),
+		cloud: getCloudPoint(VALENTINES_HEART_COUNT),
+		compactCloud: getCloudPoint(VALENTINES_COMPACT_HEART_COUNT),
+		phase: randomInRange({ min: 0, max: Math.PI * 2 }),
+		delay: randomInRange({ min: 0, max: 2.2 }),
+		size:
+			randomInRange(isLight ? { min: 36, max: 78 } : { min: 24, max: 42 }) *
+			depth,
+		speedX: randomInRange({ min: -0.0011, max: 0.0011 }) * depth,
+		speedY: randomInRange({ min: -0.007, max: -0.003 }) * depth,
+		sway: randomInRange({ min: 5, max: 15 }) * depth,
+		rotation: randomInRange({ min: -0.24, max: 0.24 }),
+		opacity:
+			randomInRange(
+				isLight ? { min: 0.08, max: 0.18 } : { min: 0.64, max: 0.9 },
+			) *
+			(0.6 + depth * 0.35),
+	}
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
+function wrap(value: number) {
+	return ((value % 1) + 1) % 1
 }
