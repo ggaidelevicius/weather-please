@@ -1,409 +1,248 @@
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import { randomInRange, getCanvasDpr } from '../core/utils'
+import { getCanvasDpr, randomInRange } from '../core/utils'
+import { createAutumnArtwork } from './autumn-artwork'
 
-const AUTUMN_MOUNT_DELAY_MS = 900
+type Leaf = {
+	depth: number
+	phase: number
+	rotation: number
+	size: number
+	speed: number
+	spin: number
+	variant: number
+	x: number
+	y: number
+}
 
-const AUTUMN_FIELD_OPACITY = '0.65'
+export async function launchAutumnEquinoxLeaves(): Promise<() => void> {
+	if (typeof window === 'undefined') return () => {}
 
-const AUTUMN_FIELD_FILTER = 'saturate(120%)'
+	const canvas = document.createElement('canvas')
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create autumn atmosphere canvas')
+	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+	let artwork: ReturnType<typeof createAutumnArtwork> | null = null
+	let artworkDpr = 0
+	let width = Math.max(1, window.innerWidth)
+	let height = Math.max(1, window.innerHeight)
+	const leaves = Array.from({ length: 32 }, (_, index) => createLeaf(index))
+	let shouldAnimate = !motionPreference.matches
+	let elapsed = shouldAnimate ? 0 : 4
+	let lastTime = performance.now()
+	let hasCanceled = false
+	let animationFrameId: null | number = null
+	let animationGeneration = 0
 
-const AUTUMN_FIELD_MAX_DPR = 2
+	canvas.setAttribute('aria-hidden', 'true')
+	canvas.setAttribute('data-autumn-equinox', 'true')
+	Object.assign(canvas.style, {
+		background:
+			'radial-gradient(ellipse at 6% 7%, #b7834f28, transparent 64%), radial-gradient(ellipse at 98% 62%, #66547524, transparent 70%), radial-gradient(ellipse at 40% 100%, #8764461c, transparent 60%)',
+		inset: '0',
+		mixBlendMode: 'screen',
+		pointerEvents: 'none',
+		position: 'fixed',
+		zIndex: '0',
+	})
+	document.body.appendChild(canvas)
+	const animationController = createSettingsModalAnimationController()
 
-const AUTUMN_FIELD_MARGIN = 160
-
-const AUTUMN_PARTICLE_COUNT = 62
-
-const AUTUMN_FADE_IN_DELAY_RANGE = { max: 2400, min: 0 }
-
-const AUTUMN_FADE_IN_DURATION_RANGE = { max: 2000, min: 1100 }
-
-const AUTUMN_SCALE_RANGE = { max: 0.95, min: 0.55 }
-
-const AUTUMN_SIZE_RANGE = { max: 34, min: 18 }
-
-const AUTUMN_VELOCITY_X_RANGE = { max: 12, min: -12 }
-
-const AUTUMN_VELOCITY_Y_RANGE = { max: 20, min: 9 }
-
-const AUTUMN_SWAY_RANGE = { max: 10, min: 3 }
-
-const AUTUMN_ROTATION_SPEED_RANGE = { max: 0.45, min: -0.45 }
-
-const AUTUMN_SWAY_SPEED_X = 0.00055
-
-const AUTUMN_SWAY_SPEED_Y = 0.00045
-
-const AUTUMN_GLOW_RANGE = { max: 20, min: 10 }
-
-const AUTUMN_EMOJIS = ['🍁', '🍂']
-
-const AUTUMN_FONT =
-	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
-
-const AUTUMN_SPAWN_Y_MAX_RATIO = 0.7
-
-const AUTUMN_HAZE_OPACITY = '0.5'
-
-const AUTUMN_HAZE_GRADIENT =
-	'radial-gradient(120% 85% at 18% 0%, rgba(251, 191, 36, 0.38), rgba(251, 146, 60, 0.18) 45%, rgba(15, 23, 42, 0) 75%), radial-gradient(80% 70% at 78% 20%, rgba(249, 115, 22, 0.28), rgba(15, 23, 42, 0) 70%)'
-
-const AUTUMN_GLOW_COLORS = [
-	'rgba(251, 191, 36, 0.5)',
-	'rgba(248, 113, 113, 0.45)',
-	'rgba(245, 158, 11, 0.42)',
-	'rgba(248, 250, 252, 0.25)',
-]
-
-export async function launchAutumnEquinoxLeaves() {
-	try {
-		if (typeof window === 'undefined') {
-			return () => {}
+	const advanceLeaves = (delta: number) => {
+		const gust = getGust(elapsed)
+		for (const leaf of leaves) {
+			const wind =
+				4 +
+				gust * (19 + leaf.depth * 7) +
+				Math.sin(elapsed * 0.3 + leaf.phase) * 3
+			leaf.x = (leaf.x + (wind * delta) / (width + 100)) % 1
+			leaf.y = (leaf.y + ((leaf.speed - gust * 5) * delta) / (height + 100)) % 1
+			leaf.rotation += (leaf.spin + gust * 0.55) * delta
 		}
+		return leaves
+	}
 
-		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
-			.matches
-		const animationController = createSettingsModalAnimationController({
-			shouldAnimate,
-		})
-		const style = document.createElement('style')
-		const overlay = document.createElement('div')
-		const haze = document.createElement('div')
-		const canvas = document.createElement('canvas')
-		const context = canvas.getContext('2d')
-		if (!context) {
-			throw new Error('Unable to create 2D context for autumn equinox canvas')
-		}
+	const drawScene = () => {
+		if (!artwork) return
+		context.clearRect(0, 0, width, height)
+		const reveal = Math.min(1, elapsed / 2.6)
+		const opacity = 1 - (1 - reveal) ** 3
+		const gust = getGust(elapsed)
+		const drift = Math.sin(elapsed * 0.13) * 0.012 + gust * 0.018
 
-		type LeafParticle = {
-			birthTime: number
-			emoji: string
-			fadeDuration: number
-			glow: number
-			glowColor: string
-			opacity: number
-			phase: number
-			rotation: number
-			rotationSpeed: number
-			scaleFrom: number
-			size: number
-			sway: number
-			vx: number
-			vy: number
-			x: number
-			y: number
-		}
-		type EmojiSprite = {
-			canvas: HTMLCanvasElement
-			displaySize: number
-		}
-
-		let timeoutId: null | number = null
-		let animationFrameId: null | number = null
-		let hasCanceled = false
-		let width = window.innerWidth
-		let height = window.innerHeight
-		let particles: LeafParticle[] = []
-		let lastTime = performance.now()
-		const spriteCache = new Map<string, EmojiSprite>()
-		const spriteDpr = Math.min(
-			window.devicePixelRatio || 1,
-			AUTUMN_FIELD_MAX_DPR,
+		context.globalAlpha = opacity * (0.13 + gust * 0.022)
+		context.drawImage(
+			artwork.light,
+			width * (-0.41 + drift),
+			-height * 0.5,
+			width * 1.4,
+			height * 1.55,
+		)
+		context.globalAlpha = opacity * (0.047 + Math.sin(elapsed * 0.17) * 0.008)
+		context.drawImage(
+			artwork.light,
+			width * (0.18 + drift * 1.6),
+			-height * 0.26,
+			width * 0.75,
+			height * 0.92,
+		)
+		context.globalAlpha = opacity * 0.038
+		context.drawImage(
+			artwork.light,
+			width * (-0.32 + drift * 0.6),
+			height * 0.6,
+			width * 0.95,
+			height * 0.72,
 		)
 
-		const randomEmoji = () =>
-			AUTUMN_EMOJIS[Math.floor(Math.random() * AUTUMN_EMOJIS.length)]
-		const randomGlow = () =>
-			AUTUMN_GLOW_COLORS[Math.floor(Math.random() * AUTUMN_GLOW_COLORS.length)]
-		const createParticle = (time: number): LeafParticle => ({
-			birthTime: time + randomInRange(AUTUMN_FADE_IN_DELAY_RANGE),
-			emoji: randomEmoji(),
-			fadeDuration: randomInRange(AUTUMN_FADE_IN_DURATION_RANGE),
-			glow: randomInRange(AUTUMN_GLOW_RANGE),
-			glowColor: randomGlow(),
-			opacity: randomInRange({ max: 0.8, min: 0.45 }),
-			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
-			rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
-			rotationSpeed: randomInRange(AUTUMN_ROTATION_SPEED_RANGE),
-			scaleFrom: randomInRange(AUTUMN_SCALE_RANGE),
-			size: randomInRange(AUTUMN_SIZE_RANGE),
-			sway: randomInRange(AUTUMN_SWAY_RANGE),
-			vx: randomInRange(AUTUMN_VELOCITY_X_RANGE),
-			vy: randomInRange(AUTUMN_VELOCITY_Y_RANGE),
-			x: randomInRange({
-				max: width + AUTUMN_FIELD_MARGIN,
-				min: -AUTUMN_FIELD_MARGIN,
-			}),
-			y: randomInRange({
-				max: height * AUTUMN_SPAWN_Y_MAX_RATIO,
-				min: -AUTUMN_FIELD_MARGIN,
-			}),
-		})
-		const getSpriteKey = (
-			emoji: string,
-			size: number,
-			glowColor: string,
-			glow: number,
-		) => {
-			const quantizedSize = Math.max(12, Math.round(size / 2) * 2)
-			const quantizedGlow = Math.max(6, Math.round(glow / 2) * 2)
-			return `${emoji}-${quantizedSize}-${glowColor}-${quantizedGlow}-${spriteDpr}`
-		}
-		const getEmojiSprite = (
-			emoji: string,
-			size: number,
-			glowColor: string,
-			glow: number,
-		): EmojiSprite => {
-			const key = getSpriteKey(emoji, size, glowColor, glow)
-			const cached = spriteCache.get(key)
-			if (cached) {
-				return cached
-			}
+		const canopyWidth = Math.min(width * 0.9, 800)
+		const canopyHeight =
+			(canopyWidth * artwork.canopyHeight) / artwork.canopyWidth
+		// The cached mask breaks up the light without adding a solid tree silhouette.
+		context.globalCompositeOperation = 'destination-out'
+		context.globalAlpha = 0.65
+		context.drawImage(
+			artwork.canopy,
+			-35 + drift * 450,
+			-24 + gust * 6,
+			canopyWidth,
+			canopyHeight,
+		)
+		context.save()
+		context.translate(width + 30 - drift * 260, -34)
+		context.scale(-1, 1)
+		context.globalAlpha = 0.45
+		context.drawImage(
+			artwork.canopy,
+			0,
+			0,
+			canopyWidth * 0.74,
+			canopyHeight * 0.74,
+		)
+		context.restore()
+		context.globalCompositeOperation = 'source-over'
 
-			const quantizedSize = Math.max(12, Math.round(size / 2) * 2)
-			const quantizedGlow = Math.max(6, Math.round(glow / 2) * 2)
-			const padding = quantizedGlow * 2
-			const displaySize = quantizedSize + padding * 2
-			const spriteCanvas = document.createElement('canvas')
-			spriteCanvas.width = Math.ceil(displaySize * spriteDpr)
-			spriteCanvas.height = Math.ceil(displaySize * spriteDpr)
-
-			const spriteContext = spriteCanvas.getContext('2d')
-			if (!spriteContext) {
-				return { canvas: spriteCanvas, displaySize }
-			}
-
-			spriteContext.setTransform(spriteDpr, 0, 0, spriteDpr, 0, 0)
-			spriteContext.clearRect(0, 0, displaySize, displaySize)
-			spriteContext.font = `${quantizedSize}px ${AUTUMN_FONT}`
-			spriteContext.textAlign = 'center'
-			spriteContext.textBaseline = 'middle'
-			spriteContext.shadowColor = glowColor
-			spriteContext.shadowBlur = quantizedGlow
-			spriteContext.fillText(emoji, displaySize / 2, displaySize / 2)
-
-			const sprite = { canvas: spriteCanvas, displaySize }
-			spriteCache.set(key, sprite)
-			return sprite
-		}
-		const resetParticles = (time: number) => {
-			particles = Array.from({ length: AUTUMN_PARTICLE_COUNT }, () =>
-				createParticle(time),
-			)
-		}
-		const respawnParticle = (particle: LeafParticle, time: number) => {
-			Object.assign(particle, createParticle(time))
-		}
-		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
-		const resizeCanvas = () => {
-			const nextWidth = window.innerWidth
-			const nextHeight = window.innerHeight
-			const prevWidth = width
-			const prevHeight = height
-			width = nextWidth
-			height = nextHeight
-			const dpr = getCanvasDpr({ height, maxDpr: AUTUMN_FIELD_MAX_DPR, width })
-
-			canvas.width = Math.round(width * dpr)
-			canvas.height = Math.round(height * dpr)
-			canvas.style.width = `${width}px`
-			canvas.style.height = `${height}px`
-			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-
-			const now = performance.now()
-			if (particles.length === 0) {
-				resetParticles(now)
-				return
-			}
-
-			const scaleX = prevWidth > 0 ? width / prevWidth : 1
-			const scaleY = prevHeight > 0 ? height / prevHeight : 1
-			for (const particle of particles) {
-				particle.x = (particle.x - prevWidth / 2) * scaleX + width / 2
-				particle.y = (particle.y - prevHeight / 2) * scaleY + height / 2
-
-				if (
-					particle.x < -AUTUMN_FIELD_MARGIN ||
-					particle.x > width + AUTUMN_FIELD_MARGIN ||
-					particle.y > height + AUTUMN_FIELD_MARGIN
-				) {
-					respawnParticle(particle, now)
-				}
-			}
-		}
-		const revealParticles = (time: number) => {
-			for (const particle of particles) {
-				particle.birthTime = time - particle.fadeDuration
-			}
-		}
-		const drawParticle = (particle: LeafParticle, time: number) => {
-			const lifeProgress = (time - particle.birthTime) / particle.fadeDuration
-			if (lifeProgress < 0) {
-				return
-			}
-
-			const eased = easeOutCubic(Math.min(1, lifeProgress))
-			const pulse =
-				0.85 + Math.sin(time * 0.001 + particle.phase) * particle.sway * 0.03
-			const scale = particle.scaleFrom + (1 - particle.scaleFrom) * eased
-
+		const leafCount = width < 600 ? 18 : leaves.length
+		for (let index = 0; index < leafCount; index += 1) {
+			const leaf = leaves[index]
+			const sway = Math.sin(elapsed * 0.45 + leaf.phase)
+			const x = leaf.x * (width + 100) - 50 + sway * (7 + leaf.depth * 3)
+			const y =
+				leaf.y * (height + 100) - 50 + Math.cos(elapsed * 0.38 + leaf.phase) * 4
+			const size = leaf.size * (width < 600 ? 0.8 : 1)
+			const turn = 0.18 + Math.abs(Math.cos(elapsed * 0.7 + leaf.phase)) * 0.82
 			context.save()
-			context.translate(particle.x, particle.y)
-			context.rotate(particle.rotation)
-			context.scale(scale, scale)
-			context.globalAlpha = particle.opacity * eased * pulse
-			context.font = `${particle.size}px ${AUTUMN_FONT}`
-			context.textAlign = 'center'
-			context.textBaseline = 'middle'
-			const sprite = getEmojiSprite(
-				particle.emoji,
-				particle.size,
-				particle.glowColor,
-				particle.glow,
-			)
-			const drawSize = sprite.displaySize * scale
+			context.translate(x, y)
+			context.rotate(leaf.rotation + sway * 0.18)
+			context.scale(turn, 1)
+			context.globalAlpha =
+				opacity * (0.22 + leaf.depth * 0.09) * (0.82 + turn * 0.18)
 			context.drawImage(
-				sprite.canvas,
-				-drawSize / 2,
-				-drawSize / 2,
-				drawSize,
-				drawSize,
+				artwork.leaves[leaf.variant],
+				-size / 2,
+				-size / 2,
+				size,
+				size,
 			)
 			context.restore()
 		}
-		const updateParticle = (
-			particle: LeafParticle,
-			delta: number,
-			time: number,
-		) => {
-			if (time < particle.birthTime) {
-				return
-			}
-
-			const sway =
-				Math.sin(time * AUTUMN_SWAY_SPEED_X + particle.phase) * particle.sway
-			const lift =
-				Math.cos(time * AUTUMN_SWAY_SPEED_Y + particle.phase) *
-				particle.sway *
-				0.35
-
-			particle.x += (particle.vx + sway) * delta
-			particle.y += (particle.vy + lift) * delta
-			particle.rotation += particle.rotationSpeed * delta
-
-			if (
-				particle.x < -AUTUMN_FIELD_MARGIN ||
-				particle.x > width + AUTUMN_FIELD_MARGIN ||
-				particle.y > height + AUTUMN_FIELD_MARGIN
-			) {
-				respawnParticle(particle, time)
-			}
-		}
-		const renderFrame = (time: number) => {
-			if (hasCanceled) return
-			const delta = Math.min(0.05, (time - lastTime) / 1000)
-			lastTime = time
-
-			context.clearRect(0, 0, width, height)
-			for (const particle of particles) {
-				updateParticle(particle, delta, time)
-				drawParticle(particle, time)
-			}
-
-			animationFrameId = animationController.requestAnimationFrame(renderFrame)
-		}
-		const drawStaticFrame = () => {
-			revealParticles(performance.now())
-			context.clearRect(0, 0, width, height)
-			for (const particle of particles) {
-				drawParticle(particle, performance.now())
-			}
-		}
-		const mountLeaves = () => {
-			if (hasCanceled) return
-
-			style.setAttribute('data-autumn-equinox', 'haze')
-			style.textContent = `
-@keyframes autumn-equinox-haze-reveal {
-	0% { opacity: 0; transform: translate3d(-2%, -2%, 0) scale(1.02); }
-	100% { opacity: ${AUTUMN_HAZE_OPACITY}; transform: translate3d(0, 0, 0) scale(1); }
-}
-@keyframes autumn-equinox-haze-drift {
-	0% { transform: translate3d(0, 0, 0) scale(1); }
-	50% { transform: translate3d(1.5%, -1%, 0) scale(1.02); }
-	100% { transform: translate3d(0, 0, 0) scale(1); }
-}
-`
-
-			overlay.setAttribute('aria-hidden', 'true')
-			overlay.style.position = 'fixed'
-			overlay.style.inset = '0'
-			overlay.style.pointerEvents = 'none'
-			overlay.style.zIndex = '0'
-			overlay.style.mixBlendMode = 'screen'
-
-			haze.style.position = 'absolute'
-			haze.style.inset = '-20% -10% 0 -10%'
-			haze.style.background = AUTUMN_HAZE_GRADIENT
-			haze.style.opacity = shouldAnimate ? '0' : AUTUMN_HAZE_OPACITY
-			haze.style.filter = 'blur(26px)'
-			haze.style.willChange = 'opacity, transform'
-
-			if (shouldAnimate) {
-				haze.style.animation =
-					'autumn-equinox-haze-reveal 4.2s ease-out 0.8s forwards, autumn-equinox-haze-drift 20s ease-in-out infinite 4.2s'
-			}
-
-			overlay.appendChild(haze)
-			document.head.appendChild(style)
-			document.body.appendChild(overlay)
-
-			canvas.setAttribute('aria-hidden', 'true')
-			canvas.style.position = 'fixed'
-			canvas.style.inset = '0'
-			canvas.style.pointerEvents = 'none'
-			canvas.style.zIndex = '1'
-			canvas.style.opacity = AUTUMN_FIELD_OPACITY
-			canvas.style.filter = AUTUMN_FIELD_FILTER
-			canvas.style.mixBlendMode = 'screen'
-
-			document.body.appendChild(canvas)
-			resizeCanvas()
-			window.addEventListener('resize', resizeCanvas)
-
-			if (shouldAnimate) {
-				lastTime = performance.now()
-				animationFrameId =
-					animationController.requestAnimationFrame(renderFrame)
-			} else {
-				drawStaticFrame()
-			}
-		}
-
-		timeoutId = window.setTimeout(mountLeaves, AUTUMN_MOUNT_DELAY_MS)
-
-		return () => {
-			animationController.dispose()
-			hasCanceled = true
-			if (timeoutId !== null) {
-				window.clearTimeout(timeoutId)
-			}
-			if (animationFrameId !== null) {
-				animationController.cancelAnimationFrame(animationFrameId)
-			}
-			window.removeEventListener('resize', resizeCanvas)
-			if (document.body.contains(canvas)) {
-				document.body.removeChild(canvas)
-			}
-			if (overlay.parentElement) {
-				overlay.parentElement.removeChild(overlay)
-			}
-			if (style.parentElement) {
-				style.parentElement.removeChild(style)
-			}
-		}
-	} catch (error) {
-		console.error('Failed to launch autumn equinox leaves', error)
-		return () => {}
+		context.globalAlpha = 1
 	}
+
+	const resizeCanvas = () => {
+		width = Math.max(1, window.innerWidth)
+		height = Math.max(1, window.innerHeight)
+		const dpr = getCanvasDpr({ height, maxDpr: 2, width })
+		canvas.width = Math.round(width * dpr)
+		canvas.height = Math.round(height * dpr)
+		canvas.style.width = `${width}px`
+		canvas.style.height = `${height}px`
+		context.setTransform(dpr, 0, 0, dpr, 0, 0)
+		if (!artwork || artworkDpr !== dpr) {
+			artwork = createAutumnArtwork({ dpr })
+			artworkDpr = dpr
+		}
+		drawScene()
+	}
+
+	const renderFrame = (time: number, generation: number) => {
+		// A settings-resume callback may already be queued when visibility changes.
+		if (hasCanceled || generation !== animationGeneration) return
+		animationFrameId = null
+		if (!shouldAnimate || document.hidden) return
+		if (!animationController.isPaused()) {
+			const delta = Math.min(Math.max(0, (time - lastTime) / 1000), 0.05)
+			elapsed += delta
+			lastTime = time
+			advanceLeaves(delta)
+			drawScene()
+		}
+		animationFrameId = animationController.requestAnimationFrame((nextTime) =>
+			renderFrame(nextTime, generation),
+		)
+	}
+
+	const syncAnimation = () => {
+		animationGeneration += 1
+		if (animationFrameId !== null) {
+			animationController.cancelAnimationFrame(animationFrameId)
+			animationFrameId = null
+		}
+		shouldAnimate = !motionPreference.matches
+		lastTime = performance.now()
+		if (!shouldAnimate) {
+			elapsed = Math.max(elapsed, 4)
+			drawScene()
+		} else if (!document.hidden) {
+			const generation = animationGeneration
+			animationFrameId = animationController.requestAnimationFrame((time) =>
+				renderFrame(time, generation),
+			)
+		}
+	}
+
+	const cleanup = () => {
+		hasCanceled = true
+		if (animationFrameId !== null) {
+			animationController.cancelAnimationFrame(animationFrameId)
+		}
+		animationController.dispose()
+		window.removeEventListener('resize', resizeCanvas)
+		document.removeEventListener('visibilitychange', syncAnimation)
+		motionPreference.removeEventListener('change', syncAnimation)
+		canvas.remove()
+	}
+
+	try {
+		resizeCanvas()
+		window.addEventListener('resize', resizeCanvas)
+		document.addEventListener('visibilitychange', syncAnimation)
+		motionPreference.addEventListener('change', syncAnimation)
+		syncAnimation()
+	} catch (error) {
+		cleanup()
+		throw error
+	}
+	return cleanup
+}
+
+function createLeaf(index: number): Leaf {
+	const depth = index % 7 === 0 ? 2 : index % 3 === 0 ? 0 : 1
+	return {
+		depth,
+		phase: randomInRange({ min: 0, max: Math.PI * 2 }),
+		rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
+		size: randomInRange({ min: 12 + depth * 8, max: 18 + depth * 9 }),
+		speed: randomInRange({ min: 7 + depth * 5, max: 12 + depth * 5 }),
+		spin: randomInRange({ min: -0.32, max: 0.32 }),
+		variant: index % 9,
+		x: (index * 0.618034 + Math.random() * 0.08) % 1,
+		y: (index * 0.414214 + Math.random() * 0.08) % 1,
+	}
+}
+
+function getGust(time: number) {
+	return (
+		Math.max(0, Math.sin(time * 0.21 - 0.9)) ** 6 *
+		(0.8 + Math.sin(time * 0.067) * 0.2)
+	)
 }
