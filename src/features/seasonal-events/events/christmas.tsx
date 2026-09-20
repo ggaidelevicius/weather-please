@@ -1,372 +1,391 @@
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import { randomInRange, getCanvasDpr } from '../core/utils'
+import { getCanvasDpr, randomInRange } from '../core/utils'
+import { createChristmasArtwork } from './christmas-artwork'
 
-const CHRISTMAS_MOUNT_DELAY_MS = 900
+type Snowflake = {
+	depth: number
+	phase: number
+	size: number
+	speed: number
+	x: number
+	y: number
+}
 
-const CHRISTMAS_FIELD_OPACITY = '0.7'
+export async function launchChristmasSnowfall(): Promise<() => void> {
+	if (typeof window === 'undefined') return () => {}
 
-const CHRISTMAS_FIELD_FILTER = 'saturate(135%)'
+	const canvas = document.createElement('canvas')
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Christmas scene canvas')
+	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+	const lightSprite = createLightSprite()
+	const snowSprite = createSnowSprite()
+	const snow = Array.from({ length: 180 }, (_, index) => createSnowflake(index))
+	const stars = Array.from({ length: 45 }, () => ({
+		phase: Math.random() * Math.PI * 2,
+		x: Math.random(),
+		y: Math.random() * 0.72,
+	}))
+	let artwork: ReturnType<typeof createChristmasArtwork> | null = null
+	let landscape: HTMLCanvasElement | null = null
+	let artworkDpr = 0
+	let landscapeHeight = 0
+	let width = window.innerWidth
+	let height = window.innerHeight
+	let elapsed = 0
+	let lastTime = performance.now()
+	let shouldAnimate = !motionPreference.matches
+	let hasCanceled = false
+	let animationFrameId: null | number = null
+	let animationGeneration = 0
 
-const CHRISTMAS_FIELD_MAX_DPR = 2
+	canvas.setAttribute('aria-hidden', 'true')
+	canvas.setAttribute('data-christmas', 'true')
+	Object.assign(canvas.style, {
+		background:
+			'radial-gradient(ellipse at 10% 85%, #c59a3428, transparent 48%), radial-gradient(ellipse at 80% 15%, #456b9a28, transparent 65%), radial-gradient(ellipse at 100% 100%, #25544622, transparent 50%)',
+		inset: '0',
+		mixBlendMode: 'screen',
+		pointerEvents: 'none',
+		position: 'fixed',
+		zIndex: '0',
+	})
+	document.body.appendChild(canvas)
+	const animationController = createSettingsModalAnimationController()
 
-const CHRISTMAS_FIELD_MARGIN = 160
+	const drawSnow = (isForeground: boolean, opacity: number) => {
+		context.fillStyle = '#e1eaf4'
+		for (const flake of snow) {
+			if (flake.depth > 0 !== isForeground) continue
+			const span = height + 36
+			const y = ((flake.y * span + elapsed * flake.speed) % span) - 18
+			const drift = elapsed * (2 + flake.depth * 1.8)
+			const sway =
+				Math.sin(elapsed * 0.35 + flake.phase) * (7 + flake.depth * 5)
+			const x = ((flake.x * (width + 60) + drift + sway) % (width + 60)) - 30
+			context.globalAlpha =
+				opacity * (flake.depth === 0 ? 0.28 : flake.depth === 1 ? 0.5 : 0.38)
+			if (flake.depth === 0) {
+				context.fillRect(x, y, flake.size, flake.size)
+			} else {
+				const size = flake.size * (flake.depth === 2 ? 4 : 2.8)
+				context.drawImage(snowSprite, x - size / 2, y - size / 2, size, size)
+			}
+		}
+	}
 
-const CHRISTMAS_PARTICLE_COUNT = 120
+	const drawScene = () => {
+		if (!artwork || !landscape) return
+		context.clearRect(0, 0, width, height)
+		const reveal = shouldAnimate ? Math.min(1, elapsed / 1.8) : 1
+		const opacity = 1 - (1 - reveal) ** 3
+		const scale = Math.min(
+			(height * 0.68) / artwork.height,
+			(width * 0.78) / artwork.width,
+			1,
+		)
+		const treeWidth = artwork.width * scale
+		const treeHeight = artwork.height * scale
+		const treeX = -treeWidth * 0.16
+		const treeY = height - artwork.baseY * scale + 10
 
-const CHRISTMAS_FADE_IN_DELAY_RANGE = { max: 2400, min: 0 }
+		context.fillStyle = '#bfd1e9'
+		for (const star of stars) {
+			context.globalAlpha =
+				opacity * (0.17 + Math.sin(elapsed * 0.45 + star.phase) * 0.07)
+			context.fillRect(star.x * width, star.y * height, 1, 1)
+		}
+		drawSnow(false, opacity)
 
-const CHRISTMAS_FADE_IN_DURATION_RANGE = { max: 2200, min: 1200 }
+		context.globalAlpha = opacity
+		context.drawImage(
+			landscape,
+			0,
+			height - landscapeHeight,
+			width,
+			landscapeHeight,
+		)
+		context.drawImage(artwork.canvas, treeX, treeY, treeWidth, treeHeight)
 
-const CHRISTMAS_SCALE_RANGE = { max: 0.9, min: 0.45 }
-
-const CHRISTMAS_SIZE_RANGE = { max: 6.5, min: 2.5 }
-
-const CHRISTMAS_VELOCITY_X_RANGE = { max: 4.5, min: -4.5 }
-
-const CHRISTMAS_VELOCITY_Y_RANGE = { max: 20, min: 10 }
-
-const CHRISTMAS_SWAY_RANGE = { max: 4, min: 1.2 }
-
-const CHRISTMAS_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
-
-const CHRISTMAS_SWAY_SPEED_X = 0.00045
-
-const CHRISTMAS_SWAY_SPEED_Y = 0.00025
-
-const CHRISTMAS_GLOW_RANGE = { max: 18, min: 10 }
-
-const CHRISTMAS_SPARKLE_CHANCE = 0.3
-
-const CHRISTMAS_LIGHTS_OPACITY = '0.5'
-
-const CHRISTMAS_LIGHTS_GRADIENT =
-	'radial-gradient(30% 30% at 15% 10%, rgba(250, 204, 21, 0.22), rgba(15, 23, 42, 0) 70%), radial-gradient(25% 25% at 50% -5%, rgba(248, 113, 113, 0.18), rgba(15, 23, 42, 0) 70%), radial-gradient(28% 30% at 80% 12%, rgba(74, 222, 128, 0.2), rgba(15, 23, 42, 0) 70%)'
-
-const CHRISTMAS_COLORS = [
-	'#f8fafc',
-	'#e2e8f0',
-	'#e0f2fe',
-	'#fde68a',
-	'#fca5a5',
-	'#86efac',
-]
-
-export async function launchChristmasSnowfall() {
-	try {
-		if (typeof window === 'undefined') {
-			return () => {}
+		context.globalCompositeOperation = 'lighter'
+		for (const light of artwork.lights) {
+			const warmth =
+				0.65 +
+				Math.sin(elapsed * 0.9 + light.phase) * 0.14 +
+				Math.sin(elapsed * 1.7 + light.phase * 0.7) * 0.07
+			const x = treeX + light.x * scale
+			const y = treeY + light.y * scale
+			const haloSize = light.size * 13 * scale
+			context.globalAlpha = opacity * warmth * 0.68
+			context.drawImage(
+				lightSprite,
+				x - haloSize / 2,
+				y - haloSize / 2,
+				haloSize,
+				haloSize,
+			)
+			context.globalAlpha = opacity * warmth
+			context.fillStyle = '#fff1c5'
+			context.beginPath()
+			context.arc(
+				x,
+				y,
+				Math.max(0.6, light.size * 0.65 * scale),
+				0,
+				Math.PI * 2,
+			)
+			context.fill()
 		}
 
-		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
-			.matches
-		const animationController = createSettingsModalAnimationController({
-			shouldAnimate,
-		})
-		const style = document.createElement('style')
-		const overlay = document.createElement('div')
-		const glow = document.createElement('div')
-		const canvas = document.createElement('canvas')
-		const context = canvas.getContext('2d')
-		if (!context) {
-			throw new Error('Unable to create 2D context for christmas canvas')
+		const starX = treeX + artwork.star.x * scale
+		const starY = treeY + artwork.star.y * scale
+		const starSize = 85 * scale
+		context.globalAlpha = opacity * (0.3 + Math.sin(elapsed * 0.7) * 0.045)
+		context.drawImage(
+			lightSprite,
+			starX - starSize / 2,
+			starY - starSize / 2,
+			starSize,
+			starSize,
+		)
+		context.globalCompositeOperation = 'source-over'
+		drawSnow(true, opacity)
+		context.globalAlpha = 1
+	}
+
+	const resizeCanvas = () => {
+		width = Math.max(1, window.innerWidth)
+		height = Math.max(1, window.innerHeight)
+		const dpr = getCanvasDpr({ height, maxDpr: 2, width })
+		canvas.width = Math.round(width * dpr)
+		canvas.height = Math.round(height * dpr)
+		canvas.style.width = `${width}px`
+		canvas.style.height = `${height}px`
+		context.setTransform(dpr, 0, 0, dpr, 0, 0)
+		if (!artwork || artworkDpr !== dpr) {
+			artwork = createChristmasArtwork({ dpr })
+			artworkDpr = dpr
 		}
+		landscapeHeight = Math.min(height * 0.22, 160)
+		landscape = createLandscape({ width, height: landscapeHeight, dpr })
+		drawScene()
+	}
 
-		type SnowParticle = {
-			birthTime: number
-			color: string
-			fadeDuration: number
-			glow: number
-			hasSparkle: boolean
-			opacity: number
-			phase: number
-			rotation: number
-			rotationSpeed: number
-			scaleFrom: number
-			size: number
-			sway: number
-			vx: number
-			vy: number
-			x: number
-			y: number
+	const renderFrame = (time: number, generation: number) => {
+		// A settings-resume callback may already be queued when visibility changes.
+		if (hasCanceled || generation !== animationGeneration) return
+		animationFrameId = null
+		if (!shouldAnimate || document.hidden) return
+		if (!animationController.isPaused()) {
+			elapsed += Math.min((time - lastTime) / 1000, 0.05)
+			lastTime = time
+			drawScene()
 		}
+		animationFrameId = animationController.requestAnimationFrame((nextTime) =>
+			renderFrame(nextTime, generation),
+		)
+	}
 
-		let timeoutId: null | number = null
-		let animationFrameId: null | number = null
-		let hasCanceled = false
-		let width = window.innerWidth
-		let height = window.innerHeight
-		let particles: SnowParticle[] = []
-		let lastTime = performance.now()
-
-		const randomColor = () =>
-			CHRISTMAS_COLORS[Math.floor(Math.random() * CHRISTMAS_COLORS.length)]
-		const createParticle = (time: number): SnowParticle => ({
-			birthTime: time + randomInRange(CHRISTMAS_FADE_IN_DELAY_RANGE),
-			color: randomColor(),
-			fadeDuration: randomInRange(CHRISTMAS_FADE_IN_DURATION_RANGE),
-			glow: randomInRange(CHRISTMAS_GLOW_RANGE),
-			hasSparkle: Math.random() < CHRISTMAS_SPARKLE_CHANCE,
-			opacity: randomInRange({ max: 0.8, min: 0.35 }),
-			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
-			rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
-			rotationSpeed: randomInRange(CHRISTMAS_ROTATION_SPEED_RANGE),
-			scaleFrom: randomInRange(CHRISTMAS_SCALE_RANGE),
-			size: randomInRange(CHRISTMAS_SIZE_RANGE),
-			sway: randomInRange(CHRISTMAS_SWAY_RANGE),
-			vx: randomInRange(CHRISTMAS_VELOCITY_X_RANGE),
-			vy: randomInRange(CHRISTMAS_VELOCITY_Y_RANGE),
-			x: randomInRange({
-				max: width + CHRISTMAS_FIELD_MARGIN,
-				min: -CHRISTMAS_FIELD_MARGIN,
-			}),
-			y: randomInRange({
-				max: height + CHRISTMAS_FIELD_MARGIN,
-				min: -CHRISTMAS_FIELD_MARGIN,
-			}),
-		})
-		const resetParticles = (time: number) => {
-			particles = Array.from({ length: CHRISTMAS_PARTICLE_COUNT }, () =>
-				createParticle(time),
+	const syncAnimation = () => {
+		animationGeneration += 1
+		if (animationFrameId !== null) {
+			animationController.cancelAnimationFrame(animationFrameId)
+			animationFrameId = null
+		}
+		shouldAnimate = !motionPreference.matches
+		lastTime = performance.now()
+		if (!shouldAnimate) {
+			drawScene()
+		} else if (!document.hidden) {
+			const generation = animationGeneration
+			animationFrameId = animationController.requestAnimationFrame((time) =>
+				renderFrame(time, generation),
 			)
 		}
-		const respawnParticle = (particle: SnowParticle, time: number) => {
-			Object.assign(particle, createParticle(time))
-			particle.y = -randomInRange({ max: CHRISTMAS_FIELD_MARGIN, min: 0 })
-		}
-		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
-		const resizeCanvas = () => {
-			const nextWidth = window.innerWidth
-			const nextHeight = window.innerHeight
-			const prevWidth = width
-			const prevHeight = height
-			width = nextWidth
-			height = nextHeight
-			const dpr = getCanvasDpr({
-				height,
-				maxDpr: CHRISTMAS_FIELD_MAX_DPR,
-				width,
-			})
-
-			canvas.width = Math.round(width * dpr)
-			canvas.height = Math.round(height * dpr)
-			canvas.style.width = `${width}px`
-			canvas.style.height = `${height}px`
-			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-
-			const now = performance.now()
-			if (particles.length === 0) {
-				resetParticles(now)
-				return
-			}
-
-			const scaleX = prevWidth > 0 ? width / prevWidth : 1
-			const scaleY = prevHeight > 0 ? height / prevHeight : 1
-			for (const particle of particles) {
-				particle.x = (particle.x - prevWidth / 2) * scaleX + width / 2
-				particle.y = (particle.y - prevHeight / 2) * scaleY + height / 2
-
-				if (
-					particle.x < -CHRISTMAS_FIELD_MARGIN ||
-					particle.x > width + CHRISTMAS_FIELD_MARGIN ||
-					particle.y < -CHRISTMAS_FIELD_MARGIN ||
-					particle.y > height + CHRISTMAS_FIELD_MARGIN
-				) {
-					respawnParticle(particle, now)
-				}
-			}
-		}
-		const revealParticles = (time: number) => {
-			for (const particle of particles) {
-				particle.birthTime = time - particle.fadeDuration
-			}
-		}
-		const drawSnowSparkle = (size: number) => {
-			context.lineWidth = Math.max(0.6, size * 0.18)
-			context.beginPath()
-			context.moveTo(-size, 0)
-			context.lineTo(size, 0)
-			context.moveTo(0, -size)
-			context.lineTo(0, size)
-			context.stroke()
-		}
-		const drawParticle = (particle: SnowParticle, time: number) => {
-			const lifeProgress = (time - particle.birthTime) / particle.fadeDuration
-			if (lifeProgress < 0) {
-				return
-			}
-
-			const eased = easeOutCubic(Math.min(1, lifeProgress))
-			const twinkle = 0.7 + Math.sin(time * 0.002 + particle.phase) * 0.3
-			const scale = particle.scaleFrom + (1 - particle.scaleFrom) * eased
-			const alpha = particle.opacity * eased * twinkle
-			const glowRadius = particle.size * 3.2
-
-			context.save()
-			context.translate(particle.x, particle.y)
-			context.rotate(particle.rotation)
-			context.scale(scale, scale)
-
-			context.globalAlpha = alpha * 0.4
-			const glow = context.createRadialGradient(0, 0, 0, 0, 0, glowRadius)
-			glow.addColorStop(0, particle.color)
-			glow.addColorStop(1, 'rgba(15, 23, 42, 0)')
-			context.fillStyle = glow
-			context.beginPath()
-			context.arc(0, 0, glowRadius, 0, Math.PI * 2)
-			context.fill()
-
-			context.globalAlpha = alpha
-			context.fillStyle = particle.color
-			context.shadowColor = particle.color
-			context.shadowBlur = particle.glow
-			context.beginPath()
-			context.arc(0, 0, particle.size, 0, Math.PI * 2)
-			context.fill()
-			context.shadowBlur = 0
-			context.shadowColor = 'transparent'
-
-			if (particle.hasSparkle) {
-				context.globalAlpha = alpha * 0.6
-				context.strokeStyle = particle.color
-				drawSnowSparkle(particle.size * 1.1)
-			}
-
-			context.restore()
-		}
-		const updateParticle = (
-			particle: SnowParticle,
-			delta: number,
-			time: number,
-		) => {
-			if (time < particle.birthTime) {
-				return
-			}
-
-			const sway =
-				Math.sin(time * CHRISTMAS_SWAY_SPEED_X + particle.phase) * particle.sway
-			const flutter =
-				Math.cos(time * CHRISTMAS_SWAY_SPEED_Y + particle.phase) *
-				particle.sway *
-				0.35
-
-			particle.x += (particle.vx + sway) * delta
-			particle.y += (particle.vy + flutter) * delta
-			particle.rotation += particle.rotationSpeed * delta
-
-			if (
-				particle.y > height + CHRISTMAS_FIELD_MARGIN ||
-				particle.x < -CHRISTMAS_FIELD_MARGIN ||
-				particle.x > width + CHRISTMAS_FIELD_MARGIN
-			) {
-				respawnParticle(particle, time)
-			}
-		}
-		const renderFrame = (time: number) => {
-			if (hasCanceled) return
-			const delta = Math.min(0.05, (time - lastTime) / 1000)
-			lastTime = time
-
-			context.clearRect(0, 0, width, height)
-			for (const particle of particles) {
-				updateParticle(particle, delta, time)
-				drawParticle(particle, time)
-			}
-
-			animationFrameId = animationController.requestAnimationFrame(renderFrame)
-		}
-		const drawStaticFrame = () => {
-			revealParticles(performance.now())
-			context.clearRect(0, 0, width, height)
-			for (const particle of particles) {
-				drawParticle(particle, performance.now())
-			}
-		}
-
-		const mountChristmas = () => {
-			if (hasCanceled) return
-
-			style.setAttribute('data-christmas', 'lights')
-			style.textContent = `
-@keyframes christmas-lights-reveal {
-	0% { opacity: 0; transform: translate3d(0, -2%, 0) scale(1.02); }
-	100% { opacity: ${CHRISTMAS_LIGHTS_OPACITY}; transform: translate3d(0, 0, 0) scale(1); }
-}
-@keyframes christmas-lights-drift {
-	0% { transform: translate3d(0, 0, 0) scale(1); }
-	50% { transform: translate3d(-1.5%, 1%, 0) scale(1.01); }
-	100% { transform: translate3d(0, 0, 0) scale(1); }
-}
-`
-
-			overlay.setAttribute('aria-hidden', 'true')
-			overlay.style.position = 'fixed'
-			overlay.style.inset = '0'
-			overlay.style.pointerEvents = 'none'
-			overlay.style.zIndex = '0'
-			overlay.style.mixBlendMode = 'screen'
-
-			glow.style.position = 'absolute'
-			glow.style.inset = '-20% -10% 0 -10%'
-			glow.style.background = CHRISTMAS_LIGHTS_GRADIENT
-			glow.style.opacity = shouldAnimate ? '0' : CHRISTMAS_LIGHTS_OPACITY
-			glow.style.filter = 'blur(26px)'
-			glow.style.willChange = 'opacity, transform'
-
-			if (shouldAnimate) {
-				glow.style.animation =
-					'christmas-lights-reveal 4.4s ease-out 0.6s forwards, christmas-lights-drift 18s ease-in-out infinite 4.4s'
-			}
-
-			overlay.appendChild(glow)
-			document.head.appendChild(style)
-			document.body.appendChild(overlay)
-
-			canvas.setAttribute('aria-hidden', 'true')
-			canvas.style.position = 'fixed'
-			canvas.style.inset = '0'
-			canvas.style.pointerEvents = 'none'
-			canvas.style.zIndex = '1'
-			canvas.style.opacity = CHRISTMAS_FIELD_OPACITY
-			canvas.style.filter = CHRISTMAS_FIELD_FILTER
-			canvas.style.mixBlendMode = 'screen'
-
-			document.body.appendChild(canvas)
-			resizeCanvas()
-			window.addEventListener('resize', resizeCanvas)
-
-			if (shouldAnimate) {
-				lastTime = performance.now()
-				animationFrameId =
-					animationController.requestAnimationFrame(renderFrame)
-			} else {
-				drawStaticFrame()
-			}
-		}
-
-		timeoutId = window.setTimeout(mountChristmas, CHRISTMAS_MOUNT_DELAY_MS)
-
-		return () => {
-			animationController.dispose()
-			hasCanceled = true
-			if (timeoutId !== null) {
-				window.clearTimeout(timeoutId)
-			}
-			if (animationFrameId !== null) {
-				animationController.cancelAnimationFrame(animationFrameId)
-			}
-			window.removeEventListener('resize', resizeCanvas)
-			if (document.body.contains(canvas)) {
-				document.body.removeChild(canvas)
-			}
-			if (overlay.parentElement) {
-				overlay.parentElement.removeChild(overlay)
-			}
-			if (style.parentElement) {
-				style.parentElement.removeChild(style)
-			}
-		}
-	} catch (error) {
-		console.error('Failed to launch christmas snowfall', error)
-		return () => {}
 	}
+
+	const cleanup = () => {
+		hasCanceled = true
+		if (animationFrameId !== null) {
+			animationController.cancelAnimationFrame(animationFrameId)
+		}
+		animationController.dispose()
+		window.removeEventListener('resize', resizeCanvas)
+		document.removeEventListener('visibilitychange', syncAnimation)
+		motionPreference.removeEventListener('change', syncAnimation)
+		canvas.remove()
+	}
+
+	try {
+		resizeCanvas()
+		window.addEventListener('resize', resizeCanvas)
+		document.addEventListener('visibilitychange', syncAnimation)
+		motionPreference.addEventListener('change', syncAnimation)
+		syncAnimation()
+	} catch (error) {
+		cleanup()
+		throw error
+	}
+	return cleanup
+}
+
+function createSnowflake(index: number): Snowflake {
+	const depth = index < 90 ? 0 : index < 160 ? 1 : 2
+	return {
+		depth,
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ min: 0.6 + depth * 0.6, max: 1.1 + depth * 0.9 }),
+		speed: randomInRange({ min: 9 + depth * 13, max: 17 + depth * 15 }),
+		x: Math.random(),
+		y: Math.random(),
+	}
+}
+
+function createLightSprite(): HTMLCanvasElement {
+	const canvas = document.createElement('canvas')
+	canvas.width = 64
+	canvas.height = 64
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Christmas light glow')
+	const gradient = context.createRadialGradient(32, 32, 0, 32, 32, 32)
+	gradient.addColorStop(0, '#fffbe7')
+	gradient.addColorStop(0.12, '#ffe5abe0')
+	gradient.addColorStop(0.38, '#eeba5a55')
+	gradient.addColorStop(1, '#eeba5a00')
+	context.fillStyle = gradient
+	context.fillRect(0, 0, 64, 64)
+	return canvas
+}
+
+function createSnowSprite(): HTMLCanvasElement {
+	const canvas = document.createElement('canvas')
+	canvas.width = 32
+	canvas.height = 32
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Christmas snowflake')
+	const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16)
+	gradient.addColorStop(0, '#f1f6ff')
+	gradient.addColorStop(0.25, '#e2edf9e0')
+	gradient.addColorStop(0.55, '#dce8f34d')
+	gradient.addColorStop(1, '#dce8f300')
+	context.fillStyle = gradient
+	context.fillRect(0, 0, 32, 32)
+	return canvas
+}
+
+function createLandscape({
+	width,
+	height,
+	dpr,
+}: {
+	width: number
+	height: number
+	dpr: number
+}): HTMLCanvasElement {
+	const canvas = document.createElement('canvas')
+	canvas.width = Math.round(width * dpr)
+	canvas.height = Math.round(height * dpr)
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Christmas snowdrifts')
+	context.setTransform(dpr, 0, 0, dpr, 0, 0)
+
+	const backSnow = context.createLinearGradient(0, height * 0.7, 0, height)
+	backSnow.addColorStop(0, '#788d9e85')
+	backSnow.addColorStop(1, '#2a3b4c66')
+	context.fillStyle = backSnow
+	context.beginPath()
+	context.moveTo(0, height * 0.77)
+	context.bezierCurveTo(
+		width * 0.22,
+		height * 0.61,
+		width * 0.44,
+		height * 0.99,
+		width * 0.7,
+		height * 0.82,
+	)
+	context.quadraticCurveTo(width * 0.9, height * 0.7, width, height * 0.75)
+	context.lineTo(width, height)
+	context.lineTo(0, height)
+	context.closePath()
+	context.fill()
+
+	const frontSnow = context.createLinearGradient(0, height * 0.8, 0, height)
+	frontSnow.addColorStop(0, '#abb9c2a6')
+	frontSnow.addColorStop(1, '#50616f80')
+	context.fillStyle = frontSnow
+	context.beginPath()
+	context.moveTo(0, height * 0.9)
+	context.bezierCurveTo(
+		width * 0.18,
+		height,
+		width * 0.35,
+		height * 0.69,
+		width * 0.59,
+		height * 0.9,
+	)
+	context.quadraticCurveTo(width * 0.81, height * 1.04, width, height * 0.88)
+	context.lineTo(width, height)
+	context.lineTo(0, height)
+	context.closePath()
+	context.fill()
+
+	for (let index = 0; index < 7; index += 1) {
+		const x = width * (0.77 + index * 0.044)
+		const treeHeight = height * (0.34 + Math.sin(index * 2.1) * 0.13)
+		const baseY = height * (0.88 + (index % 3) * 0.012)
+		const topY = baseY - treeHeight
+		const trunkWidth = Math.max(1.5, treeHeight * 0.045)
+		const tiers = Array.from({ length: 6 }, (_, tier) => ({
+			y: topY + treeHeight * (0.2 + tier * 0.14),
+			halfWidth: treeHeight * (0.07 + tier * 0.04),
+		}))
+
+		context.fillStyle = '#14252bb3'
+		context.beginPath()
+		context.ellipse(
+			x,
+			baseY,
+			treeHeight * 0.23,
+			Math.max(1, treeHeight * 0.035),
+			0,
+			0,
+			Math.PI * 2,
+		)
+		context.fill()
+		context.fillStyle = '#41443a'
+		context.fillRect(
+			x - trunkWidth / 2,
+			baseY - treeHeight * 0.2,
+			trunkWidth,
+			treeHeight * 0.2,
+		)
+
+		const foliage = context.createLinearGradient(
+			x - treeHeight * 0.27,
+			0,
+			x + treeHeight * 0.27,
+			0,
+		)
+		foliage.addColorStop(0, index % 2 === 0 ? '#2c4942' : '#30494a')
+		foliage.addColorStop(0.48, '#213b35')
+		foliage.addColorStop(1, '#142c2c')
+		context.fillStyle = foliage
+		context.beginPath()
+		context.moveTo(x, topY)
+		for (const tier of tiers) {
+			context.lineTo(x + tier.halfWidth, tier.y)
+			context.lineTo(x + tier.halfWidth * 0.57, tier.y - treeHeight * 0.035)
+		}
+		context.lineTo(x, baseY - treeHeight * 0.09)
+		for (let tier = tiers.length - 1; tier >= 0; tier -= 1) {
+			context.lineTo(
+				x - tiers[tier].halfWidth * 0.57,
+				tiers[tier].y - treeHeight * 0.035,
+			)
+			context.lineTo(x - tiers[tier].halfWidth, tiers[tier].y)
+		}
+		context.closePath()
+		context.fill()
+	}
+	return canvas
 }
