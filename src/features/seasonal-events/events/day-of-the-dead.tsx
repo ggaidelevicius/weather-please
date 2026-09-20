@@ -1,385 +1,389 @@
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import { randomInRange, getCanvasDpr } from '../core/utils'
+import {
+	isSettingsModalOpen,
+	onSettingsModalStateChange,
+} from '../../../shared/lib/settings-modal-state'
+import { getCanvasDpr, randomInRange } from '../core/utils'
+import { createDayOfTheDeadArtwork } from './day-of-the-dead-artwork'
+import { createDayOfTheDeadBanners } from './day-of-the-dead-banners'
 
 const DAY_OF_THE_DEAD_MOUNT_DELAY_MS = 900
 
-const DAY_OF_THE_DEAD_FIELD_OPACITY = '0.75'
+export async function launchDayOfTheDead(): Promise<() => void> {
+	if (typeof window === 'undefined') return () => {}
 
-const DAY_OF_THE_DEAD_FIELD_FILTER = 'saturate(130%)'
-
-const DAY_OF_THE_DEAD_FIELD_MAX_DPR = 2
-
-const DAY_OF_THE_DEAD_FIELD_MARGIN = 160
-
-const DAY_OF_THE_DEAD_PARTICLE_COUNT = 70
-
-const DAY_OF_THE_DEAD_FADE_IN_DELAY_RANGE = { max: 2200, min: 0 }
-
-const DAY_OF_THE_DEAD_FADE_IN_DURATION_RANGE = { max: 1900, min: 1000 }
-
-const DAY_OF_THE_DEAD_SCALE_RANGE = { max: 0.85, min: 0.45 }
-
-const DAY_OF_THE_DEAD_SIZE_RANGE = { max: 32, min: 18 }
-
-const DAY_OF_THE_DEAD_VELOCITY_X_RANGE = { max: 9, min: -9 }
-
-const DAY_OF_THE_DEAD_VELOCITY_Y_RANGE = { max: 8, min: -6 }
-
-const DAY_OF_THE_DEAD_SWAY_RANGE = { max: 8, min: 2.5 }
-
-const DAY_OF_THE_DEAD_ROTATION_SPEED_RANGE = { max: 0.35, min: -0.35 }
-
-const DAY_OF_THE_DEAD_SWAY_SPEED_X = 0.00055
-
-const DAY_OF_THE_DEAD_SWAY_SPEED_Y = 0.00045
-
-const DAY_OF_THE_DEAD_GLOW_RANGE = { max: 16, min: 6 }
-
-const DAY_OF_THE_DEAD_GLOW_COLORS = [
-	'rgba(251, 146, 60, 0.5)',
-	'rgba(248, 113, 113, 0.45)',
-	'rgba(249, 115, 22, 0.4)',
-]
-
-const DAY_OF_THE_DEAD_EMOJIS = ['💀', '🌼', '🕯️', '🦋', '🏵️']
-
-const DAY_OF_THE_DEAD_FONT =
-	'"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif'
-
-const DAY_OF_THE_DEAD_HALO_OPACITY = '0.5'
-
-export async function launchDayOfTheDead() {
-	try {
-		if (typeof window === 'undefined') {
-			return () => {}
+	let disposeScene = () => {}
+	let hasCanceled = false
+	const timeoutId = window.setTimeout(() => {
+		if (hasCanceled) return
+		try {
+			disposeScene = mountDayOfTheDead()
+		} catch (error) {
+			console.error('Failed to launch Day of the Dead effect', error)
 		}
+	}, DAY_OF_THE_DEAD_MOUNT_DELAY_MS)
 
-		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
-			.matches
-		const animationController = createSettingsModalAnimationController({
-			shouldAnimate,
-		})
-		const canvas = document.createElement('canvas')
-		const context = canvas.getContext('2d')
-		if (!context) {
-			throw new Error('Unable to create 2D context for day of the dead canvas')
-		}
+	return () => {
+		hasCanceled = true
+		window.clearTimeout(timeoutId)
+		disposeScene()
+	}
+}
 
-		type SpiritParticle = {
-			birthTime: number
-			emoji: string
-			fadeDuration: number
-			glow: number
-			glowColor: string
-			hasSparkle: boolean
-			opacity: number
-			phase: number
-			rotation: number
-			rotationSpeed: number
-			scaleFrom: number
-			size: number
-			sparklePhase: number
-			sway: number
-			vx: number
-			vy: number
+function mountDayOfTheDead() {
+	const canvas = document.createElement('canvas')
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Day of the Dead canvas')
+	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+	const artwork = createDayOfTheDeadArtwork({ dpr: 2 })
+	const banners = createDayOfTheDeadBanners({ dpr: 2 })
+	const petals = Array.from({ length: 40 }, (_, index) => ({
+		x:
+			index % 4 === 0
+				? Math.random()
+				: index % 2
+					? randomInRange({ min: 0.03, max: 0.24 })
+					: randomInRange({ min: 0.76, max: 0.97 }),
+		y: Math.random(),
+		size: randomInRange({ min: 27, max: 48 }),
+		speed: randomInRange({ min: 0.01, max: 0.022 }),
+		phase: Math.random() * Math.PI * 2,
+		rotation: Math.random() * Math.PI * 2,
+		spin: randomInRange({ min: -0.2, max: 0.2 }),
+		variant: index % artwork.petals.length,
+		opacity: randomInRange({ min: 0.32, max: 0.66 }),
+	}))
+	const butterflies = Array.from({ length: 6 }, (_, index) => ({
+		x:
+			index % 2
+				? randomInRange({ min: 0.76, max: 0.93 })
+				: randomInRange({ min: 0.07, max: 0.24 }),
+		y: Math.random(),
+		size: randomInRange({ min: 48, max: 76 }),
+		speed: randomInRange({ min: 0.004, max: 0.009 }),
+		phase: Math.random() * Math.PI * 2,
+		variant: index % artwork.butterflies.length,
+		opacity: randomInRange({ min: 0.5, max: 0.78 }),
+	}))
+	let width = Math.max(1, window.innerWidth)
+	let height = Math.max(1, window.innerHeight)
+	let elapsed = 0
+	let hasRevealed = motionPreference.matches
+	let lastTime: number | null = null
+	let animationFrameId: number | null = null
+	let animationGeneration = 0
+	let hasCanceled = false
+	let unsubscribeSettings = () => {}
+
+	canvas.dataset.dayOfTheDead = 'true'
+	canvas.setAttribute('aria-hidden', 'true')
+	Object.assign(canvas.style, {
+		inset: '0',
+		pointerEvents: 'none',
+		position: 'fixed',
+		zIndex: '0',
+	})
+
+	const drawSprite = (
+		sprite: HTMLCanvasElement,
+		{
+			x,
+			y,
+			size,
+			alpha,
+			rotation = 0,
+			scaleX = 1,
+			scaleY = 1,
+		}: {
 			x: number
 			y: number
-		}
-		type EmojiSprite = {
-			canvas: HTMLCanvasElement
-			displaySize: number
-		}
-
-		let timeoutId: null | number = null
-		let animationFrameId: null | number = null
-		let hasCanceled = false
-		let width = window.innerWidth
-		let height = window.innerHeight
-		let particles: SpiritParticle[] = []
-		let lastTime = performance.now()
-		let overlay: HTMLDivElement | null = null
-		let styleEl: HTMLStyleElement | null = null
-		const spriteCache = new Map<string, EmojiSprite>()
-		const spriteDpr = Math.min(
-			window.devicePixelRatio || 1,
-			DAY_OF_THE_DEAD_FIELD_MAX_DPR,
+			size: number
+			alpha: number
+			rotation?: number
+			scaleX?: number
+			scaleY?: number
+		},
+	) => {
+		context.save()
+		context.translate(x, y)
+		context.rotate(rotation)
+		context.scale(scaleX, scaleY)
+		context.globalAlpha = alpha
+		context.drawImage(sprite, -size / 2, -size / 2, size, size)
+		context.restore()
+	}
+	const drawCandle = ({
+		x,
+		size,
+		phase,
+		reveal,
+	}: {
+		x: number
+		size: number
+		phase: number
+		reveal: number
+	}) => {
+		const scale = size / 256
+		const top = height + 4 - 238 * scale
+		context.globalAlpha = reveal * 0.84
+		context.drawImage(artwork.candle, x - 64 * scale, top, 128 * scale, size)
+		const flameSize = 74 * scale
+		const flicker =
+			Math.sin(elapsed * 2.2 + phase) * 0.6 +
+			Math.sin(elapsed * 3.7 + phase) * 0.4
+		context.save()
+		context.translate(x, top + 74 * scale)
+		context.rotate(Math.sin(elapsed * 1.6 + phase) * 0.035)
+		context.scale(1 - flicker * 0.05, 1 + flicker * 0.04)
+		context.globalAlpha = reveal * (0.91 + flicker * 0.06)
+		context.drawImage(
+			artwork.flame,
+			-flameSize / 2,
+			-flameSize * 0.75,
+			flameSize,
+			flameSize,
+		)
+		context.restore()
+	}
+	const drawScene = () => {
+		context.clearRect(0, 0, width, height)
+		const reveal = hasRevealed ? 1 : easeOut(elapsed / 3.5)
+		const isCompact = width < 600
+		const sceneScale = Math.min(1, height / 650)
+		context.globalAlpha = reveal * 0.17
+		context.drawImage(
+			artwork.glow,
+			-width * 0.35,
+			-height * 0.48,
+			width * 1.3,
+			height,
+		)
+		context.globalAlpha = reveal * 0.3
+		context.drawImage(
+			artwork.glow,
+			-120,
+			height - 250 * sceneScale,
+			isCompact ? 390 : 510,
+			400 * sceneScale,
+		)
+		context.globalAlpha = reveal * 0.26
+		context.drawImage(
+			artwork.glow,
+			width - 370,
+			height - 250 * sceneScale,
+			460,
+			400 * sceneScale,
 		)
 
-		const randomEmoji = () =>
-			DAY_OF_THE_DEAD_EMOJIS[
-				Math.floor(Math.random() * DAY_OF_THE_DEAD_EMOJIS.length)
-			]
-		const randomGlow = () =>
-			DAY_OF_THE_DEAD_GLOW_COLORS[
-				Math.floor(Math.random() * DAY_OF_THE_DEAD_GLOW_COLORS.length)
-			]
-		const createParticle = (time: number): SpiritParticle => ({
-			birthTime: time + randomInRange(DAY_OF_THE_DEAD_FADE_IN_DELAY_RANGE),
-			emoji: randomEmoji(),
-			fadeDuration: randomInRange(DAY_OF_THE_DEAD_FADE_IN_DURATION_RANGE),
-			glow: randomInRange(DAY_OF_THE_DEAD_GLOW_RANGE),
-			glowColor: randomGlow(),
-			hasSparkle: Math.random() < 0.25,
-			opacity: randomInRange({ max: 0.85, min: 0.45 }),
-			phase: randomInRange({ max: Math.PI * 2, min: 0 }),
-			rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
-			rotationSpeed: randomInRange(DAY_OF_THE_DEAD_ROTATION_SPEED_RANGE),
-			scaleFrom: randomInRange(DAY_OF_THE_DEAD_SCALE_RANGE),
-			size: randomInRange(DAY_OF_THE_DEAD_SIZE_RANGE),
-			sparklePhase: randomInRange({ max: Math.PI * 2, min: 0 }),
-			sway: randomInRange(DAY_OF_THE_DEAD_SWAY_RANGE),
-			vx: randomInRange(DAY_OF_THE_DEAD_VELOCITY_X_RANGE),
-			vy: randomInRange(DAY_OF_THE_DEAD_VELOCITY_Y_RANGE),
-			x: randomInRange({
-				max: width + DAY_OF_THE_DEAD_FIELD_MARGIN,
-				min: -DAY_OF_THE_DEAD_FIELD_MARGIN,
-			}),
-			y: randomInRange({
-				max: height + DAY_OF_THE_DEAD_FIELD_MARGIN,
-				min: -DAY_OF_THE_DEAD_FIELD_MARGIN,
-			}),
-		})
-		const getSpriteKey = (
-			emoji: string,
-			size: number,
-			glowColor: string,
-			glow: number,
-		) => {
-			const quantizedSize = Math.max(12, Math.round(size / 2) * 2)
-			const quantizedGlow = Math.max(6, Math.round(glow / 2) * 2)
-			return `${emoji}-${quantizedSize}-${glowColor}-${quantizedGlow}-${spriteDpr}`
-		}
-		const getEmojiSprite = (
-			emoji: string,
-			size: number,
-			glowColor: string,
-			glow: number,
-		): EmojiSprite => {
-			const key = getSpriteKey(emoji, size, glowColor, glow)
-			const cached = spriteCache.get(key)
-			if (cached) {
-				return cached
-			}
-
-			const quantizedSize = Math.max(12, Math.round(size / 2) * 2)
-			const quantizedGlow = Math.max(6, Math.round(glow / 2) * 2)
-			const padding = quantizedGlow * 2
-			const displaySize = quantizedSize + padding * 2
-			const spriteCanvas = document.createElement('canvas')
-			spriteCanvas.width = Math.ceil(displaySize * spriteDpr)
-			spriteCanvas.height = Math.ceil(displaySize * spriteDpr)
-			const spriteContext = spriteCanvas.getContext('2d')
-			if (!spriteContext) {
-				return { canvas: spriteCanvas, displaySize }
-			}
-
-			spriteContext.scale(spriteDpr, spriteDpr)
-			spriteContext.font = `${quantizedSize}px ${DAY_OF_THE_DEAD_FONT}`
-			spriteContext.textAlign = 'center'
-			spriteContext.textBaseline = 'middle'
-			spriteContext.shadowColor = glowColor
-			spriteContext.shadowBlur = quantizedGlow
-			spriteContext.fillText(emoji, displaySize / 2, displaySize / 2)
-
-			const sprite = { canvas: spriteCanvas, displaySize }
-			spriteCache.set(key, sprite)
-			return sprite
-		}
-		const resetParticles = (time: number) => {
-			particles = Array.from({ length: DAY_OF_THE_DEAD_PARTICLE_COUNT }, () =>
-				createParticle(time),
-			)
-		}
-		const respawnParticle = (particle: SpiritParticle, time: number) => {
-			Object.assign(particle, createParticle(time))
-		}
-		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
-		const revealParticles = (time: number) => {
-			for (const particle of particles) {
-				particle.birthTime = time - particle.fadeDuration
-			}
-		}
-		const resizeCanvas = () => {
-			width = window.innerWidth
-			height = window.innerHeight
-			const dpr = getCanvasDpr({
-				height,
-				maxDpr: DAY_OF_THE_DEAD_FIELD_MAX_DPR,
-				width,
-			})
-			canvas.width = Math.round(width * dpr)
-			canvas.height = Math.round(height * dpr)
-			canvas.style.width = `${width}px`
-			canvas.style.height = `${height}px`
-			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-		}
-		const drawParticle = (particle: SpiritParticle, time: number) => {
-			const lifeProgress = (time - particle.birthTime) / particle.fadeDuration
-			if (lifeProgress < 0) {
-				return
-			}
-
-			const eased = easeOutCubic(Math.min(1, lifeProgress))
-			const scale = particle.scaleFrom + (1 - particle.scaleFrom) * eased
-			const alpha = particle.opacity * eased
-			const twinkle = 1 + Math.sin(time * 0.004 + particle.sparklePhase) * 0.08
-			const sprite = getEmojiSprite(
-				particle.emoji,
-				particle.size * scale,
-				particle.glowColor,
-				particle.glow,
-			)
-
+		const bow = (isCompact ? 24 : 36) * sceneScale
+		context.globalAlpha = reveal * 0.4
+		context.strokeStyle = '#c9a28b'
+		context.lineWidth = 1
+		context.beginPath()
+		context.moveTo(-20, -5)
+		context.quadraticCurveTo(width / 2, -5 + bow * 2, width + 20, -5)
+		context.stroke()
+		const bannerCount = isCompact ? 5 : Math.max(6, Math.ceil(width / 140))
+		const bannerWidth =
+			Math.min(isCompact ? 58 : 100, (width / bannerCount) * 0.75) * sceneScale
+		for (let index = 0; index < bannerCount; index += 1) {
+			const x = ((index + 0.5) * width) / bannerCount
+			const position = (x + 20) / (width + 40)
+			const y = -5 + bow * 4 * position * (1 - position)
+			const slope = Math.atan2(bow * 4 * (1 - position * 2), width + 40)
+			const flutter = Math.sin(elapsed * 0.7 + index * 0.65)
 			context.save()
-			context.globalAlpha = alpha * (particle.hasSparkle ? twinkle : 1)
-			context.translate(particle.x, particle.y)
-			context.rotate(particle.rotation)
+			context.translate(x, y)
+			context.rotate(slope + flutter * 0.014)
+			context.scale(1, 0.97 + Math.sin(elapsed * 0.55 + index * 0.45) * 0.03)
+			context.globalAlpha = reveal * 0.66
 			context.drawImage(
-				sprite.canvas,
-				-sprite.displaySize / 2,
-				-sprite.displaySize / 2,
-				sprite.displaySize,
-				sprite.displaySize,
+				banners[index % banners.length],
+				-bannerWidth / 2,
+				-bannerWidth / 16,
+				bannerWidth,
+				bannerWidth * 1.25,
 			)
 			context.restore()
 		}
-		const updateParticle = (
-			particle: SpiritParticle,
-			delta: number,
-			time: number,
-		) => {
-			if (time < particle.birthTime) {
-				return
-			}
 
-			const sway =
-				Math.sin(time * DAY_OF_THE_DEAD_SWAY_SPEED_X + particle.phase) *
-				particle.sway
-			const lift =
-				Math.cos(time * DAY_OF_THE_DEAD_SWAY_SPEED_Y + particle.phase) *
-				particle.sway *
-				0.4
-
-			particle.x += (particle.vx + sway) * delta
-			particle.y += (particle.vy + lift) * delta
-			particle.rotation += particle.rotationSpeed * delta
-
-			if (
-				particle.x < -DAY_OF_THE_DEAD_FIELD_MARGIN ||
-				particle.x > width + DAY_OF_THE_DEAD_FIELD_MARGIN ||
-				particle.y < -DAY_OF_THE_DEAD_FIELD_MARGIN ||
-				particle.y > height + DAY_OF_THE_DEAD_FIELD_MARGIN
-			) {
-				respawnParticle(particle, time)
-			}
+		const petalCount = isCompact ? 24 : petals.length
+		for (let index = 0; index < petalCount; index += 1) {
+			const petal = petals[index]
+			const vertical = wrap(petal.y + elapsed * petal.speed)
+			const sway = Math.sin(elapsed * 0.45 + petal.phase)
+			const isCentral = petal.x > 0.28 && petal.x < 0.72
+			drawSprite(artwork.petals[petal.variant], {
+				x: petal.x * width + sway * (isCompact ? 12 : 27),
+				y: vertical * (height + 110) - 55,
+				size: petal.size * (isCompact ? 0.85 : 1),
+				alpha:
+					reveal * petal.opacity * edgeFade(vertical) * (isCentral ? 0.4 : 1),
+				rotation: petal.rotation + elapsed * petal.spin + sway * 0.25,
+				scaleX: 0.7 + Math.sin(elapsed * 0.8 + petal.phase) * 0.3,
+			})
 		}
-		const renderFrame = (time: number) => {
-			if (hasCanceled) return
-			const delta = Math.min(0.05, (time - lastTime) / 1000)
-			lastTime = time
-
-			context.clearRect(0, 0, width, height)
-			for (const particle of particles) {
-				updateParticle(particle, delta, time)
-				drawParticle(particle, time)
-			}
-
-			animationFrameId = animationController.requestAnimationFrame(renderFrame)
-		}
-		const drawStaticFrame = () => {
-			revealParticles(performance.now())
-			context.clearRect(0, 0, width, height)
-			for (const particle of particles) {
-				drawParticle(particle, performance.now())
-			}
+		const butterflyCount = isCompact ? 3 : butterflies.length
+		for (let index = 0; index < butterflyCount; index += 1) {
+			const butterfly = butterflies[index]
+			const vertical = wrap(butterfly.y - elapsed * butterfly.speed)
+			const sway = Math.sin(elapsed * 0.42 + butterfly.phase)
+			drawSprite(artwork.butterflies[butterfly.variant], {
+				x: butterfly.x * width + sway * (isCompact ? 15 : 34),
+				y:
+					vertical * (height + 140) -
+					70 +
+					Math.sin(elapsed * 0.8 + butterfly.phase) * 8,
+				size: butterfly.size * (isCompact ? 0.8 : 1),
+				alpha: reveal * butterfly.opacity * edgeFade(vertical),
+				rotation: sway * 0.2,
+				scaleX:
+					0.24 + Math.abs(Math.cos(elapsed * 3.5 + butterfly.phase)) * 0.76,
+			})
 		}
 
-		const mountSpirits = () => {
-			if (hasCanceled) return
-			const style = document.createElement('style')
-			const overlayNode = document.createElement('div')
-			const halo = document.createElement('div')
-
-			style.setAttribute('data-day-of-the-dead', 'overlay')
-			style.textContent = `
-@keyframes day-of-the-dead-halo-reveal {
-	0% { opacity: 0; transform: translate(0, 0) scale(0.96); }
-	100% { opacity: ${DAY_OF_THE_DEAD_HALO_OPACITY}; transform: translate(0, 0) scale(1); }
-}
-`
-
-			overlayNode.setAttribute('aria-hidden', 'true')
-			overlayNode.style.position = 'fixed'
-			overlayNode.style.inset = '0'
-			overlayNode.style.pointerEvents = 'none'
-			overlayNode.style.zIndex = '0'
-			overlayNode.style.mixBlendMode = 'screen'
-
-			halo.style.position = 'absolute'
-			halo.style.inset = '-30% 0 0 -30%'
-			halo.style.opacity = shouldAnimate ? '0' : DAY_OF_THE_DEAD_HALO_OPACITY
-			halo.style.background =
-				'radial-gradient(circle at 30% 30%, rgba(251, 191, 36, 0.4), rgba(251, 146, 60, 0.18) 35%, rgba(226, 232, 240, 0) 70%)'
-			halo.style.filter = 'blur(20px)'
-
-			if (shouldAnimate) {
-				halo.style.animation =
-					'day-of-the-dead-halo-reveal 4s ease-out 0.8s forwards'
-			}
-
-			overlayNode.appendChild(halo)
-			document.head.appendChild(style)
-			document.body.appendChild(overlayNode)
-			overlay = overlayNode
-			styleEl = style
-
-			canvas.setAttribute('aria-hidden', 'true')
-			canvas.style.position = 'fixed'
-			canvas.style.inset = '0'
-			canvas.style.pointerEvents = 'none'
-			canvas.style.zIndex = '1'
-			canvas.style.opacity = DAY_OF_THE_DEAD_FIELD_OPACITY
-			canvas.style.filter = DAY_OF_THE_DEAD_FIELD_FILTER
-			canvas.style.mixBlendMode = 'screen'
-
-			document.body.appendChild(canvas)
-			resizeCanvas()
-			resetParticles(performance.now())
-			window.addEventListener('resize', resizeCanvas)
-
-			if (shouldAnimate) {
-				lastTime = performance.now()
-				animationFrameId =
-					animationController.requestAnimationFrame(renderFrame)
-			} else {
-				drawStaticFrame()
-			}
+		const candles = isCompact
+			? [
+					{ x: width - 74, size: 184, phase: 0 },
+					{ x: width - 31, size: 132, phase: 2 },
+				]
+			: [
+					{ x: 207, size: 190, phase: 1 },
+					{ x: 262, size: 136, phase: 3 },
+					{ x: width - 142, size: 177, phase: 2 },
+					{ x: width - 90, size: 250, phase: 0 },
+					{ x: width - 40, size: 148, phase: 4 },
+				]
+		for (const candle of candles) {
+			drawCandle({ ...candle, size: candle.size * sceneScale, reveal })
 		}
-
-		timeoutId = window.setTimeout(mountSpirits, DAY_OF_THE_DEAD_MOUNT_DELAY_MS)
-
-		return () => {
-			animationController.dispose()
-			hasCanceled = true
-			if (timeoutId !== null) {
-				window.clearTimeout(timeoutId)
-			}
-			if (animationFrameId !== null) {
-				animationController.cancelAnimationFrame(animationFrameId)
-			}
-			window.removeEventListener('resize', resizeCanvas)
-			if (document.body.contains(canvas)) {
-				document.body.removeChild(canvas)
-			}
-			if (overlay && overlay.parentElement) {
-				overlay.parentElement.removeChild(overlay)
-			}
-			if (styleEl && styleEl.parentElement) {
-				styleEl.parentElement.removeChild(styleEl)
-			}
+		const skulls = isCompact
+			? [{ x: 67, size: 172, variant: 0 }]
+			: [
+					{ x: 103, size: 232, variant: 0 },
+					{ x: width - 242, size: 164, variant: 1 },
+				]
+		for (const { x, size: baseSize, variant } of skulls) {
+			const size = baseSize * sceneScale
+			context.globalAlpha = reveal * 0.85
+			context.drawImage(
+				artwork.skulls[variant],
+				x - size / 2,
+				height + 4 - (size * 236) / 256,
+				size,
+				size,
+			)
 		}
-	} catch (error) {
-		console.error('Failed to launch Day of the Dead event', error)
-		return () => {}
+		const flowers = isCompact
+			? [
+					{ x: 11, size: 58, lift: 12 },
+					{ x: 115, size: 60, lift: 9 },
+					{ x: 153, size: 43, lift: 4 },
+					{ x: width - 115, size: 48, lift: 7 },
+					{ x: width - 5, size: 54, lift: 10 },
+				]
+			: [
+					{ x: 17, size: 76, lift: 18 },
+					{ x: 43, size: 59, lift: 9 },
+					{ x: 162, size: 67, lift: 13 },
+					{ x: 194, size: 51, lift: 5 },
+					{ x: 284, size: 60, lift: 6 },
+					{ x: width - 304, size: 62, lift: 11 },
+					{ x: width - 185, size: 63, lift: 11 },
+					{ x: width - 11, size: 68, lift: 12 },
+				]
+		for (const [index, flower] of flowers.entries()) {
+			drawSprite(artwork.marigolds[index % artwork.marigolds.length], {
+				x: flower.x,
+				y: height - flower.lift * sceneScale,
+				size: flower.size * sceneScale,
+				alpha: reveal * 0.94,
+				rotation: index * 0.83,
+			})
+		}
+		context.globalAlpha = 1
 	}
+	const resizeScene = () => {
+		if (hasCanceled) return
+		width = Math.max(1, window.innerWidth)
+		height = Math.max(1, window.innerHeight)
+		const dpr = getCanvasDpr({ height, maxDpr: 2, width })
+		canvas.width = Math.round(width * dpr)
+		canvas.height = Math.round(height * dpr)
+		canvas.style.width = `${width}px`
+		canvas.style.height = `${height}px`
+		context.setTransform(dpr, 0, 0, dpr, 0, 0)
+		drawScene()
+	}
+	const canAnimate = () =>
+		!motionPreference.matches && !document.hidden && !isSettingsModalOpen()
+	const renderFrame = (time: number, generation: number) => {
+		if (hasCanceled || generation !== animationGeneration) return
+		animationFrameId = null
+		if (!canAnimate()) return
+		const delta =
+			lastTime === null ? 0 : Math.max(0, Math.min(50, time - lastTime))
+		lastTime = time
+		elapsed += delta / 1000
+		drawScene()
+		animationFrameId = window.requestAnimationFrame((nextTime) =>
+			renderFrame(nextTime, generation),
+		)
+	}
+	const syncAnimation = () => {
+		if (hasCanceled) return
+		animationGeneration += 1
+		if (animationFrameId !== null) {
+			window.cancelAnimationFrame(animationFrameId)
+			animationFrameId = null
+		}
+		lastTime = null
+		if (motionPreference.matches) {
+			hasRevealed = true
+			drawScene()
+		} else if (canAnimate()) {
+			const generation = animationGeneration
+			animationFrameId = window.requestAnimationFrame((time) =>
+				renderFrame(time, generation),
+			)
+		}
+	}
+	const cleanup = () => {
+		if (hasCanceled) return
+		hasCanceled = true
+		if (animationFrameId !== null) {
+			window.cancelAnimationFrame(animationFrameId)
+			animationFrameId = null
+		}
+		unsubscribeSettings()
+		window.removeEventListener('resize', resizeScene)
+		document.removeEventListener('visibilitychange', syncAnimation)
+		motionPreference.removeEventListener('change', syncAnimation)
+		canvas.remove()
+	}
+
+	try {
+		document.body.appendChild(canvas)
+		resizeScene()
+		window.addEventListener('resize', resizeScene)
+		document.addEventListener('visibilitychange', syncAnimation)
+		motionPreference.addEventListener('change', syncAnimation)
+		unsubscribeSettings = onSettingsModalStateChange(syncAnimation)
+		syncAnimation()
+	} catch (error) {
+		cleanup()
+		throw error
+	}
+	return cleanup
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
+function wrap(value: number) {
+	return ((value % 1) + 1) % 1
+}
+
+function edgeFade(position: number) {
+	return Math.min(1, position * 12, (1 - position) * 12)
 }
