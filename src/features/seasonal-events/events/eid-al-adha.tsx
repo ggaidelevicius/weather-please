@@ -1,304 +1,360 @@
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
-import { randomInRange, getCanvasDpr } from '../core/utils'
+import {
+	isSettingsModalOpen,
+	onSettingsModalStateChange,
+} from '../../../shared/lib/settings-modal-state'
+import { getCanvasDpr, randomInRange } from '../core/utils'
+import { createEidAlAdhaArtwork } from './eid-al-adha-artwork'
 
-const EID_ADHA_MOUNT_DELAY_MS = 900
+const EID_MOUNT_DELAY_MS = 900
 
-const EID_ADHA_OVERLAY_OPACITY = '0.72'
+type EidArtwork = ReturnType<typeof createEidAlAdhaArtwork>
 
-const EID_ADHA_OVERLAY_FILTER = 'saturate(120%)'
+export async function launchEidAlAdhaGlow(): Promise<() => void> {
+	if (typeof window === 'undefined') return () => {}
 
-const EID_ADHA_MAX_DPR = 2
-
-const EID_ADHA_STAR_COUNT = 140
-
-const EID_ADHA_STAR_RADIUS_RANGE = { max: 1.5, min: 0.5 }
-
-const EID_ADHA_STAR_OPACITY_RANGE = { max: 0.55, min: 0.2 }
-
-const EID_ADHA_STAR_TWINKLE_RANGE = { max: 0.0013, min: 0.0005 }
-
-const EID_ADHA_EMBER_COUNT = 26
-
-const EID_ADHA_EMBER_SIZE_RANGE = { max: 14, min: 6 }
-
-const EID_ADHA_EMBER_SPEED_RANGE = { max: 18, min: 8 }
-
-const EID_ADHA_EMBER_SWAY_RANGE = { max: 16, min: 6 }
-
-const EID_ADHA_EMBER_OPACITY_RANGE = { max: 0.75, min: 0.35 }
-
-const EID_ADHA_EMBER_FADE_IN_DELAY_RANGE = { max: 2000, min: 0 }
-
-const EID_ADHA_EMBER_FADE_IN_DURATION_RANGE = { max: 2200, min: 1100 }
-
-const EID_ADHA_SCENE_FADE_DELAY_MS = 300
-
-const EID_ADHA_SCENE_FADE_DURATION_MS = 1400
-
-const EID_ADHA_EMBER_COLORS = [
-	'rgba(254, 243, 199, 0.9)',
-	'rgba(253, 230, 138, 0.85)',
-	'rgba(251, 191, 36, 0.78)',
-	'rgba(245, 158, 11, 0.68)',
-	'rgba(52, 211, 153, 0.6)',
-]
-
-export async function launchEidAlAdhaGlow() {
-	try {
-		if (typeof window === 'undefined') {
-			return () => {}
+	let disposeScene = () => {}
+	let hasCanceled = false
+	const timeoutId = window.setTimeout(() => {
+		if (hasCanceled) return
+		try {
+			disposeScene = mountEidAlAdha()
+		} catch (error) {
+			console.error('Failed to launch Eid al-Adha glow', error)
 		}
-
-		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
-			.matches
-		const animationController = createSettingsModalAnimationController({
-			shouldAnimate,
-		})
-		const overlay = document.createElement('div')
-		const canvas = document.createElement('canvas')
-		const context = canvas.getContext('2d')
-		if (!context) {
-			throw new Error('Unable to create 2D context for Eid al-Adha canvas')
-		}
-
-		type Star = {
-			opacity: number
-			phase: number
-			radius: number
-			twinkle: number
-			x: number
-			y: number
-		}
-		type Ember = {
-			baseX: number
-			birthTime: number
-			color: string
-			fadeDuration: number
-			opacity: number
-			phase: number
-			size: number
-			sway: number
-			vy: number
-			y: number
-		}
-
-		let timeoutId: null | number = null
-		let animationFrameId: null | number = null
-		let width = window.innerWidth
-		let height = window.innerHeight
-		let stars: Star[] = []
-		let embers: Ember[] = []
-		let lastTime = performance.now()
-		let sceneFadeStart = performance.now()
-
-		const randomEmberColor = () =>
-			EID_ADHA_EMBER_COLORS[
-				Math.floor(Math.random() * EID_ADHA_EMBER_COLORS.length)
-			]
-
-		const createStar = (): Star => ({
-			opacity: randomInRange(EID_ADHA_STAR_OPACITY_RANGE),
-			phase: Math.random() * Math.PI * 2,
-			radius: randomInRange(EID_ADHA_STAR_RADIUS_RANGE),
-			twinkle: randomInRange(EID_ADHA_STAR_TWINKLE_RANGE),
-			x: Math.random() * width,
-			y: Math.random() * height,
-		})
-
-		const createEmber = (time: number): Ember => ({
-			baseX: Math.random() * width,
-			birthTime: time + randomInRange(EID_ADHA_EMBER_FADE_IN_DELAY_RANGE),
-			color: randomEmberColor(),
-			fadeDuration: randomInRange(EID_ADHA_EMBER_FADE_IN_DURATION_RANGE),
-			opacity: randomInRange(EID_ADHA_EMBER_OPACITY_RANGE),
-			phase: Math.random() * Math.PI * 2,
-			size: randomInRange(EID_ADHA_EMBER_SIZE_RANGE),
-			sway: randomInRange(EID_ADHA_EMBER_SWAY_RANGE),
-			vy: randomInRange(EID_ADHA_EMBER_SPEED_RANGE),
-			y: height + Math.random() * height * 0.35,
-		})
-
-		const resetField = (time: number) => {
-			stars = Array.from({ length: EID_ADHA_STAR_COUNT }, createStar)
-			embers = Array.from({ length: EID_ADHA_EMBER_COUNT }, () =>
-				createEmber(time),
-			)
-		}
-
-		const resizeCanvas = () => {
-			width = window.innerWidth
-			height = window.innerHeight
-			const dpr = getCanvasDpr({ height, maxDpr: EID_ADHA_MAX_DPR, width })
-			canvas.width = Math.round(width * dpr)
-			canvas.height = Math.round(height * dpr)
-			canvas.style.width = `${width}px`
-			canvas.style.height = `${height}px`
-			context.setTransform(dpr, 0, 0, dpr, 0, 0)
-			resetField(performance.now())
-		}
-
-		const drawCrescent = (alpha: number) => {
-			const radius = Math.min(width, height) * 0.12
-			const cx = width * 0.8
-			const cy = height * 0.2
-			context.save()
-			context.globalAlpha = alpha
-			context.globalCompositeOperation = 'source-over'
-			const glow = context.createRadialGradient(
-				cx,
-				cy,
-				radius * 0.25,
-				cx,
-				cy,
-				radius,
-			)
-			glow.addColorStop(0, 'rgba(255, 246, 214, 0.9)')
-			glow.addColorStop(0.55, 'rgba(255, 220, 140, 0.55)')
-			glow.addColorStop(1, 'rgba(255, 220, 140, 0)')
-			context.fillStyle = glow
-			context.beginPath()
-			context.arc(cx, cy, radius, 0, Math.PI * 2)
-			context.fill()
-
-			context.globalAlpha = 1
-			context.fillStyle = '#1a1b1e'
-			context.beginPath()
-			context.arc(
-				cx + radius * 0.4,
-				cy - radius * 0.1,
-				radius * 0.9,
-				0,
-				Math.PI * 2,
-			)
-			context.fill()
-			context.restore()
-		}
-
-		const drawStars = (time: number, alpha: number) => {
-			context.fillStyle = 'rgba(226, 232, 240, 1)'
-			for (const star of stars) {
-				const twinkle = 0.65 + 0.35 * Math.sin(time * star.twinkle + star.phase)
-				context.globalAlpha = alpha * star.opacity * twinkle
-				context.beginPath()
-				context.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
-				context.fill()
-			}
-		}
-
-		const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3)
-
-		const drawEmber = (
-			ember: Ember,
-			time: number,
-			alpha: number,
-			sceneAlpha: number,
-		) => {
-			const sway = Math.sin(time * 0.0005 + ember.phase) * ember.sway
-			const x = ember.baseX + sway
-			const y = ember.y
-			const radius = ember.size * 1.4
-			const gradient = context.createRadialGradient(x, y, 0, x, y, radius)
-			gradient.addColorStop(0, ember.color)
-			gradient.addColorStop(0.7, ember.color.replace('0.', '0.22'))
-			gradient.addColorStop(1, 'rgba(15, 23, 42, 0)')
-			context.globalAlpha = alpha * sceneAlpha
-			context.fillStyle = gradient
-			context.beginPath()
-			context.arc(x, y, radius, 0, Math.PI * 2)
-			context.fill()
-		}
-
-		const tick = (time: number) => {
-			const delta = Math.min(time - lastTime, 48)
-			lastTime = time
-			const sceneFadeProgress = Math.min(
-				Math.max((time - sceneFadeStart) / EID_ADHA_SCENE_FADE_DURATION_MS, 0),
-				1,
-			)
-			const sceneAlpha = easeOutCubic(sceneFadeProgress)
-			context.clearRect(0, 0, width, height)
-			drawCrescent(sceneAlpha)
-			context.globalCompositeOperation = 'lighter'
-			drawStars(time, sceneAlpha)
-
-			for (const ember of embers) {
-				ember.y -= (ember.vy * delta) / 1000
-				if (ember.y < -ember.size * 2) {
-					Object.assign(ember, createEmber(time))
-				}
-
-				const fadeProgress = Math.min(
-					Math.max((time - ember.birthTime) / ember.fadeDuration, 0),
-					1,
-				)
-				const fade = easeOutCubic(fadeProgress)
-				drawEmber(ember, time, ember.opacity * fade, sceneAlpha)
-			}
-
-			if (shouldAnimate) {
-				animationFrameId = animationController.requestAnimationFrame(tick)
-			}
-		}
-
-		const drawStatic = () => {
-			const now = performance.now()
-			context.clearRect(0, 0, width, height)
-			drawCrescent(1)
-			context.globalCompositeOperation = 'lighter'
-			drawStars(now, 1)
-			for (let i = 0; i < Math.min(7, embers.length); i += 1) {
-				const ember = createEmber(now)
-				ember.baseX = width * (0.12 + i * 0.12)
-				ember.y = height * (0.82 - i * 0.05)
-				drawEmber(ember, now, ember.opacity, 1)
-			}
-		}
-
-		overlay.style.position = 'fixed'
-		overlay.style.inset = '0'
-		overlay.style.pointerEvents = 'none'
-		overlay.style.zIndex = '0'
-		overlay.style.opacity = EID_ADHA_OVERLAY_OPACITY
-		overlay.style.filter = EID_ADHA_OVERLAY_FILTER
-		overlay.appendChild(canvas)
-
-		const mount = () => {
-			document.body.appendChild(overlay)
-			resizeCanvas()
-			sceneFadeStart = performance.now() + EID_ADHA_SCENE_FADE_DELAY_MS
-			if (shouldAnimate) {
-				lastTime = performance.now()
-				animationFrameId = animationController.requestAnimationFrame(tick)
-			} else {
-				drawStatic()
-			}
-		}
-
-		timeoutId = window.setTimeout(mount, EID_ADHA_MOUNT_DELAY_MS)
-
-		const handleResize = () => {
-			resizeCanvas()
-			if (!shouldAnimate) {
-				drawStatic()
-			}
-		}
-		window.addEventListener('resize', handleResize)
-
-		return () => {
-			animationController.dispose()
-			if (timeoutId !== null) {
-				window.clearTimeout(timeoutId)
-			}
-			if (animationFrameId !== null) {
-				animationController.cancelAnimationFrame(animationFrameId)
-			}
-			window.removeEventListener('resize', handleResize)
-			if (overlay.parentElement) {
-				overlay.parentElement.removeChild(overlay)
-			}
-		}
-	} catch (error) {
-		console.error('Failed to launch Eid al-Adha glow', error)
-		return () => {}
+	}, EID_MOUNT_DELAY_MS)
+	return () => {
+		if (hasCanceled) return
+		hasCanceled = true
+		window.clearTimeout(timeoutId)
+		disposeScene()
 	}
+}
+
+function mountEidAlAdha() {
+	const canvas = document.createElement('canvas')
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Eid al-Adha canvas')
+	const artwork = createEidAlAdhaArtwork({ dpr: 2 })
+	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+	const stars = Array.from({ length: 110 }, (_, index) => ({
+		x: Math.random(),
+		y: Math.random(),
+		size: randomInRange({ min: 2.5, max: index % 11 === 0 ? 11 : 5.5 }),
+		opacity: randomInRange({ min: 0.13, max: 0.56 }),
+		phase: Math.random() * Math.PI * 2,
+		speed: randomInRange({ min: 0.35, max: 0.75 }),
+	}))
+	const motes = Array.from({ length: 24 }, (_, index) => ({
+		x:
+			index % 2
+				? randomInRange({ min: 0.04, max: 0.27 })
+				: randomInRange({ min: 0.76, max: 0.96 }),
+		progress: Math.random(),
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ min: 7, max: 20 }),
+		speed: randomInRange({ min: 0.003, max: 0.007 }),
+		opacity: randomInRange({ min: 0.17, max: 0.4 }),
+	}))
+	let width = Math.max(1, window.innerWidth)
+	let height = Math.max(1, window.innerHeight)
+	let elapsed = 0
+	let hasRevealed = motionPreference.matches
+	let lastTime: number | null = null
+	let animationFrameId: number | null = null
+	let animationGeneration = 0
+	let hasCanceled = false
+	let unsubscribeSettings = () => {}
+
+	canvas.dataset.eidAlAdha = 'true'
+	canvas.setAttribute('aria-hidden', 'true')
+	Object.assign(canvas.style, {
+		inset: '0',
+		pointerEvents: 'none',
+		position: 'fixed',
+		zIndex: '0',
+	})
+
+	const drawScene = () => {
+		context.clearRect(0, 0, width, height)
+		const reveal = hasRevealed ? 1 : easeOut(elapsed / 3.2)
+		const isCompact = width < 600
+		const sceneScale = Math.min(1, height / 700)
+		const drift = Math.sin(elapsed * 0.065) * width * 0.025
+		context.globalAlpha = reveal * 0.42
+		context.drawImage(
+			artwork.haze.canvas,
+			-width * 0.6 + drift,
+			height * 0.15,
+			width * 1.6,
+			height * 1.25,
+		)
+		context.globalAlpha = reveal * 0.24
+		context.drawImage(
+			artwork.haze.canvas,
+			width * 0.22 - drift,
+			-height * 0.45,
+			width * 1.2,
+			height * 1.4,
+		)
+
+		const starCount = isCompact ? 64 : stars.length
+		for (let index = 0; index < starCount; index += 1) {
+			const star = stars[index]
+			const isCentral =
+				star.x > 0.3 && star.x < 0.7 && star.y > 0.3 && star.y < 0.7
+			const twinkle = 0.72 + Math.sin(elapsed * star.speed + star.phase) * 0.28
+			const size = star.size * (isCompact ? 0.82 : 1)
+			context.globalAlpha =
+				reveal * star.opacity * twinkle * (isCentral ? 0.3 : 1)
+			context.drawImage(
+				artwork.star.canvas,
+				star.x * width - size / 2,
+				star.y * height - size / 2,
+				size,
+				size,
+			)
+		}
+
+		const moonSize =
+			(isCompact
+				? Math.min(180, width * 0.47)
+				: Math.min(330, width * 0.27, height * 0.43)) * sceneScale
+		const moonX = width * (isCompact ? 0.75 : 0.81)
+		const moonY = height * (isCompact ? 0.16 : 0.23)
+		context.globalAlpha = reveal * 0.12
+		context.drawImage(
+			artwork.glow.canvas,
+			moonX - moonSize,
+			moonY - moonSize,
+			moonSize * 2,
+			moonSize * 2,
+		)
+		context.globalAlpha = reveal * 0.92
+		context.drawImage(
+			artwork.crescent.canvas,
+			moonX - moonSize / 2,
+			moonY - moonSize / 2,
+			moonSize,
+			moonSize,
+		)
+
+		const moteCount = isCompact ? 14 : motes.length
+		for (let index = 0; index < moteCount; index += 1) {
+			const mote = motes[index]
+			const progress = wrap(mote.progress + elapsed * mote.speed)
+			const x = mote.x * width + Math.sin(elapsed * 0.22 + mote.phase) * 12
+			const y = height - progress * height * 0.78
+			const edge = Math.min(1, progress * 9, (1 - progress) * 6)
+			const pulse = 0.82 + Math.sin(elapsed * 0.65 + mote.phase) * 0.18
+			const size = mote.size * (isCompact ? 0.85 : 1)
+			context.globalAlpha = reveal * mote.opacity * edge * pulse
+			context.drawImage(
+				artwork.glow.canvas,
+				x - size / 2,
+				y - size / 2,
+				size,
+				size,
+			)
+		}
+
+		const lanterns = isCompact
+			? [
+					{ x: width * 0.14, scale: 0.58, variant: 0 },
+					{ x: width * 0.88, scale: 0.42, variant: 1 },
+				]
+			: [
+					{ x: width * 0.185, scale: 0.57, variant: 1 },
+					{ x: width * 0.078, scale: 0.84, variant: 0 },
+					{ x: width * 0.92, scale: 0.65, variant: 2 },
+				]
+		for (const [index, lantern] of lanterns.entries()) {
+			drawStandingLantern({
+				context,
+				artwork,
+				...lantern,
+				baseline: height + 3,
+				scale: lantern.scale * sceneScale,
+				time: elapsed,
+				phase: index * 2.1,
+				opacity: reveal,
+			})
+		}
+		context.globalAlpha = 1
+	}
+	const resizeScene = () => {
+		if (hasCanceled) return
+		width = Math.max(1, window.innerWidth)
+		height = Math.max(1, window.innerHeight)
+		const dpr = getCanvasDpr({ height, width, maxDpr: 2, maxPixels: 4_000_000 })
+		canvas.width = Math.round(width * dpr)
+		canvas.height = Math.round(height * dpr)
+		canvas.style.width = `${width}px`
+		canvas.style.height = `${height}px`
+		context.setTransform(dpr, 0, 0, dpr, 0, 0)
+		drawScene()
+	}
+	const canAnimate = () =>
+		!motionPreference.matches && !document.hidden && !isSettingsModalOpen()
+	const renderFrame = (time: number, generation: number) => {
+		if (hasCanceled || generation !== animationGeneration) return
+		animationFrameId = null
+		if (!canAnimate()) return
+		const delta =
+			lastTime === null ? 0 : Math.max(0, Math.min(50, time - lastTime))
+		lastTime = time
+		elapsed += delta / 1000
+		try {
+			drawScene()
+			animationFrameId = window.requestAnimationFrame((nextTime) =>
+				renderFrame(nextTime, generation),
+			)
+		} catch (error) {
+			handleFailure(error)
+		}
+	}
+	const syncAnimation = () => {
+		if (hasCanceled) return
+		animationGeneration += 1
+		if (animationFrameId !== null) window.cancelAnimationFrame(animationFrameId)
+		animationFrameId = null
+		lastTime = null
+		if (motionPreference.matches) {
+			hasRevealed = true
+			drawScene()
+		} else if (canAnimate()) {
+			const generation = animationGeneration
+			animationFrameId = window.requestAnimationFrame((time) =>
+				renderFrame(time, generation),
+			)
+		}
+	}
+	const handleResize = () => {
+		try {
+			resizeScene()
+		} catch (error) {
+			handleFailure(error)
+		}
+	}
+	const handleAnimationChange = () => {
+		try {
+			syncAnimation()
+		} catch (error) {
+			handleFailure(error)
+		}
+	}
+	const cleanup = () => {
+		if (hasCanceled) return
+		hasCanceled = true
+		if (animationFrameId !== null) window.cancelAnimationFrame(animationFrameId)
+		animationFrameId = null
+		unsubscribeSettings()
+		window.removeEventListener('resize', handleResize)
+		document.removeEventListener('visibilitychange', handleAnimationChange)
+		motionPreference.removeEventListener('change', handleAnimationChange)
+		canvas.remove()
+		for (const surface of [
+			canvas,
+			...artwork.lanterns.map((sprite) => sprite.canvas),
+			artwork.crescent.canvas,
+			artwork.glow.canvas,
+			artwork.haze.canvas,
+			artwork.star.canvas,
+		]) {
+			surface.width = 0
+			surface.height = 0
+		}
+	}
+	const handleFailure = (error: unknown) => {
+		cleanup()
+		console.error('Failed to render Eid al-Adha glow', error)
+	}
+	try {
+		document.body.appendChild(canvas)
+		resizeScene()
+		window.addEventListener('resize', handleResize)
+		document.addEventListener('visibilitychange', handleAnimationChange)
+		motionPreference.addEventListener('change', handleAnimationChange)
+		unsubscribeSettings = onSettingsModalStateChange(handleAnimationChange)
+		syncAnimation()
+	} catch (error) {
+		cleanup()
+		throw error
+	}
+	return cleanup
+}
+
+function drawStandingLantern({
+	context,
+	artwork,
+	x,
+	baseline,
+	scale,
+	variant,
+	time,
+	phase,
+	opacity,
+}: {
+	context: CanvasRenderingContext2D
+	artwork: EidArtwork
+	x: number
+	baseline: number
+	scale: number
+	variant: number
+	time: number
+	phase: number
+	opacity: number
+}) {
+	const sprite = artwork.lanterns[variant % artwork.lanterns.length]
+	const left = x - (sprite.width * scale) / 2
+	const top = baseline - sprite.baseY * scale
+	const lightX = left + sprite.lightX * scale
+	const lightY = top + sprite.lightY * scale
+	const light =
+		0.91 +
+		Math.sin(time * 0.9 + phase) * 0.06 +
+		Math.sin(time * 2.7 + phase) * 0.03
+	const glowSize = 410 * scale
+	context.globalAlpha = opacity * light * 0.48
+	context.drawImage(
+		artwork.glow.canvas,
+		lightX - glowSize / 2,
+		lightY - glowSize / 2,
+		glowSize,
+		glowSize,
+	)
+	context.globalAlpha = opacity * light * 0.32
+	context.drawImage(
+		artwork.glow.canvas,
+		x - glowSize * 0.65,
+		baseline - 42 * scale,
+		glowSize * 1.3,
+		80 * scale,
+	)
+	context.globalAlpha = opacity
+	context.drawImage(
+		sprite.canvas,
+		left,
+		top,
+		sprite.width * scale,
+		sprite.height * scale,
+	)
+	context.globalCompositeOperation = 'screen'
+	context.globalAlpha = opacity * light * 0.22
+	const coreSize = 85 * scale
+	context.drawImage(
+		artwork.glow.canvas,
+		lightX - coreSize / 2,
+		lightY - coreSize / 2,
+		coreSize,
+		coreSize,
+	)
+	context.globalCompositeOperation = 'source-over'
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
+function wrap(value: number) {
+	return ((value % 1) + 1) % 1
 }
