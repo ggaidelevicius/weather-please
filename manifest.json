@@ -8,7 +8,21 @@
 	"chrome_url_overrides": {
 		"newtab": "index.html"
 	},
-	"permissions": ["geolocation", "identity"],
+	"permissions": [
+		"geolocation",
+		"identity",
+		"declarativeNetRequestWithHostAccess"
+	],
+	"host_permissions": ["https://tile.openstreetmap.org/*"],
+	"declarative_net_request": {
+		"rule_resources": [
+			{
+				"enabled": true,
+				"id": "openstreetmap_tile_headers",
+				"path": "openstreetmap-tile-rules.json"
+			}
+		]
+	},
 	"icons": {
 		"128": "favicon.png"
 	}

@@ -45,6 +45,10 @@ export const buildExtensionOutput = ({ rootDirectory = rootPath } = {}) => {
 		fromRoot('manifest.json'),
 		path.join(extensionPath, 'manifest.json'),
 	)
+	fs.copySync(
+		fromRoot('openstreetmap-tile-rules.json'),
+		path.join(extensionPath, 'openstreetmap-tile-rules.json'),
+	)
 
 	console.log('Processing completed.')
 }

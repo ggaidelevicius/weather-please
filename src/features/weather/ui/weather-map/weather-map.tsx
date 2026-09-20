@@ -183,12 +183,13 @@ export const WeatherMap = ({
 	}
 
 	const dimensions = displaySize ? getWeatherMapDimensions(displaySize) : null
-	const tiles = dimensions
-		? getWeatherMapTiles({
-				center: weatherMapData.center,
-				dimensions,
-			})
-		: []
+	const tiles =
+		isActive && dimensions
+			? getWeatherMapTiles({
+					center: weatherMapData.center,
+					dimensions,
+				})
+			: []
 	const viewport = dimensions
 		? getWeatherMapViewport({
 				center: weatherMapData.center,
