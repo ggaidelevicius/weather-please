@@ -5,7 +5,7 @@ import type {
 	WeatherMapPointerWeather,
 } from '../../model/detail-types'
 import type { WeatherMapData } from '../../model/types'
-import { useRef, useState, useEffect } from 'react'
+import { useState, useEffect, useEffectEvent } from 'react'
 import { Trans } from '@lingui/react/macro'
 import { WEATHER_MAP_TOOLTIP_FRAME_INTERVAL_MS } from '../../model/weather-map/constants'
 import {
@@ -41,19 +41,24 @@ export const WeatherMapTooltip = ({
 	viewport: WeatherMapViewport
 	windUnitLabel: string
 }>) => {
-	const framesRef = useRef(frames)
-	const playbackPositionRef = useRef(playbackPosition)
 	const [weather, setWeather] = useState<null | WeatherMapPointerWeather>(null)
 	const pointX = point?.x ?? 0
 	const pointY = point?.y ?? 0
 
-	useEffect(() => {
-		framesRef.current = frames
-	}, [frames])
-
-	useEffect(() => {
-		playbackPositionRef.current = playbackPosition
-	}, [playbackPosition])
+	const getWeatherPoints = useEffectEvent(
+		(animationViewport: WeatherMapViewport) => ({
+			windPoints: getInterpolatedWeatherMapWindPoints({
+				framePosition: playbackPosition,
+				frames,
+				viewport: animationViewport,
+			}),
+			precipitationPoints: getInterpolatedWeatherMapPrecipitationPoints({
+				framePosition: playbackPosition,
+				frames,
+				viewport: animationViewport,
+			}),
+		}),
+	)
 
 	useEffect(() => {
 		if (!isActive || !point) {
@@ -71,22 +76,15 @@ export const WeatherMapTooltip = ({
 		const updateTooltip = (time: number) => {
 			if (time - lastDrawTime >= WEATHER_MAP_TOOLTIP_FRAME_INTERVAL_MS) {
 				lastDrawTime = time
-				const projectedPoints = getInterpolatedWeatherMapWindPoints({
-					framePosition: playbackPositionRef.current,
-					frames: framesRef.current,
-					viewport: animationViewport,
-				})
+				const { windPoints, precipitationPoints } =
+					getWeatherPoints(animationViewport)
 				const speed = getWeatherMapWindSpeedAtPoint({
 					point,
-					projectedPoints,
+					projectedPoints: windPoints,
 				})
 				const precipitation = getWeatherMapPrecipitationAtPoint({
 					point,
-					projectedPoints: getInterpolatedWeatherMapPrecipitationPoints({
-						framePosition: playbackPositionRef.current,
-						frames: framesRef.current,
-						viewport: animationViewport,
-					}),
+					projectedPoints: precipitationPoints,
 				})
 
 				if (typeof speed === 'number' && precipitation) {

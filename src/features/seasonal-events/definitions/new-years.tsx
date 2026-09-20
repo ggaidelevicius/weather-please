@@ -66,7 +66,7 @@ export const newYearsEvent: SeasonalEvent = {
 	isActive: isNewYearsDay,
 	run: () =>
 		import('../events/new-years').then((module) =>
-			module.launchNewYearsFireworks(),
+			module.launchNewYearsCelebration(),
 		),
 	tileAccent: {
 		colors: ['#fde68a', '#f59e0b', '#60a5fa', '#a78bfa', '#fde68a'],

@@ -2,16 +2,14 @@ import type { ShaderMaterial } from 'three'
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useReducedMotion } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, use, useEffect, useRef, useState } from 'react'
+import { browser } from 'react-dom'
 
 export const HeroAtmosphere = () => {
-	const shouldReduceMotion = useReducedMotion()
-	const [isWebGLAvailable, setIsWebGLAvailable] = useState(false)
 	const [isSurfaceVisible, setIsSurfaceVisible] = useState(false)
 
 	useEffect(() => {
 		const frameId = window.requestAnimationFrame(() => {
-			setIsWebGLAvailable('WebGLRenderingContext' in window)
 			setIsSurfaceVisible(true)
 		})
 
@@ -32,23 +30,36 @@ export const HeroAtmosphere = () => {
 				<div className="absolute inset-y-0 left-0 w-2/5 bg-[radial-gradient(ellipse_at_left,rgba(167,139,250,0.12),transparent_72%)]" />
 				<div className="absolute inset-y-0 right-0 w-2/5 bg-[radial-gradient(ellipse_at_right,rgba(103,232,249,0.1),transparent_72%)]" />
 				<div className="absolute right-0 bottom-0 h-2/5 w-1/3 bg-[radial-gradient(ellipse_at_bottom_right,rgba(251,146,182,0.08),transparent_70%)]" />
-				{isWebGLAvailable ? (
-					<Canvas
-						camera={{ fov: 42, position: [0, 0, 5.4] }}
-						dpr={[1, 1.5]}
-						frameloop={shouldReduceMotion ? 'demand' : 'always'}
-						gl={{
-							alpha: true,
-							antialias: true,
-							powerPreference: 'low-power',
-						}}
-						style={{ inset: 0, position: 'absolute' }}
-					>
-						<HeroGradientSurface isAnimated={!shouldReduceMotion} />
-					</Canvas>
-				) : null}
+				<Suspense fallback={null}>
+					<HeroAtmosphereCanvas />
+				</Suspense>
 			</div>
 		</div>
+	)
+}
+
+const HeroAtmosphereCanvas = () => {
+	use(browser())
+	const shouldReduceMotion = useReducedMotion()
+
+	if (!('WebGLRenderingContext' in window)) {
+		return null
+	}
+
+	return (
+		<Canvas
+			camera={{ fov: 42, position: [0, 0, 5.4] }}
+			dpr={[1, 1.5]}
+			frameloop={shouldReduceMotion ? 'demand' : 'always'}
+			gl={{
+				alpha: true,
+				antialias: true,
+				powerPreference: 'low-power',
+			}}
+			style={{ inset: 0, position: 'absolute' }}
+		>
+			<HeroGradientSurface isAnimated={!shouldReduceMotion} />
+		</Canvas>
 	)
 }
 

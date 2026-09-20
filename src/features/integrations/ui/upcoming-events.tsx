@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { FragmentInstance, ReactNode } from 'react'
 
 import { Trans } from '@lingui/react/macro'
 import {
@@ -41,6 +41,7 @@ export const UpcomingEvents = ({
 	const [hasMoreBelow, setHasMoreBelow] = useState(false)
 	const sectionHeadingId = useId()
 	const sectionRef = useRef<HTMLElement | null>(null)
+	const contentRef = useRef<FragmentInstance | null>(null)
 	const visibleEvents = events.filter((event) => event.endTimestamp > now)
 	const hasVisibleEvents = visibleEvents.length > 0
 	const visibleEventCount = visibleEvents.length
@@ -62,7 +63,8 @@ export const UpcomingEvents = ({
 	// too late for this.
 	useEffect(() => {
 		const section = sectionRef.current
-		if (!hasVisibleEvents || !section) {
+		const content = contentRef.current
+		if (!hasVisibleEvents || !section || !content) {
 			return
 		}
 
@@ -81,9 +83,8 @@ export const UpcomingEvents = ({
 		}
 		section.addEventListener('scroll', updateBottomOverflow, { passive: true })
 		const resizeObserver = new ResizeObserver(updateBottomOverflow)
-		for (const child of section.children) {
-			resizeObserver.observe(child)
-		}
+		content.observeUsing(resizeObserver)
+		// A changed count can affect overflow without resizing surviving cards.
 		const initialMeasureFrame = requestAnimationFrame(updateBottomOverflow)
 
 		return () => {
@@ -91,6 +92,7 @@ export const UpcomingEvents = ({
 				section.removeEventListener(eventName, stopPropagation)
 			}
 			section.removeEventListener('scroll', updateBottomOverflow)
+			content.unobserveUsing(resizeObserver)
 			resizeObserver.disconnect()
 			cancelAnimationFrame(initialMeasureFrame)
 		}
@@ -118,29 +120,31 @@ export const UpcomingEvents = ({
 			ref={sectionRef}
 			transition={{ duration: 0.3 }}
 		>
-			<h2 className="sr-only" id={sectionHeadingId}>
-				<Trans>Upcoming calendar events</Trans>
-			</h2>
-			{dayGroups.map((dayGroup) => (
-				<Fragment key={dayGroup.dayStartTimestamp}>
-					<p className="px-1 pt-1 text-xs font-semibold tracking-wide text-dark-100">
-						{getDayHeadingLabel({
-							dayStartTimestamp: dayGroup.dayStartTimestamp,
-							locale,
-							now,
-						})}
-					</p>
-					{dayGroup.events.map((event) => (
-						<EventCard
-							account={accountsById.get(event.accountId)}
-							event={event}
-							key={`${event.accountId}:${event.id}`}
-							locale={locale}
-							now={now}
-						/>
-					))}
-				</Fragment>
-			))}
+			<Fragment ref={contentRef}>
+				<h2 className="sr-only" id={sectionHeadingId}>
+					<Trans>Upcoming calendar events</Trans>
+				</h2>
+				{dayGroups.map((dayGroup) => (
+					<Fragment key={dayGroup.dayStartTimestamp}>
+						<p className="px-1 pt-1 text-xs font-semibold tracking-wide text-dark-100">
+							{getDayHeadingLabel({
+								dayStartTimestamp: dayGroup.dayStartTimestamp,
+								locale,
+								now,
+							})}
+						</p>
+						{dayGroup.events.map((event) => (
+							<EventCard
+								account={accountsById.get(event.accountId)}
+								event={event}
+								key={`${event.accountId}:${event.id}`}
+								locale={locale}
+								now={now}
+							/>
+						))}
+					</Fragment>
+				))}
+			</Fragment>
 		</motion.section>
 	)
 }

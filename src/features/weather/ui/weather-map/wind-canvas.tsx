@@ -3,7 +3,7 @@ import type {
 	WeatherMapViewport,
 } from '../../model/detail-types'
 import type { WeatherMapData } from '../../model/types'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useEffectEvent } from 'react'
 import { getWeatherMapOverlayScale } from '../../model/weather-map/geometry'
 import {
 	createWeatherMapParticles,
@@ -32,20 +32,19 @@ export const WeatherMapWindParticleCanvas = ({
 	viewport: WeatherMapViewport
 }>) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
-	const framesRef = useRef(frames)
-	const playbackPositionRef = useRef(playbackPosition)
 	const mapHeight = dimensions.height
 	const mapWidth = dimensions.width
 	const viewportCenterX = viewport.centerX
 	const viewportCenterY = viewport.centerY
 
-	useEffect(() => {
-		framesRef.current = frames
-	}, [frames])
-
-	useEffect(() => {
-		playbackPositionRef.current = playbackPosition
-	}, [playbackPosition])
+	const getWindPoints = useEffectEvent(
+		(animationViewport: WeatherMapViewport) =>
+			getInterpolatedWeatherMapWindPoints({
+				framePosition: playbackPosition,
+				frames,
+				viewport: animationViewport,
+			}),
+	)
 
 	useEffect(() => {
 		const canvas = canvasRef.current
@@ -86,11 +85,7 @@ export const WeatherMapWindParticleCanvas = ({
 							(time - lastFrameTime) / WEATHER_MAP_PARTICLE_FRAME_MS,
 						)
 			lastFrameTime = time
-			const projectedPoints = getInterpolatedWeatherMapWindPoints({
-				framePosition: playbackPositionRef.current,
-				frames: framesRef.current,
-				viewport: animationViewport,
-			})
+			const projectedPoints = getWindPoints(animationViewport)
 			const maxWind = Math.max(
 				1,
 				max(projectedPoints.map(({ speed }) => speed)),
