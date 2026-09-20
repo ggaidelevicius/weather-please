@@ -1,5 +1,6 @@
-import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import { createAdaptiveDprController, randomInRange } from '../core/utils'
+import { startMeteorShowerAnimation } from './meteor-shower-animation'
+import type { MeteorShowerFrame } from './meteor-shower-animation'
 
 const ETA_AQUARIIDS_MOUNT_DELAY_MS = 900
 
@@ -59,11 +60,6 @@ export async function launchEtaAquariidsShower() {
 			return () => {}
 		}
 
-		const shouldAnimate = !window.matchMedia('(prefers-reduced-motion: reduce)')
-			.matches
-		const animationController = createSettingsModalAnimationController({
-			shouldAnimate,
-		})
 		const overlay = document.createElement('div')
 		const canvas = document.createElement('canvas')
 		const context = canvas.getContext('2d')
@@ -96,13 +92,11 @@ export async function launchEtaAquariidsShower() {
 			y: number
 		}
 
-		let timeoutId: null | number = null
-		let animationFrameId: null | number = null
 		let width = window.innerWidth
 		let height = window.innerHeight
 		let meteors: Meteor[] = []
 		let stars: Star[] = []
-		let lastTime = performance.now()
+		let staticMeteors: Meteor[] = []
 
 		const dprController = createAdaptiveDprController({
 			maxDpr: ETA_AQUARIIDS_MAX_DPR,
@@ -152,7 +146,7 @@ export async function launchEtaAquariidsShower() {
 			)
 		}
 
-		const resizeCanvas = () => {
+		const resizeCanvas = (time: number) => {
 			const nextWidth = window.innerWidth
 			const nextHeight = window.innerHeight
 			const prevWidth = width
@@ -166,7 +160,7 @@ export async function launchEtaAquariidsShower() {
 			canvas.style.height = `${height}px`
 			context.setTransform(dpr, 0, 0, dpr, 0, 0)
 			if (meteors.length === 0 && stars.length === 0) {
-				resetField(performance.now())
+				resetField(time)
 				return
 			}
 			const scaleX = prevWidth > 0 ? width / prevWidth : 1
@@ -183,8 +177,12 @@ export async function launchEtaAquariidsShower() {
 			}
 		}
 
-		const getStarFade = (star: Star, time: number) => {
-			if (!shouldAnimate) {
+		const getStarFade = (
+			star: Star,
+			time: number,
+			isReducedMotion: boolean,
+		) => {
+			if (isReducedMotion) {
 				return 1
 			}
 
@@ -199,10 +197,10 @@ export async function launchEtaAquariidsShower() {
 			return 1 - Math.pow(1 - progress, 3)
 		}
 
-		const drawStars = (time: number) => {
+		const drawStars = (time: number, isReducedMotion: boolean) => {
 			context.fillStyle = ETA_AQUARIIDS_STAR_COLOR
 			for (const star of stars) {
-				const fade = getStarFade(star, time)
+				const fade = getStarFade(star, time, isReducedMotion)
 				if (fade <= 0) {
 					continue
 				}
@@ -237,56 +235,59 @@ export async function launchEtaAquariidsShower() {
 			context.restore()
 		}
 
-		const tick = (time: number) => {
-			if (dprController.reportFrame(time)) {
-				resizeCanvas()
+		const drawFrame = ({ delta, isReducedMotion, time }: MeteorShowerFrame) => {
+			if (isReducedMotion) {
+				drawStatic(time)
+				return
 			}
-			const delta = Math.min(time - lastTime, 48)
-			lastTime = time
+			if (delta > 0 && dprController.reportFrame(time)) {
+				resizeCanvas(time)
+			}
 			context.clearRect(0, 0, width, height)
 			context.globalCompositeOperation = 'lighter'
-			drawStars(time)
+			drawStars(time, false)
 
 			for (const meteor of meteors) {
 				if (time < meteor.nextSpawn) {
 					continue
 				}
 
-				meteor.age += delta
+				if (delta > 0) {
+					meteor.age += delta
+					if (meteor.age >= meteor.lifetime) {
+						Object.assign(meteor, createMeteor(time))
+						continue
+					}
+
+					meteor.x += (meteor.vx * delta) / 1000
+					meteor.y += (meteor.vy * delta) / 1000
+
+					if (
+						meteor.x > width + meteor.length ||
+						meteor.y > height + meteor.length
+					) {
+						Object.assign(meteor, createMeteor(time))
+						continue
+					}
+				}
 				const progress = meteor.age / meteor.lifetime
-
-				if (progress >= 1) {
-					Object.assign(meteor, createMeteor(time))
-					continue
-				}
-
-				meteor.x += (meteor.vx * delta) / 1000
-				meteor.y += (meteor.vy * delta) / 1000
-
-				if (
-					meteor.x > width + meteor.length ||
-					meteor.y > height + meteor.length
-				) {
-					Object.assign(meteor, createMeteor(time))
-					continue
-				}
 
 				const fade = Math.sin(progress * Math.PI)
 				drawMeteor(meteor, meteor.opacity * fade)
 			}
-
-			if (shouldAnimate) {
-				animationFrameId = animationController.requestAnimationFrame(tick)
-			}
 		}
 
-		const drawStatic = () => {
-			const now = performance.now()
+		const drawStatic = (time: number) => {
 			context.clearRect(0, 0, width, height)
 			context.globalCompositeOperation = 'lighter'
-			drawStars(now)
-			for (let i = 0; i < Math.min(4, meteors.length); i += 1) {
-				const meteor = createMeteor(now)
+			drawStars(time, true)
+			if (staticMeteors.length === 0) {
+				staticMeteors = Array.from(
+					{ length: Math.min(4, meteors.length) },
+					() => createMeteor(time),
+				)
+			}
+			for (const [i, meteor] of staticMeteors.entries()) {
 				meteor.x = width * (0.2 + i * 0.15)
 				meteor.y = height * (0.22 + i * 0.1)
 				drawMeteor(meteor, meteor.opacity)
@@ -301,40 +302,12 @@ export async function launchEtaAquariidsShower() {
 		overlay.style.filter = ETA_AQUARIIDS_OVERLAY_FILTER
 		overlay.appendChild(canvas)
 
-		const mount = () => {
-			document.body.appendChild(overlay)
-			resizeCanvas()
-			if (shouldAnimate) {
-				lastTime = performance.now()
-				animationFrameId = animationController.requestAnimationFrame(tick)
-			} else {
-				drawStatic()
-			}
-		}
-
-		timeoutId = window.setTimeout(mount, ETA_AQUARIIDS_MOUNT_DELAY_MS)
-
-		const handleResize = () => {
-			resizeCanvas()
-			if (!shouldAnimate) {
-				drawStatic()
-			}
-		}
-		window.addEventListener('resize', handleResize)
-
-		return () => {
-			animationController.dispose()
-			if (timeoutId !== null) {
-				window.clearTimeout(timeoutId)
-			}
-			if (animationFrameId !== null) {
-				animationController.cancelAnimationFrame(animationFrameId)
-			}
-			window.removeEventListener('resize', handleResize)
-			if (overlay.parentElement) {
-				overlay.parentElement.removeChild(overlay)
-			}
-		}
+		return startMeteorShowerAnimation({
+			mountDelayMs: ETA_AQUARIIDS_MOUNT_DELAY_MS,
+			onFrame: drawFrame,
+			onResize: resizeCanvas,
+			overlay,
+		})
 	} catch (error) {
 		console.error('Failed to launch Eta Aquariids meteor shower', error)
 		return () => {}

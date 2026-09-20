@@ -9,6 +9,10 @@ type ControllerOptions = {
 }
 
 type IntervalHandler = () => void
+type PendingAnimationFrame = {
+	callback: FrameRequestCallback
+	nativeId: null | number
+}
 const MODAL_PAUSE_CLASS = 'wp-settings-modal-pause-root'
 const MODAL_PAUSE_STYLE_ID = 'wp-settings-modal-pause-style'
 const markedCssRoots = new Set<HTMLElement>()
@@ -90,33 +94,54 @@ export const createSettingsModalAnimationController = ({
 	}
 
 	let isPaused = shouldAnimate && isSettingsModalOpen()
+	let hasDisposed = false
 	let nextSyntheticRafId = 1
-	const queuedRafCallbacks = new Map<number, FrameRequestCallback>()
+	const pendingFrames = new Map<number, PendingAnimationFrame>()
 
 	if (isPaused) {
 		pauseOverlayCssAnimations()
 	}
 
-	const flushQueuedFrames = () => {
-		if (!shouldAnimate || queuedRafCallbacks.size === 0) {
-			return
+	const scheduleFrame = (id: number, frame: PendingAnimationFrame) => {
+		const nativeId = window.requestAnimationFrame((time) => {
+			if (
+				hasDisposed ||
+				pendingFrames.get(id) !== frame ||
+				frame.nativeId !== nativeId
+			) {
+				return
+			}
+			frame.nativeId = null
+			if (isPaused) return
+			pendingFrames.delete(id)
+			frame.callback(time)
+		})
+		frame.nativeId = nativeId
+	}
+
+	const pausePendingFrames = () => {
+		for (const frame of pendingFrames.values()) {
+			if (frame.nativeId !== null) {
+				window.cancelAnimationFrame(frame.nativeId)
+				frame.nativeId = null
+			}
 		}
+	}
 
-		const callbacks = [...queuedRafCallbacks.values()]
-		queuedRafCallbacks.clear()
-
-		for (const callback of callbacks) {
-			window.requestAnimationFrame(callback)
+	const flushQueuedFrames = () => {
+		for (const [id, frame] of pendingFrames) {
+			if (frame.nativeId === null) scheduleFrame(id, frame)
 		}
 	}
 
 	const unsubscribeModalState = onSettingsModalStateChange((isOpen) => {
-		if (!shouldAnimate) {
+		if (hasDisposed || !shouldAnimate) {
 			return
 		}
 
 		isPaused = isOpen
 		if (isPaused) {
+			pausePendingFrames()
 			pauseOverlayCssAnimations()
 		} else {
 			resumeOverlayCssAnimations()
@@ -127,22 +152,23 @@ export const createSettingsModalAnimationController = ({
 	})
 
 	const requestAnimationFrame = (callback: FrameRequestCallback) => {
-		if (!shouldAnimate || !isPaused) {
-			return window.requestAnimationFrame(callback)
-		}
-
+		if (hasDisposed) return 0
+		// Keep the caller's ID valid when pause/resume replaces the native request.
 		const syntheticId = -nextSyntheticRafId
 		nextSyntheticRafId += 1
-		queuedRafCallbacks.set(syntheticId, callback)
+		const frame: PendingAnimationFrame = { callback, nativeId: null }
+		pendingFrames.set(syntheticId, frame)
+		if (!isPaused) scheduleFrame(syntheticId, frame)
 		return syntheticId
 	}
 
 	const cancelAnimationFrame = (id: number) => {
-		if (id < 0) {
-			queuedRafCallbacks.delete(id)
-			return
+		const frame = pendingFrames.get(id)
+		if (!frame) return
+		pendingFrames.delete(id)
+		if (frame.nativeId !== null) {
+			window.cancelAnimationFrame(frame.nativeId)
 		}
-		window.cancelAnimationFrame(id)
 	}
 
 	const setInterval = (handler: IntervalHandler, ms: number) =>
@@ -157,7 +183,10 @@ export const createSettingsModalAnimationController = ({
 	}
 
 	const dispose = () => {
-		queuedRafCallbacks.clear()
+		if (hasDisposed) return
+		hasDisposed = true
+		pausePendingFrames()
+		pendingFrames.clear()
 		unsubscribeModalState()
 		if (!isSettingsModalOpen()) {
 			resumeOverlayCssAnimations()
