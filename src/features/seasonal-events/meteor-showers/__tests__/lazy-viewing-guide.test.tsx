@@ -82,7 +82,7 @@ describe('LazyMeteorViewingGuide', () => {
 		).toBeInTheDocument()
 		expect(reportError).toHaveBeenCalledWith(
 			'Failed to load meteor viewing guidance',
-			expect.any(Error),
+			expect.objectContaining({ cause: error }),
 		)
 		const retry = Promise.withResolvers<GuideModule>()
 		vi.doMock('../viewing-guide', () => retry.promise)

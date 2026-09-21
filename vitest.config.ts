@@ -5,6 +5,7 @@ export default defineConfig({
 		environment: 'jsdom',
 		globals: true,
 		include: ['src/**/*.test.{ts,tsx}', 'scripts/**/*.test.mjs'],
+		pool: 'vmThreads',
 		setupFiles: ['./src/test-setup.ts'],
 	},
 })
