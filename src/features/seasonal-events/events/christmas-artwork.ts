@@ -25,8 +25,10 @@ type Bough = {
 
 export function createChristmasArtwork({
 	dpr,
+	hasSnow = true,
 }: {
 	dpr: number
+	hasSnow?: boolean
 }): ChristmasArtwork {
 	const width = 440
 	const height = 560
@@ -46,7 +48,7 @@ export function createChristmasArtwork({
 	drawTreeShadow(context)
 	const boughs = createBoughs()
 	for (const bough of boughs) {
-		drawBough({ context, bough })
+		drawBough({ context, bough, hasSnow })
 	}
 	drawCrown(context)
 	const lights = drawLightStrands(context)
@@ -148,9 +150,11 @@ function createBoughs(): Bough[] {
 function drawBough({
 	context,
 	bough,
+	hasSnow,
 }: {
 	context: CanvasRenderingContext2D
 	bough: Bough
+	hasSnow: boolean
 }) {
 	const random = createRandom(bough.seed)
 	const { length, depth } = bough
@@ -209,7 +213,7 @@ function drawBough({
 			})
 		}
 	}
-	if (depth > 0.7 && length > 35 && random() > 0.43) {
+	if (hasSnow && depth > 0.7 && length > 35 && random() > 0.43) {
 		drawBranchSnow({ context, length, random })
 	}
 	context.restore()

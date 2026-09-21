@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 
-import type {
-	Hemisphere,
-	SeasonalEventId,
-	SeasonalEventOverride,
-} from '../core/types'
+import type { SeasonalEventOverride } from '../core/types'
 
 import { applySeasonalEventEffectBlur } from '../core/effect-blur'
-import { SEASONAL_EVENT_OVERRIDE_NONE } from '../core/types'
+import {
+	Hemisphere,
+	SEASONAL_EVENT_OVERRIDE_NONE,
+	SeasonalEventId,
+} from '../core/types'
 import { isLikelySoftwareRenderer } from '../core/utils'
 
 type SeasonalEventsModule = typeof import('../core/seasonal-events-module')
@@ -41,12 +41,18 @@ export const useSeasonalEvents = ({
 	seasonalEventOverride = SEASONAL_EVENT_OVERRIDE_NONE,
 	shouldBlurEffects = false,
 }: Readonly<UseSeasonalEventsOptions>) => {
-	const triggeredEvents = useRef<Set<SeasonalEventId>>(new Set())
+	const triggeredEvents = useRef<Map<SeasonalEventId, Hemisphere | undefined>>(
+		new Map(),
+	)
 	const [dateKey, setDateKey] = useState(() => getDateKey(new Date()))
 	const activeDate = getDateFromKey(dateKey)
 	const [activeEvent, setActiveEvent] = useState<null | SeasonalEventId>(null)
 	const shouldResolveActiveEvent = isHydrated && isEnabled && isOnboarded
 	const effectiveActiveEvent = shouldResolveActiveEvent ? activeEvent : null
+	const effectHemisphere =
+		effectiveActiveEvent === SeasonalEventId.ChristmasDay
+			? (hemisphere ?? Hemisphere.Northern)
+			: undefined
 	const hasSeasonalEventOverride =
 		seasonalEventOverride !== SEASONAL_EVENT_OVERRIDE_NONE
 
@@ -55,7 +61,7 @@ export const useSeasonalEvents = ({
 			return
 		}
 
-		for (const triggeredEvent of triggeredEvents.current) {
+		for (const triggeredEvent of triggeredEvents.current.keys()) {
 			if (!enabledEvents.has(triggeredEvent)) {
 				triggeredEvents.current.delete(triggeredEvent)
 			}
@@ -138,13 +144,14 @@ export const useSeasonalEvents = ({
 		}
 		if (
 			!hasSeasonalEventOverride &&
-			triggeredEvents.current.has(effectiveActiveEvent)
+			triggeredEvents.current.has(effectiveActiveEvent) &&
+			triggeredEvents.current.get(effectiveActiveEvent) === effectHemisphere
 		) {
 			return
 		}
 
 		if (!hasSeasonalEventOverride) {
-			triggeredEvents.current.add(effectiveActiveEvent)
+			triggeredEvents.current.set(effectiveActiveEvent, effectHemisphere)
 		}
 
 		let cleanup = () => {}
@@ -153,8 +160,13 @@ export const useSeasonalEvents = ({
 		const runEvent = async () => {
 			try {
 				const seasonalEvents = await loadSeasonalEventsModule()
-				const nextCleanup =
-					await seasonalEvents.runSeasonalEvent(effectiveActiveEvent)
+				if (hasCanceled) {
+					return
+				}
+				const nextCleanup = await seasonalEvents.runSeasonalEvent({
+					eventId: effectiveActiveEvent,
+					hemisphere: effectHemisphere,
+				})
 
 				if (hasCanceled) {
 					nextCleanup()
@@ -173,7 +185,7 @@ export const useSeasonalEvents = ({
 			hasCanceled = true
 			cleanup()
 		}
-	}, [effectiveActiveEvent, hasSeasonalEventOverride])
+	}, [effectiveActiveEvent, effectHemisphere, hasSeasonalEventOverride])
 
 	useEffect(() => {
 		if (!effectiveActiveEvent || typeof document === 'undefined') {

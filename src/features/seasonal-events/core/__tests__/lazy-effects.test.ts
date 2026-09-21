@@ -4,7 +4,7 @@ import {
 	getSeasonalEventForDate,
 	runSeasonalEvent,
 } from '../seasonal-events-module'
-import { SeasonalEventId } from '../types'
+import { Hemisphere, SeasonalEventId } from '../types'
 
 const effect = vi.hoisted(() => ({
 	cleanup: vi.fn(),
@@ -14,7 +14,7 @@ const effect = vi.hoisted(() => ({
 
 vi.mock('../../events/christmas', () => {
 	effect.isLoaded = true
-	return { launchChristmasSnowfall: effect.launch }
+	return { launchChristmasScene: effect.launch }
 })
 
 describe('seasonal effect loading', () => {
@@ -23,10 +23,26 @@ describe('seasonal effect loading', () => {
 		const event = getSeasonalEventForDate({ date: new Date(2026, 11, 25) })
 		expect(event?.id).toBe(SeasonalEventId.ChristmasDay)
 		expect(effect.isLoaded).toBe(false)
-		const cleanup = await runSeasonalEvent(SeasonalEventId.ChristmasDay)
+		const cleanup = await runSeasonalEvent({
+			eventId: SeasonalEventId.ChristmasDay,
+		})
 		expect(effect.isLoaded).toBe(true)
 		expect(effect.launch).toHaveBeenCalledOnce()
+		expect(effect.launch).toHaveBeenCalledWith({
+			hemisphere: Hemisphere.Northern,
+		})
 		cleanup()
 		expect(effect.cleanup).toHaveBeenCalledOnce()
+	})
+
+	it('passes the southern hemisphere to the Christmas renderer', async () => {
+		await runSeasonalEvent({
+			eventId: SeasonalEventId.ChristmasDay,
+			hemisphere: Hemisphere.Southern,
+		})
+
+		expect(effect.launch).toHaveBeenLastCalledWith({
+			hemisphere: Hemisphere.Southern,
+		})
 	})
 })

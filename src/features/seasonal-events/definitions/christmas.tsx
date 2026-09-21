@@ -87,9 +87,9 @@ export const christmasEvent: SeasonalEvent = {
 	details: EventDetails,
 	id: SeasonalEventId.ChristmasDay,
 	isActive: isChristmasDay,
-	run: () =>
+	run: ({ hemisphere }) =>
 		import('../events/christmas').then((module) =>
-			module.launchChristmasSnowfall(),
+			module.launchChristmasScene({ hemisphere }),
 		),
 	tileAccent: {
 		colors: ['#fef3c7', '#fca5a5', '#86efac', '#fde68a', '#fef3c7'],

@@ -39,7 +39,7 @@ export type SeasonalEvent = {
 	details?: SeasonalEventDetails
 	id: SeasonalEventId
 	isActive: (context: SeasonalEventContext) => boolean
-	run: () => Promise<() => void>
+	run: (context: { hemisphere: Hemisphere }) => Promise<() => void>
 	tileAccent?: SeasonalEventTileAccent
 }
 

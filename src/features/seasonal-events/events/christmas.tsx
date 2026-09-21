@@ -1,6 +1,9 @@
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
+import { Hemisphere } from '../core/types'
 import { getCanvasDpr, randomInRange } from '../core/utils'
 import { createChristmasArtwork } from './christmas-artwork'
+import { createChristmasBarbecueArtwork } from './christmas-barbecue-artwork'
+import { createChristmasSummerSun } from './christmas-summer-artwork'
 
 type Snowflake = {
 	depth: number
@@ -11,23 +14,39 @@ type Snowflake = {
 	y: number
 }
 
-export async function launchChristmasSnowfall(): Promise<() => void> {
+export async function launchChristmasScene({
+	hemisphere = Hemisphere.Northern,
+}: {
+	hemisphere?: Hemisphere
+} = {}): Promise<() => void> {
 	if (typeof window === 'undefined') return () => {}
 
+	const isSummer = hemisphere === Hemisphere.Southern
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
 	if (!context) throw new Error('Unable to create Christmas scene canvas')
 	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
 	const lightSprite = createLightSprite()
-	const snowSprite = createSnowSprite()
-	const snow = Array.from({ length: 180 }, (_, index) => createSnowflake(index))
-	const stars = Array.from({ length: 45 }, () => ({
+	const sunshine = isSummer ? createChristmasSummerSun() : null
+	const snowSprite = isSummer ? null : createSnowSprite()
+	const snow = Array.from({ length: isSummer ? 0 : 180 }, (_, index) =>
+		createSnowflake(index),
+	)
+	const stars = Array.from({ length: isSummer ? 0 : 45 }, () => ({
 		phase: Math.random() * Math.PI * 2,
 		x: Math.random(),
 		y: Math.random() * 0.72,
 	}))
+	const glints = Array.from({ length: isSummer ? 10 : 0 }, (_, index) => ({
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ min: 5, max: 12 }),
+		speed: randomInRange({ min: 0.005, max: 0.012 }),
+		x: index % 2 === 0 ? Math.random() * 0.28 : 0.78 + Math.random() * 0.22,
+		y: 0.45 + Math.random() * 0.55,
+	}))
 	let artwork: ReturnType<typeof createChristmasArtwork> | null = null
 	let landscape: HTMLCanvasElement | null = null
+	let barbecue: ReturnType<typeof createChristmasBarbecueArtwork> | null = null
 	let artworkDpr = 0
 	let landscapeHeight = 0
 	let width = window.innerWidth
@@ -41,9 +60,11 @@ export async function launchChristmasSnowfall(): Promise<() => void> {
 
 	canvas.setAttribute('aria-hidden', 'true')
 	canvas.setAttribute('data-christmas', 'true')
+	canvas.setAttribute('data-christmas-season', isSummer ? 'summer' : 'winter')
 	Object.assign(canvas.style, {
-		background:
-			'radial-gradient(ellipse at 10% 85%, #c59a3428, transparent 48%), radial-gradient(ellipse at 80% 15%, #456b9a28, transparent 65%), radial-gradient(ellipse at 100% 100%, #25544622, transparent 50%)',
+		background: isSummer
+			? 'radial-gradient(ellipse at 88% 13%, #fff1b8b3, #ffd77875 24%, transparent 59%), linear-gradient(180deg, #4a9fbe8a, #8aafad66 38%, #e9bc6480 76%, #bd95475c)'
+			: 'radial-gradient(ellipse at 10% 85%, #c59a3428, transparent 48%), radial-gradient(ellipse at 80% 15%, #456b9a28, transparent 65%), radial-gradient(ellipse at 100% 100%, #25544622, transparent 50%)',
 		inset: '0',
 		mixBlendMode: 'screen',
 		pointerEvents: 'none',
@@ -54,6 +75,7 @@ export async function launchChristmasSnowfall(): Promise<() => void> {
 	const animationController = createSettingsModalAnimationController()
 
 	const drawSnow = (isForeground: boolean, opacity: number) => {
+		if (!snowSprite) return
 		context.fillStyle = '#e1eaf4'
 		for (const flake of snow) {
 			if (flake.depth > 0 !== isForeground) continue
@@ -74,14 +96,76 @@ export async function launchChristmasSnowfall(): Promise<() => void> {
 		}
 	}
 
+	const drawSummerGlints = (opacity: number) => {
+		for (const glint of glints) {
+			const phase = elapsed * glint.speed + glint.phase
+			const x = glint.x * width + Math.sin(phase * 3) * 16
+			const y = glint.y * height + Math.cos(phase * 2) * 12
+			const shimmer = Math.max(0, Math.sin(elapsed * 0.55 + glint.phase)) ** 4
+			context.globalAlpha = opacity * (0.07 + shimmer * 0.36)
+			context.drawImage(lightSprite, x, y, glint.size, glint.size)
+		}
+	}
+
+	const drawSummerBarbecue = (opacity: number) => {
+		if (!barbecue) return
+		const scale = Math.min(
+			0.95,
+			(height * 0.38) / barbecue.height,
+			(width * 0.55) / barbecue.width,
+		)
+		const sceneWidth = barbecue.width * scale
+		const sceneHeight = barbecue.height * scale
+		const x = width - sceneWidth - Math.min(24, width * 0.02)
+		const y = height - barbecue.baseY * scale
+		context.globalAlpha = opacity
+		context.drawImage(barbecue.canvas, x, y, sceneWidth, sceneHeight)
+		const grillX = x + barbecue.grill.x * sceneWidth
+		const grillY = y + barbecue.grill.y * sceneHeight
+		const grillWidth = barbecue.grill.width * sceneWidth
+		context.strokeStyle = '#fff4d0'
+		context.lineWidth = Math.max(0.7, 1.6 * scale)
+		context.lineCap = 'round'
+		for (let index = 0; index < 5; index += 1) {
+			const progress = (elapsed * 0.16 + index * 0.19) % 1
+			const rise = progress * 100 * scale
+			const sway = Math.sin(elapsed * 0.8 + index * 2) * 9 * scale
+			const steamX = grillX + (index / 4 - 0.5) * grillWidth * 0.72
+			const steamY = grillY - rise
+			context.globalAlpha = opacity * Math.sin(progress * Math.PI) * 0.24
+			context.beginPath()
+			context.moveTo(steamX, steamY)
+			context.bezierCurveTo(
+				steamX - 8 * scale + sway,
+				steamY - 12 * scale,
+				steamX + 10 * scale + sway,
+				steamY - 28 * scale,
+				steamX + sway,
+				steamY - 42 * scale,
+			)
+			context.stroke()
+		}
+	}
+
 	const drawScene = () => {
-		if (!artwork || !landscape) return
+		if (!artwork) return
 		context.clearRect(0, 0, width, height)
 		const reveal = shouldAnimate ? Math.min(1, elapsed / 1.8) : 1
 		const opacity = 1 - (1 - reveal) ** 3
+		if (sunshine) {
+			const sunSize = Math.min(width * 0.8, height * 0.7, 600)
+			context.globalAlpha = opacity * 0.9
+			context.drawImage(
+				sunshine,
+				width * 0.87 - sunSize / 2,
+				height * 0.14 - sunSize / 2,
+				sunSize,
+				sunSize,
+			)
+		}
 		const scale = Math.min(
 			(height * 0.68) / artwork.height,
-			(width * 0.78) / artwork.width,
+			(width * (isSummer ? 0.6 : 0.78)) / artwork.width,
 			1,
 		)
 		const treeWidth = artwork.width * scale
@@ -89,7 +173,7 @@ export async function launchChristmasSnowfall(): Promise<() => void> {
 		const treeX = -treeWidth * 0.16
 		const treeY = height - artwork.baseY * scale + 10
 
-		context.fillStyle = '#bfd1e9'
+		context.fillStyle = isSummer ? '#f4dfb7' : '#bfd1e9'
 		for (const star of stars) {
 			context.globalAlpha =
 				opacity * (0.17 + Math.sin(elapsed * 0.45 + star.phase) * 0.07)
@@ -98,14 +182,17 @@ export async function launchChristmasSnowfall(): Promise<() => void> {
 		drawSnow(false, opacity)
 
 		context.globalAlpha = opacity
-		context.drawImage(
-			landscape,
-			0,
-			height - landscapeHeight,
-			width,
-			landscapeHeight,
-		)
+		if (landscape) {
+			context.drawImage(
+				landscape,
+				0,
+				height - landscapeHeight,
+				width,
+				landscapeHeight,
+			)
+		}
 		context.drawImage(artwork.canvas, treeX, treeY, treeWidth, treeHeight)
+		drawSummerBarbecue(opacity)
 
 		context.globalCompositeOperation = 'lighter'
 		for (const light of artwork.lights) {
@@ -150,6 +237,7 @@ export async function launchChristmasSnowfall(): Promise<() => void> {
 		)
 		context.globalCompositeOperation = 'source-over'
 		drawSnow(true, opacity)
+		drawSummerGlints(opacity)
 		context.globalAlpha = 1
 	}
 
@@ -163,11 +251,14 @@ export async function launchChristmasSnowfall(): Promise<() => void> {
 		canvas.style.height = `${height}px`
 		context.setTransform(dpr, 0, 0, dpr, 0, 0)
 		if (!artwork || artworkDpr !== dpr) {
-			artwork = createChristmasArtwork({ dpr })
+			artwork = createChristmasArtwork({ dpr, hasSnow: !isSummer })
+			barbecue = isSummer ? createChristmasBarbecueArtwork({ dpr }) : null
 			artworkDpr = dpr
 		}
 		landscapeHeight = Math.min(height * 0.22, 160)
-		landscape = createLandscape({ width, height: landscapeHeight, dpr })
+		landscape = isSummer
+			? null
+			: createLandscape({ width, height: landscapeHeight, dpr })
 		drawScene()
 	}
 

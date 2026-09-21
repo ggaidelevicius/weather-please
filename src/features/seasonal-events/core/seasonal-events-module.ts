@@ -130,14 +130,20 @@ export const getActiveSeasonalEvent = (params: {
 	return event ? event.id : null
 }
 
-export const runSeasonalEvent = (eventId: SeasonalEventId) => {
+export const runSeasonalEvent = ({
+	eventId,
+	hemisphere = Hemisphere.Northern,
+}: {
+	eventId: SeasonalEventId
+	hemisphere?: Hemisphere
+}): Promise<() => void> => {
 	const event = seasonalEventMap.get(eventId)
 
 	if (!event) {
 		return Promise.resolve(() => {})
 	}
 
-	return event.run()
+	return event.run({ hemisphere })
 }
 
 export const getSeasonalTileAccent = (params: {
