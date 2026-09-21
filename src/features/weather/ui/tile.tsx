@@ -26,6 +26,8 @@ import type {
 
 import { SeasonalEventModal } from '../../../shared/ui/seasonal-event-modal'
 import { Hemisphere, SeasonalEventId } from '../../seasonal-events/core/types'
+import { getMeteorShower } from '../../seasonal-events/meteor-showers/catalog'
+import { LazyMeteorViewingGuide } from '../../seasonal-events/meteor-showers/lazy-viewing-guide'
 import { TileIdentifier } from '../../settings/model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../settings/model/unit-system'
 import {
@@ -232,6 +234,7 @@ interface TileProps {
 	isSeasonalEventEnabled: (eventId: SeasonalEventId) => boolean
 	max: number
 	min: number
+	observingLocation?: Readonly<{ latitude: number; longitude: number }>
 	onToggleSeasonalEventBackground: (
 		eventId: SeasonalEventId,
 		enabled: boolean,
@@ -286,6 +289,7 @@ export const Tile = ({
 	isSeasonalEventEnabled,
 	max,
 	min,
+	observingLocation,
 	onToggleSeasonalEventBackground,
 	onToggleSeasonalEvent,
 	rain,
@@ -422,7 +426,7 @@ export const Tile = ({
 			)}
 			<div className="relative z-10 flex h-full flex-col rounded-2xl border border-white/3 bg-[#24252b] p-5.5 shadow-md select-none">
 				{seasonalBadgeId && (
-					<div className="absolute top-3 right-3">
+					<div className="absolute top-3 right-3 z-10">
 						<div className="group/seasonal relative">
 							<button
 								aria-expanded={isEventOpen}
@@ -593,6 +597,14 @@ export const Tile = ({
 					onClose={() => setIsEventOpen(false)}
 					title={renderSeasonalLabel(seasonalBadgeId)}
 				>
+					{isEventOpen && getMeteorShower(seasonalBadgeId) && (
+						<LazyMeteorViewingGuide
+							date={tileDate}
+							eventId={seasonalBadgeId}
+							latitude={observingLocation?.latitude ?? Number.NaN}
+							longitude={observingLocation?.longitude ?? Number.NaN}
+						/>
+					)}
 					<EventDetails />
 				</SeasonalEventModal>
 			)}

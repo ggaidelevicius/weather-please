@@ -53,9 +53,9 @@ const EventDetails = () => (
 		</p>
 		<p>
 			<Trans>
-				Their radiant lies in the constellation Perseus, and the shower is
-				especially prominent in the northern hemisphere, though visible
-				worldwide.
+				Their radiant lies in the constellation Perseus. The shower is best
+				placed in the northern hemisphere, with visibility decreasing farther
+				south.
 			</Trans>
 		</p>
 
@@ -104,9 +104,9 @@ const EventDetails = () => (
 		</p>
 		<p>
 			<Trans>
-				On a good night near peak, you can expect a meteor every minute or two.
-				The best rates come after midnight, when your side of the Earth faces
-				into the debris stream.
+				The number of meteors you see depends on your location, the darkness and
+				clarity of the sky, and the shower's activity that year. A high radiant
+				and a dark sky usually offer better viewing.
 			</Trans>
 		</p>
 	</>

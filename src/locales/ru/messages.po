@@ -13,6 +13,134 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:245
+msgid "Above the horizon for part of this window."
+msgstr "Над горизонтом в течение части этого периода."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:243
+msgid "Above the horizon throughout this window."
+msgstr "Над горизонтом в течение всего этого периода."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:241
+msgid "Below the horizon throughout this window."
+msgstr "Под горизонтом в течение всего этого периода."
+
+#: src/features/seasonal-events/meteor-showers/lazy-viewing-guide.tsx:61
+msgid "Calculating local viewing times…"
+msgstr "Рассчитываем местное время наблюдения…"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:222
+msgid "East"
+msgstr "Восток"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:203
+msgid "Estimates near the usual peak, not a prediction of meteor activity or cloud cover. Check the local forecast and choose a dark spot away from lights."
+msgstr "Это оценки для периода вблизи обычного максимума, а не прогноз активности метеоров или облачности. Проверьте местный прогноз погоды и выберите тёмное место вдали от огней."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:84
+msgid "Local viewing guidance appears near this shower’s usual peak."
+msgstr "Рекомендации для вашей местности появляются вблизи обычного максимума этого потока."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:282
+msgid "Local viewing guidance isn’t available for this location. Check that your selected weather location is correct."
+msgstr "Рекомендации по наблюдению для этого места недоступны. Проверьте, правильно ли выбрано местоположение для прогноза погоды."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:169
+msgid "Moonlight"
+msgstr "Лунный свет"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:137
+msgid "Night of {nightLabel}"
+msgstr "Ночь: {nightLabel}"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:274
+msgid "No useful local viewing window was found for this night."
+msgstr "Подходящего времени для наблюдения в этой местности в эту ночь не найдено."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:218
+msgid "North"
+msgstr "Север"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:220
+msgid "North-east"
+msgstr "Северо-восток"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:232
+msgid "North-west"
+msgstr "Северо-запад"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:158
+msgid "Radiant position"
+msgstr "Положение радианта"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:182
+msgid "Sky position and Moon illumination shown for {referenceLabel}."
+msgstr "Положение на небе и освещённость Луны указаны на {referenceLabel}."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:226
+msgid "South"
+msgstr "Юг"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:224
+msgid "South-east"
+msgstr "Юго-восток"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:228
+msgid "South-west"
+msgstr "Юго-запад"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:146
+msgid "Suggested viewing window"
+msgstr "Рекомендуемое время наблюдения"
+
+#: src/features/seasonal-events/definitions/perseids.tsx:106
+msgid "The number of meteors you see depends on your location, the darkness and clarity of the sky, and the shower's activity that year. A high radiant and a dark sky usually offer better viewing."
+msgstr "Число видимых метеоров зависит от вашего местоположения, темноты и прозрачности неба, а также активности потока в этом году. Высокое положение радианта и тёмное небо обычно обеспечивают лучшие условия наблюдения."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:188
+msgid "The radiant is where the trails appear to come from. Meteors can cross any part of the sky: look roughly halfway up, away from the Moon, with a wide, unobstructed view."
+msgstr "Радиант — точка, из которой, кажется, расходятся следы метеоров. Метеоры могут пересекать любую часть неба: смотрите примерно посередине между горизонтом и зенитом, в сторону от Луны, и выбирайте место с широким открытым обзором."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:256
+msgid "The sky stays too bright for a useful viewing window at this location on this night."
+msgstr "В эту ночь небо в этой местности остаётся слишком светлым для подходящих условий наблюдения."
+
+#: src/features/seasonal-events/definitions/perseids.tsx:55
+msgid "Their radiant lies in the constellation Perseus. The shower is best placed in the northern hemisphere, with visibility decreasing farther south."
+msgstr "Их радиант находится в созвездии Персея. Поток лучше всего виден в северном полушарии; чем дальше на юг, тем хуже условия наблюдения."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:265
+msgid "This shower’s radiant stays too low while your sky is dark for a useful viewing window on this night."
+msgstr "В тёмное время этой ночи радиант потока остаётся слишком низко для подходящих условий наблюдения."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:140
+msgid "Times in {timeZoneLabel}"
+msgstr "Часовой пояс: {timeZoneLabel}"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:151
+msgid "to"
+msgstr "до"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:196
+msgid "Twilight overlaps this window, so fainter meteors may be harder to see."
+msgstr "Часть этого периода приходится на сумерки, поэтому слабые метеоры может быть труднее заметить."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:90
+msgid "Usual peak: around {peakLabel}."
+msgstr "Обычный максимум: около {peakLabel}."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:55
+msgid "Viewing from your location"
+msgstr "Наблюдение из вашего местоположения"
+
+#: src/features/seasonal-events/meteor-showers/lazy-viewing-guide.tsx:49
+msgid "Viewing guidance could not be loaded."
+msgstr "Не удалось загрузить рекомендации по наблюдению."
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:230
+msgid "West"
+msgstr "Запад"
+
 #. placeholder {0}: formatPrecipitationValue({ precipitation: sum(precipitation), usesMetricUnits, })
 #: src/features/weather/ui/next-24-hours-tile.tsx:428
 msgid "{0}"
@@ -96,6 +224,10 @@ msgstr "{0} завтра"
 msgid "{0}% at <0/>"
 msgstr "{0}% в <0/>"
 
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:163
+msgid "{altitude}° above the horizon"
+msgstr "{altitude}° над горизонтом"
+
 #: src/features/integrations/ui/upcoming-events.tsx:384
 msgid "{hours}h"
 msgstr "{hours} ч"
@@ -107,6 +239,10 @@ msgstr "{hours} ч {minutes} мин"
 #: src/features/integrations/ui/upcoming-events.tsx:380
 msgid "{minutes}m"
 msgstr "{minutes} мин"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:173
+msgid "{moonBrightness} illuminated"
+msgstr "Освещено {moonBrightness}"
 
 #: src/features/weather/ui/weather-alert.tsx:307
 msgid "{precipitationInches} inches of precipitation expected over the next {durationHours} hours"

@@ -36,6 +36,7 @@ import {
 } from '../features/seasonal-events/core/utils'
 import { useSeasonalEvents } from '../features/seasonal-events/hooks/use-seasonal-events'
 import { useConfig } from '../features/settings/hooks/use-config'
+import { hasValidCoordinates } from '../features/settings/model/config'
 import {
 	SEASONAL_EVENT_BACKGROUND_TOGGLE_KEY_BY_ID,
 	SEASONAL_EVENT_TOGGLE_KEY_BY_ID,
@@ -228,6 +229,11 @@ const WeatherDashboard = () => {
 					isSeasonalEventBackgroundEnabled={isSeasonalEventBackgroundEnabled}
 					isSeasonalEventEnabled={isSeasonalEventEnabled}
 					key={day.day}
+					observingLocation={
+						hasValidCoordinates(config)
+							? { latitude: Number(config.lat), longitude: Number(config.lon) }
+							: undefined
+					}
 					onToggleSeasonalEvent={toggleSeasonalEvent}
 					onToggleSeasonalEventBackground={toggleSeasonalEventBackground}
 					seasonalEventOverride={config.seasonalEventOverride}
