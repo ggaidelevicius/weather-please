@@ -20,6 +20,7 @@ import { AsyncStatus } from '../../../../shared/hooks/async-status'
 import { CalendarAccountCategory } from '../../../integrations/model/account-category'
 import { CalendarProvider } from '../../../integrations/model/calendar-provider'
 import {
+	SEASONAL_BACKGROUND_AUTOMATIC,
 	SEASONAL_EVENT_OVERRIDE_NONE,
 	SeasonalEventId,
 } from '../../../seasonal-events/core/types'
@@ -27,6 +28,7 @@ import { BOOLEAN_CONFIG_DEFAULTS } from '../../model/boolean-settings'
 import { TileIdentifier } from '../../model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../model/unit-system'
 import { Settings } from '../settings'
+import { GeneralSettingsSection } from '../sections/general-settings'
 
 vi.mock('@lingui/react/macro', () => ({
 	Trans: ({ children }: { children: ReactNode }) => children,
@@ -35,17 +37,19 @@ vi.mock('@lingui/react/macro', () => ({
 const renderSettings = ({
 	calendarConnection = createCalendarConnection(),
 	handleChange = vi.fn(),
+	input = createConfig(),
 	integrationsPromo = createIntegrationsPromo(),
 }: {
 	calendarConnection?: CalendarConnection
 	handleChange?: (k: keyof Config, v: Config[keyof Config]) => void
+	input?: Config
 	integrationsPromo?: IntegrationsPromo
 } = {}) =>
 	render(
 		<Settings
 			calendarConnection={calendarConnection}
 			handleChange={handleChange}
-			input={createConfig()}
+			input={input}
 			integrationsPromo={integrationsPromo}
 		/>,
 	)
@@ -114,13 +118,28 @@ describe('Settings modal navigation', () => {
 		)
 	})
 
-	it('updates event backgrounds and tile events independently', () => {
+	it('keeps background styles in General and event controls in Seasonal events', () => {
 		const handleChange = vi.fn()
 
-		renderSettings({ handleChange })
+		renderSettings({
+			handleChange,
+			input: { ...createConfig(), seasonalBackground: SeasonalEventId.Holi },
+		})
 
 		fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
+		expect(screen.getByLabelText('Background style')).toHaveValue(
+			SeasonalEventId.Holi,
+		)
+		expect(
+			screen.getByLabelText('Switch to seasonal backgrounds'),
+		).toBeInTheDocument()
+
 		fireEvent.click(screen.getByRole('button', { name: 'Seasonal events' }))
+		expect(screen.queryByLabelText('Background style')).not.toBeInTheDocument()
+		expect(
+			screen.queryByLabelText('Switch to seasonal backgrounds'),
+		).not.toBeInTheDocument()
+		expect(screen.getByLabelText('Show seasonal events')).toBeInTheDocument()
 		const christmasSettings = screen.getByRole('group', {
 			name: 'Christmas Day',
 		})
@@ -133,6 +152,151 @@ describe('Settings modal navigation', () => {
 			false,
 		)
 		expect(handleChange).toHaveBeenCalledWith('showChristmasEvent', false)
+	})
+
+	it('offers automatic and every seasonal effect as a background style in General', () => {
+		const handleChange = vi.fn()
+		renderSettings({ handleChange })
+
+		fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
+		const backgroundStyle = screen.getByLabelText('Background style')
+		const options = within(backgroundStyle).getAllByRole('option')
+		const expectedValues = [
+			...Object.values(SeasonalEventId),
+			SEASONAL_BACKGROUND_AUTOMATIC,
+		]
+
+		expect(backgroundStyle).toHaveValue(SEASONAL_BACKGROUND_AUTOMATIC)
+		expect(
+			within(backgroundStyle).getByRole('option', {
+				name: 'Automatic (seasonal)',
+			}),
+		).toHaveValue(SEASONAL_BACKGROUND_AUTOMATIC)
+		expect(options).toHaveLength(expectedValues.length)
+		expect(
+			new Set(options.map((option) => option.getAttribute('value'))),
+		).toEqual(new Set(expectedValues))
+
+		for (const value of expectedValues) {
+			fireEvent.change(backgroundStyle, { target: { value } })
+			expect(handleChange).toHaveBeenLastCalledWith('seasonalBackground', value)
+		}
+		expect(handleChange).toHaveBeenCalledTimes(expectedValues.length)
+	})
+
+	it('only offers seasonal background switching for a chosen background style', () => {
+		const handleChange = vi.fn()
+		const props = {
+			handleChange,
+			hasSoftwareRenderer: false,
+			input: createConfig(),
+			localeKeys: ['en' as const],
+		}
+		const { rerender } = render(<GeneralSettingsSection {...props} />)
+		const switchLabel = 'Switch to seasonal backgrounds'
+
+		expect(screen.queryByLabelText(switchLabel)).not.toBeInTheDocument()
+		rerender(
+			<GeneralSettingsSection
+				{...props}
+				input={{ ...props.input, seasonalBackground: SeasonalEventId.Holi }}
+			/>,
+		)
+
+		expect(screen.getByLabelText(switchLabel)).not.toBeChecked()
+		expect(
+			screen.getByText(
+				'Use enabled seasonal backgrounds on their dates, then return to your chosen style. Turn this off to always use your chosen background.',
+			),
+		).toBeInTheDocument()
+		fireEvent.click(screen.getByLabelText(switchLabel))
+		expect(handleChange).toHaveBeenLastCalledWith(
+			'shouldPreferSeasonalBackgrounds',
+			true,
+		)
+
+		rerender(
+			<GeneralSettingsSection
+				{...props}
+				input={{
+					...props.input,
+					seasonalBackground: SeasonalEventId.Holi,
+					shouldPreferSeasonalBackgrounds: true,
+				}}
+			/>,
+		)
+		expect(screen.getByLabelText(switchLabel)).toBeChecked()
+		fireEvent.click(screen.getByLabelText(switchLabel))
+		expect(handleChange).toHaveBeenLastCalledWith(
+			'shouldPreferSeasonalBackgrounds',
+			false,
+		)
+
+		rerender(<GeneralSettingsSection {...props} />)
+		expect(screen.queryByLabelText(switchLabel)).not.toBeInTheDocument()
+	})
+
+	it('keeps General background controls available when seasonal events are disabled', () => {
+		const handleChange = vi.fn()
+		renderSettings({
+			handleChange,
+			input: {
+				...createConfig(),
+				seasonalBackground: SeasonalEventId.Holi,
+				showSeasonalEvents: false,
+			},
+		})
+
+		fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
+		const backgroundStyle = screen.getByLabelText('Background style')
+
+		expect(backgroundStyle).toHaveValue(SeasonalEventId.Holi)
+		expect(backgroundStyle).toBeEnabled()
+		expect(
+			screen.getByLabelText('Switch to seasonal backgrounds'),
+		).toBeEnabled()
+		expect(
+			screen.queryByRole('group', { name: 'Holi' }),
+		).not.toBeInTheDocument()
+		fireEvent.change(backgroundStyle, {
+			target: { value: SeasonalEventId.ChristmasDay },
+		})
+		expect(handleChange).toHaveBeenCalledWith(
+			'seasonalBackground',
+			SeasonalEventId.ChristmasDay,
+		)
+	})
+
+	it('explains unavailable fixed backgrounds in General when hardware acceleration is disabled', () => {
+		const props = {
+			handleChange: vi.fn(),
+			hasSoftwareRenderer: true,
+			input: { ...createConfig(), showSeasonalEvents: false },
+			localeKeys: ['en' as const],
+		}
+		const { rerender } = render(<GeneralSettingsSection {...props} />)
+
+		expect(
+			screen.queryByText(/using a software renderer/),
+		).not.toBeInTheDocument()
+
+		rerender(
+			<GeneralSettingsSection
+				{...props}
+				input={{ ...props.input, seasonalBackground: SeasonalEventId.Holi }}
+			/>,
+		)
+
+		expect(screen.getByText(/using a software renderer/)).toBeInTheDocument()
+
+		rerender(
+			<GeneralSettingsSection
+				{...props}
+				input={{ ...props.input, showSeasonalEvents: true }}
+			/>,
+		)
+
+		expect(screen.getByText(/using a software renderer/)).toBeInTheDocument()
 	})
 
 	it('offers a connect button per configured provider in the integrations section', () => {
@@ -315,7 +479,7 @@ const createCalendarConnection = (
 	...overrides,
 })
 
-const createConfig = () => ({
+const createConfig = (): Config => ({
 	...BOOLEAN_CONFIG_DEFAULTS,
 	daysToRetrieve: '3',
 	identifier: TileIdentifier.Day,
@@ -323,6 +487,7 @@ const createConfig = () => ({
 	lang: 'en' as const,
 	lat: '-31.9523',
 	lon: '115.8613',
+	seasonalBackground: SEASONAL_BACKGROUND_AUTOMATIC,
 	seasonalEventOverride: SEASONAL_EVENT_OVERRIDE_NONE,
 	temperatureUnit: TemperatureUnit.Celsius,
 	unitSystem: UnitSystem.Metric,

@@ -77,10 +77,8 @@ temporary staging directory and do not rename source directories or rewrite
 analytics imports. Website builds include analytics; extension builds exclude
 it. Vercel uses `pnpm build:web` through `vercel.json`.
 
-ESLint compatibility with the current TypeScript version is deferred. CI checks
-types, formatting, tests, both build targets, browser behavior, and
-source-archive reproducibility without invoking ESLint. `pnpm lint` remains a
-mutating local command and still invokes ESLint.
+ESLint compatibility with the current TypeScript version is deferred.
+`pnpm lint` remains a mutating local command and still invokes ESLint.
 
 See [architecture](docs/architecture.md) for module boundaries and
 [development and release instructions](docs/development.md) for browser smoke

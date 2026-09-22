@@ -53,9 +53,8 @@ onboarding, persistent settings, navigation, and CSP-compatible startup. The
 port must be free. `PLAYWRIGHT_BROWSERS_PATH` can point to a writable browser
 cache.
 
-`pnpm format:fix` applies formatting. ESLint is currently excluded from CI while
-its TypeScript compatibility is unresolved; `pnpm lint` still invokes ESLint and
-also modifies files.
+`pnpm format:fix` applies formatting. ESLint's TypeScript compatibility is
+unresolved; `pnpm lint` still invokes ESLint and also modifies files.
 
 ## Packaging
 
@@ -76,7 +75,6 @@ excluded. The archive includes scripts, translations, schema/migrations, and the
 lockfile. Do not replace this policy with a recursive copy of the workspace
 root.
 
-A commit to `main` runs quality checks. A commit whose message contains
-`(release)` creates its version tag and GitHub release only after those checks
-pass. The local release script packages files; it does not publish to browser
-stores.
+A push to `main` whose latest commit message contains `(release)` creates its
+version tag and GitHub release. The local release script packages files; it does
+not publish to browser stores.

@@ -145,8 +145,10 @@ const WeatherDashboard = () => {
 		isEnabled: config.showSeasonalEvents,
 		isHydrated,
 		isOnboarded: isHydrated && isOnboarded,
+		seasonalBackground: config.seasonalBackground,
 		seasonalEventOverride: config.seasonalEventOverride,
 		shouldBlurEffects: shouldBlurSeasonalEffects,
+		shouldPreferSeasonalBackgrounds: config.shouldPreferSeasonalBackgrounds,
 	})
 	const shouldShowDetailFallbackGlow =
 		activeAvailableViewId !== 'forecast' && !activeSeasonalEvent

@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import type { SeasonalEventOverride } from '../core/types'
+import type { SeasonalBackground, SeasonalEventOverride } from '../core/types'
 
 import { applySeasonalEventEffectBlur } from '../core/effect-blur'
 import {
 	Hemisphere,
+	SEASONAL_BACKGROUND_AUTOMATIC,
 	SEASONAL_EVENT_OVERRIDE_NONE,
 	SeasonalEventId,
 } from '../core/types'
@@ -18,8 +19,10 @@ type UseSeasonalEventsOptions = {
 	isEnabled: boolean
 	isHydrated?: boolean
 	isOnboarded?: boolean
+	seasonalBackground?: SeasonalBackground
 	seasonalEventOverride?: SeasonalEventOverride
 	shouldBlurEffects?: boolean
+	shouldPreferSeasonalBackgrounds?: boolean
 }
 
 let seasonalEventsModulePromise: null | Promise<SeasonalEventsModule> = null
@@ -38,38 +41,35 @@ export const useSeasonalEvents = ({
 	isEnabled,
 	isHydrated = true,
 	isOnboarded = true,
+	seasonalBackground = SEASONAL_BACKGROUND_AUTOMATIC,
 	seasonalEventOverride = SEASONAL_EVENT_OVERRIDE_NONE,
 	shouldBlurEffects = false,
+	shouldPreferSeasonalBackgrounds = false,
 }: Readonly<UseSeasonalEventsOptions>) => {
-	const triggeredEvents = useRef<Map<SeasonalEventId, Hemisphere | undefined>>(
-		new Map(),
-	)
 	const [dateKey, setDateKey] = useState(() => getDateKey(new Date()))
-	const activeDate = getDateFromKey(dateKey)
-	const [activeEvent, setActiveEvent] = useState<null | SeasonalEventId>(null)
+	const [activeEvent, setActiveEvent] = useState<null | SeasonalEventId>()
 	const shouldResolveActiveEvent = isHydrated && isEnabled && isOnboarded
-	const effectiveActiveEvent = shouldResolveActiveEvent ? activeEvent : null
+	const hasPermanentBackground =
+		seasonalBackground !== SEASONAL_BACKGROUND_AUTOMATIC
+	const shouldUseSeasonalBackground =
+		isEnabled && (!hasPermanentBackground || shouldPreferSeasonalBackgrounds)
+	const canShowBackground =
+		isHydrated &&
+		isOnboarded &&
+		(!shouldUseSeasonalBackground || activeEvent !== undefined)
+	const fallbackBackground = hasPermanentBackground ? seasonalBackground : null
+	const effectiveActiveEvent = canShowBackground
+		? ((shouldUseSeasonalBackground ? activeEvent : null) ?? fallbackBackground)
+		: null
 	const effectHemisphere =
 		effectiveActiveEvent === SeasonalEventId.ChristmasDay
 			? (hemisphere ?? Hemisphere.Northern)
 			: undefined
-	const hasSeasonalEventOverride =
-		seasonalEventOverride !== SEASONAL_EVENT_OVERRIDE_NONE
-
-	useEffect(() => {
-		if (!enabledEvents) {
-			return
-		}
-
-		for (const triggeredEvent of triggeredEvents.current.keys()) {
-			if (!enabledEvents.has(triggeredEvent)) {
-				triggeredEvents.current.delete(triggeredEvent)
-			}
-		}
-	}, [enabledEvents])
 
 	useEffect(() => {
 		if (!shouldResolveActiveEvent) {
+			// Re-enabling must resolve today's event instead of reusing an old date.
+			setActiveEvent(undefined)
 			return
 		}
 
@@ -82,13 +82,16 @@ export const useSeasonalEvents = ({
 					return
 				}
 				const nextActiveEvent = seasonalEvents.getActiveSeasonalEvent({
-					date: activeDate,
+					date: new Date(),
 					enabledEvents,
 					hemisphere,
 					seasonalEventOverride,
 				})
 				setActiveEvent(nextActiveEvent)
 			} catch (error) {
+				if (hasCanceled) {
+					return
+				}
 				console.error('Failed to load seasonal events module', error)
 				setActiveEvent(null)
 			}
@@ -100,7 +103,7 @@ export const useSeasonalEvents = ({
 			hasCanceled = true
 		}
 	}, [
-		activeDate,
+		dateKey,
 		enabledEvents,
 		hemisphere,
 		seasonalEventOverride,
@@ -142,18 +145,6 @@ export const useSeasonalEvents = ({
 		if (!effectiveActiveEvent) {
 			return
 		}
-		if (
-			!hasSeasonalEventOverride &&
-			triggeredEvents.current.has(effectiveActiveEvent) &&
-			triggeredEvents.current.get(effectiveActiveEvent) === effectHemisphere
-		) {
-			return
-		}
-
-		if (!hasSeasonalEventOverride) {
-			triggeredEvents.current.set(effectiveActiveEvent, effectHemisphere)
-		}
-
 		let cleanup = () => {}
 		let hasCanceled = false
 
@@ -185,7 +176,7 @@ export const useSeasonalEvents = ({
 			hasCanceled = true
 			cleanup()
 		}
-	}, [effectiveActiveEvent, effectHemisphere, hasSeasonalEventOverride])
+	}, [effectiveActiveEvent, effectHemisphere])
 
 	useEffect(() => {
 		if (!effectiveActiveEvent || typeof document === 'undefined') {
@@ -211,8 +202,3 @@ export const useSeasonalEvents = ({
 
 const getDateKey = (date: Date) =>
 	`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
-
-const getDateFromKey = (dateKey: string) => {
-	const [year, month, day] = dateKey.split('-').map(Number)
-	return new Date(year, month, day)
-}

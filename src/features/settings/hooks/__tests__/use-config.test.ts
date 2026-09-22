@@ -1,7 +1,11 @@
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { SEASONAL_EVENT_OVERRIDE_NONE } from '../../../seasonal-events/core/types'
+import {
+	SEASONAL_BACKGROUND_AUTOMATIC,
+	SEASONAL_EVENT_OVERRIDE_NONE,
+	SeasonalEventId,
+} from '../../../seasonal-events/core/types'
 import {
 	ADD_SEASONAL_EVENT_BACKGROUND_SETTINGS_MIGRATION_ID,
 	CONFIG_MIGRATION_STATE_STORAGE_KEY,
@@ -70,6 +74,7 @@ const mockValidConfig: Config = {
 	lat: '40.7128',
 	lon: '-74.0060',
 	periodicLocationUpdate: false,
+	seasonalBackground: SEASONAL_BACKGROUND_AUTOMATIC,
 	seasonalEventOverride: SEASONAL_EVENT_OVERRIDE_NONE,
 	showAlerts: true,
 	showAutumnEquinoxEvent: true,
@@ -137,6 +142,7 @@ describe('useConfig - Core Functionality', () => {
 			lat: '',
 			lon: '',
 			periodicLocationUpdate: false,
+			seasonalBackground: SEASONAL_BACKGROUND_AUTOMATIC,
 			seasonalEventOverride: SEASONAL_EVENT_OVERRIDE_NONE,
 			showAlerts: true,
 			showAutumnEquinoxEvent: true,
@@ -234,6 +240,129 @@ describe('useConfig - Core Functionality', () => {
 			currentVersion: CURRENT_CONFIG_VERSION,
 		})
 	})
+
+	it('adds automatic backgrounds to existing configs while preserving preferences', async () => {
+		const previousConfig: Record<string, unknown> = {
+			...mockValidConfig,
+			configVersion: CURRENT_CONFIG_VERSION,
+			lang: 'fr',
+			showSeasonalEvents: false,
+			showChristmasEventBackground: false,
+			showChristmasEvent: false,
+		}
+		delete previousConfig.seasonalBackground
+		localStorageMock.config = JSON.stringify(previousConfig)
+
+		const { result } = renderHook(() => useConfig())
+		const expectedPreferences = {
+			seasonalBackground: SEASONAL_BACKGROUND_AUTOMATIC,
+			lang: 'fr',
+			showSeasonalEvents: false,
+			showChristmasEventBackground: false,
+			showChristmasEvent: false,
+		}
+
+		await waitFor(() => {
+			expect(result.current.config).toMatchObject(expectedPreferences)
+			expect(result.current.input).toMatchObject(expectedPreferences)
+		})
+		expect(JSON.parse(localStorageMock.config)).toMatchObject({
+			...previousConfig,
+			...expectedPreferences,
+		})
+	})
+
+	it('saves a fixed background and restores it after reloading', async () => {
+		localStorageMock.config = JSON.stringify({
+			...mockValidConfig,
+			showSeasonalEvents: false,
+		})
+		const { result, unmount } = renderHook(() => useConfig())
+
+		act(() => {
+			result.current.handleChange('seasonalBackground', SeasonalEventId.Holi)
+		})
+
+		expect(result.current.config.seasonalBackground).toBe(SeasonalEventId.Holi)
+		expect(JSON.parse(localStorageMock.config)).toMatchObject({
+			seasonalBackground: SeasonalEventId.Holi,
+			showSeasonalEvents: false,
+		})
+		unmount()
+
+		const { result: reloaded } = renderHook(() => useConfig())
+		await waitFor(() => {
+			expect(reloaded.current.config.seasonalBackground).toBe(
+				SeasonalEventId.Holi,
+			)
+			expect(reloaded.current.input.seasonalBackground).toBe(
+				SeasonalEventId.Holi,
+			)
+			expect(reloaded.current.config.showSeasonalEvents).toBe(false)
+		})
+	})
+
+	it('keeps existing fixed backgrounds when adding the seasonal preference', async () => {
+		const previousConfig: Record<string, unknown> = {
+			...mockValidConfig,
+			configVersion: CURRENT_CONFIG_VERSION,
+			seasonalBackground: SeasonalEventId.Holi,
+			showChristmasEventBackground: false,
+		}
+		delete previousConfig.shouldPreferSeasonalBackgrounds
+		localStorageMock.config = JSON.stringify(previousConfig)
+
+		const { result } = renderHook(() => useConfig())
+		const expectedPreferences = {
+			seasonalBackground: SeasonalEventId.Holi,
+			shouldPreferSeasonalBackgrounds: false,
+			showChristmasEventBackground: false,
+		}
+
+		await waitFor(() => {
+			expect(result.current.config).toMatchObject(expectedPreferences)
+			expect(result.current.input).toMatchObject(expectedPreferences)
+		})
+		expect(JSON.parse(localStorageMock.config)).toMatchObject({
+			...previousConfig,
+			...expectedPreferences,
+		})
+	})
+
+	it.each([true, false])(
+		'saves seasonal background preference %s and restores it after reloading',
+		async (shouldPreferSeasonalBackgrounds) => {
+			localStorageMock.config = JSON.stringify({
+				...mockValidConfig,
+				seasonalBackground: SeasonalEventId.Holi,
+				shouldPreferSeasonalBackgrounds: !shouldPreferSeasonalBackgrounds,
+			})
+			const { result, unmount } = renderHook(() => useConfig())
+
+			act(() => {
+				result.current.handleChange(
+					'shouldPreferSeasonalBackgrounds',
+					shouldPreferSeasonalBackgrounds,
+				)
+			})
+
+			const expectedPreferences = {
+				seasonalBackground: SeasonalEventId.Holi,
+				shouldPreferSeasonalBackgrounds,
+			}
+			expect(result.current.config).toMatchObject(expectedPreferences)
+			expect(JSON.parse(localStorageMock.config)).toMatchObject(
+				expectedPreferences,
+			)
+			unmount()
+
+			const { result: reloaded } = renderHook(() => useConfig())
+			await waitFor(() => {
+				expect(reloaded.current.config).toMatchObject(expectedPreferences)
+				expect(reloaded.current.input).toMatchObject(expectedPreferences)
+			})
+		},
+	)
 
 	it('enables air quality UV override for Australia when setting is missing', async () => {
 		const legacyConfig = { ...mockValidConfig } as Record<string, unknown>

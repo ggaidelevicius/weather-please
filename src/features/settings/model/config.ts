@@ -4,6 +4,7 @@ import type { LocaleKey } from '../../../shared/lib/i18n'
 
 import { locales } from '../../../shared/lib/i18n'
 import {
+	SEASONAL_BACKGROUND_AUTOMATIC,
 	SEASONAL_EVENT_OVERRIDE_NONE,
 	SeasonalEventId,
 } from '../../seasonal-events/core/types'
@@ -28,6 +29,10 @@ export const configSchema = z.object({
 	lang: z.enum(Object.keys(locales) as [LocaleKey, ...LocaleKey[]]),
 	lat: z.union([z.literal(''), z.string().regex(LATITUDE_PATTERN)]),
 	lon: z.union([z.literal(''), z.string().regex(LONGITUDE_PATTERN)]),
+	seasonalBackground: z.union([
+		z.literal(SEASONAL_BACKGROUND_AUTOMATIC),
+		z.enum(SeasonalEventId),
+	]),
 	seasonalEventOverride: z.union([
 		z.literal(SEASONAL_EVENT_OVERRIDE_NONE),
 		z.enum(SeasonalEventId),
@@ -49,6 +54,7 @@ export const createDefaultConfig = (): Config => ({
 	lang: 'en',
 	lat: '',
 	lon: '',
+	seasonalBackground: SEASONAL_BACKGROUND_AUTOMATIC,
 	seasonalEventOverride: SEASONAL_EVENT_OVERRIDE_NONE,
 	...BOOLEAN_CONFIG_DEFAULTS,
 	daysToRetrieve: '3',

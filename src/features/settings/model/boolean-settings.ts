@@ -238,6 +238,11 @@ export const BOOLEAN_SETTINGS = [
 	},
 	{
 		category: BooleanSettingCategory.Seasonal,
+		defaultValue: false,
+		key: 'shouldPreferSeasonalBackgrounds',
+	},
+	{
+		category: BooleanSettingCategory.Seasonal,
 		defaultValue: true,
 		key: 'showSeasonalTileGlow',
 	},

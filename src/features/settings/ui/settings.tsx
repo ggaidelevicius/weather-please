@@ -231,6 +231,7 @@ export const renderActiveSection = ({
 			return (
 				<GeneralSettingsSection
 					handleChange={handleChange}
+					hasSoftwareRenderer={hasSoftwareRenderer}
 					input={input}
 					localeKeys={localeKeys}
 				/>
