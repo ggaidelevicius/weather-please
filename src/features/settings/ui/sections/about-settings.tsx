@@ -43,14 +43,6 @@ export const AboutSettingsSection = ({
 				</a>
 				<a
 					className="flex text-sm text-blue-300 hover:underline"
-					href="https://www.buymeacoffee.com/ggaidelevicius"
-					rel="noopener noreferrer"
-					target="_blank"
-				>
-					<Trans>☕ Gift a coffee</Trans>
-				</a>
-				<a
-					className="flex text-sm text-blue-300 hover:underline"
 					href="https://ggaidelevicius.com/?utm_source=weather_please"
 					rel="noopener noreferrer"
 					target="_blank"
