@@ -43,6 +43,33 @@ export async function launchEaster(): Promise<() => void> {
 	}
 }
 
+function createParticle(index: number) {
+	const kind = EASTER_PARTICLE_KINDS[index % EASTER_PARTICLE_KINDS.length]
+	const depth = index % 6 === 0 ? 1.14 : index % 4 === 0 ? 0.64 : 0.9
+	return {
+		delay: randomInRange({ max: 2.2, min: 0 }),
+		depth,
+		kind,
+		opacity: randomInRange({ max: 0.9, min: 0.65 }) * (0.65 + depth * 0.3),
+		phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+		rotation: randomInRange({ max: 0.2, min: -0.2 }),
+		size:
+			randomInRange(
+				kind === 'egg' ? { max: 44, min: 27 } : { max: 28, min: 18 },
+			) * depth,
+		speedX: randomInRange({ max: 0.0015, min: -0.0015 }) * depth,
+		speedY: randomInRange({ max: -0.0015, min: -0.005 }) * depth,
+		sway: randomInRange({ max: 13, min: 5 }) * depth,
+		variant: Math.floor(index / EASTER_PARTICLE_KINDS.length) + index,
+		x: Math.random(),
+		y: Math.random(),
+	}
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
 function mountEaster() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
@@ -57,8 +84,8 @@ function mountEaster() {
 	let height = Math.max(1, window.innerHeight)
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -208,33 +235,6 @@ function mountEaster() {
 		throw error
 	}
 	return cleanup
-}
-
-function createParticle(index: number) {
-	const kind = EASTER_PARTICLE_KINDS[index % EASTER_PARTICLE_KINDS.length]
-	const depth = index % 6 === 0 ? 1.14 : index % 4 === 0 ? 0.64 : 0.9
-	return {
-		kind,
-		depth,
-		variant: Math.floor(index / EASTER_PARTICLE_KINDS.length) + index,
-		x: Math.random(),
-		y: Math.random(),
-		phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-		delay: randomInRange({ min: 0, max: 2.2 }),
-		size:
-			randomInRange(
-				kind === 'egg' ? { min: 27, max: 44 } : { min: 18, max: 28 },
-			) * depth,
-		speedX: randomInRange({ min: -0.0015, max: 0.0015 }) * depth,
-		speedY: randomInRange({ min: -0.005, max: -0.0015 }) * depth,
-		sway: randomInRange({ min: 5, max: 13 }) * depth,
-		rotation: randomInRange({ min: -0.2, max: 0.2 }),
-		opacity: randomInRange({ min: 0.65, max: 0.9 }) * (0.65 + depth * 0.3),
-	}
-}
-
-function easeOut(progress: number) {
-	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
 }
 
 function wrap(value: number) {

@@ -54,6 +54,6 @@ it('packages build inputs without local secrets, generated files, or symlinks', 
 			'scripts/build-extension.mjs',
 		)
 	} finally {
-		fs.rmSync(rootDirectory, { recursive: true, force: true })
+		fs.rmSync(rootDirectory, { force: true, recursive: true })
 	}
 })

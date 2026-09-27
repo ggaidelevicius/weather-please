@@ -26,21 +26,21 @@ vi.mock('../viewing', () => ({
 }))
 
 const availableGuide = {
-	status: 'available',
-	timeZone: 'Australia/Perth',
-	start: new Date('2026-12-14T15:00:00Z'),
 	end: new Date('2026-12-14T17:00:00Z'),
-	referenceTime: new Date('2026-12-14T16:00:00Z'),
-	radiantAltitude: 42.3,
-	radiantAzimuth: 72,
+	hasTwilight: false,
 	moonIllumination: 0.42,
 	moonVisibility: 'below',
-	hasTwilight: false,
+	radiantAltitude: 42.3,
+	radiantAzimuth: 72,
+	referenceTime: new Date('2026-12-14T16:00:00Z'),
+	start: new Date('2026-12-14T15:00:00Z'),
+	status: 'available',
+	timeZone: 'Australia/Perth',
 } satisfies ReturnType<typeof getMeteorViewingGuide>
 
 const props = {
-	eventId: SeasonalEventId.Geminids,
 	date: new Date(2026, 11, 14),
+	eventId: SeasonalEventId.Geminids,
 	latitude: -31.95,
 	longitude: 115.86,
 }

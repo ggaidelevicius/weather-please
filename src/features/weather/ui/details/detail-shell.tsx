@@ -1,15 +1,17 @@
+import { Trans } from '@lingui/react/macro'
+
 import type {
 	DetailViewShellProps,
 	FeelsLikeExplanationProps,
+	HourIntervalLabelProps,
 	MetricProps,
 	RelativeHourLabelProps,
-	HourIntervalLabelProps,
 } from '../../model/detail-types'
-import { Trans } from '@lingui/react/macro'
+
 import {
 	formatHour,
-	isSameLocalDate,
 	formatWeekdayHour,
+	isSameLocalDate,
 } from '../../model/detail-formatting'
 
 export const FEELS_LIKE_DEW_POINT_THRESHOLD_C = 16

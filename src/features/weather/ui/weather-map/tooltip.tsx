@@ -1,26 +1,28 @@
+import { Trans } from '@lingui/react/macro'
+import { useEffect, useEffectEvent, useState } from 'react'
+
 import type {
 	WeatherMapDimensions,
 	WeatherMapPointerPoint,
-	WeatherMapViewport,
 	WeatherMapPointerWeather,
+	WeatherMapViewport,
 } from '../../model/detail-types'
 import type { WeatherMapData } from '../../model/types'
-import { useState, useEffect, useEffectEvent } from 'react'
-import { Trans } from '@lingui/react/macro'
-import { WEATHER_MAP_TOOLTIP_FRAME_INTERVAL_MS } from '../../model/weather-map/constants'
-import {
-	getInterpolatedWeatherMapWindPoints,
-	getWeatherMapWindSpeedAtPoint,
-} from '../../model/weather-map/wind'
-import {
-	getWeatherMapPrecipitationAtPoint,
-	getInterpolatedWeatherMapPrecipitationPoints,
-	formatWeatherMapTooltipPrecipitationDepth,
-} from '../../model/weather-map/precipitation'
+
 import {
 	convertPrecipitation,
 	convertWind,
 } from '../../model/detail-formatting'
+import { WEATHER_MAP_TOOLTIP_FRAME_INTERVAL_MS } from '../../model/weather-map/constants'
+import {
+	formatWeatherMapTooltipPrecipitationDepth,
+	getInterpolatedWeatherMapPrecipitationPoints,
+	getWeatherMapPrecipitationAtPoint,
+} from '../../model/weather-map/precipitation'
+import {
+	getInterpolatedWeatherMapWindPoints,
+	getWeatherMapWindSpeedAtPoint,
+} from '../../model/weather-map/wind'
 
 export const WeatherMapTooltip = ({
 	dimensions,
@@ -47,12 +49,12 @@ export const WeatherMapTooltip = ({
 
 	const getWeatherPoints = useEffectEvent(
 		(animationViewport: WeatherMapViewport) => ({
-			windPoints: getInterpolatedWeatherMapWindPoints({
+			precipitationPoints: getInterpolatedWeatherMapPrecipitationPoints({
 				framePosition: playbackPosition,
 				frames,
 				viewport: animationViewport,
 			}),
-			precipitationPoints: getInterpolatedWeatherMapPrecipitationPoints({
+			windPoints: getInterpolatedWeatherMapWindPoints({
 				framePosition: playbackPosition,
 				frames,
 				viewport: animationViewport,
@@ -76,7 +78,7 @@ export const WeatherMapTooltip = ({
 		const updateTooltip = (time: number) => {
 			if (time - lastDrawTime >= WEATHER_MAP_TOOLTIP_FRAME_INTERVAL_MS) {
 				lastDrawTime = time
-				const { windPoints, precipitationPoints } =
+				const { precipitationPoints, windPoints } =
 					getWeatherPoints(animationViewport)
 				const speed = getWeatherMapWindSpeedAtPoint({
 					point,

@@ -23,7 +23,7 @@ export async function launchHanukkahGlow(): Promise<() => void> {
 	const glow = createGlowSprite()
 	const stars = Array.from({ length: 90 }, createLight)
 	const embers = Array.from({ length: 32 }, createLight)
-	let artwork: ReturnType<typeof createHanukkahArtwork> | null = null
+	let artwork: null | ReturnType<typeof createHanukkahArtwork> = null
 	let artworkDpr = 0
 	let width = window.innerWidth
 	let height = window.innerHeight
@@ -202,15 +202,6 @@ export async function launchHanukkahGlow(): Promise<() => void> {
 	return cleanup
 }
 
-function createLight(): Light {
-	return {
-		phase: Math.random() * Math.PI * 2,
-		size: randomInRange({ min: 0.5, max: 1.4 }),
-		x: Math.random(),
-		y: Math.random(),
-	}
-}
-
 function createFlameSprite(): HTMLCanvasElement {
 	const canvas = document.createElement('canvas')
 	canvas.width = 48
@@ -253,4 +244,13 @@ function createGlowSprite(): HTMLCanvasElement {
 	context.fillStyle = glow
 	context.fillRect(0, 0, 128, 128)
 	return canvas
+}
+
+function createLight(): Light {
+	return {
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ max: 1.4, min: 0.5 }),
+		x: Math.random(),
+		y: Math.random(),
+	}
 }

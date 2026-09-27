@@ -48,17 +48,85 @@ export function createDayOfTheDeadBanners({
 	})
 }
 
-function paperOutline(context: CanvasRenderingContext2D) {
+function cutDiamond({
+	context,
+	height,
+	width,
+	x,
+	y,
+}: {
+	context: CanvasRenderingContext2D
+	height: number
+	width: number
+	x: number
+	y: number
+}) {
 	context.beginPath()
-	context.moveTo(6, 8)
-	context.lineTo(122, 8)
-	context.lineTo(122, 137)
-	for (let scallop = 0; scallop < 5; scallop += 1) {
-		const right = 122 - scallop * 23.2
-		context.quadraticCurveTo(right - 11.6, 159, right - 23.2, 137)
-	}
-	context.lineTo(6, 8)
+	context.moveTo(x, y - height)
+	context.lineTo(x + width, y)
+	context.lineTo(x, y + height)
+	context.lineTo(x - width, y)
 	context.closePath()
+	context.fill()
+	return context
+}
+
+function cutFloralSprig({
+	context,
+	isRounded,
+}: {
+	context: CanvasRenderingContext2D
+	isRounded: boolean
+}) {
+	cutRosette({
+		context,
+		petals: isRounded ? 8 : 6,
+		radius: isRounded ? 28 : 26,
+		x: 64,
+		y: 68,
+	})
+	context.lineWidth = 2
+	context.strokeStyle = '#000'
+	context.beginPath()
+	context.moveTo(64, 101)
+	context.quadraticCurveTo(65, 110, 63, 123)
+	context.stroke()
+	for (const [x, y, length, side] of [
+		[58, 107, 21, -1],
+		[69, 116, 21, 1],
+		[37, 85, 17, -1],
+		[91, 87, 17, 1],
+	]) {
+		cutPetal({ angle: side * 0.94, context, length, width: 5, x, y })
+	}
+	cutRosette({ context, petals: 5, radius: 7, x: 39, y: 37 })
+	cutRosette({ context, petals: 5, radius: 7, x: 89, y: 37 })
+	return context
+}
+
+function cutGeometricFlower(context: CanvasRenderingContext2D) {
+	cutDiamond({ context, height: 5, width: 5, x: 64, y: 77 })
+	for (let ray = 0; ray < 8; ray += 1) {
+		context.save()
+		context.translate(64, 77)
+		context.rotate((ray / 8) * Math.PI * 2)
+		context.beginPath()
+		context.moveTo(0, -10)
+		context.lineTo(-5.8, -22)
+		context.lineTo(0, -32)
+		context.lineTo(5.8, -22)
+		context.closePath()
+		context.fill()
+		context.beginPath()
+		context.arc(0, -37.5, 2.1, 0, Math.PI * 2)
+		context.fill()
+		context.restore()
+	}
+	for (const y of [35, 119]) {
+		cutDiamond({ context, height: 4.5, width: 4, x: 64, y })
+		cutPetal({ angle: -Math.PI / 2, context, length: 12, width: 3.8, x: 53, y })
+		cutPetal({ angle: Math.PI / 2, context, length: 12, width: 3.8, x: 75, y })
+	}
 	return context
 }
 
@@ -66,7 +134,7 @@ function cutLaceBorder(context: CanvasRenderingContext2D) {
 	for (let index = 0; index < 7; index += 1) {
 		const y = 32 + index * 14
 		for (const x of [15, 113]) {
-			cutDiamond({ context, x, y, width: 3.3, height: 4.6 })
+			cutDiamond({ context, height: 4.6, width: 3.3, x, y })
 			context.beginPath()
 			context.arc(x, y + 7, 1.3, 0, Math.PI * 2)
 			context.fill()
@@ -75,10 +143,10 @@ function cutLaceBorder(context: CanvasRenderingContext2D) {
 	for (let index = 0; index < 7; index += 1) {
 		cutDiamond({
 			context,
+			height: 3.7,
+			width: 3.4,
 			x: 28 + index * 12,
 			y: 22,
-			width: 3.4,
-			height: 3.7,
 		})
 	}
 	for (let scallop = 0; scallop < 5; scallop += 1) {
@@ -104,14 +172,78 @@ function cutLaceBorder(context: CanvasRenderingContext2D) {
 		[30, -0.72],
 		[98, 0.72],
 	]) {
-		cutPetal({ context, x, y: 43, length: 12, width: 4, angle })
+		cutPetal({ angle, context, length: 12, width: 4, x, y: 43 })
 		cutPetal({
+			angle: Math.PI - angle,
 			context,
-			x,
-			y: 112,
 			length: 12,
 			width: 4,
-			angle: Math.PI - angle,
+			x,
+			y: 112,
+		})
+	}
+	return context
+}
+
+function cutPetal({
+	angle,
+	context,
+	length,
+	width,
+	x,
+	y,
+}: {
+	angle: number
+	context: CanvasRenderingContext2D
+	length: number
+	width: number
+	x: number
+	y: number
+}) {
+	context.save()
+	context.translate(x, y)
+	context.rotate(angle)
+	context.beginPath()
+	context.moveTo(0, 0)
+	context.bezierCurveTo(
+		-width,
+		-length * 0.28,
+		-width,
+		-length * 0.83,
+		0,
+		-length,
+	)
+	context.bezierCurveTo(width, -length * 0.83, width, -length * 0.28, 0, 0)
+	context.fill()
+	context.restore()
+	return context
+}
+
+function cutRosette({
+	context,
+	petals,
+	radius,
+	x,
+	y,
+}: {
+	context: CanvasRenderingContext2D
+	petals: number
+	radius: number
+	x: number
+	y: number
+}) {
+	context.beginPath()
+	context.arc(x, y, radius * 0.14, 0, Math.PI * 2)
+	context.fill()
+	for (let petal = 0; petal < petals; petal += 1) {
+		const angle = (petal / petals) * Math.PI * 2
+		cutPetal({
+			angle,
+			context,
+			length: radius * 0.73,
+			width: radius * (petals < 7 ? 0.24 : 0.19),
+			x: x + Math.sin(angle) * radius * 0.27,
+			y: y - Math.cos(angle) * radius * 0.27,
 		})
 	}
 	return context
@@ -140,19 +272,19 @@ function cutSkull({
 	}
 	for (const x of [52, 76]) {
 		if (hasFloralEyes) {
-			cutRosette({ context, x, y: 76, radius: 9.4, petals: 6 })
+			cutRosette({ context, petals: 6, radius: 9.4, x, y: 76 })
 		} else {
 			context.beginPath()
 			context.ellipse(x, 76, 7.5, 8.5, (x < 64 ? -1 : 1) * 0.18, 0, Math.PI * 2)
 			context.fill()
 		}
 		cutPetal({
+			angle: x < 64 ? -0.4 : 0.4,
 			context,
-			x,
-			y: 63,
 			length: 5,
 			width: 2,
-			angle: x < 64 ? -0.4 : 0.4,
+			x,
+			y: 63,
 		})
 	}
 	context.beginPath()
@@ -173,155 +305,23 @@ function cutSkull({
 		context.closePath()
 		context.fill()
 	}
-	cutRosette({ context, x: 64, y: 39, radius: 10.5, petals: 6 })
-	cutPetal({ context, x: 59, y: 118, length: 13, width: 4, angle: -1.04 })
-	cutPetal({ context, x: 69, y: 118, length: 13, width: 4, angle: 1.04 })
-	cutDiamond({ context, x: 64, y: 121, width: 3, height: 4 })
+	cutRosette({ context, petals: 6, radius: 10.5, x: 64, y: 39 })
+	cutPetal({ angle: -1.04, context, length: 13, width: 4, x: 59, y: 118 })
+	cutPetal({ angle: 1.04, context, length: 13, width: 4, x: 69, y: 118 })
+	cutDiamond({ context, height: 4, width: 3, x: 64, y: 121 })
 	return context
 }
 
-function cutGeometricFlower(context: CanvasRenderingContext2D) {
-	cutDiamond({ context, x: 64, y: 77, width: 5, height: 5 })
-	for (let ray = 0; ray < 8; ray += 1) {
-		context.save()
-		context.translate(64, 77)
-		context.rotate((ray / 8) * Math.PI * 2)
-		context.beginPath()
-		context.moveTo(0, -10)
-		context.lineTo(-5.8, -22)
-		context.lineTo(0, -32)
-		context.lineTo(5.8, -22)
-		context.closePath()
-		context.fill()
-		context.beginPath()
-		context.arc(0, -37.5, 2.1, 0, Math.PI * 2)
-		context.fill()
-		context.restore()
-	}
-	for (const y of [35, 119]) {
-		cutDiamond({ context, x: 64, y, width: 4, height: 4.5 })
-		cutPetal({ context, x: 53, y, length: 12, width: 3.8, angle: -Math.PI / 2 })
-		cutPetal({ context, x: 75, y, length: 12, width: 3.8, angle: Math.PI / 2 })
-	}
-	return context
-}
-
-function cutFloralSprig({
-	context,
-	isRounded,
-}: {
-	context: CanvasRenderingContext2D
-	isRounded: boolean
-}) {
-	cutRosette({
-		context,
-		x: 64,
-		y: 68,
-		radius: isRounded ? 28 : 26,
-		petals: isRounded ? 8 : 6,
-	})
-	context.lineWidth = 2
-	context.strokeStyle = '#000'
+function paperOutline(context: CanvasRenderingContext2D) {
 	context.beginPath()
-	context.moveTo(64, 101)
-	context.quadraticCurveTo(65, 110, 63, 123)
-	context.stroke()
-	for (const [x, y, length, side] of [
-		[58, 107, 21, -1],
-		[69, 116, 21, 1],
-		[37, 85, 17, -1],
-		[91, 87, 17, 1],
-	]) {
-		cutPetal({ context, x, y, length, width: 5, angle: side * 0.94 })
+	context.moveTo(6, 8)
+	context.lineTo(122, 8)
+	context.lineTo(122, 137)
+	for (let scallop = 0; scallop < 5; scallop += 1) {
+		const right = 122 - scallop * 23.2
+		context.quadraticCurveTo(right - 11.6, 159, right - 23.2, 137)
 	}
-	cutRosette({ context, x: 39, y: 37, radius: 7, petals: 5 })
-	cutRosette({ context, x: 89, y: 37, radius: 7, petals: 5 })
-	return context
-}
-
-function cutRosette({
-	context,
-	x,
-	y,
-	radius,
-	petals,
-}: {
-	context: CanvasRenderingContext2D
-	x: number
-	y: number
-	radius: number
-	petals: number
-}) {
-	context.beginPath()
-	context.arc(x, y, radius * 0.14, 0, Math.PI * 2)
-	context.fill()
-	for (let petal = 0; petal < petals; petal += 1) {
-		const angle = (petal / petals) * Math.PI * 2
-		cutPetal({
-			context,
-			x: x + Math.sin(angle) * radius * 0.27,
-			y: y - Math.cos(angle) * radius * 0.27,
-			length: radius * 0.73,
-			width: radius * (petals < 7 ? 0.24 : 0.19),
-			angle,
-		})
-	}
-	return context
-}
-
-function cutPetal({
-	context,
-	x,
-	y,
-	length,
-	width,
-	angle,
-}: {
-	context: CanvasRenderingContext2D
-	x: number
-	y: number
-	length: number
-	width: number
-	angle: number
-}) {
-	context.save()
-	context.translate(x, y)
-	context.rotate(angle)
-	context.beginPath()
-	context.moveTo(0, 0)
-	context.bezierCurveTo(
-		-width,
-		-length * 0.28,
-		-width,
-		-length * 0.83,
-		0,
-		-length,
-	)
-	context.bezierCurveTo(width, -length * 0.83, width, -length * 0.28, 0, 0)
-	context.fill()
-	context.restore()
-	return context
-}
-
-function cutDiamond({
-	context,
-	x,
-	y,
-	width,
-	height,
-}: {
-	context: CanvasRenderingContext2D
-	x: number
-	y: number
-	width: number
-	height: number
-}) {
-	context.beginPath()
-	context.moveTo(x, y - height)
-	context.lineTo(x + width, y)
-	context.lineTo(x, y + height)
-	context.lineTo(x - width, y)
+	context.lineTo(6, 8)
 	context.closePath()
-	context.fill()
 	return context
 }

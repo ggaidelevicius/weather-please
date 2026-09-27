@@ -1,38 +1,40 @@
-import type { DetailViewProps } from './detail-data'
-import { getDetailViewData } from './detail-data'
-import { VISIBILITY_CHART_DEFAULT_MAX_METERS } from './constants'
 import { Trans } from '@lingui/react/macro'
 import { IconEye } from '@tabler/icons-react'
+
+import type { DetailViewProps } from './detail-data'
+
 import {
-	Metric,
-	DetailViewShell,
-	RelativeHourLabel,
-} from '../details/detail-shell'
+	getChartScale,
+	getLowPoint,
+	getPeakPoint,
+	getScaleLabels,
+} from '../../model/chart-geometry'
 import {
 	convertVisibility,
 	formatDecimal,
 	max,
 } from '../../model/detail-formatting'
-import {
-	getChartScale,
-	getScaleLabels,
-	getPeakPoint,
-	getLowPoint,
-} from '../../model/chart-geometry'
 import { ChartFrame, LineChart } from '../charts/chart'
+import {
+	DetailViewShell,
+	Metric,
+	RelativeHourLabel,
+} from '../details/detail-shell'
+import { VISIBILITY_CHART_DEFAULT_MAX_METERS } from './constants'
+import { getDetailViewData } from './detail-data'
 
 export const ConditionsDetail = (props: Readonly<DetailViewProps>) => {
 	const {
-		usesMetricUnits,
 		data,
-		isActive,
-		visibility,
-		times,
-		visibilityUnitLabel,
-		startLabel,
-		middleLabel,
 		endLabel,
+		isActive,
+		middleLabel,
 		referenceTime,
+		startLabel,
+		times,
+		usesMetricUnits,
+		visibility,
+		visibilityUnitLabel,
 	} = getDetailViewData(props)
 	const visibilityDefaultMax = convertVisibility({
 		usesMetricUnits,

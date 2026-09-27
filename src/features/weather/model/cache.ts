@@ -1,4 +1,12 @@
-import type { Alerts, Next24HoursData, Data, WeatherMapData } from './types'
+import { z } from 'zod'
+
+import type { Alerts, Data, Next24HoursData, WeatherMapData } from './types'
+
+import {
+	readLocalStorage,
+	removeLocalStorage,
+	writeLocalStorage,
+} from '../../../shared/lib/local-storage'
 import {
 	alertSchema,
 	CACHE_VALIDITY_MS,
@@ -6,12 +14,6 @@ import {
 	next24HoursDataSchema,
 	weatherMapDataSchema,
 } from './types'
-import { z } from 'zod'
-import {
-	readLocalStorage,
-	writeLocalStorage,
-	removeLocalStorage,
-} from '../../../shared/lib/local-storage'
 
 const LEGACY_LAST_UPDATED_PATTERN = /^\d{4}-\d{1,2}-\d{1,2}-\d{1,2}$/
 const WEATHER_CACHE_DEGRADED_KEY = 'weatherCacheDegraded'
@@ -155,13 +157,13 @@ const readLegacyCachedWeather = () => {
 
 	return {
 		alertData: storedAlerts,
-		lat: cachedLat,
-		lon: cachedLon,
-		timeZone: cachedTimeZone,
-		shouldUseAirQualityUv: cachedUseAirQualityUv,
 		isDegraded,
 		lastUpdatedDate,
+		lat: cachedLat,
+		lon: cachedLon,
 		next24HoursData: storedNext24HoursData ?? [],
+		shouldUseAirQualityUv: cachedUseAirQualityUv,
+		timeZone: cachedTimeZone,
 		weatherData: storedData,
 		weatherMapData: storedWeatherMapData,
 	}
@@ -170,16 +172,16 @@ const readLegacyCachedWeather = () => {
 export const WEATHER_CACHE_STORAGE_KEY = 'weather-please:weather-cache'
 
 const cacheSchema = z.object({
-	version: z.literal(1),
+	alertData: alertSchema,
+	isDegraded: z.boolean(),
+	lastUpdatedDate: lastUpdatedSchema,
 	lat: z.string().min(1),
 	lon: z.string().min(1),
-	timeZone: z.string().min(1),
-	shouldUseAirQualityUv: z.boolean(),
-	lastUpdatedDate: lastUpdatedSchema,
-	isDegraded: z.boolean(),
-	alertData: alertSchema,
-	weatherData: dataSchema,
 	next24HoursData: next24HoursDataSchema,
+	shouldUseAirQualityUv: z.boolean(),
+	timeZone: z.string().min(1),
+	version: z.literal(1),
+	weatherData: dataSchema,
 	weatherMapData: weatherMapDataSchema.nullable(),
 })
 

@@ -1,5 +1,7 @@
 import { Trans } from '@lingui/react/macro'
+
 import type { SeasonalEvent, SeasonalEventContext } from '../core/types'
+
 import { SeasonalEventId } from '../core/types'
 
 const PERSEIDS_PEAK_DATES = new Set([
@@ -105,8 +107,8 @@ const EventDetails = () => (
 		<p>
 			<Trans>
 				The number of meteors you see depends on your location, the darkness and
-				clarity of the sky, and the shower's activity that year. A high radiant
-				and a dark sky usually offer better viewing.
+				clarity of the sky, and the shower&apos;s activity that year. A high
+				radiant and a dark sky usually offer better viewing.
 			</Trans>
 		</p>
 	</>

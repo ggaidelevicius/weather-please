@@ -99,6 +99,7 @@ const storedAccountSchema = z.object({
 	// Accounts persisted before multi-provider support are all Microsoft.
 	provider: z.enum(CalendarProvider).default(CalendarProvider.Microsoft),
 	refreshToken: z.string().nullable(),
+	sessionId: z.string().min(1).optional(),
 })
 
 const storedConnectionsSchema = z.object({

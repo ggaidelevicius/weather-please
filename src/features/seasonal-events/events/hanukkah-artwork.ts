@@ -1,15 +1,15 @@
 type Candle = {
+	phase: number
 	x: number
 	y: number
-	phase: number
 }
 
 type HanukkahArtwork = {
 	baseY: number
-	canvas: HTMLCanvasElement
-	width: number
-	height: number
 	candles: Candle[]
+	canvas: HTMLCanvasElement
+	height: number
+	width: number
 }
 
 export function createHanukkahArtwork({
@@ -30,18 +30,39 @@ export function createHanukkahArtwork({
 	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
 
 	const candles = Array.from({ length: 9 }, (_, index) => ({
+		phase: index * 2.39996,
 		x: 104 + index * 54,
 		y: index === 4 ? 42 : 78,
-		phase: index * 2.39996,
 	}))
 
 	drawBranches(context)
 	drawPedestal(context)
 	for (const candle of candles) {
-		drawCandle({ context, candle })
+		drawCandle({ candle, context })
 	}
 
-	return { baseY: 292, canvas, width, height, candles }
+	return { baseY: 292, candles, canvas, height, width }
+}
+
+function createBrassGradient({
+	context,
+	left,
+	right,
+}: {
+	context: CanvasRenderingContext2D
+	left: number
+	right: number
+}) {
+	const gradient = context.createLinearGradient(left, 0, right, 0)
+	gradient.addColorStop(0, '#706042')
+	gradient.addColorStop(0.13, '#c7a76b')
+	gradient.addColorStop(0.28, '#f1d99e')
+	gradient.addColorStop(0.43, '#b18a4d')
+	gradient.addColorStop(0.59, '#775931')
+	gradient.addColorStop(0.76, '#cfac68')
+	gradient.addColorStop(0.9, '#9c7b43')
+	gradient.addColorStop(1, '#5c4b32')
+	return gradient
 }
 
 function drawBranches(context: CanvasRenderingContext2D) {
@@ -114,64 +135,12 @@ function drawBranches(context: CanvasRenderingContext2D) {
 	return context
 }
 
-function drawPedestal(context: CanvasRenderingContext2D) {
-	context.fillStyle = createBrassGradient({
-		context,
-		left: 272,
-		right: 368,
-	})
-	context.beginPath()
-	context.moveTo(314.5, 259)
-	context.bezierCurveTo(314, 268, 305, 274, 286, 278)
-	context.quadraticCurveTo(320, 285, 354, 278)
-	context.bezierCurveTo(335, 274, 326, 268, 325.5, 259)
-	context.closePath()
-	context.fill()
-	context.strokeStyle = 'rgba(248, 222, 164, 0.55)'
-	context.lineWidth = 0.8
-	context.beginPath()
-	context.moveTo(315.5, 262)
-	context.bezierCurveTo(314, 270, 302, 276, 289, 278)
-	context.stroke()
-
-	for (const step of [
-		{ x: 282, y: 278, width: 76, height: 6 },
-		{ x: 272, y: 284, width: 96, height: 8 },
-	]) {
-		context.fillStyle = createBrassGradient({
-			context,
-			left: step.x,
-			right: step.x + step.width,
-		})
-		context.beginPath()
-		context.roundRect(step.x, step.y, step.width, step.height, 2)
-		context.fill()
-		context.fillStyle = 'rgba(248, 224, 171, 0.52)'
-		context.fillRect(step.x + 2, step.y, step.width - 4, 0.8)
-		context.fillStyle = 'rgba(37, 29, 20, 0.56)'
-		context.fillRect(
-			step.x + 1,
-			step.y + step.height - 1.2,
-			step.width - 2,
-			1.2,
-		)
-	}
-
-	context.strokeStyle = 'rgba(72, 48, 27, 0.6)'
-	context.lineWidth = 0.8
-	context.beginPath()
-	context.moveTo(299, 281)
-	context.quadraticCurveTo(320, 284, 341, 281)
-	context.stroke()
-	return context
-}
-
 function drawCandle({
-	context,
 	candle,
+	context,
 }: {
-	context: CanvasRenderingContext2D
 	candle: Candle
+	context: CanvasRenderingContext2D
 }) {
 	const { x, y } = candle
 	const top = y + 6
@@ -252,23 +221,54 @@ function drawCandle({
 	return context
 }
 
-function createBrassGradient({
-	context,
-	left,
-	right,
-}: {
-	context: CanvasRenderingContext2D
-	left: number
-	right: number
-}) {
-	const gradient = context.createLinearGradient(left, 0, right, 0)
-	gradient.addColorStop(0, '#706042')
-	gradient.addColorStop(0.13, '#c7a76b')
-	gradient.addColorStop(0.28, '#f1d99e')
-	gradient.addColorStop(0.43, '#b18a4d')
-	gradient.addColorStop(0.59, '#775931')
-	gradient.addColorStop(0.76, '#cfac68')
-	gradient.addColorStop(0.9, '#9c7b43')
-	gradient.addColorStop(1, '#5c4b32')
-	return gradient
+function drawPedestal(context: CanvasRenderingContext2D) {
+	context.fillStyle = createBrassGradient({
+		context,
+		left: 272,
+		right: 368,
+	})
+	context.beginPath()
+	context.moveTo(314.5, 259)
+	context.bezierCurveTo(314, 268, 305, 274, 286, 278)
+	context.quadraticCurveTo(320, 285, 354, 278)
+	context.bezierCurveTo(335, 274, 326, 268, 325.5, 259)
+	context.closePath()
+	context.fill()
+	context.strokeStyle = 'rgba(248, 222, 164, 0.55)'
+	context.lineWidth = 0.8
+	context.beginPath()
+	context.moveTo(315.5, 262)
+	context.bezierCurveTo(314, 270, 302, 276, 289, 278)
+	context.stroke()
+
+	for (const step of [
+		{ height: 6, width: 76, x: 282, y: 278 },
+		{ height: 8, width: 96, x: 272, y: 284 },
+	]) {
+		context.fillStyle = createBrassGradient({
+			context,
+			left: step.x,
+			right: step.x + step.width,
+		})
+		context.beginPath()
+		context.roundRect(step.x, step.y, step.width, step.height, 2)
+		context.fill()
+		context.fillStyle = 'rgba(248, 224, 171, 0.52)'
+		context.fillRect(step.x + 2, step.y, step.width - 4, 0.8)
+		context.fillStyle = 'rgba(37, 29, 20, 0.56)'
+		context.fillRect(
+			step.x + 1,
+			step.y + step.height - 1.2,
+			step.width - 2,
+			1.2,
+		)
+	}
+
+	context.strokeStyle = 'rgba(72, 48, 27, 0.6)'
+	context.lineWidth = 0.8
+	context.beginPath()
+	context.moveTo(299, 281)
+	context.quadraticCurveTo(320, 284, 341, 281)
+	context.stroke()
+	return context
 }

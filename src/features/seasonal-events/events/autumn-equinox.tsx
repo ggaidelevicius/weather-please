@@ -21,7 +21,7 @@ export async function launchAutumnEquinoxLeaves(): Promise<() => void> {
 	const context = canvas.getContext('2d')
 	if (!context) throw new Error('Unable to create autumn atmosphere canvas')
 	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
-	let artwork: ReturnType<typeof createAutumnArtwork> | null = null
+	let artwork: null | ReturnType<typeof createAutumnArtwork> = null
 	let artworkDpr = 0
 	let width = Math.max(1, window.innerWidth)
 	let height = Math.max(1, window.innerHeight)
@@ -229,11 +229,11 @@ function createLeaf(index: number): Leaf {
 	const depth = index % 7 === 0 ? 2 : index % 3 === 0 ? 0 : 1
 	return {
 		depth,
-		phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-		rotation: randomInRange({ min: 0, max: Math.PI * 2 }),
-		size: randomInRange({ min: 12 + depth * 8, max: 18 + depth * 9 }),
-		speed: randomInRange({ min: 7 + depth * 5, max: 12 + depth * 5 }),
-		spin: randomInRange({ min: -0.32, max: 0.32 }),
+		phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+		rotation: randomInRange({ max: Math.PI * 2, min: 0 }),
+		size: randomInRange({ max: 18 + depth * 9, min: 12 + depth * 8 }),
+		speed: randomInRange({ max: 12 + depth * 5, min: 7 + depth * 5 }),
+		spin: randomInRange({ max: 0.32, min: -0.32 }),
 		variant: index % 9,
 		x: (index * 0.618034 + Math.random() * 0.08) % 1,
 		y: (index * 0.414214 + Math.random() * 0.08) % 1,

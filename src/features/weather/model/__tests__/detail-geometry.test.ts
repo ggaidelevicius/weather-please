@@ -24,8 +24,8 @@ describe('detail charts', () => {
 
 	it('keeps a zero floor for a dry precipitation series', () => {
 		expect(getChartScale([0, 0], { minValue: 0 })).toEqual({
-			minValue: 0,
 			maxValue: 1,
+			minValue: 0,
 		})
 	})
 
@@ -33,7 +33,7 @@ describe('detail charts', () => {
 		expect(getNearestPointIndex({ pointCount: 24, x: -100 })).toBe(0)
 		expect(getNearestPointIndex({ pointCount: 24, x: 1000 })).toBe(23)
 		expect(getNearestPointIndex({ pointCount: 1, x: 200 })).toBe(0)
-		expect(getLinePath([], { minValue: 0, maxValue: 1 })).toBe('')
+		expect(getLinePath([], { maxValue: 1, minValue: 0 })).toBe('')
 	})
 })
 
@@ -42,15 +42,15 @@ describe('weather map calculations', () => {
 		expect(
 			interpolateWeatherMapDirection({
 				fromDirection: 350,
-				toDirection: 10,
 				progress: 0.5,
+				toDirection: 10,
 			}),
 		).toBe(0)
 		expect(
 			interpolateWeatherMapDirection({
 				fromDirection: 10,
-				toDirection: 350,
 				progress: 0.5,
+				toDirection: 350,
 			}),
 		).toBe(0)
 	})
@@ -65,11 +65,11 @@ describe('weather map calculations', () => {
 
 	it('handles empty and single-frame playback', () => {
 		expect(
-			getWeatherMapFrameInterpolation({ frames: [], framePosition: 2 }),
+			getWeatherMapFrameInterpolation({ framePosition: 2, frames: [] }),
 		).toBeNull()
-		const frame = { time: 100, points: [] }
+		const frame = { points: [], time: 100 }
 		expect(
-			getWeatherMapFrameInterpolation({ frames: [frame], framePosition: 0 }),
-		).toEqual({ fromFrame: frame, toFrame: frame, progress: 0 })
+			getWeatherMapFrameInterpolation({ framePosition: 0, frames: [frame] }),
+		).toEqual({ fromFrame: frame, progress: 0, toFrame: frame })
 	})
 })

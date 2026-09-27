@@ -64,12 +64,8 @@ const getControlWrapperClassName = ({
 			? 'md:ml-auto md:w-fit md:max-w-full'
 			: undefined,
 		layout === 'split' && controlType === 'input' ? 'md:w-[18.5ch]' : undefined,
-		layout === 'split' && controlType === 'select'
-			? 'md:w-43'
-			: undefined,
-		layout === 'split' && controlType === 'textarea'
-			? 'md:w-md'
-			: undefined,
+		layout === 'split' && controlType === 'select' ? 'md:w-43' : undefined,
+		layout === 'split' && controlType === 'textarea' ? 'md:w-md' : undefined,
 		layout === 'split' && controlType === 'switch'
 			? 'flex flex-col items-end'
 			: undefined,

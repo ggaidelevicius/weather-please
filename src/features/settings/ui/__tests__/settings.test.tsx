@@ -27,8 +27,8 @@ import {
 import { BOOLEAN_CONFIG_DEFAULTS } from '../../model/boolean-settings'
 import { TileIdentifier } from '../../model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../model/unit-system'
-import { Settings } from '../settings'
 import { GeneralSettingsSection } from '../sections/general-settings'
+import { Settings } from '../settings'
 
 vi.mock('@lingui/react/macro', () => ({
 	Trans: ({ children }: { children: ReactNode }) => children,

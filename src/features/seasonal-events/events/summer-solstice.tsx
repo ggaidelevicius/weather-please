@@ -30,6 +30,29 @@ export async function launchSummerSolstice(): Promise<() => void> {
 	}
 }
 
+function createMote(index: number) {
+	const isSoft = index % 8 === 0
+	const isDistant = index % 3 === 0
+	return {
+		isSoft,
+		opacity: isSoft ? 0.22 : isDistant ? 0.34 : 0.52,
+		phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+		size: randomInRange({
+			max: isSoft ? 72 : isDistant ? 20 : 34,
+			min: isSoft ? 42 : isDistant ? 12 : 20,
+		}),
+		speed: randomInRange({ max: isSoft ? 0.005 : 0.01, min: 0.003 }),
+		sway: randomInRange({ max: 16, min: 5 }),
+		variant: POLLEN_VARIANTS[index % POLLEN_VARIANTS.length],
+		x: (index * 0.618034 + Math.random() * 0.08) % 1,
+		y: (index * 0.414214 + Math.random() * 0.08) % 1,
+	}
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
 function mountSummerSolstice() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
@@ -43,8 +66,8 @@ function mountSummerSolstice() {
 	let height = Math.max(1, window.innerHeight)
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -201,27 +224,4 @@ function mountSummerSolstice() {
 		throw error
 	}
 	return cleanup
-}
-
-function createMote(index: number) {
-	const isSoft = index % 8 === 0
-	const isDistant = index % 3 === 0
-	return {
-		isSoft,
-		variant: POLLEN_VARIANTS[index % POLLEN_VARIANTS.length],
-		x: (index * 0.618034 + Math.random() * 0.08) % 1,
-		y: (index * 0.414214 + Math.random() * 0.08) % 1,
-		phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-		size: randomInRange({
-			min: isSoft ? 42 : isDistant ? 12 : 20,
-			max: isSoft ? 72 : isDistant ? 20 : 34,
-		}),
-		opacity: isSoft ? 0.22 : isDistant ? 0.34 : 0.52,
-		speed: randomInRange({ min: 0.003, max: isSoft ? 0.005 : 0.01 }),
-		sway: randomInRange({ min: 5, max: 16 }),
-	}
-}
-
-function easeOut(progress: number) {
-	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
 }

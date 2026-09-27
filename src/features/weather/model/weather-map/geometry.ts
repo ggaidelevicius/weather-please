@@ -1,17 +1,18 @@
-import type { WeatherMapData } from '../types'
 import type {
-	WeatherMapViewport,
 	WeatherMapDimensions,
 	WeatherMapDisplaySize,
-	WeatherMapTile,
 	WeatherMapPlaybackState,
+	WeatherMapTile,
+	WeatherMapViewport,
 } from '../detail-types'
+import type { WeatherMapData } from '../types'
+
 import {
+	WEATHER_MAP_BASE_HEIGHT,
+	WEATHER_MAP_FRAME_DURATION_MS,
 	WEATHER_MAP_RENDER_SCALE,
 	WEATHER_MAP_TILE_SIZE,
 	WEATHER_MAP_ZOOM,
-	WEATHER_MAP_BASE_HEIGHT,
-	WEATHER_MAP_FRAME_DURATION_MS,
 } from './constants'
 
 export const getWeatherMapFrame = ({

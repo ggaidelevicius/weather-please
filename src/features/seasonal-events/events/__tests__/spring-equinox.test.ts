@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { setSettingsModalOpenState } from '../../../../shared/lib/settings-modal-state'
-import { launchSpringEquinoxGrowth } from '../spring-equinox'
 import * as branchArtwork from '../spring-branch-artwork'
+import { launchSpringEquinoxGrowth } from '../spring-equinox'
 import * as meadowArtwork from '../spring-meadow-artwork'
 
 let cleanupEffect = () => {}

@@ -18,12 +18,12 @@ test('web onboarding, settings persistence, and detail navigation', async ({
 test('extension hydrates under MV3 and supports the dashboard flow', async () => {
 	const extensionPath = path.resolve('extension')
 	const context = await chromium.launchPersistentContext('', {
-		channel: 'chromium',
-		headless: true,
 		args: [
 			`--disable-extensions-except=${extensionPath}`,
 			`--load-extension=${extensionPath}`,
 		],
+		channel: 'chromium',
+		headless: true,
 	})
 	try {
 		await prepareWeather(context)

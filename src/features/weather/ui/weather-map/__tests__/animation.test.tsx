@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react'
-import type { WeatherMapData } from '../../../model/types'
 
 import { act, cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+
+import type { WeatherMapData } from '../../../model/types'
 
 import { getWeatherMapViewport } from '../../../model/weather-map/geometry'
 import * as precipitation from '../../../model/weather-map/precipitation'

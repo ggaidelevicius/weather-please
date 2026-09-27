@@ -1,42 +1,44 @@
-import { getAqiCategory } from './detail-labels'
-import type { DetailViewProps } from './detail-data'
-import { getDetailViewData } from './detail-data'
-import { AIR_QUALITY_AQI_DEFAULT_MAX } from './constants'
 import { Trans } from '@lingui/react/macro'
-import { IconLungs, IconHaze } from '@tabler/icons-react'
-import {
-	Metric,
-	DetailViewShell,
-	RelativeHourLabel,
-} from '../details/detail-shell'
+import { IconHaze, IconLungs } from '@tabler/icons-react'
+
+import type { DetailViewProps } from './detail-data'
+
 import {
 	getChartScale,
-	getScaleLabels,
 	getPeakPoint,
+	getScaleLabels,
 } from '../../model/chart-geometry'
-import { ChartFrame, LineChart, EmptyChartState } from '../charts/chart'
 import {
-	max,
-	isNumber,
 	formatPollutantValue,
+	isNumber,
+	max,
 } from '../../model/detail-formatting'
+import { ChartFrame, EmptyChartState, LineChart } from '../charts/chart'
+import {
+	DetailViewShell,
+	Metric,
+	RelativeHourLabel,
+} from '../details/detail-shell'
+import { AIR_QUALITY_AQI_DEFAULT_MAX } from './constants'
+import { getDetailViewData } from './detail-data'
+import { getAqiCategory } from './detail-labels'
 
 export const AirQualityDetail = (props: Readonly<DetailViewProps>) => {
 	const {
-		data,
-		isActive,
 		activeSeriesId,
-		setActiveSeriesId,
-		times,
 		airQualityAqi,
-		airQualityPm25,
-		airQualityPm10,
-		airQualityOzone,
 		airQualityNitrogenDioxide,
-		startLabel,
-		middleLabel,
+		airQualityOzone,
+		airQualityPm10,
+		airQualityPm25,
+		data,
 		endLabel,
+		isActive,
+		middleLabel,
 		referenceTime,
+		setActiveSeriesId,
+		startLabel,
+		times,
 	} = getDetailViewData(props)
 
 	const hasAirQualityData = airQualityAqi.some(isNumber)

@@ -1,12 +1,13 @@
 import type {
-	WeatherMapParticle,
 	WeatherMapDimensions,
 	WeatherMapMetricPoint,
-	WeatherMapViewport,
+	WeatherMapParticle,
 	WeatherMapPointerPoint,
 	WeatherMapProjectedWindPoint,
+	WeatherMapViewport,
 } from '../detail-types'
 import type { WeatherMapData } from '../types'
+
 import { WEATHER_MAP_PARTICLE_DENSITY } from './constants'
 import {
 	getWeatherMapFrameInterpolation,

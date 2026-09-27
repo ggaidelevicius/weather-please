@@ -1,4 +1,4 @@
-export type EarthParticleKind = 'leaf' | 'sprout' | 'drop' | 'flower'
+export type EarthParticleKind = 'drop' | 'flower' | 'leaf' | 'sprout'
 
 type EarthDayArtwork = {
 	glow: HTMLCanvasElement
@@ -9,10 +9,10 @@ export function createEarthDayArtwork(): EarthDayArtwork {
 	return {
 		glow: createGlow(),
 		sprites: {
-			leaf: ['#4ade80', '#22c55e', '#86efac'].map(createLeaf),
-			sprout: ['#34d399', '#2dd4bf', '#a7f3d0'].map(createSprout),
 			drop: ['#7dd3fc', '#38bdf8', '#60a5fa'].map(createDrop),
 			flower: FLOWER_PALETTES.map(createFlower),
+			leaf: ['#4ade80', '#22c55e', '#86efac'].map(createLeaf),
+			sprout: ['#34d399', '#2dd4bf', '#a7f3d0'].map(createSprout),
 		},
 	}
 }
@@ -39,74 +39,13 @@ const FLOWER_PALETTES = [
 	{ inner: '#ffedd5', mid: '#fdba74', outer: '#f97316' },
 ] as const
 
-function createGlow(): HTMLCanvasElement {
-	const { canvas, context } = createCanvas(256)
-	const gradient = context.createRadialGradient(128, 128, 0, 128, 128, 128)
-	gradient.addColorStop(0, 'rgba(34, 197, 94, 0.35)')
-	gradient.addColorStop(0.45, 'rgba(16, 185, 129, 0.18)')
-	gradient.addColorStop(0.75, 'rgba(15, 23, 42, 0)')
-	gradient.addColorStop(1, 'rgba(15, 23, 42, 0)')
-	context.fillStyle = gradient
-	context.fillRect(0, 0, 256, 256)
-	return canvas
-}
-
-function createLeaf(color: string): HTMLCanvasElement {
-	const { canvas, context } = createParticleCanvas(color)
-	context.beginPath()
-	context.moveTo(7, -32)
-	context.bezierCurveTo(-10, -27, -25, -10, -20, 9)
-	context.bezierCurveTo(-17, 23, -4, 27, -2, 32)
-	context.bezierCurveTo(16, 20, 23, 2, 15, -13)
-	context.quadraticCurveTo(8, -24, 7, -32)
-	context.closePath()
-	context.fill()
-	context.shadowBlur = 0
-	const sheen = context.createLinearGradient(-23, -8, 17, 10)
-	sheen.addColorStop(0, 'rgba(236, 253, 245, 0)')
-	sheen.addColorStop(0.4, 'rgba(236, 253, 245, 0.22)')
-	sheen.addColorStop(0.59, 'rgba(236, 253, 245, 0.035)')
-	sheen.addColorStop(1, 'rgba(236, 253, 245, 0)')
-	context.fillStyle = sheen
-	context.fill()
-	context.strokeStyle = 'rgba(220, 252, 231, 0.43)'
-	context.lineWidth = 1.2
-	context.beginPath()
-	context.moveTo(-2, 27)
-	context.bezierCurveTo(-5, 12, 4, -8, 7, -27)
-	context.stroke()
-	return canvas
-}
-
-function createSprout(color: string): HTMLCanvasElement {
-	const { canvas, context } = createParticleCanvas(color)
-	context.lineWidth = 3
-	context.beginPath()
-	context.moveTo(-3, 31)
-	context.bezierCurveTo(3, 19, -4, 11, 0, 2)
-	context.stroke()
-	context.beginPath()
-	context.moveTo(0, 6)
-	context.bezierCurveTo(-19, 9, -34, -6, -30, -23)
-	context.bezierCurveTo(-13, -28, -1, -13, 0, 6)
-	context.closePath()
-	context.fill()
-	context.beginPath()
-	context.moveTo(-1, 5)
-	context.bezierCurveTo(0, -14, 15, -31, 31, -27)
-	context.bezierCurveTo(34, -8, 20, 7, -1, 5)
-	context.closePath()
-	context.fill()
-	context.shadowBlur = 0
-	context.strokeStyle = 'rgba(220, 252, 231, 0.42)'
-	context.lineWidth = 1.15
-	context.beginPath()
-	context.moveTo(-1, 5)
-	context.quadraticCurveTo(-16, -1, -25, -18)
-	context.moveTo(0, 5)
-	context.quadraticCurveTo(13, -3, 26, -21)
-	context.stroke()
-	return canvas
+function createCanvas(size: number) {
+	const canvas = document.createElement('canvas')
+	canvas.width = size
+	canvas.height = size
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create the Earth Day artwork canvas')
+	return { canvas, context }
 }
 
 function createDrop(color: string): HTMLCanvasElement {
@@ -173,6 +112,45 @@ function createFlower(
 	return canvas
 }
 
+function createGlow(): HTMLCanvasElement {
+	const { canvas, context } = createCanvas(256)
+	const gradient = context.createRadialGradient(128, 128, 0, 128, 128, 128)
+	gradient.addColorStop(0, 'rgba(34, 197, 94, 0.35)')
+	gradient.addColorStop(0.45, 'rgba(16, 185, 129, 0.18)')
+	gradient.addColorStop(0.75, 'rgba(15, 23, 42, 0)')
+	gradient.addColorStop(1, 'rgba(15, 23, 42, 0)')
+	context.fillStyle = gradient
+	context.fillRect(0, 0, 256, 256)
+	return canvas
+}
+
+function createLeaf(color: string): HTMLCanvasElement {
+	const { canvas, context } = createParticleCanvas(color)
+	context.beginPath()
+	context.moveTo(7, -32)
+	context.bezierCurveTo(-10, -27, -25, -10, -20, 9)
+	context.bezierCurveTo(-17, 23, -4, 27, -2, 32)
+	context.bezierCurveTo(16, 20, 23, 2, 15, -13)
+	context.quadraticCurveTo(8, -24, 7, -32)
+	context.closePath()
+	context.fill()
+	context.shadowBlur = 0
+	const sheen = context.createLinearGradient(-23, -8, 17, 10)
+	sheen.addColorStop(0, 'rgba(236, 253, 245, 0)')
+	sheen.addColorStop(0.4, 'rgba(236, 253, 245, 0.22)')
+	sheen.addColorStop(0.59, 'rgba(236, 253, 245, 0.035)')
+	sheen.addColorStop(1, 'rgba(236, 253, 245, 0)')
+	context.fillStyle = sheen
+	context.fill()
+	context.strokeStyle = 'rgba(220, 252, 231, 0.43)'
+	context.lineWidth = 1.2
+	context.beginPath()
+	context.moveTo(-2, 27)
+	context.bezierCurveTo(-5, 12, 4, -8, 7, -27)
+	context.stroke()
+	return canvas
+}
+
 function createParticleCanvas(color: string) {
 	const { canvas, context } = createCanvas(128)
 	context.translate(64, 64)
@@ -185,11 +163,33 @@ function createParticleCanvas(color: string) {
 	return { canvas, context }
 }
 
-function createCanvas(size: number) {
-	const canvas = document.createElement('canvas')
-	canvas.width = size
-	canvas.height = size
-	const context = canvas.getContext('2d')
-	if (!context) throw new Error('Unable to create the Earth Day artwork canvas')
-	return { canvas, context }
+function createSprout(color: string): HTMLCanvasElement {
+	const { canvas, context } = createParticleCanvas(color)
+	context.lineWidth = 3
+	context.beginPath()
+	context.moveTo(-3, 31)
+	context.bezierCurveTo(3, 19, -4, 11, 0, 2)
+	context.stroke()
+	context.beginPath()
+	context.moveTo(0, 6)
+	context.bezierCurveTo(-19, 9, -34, -6, -30, -23)
+	context.bezierCurveTo(-13, -28, -1, -13, 0, 6)
+	context.closePath()
+	context.fill()
+	context.beginPath()
+	context.moveTo(-1, 5)
+	context.bezierCurveTo(0, -14, 15, -31, 31, -27)
+	context.bezierCurveTo(34, -8, 20, 7, -1, 5)
+	context.closePath()
+	context.fill()
+	context.shadowBlur = 0
+	context.strokeStyle = 'rgba(220, 252, 231, 0.42)'
+	context.lineWidth = 1.15
+	context.beginPath()
+	context.moveTo(-1, 5)
+	context.quadraticCurveTo(-16, -1, -25, -18)
+	context.moveTo(0, 5)
+	context.quadraticCurveTo(13, -3, 26, -21)
+	context.stroke()
+	return canvas
 }

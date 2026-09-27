@@ -1,15 +1,17 @@
+import { useEffect, useEffectEvent, useRef } from 'react'
+
 import type {
 	WeatherMapDimensions,
 	WeatherMapViewport,
 } from '../../model/detail-types'
 import type { WeatherMapData } from '../../model/types'
-import { useRef, useEffect, useEffectEvent } from 'react'
-import {
-	getWeatherMapPrecipitationMeshDimensions,
-	getInterpolatedWeatherMapPrecipitationPoints,
-	createWeatherMapPrecipitationMeshImageData,
-} from '../../model/weather-map/precipitation'
+
 import { WEATHER_MAP_PRECIPITATION_FRAME_INTERVAL_MS } from '../../model/weather-map/constants'
+import {
+	createWeatherMapPrecipitationMeshImageData,
+	getInterpolatedWeatherMapPrecipitationPoints,
+	getWeatherMapPrecipitationMeshDimensions,
+} from '../../model/weather-map/precipitation'
 
 export const WeatherMapPrecipitationCanvas = ({
 	dimensions,

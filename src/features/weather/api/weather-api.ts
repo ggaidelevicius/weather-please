@@ -339,8 +339,8 @@ export const fetchWeatherResponse = async ({
 		const weatherRequest = fetch(weatherUrl, { signal })
 		const airQualityUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=pm10,pm2_5,ozone,nitrogen_dioxide,us_aqi,uv_index&timeformat=unixtime&timezone=${encodedTimeZone}&forecast_days=${AIR_QUALITY_FORECAST_DAYS}`
 		const airQualityRequest = fetchOptionalAirQuality({
-			url: airQualityUrl,
 			signal: enrichmentController.signal,
+			url: airQualityUrl,
 		})
 		const response = await weatherRequest
 		if (!response.ok) {
@@ -676,11 +676,11 @@ const getDailyWeatherIndexForTime = ({
 export const AIR_QUALITY_TIMEOUT_MS = 2500
 
 const fetchOptionalAirQuality = ({
-	url,
 	signal,
+	url,
 }: {
-	url: string
 	signal: AbortSignal
+	url: string
 }): Promise<AirQualityResponse | null> =>
 	new Promise((resolve) => {
 		const controller = new AbortController()

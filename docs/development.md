@@ -6,6 +6,16 @@ Use Node.js 24+ and the pnpm version in `package.json`. Run
 `pnpm install --frozen-lockfile`. The `/demo` dashboard works without
 environment configuration. `pnpm dev` starts the hosted development server.
 
+TypeScript runs side by side using Microsoft's
+[recommended package aliases](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6-0):
+`@typescript/native` points to TypeScript 7 and provides `tsc`, while
+`typescript` points to `@typescript/typescript6` and supplies the compiler API
+and `tsc6`. Existing standalone checks, including `pnpm typecheck`, use the
+native compiler. ESLint uses the compatible TypeScript 6 API, and Next's build
+checker resolves `typescript` and uses TypeScript 6. Revisit this compatibility
+setup when the tools support TypeScript's new API; installing TypeScript 7.1
+alone will not make consumers of the old API compatible.
+
 Copy `.env.example` to `.env.local` when enabling optional services. Never
 commit actual environment files. Public variables are embedded during builds, so
 rebuild the extension after changing provider configuration.
@@ -36,11 +46,27 @@ website OAuth client's confidential secret must never be put into a
 `NEXT_PUBLIC_*` variable.
 
 Both calendar providers refresh access tokens automatically. Microsoft refresh
-tokens issued to redirect URIs registered as `spa` have a fixed 24-hour lifetime;
-rotating a refresh token does not extend that original deadline. Once it expires,
-the account needs a new authorization flow. Microsoft account and organization
-policies can also require sign-in sooner. See
+tokens issued to redirect URIs registered as `spa` have a fixed 24-hour
+lifetime; rotating a refresh token does not extend that original deadline. Once
+it expires, the account needs a new authorization flow. Microsoft account and
+organization policies can also require sign-in sooner. See
 [Microsoft's refresh-token lifetime documentation](https://learn.microsoft.com/en-us/entra/identity-platform/refresh-tokens#token-lifetime).
+
+Dashboard tabs coordinate forecast, air-quality, map forecast, calendar, device
+location, and location-label requests through `shared-resource.ts`. A Web Lock
+gives one tab ownership of each resource while other tabs wait and then reuse
+its validated cache entry. BroadcastChannel and storage events propagate
+updates. Weather keys include the location and relevant settings; calendar
+requests use account-specific locks, with a separate short lock for updating the
+stored account list.
+
+Closing a tab releases its browser locks. Hiding or freezing a page cancels its
+requests, and stalled requests time out. Waiting visible tabs can then take
+ownership; resumed tabs check the cache again. Shared cache generations reject
+late results after invalidation, and concurrent manual refreshes share the same
+request. Website tabs and extension tabs coordinate within their own origins.
+Unavailable browser storage falls back to memory and broadcast results; without
+Web Locks, request deduplication is limited to the current tab.
 
 ## Verification
 
@@ -60,8 +86,15 @@ onboarding, persistent settings, navigation, and CSP-compatible startup. The
 port must be free. `PLAYWRIGHT_BROWSERS_PATH` can point to a writable browser
 cache.
 
-`pnpm format:fix` applies formatting. ESLint's TypeScript compatibility is
-unresolved; `pnpm lint` still invokes ESLint and also modifies files.
+The shared-fetch browser tests run in isolated routed pages without starting an
+application server:
+
+```bash
+pnpm exec playwright test --config=playwright.shared.config.ts
+```
+
+`pnpm format:fix` applies formatting. `pnpm exec eslint .` checks lint rules
+without changing files; `pnpm lint` also applies formatting and lint fixes.
 
 ## Packaging
 

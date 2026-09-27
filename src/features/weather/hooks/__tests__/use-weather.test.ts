@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { useWeather } from '../use-weather'
 import { getCachedWeather } from '../../model/cache'
+import { useWeather } from '../use-weather'
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -361,8 +361,8 @@ describe('useWeather - Core Functionality', () => {
 			getCachedWeather({
 				lat: '40.7128',
 				lon: '-74.0060',
-				timeZone: userTimeZone,
 				shouldUseAirQualityUv: false,
+				timeZone: userTimeZone,
 			})?.weatherMapData,
 		).not.toBeNull()
 	})
@@ -500,11 +500,11 @@ describe('useWeather - Core Functionality', () => {
 		])
 		expect(
 			getCachedWeather({
+				allowStale: true,
 				lat: '40.7128',
 				lon: '-74.0060',
-				timeZone: userTimeZone,
 				shouldUseAirQualityUv: false,
-				allowStale: true,
+				timeZone: userTimeZone,
 			})?.isDegraded,
 		).toBe(true)
 		expect(result.current.alertData.hoursOfStrongWind[0]).toBe(true)

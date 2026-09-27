@@ -20,8 +20,8 @@ try {
 	for (const args of [['install', '--frozen-lockfile'], ['build']]) {
 		const result = spawnSync(pnpmCommand, args, {
 			cwd: checkout,
-			stdio: 'inherit',
 			env: { ...process.env, HUSKY: '0' },
+			stdio: 'inherit',
 		})
 		if (result.error) throw result.error
 		if (result.status !== 0)
@@ -34,5 +34,5 @@ try {
 	console.error(error)
 	process.exitCode = 1
 } finally {
-	fs.rmSync(directory, { recursive: true, force: true })
+	fs.rmSync(directory, { force: true, recursive: true })
 }

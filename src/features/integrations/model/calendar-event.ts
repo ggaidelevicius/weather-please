@@ -1,15 +1,19 @@
-export type CalendarEvent = {
-	accountId: string
-	description: null | string
-	endTimestamp: number
-	icalUid: null | string
-	id: string
-	isAllDay: boolean
-	location: null | string
-	startTimestamp: number
-	subject: string
-	webLink: null | string
-}
+import { z } from 'zod'
+
+export const calendarEventSchema = z.object({
+	accountId: z.string().min(1),
+	description: z.string().nullable(),
+	endTimestamp: z.number(),
+	icalUid: z.string().nullable(),
+	id: z.string().min(1),
+	isAllDay: z.boolean(),
+	location: z.string().nullable(),
+	startTimestamp: z.number(),
+	subject: z.string(),
+	webLink: z.string().nullable(),
+})
+
+export type CalendarEvent = z.infer<typeof calendarEventSchema>
 
 // Merges per-account event lists into one chronological list. The same event
 // can exist in several connected calendars (the user invited their other

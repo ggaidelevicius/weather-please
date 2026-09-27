@@ -1,15 +1,13 @@
-type FireworkVariant = 'willow' | 'chrysanthemum' | 'peony' | 'ring'
-
-type FireworkParticle = {
-	color: string
-	cosine: number
-	gravity: number
-	lifetime: number
-	phase: number
-	satellites: { cosine: number; sine: number }[] | null
-	sine: number
-	size: number
-	speed: number
+export type NewYearsFirework = {
+	age: number
+	ascentDuration: number
+	duration: number
+	frame: FireworkFrame
+	launchX: number
+	particles: FireworkParticle[]
+	variant: FireworkVariant
+	x: number
+	y: number
 }
 
 type FireworkFrame = {
@@ -24,30 +22,32 @@ type FireworkFrame = {
 	satelliteFall: number
 }
 
-export type NewYearsFirework = {
-	age: number
-	ascentDuration: number
-	duration: number
-	frame: FireworkFrame
-	launchX: number
-	particles: FireworkParticle[]
-	variant: FireworkVariant
-	x: number
-	y: number
+type FireworkParticle = {
+	color: string
+	cosine: number
+	gravity: number
+	lifetime: number
+	phase: number
+	satellites: null | { cosine: number; sine: number }[]
+	sine: number
+	size: number
+	speed: number
 }
 
+type FireworkVariant = 'chrysanthemum' | 'peony' | 'ring' | 'willow'
+
 export function createNewYearsFirework({
-	x,
-	y,
 	delay = 0,
 	paletteIndex = 0,
 	variant = VARIANTS[Math.abs(paletteIndex) % VARIANTS.length],
+	x,
+	y,
 }: {
-	x: number
-	y: number
 	delay?: number
 	paletteIndex?: number
 	variant?: FireworkVariant
+	x: number
+	y: number
 }): NewYearsFirework {
 	const palette = PALETTES[Math.abs(paletteIndex) % PALETTES.length]
 	const ascentDuration = 0.95 + Math.random() * 0.2
@@ -117,15 +117,15 @@ export function createNewYearsFirework({
 export function drawNewYearsFirework({
 	context,
 	firework,
-	width,
 	height,
 	sparkSprite,
+	width,
 }: {
 	context: CanvasRenderingContext2D
 	firework: NewYearsFirework
-	width: number
 	height: number
 	sparkSprite: HTMLCanvasElement
+	width: number
 }): void {
 	if (firework.age < 0 || firework.age >= firework.duration) return
 
@@ -136,7 +136,7 @@ export function drawNewYearsFirework({
 	const centerY = firework.y * height
 
 	if (firework.age < firework.ascentDuration) {
-		drawRocket({ context, firework, width, height, sparkSprite })
+		drawRocket({ context, firework, height, sparkSprite, width })
 		context.restore()
 		return
 	}
@@ -199,65 +199,6 @@ const PALETTES = [
 	['#83d9ff', '#b6ebff', '#effcff'],
 	['#ffbb69', '#ffd88c', '#fff6d9'],
 ]
-
-function drawRocket({
-	context,
-	firework,
-	width,
-	height,
-	sparkSprite,
-}: {
-	context: CanvasRenderingContext2D
-	firework: NewYearsFirework
-	width: number
-	height: number
-	sparkSprite: HTMLCanvasElement
-}) {
-	const progress = firework.age / firework.ascentDuration
-	const startX = firework.launchX * width
-	const startY = height * 1.04
-	const targetX = firework.x * width
-	const targetY = firework.y * height
-	const ascent = 1 - (1 - progress) ** 1.65
-	const headX = startX + (targetX - startX) * ascent
-	const headY =
-		startY + (targetY - startY) * ascent - Math.sin(progress * Math.PI) * 22
-	const tailStart = Math.max(0, progress - 0.23)
-	const tailAscent = 1 - (1 - tailStart) ** 1.65
-	let fromX = startX + (targetX - startX) * tailAscent
-	let fromY =
-		startY +
-		(targetY - startY) * tailAscent -
-		Math.sin(tailStart * Math.PI) * 22
-	context.strokeStyle = '#f4b94e'
-	context.lineWidth = 1.6
-
-	for (let segment = 0; segment < 8; segment += 1) {
-		const sampleProgress =
-			tailStart + (progress - tailStart) * ((segment + 1) / 8)
-		const sampleAscent = 1 - (1 - sampleProgress) ** 1.65
-		const toX = startX + (targetX - startX) * sampleAscent
-		const toY =
-			startY +
-			(targetY - startY) * sampleAscent -
-			Math.sin(sampleProgress * Math.PI) * 22
-		context.globalAlpha = (segment / 8) * 0.62
-		context.beginPath()
-		context.moveTo(fromX, fromY)
-		context.lineTo(toX, toY)
-		context.stroke()
-		fromX = toX
-		fromY = toY
-	}
-
-	context.globalAlpha = 0.65
-	context.drawImage(sparkSprite, headX - 13, headY - 13, 26, 26)
-	context.fillStyle = '#fff3cf'
-	context.globalAlpha = 0.95
-	context.beginPath()
-	context.arc(headX, headY, 1.7, 0, Math.PI * 2)
-	context.fill()
-}
 
 function drawParticle(
 	context: CanvasRenderingContext2D,
@@ -331,4 +272,63 @@ function drawParticle(
 		}
 		context.stroke()
 	}
+}
+
+function drawRocket({
+	context,
+	firework,
+	height,
+	sparkSprite,
+	width,
+}: {
+	context: CanvasRenderingContext2D
+	firework: NewYearsFirework
+	height: number
+	sparkSprite: HTMLCanvasElement
+	width: number
+}) {
+	const progress = firework.age / firework.ascentDuration
+	const startX = firework.launchX * width
+	const startY = height * 1.04
+	const targetX = firework.x * width
+	const targetY = firework.y * height
+	const ascent = 1 - (1 - progress) ** 1.65
+	const headX = startX + (targetX - startX) * ascent
+	const headY =
+		startY + (targetY - startY) * ascent - Math.sin(progress * Math.PI) * 22
+	const tailStart = Math.max(0, progress - 0.23)
+	const tailAscent = 1 - (1 - tailStart) ** 1.65
+	let fromX = startX + (targetX - startX) * tailAscent
+	let fromY =
+		startY +
+		(targetY - startY) * tailAscent -
+		Math.sin(tailStart * Math.PI) * 22
+	context.strokeStyle = '#f4b94e'
+	context.lineWidth = 1.6
+
+	for (let segment = 0; segment < 8; segment += 1) {
+		const sampleProgress =
+			tailStart + (progress - tailStart) * ((segment + 1) / 8)
+		const sampleAscent = 1 - (1 - sampleProgress) ** 1.65
+		const toX = startX + (targetX - startX) * sampleAscent
+		const toY =
+			startY +
+			(targetY - startY) * sampleAscent -
+			Math.sin(sampleProgress * Math.PI) * 22
+		context.globalAlpha = (segment / 8) * 0.62
+		context.beginPath()
+		context.moveTo(fromX, fromY)
+		context.lineTo(toX, toY)
+		context.stroke()
+		fromX = toX
+		fromY = toY
+	}
+
+	context.globalAlpha = 0.65
+	context.drawImage(sparkSprite, headX - 13, headY - 13, 26, 26)
+	context.fillStyle = '#fff3cf'
+	context.globalAlpha = 0.95
+	context.beginPath()
+	context.arc(headX, headY, 1.7, 0, Math.PI * 2)
+	context.fill()
 }

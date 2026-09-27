@@ -1,4 +1,5 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { WebGLRenderer } from 'three'
+
 import {
 	Data3DTexture,
 	Material,
@@ -10,10 +11,11 @@ import {
 	UnsignedByteType,
 	WebGLRenderTarget,
 } from 'three'
-import type { WebGLRenderer } from 'three'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { createBlackHoleScene } from '../black-hole-scene'
 import { createAccretionVolumeTexture } from '../black-hole-volume'
 
@@ -22,7 +24,7 @@ vi.mock('../black-hole-volume', () => ({
 }))
 
 const scenes: ReturnType<typeof createBlackHoleScene>[] = []
-const frame = { width: 1280, height: 720, dpr: 1, time: 0, reveal: 1 }
+const frame = { dpr: 1, height: 720, reveal: 1, time: 0, width: 1280 }
 
 beforeEach(() => {
 	vi.mocked(createAccretionVolumeTexture).mockReset()
@@ -42,12 +44,12 @@ afterEach(() => {
 
 describe('black hole scene resources', () => {
 	it('bakes ray geometry once while continuing to compose every animation frame', () => {
-		const { scene, renderer, composer } = createScene()
+		const { composer, renderer, scene } = createScene()
 		scene.render(frame)
 		const sizeCalls = vi.mocked(EffectComposer.prototype.setSize).mock.calls
 			.length
 		for (let index = 1; index <= 20; index += 1) {
-			scene.render({ ...frame, time: index * 0.05, reveal: index / 20 })
+			scene.render({ ...frame, reveal: index / 20, time: index * 0.05 })
 		}
 
 		expect(renderer.render).toHaveBeenCalledOnce()
@@ -64,12 +66,12 @@ describe('black hole scene resources', () => {
 	})
 
 	it.each([
-		{ width: 390, height: 844, dpr: 1 },
-		{ width: 1280, height: 720, dpr: 1.2 },
+		{ dpr: 1, height: 844, width: 390 },
+		{ dpr: 1.2, height: 720, width: 1280 },
 	])(
 		'rebakes once when the physical viewport changes to $width × $height at $dpr DPR',
 		(viewport) => {
-			const { scene, renderer, composer } = createScene()
+			const { composer, renderer, scene } = createScene()
 			scene.render(frame)
 			scene.render({ ...frame, ...viewport, time: 1 })
 			scene.render({ ...frame, ...viewport, time: 2 })
@@ -86,9 +88,9 @@ describe('black hole scene resources', () => {
 	)
 
 	it('reuses a bake when CSS size and DPR change without changing physical dimensions', () => {
-		const { scene, renderer } = createScene()
+		const { renderer, scene } = createScene()
 		scene.render(frame)
-		scene.render({ ...frame, width: 640, height: 360, dpr: 2, time: 1 })
+		scene.render({ ...frame, dpr: 2, height: 360, time: 1, width: 640 })
 		expect(renderer.render).toHaveBeenCalledOnce()
 		expect(EffectComposer.prototype.render).toHaveBeenCalledTimes(2)
 	})
@@ -99,7 +101,7 @@ describe('black hole scene resources', () => {
 	])(
 		'renders without a geometry cache when MRT is unsupported ($hasHalfFloat, $maxAttachments)',
 		(capabilities) => {
-			const { scene, renderer, gl, composer, bloom } = createScene(capabilities)
+			const { bloom, composer, gl, renderer, scene } = createScene(capabilities)
 			scene.render(frame)
 			scene.render({ ...frame, time: 1 })
 			expect(renderer.render).not.toHaveBeenCalled()
@@ -117,11 +119,11 @@ describe('black hole scene resources', () => {
 	)
 
 	it('falls back permanently when the allocated MRT framebuffer is incomplete', () => {
-		const { scene, renderer, gl, composer } = createScene({
+		const { composer, gl, renderer, scene } = createScene({
 			isFramebufferComplete: false,
 		})
 		scene.render(frame)
-		scene.render({ ...frame, width: 390, height: 844, time: 1 })
+		scene.render({ ...frame, height: 844, time: 1, width: 390 })
 		expect(gl.checkFramebufferStatus).toHaveBeenCalledOnce()
 		expect(renderer.render).not.toHaveBeenCalled()
 		expect(renderer.getRenderTarget()).toBeNull()
@@ -132,7 +134,7 @@ describe('black hole scene resources', () => {
 	})
 
 	it('disposes every owned target, material, pass, and geometry once without disposing caller resources', () => {
-		const { scene, renderer, composer, bloom, textures } = createScene()
+		const { bloom, composer, renderer, scene, textures } = createScene()
 		scene.render(frame)
 		const cacheTarget = vi.mocked(renderer.setRenderTarget).mock.calls[0][0]
 		expect(cacheTarget).toBeInstanceOf(WebGLRenderTarget)
@@ -195,7 +197,7 @@ describe('black hole scene resources', () => {
 	})
 
 	it('restores the previous render target when geometry baking throws', () => {
-		const { scene, renderer } = createScene()
+		const { renderer, scene } = createScene()
 		const previousTarget = new WebGLRenderTarget(8, 8)
 		renderer.setRenderTarget(previousTarget)
 		vi.mocked(renderer.render).mockImplementationOnce(() => {
@@ -208,6 +210,67 @@ describe('black hole scene resources', () => {
 	})
 })
 
+function createInputs({
+	hasHalfFloat = true,
+	isFramebufferComplete = true,
+	maxAttachments = 8,
+}: {
+	hasHalfFloat?: boolean
+	isFramebufferComplete?: boolean
+	maxAttachments?: number
+} = {}) {
+	const gl: Pick<
+		WebGL2RenderingContext,
+		| 'checkFramebufferStatus'
+		| 'FRAMEBUFFER'
+		| 'FRAMEBUFFER_COMPLETE'
+		| 'getContextAttributes'
+		| 'getParameter'
+		| 'MAX_COLOR_ATTACHMENTS'
+		| 'MAX_DRAW_BUFFERS'
+	> = {
+		checkFramebufferStatus: vi.fn(() =>
+			isFramebufferComplete ? 0x8cd5 : 0x8cd6,
+		),
+		FRAMEBUFFER: 0x8d40,
+		FRAMEBUFFER_COMPLETE: 0x8cd5,
+		getContextAttributes: vi.fn(() => ({ premultipliedAlpha: true })),
+		getParameter: vi.fn(() => maxAttachments),
+		MAX_COLOR_ATTACHMENTS: 0x8cdf,
+		MAX_DRAW_BUFFERS: 0x8824,
+	}
+	let target: null | WebGLRenderTarget = null
+	const renderer: Pick<
+		WebGLRenderer,
+		| 'dispose'
+		| 'extensions'
+		| 'getContext'
+		| 'getPixelRatio'
+		| 'getRenderTarget'
+		| 'render'
+		| 'setRenderTarget'
+		| 'toneMapping'
+		| 'toneMappingExposure'
+	> = {
+		dispose: vi.fn(),
+		extensions: { get: vi.fn(), has: vi.fn(() => hasHalfFloat), init: vi.fn() },
+		getContext: () => gl as WebGL2RenderingContext,
+		getPixelRatio: () => 1,
+		getRenderTarget: () => target,
+		render: vi.fn(),
+		setRenderTarget: vi.fn((next) => {
+			target = next
+		}),
+		toneMapping: ReinhardToneMapping,
+		toneMappingExposure: 1.7,
+	}
+	return {
+		bgTexture: new Texture(),
+		renderer: renderer as WebGLRenderer,
+		starTexture: new Texture(),
+	}
+}
+
 function createScene(options: Parameters<typeof createInputs>[0] = {}) {
 	const inputs = createInputs(options)
 	const scene = createBlackHoleScene(inputs)
@@ -218,74 +281,25 @@ function createScene(options: Parameters<typeof createInputs>[0] = {}) {
 	const bloom = composer.passes.find((pass) => pass instanceof UnrealBloomPass)
 	if (!bloom) throw new Error('Missing bloom pass')
 	return {
-		scene,
-		renderer: inputs.renderer,
-		gl: inputs.renderer.getContext(),
-		composer,
 		bloom,
+		composer,
+		gl: inputs.renderer.getContext(),
+		renderer: inputs.renderer,
+		scene,
 		textures: [inputs.bgTexture, inputs.starTexture],
 	}
 }
 
-function createInputs({
-	hasHalfFloat = true,
-	maxAttachments = 8,
-	isFramebufferComplete = true,
-}: {
-	hasHalfFloat?: boolean
-	maxAttachments?: number
-	isFramebufferComplete?: boolean
-} = {}) {
-	const gl: Pick<
-		WebGL2RenderingContext,
-		| 'MAX_DRAW_BUFFERS'
-		| 'MAX_COLOR_ATTACHMENTS'
-		| 'FRAMEBUFFER'
-		| 'FRAMEBUFFER_COMPLETE'
-		| 'getParameter'
-		| 'checkFramebufferStatus'
-		| 'getContextAttributes'
-	> = {
-		MAX_DRAW_BUFFERS: 0x8824,
-		MAX_COLOR_ATTACHMENTS: 0x8cdf,
-		FRAMEBUFFER: 0x8d40,
-		FRAMEBUFFER_COMPLETE: 0x8cd5,
-		getParameter: vi.fn(() => maxAttachments),
-		checkFramebufferStatus: vi.fn(() =>
-			isFramebufferComplete ? 0x8cd5 : 0x8cd6,
+function getCreatedMaterials() {
+	return [
+		...new Set(
+			vi
+				.mocked(Material.prototype.setValues)
+				.mock.contexts.filter(
+					(value): value is Material => value instanceof Material,
+				),
 		),
-		getContextAttributes: vi.fn(() => ({ premultipliedAlpha: true })),
-	}
-	let target: WebGLRenderTarget | null = null
-	const renderer: Pick<
-		WebGLRenderer,
-		| 'getContext'
-		| 'extensions'
-		| 'getPixelRatio'
-		| 'getRenderTarget'
-		| 'setRenderTarget'
-		| 'render'
-		| 'dispose'
-		| 'toneMapping'
-		| 'toneMappingExposure'
-	> = {
-		getContext: () => gl as WebGL2RenderingContext,
-		extensions: { has: vi.fn(() => hasHalfFloat), get: vi.fn(), init: vi.fn() },
-		getPixelRatio: () => 1,
-		getRenderTarget: () => target,
-		setRenderTarget: vi.fn((next) => {
-			target = next
-		}),
-		render: vi.fn(),
-		dispose: vi.fn(),
-		toneMapping: ReinhardToneMapping,
-		toneMappingExposure: 1.7,
-	}
-	return {
-		renderer: renderer as WebGLRenderer,
-		bgTexture: new Texture(),
-		starTexture: new Texture(),
-	}
+	]
 }
 
 function getCreatedVolume() {
@@ -317,17 +331,5 @@ function getPostprocessTargets(
 		bloom.renderTargetBright,
 		...bloom.renderTargetsHorizontal,
 		...bloom.renderTargetsVertical,
-	]
-}
-
-function getCreatedMaterials() {
-	return [
-		...new Set(
-			vi
-				.mocked(Material.prototype.setValues)
-				.mock.contexts.filter(
-					(value): value is Material => value instanceof Material,
-				),
-		),
 	]
 }

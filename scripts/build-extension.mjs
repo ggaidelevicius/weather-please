@@ -1,9 +1,9 @@
+import { config } from 'dotenv'
+import fs from 'fs-extra'
 import { spawnSync } from 'node:child_process'
 import { mkdtempSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
-import { config } from 'dotenv'
-import fs from 'fs-extra'
 
 import { buildExtensionOutput } from './build.mjs'
 import { rootPath } from './lib/root.mjs'
@@ -51,8 +51,8 @@ try {
 		...process.env,
 		DATABASE_URL:
 			process.env.DATABASE_URL || 'postgresql://localhost:5432/weather_please',
-		WEATHER_PLEASE_BUILD_TARGET: 'extension',
 		NEXT_PUBLIC_WEATHER_PLEASE_BUILD_TARGET: 'extension',
+		WEATHER_PLEASE_BUILD_TARGET: 'extension',
 	}
 	runCommand(['exec', 'prisma', 'generate'], env)
 	runCommand(['exec', 'next', 'build', '--webpack'], env)

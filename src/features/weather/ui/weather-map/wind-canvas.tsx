@@ -1,9 +1,17 @@
+import { useEffect, useEffectEvent, useRef } from 'react'
+
 import type {
 	WeatherMapDimensions,
 	WeatherMapViewport,
 } from '../../model/detail-types'
 import type { WeatherMapData } from '../../model/types'
-import { useRef, useEffect, useEffectEvent } from 'react'
+
+import { max } from '../../model/detail-formatting'
+import {
+	WEATHER_MAP_PARTICLE_FRAME_MS,
+	WEATHER_MAP_PARTICLE_MAX_FRAME_MULTIPLIER,
+	WEATHER_MAP_PARTICLE_TRAIL_ALPHA,
+} from '../../model/weather-map/constants'
 import { getWeatherMapOverlayScale } from '../../model/weather-map/geometry'
 import {
 	createWeatherMapParticles,
@@ -11,12 +19,6 @@ import {
 	getNearestWeatherMapWindPoint,
 	resetWeatherMapParticle,
 } from '../../model/weather-map/wind'
-import {
-	WEATHER_MAP_PARTICLE_MAX_FRAME_MULTIPLIER,
-	WEATHER_MAP_PARTICLE_FRAME_MS,
-	WEATHER_MAP_PARTICLE_TRAIL_ALPHA,
-} from '../../model/weather-map/constants'
-import { max } from '../../model/detail-formatting'
 
 export const WeatherMapWindParticleCanvas = ({
 	dimensions,

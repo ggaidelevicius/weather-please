@@ -152,6 +152,19 @@ describe('refreshGoogleTokens', () => {
 		expect(tokens.refreshToken).toBe('refresh-token')
 	})
 
+	it('passes cancellation through credential renewal', async () => {
+		const controller = new AbortController()
+		const fetchMock = stubTokenResponse({
+			access_token: 'new-access-token',
+			expires_in: 3600,
+		})
+		await refreshGoogleTokens({ previousTokens, signal: controller.signal })
+		expect(fetchMock).toHaveBeenCalledWith(
+			expect.any(String),
+			expect.objectContaining({ signal: controller.signal }),
+		)
+	})
+
 	it('requires reauthorisation when no refresh token is held', async () => {
 		await expect(
 			refreshGoogleTokens({

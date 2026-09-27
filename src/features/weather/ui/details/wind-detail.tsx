@@ -1,36 +1,38 @@
-import type { DetailViewProps } from './detail-data'
-import { getDetailViewData } from './detail-data'
-import { WIND_CHART_DEFAULT_MAX_KMH } from './constants'
 import { Trans } from '@lingui/react/macro'
 import { IconWind } from '@tabler/icons-react'
-import {
-	Metric,
-	DetailViewShell,
-	RelativeHourLabel,
-} from '../details/detail-shell'
-import { convertWind, formatDecimal, max } from '../../model/detail-formatting'
+
+import type { DetailViewProps } from './detail-data'
+
 import {
 	getChartScale,
-	getScaleLabels,
 	getPeakPoint,
+	getScaleLabels,
 } from '../../model/chart-geometry'
+import { convertWind, formatDecimal, max } from '../../model/detail-formatting'
 import { ChartFrame, LineChart } from '../charts/chart'
+import {
+	DetailViewShell,
+	Metric,
+	RelativeHourLabel,
+} from '../details/detail-shell'
+import { WIND_CHART_DEFAULT_MAX_KMH } from './constants'
+import { getDetailViewData } from './detail-data'
 
 export const WindDetail = (props: Readonly<DetailViewProps>) => {
 	const {
-		data,
-		isActive,
 		activeSeriesId,
+		data,
+		endLabel,
+		isActive,
+		middleLabel,
+		referenceTime,
 		setActiveSeriesId,
+		startLabel,
+		times,
 		usesMetricUnits,
 		wind,
 		windGust,
-		times,
 		windUnitLabel,
-		startLabel,
-		middleLabel,
-		endLabel,
-		referenceTime,
 	} = getDetailViewData(props)
 
 	const windDefaultMax = convertWind({

@@ -31,6 +31,108 @@ export async function launchDiwaliLights(): Promise<() => void> {
 	}
 }
 
+function createGroundRangoli(sprite: DiwaliArtwork['rangoli']) {
+	const canvas = document.createElement('canvas')
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Diwali ground artwork')
+	const planeWidth = 1200
+	const halfDepth = planeWidth * 0.12
+	const perspective = 0.38
+	const farDepth = halfDepth / (1 + perspective)
+	const nearDepth = halfDepth / (1 - perspective)
+	const anchorY = Math.ceil(farDepth) + 2
+	canvas.width = Math.ceil(planeWidth / (1 - perspective)) + 4
+	canvas.height = Math.ceil(farDepth + nearDepth) + 4
+	// Project a ground plane once; the far half narrows and compresses naturally.
+	for (let row = 0; row < canvas.height; row += 1) {
+		const top = row - anchorY
+		const bottom = top + 1
+		const far = Math.max(-1, top / (halfDepth + perspective * top))
+		const near = Math.min(1, bottom / (halfDepth + perspective * bottom))
+		if (far >= near) continue
+		const depth = (far + near) / 2
+		const rowWidth = planeWidth / (1 - perspective * depth)
+		context.globalAlpha = 0.72 + (depth + 1) * 0.14
+		context.drawImage(
+			sprite.canvas,
+			0,
+			((far + 1) / 2) * sprite.canvas.height,
+			sprite.canvas.width,
+			((near - far) / 2) * sprite.canvas.height,
+			(canvas.width - rowWidth) / 2,
+			row,
+			rowWidth,
+			1,
+		)
+	}
+	return { anchorY, canvas, planeWidth }
+}
+
+function drawDiya({
+	artwork,
+	context,
+	hasFlipped,
+	opacity,
+	phase,
+	size,
+	time,
+	variant,
+	x,
+	y,
+}: {
+	artwork: DiwaliArtwork
+	context: CanvasRenderingContext2D
+	hasFlipped: boolean
+	opacity: number
+	phase: number
+	size: number
+	time: number
+	variant: number
+	x: number
+	y: number
+}) {
+	const sprite = artwork.diyas[variant % artwork.diyas.length]
+	const scale = size / sprite.width
+	const flicker =
+		0.94 +
+		Math.sin(time * 4.7 + phase) * 0.035 +
+		Math.sin(time * 7.1 + phase * 2) * 0.025
+	const lightX = sprite.flameX - sprite.width / 2
+	const lightY = sprite.flameY - sprite.baseY
+	context.save()
+	context.translate(x, y)
+	context.scale(scale * (hasFlipped ? -1 : 1), scale)
+	context.globalAlpha = opacity * flicker * 0.58
+	context.drawImage(artwork.glow.canvas, lightX - 240, lightY - 240, 480, 480)
+	context.globalAlpha = opacity * 0.24
+	context.drawImage(artwork.glow.canvas, -180, -22, 360, 55)
+	context.globalAlpha = opacity
+	context.drawImage(
+		sprite.canvas,
+		-sprite.width / 2,
+		-sprite.baseY,
+		sprite.width,
+		sprite.height,
+	)
+	context.translate(lightX, lightY)
+	context.rotate(Math.sin(time * 1.8 + phase) * 0.035)
+	context.scale(0.94 + Math.sin(time * 3.4 + phase) * 0.045, flicker)
+	const flameWidth = artwork.flame.width * 0.55
+	const flameHeight = artwork.flame.height * 0.55
+	context.drawImage(
+		artwork.flame.canvas,
+		-flameWidth / 2,
+		-flameHeight,
+		flameWidth,
+		flameHeight,
+	)
+	context.restore()
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
 function mountDiwali() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
@@ -42,24 +144,24 @@ function mountDiwali() {
 	const groundRangoli = createGroundRangoli(artwork.rangoli)
 	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
 	const embers = Array.from({ length: 42 }, (_, index) => ({
+		opacity: randomInRange({ max: 0.55, min: 0.2 }),
+		phase: Math.random() * Math.PI * 2,
+		progress: Math.random(),
+		size: randomInRange({ max: 13, min: 4 }),
+		speed: randomInRange({ max: 0.018, min: 0.006 }),
 		x:
 			index % 5 === 0
 				? Math.random()
 				: index % 2
-					? randomInRange({ min: 0.02, max: 0.27 })
-					: randomInRange({ min: 0.73, max: 0.98 }),
-		progress: Math.random(),
-		phase: Math.random() * Math.PI * 2,
-		speed: randomInRange({ min: 0.006, max: 0.018 }),
-		size: randomInRange({ min: 4, max: 13 }),
-		opacity: randomInRange({ min: 0.2, max: 0.55 }),
+					? randomInRange({ max: 0.27, min: 0.02 })
+					: randomInRange({ max: 0.98, min: 0.73 }),
 	}))
 	let width = Math.max(1, window.innerWidth)
 	let height = Math.max(1, window.innerHeight)
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -147,30 +249,30 @@ function mountDiwali() {
 
 		const lamps = isCompact
 			? [
-					{ x: width * 0.12, size: 78, variant: 0 },
-					{ x: width * 0.5, size: 105, variant: 1 },
-					{ x: width * 0.88, size: 78, variant: 2 },
+					{ size: 78, variant: 0, x: width * 0.12 },
+					{ size: 105, variant: 1, x: width * 0.5 },
+					{ size: 78, variant: 2, x: width * 0.88 },
 				]
 			: [
-					{ x: width * 0.035, size: 91, variant: 0 },
-					{ x: width * 0.15, size: 152, variant: 1 },
-					{ x: width * 0.3, size: 86, variant: 2 },
-					{ x: width * 0.5, size: 112, variant: 0 },
-					{ x: width * 0.7, size: 86, variant: 1 },
-					{ x: width * 0.85, size: 148, variant: 2 },
-					{ x: width * 0.965, size: 91, variant: 0 },
+					{ size: 91, variant: 0, x: width * 0.035 },
+					{ size: 152, variant: 1, x: width * 0.15 },
+					{ size: 86, variant: 2, x: width * 0.3 },
+					{ size: 112, variant: 0, x: width * 0.5 },
+					{ size: 86, variant: 1, x: width * 0.7 },
+					{ size: 148, variant: 2, x: width * 0.85 },
+					{ size: 91, variant: 0, x: width * 0.965 },
 				]
 		for (const [index, lamp] of lamps.entries()) {
 			drawDiya({
-				context,
 				artwork,
+				context,
 				...lamp,
-				y: height + 3,
-				size: lamp.size * sceneScale,
 				hasFlipped: lamp.x > width / 2,
-				time: elapsed,
-				phase: index * 2.37,
 				opacity: reveal,
+				phase: index * 2.37,
+				size: lamp.size * sceneScale,
+				time: elapsed,
+				y: height + 3,
 			})
 		}
 		context.globalAlpha = 1
@@ -179,7 +281,7 @@ function mountDiwali() {
 		if (hasCanceled) return
 		width = Math.max(1, window.innerWidth)
 		height = Math.max(1, window.innerHeight)
-		const dpr = getCanvasDpr({ height, width, maxDpr: 2, maxPixels: 4_000_000 })
+		const dpr = getCanvasDpr({ height, maxDpr: 2, maxPixels: 4_000_000, width })
 		canvas.width = Math.round(width * dpr)
 		canvas.height = Math.round(height * dpr)
 		canvas.style.width = `${width}px`
@@ -188,8 +290,8 @@ function mountDiwali() {
 		paintAtmosphere({
 			canvas: atmosphere,
 			context: atmosphereContext,
-			width,
 			height,
+			width,
 		})
 		drawScene()
 	}
@@ -286,137 +388,39 @@ function mountDiwali() {
 	return cleanup
 }
 
-function drawDiya({
-	context,
-	artwork,
-	x,
-	y,
-	size,
-	variant,
-	hasFlipped,
-	time,
-	phase,
-	opacity,
-}: {
-	context: CanvasRenderingContext2D
-	artwork: DiwaliArtwork
-	x: number
-	y: number
-	size: number
-	variant: number
-	hasFlipped: boolean
-	time: number
-	phase: number
-	opacity: number
-}) {
-	const sprite = artwork.diyas[variant % artwork.diyas.length]
-	const scale = size / sprite.width
-	const flicker =
-		0.94 +
-		Math.sin(time * 4.7 + phase) * 0.035 +
-		Math.sin(time * 7.1 + phase * 2) * 0.025
-	const lightX = sprite.flameX - sprite.width / 2
-	const lightY = sprite.flameY - sprite.baseY
-	context.save()
-	context.translate(x, y)
-	context.scale(scale * (hasFlipped ? -1 : 1), scale)
-	context.globalAlpha = opacity * flicker * 0.58
-	context.drawImage(artwork.glow.canvas, lightX - 240, lightY - 240, 480, 480)
-	context.globalAlpha = opacity * 0.24
-	context.drawImage(artwork.glow.canvas, -180, -22, 360, 55)
-	context.globalAlpha = opacity
-	context.drawImage(
-		sprite.canvas,
-		-sprite.width / 2,
-		-sprite.baseY,
-		sprite.width,
-		sprite.height,
-	)
-	context.translate(lightX, lightY)
-	context.rotate(Math.sin(time * 1.8 + phase) * 0.035)
-	context.scale(0.94 + Math.sin(time * 3.4 + phase) * 0.045, flicker)
-	const flameWidth = artwork.flame.width * 0.55
-	const flameHeight = artwork.flame.height * 0.55
-	context.drawImage(
-		artwork.flame.canvas,
-		-flameWidth / 2,
-		-flameHeight,
-		flameWidth,
-		flameHeight,
-	)
-	context.restore()
-}
-
-function createGroundRangoli(sprite: DiwaliArtwork['rangoli']) {
-	const canvas = document.createElement('canvas')
-	const context = canvas.getContext('2d')
-	if (!context) throw new Error('Unable to create Diwali ground artwork')
-	const planeWidth = 1200
-	const halfDepth = planeWidth * 0.12
-	const perspective = 0.38
-	const farDepth = halfDepth / (1 + perspective)
-	const nearDepth = halfDepth / (1 - perspective)
-	const anchorY = Math.ceil(farDepth) + 2
-	canvas.width = Math.ceil(planeWidth / (1 - perspective)) + 4
-	canvas.height = Math.ceil(farDepth + nearDepth) + 4
-	// Project a ground plane once; the far half narrows and compresses naturally.
-	for (let row = 0; row < canvas.height; row += 1) {
-		const top = row - anchorY
-		const bottom = top + 1
-		const far = Math.max(-1, top / (halfDepth + perspective * top))
-		const near = Math.min(1, bottom / (halfDepth + perspective * bottom))
-		if (far >= near) continue
-		const depth = (far + near) / 2
-		const rowWidth = planeWidth / (1 - perspective * depth)
-		context.globalAlpha = 0.72 + (depth + 1) * 0.14
-		context.drawImage(
-			sprite.canvas,
-			0,
-			((far + 1) / 2) * sprite.canvas.height,
-			sprite.canvas.width,
-			((near - far) / 2) * sprite.canvas.height,
-			(canvas.width - rowWidth) / 2,
-			row,
-			rowWidth,
-			1,
-		)
-	}
-	return { canvas, planeWidth, anchorY }
-}
-
 function paintAtmosphere({
 	canvas,
 	context,
-	width,
 	height,
+	width,
 }: {
 	canvas: HTMLCanvasElement
 	context: CanvasRenderingContext2D
-	width: number
 	height: number
+	width: number
 }) {
 	const scale = Math.min(1, 900 / Math.max(width, height))
 	canvas.width = Math.max(1, Math.round(width * scale))
 	canvas.height = Math.max(1, Math.round(height * scale))
 	context.setTransform(scale, 0, 0, scale, 0, 0)
-	for (const { x, y, radius, color } of [
+	for (const { color, radius, x, y } of [
 		{
+			color: '186, 72, 17',
+			radius: Math.max(width * 0.6, height * 0.65),
 			x: width * 0.12,
 			y: height * 1.03,
-			radius: Math.max(width * 0.6, height * 0.65),
-			color: '186, 72, 17',
 		},
 		{
+			color: '140, 35, 89',
+			radius: Math.max(width * 0.47, height * 0.5),
 			x: width * 0.89,
 			y: height * 0.87,
-			radius: Math.max(width * 0.47, height * 0.5),
-			color: '140, 35, 89',
 		},
 		{
+			color: '101, 44, 116',
+			radius: Math.max(width * 0.5, height * 0.4),
 			x: width * 0.72,
 			y: -height * 0.12,
-			radius: Math.max(width * 0.5, height * 0.4),
-			color: '101, 44, 116',
 		},
 	]) {
 		const gradient = context.createRadialGradient(x, y, 0, x, y, radius)
@@ -426,10 +430,6 @@ function paintAtmosphere({
 		context.fillStyle = gradient
 		context.fillRect(0, 0, width, height)
 	}
-}
-
-function easeOut(progress: number) {
-	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
 }
 
 function wrap(value: number) {

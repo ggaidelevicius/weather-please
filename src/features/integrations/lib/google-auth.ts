@@ -67,19 +67,24 @@ export const exchangeGoogleAuthorizationCode = async ({
 
 export const refreshGoogleTokens = async ({
 	previousTokens,
+	signal,
 }: Readonly<{
 	previousTokens: ProviderTokens
+	signal?: AbortSignal
 }>): Promise<ProviderTokens> => {
 	if (!previousTokens.refreshToken) {
 		throw new CalendarReauthRequiredError()
 	}
 
-	const refreshedTokens = await requestGoogleTokens({
-		client_id: getGoogleClientId(),
-		client_secret: getGoogleClientSecret(),
-		grant_type: 'refresh_token',
-		refresh_token: previousTokens.refreshToken,
-	})
+	const refreshedTokens = await requestGoogleTokens(
+		{
+			client_id: getGoogleClientId(),
+			client_secret: getGoogleClientSecret(),
+			grant_type: 'refresh_token',
+			refresh_token: previousTokens.refreshToken,
+		},
+		signal,
+	)
 
 	return {
 		...refreshedTokens,
@@ -112,11 +117,13 @@ const idTokenClaimsSchema = z.object({
 
 const requestGoogleTokens = async (
 	body: Record<string, string>,
+	signal?: AbortSignal,
 ): Promise<ProviderTokens> => {
 	const response = await fetch(TOKEN_ENDPOINT, {
 		body: new URLSearchParams(body).toString(),
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		method: 'POST',
+		signal,
 	})
 
 	if (!response.ok) {

@@ -1,3 +1,5 @@
+import type { Texture } from 'three'
+
 import {
 	ClampToEdgeWrapping,
 	LinearFilter,
@@ -5,7 +7,7 @@ import {
 	TextureLoader,
 	WebGLRenderer,
 } from 'three'
-import type { Texture } from 'three'
+
 import {
 	isSettingsModalOpen,
 	onSettingsModalStateChange,
@@ -23,16 +25,16 @@ export async function launchBlackHoleEvent(): Promise<() => void> {
 	if (typeof window === 'undefined') return () => {}
 
 	let hasCanceled = false
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let elapsed = 0
 	let rotation = 0
 	let width = Math.max(1, window.innerWidth)
 	let height = Math.max(1, window.innerHeight)
 	let dpr = 1
-	let renderer: WebGLRenderer | null = null
-	let scene: ReturnType<typeof createBlackHoleScene> | null = null
+	let renderer: null | WebGLRenderer = null
+	let scene: null | ReturnType<typeof createBlackHoleScene> = null
 	let unsubscribeSettings = () => {}
 	const textures = new Set<Texture>()
 	const pendingLoads = new Set<() => void>()
@@ -51,7 +53,7 @@ export async function launchBlackHoleEvent(): Promise<() => void> {
 	const loadTexture = (url: string, shouldRepeat = false) =>
 		new Promise<Texture>((resolve, reject) => {
 			let hasSettled = false
-			const finish = (texture: Texture | null, error?: unknown) => {
+			const finish = (texture: null | Texture, error?: unknown) => {
 				if (hasSettled) return
 				hasSettled = true
 				window.clearTimeout(timeoutId)
@@ -88,11 +90,11 @@ export async function launchBlackHoleEvent(): Promise<() => void> {
 
 	const drawScene = () => {
 		scene?.render({
-			width,
-			height,
 			dpr,
-			time: rotation,
+			height,
 			reveal: hasRevealed ? 1 : 1 - (1 - Math.min(1, elapsed / 2.8)) ** 3,
+			time: rotation,
+			width,
 		})
 	}
 	const resizeScene = () => {
@@ -100,7 +102,7 @@ export async function launchBlackHoleEvent(): Promise<() => void> {
 		try {
 			width = Math.max(1, window.innerWidth)
 			height = Math.max(1, window.innerHeight)
-			dpr = getCanvasDpr({ height, width, maxDpr: 1.2, maxPixels: 1_600_000 })
+			dpr = getCanvasDpr({ height, maxDpr: 1.2, maxPixels: 1_600_000, width })
 			renderer.setPixelRatio(dpr)
 			renderer.setSize(width, height, false)
 			canvas.style.width = `${width}px`
@@ -186,15 +188,15 @@ export async function launchBlackHoleEvent(): Promise<() => void> {
 			])
 			if (hasCanceled) return
 			renderer = new WebGLRenderer({
-				canvas,
 				alpha: true,
 				antialias: false,
+				canvas,
 				powerPreference: 'low-power',
 			})
 			renderer.setClearColor(0x000000, 0)
 			scene = createBlackHoleScene({
-				renderer,
 				bgTexture,
+				renderer,
 				starTexture,
 			})
 			hasRevealed = motionPreference.matches

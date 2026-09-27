@@ -13,156 +13,8 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/features/settings/ui/sections/general-settings.tsx
-msgid "Background style"
-msgstr "背景样式"
-
-#: src/features/settings/ui/sections/general-settings.tsx
-msgid "Automatic (seasonal)"
-msgstr "自动（季节性）"
-
-#: src/features/settings/ui/sections/general-settings.tsx
-msgid "Choose your default background. Automatic follows your seasonal event settings."
-msgstr "选择默认背景。自动模式会遵循您的季节性活动设置。"
-
-#: src/features/settings/ui/sections/general-settings.tsx
-msgid "Switch to seasonal backgrounds"
-msgstr "切换到季节性背景"
-
-#: src/features/settings/ui/sections/general-settings.tsx
-msgid "Use enabled seasonal backgrounds on their dates, then return to your chosen style. Turn this off to always use your chosen background."
-msgstr "在相应日期使用已启用的季节性背景，之后恢复您选择的样式。关闭此选项可始终使用您选择的背景。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:245
-msgid "Above the horizon for part of this window."
-msgstr "在这段时间的部分时段位于地平线上方。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:243
-msgid "Above the horizon throughout this window."
-msgstr "在这整段时间内位于地平线上方。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:241
-msgid "Below the horizon throughout this window."
-msgstr "在这整段时间内位于地平线下方。"
-
-#: src/features/seasonal-events/meteor-showers/lazy-viewing-guide.tsx:61
-msgid "Calculating local viewing times…"
-msgstr "正在计算当地观测时间…"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:222
-msgid "East"
-msgstr "东"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:203
-msgid "Estimates near the usual peak, not a prediction of meteor activity or cloud cover. Check the local forecast and choose a dark spot away from lights."
-msgstr "这是流星雨通常极大期附近的估算，并非流星活动或云量预报。请查看当地天气预报，并选择远离灯光的黑暗地点。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:84
-msgid "Local viewing guidance appears near this shower’s usual peak."
-msgstr "接近该流星雨通常的极大期时，会显示当地观测建议。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:282
-msgid "Local viewing guidance isn’t available for this location. Check that your selected weather location is correct."
-msgstr "此地点暂无观测建议。请检查所选的天气地点是否正确。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:169
-msgid "Moonlight"
-msgstr "月光"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:137
-msgid "Night of {nightLabel}"
-msgstr "{nightLabel}之夜"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:274
-msgid "No useful local viewing window was found for this night."
-msgstr "这晚未找到适合当地观测的时段。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:218
-msgid "North"
-msgstr "北"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:220
-msgid "North-east"
-msgstr "东北"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:232
-msgid "North-west"
-msgstr "西北"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:158
-msgid "Radiant position"
-msgstr "辐射点位置"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:182
-msgid "Sky position and Moon illumination shown for {referenceLabel}."
-msgstr "所示天空位置和月面照亮比例对应的时间为 {referenceLabel}。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:226
-msgid "South"
-msgstr "南"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:224
-msgid "South-east"
-msgstr "东南"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:228
-msgid "South-west"
-msgstr "西南"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:146
-msgid "Suggested viewing window"
-msgstr "建议观测时段"
-
-#: src/features/seasonal-events/definitions/perseids.tsx:106
-msgid "The number of meteors you see depends on your location, the darkness and clarity of the sky, and the shower's activity that year. A high radiant and a dark sky usually offer better viewing."
-msgstr "可见流星的数量取决于您所在的位置、天空的黑暗与晴朗程度，以及流星雨当年的活跃程度。辐射点较高、天空较暗时，观测条件通常更好。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:188
-msgid "The radiant is where the trails appear to come from. Meteors can cross any part of the sky: look roughly halfway up, away from the Moon, with a wide, unobstructed view."
-msgstr "辐射点是流星轨迹看起来向外发散的起点。流星可能划过天空的任何区域：请望向地平线与天顶之间的大约中间位置，避开月亮，并选择视野开阔、没有遮挡的地方。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:256
-msgid "The sky stays too bright for a useful viewing window at this location on this night."
-msgstr "这晚此地点的天空始终太亮，没有合适的观测时段。"
-
-#: src/features/seasonal-events/definitions/perseids.tsx:55
-msgid "Their radiant lies in the constellation Perseus. The shower is best placed in the northern hemisphere, with visibility decreasing farther south."
-msgstr "其辐射点位于英仙座。这场流星雨在北半球最适宜观测，越往南，可见度越低。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:265
-msgid "This shower’s radiant stays too low while your sky is dark for a useful viewing window on this night."
-msgstr "这晚天空较暗时，该流星雨的辐射点始终过低，没有合适的观测时段。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:140
-msgid "Times in {timeZoneLabel}"
-msgstr "时间采用{timeZoneLabel}"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:151
-msgid "to"
-msgstr "至"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:196
-msgid "Twilight overlaps this window, so fainter meteors may be harder to see."
-msgstr "这段时间与曙暮光时段重叠，较暗的流星可能更难看见。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:90
-msgid "Usual peak: around {peakLabel}."
-msgstr "通常极大期：{peakLabel}前后。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:55
-msgid "Viewing from your location"
-msgstr "您所在地点的观测建议"
-
-#: src/features/seasonal-events/meteor-showers/lazy-viewing-guide.tsx:49
-msgid "Viewing guidance could not be loaded."
-msgstr "无法加载观测建议。"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:230
-msgid "West"
-msgstr "西"
-
 #. placeholder {0}: formatPrecipitationValue({ precipitation: sum(precipitation), usesMetricUnits, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:428
+#: src/features/weather/ui/details/precipitation-detail.tsx:74
 msgid "{0}"
 msgstr "{0}"
 
@@ -170,77 +22,77 @@ msgstr "{0}"
 #. placeholder {0}: Math.round(value)
 #. placeholder {1}: getAqiCategory(currentAqi ?? 0)
 #. placeholder {1}: getAqiCategory(value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:647
-#: src/features/weather/ui/next-24-hours-tile.tsx:711
+#: src/features/weather/ui/details/air-quality-detail.tsx:79
+#: src/features/weather/ui/details/air-quality-detail.tsx:143
 msgid "{0} · {1}"
 msgstr "{0} · {1}"
 
 #. placeholder {0}: formatDecimal(bestVisibility.value)
 #. placeholder {0}: formatDecimal(lowestVisibility.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:850
-#: src/features/weather/ui/next-24-hours-tile.tsx:864
+#: src/features/weather/ui/details/conditions-detail.tsx:63
+#: src/features/weather/ui/details/conditions-detail.tsx:77
 msgid "{0} {visibilityUnitLabel} at <0/>"
 msgstr "{0} {visibilityUnitLabel}（<0/>）"
 
 #. placeholder {0}: Math.round(peakGust.value)
 #. placeholder {0}: Math.round(peakWind.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:765
-#: src/features/weather/ui/next-24-hours-tile.tsx:782
+#: src/features/weather/ui/details/wind-detail.tsx:65
+#: src/features/weather/ui/details/wind-detail.tsx:82
 msgid "{0} {windUnitLabel} at <0/>"
 msgstr "{0} {windUnitLabel}（<0/>）"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1147
+#: src/features/weather/ui/details/detail-shell.tsx:274
 msgid "{0} and {1}"
 msgstr "{0}和{1}"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1160
+#: src/features/weather/ui/details/detail-shell.tsx:287
 msgid "{0} and {1} today"
 msgstr "今天 {0}和{1}"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1168
+#: src/features/weather/ui/details/detail-shell.tsx:295
 msgid "{0} and {1} tomorrow"
 msgstr "明天 {0}和{1}"
 
 #. placeholder {0}: Math.round(peakAqi.value)
 #. placeholder {0}: Math.round(peakUv.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:564
-#: src/features/weather/ui/next-24-hours-tile.tsx:661
+#: src/features/weather/ui/details/air-quality-detail.tsx:93
+#: src/features/weather/ui/details/sun-detail.tsx:77
 msgid "{0} at <0/>"
 msgstr "{0}（<0/>）"
 
 #. placeholder {0}: formatPrecipitationValue({ precipitation: peakAmount.value, usesMetricUnits, })
-#: src/features/weather/ui/next-24-hours-tile.tsx:478
+#: src/features/weather/ui/details/precipitation-detail.tsx:124
 msgid "{0} between <0/>"
 msgstr "{0}（<0/>期间）"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:521
+#: src/features/weather/ui/tile.tsx:540
 msgid "{0} km/h"
 msgstr "{0} 公里/小时"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:523
+#: src/features/weather/ui/tile.tsx:542
 msgid "{0} mph"
 msgstr "{0} 英里/小时"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1088
+#: src/features/weather/ui/details/detail-shell.tsx:215
 msgid "{0} today"
 msgstr "今天 {0}"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/next-24-hours-tile.tsx:1092
+#: src/features/weather/ui/details/detail-shell.tsx:219
 msgid "{0} tomorrow"
 msgstr "明天 {0}"
 
 #. placeholder {0}: Math.round(peakProbability.value)
-#: src/features/weather/ui/next-24-hours-tile.tsx:451
+#: src/features/weather/ui/details/precipitation-detail.tsx:97
 msgid "{0}% at <0/>"
 msgstr "{0}%（<0/>）"
 
@@ -248,15 +100,15 @@ msgstr "{0}%（<0/>）"
 msgid "{altitude}° above the horizon"
 msgstr "高于地平线 {altitude}°"
 
-#: src/features/integrations/ui/upcoming-events.tsx:384
+#: src/features/integrations/ui/upcoming-events.tsx:388
 msgid "{hours}h"
 msgstr "{hours}小时"
 
-#: src/features/integrations/ui/upcoming-events.tsx:388
+#: src/features/integrations/ui/upcoming-events.tsx:392
 msgid "{hours}h {minutes}m"
 msgstr "{hours}小时 {minutes}分钟"
 
-#: src/features/integrations/ui/upcoming-events.tsx:380
+#: src/features/integrations/ui/upcoming-events.tsx:384
 msgid "{minutes}m"
 msgstr "{minutes}分钟"
 
@@ -299,369 +151,398 @@ msgid "<0>Location access denied.</0> Click the location icon in the address bar
 msgstr "<0>位置访问被拒绝。</0> 点击地址栏中的位置图标，并选择\"始终允许访问您的位置\"。然后点击下面的按钮再试一次。"
 
 #: src/features/settings/ui/settings.tsx:1054
-msgid "☕ Gift a coffee"
-msgstr "☕ 送一杯咖啡"
+#~ msgid "☕ Gift a coffee"
+#~ msgstr "☕ 送一杯咖啡"
 
-#: src/pages/demo.tsx:717
+#: src/pages/demo.tsx:447
 msgid "✨ NEW: Connect your Google or Microsoft calendar"
 msgstr "✨ 新功能：连接您的 Google 或 Microsoft 日历"
 
-#: src/pages/demo.tsx:682
+#: src/pages/demo.tsx:412
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ 新功能：试试向下滚动"
 
-#: src/features/settings/ui/settings.tsx:1038
+#: src/features/settings/ui/sections/about-settings.tsx:34
 msgid "🌟 Leave a review"
 msgstr "🌟 留下评论"
 
-#: src/features/settings/ui/settings.tsx:1046
+#: src/features/settings/ui/sections/about-settings.tsx:42
 msgid "🐛 Report a bug"
 msgstr "🐛 报告错误"
 
-#: src/features/settings/ui/settings.tsx:1097
+#: src/features/settings/ui/sections/about-settings.tsx:85
 msgid "🔒 Privacy policy"
 msgstr "🔒 隐私政策"
 
-#: src/features/seasonal-events/events/perseids.tsx:122
+#: src/features/seasonal-events/definitions/perseids.tsx:91
 msgid "A comfortable chair or blanket is more useful than a telescope, as meteors can appear anywhere overhead."
 msgstr "舒适的椅子或毯子比望远镜更实用，因为流星可能出现在头顶任何位置。"
 
-#: src/features/seasonal-events/events/autumn-equinox.tsx:112
+#: src/features/seasonal-events/definitions/autumn-equinox.tsx:78
 msgid "A time of turning"
 msgstr "转折之时"
 
-#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:44
+#: src/features/seasonal-events/definitions/total-lunar-eclipse.tsx:40
 msgid "A total lunar eclipse occurs when the Earth moves directly between the Sun and the Moon, fully shading the lunar surface."
 msgstr "月全食发生在地球正好位于太阳与月亮之间，完全遮蔽月面之时。"
 
-#: src/features/seasonal-events/events/total-solar-eclipse.tsx:35
+#: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:31
 msgid "A total solar eclipse occurs when the Moon moves directly in front of the Sun, briefly transforming daylight into twilight."
 msgstr "日全食发生在月亮正好运行到太阳前方，短暂地把白昼变成暮色之时。"
 
-#: src/features/settings/ui/settings.tsx:126
+#: src/features/settings/ui/settings.tsx:61
 msgid "About"
 msgstr "关于"
 
-#: src/features/seasonal-events/events/summer-solstice.tsx:121
+#: src/features/seasonal-events/definitions/summer-solstice.tsx:88
 msgid "Above the Arctic Circle, the sun doesn't set at all — it traces a low circle along the horizon and starts climbing again. This is the midnight sun, and it lasts for weeks."
 msgstr "在北极圈以北，太阳根本不落山——它沿着地平线画出一个低低的圆弧，然后重新开始升起。这就是白夜，会持续数周。"
 
-#: src/features/seasonal-events/events/hanukkah.tsx:92
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:223
+msgid "Above the horizon for part of this window."
+msgstr "在这段时间的部分时段位于地平线上方。"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:219
+msgid "Above the horizon throughout this window."
+msgstr "在这整段时间内位于地平线上方。"
+
+#: src/features/seasonal-events/definitions/hanukkah.tsx:55
 msgid "According to tradition, a small supply of oil, meant for one day, lasted eight."
 msgstr "按照传统，本只够燃烧一天的一小罐油，却持续了八天。"
 
-#: src/features/seasonal-events/events/christmas.tsx:73
+#: src/features/seasonal-events/definitions/christmas.tsx:41
 msgid "Across centuries and cultures, distinctive local practices emerged — from midnight services and carolling to bustling festive markets and public celebrations."
 msgstr "跨越几个世纪与不同文化，各地发展出独特习俗——从午夜礼拜与唱诗，到热闹的节日集市与公共庆典。"
 
-#: src/features/seasonal-events/events/autumn-equinox.tsx:99
+#: src/features/seasonal-events/definitions/autumn-equinox.tsx:65
 msgid "Across many ancient cultures, this point in the year was closely tied to harvest celebrations, gratitude, and preparation for winter."
 msgstr "在许多古代文化中，这一时节与丰收庆典、感恩以及迎接冬季的准备紧密相连。"
 
-#: src/features/seasonal-events/events/easter.tsx:66
+#: src/features/seasonal-events/definitions/easter.tsx:35
 msgid "Across many cultures, older symbols of rebirth — such as eggs, blossoms, and new growth — became woven into the celebration."
 msgstr "在许多文化中，更古老的重生象征——如彩蛋、花开与新芽——也被编织进了庆祝之中。"
 
-#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:60
+#: src/features/seasonal-events/definitions/total-lunar-eclipse.tsx:56
 msgid "Across many cultures, the deep red colour of the eclipsed Moon inspired myths and the name “Blood Moon”."
 msgstr "在许多文化中，被遮蔽的月亮呈现深红色，催生了诸多传说，也让它得名“血月”。"
 
-#: src/features/seasonal-events/events/winter-solstice.tsx:102
+#: src/features/seasonal-events/definitions/winter-solstice.tsx:71
 msgid "Across many cultures, traditions such as Yule and Saturnalia developed around this moment, gathering warmth, light, and community during the darkest part of the year in the regions where they first formed."
 msgstr "在许多文化中，尤尔节与农神节等传统围绕这一时刻发展，在其诞生的地区一年最黑暗的时段里凝聚温暖、光与社群。"
 
-#: src/features/seasonal-events/events/eid-al-adha.tsx:77
+#: src/features/seasonal-events/definitions/eid-al-adha.tsx:49
 msgid "Acts of charity, the sharing of food, and care for family, neighbours, and those in need form the heart of the celebration."
 msgstr "施舍行善、分享食物，以及照顾家人、邻里与有需要的人，构成庆祝的核心。"
 
-#: src/features/settings/ui/settings.tsx:730
+#: src/features/settings/ui/sections/integrations-settings.tsx:184
 msgid "Add account"
 msgstr "添加账户"
 
-#: src/pages/demo.tsx:764
+#: src/features/dashboard/ui/view-indicator.tsx:30
 msgid "air quality"
 msgstr "空气质量"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:686
-#: src/features/weather/ui/next-24-hours-tile.tsx:691
+#: src/features/weather/ui/details/air-quality-detail.tsx:118
+#: src/features/weather/ui/details/air-quality-detail.tsx:123
 msgid "Air quality"
 msgstr "空气质量"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:719
+#: src/features/weather/ui/details/air-quality-detail.tsx:151
 msgid "Air quality unavailable"
 msgstr "空气质量数据不可用"
 
-#: src/features/integrations/ui/upcoming-events.tsx:361
+#: src/features/integrations/ui/upcoming-events.tsx:365
 msgid "All day"
 msgstr "全天"
 
-#: src/features/seasonal-events/events/perseids.tsx:116
+#: src/features/seasonal-events/definitions/perseids.tsx:85
 msgid "Allow your eyes about twenty minutes to adjust, turn away from city lights, and let the wide sky do the work."
 msgstr "让眼睛适应约二十分钟，避开城市灯光，让广阔的夜空自己“工作”。"
 
-#: src/features/seasonal-events/events/new-years.tsx:39
+#: src/features/seasonal-events/definitions/new-years.tsx:23
 msgid "Although many cultures follow different calendars and celebrate the new year at other times, January 1 remains a widely recognised global marker."
 msgstr "尽管许多文化使用不同历法、在其他时段庆祝新年，1 月 1 日仍是广泛认可的全球标记。"
 
-#: src/features/seasonal-events/events/quadrantids.tsx:105
+#: src/features/seasonal-events/definitions/quadrantids.tsx:74
 msgid "Although the radiant now lies within the constellation Boötes, the older name preserves a small piece of astronomical history."
 msgstr "尽管辐射点如今位于牧夫座（Boötes），旧名称仍保留着一段天文学史的小碎片。"
 
-#: src/features/seasonal-events/events/summer-solstice.tsx:98
+#: src/features/seasonal-events/definitions/summer-solstice.tsx:65
 msgid "Ancient monuments such as Stonehenge are aligned with the solstice sunrise, and midsummer festivals across many cultures celebrate light and abundance."
 msgstr "像巨石阵这样的古老遗迹与夏至日出对齐，许多文化的仲夏庆典也在这一时节庆祝光与丰盛。"
 
-#: src/features/seasonal-events/events/spring-equinox.tsx:100
+#: src/features/seasonal-events/definitions/spring-equinox.tsx:65
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "古代天文台细致追踪这一年中的转折点，用以指导播种周期、历法与季节性节庆。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1178
+#: src/features/weather/ui/details/detail-shell.tsx:305
 msgid "and"
 msgstr "和"
 
-#: src/features/seasonal-events/events/total-solar-eclipse.tsx:73
+#: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:69
 msgid "Animals can grow quiet, while the horizon glows like a complete circle of sunset."
 msgstr "动物可能变得安静，地平线则像一整圈落日般泛光。"
 
-#: src/features/seasonal-events/events/holi.tsx:225
+#: src/features/seasonal-events/definitions/holi.tsx:49
 msgid "Another widely told story celebrates Krishna, whose playful exchanges of colour are said to have inspired the festival’s most famous custom."
 msgstr "另一个广为流传的故事颂扬克里希纳，据说他嬉戏般的抛撒颜色启发了节日最著名的习俗。"
 
-#: src/features/weather/ui/tile.tsx:129
+#: src/features/weather/ui/tile.tsx:137
 msgid "April"
 msgstr "四月"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:709
+#: src/features/weather/ui/details/air-quality-detail.tsx:141
 msgid "AQI"
 msgstr "AQI"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:629
+#: src/features/weather/ui/details/air-quality-detail.tsx:61
 msgid "AQI is measured on a scale of 0-500. Lower numbers mean cleaner air."
 msgstr "AQI 按 0 至 500 的等级衡量，数值越低代表空气越清洁。"
 
-#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:76
+#: src/features/seasonal-events/definitions/total-lunar-eclipse.tsx:72
 msgid "As sunlight passes through Earth’s atmosphere, the shorter blue wavelengths scatter away while the longer red wavelengths bend toward the Moon."
 msgstr "阳光穿过地球大气层时，较短的蓝色波长被散射掉，而较长的红色波长则被折射向月球。"
 
-#: src/features/settings/ui/settings.tsx:191
+#: src/features/settings/ui/sections/seasonal-settings.tsx:81
 msgid "Astronomy"
 msgstr "天文学"
 
-#: src/features/seasonal-events/events/eta-aquariids.tsx:122
+#: src/features/seasonal-events/definitions/eta-aquariids.tsx:91
 msgid "At 66 km/s, these are among the fastest meteors you'll see. Their trails can persist for several seconds after the meteor itself is gone."
 msgstr "以每秒66公里的速度，这些是你能看到的最快流星之一。在流星本身消失后，它们的痕迹可以持续数秒。"
 
-#: src/features/seasonal-events/events/new-years.tsx:73
+#: src/features/seasonal-events/definitions/new-years.tsx:57
 msgid "At each boundary, fireworks go up, bells ring, and strangers count down together. The same moment of anticipation, repeated twenty-four times."
 msgstr "在每个时区边界，烟花升起，钟声响起，陌生人共同倒计时。同样的期待瞬间，重复了二十四次。"
 
-#: src/features/settings/ui/settings.tsx:1066
+#: src/features/settings/ui/sections/about-settings.tsx:54
 msgid "Attributions"
 msgstr "致谢"
 
-#: src/features/weather/ui/tile.tsx:133
+#: src/features/weather/ui/tile.tsx:141
 msgid "August"
 msgstr "八月"
 
-#: src/features/settings/ui/settings.tsx:136
-#: src/features/weather/ui/tile.tsx:171
+#: src/features/settings/ui/sections/general-settings.tsx:47
+msgid "Automatic (seasonal)"
+msgstr "自动（季节性）"
+
+#: src/features/settings/ui/sections/seasonal-settings.tsx:26
+#: src/features/weather/ui/tile.tsx:179
 msgid "Autumn Equinox"
 msgstr "秋分"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2046
+#: src/features/weather/ui/weather-map/weather-map.tsx:455
 msgid "Average wind"
 msgstr "平均风速"
 
-#: src/features/settings/ui/settings.tsx:997
-#: src/features/weather/ui/tile.tsx:563
+#: src/features/settings/ui/sections/general-settings.tsx:68
+#: src/features/settings/ui/sections/seasonal-settings.tsx:169
+#: src/features/weather/ui/tile.tsx:589
 msgid "Background"
 msgstr "背景"
 
-#: src/features/seasonal-events/events/black-hole.tsx:231
+#: src/features/settings/ui/sections/general-settings.tsx:71
+msgid "Background style"
+msgstr "背景样式"
+
+#: src/features/seasonal-events/definitions/black-hole.tsx:49
 msgid "Because gravity bends light paths, parts of the disk appear warped and wrapped above and below the black hole."
 msgstr "由于引力弯曲光线路径，吸积盘的部分区域看起来扭曲变形，并在黑洞上方和下方卷曲环绕。"
 
-#: src/features/seasonal-events/events/geminids.tsx:105
+#: src/features/seasonal-events/definitions/geminids.tsx:74
 msgid "Because it behaves like both an asteroid and a comet, it is sometimes described as a “rock comet”."
 msgstr "因为它既像小行星又像彗星，它有时被称作“岩石彗星”。"
 
-#: src/features/seasonal-events/events/summer-solstice.tsx:105
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:221
+msgid "Below the horizon throughout this window."
+msgstr "在这整段时间内位于地平线下方。"
+
+#: src/features/seasonal-events/definitions/summer-solstice.tsx:72
 msgid "Bonfires, late gatherings, and all-night vigils have long been part of welcoming this turning point of the year."
 msgstr "篝火、深夜聚会与通宵守夜，长久以来都是迎接这一年中转折点的方式。"
 
-#: src/features/seasonal-events/events/holi.tsx:257
+#: src/features/seasonal-events/definitions/holi.tsx:81
 msgid "By midday, the streets, the walls, and every surface in sight are stained in layers of pink, green, yellow, and blue. It takes days to wash out."
 msgstr "到正午，街道、墙壁和一切目所能及的表面都被粉红、绿色、黄色和蓝色层层染透。需要好几天才能洗掉。"
 
-#: src/features/seasonal-events/events/valentines.tsx:77
+#: src/features/seasonal-events/definitions/valentines.tsx:39
 msgid "By the eighteenth century, handwritten notes and printed cards had helped turn the day into a ritual of letters and messages."
 msgstr "到了 18 世纪，手写便笺与印刷贺卡让这一天逐渐变成“写信与留言”的仪式。"
 
-#: src/features/settings/ui/settings.tsx:775
+#: src/features/seasonal-events/meteor-showers/lazy-viewing-guide.tsx:61
+msgid "Calculating local viewing times…"
+msgstr "正在计算当地观测时间…"
+
+#: src/features/settings/ui/sections/integrations-settings.tsx:229
 msgid "Calendar"
 msgstr "日历"
 
-#: src/features/settings/ui/settings.tsx:779
+#: src/features/settings/ui/sections/integrations-settings.tsx:233
 msgid "Calendar connections aren't available in this build."
 msgstr "此版本无法使用日历连接。"
 
-#: src/features/seasonal-events/events/halloween.tsx:78
+#: src/features/seasonal-events/definitions/halloween.tsx:49
 msgid "Carved pumpkins, sweets, and playful scares echo much older customs of lanterns, bonfires, and protective charms."
 msgstr "雕刻南瓜、糖果与嬉闹的“吓人”元素，呼应着更古老的灯笼、篝火与护身符习俗。"
 
-#: src/features/settings/ui/settings.tsx:663
+#: src/features/settings/ui/sections/integrations-settings.tsx:117
 msgid "Category"
 msgstr "类别"
 
 #: src/features/settings/ui/initialisation.tsx:48
-#: src/features/settings/ui/settings.tsx:238
+#: src/features/settings/ui/sections/general-settings.tsx:25
 msgid "Celsius (°C)"
 msgstr "摄氏度 (°C)"
 
-#: src/features/seasonal-events/events/valentines.tsx:110
+#: src/features/seasonal-events/definitions/valentines.tsx:72
 msgid "Centuries later, people still reach for pen and paper when a text won't do."
 msgstr "几个世纪过去了，当文字信息不够用时，人们依然伸手去拿笔和纸。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1885
+#: src/features/weather/ui/weather-map/tooltip.tsx:142
 msgid "Chance"
 msgstr "概率"
 
-#: src/features/seasonal-events/events/lyrids.tsx:114
+#: src/features/seasonal-events/definitions/lyrids.tsx:83
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
 msgstr "公元前687年的中国记录描述了\"星星如雨而降\"——这是关于天琴座流星雨最早的已知记载，也是任何种类最古老的有据可查的流星观测记录之一。"
 
-#: src/features/settings/ui/settings.tsx:137
-#: src/features/weather/ui/tile.tsx:172
+#: src/features/settings/ui/sections/general-settings.tsx:
+#~ msgid "Choose your default background. Automatic follows your seasonal event settings."
+#~ msgstr "选择默认背景。自动模式会遵循您的季节性活动设置。"
+
+#: src/features/settings/ui/sections/seasonal-settings.tsx:27
+#: src/features/weather/ui/tile.tsx:180
 msgid "Christmas Day"
 msgstr "圣诞节"
 
-#: src/features/seasonal-events/events/christmas.tsx:49
+#: src/features/seasonal-events/definitions/christmas.tsx:17
 msgid "Christmas Day marks the celebration of the birth of Jesus, and for many people it has also become a broader season of generosity, reflection, and togetherness."
 msgstr "圣诞节纪念耶稣诞生；对许多人而言，它也演变为更广泛的慷慨、反思与团聚的季节。"
 
-#: src/features/weather/ui/tile.tsx:85
+#: src/features/weather/ui/tile.tsx:93
 msgid "clear sky"
 msgstr "晴空"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:862
+#: src/features/weather/ui/details/conditions-detail.tsx:75
 msgid "Clearest hour"
 msgstr "最晴朗的时段"
 
-#: src/shared/ui/seasonal-event-modal.tsx:53
+#: src/shared/ui/seasonal-event-modal.tsx:54
 msgid "Close"
 msgstr "关闭"
 
-#: src/features/seasonal-events/events/lyrids.tsx:121
+#: src/features/seasonal-events/definitions/lyrids.tsx:90
 msgid "Comet Thatcher, the shower's parent body, won't return to the inner solar system until roughly the year 2283."
 msgstr "塔彻彗星是这场流星雨的母天体，预计要到大约2283年才会再次回到内太阳系。"
 
-#: src/features/seasonal-events/events/earth-day.tsx:159
+#: src/features/seasonal-events/definitions/earth-day.tsx:66
 msgid "Community cleanups, tree planting, and habitat restoration are among the most common activities."
 msgstr "社区清理、植树与栖息地修复是最常见的活动之一。"
 
-#: src/features/settings/ui/settings.tsx:89
+#: src/features/settings/ui/sections/weather-settings.tsx:16
 msgid "Compact weather alerts"
 msgstr "紧凑的天气警报"
 
-#: src/pages/demo.tsx:765
+#: src/features/dashboard/ui/view-indicator.tsx:31
 msgid "conditions"
 msgstr "气象条件"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:875
+#: src/features/weather/ui/details/conditions-detail.tsx:88
 msgid "Conditions"
 msgstr "天气状况"
 
-#: src/features/settings/ui/settings.tsx:732
+#: src/features/settings/ui/sections/integrations-settings.tsx:186
 msgid "Connect"
 msgstr "连接"
 
-#: src/features/settings/ui/settings.tsx:650
+#: src/features/settings/ui/sections/integrations-settings.tsx:104
 msgid "Connected account"
 msgstr "已连接账户"
 
-#: src/features/seasonal-events/events/halloween.tsx:84
+#: src/features/seasonal-events/definitions/halloween.tsx:55
 msgid "Costumes may be heroic, humorous, or unsettling, allowing people to step briefly into different roles."
 msgstr "服装可以英勇、幽默或诡异，让人短暂走进不同的角色。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:643
+#: src/features/weather/ui/details/air-quality-detail.tsx:75
 msgid "Current AQI"
 msgstr "当前 AQI"
 
-#: src/features/settings/ui/settings.tsx:900
+#: src/features/settings/ui/sections/weather-settings.tsx:108
 msgid "Data & alerts"
 msgstr "数据与警报"
 
-#: src/features/settings/ui/settings.tsx:891
+#: src/features/settings/ui/sections/weather-settings.tsx:99
 msgid "Date"
 msgstr "日期"
 
-#: src/features/settings/ui/settings.tsx:887
+#: src/features/settings/ui/sections/weather-settings.tsx:95
 msgid "Day"
 msgstr "日"
 
-#: src/features/settings/ui/settings.tsx:138
-#: src/features/weather/ui/tile.tsx:173
+#: src/features/settings/ui/sections/seasonal-settings.tsx:28
+#: src/features/weather/ui/tile.tsx:181
 msgid "Day of the Dead"
 msgstr "亡灵节"
 
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:46
+#: src/features/seasonal-events/definitions/day-of-the-dead.tsx:17
 msgid "Day of the Dead is a celebration of life, memory, and the enduring bond between the living and those who have passed."
 msgstr "亡灵节（Día de los Muertos）是对生命、记忆，以及生者与逝者之间长久纽带的庆祝。"
 
-#: src/features/weather/ui/tile.tsx:137
+#: src/features/weather/ui/tile.tsx:145
 msgid "December"
 msgstr "十二月"
 
-#: src/features/seasonal-events/events/christmas.tsx:91
+#: src/features/seasonal-events/definitions/christmas.tsx:59
 msgid "Decorated trees, stockings, gift-giving, and shared meals now connect people across many climates and continents in a sense of home and continuity."
 msgstr "装饰圣诞树、挂长袜、交换礼物与共享餐食，如今把不同气候与大陆的人们连结在一种家的延续感里。"
 
-#: src/features/weather/ui/tile.tsx:93
+#: src/features/weather/ui/tile.tsx:101
 msgid "dense drizzle"
 msgstr "大雾霾"
 
-#: src/features/weather/ui/tile.tsx:95
+#: src/features/weather/ui/tile.tsx:103
 msgid "dense freezing drizzle"
 msgstr "冻雾霾"
 
-#: src/features/weather/ui/tile.tsx:90
+#: src/features/weather/ui/tile.tsx:98
 msgid "depositing rime fog"
 msgstr "储存白霜雾"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1891
+#: src/features/weather/ui/weather-map/tooltip.tsx:148
 msgid "Depth"
 msgstr "降水深度"
 
-#: src/features/settings/ui/settings.tsx:131
+#: src/features/settings/ui/settings.tsx:66
 msgid "Developer"
 msgstr "开发者"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:993
+#: src/features/weather/ui/details/detail-shell.tsx:120
 msgid "Direct sunlight is making it feel warmer than the measured temperature right now."
 msgstr "直射阳光使当前体感温度高于实测温度。"
 
-#: src/features/settings/ui/settings.tsx:658
+#: src/features/settings/ui/sections/integrations-settings.tsx:112
 msgid "Disconnect"
 msgstr "断开连接"
 
-#: src/pages/demo.tsx:725
+#: src/pages/demo.tsx:455
 msgid "Dismiss"
 msgstr "关闭"
 
-#: src/features/settings/ui/settings.tsx:952
+#: src/features/settings/ui/sections/seasonal-settings.tsx:124
 msgid "Display"
 msgstr "显示"
 
-#: src/features/settings/ui/settings.tsx:139
-#: src/features/weather/ui/tile.tsx:174
+#: src/features/settings/ui/sections/seasonal-settings.tsx:29
+#: src/features/weather/ui/tile.tsx:182
 msgid "Diwali"
 msgstr "排灯节"
 
-#: src/features/seasonal-events/events/diwali.tsx:67
+#: src/features/seasonal-events/definitions/diwali.tsx:34
 msgid "Diwali is the festival of lights, celebrating renewal, hope, and the enduring triumph of light over darkness."
 msgstr "排灯节（Diwali）是“灯之节”，庆祝更新、希望，以及光明战胜黑暗的恒久主题。"
 
-#: src/features/seasonal-events/events/diwali.tsx:100
+#: src/features/seasonal-events/definitions/diwali.tsx:67
 msgid "Diyas and candles glow along doorways and windows, while rangoli patterns bloom across thresholds in colour and light."
 msgstr "油灯与蜡烛沿着门口与窗沿发光，彩砂图案（rangoli）在门槛处以色彩与光绽放。"
 
@@ -669,92 +550,100 @@ msgstr "油灯与蜡烛沿着门口与窗沿发光，彩砂图案（rangoli）�
 msgid "Do not fill this field if you are human"
 msgstr "如果您是人类，请不要填写此字段"
 
-#: src/features/seasonal-events/events/lunar-new-year.tsx:124
+#: src/features/seasonal-events/definitions/lunar-new-year.tsx:89
 msgid "Dragon and lion dances wind through streets packed with spectators, firecrackers, and the smell of street food — a finale that can last well past midnight."
 msgstr "龙舞和狮舞在挤满观众的街道上穿行，鞭炮声和街头食物的香气弥漫其中——这场压轴好戏往往会延续到深夜之后。"
 
-#: src/features/seasonal-events/events/hanukkah.tsx:125
+#: src/features/seasonal-events/definitions/hanukkah.tsx:88
 msgid "Dreidel, often dismissed as a children's game, was historically used as a cover for Torah study during periods when it was outlawed. Each Hebrew letter on its sides forms an acronym: \"A great miracle happened there.\""
 msgstr "陀螺（dreidel）常被视为儿童玩具，但历史上曾被用来掩护在被禁止时期学习《托拉》的活动。其侧面的每个希伯来字母组成一个首字母缩写词：\"那里发生了一个伟大的奇迹。\""
 
-#: src/features/seasonal-events/events/total-solar-eclipse.tsx:83
+#: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:79
 msgid "During totality, the Sun’s corona — normally invisible — appears as a shimmering halo of white light. Bright stars and planets become visible in the middle of the day."
 msgstr "在全食期间，平时不可见的太阳日冕以白光闪耀的光晕形式出现。明亮的星星和行星在白天也变得可见。"
 
-#: src/features/seasonal-events/events/hanukkah.tsx:76
+#: src/features/seasonal-events/definitions/hanukkah.tsx:39
 msgid "Each evening, another candle is added to the menorah, gradually building the display of light."
 msgstr "每个夜晚，烛台（Menorah）上都会再点亮一支蜡烛，光芒逐渐汇聚。"
 
-#: src/features/seasonal-events/events/orionids.tsx:115
+#: src/features/seasonal-events/definitions/orionids.tsx:84
 msgid "Each Orionid meteor is a tiny grain of dust shed by Halley's Comet — the same object that people have been watching and recording since at least 240 BC."
 msgstr "每一颗猎户座流星雨的流星都是哈雷彗星脱落的一粒微小尘埃——这同一天体至少从公元前240年起就被人们观测和记录至今。"
 
-#: src/features/settings/ui/settings.tsx:140
-#: src/features/weather/ui/tile.tsx:175
+#: src/features/settings/ui/sections/seasonal-settings.tsx:30
+#: src/features/weather/ui/tile.tsx:183
 msgid "Earth Day"
 msgstr "地球日"
 
-#: src/features/seasonal-events/events/earth-day.tsx:127
+#: src/features/seasonal-events/definitions/earth-day.tsx:34
 msgid "Earth Day invites a pause to notice the planet that sustains us, and to consider how we care for it."
 msgstr "地球日邀请人们停下来，留意支撑我们的这颗星球，并思考我们如何照料它。"
 
-#: src/features/settings/ui/settings.tsx:141
-#: src/features/weather/ui/tile.tsx:176
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:235
+msgid "East"
+msgstr "东"
+
+#: src/features/settings/ui/sections/seasonal-settings.tsx:31
+#: src/features/weather/ui/tile.tsx:184
 msgid "Easter"
 msgstr "复活节"
 
-#: src/features/seasonal-events/events/easter.tsx:44
+#: src/features/seasonal-events/definitions/easter.tsx:13
 msgid "Easter centres on themes of renewal and, in Christian tradition, the resurrection of Jesus."
 msgstr "复活节以更新为主题；在基督教传统中，它纪念耶稣的复活。"
 
-#: src/features/seasonal-events/events/total-solar-eclipse.tsx:90
+#: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:86
 msgid "Eclipse glasses are essential during all partial phases. Only during the brief seconds of total coverage is it safe to look with the naked eye."
 msgstr "在所有偏食阶段都必须佩戴日食眼镜。只有在全食的短短几秒钟内才能用肉眼直视。"
 
-#: src/features/settings/ui/settings.tsx:142
-#: src/features/weather/ui/tile.tsx:177
+#: src/features/settings/ui/sections/seasonal-settings.tsx:32
+#: src/features/weather/ui/tile.tsx:185
 msgid "Eid al-Adha"
 msgstr "宰牲节"
 
-#: src/features/seasonal-events/events/eid-al-adha.tsx:55
+#: src/features/seasonal-events/definitions/eid-al-adha.tsx:27
 msgid "Eid al-Adha is one of the most important festivals in Islam, closely linked to the season of the Hajj pilgrimage."
 msgstr "宰牲节（Eid al‑Adha）是伊斯兰最重要的节日之一，与朝觐（Hajj）的时节紧密相连。"
 
-#: src/features/settings/ui/settings.tsx:143
-#: src/features/weather/ui/tile.tsx:178
+#: src/features/settings/ui/sections/seasonal-settings.tsx:33
+#: src/features/weather/ui/tile.tsx:186
 msgid "Eid al-Fitr"
 msgstr "开斋节"
 
-#: src/features/seasonal-events/events/eid-al-fitr.tsx:62
+#: src/features/seasonal-events/definitions/eid-al-fitr.tsx:35
 msgid "Eid al-Fitr marks the end of Ramadan, celebrating renewal, gratitude, and the strength of shared community."
 msgstr "开斋节（Eid al‑Fitr）标志着斋月结束，庆祝更新、感恩与共同体的力量。"
 
-#: src/features/settings/ui/settings.tsx:144
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:203
+msgid "Estimates near the usual peak, not a prediction of meteor activity or cloud cover. Check the local forecast and choose a dark spot away from lights."
+msgstr "这是流星雨通常极大期附近的估算，并非流星活动或云量预报。请查看当地天气预报，并选择远离灯光的黑暗地点。"
+
+#: src/features/settings/ui/sections/seasonal-settings.tsx:34
 msgid "Eta Aquariids meteor shower"
 msgstr "宝瓶座η流星雨"
 
-#: src/features/weather/ui/tile.tsx:179
+#: src/features/weather/ui/tile.tsx:187
 msgid "Eta Aquariids Meteor Shower"
 msgstr "宝瓶座η流星雨"
 
-#: src/features/seasonal-events/events/earth-day.tsx:165
+#: src/features/seasonal-events/definitions/earth-day.tsx:72
 msgid "Even small choices — repairing, reusing, conserving, or simply walking a familiar trail — reflect its underlying spirit."
 msgstr "即使是很小的选择——修理、再利用、节约，或只是走一条熟悉的小径——都体现了它的精神底色。"
 
-#: src/features/integrations/ui/upcoming-events.tsx:263
+#: src/features/integrations/ui/upcoming-events.tsx:267
 msgid "Event description"
 msgstr "事件说明"
 
-#: src/features/settings/ui/settings.tsx:145
-#: src/features/weather/ui/tile.tsx:180
+#: src/features/settings/ui/sections/seasonal-settings.tsx:35
+#: src/features/weather/ui/tile.tsx:188
 msgid "Event Horizon Day"
 msgstr "事件视界日"
 
-#: src/features/seasonal-events/events/black-hole.tsx:209
+#: src/features/seasonal-events/definitions/black-hole.tsx:27
 msgid "Event Horizon Day highlights the first direct image of a black hole, captured in 2019 by the Event Horizon Telescope collaboration."
 msgstr "事件视界日旨在纪念2019年由事件视界望远镜合作项目拍摄的首张黑洞直接图像。"
 
-#: src/features/seasonal-events/events/christmas.tsx:84
+#: src/features/seasonal-events/definitions/christmas.tsx:52
 msgid "Evergreens, candles, bells, and stars echo a shared theme drawn from those early traditions: light enduring through the darkest part of the year in the cultures where the holiday first formed."
 msgstr "常青植物、蜡烛、铃铛与星星，呼应着早期传统中的共同主题：在一年最黑暗的时段里，光依然延续。"
 
@@ -775,99 +664,99 @@ msgid "Extreme UV starting in 1 hour"
 msgstr "极端紫外线将于1小时后开始"
 
 #: src/features/settings/ui/initialisation.tsx:52
-#: src/features/settings/ui/settings.tsx:242
+#: src/features/settings/ui/sections/general-settings.tsx:29
 msgid "Fahrenheit (°F)"
 msgstr "华氏度 (°F)"
 
-#: src/features/seasonal-events/events/eid-al-fitr.tsx:84
+#: src/features/seasonal-events/definitions/eid-al-fitr.tsx:57
 msgid "Families and friends gather, visit neighbours, exchange gifts, and greet one another with wishes of peace."
 msgstr "家人朋友相聚、拜访邻里、交换礼物，并以和平的祝愿彼此问候。"
 
-#: src/features/seasonal-events/events/diwali.tsx:106
+#: src/features/seasonal-events/definitions/diwali.tsx:73
 msgid "Families exchange sweets and gifts, clean and decorate their homes, and offer prayers for health, prosperity, and a bright year ahead."
 msgstr "家人们互赠甜点与礼物，打扫并装饰家中，并为健康、繁荣与光明的新一年祈愿。"
 
-#: src/features/seasonal-events/events/hanukkah.tsx:102
+#: src/features/seasonal-events/definitions/hanukkah.tsx:65
 msgid "Families gather to light the menorah, sing songs, and play games such as dreidel."
 msgstr "家人们相聚点燃烛台、唱歌，并玩诸如陀螺（dreidel）等游戏。"
 
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:95
+#: src/features/seasonal-events/definitions/day-of-the-dead.tsx:66
 msgid "Families spend the night in cemeteries, cleaning graves, laying marigold paths, and sharing meals beside the headstones. It's social, warm, and often funny — people tell stories and play music until morning."
 msgstr "家人们在墓地过夜，清扫墓碑，铺设万寿菊花路，在墓碑旁共享餐食。这是一种社交性的、温馨的，常常充满欢笑的活动——人们讲述故事，演奏音乐，直到清晨。"
 
-#: src/features/settings/ui/settings.tsx:601
+#: src/features/settings/ui/sections/integrations-settings.tsx:55
 msgid "Family"
 msgstr "家庭"
 
-#: src/features/weather/ui/tile.tsx:127
+#: src/features/weather/ui/tile.tsx:135
 msgid "February"
 msgstr "二月"
 
-#: src/features/settings/ui/settings.tsx:1030
+#: src/features/settings/ui/sections/about-settings.tsx:26
 msgid "Feedback"
 msgstr "反馈"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:363
+#: src/features/weather/ui/details/temperature-detail.tsx:57
 msgid "Feels like now"
 msgstr "当前体感温度"
 
-#: src/features/settings/ui/settings.tsx:602
+#: src/features/settings/ui/sections/integrations-settings.tsx:56
 msgid "Finance"
 msgstr "财务"
 
-#: src/features/seasonal-events/events/geminids.tsx:115
+#: src/features/seasonal-events/definitions/geminids.tsx:84
 msgid "Find a wide view of the sky, allow your eyes time to adjust, and settle in — the display often strengthens after midnight."
 msgstr "找到视野开阔的地方，让眼睛适应后安坐下来——流星雨常在午夜后更加强烈。"
 
-#: src/features/seasonal-events/events/hanukkah.tsx:108
+#: src/features/seasonal-events/definitions/hanukkah.tsx:71
 msgid "Foods fried in oil, including latkes and sufganiyot, reflect the central symbol of the story."
 msgstr "油炸食物（包括土豆饼 latkes 和甜甜圈 sufganiyot）呼应着油的故事。"
 
-#: src/features/seasonal-events/events/diwali.tsx:83
+#: src/features/seasonal-events/definitions/diwali.tsx:50
 msgid "For many Hindus, the festival marks the return of Rama, Sita, Lakshmana, and Hanuman to Ayodhya after their long exile."
 msgstr "对许多印度教徒而言，这一节日纪念罗摩、悉多、拉克什曼与哈奴曼在长久流放后回到阿约提亚。"
 
-#: src/pages/demo.tsx:766
+#: src/features/dashboard/ui/view-indicator.tsx:32
 msgid "forecast"
 msgstr "预报"
 
-#: src/features/settings/ui/settings.tsx:865
+#: src/features/settings/ui/sections/weather-settings.tsx:73
 msgid "Forecast"
 msgstr "预报"
 
-#: src/features/settings/ui/settings.tsx:603
+#: src/features/settings/ui/sections/integrations-settings.tsx:57
 msgid "Freelance"
 msgstr "自由职业"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1121
+#: src/features/weather/ui/details/detail-shell.tsx:248
 msgid "Fri {hour}"
 msgstr "周五 {hour}"
 
-#: src/features/weather/ui/tile.tsx:121
+#: src/features/weather/ui/tile.tsx:129
 msgid "Friday"
 msgstr "星期五"
 
-#: src/features/seasonal-events/events/easter.tsx:60
+#: src/features/seasonal-events/definitions/easter.tsx:29
 msgid "From its earliest observances, Christian calendars aligned Easter with the spring season and the full moon following the equinox."
 msgstr "从最早的纪念开始，基督教历法便把复活节与春季、以及春分后出现的满月联系在一起。"
 
-#: src/features/seasonal-events/events/spring-equinox.tsx:116
+#: src/features/seasonal-events/definitions/spring-equinox.tsx:81
 msgid "From this point, each day gains a few minutes of light — a shift that's barely noticeable day to day, but adds up to hours within weeks."
 msgstr "从这一刻起，每天都会多出几分钟的光明——这种变化每天几乎感觉不到，但数周之内就会累积成数小时。"
 
-#: src/features/seasonal-events/events/geminids.tsx:131
+#: src/features/seasonal-events/definitions/geminids.tsx:100
 msgid "Geminid meteors move slower than most showers, which is part of what makes them so striking — they linger long enough to actually follow with your eyes."
 msgstr "双子座流星雨的流星比大多数流星雨移动得更慢，这也是它们如此引人注目的原因之一——它们停留的时间足够长，让你真正能用眼睛追随。"
 
-#: src/features/settings/ui/settings.tsx:146
+#: src/features/settings/ui/sections/seasonal-settings.tsx:36
 msgid "Geminids meteor shower"
 msgstr "双子座流星雨"
 
-#: src/features/weather/ui/tile.tsx:181
+#: src/features/weather/ui/tile.tsx:189
 msgid "Geminids Meteor Shower"
 msgstr "双子座流星雨"
 
-#: src/features/settings/ui/settings.tsx:106
+#: src/features/settings/ui/settings.tsx:41
 msgid "General"
 msgstr "通用"
 
@@ -891,152 +780,152 @@ msgstr "{timeUntilStrongWind}小时后开始通常有大风"
 msgid "Generally strong wind starting in 1 hour"
 msgstr "1小时后开始通常有大风"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2690
+#: src/features/weather/ui/details/detail-labels.tsx:10
 msgid "Good"
 msgstr "优"
 
-#: src/features/seasonal-events/events/autumn-equinox.tsx:123
-#: src/features/seasonal-events/events/black-hole.tsx:255
-#: src/features/seasonal-events/events/christmas.tsx:99
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:92
-#: src/features/seasonal-events/events/diwali.tsx:113
-#: src/features/seasonal-events/events/earth-day.tsx:172
-#: src/features/seasonal-events/events/easter.tsx:73
-#: src/features/seasonal-events/events/eid-al-adha.tsx:84
-#: src/features/seasonal-events/events/eid-al-fitr.tsx:91
-#: src/features/seasonal-events/events/eta-aquariids.tsx:112
-#: src/features/seasonal-events/events/geminids.tsx:128
-#: src/features/seasonal-events/events/halloween.tsx:91
-#: src/features/seasonal-events/events/hanukkah.tsx:115
-#: src/features/seasonal-events/events/holi.tsx:248
-#: src/features/seasonal-events/events/leonids.tsx:129
-#: src/features/seasonal-events/events/lunar-new-year.tsx:115
-#: src/features/seasonal-events/events/lyrids.tsx:111
-#: src/features/seasonal-events/events/new-years.tsx:64
-#: src/features/seasonal-events/events/orionids.tsx:112
-#: src/features/seasonal-events/events/perseids.tsx:129
-#: src/features/seasonal-events/events/quadrantids.tsx:128
-#: src/features/seasonal-events/events/spring-equinox.tsx:113
-#: src/features/seasonal-events/events/summer-solstice.tsx:112
-#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:90
-#: src/features/seasonal-events/events/total-solar-eclipse.tsx:80
-#: src/features/seasonal-events/events/valentines.tsx:100
-#: src/features/seasonal-events/events/winter-solstice.tsx:116
+#: src/features/seasonal-events/definitions/autumn-equinox.tsx:89
+#: src/features/seasonal-events/definitions/black-hole.tsx:73
+#: src/features/seasonal-events/definitions/christmas.tsx:67
+#: src/features/seasonal-events/definitions/day-of-the-dead.tsx:63
+#: src/features/seasonal-events/definitions/diwali.tsx:80
+#: src/features/seasonal-events/definitions/earth-day.tsx:79
+#: src/features/seasonal-events/definitions/easter.tsx:42
+#: src/features/seasonal-events/definitions/eid-al-adha.tsx:56
+#: src/features/seasonal-events/definitions/eid-al-fitr.tsx:64
+#: src/features/seasonal-events/definitions/eta-aquariids.tsx:81
+#: src/features/seasonal-events/definitions/geminids.tsx:97
+#: src/features/seasonal-events/definitions/halloween.tsx:62
+#: src/features/seasonal-events/definitions/hanukkah.tsx:78
+#: src/features/seasonal-events/definitions/holi.tsx:72
+#: src/features/seasonal-events/definitions/leonids.tsx:98
+#: src/features/seasonal-events/definitions/lunar-new-year.tsx:80
+#: src/features/seasonal-events/definitions/lyrids.tsx:80
+#: src/features/seasonal-events/definitions/new-years.tsx:48
+#: src/features/seasonal-events/definitions/orionids.tsx:81
+#: src/features/seasonal-events/definitions/perseids.tsx:98
+#: src/features/seasonal-events/definitions/quadrantids.tsx:97
+#: src/features/seasonal-events/definitions/spring-equinox.tsx:78
+#: src/features/seasonal-events/definitions/summer-solstice.tsx:79
+#: src/features/seasonal-events/definitions/total-lunar-eclipse.tsx:86
+#: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:76
+#: src/features/seasonal-events/definitions/valentines.tsx:62
+#: src/features/seasonal-events/definitions/winter-solstice.tsx:85
 msgid "Good to know"
 msgstr "值得了解"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:815
+#: src/features/weather/ui/details/wind-detail.tsx:115
 msgid "Gust"
 msgstr "阵风"
 
-#: src/features/seasonal-events/events/eta-aquariids.tsx:99
+#: src/features/seasonal-events/definitions/eta-aquariids.tsx:68
 msgid "Halley’s Comet itself returns roughly every seventy-six years, but the stream of dust it leaves behind crosses Earth’s path each year."
 msgstr "哈雷彗星本身约每 76 年回归一次，但它留下的尘埃流每年都会与地球轨道相交。"
 
-#: src/features/settings/ui/settings.tsx:147
-#: src/features/weather/ui/tile.tsx:182
+#: src/features/settings/ui/sections/seasonal-settings.tsx:37
+#: src/features/weather/ui/tile.tsx:190
 msgid "Halloween"
 msgstr "万圣节"
 
-#: src/features/seasonal-events/events/halloween.tsx:46
+#: src/features/seasonal-events/definitions/halloween.tsx:17
 msgid "Halloween is a night shaped by costumes, stories, and a playful sense of unease."
 msgstr "万圣节是一夜由服装、故事与带点不安的玩乐感塑造而成。"
 
-#: src/features/settings/ui/settings.tsx:148
-#: src/features/weather/ui/tile.tsx:183
+#: src/features/settings/ui/sections/seasonal-settings.tsx:38
+#: src/features/weather/ui/tile.tsx:191
 msgid "Hanukkah"
 msgstr "光明节"
 
-#: src/features/seasonal-events/events/hanukkah.tsx:71
+#: src/features/seasonal-events/definitions/hanukkah.tsx:34
 msgid "Hanukkah is a Jewish festival of lights, observed over eight nights."
 msgstr "光明节（Hanukkah）是犹太人的“灯节”，持续八个夜晚。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2709
+#: src/features/weather/ui/details/detail-labels.tsx:29
 msgid "Hazardous"
 msgstr "危险"
 
-#: src/features/seasonal-events/events/valentines.tsx:87
+#: src/features/seasonal-events/definitions/valentines.tsx:49
 msgid "Hearts, roses, and red ribbons became familiar symbols of devotion, warmth, and connection."
 msgstr "心形、玫瑰与红丝带成为熟悉的象征，代表热情、温暖与连结。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:469
+#: src/features/weather/ui/details/precipitation-detail.tsx:115
 msgid "Heaviest hour"
 msgstr "降雨最强的时段"
 
-#: src/features/weather/ui/tile.tsx:100
+#: src/features/weather/ui/tile.tsx:108
 msgid "heavy freezing rain"
 msgstr "大冻雨"
 
-#: src/features/weather/ui/tile.tsx:98
+#: src/features/weather/ui/tile.tsx:106
 msgid "heavy rain"
 msgstr "大雨"
 
-#: src/features/weather/ui/tile.tsx:109
+#: src/features/weather/ui/tile.tsx:117
 msgid "heavy snow showers"
 msgstr "大雪暴"
 
-#: src/features/weather/ui/tile.tsx:103
+#: src/features/weather/ui/tile.tsx:111
 msgid "heavy snowfall"
 msgstr "大雪"
 
-#: src/features/seasonal-events/events/lyrids.tsx:98
+#: src/features/seasonal-events/definitions/lyrids.tsx:67
 msgid "Historical Chinese records describe displays of Lyrid meteors more than two thousand six hundred years ago."
 msgstr "中国古代记录曾描述过 2600 多年前的天琴座流星雨景象。"
 
-#: src/features/seasonal-events/events/perseids.tsx:106
+#: src/features/seasonal-events/definitions/perseids.tsx:75
 msgid "Historical records of the Perseids extend back nearly two thousand years, making them one of the longest observed meteor showers."
 msgstr "关于英仙座流星雨的历史记录可追溯近两千年，使其成为观测历史最悠久的流星雨之一。"
 
-#: src/features/seasonal-events/events/autumn-equinox.tsx:96
-#: src/features/seasonal-events/events/christmas.tsx:63
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:59
-#: src/features/seasonal-events/events/diwali.tsx:80
-#: src/features/seasonal-events/events/earth-day.tsx:140
-#: src/features/seasonal-events/events/easter.tsx:57
-#: src/features/seasonal-events/events/eid-al-adha.tsx:68
-#: src/features/seasonal-events/events/eid-al-fitr.tsx:75
-#: src/features/seasonal-events/events/eta-aquariids.tsx:96
-#: src/features/seasonal-events/events/geminids.tsx:96
-#: src/features/seasonal-events/events/halloween.tsx:58
-#: src/features/seasonal-events/events/hanukkah.tsx:83
-#: src/features/seasonal-events/events/holi.tsx:216
-#: src/features/seasonal-events/events/leonids.tsx:96
-#: src/features/seasonal-events/events/lyrids.tsx:95
-#: src/features/seasonal-events/events/new-years.tsx:47
-#: src/features/seasonal-events/events/orionids.tsx:96
-#: src/features/seasonal-events/events/perseids.tsx:96
-#: src/features/seasonal-events/events/quadrantids.tsx:96
-#: src/features/seasonal-events/events/spring-equinox.tsx:97
-#: src/features/seasonal-events/events/summer-solstice.tsx:95
-#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:57
-#: src/features/seasonal-events/events/total-solar-eclipse.tsx:48
-#: src/features/seasonal-events/events/valentines.tsx:68
-#: src/features/seasonal-events/events/winter-solstice.tsx:99
+#: src/features/seasonal-events/definitions/autumn-equinox.tsx:62
+#: src/features/seasonal-events/definitions/christmas.tsx:31
+#: src/features/seasonal-events/definitions/day-of-the-dead.tsx:30
+#: src/features/seasonal-events/definitions/diwali.tsx:47
+#: src/features/seasonal-events/definitions/earth-day.tsx:47
+#: src/features/seasonal-events/definitions/easter.tsx:26
+#: src/features/seasonal-events/definitions/eid-al-adha.tsx:40
+#: src/features/seasonal-events/definitions/eid-al-fitr.tsx:48
+#: src/features/seasonal-events/definitions/eta-aquariids.tsx:65
+#: src/features/seasonal-events/definitions/geminids.tsx:65
+#: src/features/seasonal-events/definitions/halloween.tsx:29
+#: src/features/seasonal-events/definitions/hanukkah.tsx:46
+#: src/features/seasonal-events/definitions/holi.tsx:40
+#: src/features/seasonal-events/definitions/leonids.tsx:65
+#: src/features/seasonal-events/definitions/lyrids.tsx:64
+#: src/features/seasonal-events/definitions/new-years.tsx:31
+#: src/features/seasonal-events/definitions/orionids.tsx:65
+#: src/features/seasonal-events/definitions/perseids.tsx:65
+#: src/features/seasonal-events/definitions/quadrantids.tsx:65
+#: src/features/seasonal-events/definitions/spring-equinox.tsx:62
+#: src/features/seasonal-events/definitions/summer-solstice.tsx:62
+#: src/features/seasonal-events/definitions/total-lunar-eclipse.tsx:53
+#: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:44
+#: src/features/seasonal-events/definitions/valentines.tsx:30
+#: src/features/seasonal-events/definitions/winter-solstice.tsx:68
 msgid "History and meaning"
 msgstr "历史与意义"
 
-#: src/features/settings/ui/settings.tsx:149
-#: src/features/weather/ui/tile.tsx:184
+#: src/features/settings/ui/sections/seasonal-settings.tsx:39
+#: src/features/weather/ui/tile.tsx:192
 msgid "Holi"
 msgstr "胡里节"
 
-#: src/features/seasonal-events/events/holi.tsx:203
+#: src/features/seasonal-events/definitions/holi.tsx:27
 msgid "Holi is a joyful festival of colour, celebrated with laughter, music, and shared community."
 msgstr "洒红节（Holi）是一场充满喜悦的“色彩节”，伴随笑声、音乐与共同体的欢聚。"
 
-#: src/features/seasonal-events/events/lunar-new-year.tsx:92
+#: src/features/seasonal-events/definitions/lunar-new-year.tsx:57
 msgid "Homes are carefully cleaned and decorated to clear away old luck and welcome prosperity for the year ahead."
 msgstr "人们会细致地打扫并装饰家中，扫去旧运，迎接来年的富足。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:975
+#: src/features/weather/ui/details/detail-shell.tsx:102
 msgid "Humid air and direct sunlight are making it feel warmer than the measured temperature right now."
 msgstr "潮湿空气和直射阳光使当前体感温度高于实测温度。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:984
+#: src/features/weather/ui/details/detail-shell.tsx:111
 msgid "Humid air is making it feel warmer than the measured temperature right now."
 msgstr "潮湿空气使当前体感温度高于实测温度。"
 
-#: src/features/settings/ui/settings.tsx:880
+#: src/features/settings/ui/sections/weather-settings.tsx:88
 msgid "Identifier"
 msgstr "标识符"
 
@@ -1045,117 +934,117 @@ msgid "If your browser prompts you for location permissions, please select \"all
 msgstr "如果您的浏览器提示您允许地点权限，请选择“允许”。"
 
 #: src/features/settings/ui/initialisation.tsx:63
-#: src/features/settings/ui/settings.tsx:253
+#: src/features/settings/ui/sections/general-settings.tsx:40
 msgid "Imperial (mph, in)"
 msgstr "英制 (mph, in)"
 
-#: src/features/seasonal-events/events/eid-al-fitr.tsx:101
+#: src/features/seasonal-events/definitions/eid-al-fitr.tsx:74
 msgid "In many communities, everyone wears new clothes, children receive money or gifts, and doors stay open all day for visitors."
 msgstr "在许多社区，人人都穿上新衣，孩子们收到压岁钱或礼物，大门整天开着迎接来访的亲友。"
 
-#: src/features/seasonal-events/events/autumn-equinox.tsx:115
+#: src/features/seasonal-events/definitions/autumn-equinox.tsx:81
 msgid "In many traditions, the equinox is not only about what has been gathered, but about what lies ahead — a pause to take stock before the quieter months arrive."
 msgstr "在许多传统里，分点不仅关乎收获了什么，也关乎前路将至——在更安静的月份到来前，停下来盘点与沉淀。"
 
-#: src/features/seasonal-events/events/leonids.tsx:132
+#: src/features/seasonal-events/definitions/leonids.tsx:101
 msgid "In most years, the Leonids produce only 10–15 meteors per hour. But during the 1966 storm, observers reported rates of thousands per minute — so many that some people thought the world was ending."
 msgstr "大多数年份，狮子座流星雨每小时只产生10至15颗流星。但在1966年的流星暴雨中，观测者报告每分钟数千颗——多到有人以为世界末日到来。"
 
-#: src/features/settings/ui/settings.tsx:121
+#: src/features/settings/ui/settings.tsx:56
 msgid "Integrations"
 msgstr "集成"
 
-#: src/shared/ui/input.tsx:203
-#: src/shared/ui/input.tsx:272
+#: src/shared/ui/input.tsx:199
+#: src/shared/ui/input.tsx:268
 msgid "Invalid value. Settings will not save until this is valid."
 msgstr "无效值。此值有效之前，设置不会保存。"
 
-#: src/features/seasonal-events/events/black-hole.tsx:248
+#: src/features/seasonal-events/definitions/black-hole.tsx:66
 msgid "It also opened a new era of black-hole imaging, with continued work on sharper reconstructions and time-varying dynamics."
 msgstr "它也开创了黑洞成像的新纪元，在更清晰的重建和时变动力学方面的研究持续推进。"
 
-#: src/features/seasonal-events/events/eid-al-fitr.tsx:68
+#: src/features/seasonal-events/definitions/eid-al-fitr.tsx:41
 msgid "It begins with the sighting of the new moon, followed by a special morning prayer."
 msgstr "它从新月的出现开始，随后举行特别的清晨礼拜。"
 
-#: src/features/seasonal-events/events/eid-al-adha.tsx:61
+#: src/features/seasonal-events/definitions/eid-al-adha.tsx:33
 msgid "It centres on devotion, sacrifice, and the responsibility of generosity toward others."
 msgstr "它强调虔诚、牺牲，以及向他人慷慨的责任。"
 
-#: src/features/seasonal-events/events/autumn-equinox.tsx:105
+#: src/features/seasonal-events/definitions/autumn-equinox.tsx:71
 msgid "It has often been observed alongside lunar cycles, communal feasts, and rituals honouring both abundance and change."
 msgstr "它常与月相周期、集体盛宴，以及致敬丰饶与变化的仪式一同被庆祝。"
 
-#: src/features/seasonal-events/events/earth-day.tsx:149
+#: src/features/seasonal-events/definitions/earth-day.tsx:56
 msgid "It has since become a global observance, often drawing attention to local ecosystems, conservation efforts, and environmental challenges."
 msgstr "此后它成为全球性的纪念日，常用来聚焦气候、污染与生物多样性等议题。"
 
-#: src/features/seasonal-events/events/halloween.tsx:52
+#: src/features/seasonal-events/definitions/halloween.tsx:23
 msgid "It invites friendly fear, shared laughter, and a little mischief."
 msgstr "它邀请一种友善的恐惧、共享的笑声，以及一点点恶作剧。"
 
-#: src/features/seasonal-events/events/easter.tsx:50
+#: src/features/seasonal-events/definitions/easter.tsx:19
 msgid "It is a movable feast, its date determined by the cycle of the moon and the arrival of spring in the northern hemisphere."
 msgstr "它是一个“可移动的节期”，日期由月相周期与北半球春季的到来所决定。"
 
-#: src/features/seasonal-events/events/holi.tsx:209
+#: src/features/seasonal-events/definitions/holi.tsx:33
 msgid "It is closely associated with the arrival of spring in much of the world where the tradition first formed."
 msgstr "它与印度次大陆许多地区春天的到来紧密相关。"
 
-#: src/features/seasonal-events/events/lunar-new-year.tsx:75
+#: src/features/seasonal-events/definitions/lunar-new-year.tsx:40
 msgid "It is marked by family reunions, travel, and the renewal of long-held bonds."
 msgstr "这是团圆相聚、奔赴旅途、重续长久情谊的时刻。"
 
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:69
+#: src/features/seasonal-events/definitions/day-of-the-dead.tsx:40
 msgid "It is observed across November 1 and 2, with the first day often honouring children and the second devoted to adults."
 msgstr "庆祝通常在 11 月 1 日与 2 日进行，第一天常用来纪念逝去的孩子。"
 
-#: src/features/seasonal-events/events/christmas.tsx:56
+#: src/features/seasonal-events/definitions/christmas.tsx:24
 msgid "It is observed around the world in both deeply religious and entirely secular ways, often blending the two."
 msgstr "世界各地既以深具宗教性的方式庆祝，也以完全世俗的方式庆祝，且两者常相互交织。"
 
-#: src/features/seasonal-events/events/diwali.tsx:73
+#: src/features/seasonal-events/definitions/diwali.tsx:40
 msgid "It is observed by millions across India and by communities around the world."
 msgstr "它在印度有数以百万计的人庆祝，也被世界各地的社群纪念。"
 
-#: src/features/seasonal-events/events/black-hole.tsx:215
+#: src/features/seasonal-events/definitions/black-hole.tsx:33
 msgid "It represents a major milestone in astronomy, combining global cooperation, radio interferometry, and years of data processing."
 msgstr "这代表了天文学的一个重要里程碑，融合了全球合作、射电干涉测量技术以及多年的数据处理工作。"
 
-#: src/features/seasonal-events/events/winter-solstice.tsx:92
+#: src/features/seasonal-events/definitions/winter-solstice.tsx:61
 msgid "It signals the beginning of winter in the northern hemisphere and the start of summer in the southern hemisphere."
 msgstr "它标志着北半球冬季的开始，以及南半球夏季的开端。"
 
-#: src/features/seasonal-events/events/earth-day.tsx:133
+#: src/features/seasonal-events/definitions/earth-day.tsx:40
 msgid "It stands as both a celebration of the natural world and a call to responsible action."
 msgstr "它既是对自然世界的庆祝，也是对负责任行动的呼吁。"
 
-#: src/features/seasonal-events/events/valentines.tsx:61
+#: src/features/seasonal-events/definitions/valentines.tsx:23
 msgid "It's often less about grand gestures and more about letting someone know they're on your mind."
 msgstr "这往往不在于宏大的姿态，而在于让某人知道你心里有他们。"
 
-#: src/features/seasonal-events/events/halloween.tsx:94
+#: src/features/seasonal-events/definitions/halloween.tsx:65
 msgid "Jack-o'-lanterns were originally carved from turnips in Ireland and Scotland — the pumpkin version is a North American adaptation, chosen because pumpkins were bigger and easier to hollow out."
 msgstr "南瓜灯笼最初是在爱尔兰和苏格兰用芜菁雕刻的——南瓜版本是北美的改良，因为南瓜更大、更容易挖空。"
 
-#: src/features/weather/ui/tile.tsx:126
+#: src/features/weather/ui/tile.tsx:134
 msgid "January"
 msgstr "一月"
 
-#: src/features/weather/ui/tile.tsx:132
+#: src/features/weather/ui/tile.tsx:140
 msgid "July"
 msgstr "七月"
 
-#: src/features/weather/ui/tile.tsx:131
+#: src/features/weather/ui/tile.tsx:139
 msgid "June"
 msgstr "六月"
 
 #: src/features/settings/ui/initialisation.tsx:234
-#: src/features/settings/ui/settings.tsx:547
+#: src/features/settings/ui/sections/general-settings.tsx:115
 msgid "Language"
 msgstr "语言"
 
-#: src/features/settings/ui/settings.tsx:837
+#: src/features/settings/ui/sections/weather-settings.tsx:45
 msgid "Latitude"
 msgstr "纬度"
 
@@ -1163,35 +1052,35 @@ msgstr "纬度"
 msgid "Leave a review"
 msgstr "留下评价"
 
-#: src/features/settings/ui/settings.tsx:1090
+#: src/features/settings/ui/sections/about-settings.tsx:78
 msgid "Legal"
 msgstr "法律"
 
-#: src/features/seasonal-events/events/lunar-new-year.tsx:82
+#: src/features/seasonal-events/definitions/lunar-new-year.tsx:47
 msgid "Legends and customs"
 msgstr "传说与习俗"
 
-#: src/features/settings/ui/settings.tsx:150
+#: src/features/settings/ui/sections/seasonal-settings.tsx:40
 msgid "Leonids meteor shower"
 msgstr "狮子座流星雨"
 
-#: src/features/weather/ui/tile.tsx:185
+#: src/features/weather/ui/tile.tsx:193
 msgid "Leonids Meteor Shower"
 msgstr "狮子座流星雨"
 
-#: src/features/weather/ui/tile.tsx:91
+#: src/features/weather/ui/tile.tsx:99
 msgid "light drizzle"
 msgstr "小毛毛雨"
 
-#: src/features/weather/ui/tile.tsx:94
+#: src/features/weather/ui/tile.tsx:102
 msgid "light freezing drizzle"
 msgstr "小冻毛毛雨"
 
-#: src/features/weather/ui/tile.tsx:99
+#: src/features/weather/ui/tile.tsx:107
 msgid "light freezing rain"
 msgstr "小冻雨"
 
-#: src/features/seasonal-events/events/total-solar-eclipse.tsx:67
+#: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:63
 msgid "Light shifts to a silvery tone, shadows sharpen, and temperatures may drop noticeably within minutes."
 msgstr "光线会变成银灰色，阴影变得锐利，气温甚至可能在几分钟内明显下降。"
 
@@ -1199,15 +1088,23 @@ msgstr "光线会变成银灰色，阴影变得锐利，气温甚至可能在几
 msgid "Live data is temporarily unavailable. Showing your last saved forecast instead."
 msgstr "实时数据暂时不可用。正在显示您上次保存的预报。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1296
+#: src/features/weather/ui/weather-map/weather-map.tsx:105
 msgid "Local map"
 msgstr "本地地图"
 
-#: src/features/settings/ui/settings.tsx:545
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:84
+msgid "Local viewing guidance appears near this shower’s usual peak."
+msgstr "接近该流星雨通常的极大期时，会显示当地观测建议。"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:282
+msgid "Local viewing guidance isn’t available for this location. Check that your selected weather location is correct."
+msgstr "此地点暂无观测建议。请检查所选的天气地点是否正确。"
+
+#: src/features/settings/ui/sections/general-settings.tsx:113
 msgid "Locale"
 msgstr "语言区域"
 
-#: src/features/settings/ui/settings.tsx:834
+#: src/features/settings/ui/sections/weather-settings.tsx:42
 msgid "Location"
 msgstr "位置"
 
@@ -1215,7 +1112,7 @@ msgstr "位置"
 msgid "Location name unavailable"
 msgstr "位置名称不可用"
 
-#: src/features/settings/ui/settings.tsx:846
+#: src/features/settings/ui/sections/weather-settings.tsx:54
 msgid "Longitude"
 msgstr "经度"
 
@@ -1239,102 +1136,106 @@ msgstr "低能见度将于{timeUntilLowVisibility}小时后开始"
 msgid "Low visibility starting in 1 hour"
 msgstr "低能见度将于1小时后开始"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:848
+#: src/features/weather/ui/details/conditions-detail.tsx:61
 msgid "Lowest visibility"
 msgstr "最低能见度"
 
-#: src/features/settings/ui/settings.tsx:151
-#: src/features/weather/ui/tile.tsx:186
+#: src/features/settings/ui/sections/seasonal-settings.tsx:41
+#: src/features/weather/ui/tile.tsx:194
 msgid "Lunar New Year"
 msgstr "农历新年"
 
-#: src/features/seasonal-events/events/lunar-new-year.tsx:69
+#: src/features/seasonal-events/definitions/lunar-new-year.tsx:34
 msgid "Lunar New Year begins with the first new moon of the lunar calendar and unfolds across a festival season lasting up to fifteen days."
 msgstr "农历新年从农历的第一次新月开始，庆祝季可持续长达十五天。"
 
-#: src/features/settings/ui/settings.tsx:152
+#: src/features/settings/ui/sections/seasonal-settings.tsx:42
 msgid "Lyrids meteor shower"
 msgstr "天琴座流星雨"
 
-#: src/features/weather/ui/tile.tsx:187
+#: src/features/weather/ui/tile.tsx:195
 msgid "Lyrids Meteor Shower"
 msgstr "天琴座流星雨"
 
-#: src/features/weather/ui/tile.tsx:86
-#: src/features/weather/ui/tile.tsx:89
+#: src/features/weather/ui/tile.tsx:94
+#: src/features/weather/ui/tile.tsx:97
 msgid "mainly clear"
 msgstr "主要晴朗"
 
-#: src/pages/demo.tsx:767
+#: src/features/dashboard/ui/view-indicator.tsx:33
 msgid "map"
 msgstr "地图"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2016
+#: src/features/weather/ui/weather-map/weather-map.tsx:425
 msgid "Map"
 msgstr "地图"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1374
+#: src/features/weather/ui/weather-map/weather-map.tsx:183
 msgid "Map data unavailable"
 msgstr "地图数据不可用"
 
-#: src/features/weather/ui/tile.tsx:128
+#: src/features/weather/ui/tile.tsx:136
 msgid "March"
 msgstr "三月"
 
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:79
+#: src/features/seasonal-events/definitions/day-of-the-dead.tsx:50
 msgid "Marigolds, papel picado, sugar skulls, candles, and favourite foods form a visual language of welcome and connection."
 msgstr "万寿菊、剪纸旗（papel picado）、糖骷髅、蜡烛与喜爱的食物，构成一种“欢迎与连接”的视觉语言。"
 
-#: src/features/weather/ui/tile.tsx:130
+#: src/features/weather/ui/tile.tsx:138
 msgid "May"
 msgstr "五月"
 
-#: src/features/seasonal-events/events/autumn-equinox.tsx:133
+#: src/features/seasonal-events/definitions/autumn-equinox.tsx:99
 msgid "Meanwhile, billions of birds are mid-migration, navigating by stars, magnetic fields, and landmarks passed down through generations."
 msgstr "与此同时，数十亿只鸟正在迁徙途中，依靠星星、磁场和世代相传的地标导航。"
 
 #: src/features/settings/ui/initialisation.tsx:59
-#: src/features/settings/ui/settings.tsx:249
+#: src/features/settings/ui/sections/general-settings.tsx:36
 msgid "Metric (km/h, mm)"
 msgstr "公制 (km/h, mm)"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2694
+#: src/features/weather/ui/details/detail-labels.tsx:14
 msgid "Moderate"
 msgstr "良"
 
-#: src/features/weather/ui/tile.tsx:92
+#: src/features/weather/ui/tile.tsx:100
 msgid "moderate drizzle"
 msgstr "中度毛毛雨"
 
-#: src/features/weather/ui/tile.tsx:97
+#: src/features/weather/ui/tile.tsx:105
 msgid "moderate rain"
 msgstr "中雨"
 
-#: src/features/weather/ui/tile.tsx:106
+#: src/features/weather/ui/tile.tsx:114
 msgid "moderate rain showers"
 msgstr "中等雨阵"
 
-#: src/features/weather/ui/tile.tsx:102
+#: src/features/weather/ui/tile.tsx:110
 msgid "moderate snowfall"
 msgstr "中雪"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1105
+#: src/features/weather/ui/details/detail-shell.tsx:232
 msgid "Mon {hour}"
 msgstr "周一 {hour}"
 
-#: src/features/weather/ui/tile.tsx:117
+#: src/features/weather/ui/tile.tsx:125
 msgid "Monday"
 msgstr "星期一"
 
-#: src/features/seasonal-events/events/winter-solstice.tsx:109
+#: src/features/seasonal-events/definitions/winter-solstice.tsx:78
 msgid "Monuments and ancient sites around the world are aligned to mark the solstice and the return of the Sun’s path."
 msgstr "世界各地的纪念碑与古遗址都与冬至对齐，用以标记这一天以及太阳回归的路径。"
 
-#: src/features/seasonal-events/events/earth-day.tsx:181
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:169
+msgid "Moonlight"
+msgstr "月光"
+
+#: src/features/seasonal-events/definitions/earth-day.tsx:88
 msgid "Most environmental gains start small and local: a restored wetland, a cleaner stretch of river, a species given just enough room to recover."
 msgstr "大多数环境改善从小处、从本地做起：一片恢复的湿地、一段更清洁的河流、一个获得足够空间得以恢复的物种。"
 
-#: src/features/seasonal-events/events/leonids.tsx:89
+#: src/features/seasonal-events/definitions/leonids.tsx:58
 msgid "Most years the display is modest, but the shower is famous for its capacity to produce rare and spectacular surprises."
 msgstr "多数年份的景象较为克制，但它以罕见而壮观的惊喜能力闻名。"
 
@@ -1342,248 +1243,272 @@ msgstr "多数年份的景象较为克制，但它以罕见而壮观的惊喜能
 msgid "Never show this again"
 msgstr "再也不显示这个"
 
-#: src/features/settings/ui/settings.tsx:153
-#: src/features/weather/ui/tile.tsx:188
+#: src/features/settings/ui/sections/seasonal-settings.tsx:43
+#: src/features/weather/ui/tile.tsx:196
 msgid "New Year's Day"
 msgstr "元旦"
 
-#: src/features/seasonal-events/events/new-years.tsx:33
+#: src/features/seasonal-events/definitions/new-years.tsx:17
 msgid "New Year’s Day serves as the calendar’s reset, marked by the first sunrise of the year and a shared moment of looking forward."
 msgstr "元旦像是日历的重置键：以新年的第一缕日出为记号，也是一段共同向前看的时刻。"
 
-#: src/features/seasonal-events/events/winter-solstice.tsx:126
+#: src/features/seasonal-events/definitions/winter-solstice.tsx:95
 msgid "Newgrange, a 5,000-year-old passage tomb in Ireland, was built so precisely that sunlight floods its inner chamber for just seventeen minutes around the winter solstice each year."
 msgstr "爱尔兰有一座拥有5000年历史的通道式墓穴——纽格莱奇，它建造得如此精确，每年冬至前后只有17分钟的时间阳光会涌入其内室。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:352
-#: src/features/weather/ui/next-24-hours-tile.tsx:417
-#: src/features/weather/ui/next-24-hours-tile.tsx:553
-#: src/features/weather/ui/next-24-hours-tile.tsx:635
-#: src/features/weather/ui/next-24-hours-tile.tsx:754
-#: src/features/weather/ui/next-24-hours-tile.tsx:842
+#: src/features/weather/ui/details/air-quality-detail.tsx:67
+#: src/features/weather/ui/details/conditions-detail.tsx:55
+#: src/features/weather/ui/details/precipitation-detail.tsx:63
+#: src/features/weather/ui/details/sun-detail.tsx:66
+#: src/features/weather/ui/details/temperature-detail.tsx:46
+#: src/features/weather/ui/details/wind-detail.tsx:54
 msgid "Next 24 hours"
 msgstr "未来24小时"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1287
+#: src/features/weather/ui/weather-map/weather-map.tsx:96
 msgid "Next 6 hours"
 msgstr "未来6小时"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:576
+#: src/features/weather/ui/details/sun-detail.tsx:89
 msgid "Next sunrise"
 msgstr "下次日出"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:582
+#: src/features/weather/ui/details/sun-detail.tsx:95
 msgid "Next sunset"
 msgstr "下次日落"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:491
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:137
+msgid "Night of {nightLabel}"
+msgstr "{nightLabel}之夜"
+
+#: src/features/weather/ui/details/precipitation-detail.tsx:137
 msgid "No measurable precipitation expected"
 msgstr "预计无明显降水"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:459
+#: src/features/weather/ui/details/precipitation-detail.tsx:105
 msgid "No precipitation expected"
 msgstr "预计无降水"
 
-#: src/features/settings/ui/settings.tsx:260
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:265
+msgid "No useful local viewing window was found for this night."
+msgstr "这晚未找到适合当地观测的时段。"
+
+#: src/features/settings/ui/sections/developer-settings.tsx:20
 msgid "None"
 msgstr "无"
 
-#: src/features/weather/ui/tile.tsx:136
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:231
+msgid "North"
+msgstr "北"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:233
+msgid "North-east"
+msgstr "东北"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:245
+msgid "North-west"
+msgstr "西北"
+
+#: src/features/weather/ui/tile.tsx:144
 msgid "November"
 msgstr "十一月"
 
-#: src/features/integrations/ui/upcoming-events.tsx:365
+#: src/features/integrations/ui/upcoming-events.tsx:369
 msgid "Now"
 msgstr "现在"
 
-#: src/features/settings/ui/settings.tsx:868
+#: src/features/settings/ui/sections/weather-settings.tsx:76
 msgid "Number of days to forecast"
 msgstr "预报天数"
 
-#: src/features/weather/ui/tile.tsx:135
+#: src/features/weather/ui/tile.tsx:143
 msgid "October"
 msgstr "十月"
 
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:85
+#: src/features/seasonal-events/definitions/day-of-the-dead.tsx:56
 msgid "Ofrendas commonly include water, salt, and cherished photographs, creating a space where memory feels both intimate and shared."
 msgstr "祭坛（ofrendas）常会摆上清水、盐与珍爱的照片，营造出一种既私密又共享的记忆空间。"
 
 #: src/features/seasonal-events/events/perseids.tsx:139
-msgid "On a good night near peak, you can expect a meteor every minute or two. The best rates come after midnight, when your side of the Earth faces into the debris stream."
-msgstr "在极大期附近的好夜晚，你可以期待每一两分钟出现一颗流星。最佳观测率出现在午夜之后，此时地球的你所在一侧正面朝向碎片流。"
+#~ msgid "On a good night near peak, you can expect a meteor every minute or two. The best rates come after midnight, when your side of the Earth faces into the debris stream."
+#~ msgstr "在极大期附近的好夜晚，你可以期待每一两分钟出现一颗流星。最佳观测率出现在午夜之后，此时地球的你所在一侧正面朝向碎片流。"
 
-#: src/features/seasonal-events/events/holi.tsx:241
+#: src/features/seasonal-events/definitions/holi.tsx:65
 msgid "On the following day, coloured powders fill the air as people cross social boundaries in a shared expression of joy."
 msgstr "次日，彩粉在空气中飞扬，人们在共享的欢喜里跨越社会界限。"
 
-#: src/features/seasonal-events/events/summer-solstice.tsx:115
+#: src/features/seasonal-events/definitions/summer-solstice.tsx:82
 msgid "On the longest day, twilight stretches out for hours and full darkness may never arrive."
 msgstr "在最长的一天，暮色可以持续数小时，完全的黑暗可能始终不会降临。"
 
-#: src/features/settings/ui/settings.tsx:154
+#: src/features/settings/ui/sections/seasonal-settings.tsx:44
 msgid "Orionids meteor shower"
 msgstr "猎户座流星雨"
 
-#: src/features/weather/ui/tile.tsx:189
+#: src/features/weather/ui/tile.tsx:197
 msgid "Orionids Meteor Shower"
 msgstr "猎户座流星雨"
 
-#: src/features/settings/ui/settings.tsx:215
+#: src/features/settings/ui/sections/seasonal-settings.tsx:105
 msgid "Other holidays"
 msgstr "其他节日"
 
-#: src/features/seasonal-events/events/diwali.tsx:89
+#: src/features/seasonal-events/definitions/diwali.tsx:56
 msgid "Other traditions honour Lakshmi, the goddess of prosperity and fortune, while Jain and Sikh communities observe Diwali through their own sacred histories."
 msgstr "另一些传统会敬奉财富与好运女神拉克希米；耆那教与锡克教社群也会依据各自的神圣历史来纪念排灯节。"
 
 #: src/features/settings/ui/initialisation.tsx:253
-#: src/features/settings/ui/settings.tsx:568
+#: src/features/settings/ui/sections/general-settings.tsx:136
 msgid "Other units"
 msgstr "其他单位"
 
-#: src/features/seasonal-events/events/new-years.tsx:57
+#: src/features/seasonal-events/definitions/new-years.tsx:41
 msgid "Over centuries of calendar reform, January 1 gradually became established as the start of the year for much of the world."
 msgstr "经历数个世纪的历法改革后，1 月 1 日逐渐在世界许多地方被确立为一年的开始。"
 
-#: src/features/seasonal-events/events/halloween.tsx:68
+#: src/features/seasonal-events/definitions/halloween.tsx:39
 msgid "Over time it evolved into a community tradition of visiting, disguises, and shared treats."
 msgstr "随着时间推移，它演变成邻里拜访、变装与分享糖果的社区传统。"
 
-#: src/features/weather/ui/tile.tsx:88
+#: src/features/weather/ui/tile.tsx:96
 msgid "overcast"
 msgstr "阴天"
 
-#: src/features/settings/ui/settings.tsx:515
+#: src/features/settings/ui/sections/developer-settings.tsx:36
 msgid "Overrides"
 msgstr "覆盖设置"
 
-#: src/features/seasonal-events/events/autumn-equinox.tsx:86
-#: src/features/seasonal-events/events/black-hole.tsx:206
-#: src/features/seasonal-events/events/christmas.tsx:46
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:43
-#: src/features/seasonal-events/events/diwali.tsx:64
-#: src/features/seasonal-events/events/earth-day.tsx:124
-#: src/features/seasonal-events/events/easter.tsx:41
-#: src/features/seasonal-events/events/eid-al-adha.tsx:52
-#: src/features/seasonal-events/events/eid-al-fitr.tsx:59
-#: src/features/seasonal-events/events/eta-aquariids.tsx:80
-#: src/features/seasonal-events/events/geminids.tsx:80
-#: src/features/seasonal-events/events/halloween.tsx:43
-#: src/features/seasonal-events/events/hanukkah.tsx:68
-#: src/features/seasonal-events/events/holi.tsx:200
-#: src/features/seasonal-events/events/leonids.tsx:80
-#: src/features/seasonal-events/events/lunar-new-year.tsx:66
-#: src/features/seasonal-events/events/lyrids.tsx:80
-#: src/features/seasonal-events/events/new-years.tsx:30
-#: src/features/seasonal-events/events/orionids.tsx:80
-#: src/features/seasonal-events/events/perseids.tsx:79
-#: src/features/seasonal-events/events/quadrantids.tsx:80
-#: src/features/seasonal-events/events/spring-equinox.tsx:87
-#: src/features/seasonal-events/events/summer-solstice.tsx:85
-#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:41
-#: src/features/seasonal-events/events/total-solar-eclipse.tsx:32
-#: src/features/seasonal-events/events/valentines.tsx:52
-#: src/features/seasonal-events/events/winter-solstice.tsx:83
+#: src/features/seasonal-events/definitions/autumn-equinox.tsx:52
+#: src/features/seasonal-events/definitions/black-hole.tsx:24
+#: src/features/seasonal-events/definitions/christmas.tsx:14
+#: src/features/seasonal-events/definitions/day-of-the-dead.tsx:14
+#: src/features/seasonal-events/definitions/diwali.tsx:31
+#: src/features/seasonal-events/definitions/earth-day.tsx:31
+#: src/features/seasonal-events/definitions/easter.tsx:10
+#: src/features/seasonal-events/definitions/eid-al-adha.tsx:24
+#: src/features/seasonal-events/definitions/eid-al-fitr.tsx:32
+#: src/features/seasonal-events/definitions/eta-aquariids.tsx:49
+#: src/features/seasonal-events/definitions/geminids.tsx:49
+#: src/features/seasonal-events/definitions/halloween.tsx:14
+#: src/features/seasonal-events/definitions/hanukkah.tsx:31
+#: src/features/seasonal-events/definitions/holi.tsx:24
+#: src/features/seasonal-events/definitions/leonids.tsx:49
+#: src/features/seasonal-events/definitions/lunar-new-year.tsx:31
+#: src/features/seasonal-events/definitions/lyrids.tsx:49
+#: src/features/seasonal-events/definitions/new-years.tsx:14
+#: src/features/seasonal-events/definitions/orionids.tsx:49
+#: src/features/seasonal-events/definitions/perseids.tsx:48
+#: src/features/seasonal-events/definitions/quadrantids.tsx:49
+#: src/features/seasonal-events/definitions/spring-equinox.tsx:52
+#: src/features/seasonal-events/definitions/summer-solstice.tsx:52
+#: src/features/seasonal-events/definitions/total-lunar-eclipse.tsx:37
+#: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:28
+#: src/features/seasonal-events/definitions/valentines.tsx:14
+#: src/features/seasonal-events/definitions/winter-solstice.tsx:52
 msgid "Overview"
 msgstr "概览"
 
-#: src/features/weather/ui/tile.tsx:87
+#: src/features/weather/ui/tile.tsx:95
 msgid "partly cloudy"
 msgstr "多云"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:657
+#: src/features/weather/ui/details/air-quality-detail.tsx:89
 msgid "Peak AQI"
 msgstr "最高 AQI"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:442
+#: src/features/weather/ui/details/precipitation-detail.tsx:88
 msgid "Peak chance"
 msgstr "最大降水概率"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:761
+#: src/features/weather/ui/details/wind-detail.tsx:61
 msgid "Peak gust"
 msgstr "最大阵风"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2037
+#: src/features/weather/ui/weather-map/weather-map.tsx:446
 msgid "Peak precipitation chance"
 msgstr "最大降水概率"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:560
+#: src/features/weather/ui/details/sun-detail.tsx:73
 msgid "Peak UV"
 msgstr "最高UV指数"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:778
-#: src/features/weather/ui/next-24-hours-tile.tsx:2055
+#: src/features/weather/ui/details/wind-detail.tsx:78
+#: src/features/weather/ui/weather-map/weather-map.tsx:464
 msgid "Peak wind"
 msgstr "最大风速"
 
-#: src/features/settings/ui/settings.tsx:858
+#: src/features/settings/ui/sections/weather-settings.tsx:66
 msgid "Periodically update location automatically"
 msgstr "定期自动更新位置"
 
-#: src/features/seasonal-events/events/perseids.tsx:132
+#: src/features/seasonal-events/definitions/perseids.tsx:101
 msgid "Perseid meteors enter the atmosphere at roughly 60 km/s — fast enough that the larger ones compress the air ahead of them into a bright, explosive fireball."
 msgstr "英仙座流星雨的流星以大约每秒60公里的速度进入大气层——速度之快，使得较大的流星能将前方的空气压缩成明亮的爆炸性火球。"
 
-#: src/features/settings/ui/settings.tsx:155
+#: src/features/settings/ui/sections/seasonal-settings.tsx:45
 msgid "Perseids meteor shower"
 msgstr "英仙座流星雨"
 
-#: src/features/weather/ui/tile.tsx:190
+#: src/features/weather/ui/tile.tsx:198
 msgid "Perseids Meteor Shower"
 msgstr "英仙座流星雨"
 
-#: src/features/settings/ui/settings.tsx:604
+#: src/features/settings/ui/sections/integrations-settings.tsx:58
 msgid "Personal"
 msgstr "个人"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:679
+#: src/features/weather/ui/details/air-quality-detail.tsx:111
 msgid "PM10 / ozone / NO₂"
 msgstr "PM10 / 臭氧 / NO₂"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:673
+#: src/features/weather/ui/details/air-quality-detail.tsx:105
 msgid "PM2.5 now"
 msgstr "当前 PM2.5"
 
-#: src/pages/demo.tsx:768
+#: src/features/dashboard/ui/view-indicator.tsx:34
 msgid "precipitation"
 msgstr "降水"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:471
-#: src/features/weather/ui/next-24-hours-tile.tsx:497
-#: src/features/weather/ui/next-24-hours-tile.tsx:1943
+#: src/features/weather/ui/details/precipitation-detail.tsx:117
+#: src/features/weather/ui/details/precipitation-detail.tsx:143
+#: src/features/weather/ui/weather-map/weather-map.tsx:352
 msgid "Precipitation"
 msgstr "降水量"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:444
-#: src/features/weather/ui/next-24-hours-tile.tsx:2394
+#: src/features/weather/ui/charts/chart.tsx:397
+#: src/features/weather/ui/details/precipitation-detail.tsx:90
 msgid "Precipitation chance"
 msgstr "降水概率"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:414
+#: src/features/weather/ui/details/precipitation-detail.tsx:60
 msgid "Precipitation includes rain and snow."
 msgstr "降水量包括雨和雪。"
 
-#: src/features/settings/ui/settings.tsx:156
+#: src/features/settings/ui/sections/seasonal-settings.tsx:46
 msgid "Quadrantids meteor shower"
 msgstr "象限仪座流星雨"
 
-#: src/features/weather/ui/tile.tsx:191
+#: src/features/weather/ui/tile.tsx:199
 msgid "Quadrantids Meteor Shower"
 msgstr "象限仪座流星雨"
 
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:52
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:158
+msgid "Radiant position"
+msgstr "辐射点位置"
+
+#: src/features/seasonal-events/definitions/day-of-the-dead.tsx:23
 msgid "Rather than a solemn farewell, it treats remembrance as something vibrant, communal, and alive."
 msgstr "它并非庄严的告别，而是把追思视作充满活力、群体性的、仍在呼吸的事。"
 
-#: src/features/settings/ui/settings.tsx:692
+#: src/features/settings/ui/sections/integrations-settings.tsx:146
 msgid "Reconnect"
 msgstr "重新连接"
 
-#: src/features/seasonal-events/events/lunar-new-year.tsx:102
+#: src/features/seasonal-events/definitions/lunar-new-year.tsx:67
 msgid "Red envelopes, tangerines, and calligraphy couplets express wishes for abundance, happiness, and fresh beginnings."
 msgstr "红包、橘子与春联书法，寄托着对丰盛、幸福与新开始的祝愿。"
 
-#: src/features/settings/ui/settings.tsx:205
+#: src/features/settings/ui/sections/seasonal-settings.tsx:95
 msgid "Religious & cultural"
 msgstr "宗教与文化"
 
@@ -1591,49 +1516,50 @@ msgstr "宗教与文化"
 msgid "Report a bug"
 msgstr "报告错误"
 
-#: src/pages/demo.tsx:591
-#: src/pages/demo.tsx:605
+#: src/pages/demo.tsx:321
+#: src/pages/demo.tsx:335
 msgid "Retry"
 msgstr "重试"
 
-#: src/features/settings/ui/settings.tsx:230
+#: src/features/settings/ui/sections/about-settings.tsx:17
 msgid "Reverse geocoding by OpenStreetMap contributors"
 msgstr "由OpenStreetMap贡献者提供的反向地理编码"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1125
+#: src/features/weather/ui/details/detail-shell.tsx:252
 msgid "Sat {hour}"
 msgstr "周六 {hour}"
 
-#: src/features/weather/ui/tile.tsx:122
+#: src/features/weather/ui/tile.tsx:130
 msgid "Saturday"
 msgstr "星期六"
 
-#: src/features/settings/ui/settings.tsx:605
+#: src/features/settings/ui/sections/integrations-settings.tsx:59
 msgid "School"
 msgstr "学校"
 
-#: src/features/settings/ui/settings.tsx:962
+#: src/features/settings/ui/sections/general-settings.tsx:105
+#: src/features/settings/ui/sections/seasonal-settings.tsx:134
 msgid "Seasonal effects are disabled because your browser appears to be using a software renderer. Enable hardware acceleration to see these effects."
 msgstr "由于浏览器似乎正在使用软件渲染，季节效果已被禁用。启用硬件加速即可看到这些效果。"
 
-#: src/features/settings/ui/settings.tsx:518
+#: src/features/settings/ui/sections/developer-settings.tsx:39
 msgid "Seasonal event override"
 msgstr "季节性活动覆盖"
 
-#: src/features/settings/ui/settings.tsx:116
+#: src/features/settings/ui/settings.tsx:51
 msgid "Seasonal events"
 msgstr "季节性活动"
 
-#: src/features/settings/ui/settings.tsx:175
+#: src/features/settings/ui/sections/seasonal-settings.tsx:65
 msgid "Seasons & nature"
 msgstr "季节与自然"
 
-#: src/features/settings/ui/settings.tsx:772
-#: src/features/settings/ui/settings.tsx:831
+#: src/features/settings/ui/sections/integrations-settings.tsx:226
+#: src/features/settings/ui/sections/weather-settings.tsx:39
 msgid "Securely stored"
 msgstr "安全存储"
 
-#: src/features/settings/ui/settings.tsx:763
+#: src/features/settings/ui/sections/integrations-settings.tsx:217
 msgid "See upcoming calendar events alongside your forecast. Weather Please connects directly to your calendar provider, and your events never pass through our servers."
 msgstr "在天气预报旁查看近期日历事件。Weather Please 会直接连接您的日历服务提供商，事件绝不会经过我们的服务器。"
 
@@ -1641,11 +1567,11 @@ msgstr "在天气预报旁查看近期日历事件。Weather Please 会直接连
 #~ msgid "See upcoming calendar events alongside your forecast. Weather Please connects to Microsoft directly, and your events never pass through our servers."
 #~ msgstr ""
 
-#: src/features/seasonal-events/events/diwali.tsx:116
+#: src/features/seasonal-events/definitions/diwali.tsx:83
 msgid "Seen from above, cities during Diwali are transformed — rooftops, balconies, and streets are outlined in light, and the effect is visible from space in satellite imagery."
 msgstr "从高空俯瞰，排灯节期间的城市焕然一新——屋顶、阳台和街道被灯光勾勒出轮廓，这一壮观景象在卫星图像中甚至可以从太空看到。"
 
-#: src/features/weather/ui/tile.tsx:134
+#: src/features/weather/ui/tile.tsx:142
 msgid "September"
 msgstr "九月"
 
@@ -1653,12 +1579,12 @@ msgstr "九月"
 msgid "Set my location"
 msgstr "设置我的位置"
 
-#: src/features/settings/ui/settings.tsx:341
-#: src/features/settings/ui/settings.tsx:360
+#: src/features/settings/ui/settings.tsx:129
+#: src/features/settings/ui/settings.tsx:148
 msgid "Settings"
 msgstr "设置"
 
-#: src/features/seasonal-events/events/valentines.tsx:93
+#: src/features/seasonal-events/definitions/valentines.tsx:55
 msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and personal."
 msgstr "共享的甜点、鲜花与小礼物，让庆祝保持亲密而私人。"
 
@@ -1666,7 +1592,7 @@ msgstr "共享的甜点、鲜花与小礼物，让庆祝保持亲密而私人。
 #~ msgid "Show Autumn Equinox event"
 #~ msgstr "显示秋分活动"
 
-#: src/features/settings/ui/settings.tsx:801
+#: src/features/settings/ui/sections/integrations-settings.tsx:255
 msgid "Show calendar events"
 msgstr "显示日历事件"
 
@@ -1706,7 +1632,7 @@ msgstr "显示日历事件"
 #~ msgid "Show Event Horizon Day event"
 #~ msgstr "显示事件视界日活动"
 
-#: src/features/settings/ui/settings.tsx:90
+#: src/features/settings/ui/sections/weather-settings.tsx:17
 msgid "Show extreme UV alerts"
 msgstr "显示极端紫外线警报"
 
@@ -1722,7 +1648,7 @@ msgstr "显示极端紫外线警报"
 #~ msgid "Show Hanukkah event"
 #~ msgstr "显示光明节活动"
 
-#: src/features/settings/ui/settings.tsx:93
+#: src/features/settings/ui/sections/weather-settings.tsx:20
 msgid "Show high precipitation alerts"
 msgstr "显示高降水量警报"
 
@@ -1734,7 +1660,7 @@ msgstr "显示高降水量警报"
 #~ msgid "Show Leonids meteor shower event"
 #~ msgstr "显示狮子座流星雨活动"
 
-#: src/features/settings/ui/settings.tsx:98
+#: src/features/settings/ui/sections/weather-settings.tsx:25
 msgid "Show low visibility alerts"
 msgstr "显示低能见度警报"
 
@@ -1762,11 +1688,11 @@ msgstr "显示低能见度警报"
 #~ msgid "Show Quadrantids meteor shower event"
 #~ msgstr "显示象限仪座流星雨活动"
 
-#: src/features/settings/ui/settings.tsx:956
+#: src/features/settings/ui/sections/seasonal-settings.tsx:128
 msgid "Show seasonal events"
 msgstr "显示季节性活动"
 
-#: src/features/settings/ui/settings.tsx:972
+#: src/features/settings/ui/sections/seasonal-settings.tsx:144
 msgid "Show seasonal tile glow"
 msgstr "显示季节性瓦片光晕"
 
@@ -1774,7 +1700,7 @@ msgstr "显示季节性瓦片光晕"
 #~ msgid "Show Spring Equinox event"
 #~ msgstr "显示春分活动"
 
-#: src/features/settings/ui/settings.tsx:95
+#: src/features/settings/ui/sections/weather-settings.tsx:22
 msgid "Show strong wind alerts"
 msgstr "显示强风警报"
 
@@ -1782,8 +1708,8 @@ msgstr "显示强风警报"
 #~ msgid "Show Summer Solstice event"
 #~ msgstr "显示夏至活动"
 
-#: src/features/settings/ui/settings.tsx:1008
-#: src/features/weather/ui/tile.tsx:570
+#: src/features/settings/ui/sections/seasonal-settings.tsx:180
+#: src/features/weather/ui/tile.tsx:581
 msgid "Show this event"
 msgstr "显示此活动"
 
@@ -1799,7 +1725,7 @@ msgstr "显示此活动"
 #~ msgid "Show Valentine's Day event"
 #~ msgstr "显示情人节活动"
 
-#: src/features/settings/ui/settings.tsx:918
+#: src/features/settings/ui/sections/weather-settings.tsx:126
 msgid "Show weather alerts"
 msgstr "显示天气警报"
 
@@ -1807,57 +1733,73 @@ msgstr "显示天气警报"
 #~ msgid "Show Winter Solstice event"
 #~ msgstr "显示冬至活动"
 
-#: src/pages/demo.tsx:105
+#: src/features/dashboard/ui/weather-errors.tsx:21
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "正在显示缓存的天气数据。请重试以刷新最新预报。"
 
-#: src/features/seasonal-events/events/geminids.tsx:112
-#: src/features/seasonal-events/events/perseids.tsx:113
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:182
+msgid "Sky position and Moon illumination shown for {referenceLabel}."
+msgstr "所示天空位置和月面照亮比例对应的时间为 {referenceLabel}。"
+
+#: src/features/seasonal-events/definitions/geminids.tsx:81
+#: src/features/seasonal-events/definitions/perseids.tsx:82
 msgid "Skywatching tips"
 msgstr "观星小贴士"
 
-#: src/features/weather/ui/tile.tsx:96
+#: src/features/weather/ui/tile.tsx:104
 msgid "slight rain"
 msgstr "小雨"
 
-#: src/features/weather/ui/tile.tsx:105
+#: src/features/weather/ui/tile.tsx:113
 msgid "slight rain showers"
 msgstr "小阵雨"
 
-#: src/features/weather/ui/tile.tsx:108
+#: src/features/weather/ui/tile.tsx:116
 msgid "slight snow showers"
 msgstr "小阵雪"
 
-#: src/features/weather/ui/tile.tsx:101
+#: src/features/weather/ui/tile.tsx:109
 msgid "slight snowfall"
 msgstr "小雪"
 
-#: src/features/weather/ui/tile.tsx:104
+#: src/features/weather/ui/tile.tsx:112
 msgid "snow grains"
 msgstr "雪粒"
 
-#: src/features/seasonal-events/events/total-solar-eclipse.tsx:51
+#: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:47
 msgid "Solar eclipses have been recorded for thousands of years, inspiring awe, uncertainty, and careful study."
 msgstr "日食的记录可追溯数千年，既令人敬畏，也曾引发不安，并推动人们谨慎研究。"
 
-#: src/features/seasonal-events/events/geminids.tsx:138
+#: src/features/seasonal-events/definitions/geminids.tsx:107
 msgid "Some appear white, others yellow or blue-green. The colour depends on the mineral composition of each grain of dust as it burns up."
 msgstr "有些呈白色，有些呈黄色或蓝绿色。颜色取决于每粒尘埃燃烧时的矿物成分。"
 
-#: src/features/settings/ui/settings.tsx:587
+#: src/features/settings/ui/sections/integrations-settings.tsx:41
 msgid "Some calendar events couldn't be loaded. Please try again in a moment."
 msgstr "部分日历事件无法加载，请稍后重试。"
 
-#: src/features/settings/ui/settings.tsx:531
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:239
+msgid "South"
+msgstr "南"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:237
+msgid "South-east"
+msgstr "东南"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:241
+msgid "South-west"
+msgstr "西南"
+
+#: src/features/settings/ui/sections/developer-settings.tsx:52
 msgid "Spoof upcoming calendar events"
 msgstr "模拟近期日历事件"
 
-#: src/features/settings/ui/settings.tsx:157
-#: src/features/weather/ui/tile.tsx:192
+#: src/features/settings/ui/sections/seasonal-settings.tsx:47
+#: src/features/weather/ui/tile.tsx:200
 msgid "Spring Equinox"
 msgstr "春分"
 
-#: src/features/seasonal-events/events/holi.tsx:219
+#: src/features/seasonal-events/definitions/holi.tsx:43
 msgid "Stories surrounding Holi vary by region, including the tale of Prahlad and Holika, which speaks to the triumph of devotion and good over harm."
 msgstr "围绕洒红节的故事因地区而异，包括普拉赫拉德与霍利卡的传说，讲述虔诚与善战胜伤害。"
 
@@ -1885,144 +1827,152 @@ msgstr "1小时后开始有强风暴"
 msgid "Submit"
 msgstr "提交"
 
-#: src/features/settings/ui/settings.tsx:158
-#: src/features/weather/ui/tile.tsx:193
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:146
+msgid "Suggested viewing window"
+msgstr "建议观测时段"
+
+#: src/features/settings/ui/sections/seasonal-settings.tsx:48
+#: src/features/weather/ui/tile.tsx:201
 msgid "Summer Solstice"
 msgstr "夏至"
 
-#: src/pages/demo.tsx:769
+#: src/features/dashboard/ui/view-indicator.tsx:35
 msgid "sun"
 msgstr "日出日落"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:587
+#: src/features/weather/ui/details/sun-detail.tsx:100
 msgid "Sun"
 msgstr "太阳"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1128
+#: src/features/weather/ui/details/detail-shell.tsx:255
 msgid "Sun {hour}"
 msgstr "周日 {hour}"
 
-#: src/features/weather/ui/tile.tsx:116
+#: src/features/weather/ui/tile.tsx:124
 msgid "Sunday"
 msgstr "星期天"
 
-#: src/features/seasonal-events/events/easter.tsx:76
+#: src/features/seasonal-events/definitions/easter.tsx:45
 msgid "Sunrise services draw people outdoors before the day has fully started, and egg hunts send children tearing across gardens and parks."
 msgstr "日出礼拜在天亮之前把人们召唤到户外，而寻蛋游戏则让孩子们在花园和公园里奔跑。"
 
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:76
+#: src/features/settings/ui/sections/general-settings.tsx:86
+msgid "Switch to seasonal backgrounds"
+msgstr "切换到季节性背景"
+
+#: src/features/seasonal-events/definitions/day-of-the-dead.tsx:47
 msgid "Symbols and offerings"
 msgstr "象征与供品"
 
-#: src/features/seasonal-events/events/christmas.tsx:81
-#: src/features/seasonal-events/events/diwali.tsx:97
-#: src/features/seasonal-events/events/halloween.tsx:75
-#: src/features/seasonal-events/events/holi.tsx:232
-#: src/features/seasonal-events/events/valentines.tsx:84
+#: src/features/seasonal-events/definitions/christmas.tsx:49
+#: src/features/seasonal-events/definitions/diwali.tsx:64
+#: src/features/seasonal-events/definitions/halloween.tsx:46
+#: src/features/seasonal-events/definitions/holi.tsx:56
+#: src/features/seasonal-events/definitions/valentines.tsx:46
 msgid "Symbols and rituals"
 msgstr "象征与仪式"
 
-#: src/features/seasonal-events/events/lunar-new-year.tsx:99
+#: src/features/seasonal-events/definitions/lunar-new-year.tsx:64
 msgid "Symbols of luck"
 msgstr "幸运象征"
 
-#: src/pages/demo.tsx:770
+#: src/features/dashboard/ui/view-indicator.tsx:36
 msgid "temperature"
 msgstr "温度"
 
 #: src/features/settings/ui/initialisation.tsx:245
-#: src/features/settings/ui/settings.tsx:559
-#: src/features/weather/ui/next-24-hours-tile.tsx:368
-#: src/features/weather/ui/next-24-hours-tile.tsx:384
+#: src/features/settings/ui/sections/general-settings.tsx:127
+#: src/features/weather/ui/details/temperature-detail.tsx:62
+#: src/features/weather/ui/details/temperature-detail.tsx:78
 msgid "Temperature"
 msgstr "温度"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:358
+#: src/features/weather/ui/details/temperature-detail.tsx:52
 msgid "Temperature now"
 msgstr "当前气温"
 
-#: src/features/seasonal-events/events/autumn-equinox.tsx:89
+#: src/features/seasonal-events/definitions/autumn-equinox.tsx:55
 msgid "The autumn equinox marks a moment of near-perfect balance, when day and night stand equal before the long shift toward darker evenings."
 msgstr "秋分标志着近乎完美的平衡时刻，白昼与黑夜等长，随后便缓慢走向更长的夜晚。"
 
-#: src/features/seasonal-events/events/halloween.tsx:61
+#: src/features/seasonal-events/definitions/halloween.tsx:32
 msgid "The celebration grew from the ancient festival of Samhain and the later observance of All Hallows’ Eve, blending seasonal rites with remembrance of the dead."
 msgstr "这一庆祝源自古老的萨温节（Samhain）与后来的万圣前夜（All Hallows’ Eve），把季节仪式与对逝者的纪念交织在一起。"
 
-#: src/features/seasonal-events/events/autumn-equinox.tsx:126
+#: src/features/seasonal-events/definitions/autumn-equinox.tsx:92
 msgid "The colour change in autumn leaves isn’t new pigment appearing — it’s the green chlorophyll withdrawing, revealing yellows and oranges that were there all along."
 msgstr "秋叶的颜色变化并非新色素的出现——而是绿色叶绿素的退去，揭示出一直都在的黄色和橙色。"
 
-#: src/features/seasonal-events/events/black-hole.tsx:225
+#: src/features/seasonal-events/definitions/black-hole.tsx:43
 msgid "The dark center is the event horizon silhouette, while the bright ring is light from superheated material in the accretion flow around it."
 msgstr "黑暗的中心是事件视界的轮廓，而明亮的光环则是来自其周围吸积流中超高温物质的光。"
 
-#: src/features/seasonal-events/events/winter-solstice.tsx:119
+#: src/features/seasonal-events/definitions/winter-solstice.tsx:88
 msgid "The day after the solstice is only about a second longer — the shift is imperceptible at first, then gradually accelerates through January and February."
 msgstr "冬至后的第一天只比前一天长约一秒——这种变化起初几乎无法察觉，然后在一月和二月间逐渐加速。"
 
-#: src/features/seasonal-events/events/eta-aquariids.tsx:115
+#: src/features/seasonal-events/definitions/eta-aquariids.tsx:84
 msgid "The Eta Aquariids and the Orionids are sibling showers — both are born from Halley's Comet, but Earth crosses different parts of the debris trail six months apart."
 msgstr "宝瓶座η流星雨和猎户座流星雨是姐妹流星雨——两者都源自哈雷彗星，但地球以六个月的间隔穿越碎片轨迹的不同部分。"
 
-#: src/features/seasonal-events/events/eta-aquariids.tsx:83
+#: src/features/seasonal-events/definitions/eta-aquariids.tsx:52
 msgid "The Eta Aquariids are a major meteor shower formed from the debris of Halley’s Comet."
 msgstr "宝瓶座η流星雨（Eta Aquariids）是一场主要流星雨，由哈雷彗星的碎屑形成。"
 
-#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:50
+#: src/features/seasonal-events/definitions/total-lunar-eclipse.tsx:46
 msgid "The event unfolds gradually, often lasting several hours from beginning to end."
 msgstr "事件发展缓慢，从开始到结束常持续数小时。"
 
-#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:100
+#: src/features/seasonal-events/definitions/total-lunar-eclipse.tsx:96
 msgid "The exact shade of red depends on what's in Earth's atmosphere at the time. After major volcanic eruptions, the Moon can turn an especially dark, almost brownish red."
 msgstr "确切的红色深浅取决于当时地球大气中有什么。在重大火山喷发之后，月亮可能变成特别深的、几乎是棕红色的颜色。"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:489
+#: src/features/weather/ui/tile.tsx:508
 msgid "The expected type of weather is {0}."
 msgstr "预期的天气类型是{0}。"
 
-#: src/features/seasonal-events/events/hanukkah.tsx:86
+#: src/features/seasonal-events/definitions/hanukkah.tsx:49
 msgid "The festival commemorates the rededication of the Second Temple in Jerusalem."
 msgstr "这一节日纪念耶路撒冷第二圣殿的重新奉献。"
 
-#: src/features/seasonal-events/events/diwali.tsx:123
+#: src/features/seasonal-events/definitions/diwali.tsx:90
 msgid "The festival is also one of the biggest shopping seasons in India, with markets staying open late and fireworks continuing well past midnight."
 msgstr "这个节日也是印度最大的购物季之一，市场营业到很晚，烟火表演延续到深夜之后。"
 
-#: src/features/seasonal-events/events/earth-day.tsx:143
+#: src/features/seasonal-events/definitions/earth-day.tsx:50
 msgid "The first Earth Day, held in 1970, grew out of environmental activism and nationwide teach-ins across the United States."
 msgstr "第一届地球日于 1970 年举行，源于环保行动与美国各地的“教学活动”（teach-ins）。"
 
-#: src/features/seasonal-events/events/eid-al-fitr.tsx:94
+#: src/features/seasonal-events/definitions/eid-al-fitr.tsx:67
 msgid "The first meal of Eid, eaten after a month of fasting, carries a significance that's hard to overstate — it's often dates and something sweet, shared before the morning prayer."
 msgstr "斋戒一个月后吃下的开斋节第一顿饭，其意义难以言表——通常是在晨礼前分享的椰枣和甜食。"
 
-#: src/features/seasonal-events/events/geminids.tsx:83
+#: src/features/seasonal-events/definitions/geminids.tsx:52
 msgid "The Geminids are one of the strongest and most reliable meteor showers of the year, appearing each December with frequent, bright meteors."
 msgstr "双子座流星雨（Geminids）是全年最强、也最稳定的流星雨之一，每年十二月出现，明亮流星频繁。"
 
-#: src/features/seasonal-events/events/eid-al-adha.tsx:71
+#: src/features/seasonal-events/definitions/eid-al-adha.tsx:43
 msgid "The holiday commemorates the story of Ibrahim and his willingness to sacrifice in obedience to God."
 msgstr "节日纪念易卜拉欣（Ibrahim）顺从真主、愿意献祭的故事。"
 
-#: src/features/seasonal-events/events/valentines.tsx:71
+#: src/features/seasonal-events/definitions/valentines.tsx:33
 msgid "The holiday draws on legends of Saint Valentine and the traditions of medieval courtly love."
 msgstr "这一节日源于圣瓦伦丁的传说，以及中世纪的宫廷爱情传统。"
 
-#: src/features/seasonal-events/events/christmas.tsx:66
+#: src/features/seasonal-events/definitions/christmas.tsx:34
 msgid "The holiday we recognise today grew from early Christian tradition, layered over much older European midwinter customs tied to light, renewal, and community."
 msgstr "我们今日熟悉的圣诞节，源于早期基督教传统，并叠加在更古老的欧洲仲冬习俗之上——那些习俗与光、更新与社群紧密相关。"
 
-#: src/features/seasonal-events/events/leonids.tsx:83
+#: src/features/seasonal-events/definitions/leonids.tsx:52
 msgid "The Leonids are a November meteor shower, named for their radiant in the constellation Leo."
 msgstr "狮子座流星雨是十一月的流星雨，因辐射点位于狮子座而得名。"
 
-#: src/features/seasonal-events/events/leonids.tsx:99
+#: src/features/seasonal-events/definitions/leonids.tsx:68
 msgid "The Leonids are renowned for historic meteor storms, most notably in 1833 and 1966, when observers described the sky as seeming to rain stars."
 msgstr "狮子座流星雨以历史上的“流星暴”著称，最著名的是 1833 年的一次。"
 
-#: src/features/seasonal-events/events/leonids.tsx:116
+#: src/features/seasonal-events/definitions/leonids.tsx:85
 msgid "The Leonids originate from Comet Tempel–Tuttle, and every few decades Earth passes through especially dense streams of its debris."
 msgstr "它源自坦普尔–塔特尔彗星（Tempel–Tuttle）；每隔几十年，地球会穿过更致密的碎屑流。"
 
@@ -2034,402 +1984,451 @@ msgstr "位置请求已超时。这看起来是服务问题，而非您设备的
 msgid "The location request timed out. Please check your internet connection and try again."
 msgstr "位置请求超时。请检查您的网络连接并重试。"
 
-#: src/features/seasonal-events/events/lyrids.tsx:83
+#: src/features/seasonal-events/definitions/lyrids.tsx:52
 msgid "The Lyrids appear each year in late April, with meteors radiating from the constellation Lyra."
 msgstr "天琴座流星雨每年四月下旬出现，流星的辐射点位于天琴座（Lyra）。"
 
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:102
+#: src/features/seasonal-events/definitions/day-of-the-dead.tsx:73
 msgid "The marigold paths (cempasúchil) aren't just decorative. Their strong scent is believed to guide the dead back to the living world for the night."
 msgstr "万寿菊花路（cempasúchil）并非只是装饰。人们相信它们浓郁的香气能在夜晚引导逝者回到生者的世界。"
 
-#: src/features/seasonal-events/events/earth-day.tsx:175
+#: src/features/seasonal-events/definitions/earth-day.tsx:82
 msgid "The math is oddly encouraging — the trees planted on Earth Day since 1970 now number in the billions."
 msgstr "这些数字出乎意料地令人鼓舞——自1970年地球日以来种植的树木现已多达数十亿棵。"
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:451
+#: src/features/weather/ui/tile.tsx:470
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "最高温度将为{0}摄氏度。"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:457
+#: src/features/weather/ui/tile.tsx:476
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "最高温度将为{0}华氏度。"
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:515
+#: src/features/weather/ui/tile.tsx:534
 msgid "The maximum UV index will be {0}."
 msgstr "最大紫外线指数将为{0}。"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:528
+#: src/features/weather/ui/tile.tsx:547
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "最大风速将为每小时{0}公里。"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:534
+#: src/features/weather/ui/tile.tsx:553
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "最大风速将为每小时{0}英里。"
 
-#: src/features/seasonal-events/events/eid-al-adha.tsx:87
+#: src/features/seasonal-events/definitions/eid-al-adha.tsx:59
 msgid "The meat from the sacrifice is traditionally divided into three equal parts: one for the family, one for friends and neighbours, and one for those in need."
 msgstr "宰牲的肉传统上被分成三等份：一份给家人，一份给朋友和邻居，一份给有需要的人。"
 
-#: src/features/seasonal-events/events/hanukkah.tsx:118
+#: src/features/seasonal-events/definitions/hanukkah.tsx:81
 msgid "The menorah is placed in a window or doorway so the light faces outward — the tradition is specifically about making the flames visible to passersby."
 msgstr "烛台被放置在窗边或门口，让光朝向外面——这一传统的核心正是让路人能看见火焰。"
 
-#: src/features/seasonal-events/events/orionids.tsx:122
+#: src/features/seasonal-events/definitions/orionids.tsx:91
 msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of any annual shower, which is why they often leave persistent glowing trails."
 msgstr "这些流星以大约每秒66公里的速度进入大气层，是所有年度流星雨中速度最快的之一，这也是它们常常留下持久发光痕迹的原因。"
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:470
+#: src/features/weather/ui/tile.tsx:489
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "最低温度将为{0}摄氏度。"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:476
+#: src/features/weather/ui/tile.tsx:495
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "最低温度将为{0}华氏度。"
 
-#: src/features/seasonal-events/events/new-years.tsx:50
+#: src/features/seasonal-events/definitions/new-years.tsx:34
 msgid "The month of January is named after Janus, the Roman god of doorways and beginnings, traditionally depicted as facing both the past and the future."
 msgstr "“一月”（January）得名于罗马的门神雅努斯（Janus），他象征开端与门槛，常被描绘为同时面向过去与未来。"
 
-#: src/features/seasonal-events/events/new-years.tsx:67
+#: src/features/seasonal-events/definitions/new-years.tsx:51
 msgid "The new year doesn't arrive all at once — it rolls across the planet over the course of a full day, time zone by time zone."
 msgstr "新年并非一下子就到来——它在一整天的时间里，时区一个接一个地在全球滚动。"
 
-#: src/features/seasonal-events/events/leonids.tsx:139
+#: src/features/seasonal-events/definitions/leonids.tsx:108
 msgid "The next potential Leonid storm window is in the 2030s, when Earth is expected to pass through a particularly dense ribbon of Tempel–Tuttle debris."
 msgstr "下一次可能出现狮子座流星暴雨的时间窗口在2030年代，届时地球预计将穿越坦普尔-塔特尔彗星特别密集的碎片带。"
 
-#: src/features/seasonal-events/events/holi.tsx:235
+#: src/features/seasonal-events/definitions/holi.tsx:59
 msgid "The night before Holi features Holika Dahan, a ceremonial bonfire that symbolises the passing of winter and the renewal of life."
 msgstr "洒红节前一晚会举行霍利卡焚火（Holika Dahan），象征冬去春来与生命更新。"
 
-#: src/features/seasonal-events/events/spring-equinox.tsx:123
+#: src/features/seasonal-events/definitions/perseids.tsx:108
+msgid "The number of meteors you see depends on your location, the darkness and clarity of the sky, and the shower's activity that year. A high radiant and a dark sky usually offer better viewing."
+msgstr "可见流星的数量取决于您所在的位置、天空的黑暗与晴朗程度，以及流星雨当年的活跃程度。辐射点较高、天空较暗时，观测条件通常更好。"
+
+#: src/features/seasonal-events/definitions/spring-equinox.tsx:88
 msgid "The old tradition of balancing an egg on its end at the equinox is a myth (you can do it any day of the year), but people keep trying anyway. It's become its own kind of ritual."
 msgstr "在分点将鸡蛋竖立的古老传统是个迷思（一年中任何一天都能做到），但人们依然不停地尝试。这本身已成为一种仪式。"
 
-#: src/features/seasonal-events/events/valentines.tsx:103
+#: src/features/seasonal-events/definitions/valentines.tsx:65
 msgid "The oldest known Valentine is a fifteenth-century poem, written from a cell in the Tower of London — a love letter composed under the worst possible circumstances."
 msgstr "已知最古老的情人节信物是一首15世纪的诗，写于伦敦塔的牢房中——一封在最糟糕境遇下写就的情书。"
 
-#: src/features/seasonal-events/events/black-hole.tsx:258
+#: src/features/seasonal-events/definitions/black-hole.tsx:76
 msgid "The original image was not a conventional photograph. It was computed from synchronized radio data recorded by observatories around Earth."
 msgstr "原始图像并非传统照片，而是由全球各地天文台记录的同步射电数据计算而来。"
 
-#: src/features/seasonal-events/events/orionids.tsx:83
+#: src/features/seasonal-events/definitions/orionids.tsx:52
 msgid "The Orionids are an annual meteor shower formed from debris left by Halley’s Comet, reaching their peak in October."
 msgstr "猎户座流星雨（Orionids）是每年的流星雨，由哈雷彗星留下的碎屑形成，十月达到极大。"
 
-#: src/features/seasonal-events/events/orionids.tsx:99
+#: src/features/seasonal-events/definitions/orionids.tsx:68
 msgid "The Orionids are visible from both hemispheres and are known for producing bright, fast-moving meteors."
 msgstr "它在南北半球都可见，并以明亮、快速的流星著称。"
 
-#: src/features/seasonal-events/events/perseids.tsx:82
+#: src/features/seasonal-events/definitions/perseids.tsx:51
 msgid "The Perseids are a bright annual meteor shower formed from debris left by Comet Swift–Tuttle."
 msgstr "英仙座流星雨是每年都会出现的明亮流星雨，由斯威夫特–塔特尔彗星留下的碎屑形成。"
 
-#: src/features/seasonal-events/events/perseids.tsx:99
+#: src/features/seasonal-events/definitions/perseids.tsx:68
 msgid "The Perseids are sometimes known as the Tears of Saint Lawrence, as their peak often falls near the feast day of Saint Lawrence in mid-August."
 msgstr "英仙座流星雨有时被称为“圣劳伦斯的眼泪”，因为其极大期常接近八月中旬的圣劳伦斯纪念日。"
 
-#: src/features/seasonal-events/events/total-solar-eclipse.tsx:41
+#: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:37
 msgid "The phase of totality is short and can only be seen from a narrow path across the Earth’s surface."
 msgstr "全食阶段很短，只能在地球表面一条狭窄的路径内看到。"
 
-#: src/features/seasonal-events/events/quadrantids.tsx:137
+#: src/features/seasonal-events/definitions/quadrantids.tsx:106
 msgid "The Quadrantid peak is one of the narrowest of any major shower, sometimes lasting only six hours. Catching it is partly a matter of luck and geography."
 msgstr "象限仪座流星雨的极大期是所有主要流星雨中最窄的之一，有时仅持续六小时。能否赶上，部分取决于运气和地理位置。"
 
-#: src/features/seasonal-events/events/quadrantids.tsx:83
+#: src/features/seasonal-events/definitions/quadrantids.tsx:52
 msgid "The Quadrantids are a meteor shower that peaks in early January and is known for being brief yet often intense."
 msgstr "象限仪座流星雨（Quadrantids）在一月上旬达到极大，以短暂却常很强烈而闻名。"
 
-#: src/features/seasonal-events/events/lunar-new-year.tsx:118
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:188
+msgid "The radiant is where the trails appear to come from. Meteors can cross any part of the sky: look roughly halfway up, away from the Moon, with a wide, unobstructed view."
+msgstr "辐射点是流星轨迹看起来向外发散的起点。流星可能划过天空的任何区域：请望向地平线与天顶之间的大约中间位置，避开月亮，并选择视野开阔、没有遮挡的地方。"
+
+#: src/features/seasonal-events/definitions/lunar-new-year.tsx:83
 msgid "The season builds toward the Lantern Festival on the fifteenth night, when thousands of lanterns are released into the sky."
 msgstr "这个节日季以正月十五的元宵节为高潮，届时数以千计的灯笼被放飞天空。"
 
-#: src/features/seasonal-events/events/lyrids.tsx:104
+#: src/features/seasonal-events/definitions/lyrids.tsx:73
 msgid "The shower originates from Comet Thatcher, which returns to the inner solar system roughly every four hundred and fifteen years."
 msgstr "其源头是撒切尔彗星（Comet Thatcher），约每 415 年回到内太阳系一次。"
 
-#: src/features/seasonal-events/events/quadrantids.tsx:99
+#: src/features/seasonal-events/definitions/quadrantids.tsx:68
 msgid "The shower takes its name from Quadrans Muralis, a former constellation that no longer appears on modern star charts."
 msgstr "其名称源自已废弃的星座“象限仪座”（Quadrans Muralis）。"
 
-#: src/features/seasonal-events/events/eta-aquariids.tsx:105
+#: src/features/seasonal-events/definitions/eta-aquariids.tsx:74
 msgid "The shower’s radiant lies near the constellation Aquarius, rising before dawn when viewing conditions are at their best."
 msgstr "其辐射点位于宝瓶座附近，辐射点在黎明前升起时观测条件最佳。"
 
-#: src/features/seasonal-events/events/spring-equinox.tsx:90
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:256
+msgid "The sky stays too bright for a useful viewing window at this location on this night."
+msgstr "这晚此地点的天空始终太亮，没有合适的观测时段。"
+
+#: src/features/seasonal-events/definitions/spring-equinox.tsx:55
 msgid "The spring equinox marks the moment when day and night stand in near-perfect balance."
 msgstr "春分标志着白昼与黑夜近乎完美平衡的时刻。"
 
-#: src/features/seasonal-events/events/quadrantids.tsx:115
+#: src/features/seasonal-events/definitions/quadrantids.tsx:84
 msgid "The stream of debris that creates the Quadrantids is unusually narrow, so Earth passes through it quickly."
 msgstr "形成象限仪座流星雨的碎屑流异常狭窄，因此地球穿过它的时间很短。"
 
-#: src/features/seasonal-events/events/summer-solstice.tsx:88
+#: src/features/seasonal-events/definitions/summer-solstice.tsx:55
 msgid "The summer solstice marks the longest day of the year, when the sun reaches its highest path across the sky."
 msgstr "夏至标志着一年中白昼最长的一天，太阳在天空中走出最高的轨迹。"
 
-#: src/features/seasonal-events/events/black-hole.tsx:264
+#: src/features/seasonal-events/definitions/black-hole.tsx:82
 msgid "The target was M87*, a black hole with a mass of billions of Suns, located about 55 million light-years away."
 msgstr "观测目标是M87*，这是一个质量达数十亿个太阳的黑洞，距离地球约5500万光年。"
 
-#: src/features/seasonal-events/events/day-of-the-dead.tsx:62
+#: src/features/seasonal-events/definitions/day-of-the-dead.tsx:33
 msgid "The tradition grows from Indigenous Mexican beliefs about death and the afterlife, later blending with Catholic observances of All Saints’ and All Souls’ Days."
 msgstr "这一传统源自墨西哥原住民关于死亡与来世的信念，后来与天主教的诸圣日与追思亡者日的纪念相融合。"
 
-#: src/features/seasonal-events/events/christmas.tsx:102
+#: src/features/seasonal-events/definitions/christmas.tsx:70
 msgid "The tradition of a decorated Christmas tree only became widespread in the English-speaking world after an 1848 illustration of Queen Victoria and Prince Albert’s tree was published — and went viral, by Victorian standards."
 msgstr "装饰圣诞树的传统在英语世界广泛流行，是在1848年维多利亚女王和阿尔伯特亲王圣诞树的插画发表之后——按维多利亚时代的标准，这幅插画可谓病毒式传播。"
 
-#: src/features/seasonal-events/events/halloween.tsx:101
+#: src/features/seasonal-events/definitions/halloween.tsx:72
 msgid "The tradition of trick-or-treating in its modern form only became widespread in the 1950s, though the custom of going door to door in disguise is centuries older."
 msgstr "现代形式的\"不给糖就捣蛋\"传统直到20世纪50年代才广泛流行，尽管乔装打扮挨家挨户的习俗可以追溯到几个世纪以前。"
 
-#: src/features/seasonal-events/events/winter-solstice.tsx:86
+#: src/features/seasonal-events/definitions/winter-solstice.tsx:55
 msgid "The winter solstice marks the shortest day and longest night of the year, and the turning point toward gradually longer daylight."
 msgstr "冬至是一年中白昼最短、黑夜最长的一天，也是转向更长日照的转折点。"
 
-#: src/features/seasonal-events/events/lunar-new-year.tsx:108
+#: src/features/seasonal-events/definitions/lunar-new-year.tsx:73
 msgid "The zodiac animal associated with the year is believed to shape its character and fortunes."
 msgstr "与该年份相关的生肖动物被认为会影响这一年的气质与运势。"
 
-#: src/features/seasonal-events/events/quadrantids.tsx:131
+#: src/features/seasonal-events/definitions/quadrantids.tsx:100
 msgid "Their likely parent body, asteroid 2003 EH1, may be a dead comet — one that exhausted its volatile ices and now orbits as a dark, quiet rock."
 msgstr "其可能的母天体——小行星2003 EH1——可能是一颗死彗星，耗尽了挥发性冰体，如今作为一块黑暗、沉寂的岩石在轨道上运行。"
 
-#: src/features/seasonal-events/events/orionids.tsx:89
+#: src/features/seasonal-events/definitions/orionids.tsx:58
 msgid "Their meteors appear to radiate from the region near the constellation Orion, a figure long woven into myth and storytelling."
 msgstr "流星看似从猎户座附近辐射而出——那是一个被传说与故事长久编织的星座形象。"
 
-#: src/features/seasonal-events/events/orionids.tsx:105
+#: src/features/seasonal-events/definitions/orionids.tsx:74
 msgid "Their peak often coincides with long, dark viewing hours, when observing conditions are especially favourable."
 msgstr "极大期常与漫长而黑暗的观测时段重叠，条件尤其理想。"
 
 #: src/features/seasonal-events/events/perseids.tsx:88
-msgid "Their radiant lies in the constellation Perseus, and the shower is especially prominent in the northern hemisphere, though visible worldwide."
-msgstr "其辐射点位于英仙座星座，北半球尤为醒目，但全球皆可观测。"
+#~ msgid "Their radiant lies in the constellation Perseus, and the shower is especially prominent in the northern hemisphere, though visible worldwide."
+#~ msgstr "其辐射点位于英仙座星座，北半球尤为醒目，但全球皆可观测。"
+
+#: src/features/seasonal-events/definitions/perseids.tsx:57
+msgid "Their radiant lies in the constellation Perseus. The shower is best placed in the northern hemisphere, with visibility decreasing farther south."
+msgstr "其辐射点位于英仙座。这场流星雨在北半球最适宜观测，越往南，可见度越低。"
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:548
+#: src/features/weather/ui/tile.tsx:567
 msgid "There is a {0}% chance of precipitation."
 msgstr "有{0}%的降水概率。"
 
-#: src/features/seasonal-events/events/easter.tsx:82
+#: src/features/seasonal-events/definitions/easter.tsx:51
 msgid "There's a reason the holiday lands in spring — it borrows heavily from the season's own sense of things starting over."
 msgstr "这个节日落在春天是有原因的——它大量借鉴了这个季节本身所蕴含的万物重生的气息。"
 
-#: src/features/seasonal-events/events/leonids.tsx:106
+#: src/features/seasonal-events/definitions/leonids.tsx:75
 msgid "These events played an important role in the development of scientific understanding of meteor showers."
 msgstr "这些事件在科学界理解流星雨的形成与规律上发挥了重要作用。"
 
-#: src/features/seasonal-events/events/geminids.tsx:89
+#: src/features/seasonal-events/definitions/geminids.tsx:58
 msgid "They are especially known for their steady rates and vivid, often colourful trails."
 msgstr "它尤其以稳定的流星数量与鲜明、往往带颜色的尾迹闻名。"
 
-#: src/features/seasonal-events/events/lyrids.tsx:89
+#: src/features/seasonal-events/definitions/lyrids.tsx:58
 msgid "They are typically a gentle shower that rewards patient skywatching."
 msgstr "它通常温和，适合耐心的观测者慢慢等待。"
 
-#: src/features/seasonal-events/events/eta-aquariids.tsx:89
+#: src/features/seasonal-events/definitions/eta-aquariids.tsx:58
 msgid "They peak in early May and are especially well seen from the southern hemisphere, though northern skies still catch their share of streaks."
 msgstr "它通常在五月上旬达到极大，南半球观测尤佳，但北半球也能看到不少划痕。"
 
-#: src/features/settings/ui/settings.tsx:681
+#: src/features/settings/ui/sections/integrations-settings.tsx:135
 msgid "This account's sign-in expired. Please reconnect it."
 msgstr "此账户的登录已过期，请重新连接。"
 
-#: src/features/seasonal-events/events/quadrantids.tsx:121
+#: src/features/seasonal-events/definitions/quadrantids.tsx:90
 msgid "This makes the period of strongest activity short, but it can be especially spectacular."
 msgstr "这使得最强活动期非常短，但也可能格外壮观。"
 
-#: src/features/seasonal-events/events/black-hole.tsx:241
+#: src/features/seasonal-events/definitions/black-hole.tsx:59
 msgid "This observation gave direct visual evidence of extreme spacetime curvature near a supermassive black hole and strongly matched the predictions of general relativity."
 msgstr "这次观测为超大质量黑洞附近极端时空弯曲提供了直接的视觉证据，并与广义相对论的预测高度吻合。"
 
-#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:83
+#: src/features/seasonal-events/definitions/total-lunar-eclipse.tsx:79
 msgid "This same atmospheric filtering that produces red sunsets gives the Moon its copper and crimson tones during totality."
 msgstr "产生红色夕阳的同样大气过滤效应，也让月亮在全食时呈现铜红与绯红的色调。"
 
-#: src/features/seasonal-events/events/eid-al-adha.tsx:94
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:273
+msgid "This shower’s radiant stays too low while your sky is dark for a useful viewing window on this night."
+msgstr "这晚天空较暗时，该流星雨的辐射点始终过低，没有合适的观测时段。"
+
+#: src/features/seasonal-events/definitions/eid-al-adha.tsx:66
 msgid "This three-way split is central to the holiday's meaning — the act of giving is built directly into the ritual itself."
 msgstr "这种三等分是节日意义的核心——给予的行为被直接内嵌于仪式本身之中。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1117
+#: src/features/weather/ui/details/detail-shell.tsx:244
 msgid "Thu {hour}"
 msgstr "周四 {hour}"
 
-#: src/features/weather/ui/tile.tsx:110
+#: src/features/weather/ui/tile.tsx:118
 msgid "thunderstorm"
 msgstr "雷暴"
 
-#: src/features/weather/ui/tile.tsx:112
+#: src/features/weather/ui/tile.tsx:120
 msgid "thunderstorm with heavy hail"
 msgstr "有大冰雹的雷暴"
 
-#: src/features/weather/ui/tile.tsx:111
+#: src/features/weather/ui/tile.tsx:119
 msgid "thunderstorm with slight hail"
 msgstr "有小冰雹的雷暴"
 
-#: src/features/weather/ui/tile.tsx:120
+#: src/features/weather/ui/tile.tsx:128
 msgid "Thursday"
 msgstr "星期四"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:140
+msgid "Times in {timeZoneLabel}"
+msgstr "时间采用{timeZoneLabel}"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:151
+msgid "to"
+msgstr "至"
 
 #: src/features/settings/ui/initialisation.tsx:223
 msgid "To get started, let's set your language, units, and location."
 msgstr "开始之前，让我们设置您的语言、单位和位置。"
 
-#: src/features/integrations/ui/upcoming-events.tsx:341
+#: src/features/integrations/ui/upcoming-events.tsx:345
 msgid "Today • {dateLabel}"
 msgstr "今天 • {dateLabel}"
 
-#: src/features/seasonal-events/events/christmas.tsx:110
+#: src/features/seasonal-events/definitions/christmas.tsx:78
 msgid "Today, an estimated 350 million real Christmas trees are grown across Europe alone, most of them farmed specifically for the season."
 msgstr "如今，仅欧洲就有估计3.5亿棵真正的圣诞树被种植，其中大多数是专门为这个节日农场培育的。"
 
-#: src/features/seasonal-events/events/total-solar-eclipse.tsx:57
+#: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:53
 msgid "Today, many people travel great distances to stand within the path of totality."
 msgstr "如今，许多人会跋涉很远，只为站在“全食带”之内。"
 
-#: src/features/integrations/ui/upcoming-events.tsx:345
+#: src/features/integrations/ui/upcoming-events.tsx:349
 msgid "Tomorrow • {dateLabel}"
 msgstr "明天 • {dateLabel}"
 
-#: src/features/settings/ui/settings.tsx:159
+#: src/features/settings/ui/sections/seasonal-settings.tsx:49
 msgid "Total lunar eclipse"
 msgstr "月全食"
 
-#: src/features/weather/ui/tile.tsx:194
+#: src/features/weather/ui/tile.tsx:202
 msgid "Total Lunar Eclipse"
 msgstr "月全食"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:424
-#: src/features/weather/ui/next-24-hours-tile.tsx:2346
+#: src/features/weather/ui/charts/chart.tsx:349
+#: src/features/weather/ui/details/precipitation-detail.tsx:70
 msgid "Total precipitation"
 msgstr "总降水量"
 
-#: src/features/settings/ui/settings.tsx:160
+#: src/features/settings/ui/sections/seasonal-settings.tsx:50
 msgid "Total solar eclipse"
 msgstr "日全食"
 
-#: src/features/weather/ui/tile.tsx:195
+#: src/features/weather/ui/tile.tsx:203
 msgid "Total Solar Eclipse"
 msgstr "日全食"
 
-#: src/features/seasonal-events/events/lunar-new-year.tsx:85
+#: src/features/seasonal-events/definitions/lunar-new-year.tsx:50
 msgid "Traditional stories of the monster Nian are said to have inspired the use of loud sounds, firecrackers, and the colour red as symbols of protection and good fortune."
 msgstr "关于年兽的传统故事，据说启发了用爆竹般的巨响、鞭炮与红色作为护佑与吉祥的象征。"
 
-#: src/features/seasonal-events/events/hanukkah.tsx:99
+#: src/features/seasonal-events/definitions/hanukkah.tsx:62
 msgid "Traditions"
 msgstr "传统"
 
-#: src/features/seasonal-events/events/spring-equinox.tsx:106
+#: src/features/seasonal-events/definitions/spring-equinox.tsx:71
 msgid "Traditions such as Nowruz continue to celebrate themes of renewal on or around the equinox."
 msgstr "像诺鲁孜节（Nowruz）这样的传统，至今仍在春分前后庆祝更新的主题。"
 
+#: src/features/seasonal-events/meteor-showers/lazy-viewing-guide.tsx:56
 #: src/features/settings/ui/initialisation.tsx:273
 msgid "Try again"
 msgstr "再试一次"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1109
+#: src/features/weather/ui/details/detail-shell.tsx:236
 msgid "Tue {hour}"
 msgstr "周二 {hour}"
 
-#: src/features/weather/ui/tile.tsx:118
+#: src/features/weather/ui/tile.tsx:126
 msgid "Tuesday"
 msgstr "星期二"
 
-#: src/features/settings/ui/settings.tsx:907
+#: src/features/settings/ui/sections/weather-settings.tsx:115
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "如果 Weather Please 显示的紫外线指数长期低于本地来源，请开启此选项。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2652
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:196
+msgid "Twilight overlaps this window, so fainter meteors may be harder to see."
+msgstr "这段时间与曙暮光时段重叠，较暗的流星可能更难看见。"
+
+#: src/features/weather/ui/details/detail-labels.tsx:6
 msgid "Unavailable"
 msgstr "不可用"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2702
+#: src/features/weather/ui/details/detail-labels.tsx:22
 msgid "Unhealthy"
 msgstr "不健康"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2698
+#: src/features/weather/ui/details/detail-labels.tsx:18
 msgid "Unhealthy for sensitive groups"
 msgstr "对敏感人群不健康"
 
-#: src/features/weather/ui/tile.tsx:485
-#: src/features/weather/ui/tile.tsx:492
+#: src/features/weather/ui/tile.tsx:504
+#: src/features/weather/ui/tile.tsx:511
 msgid "unknown conditions"
 msgstr "未知状况"
 
-#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:93
+#: src/features/seasonal-events/definitions/total-lunar-eclipse.tsx:89
 msgid "Unlike a solar eclipse, a lunar eclipse needs no special equipment — you just look up. The whole event unfolds over several hours, visible to anyone on the nightside of Earth."
 msgstr "与日食不同，月食不需要任何特殊设备——只要抬头看就行。整个过程历时数小时，地球夜侧的任何人都能看到。"
 
-#: src/features/seasonal-events/events/geminids.tsx:99
+#: src/features/seasonal-events/definitions/geminids.tsx:68
 msgid "Unlike most meteor showers, the Geminids originate from the asteroid 3200 Phaethon rather than a comet."
 msgstr "与多数流星雨不同，双子座流星雨源自小行星 3200 法厄同（Phaethon），而不是彗星。"
 
-#: src/features/integrations/ui/upcoming-events.tsx:186
+#: src/features/integrations/ui/upcoming-events.tsx:190
 msgid "Untitled event"
 msgstr "无标题事件"
 
-#: src/features/integrations/ui/upcoming-events.tsx:122
+#: src/features/integrations/ui/upcoming-events.tsx:125
 msgid "Upcoming calendar events"
 msgstr "近期日历事件"
 
-#: src/features/settings/ui/settings.tsx:904
+#: src/features/settings/ui/sections/general-settings.tsx:93
+msgid "Use enabled seasonal backgrounds on their dates, then return to your chosen style. Turn this off to always use your chosen background."
+msgstr "在相应日期使用已启用的季节性背景，之后恢复您选择的样式。关闭此选项可始终使用您选择的背景。"
+
+#: src/features/settings/ui/sections/weather-settings.tsx:112
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "使用全球化学模型（CAMS）"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:601
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:90
+msgid "Usual peak: around {peakLabel}."
+msgstr "通常极大期：{peakLabel}前后。"
+
+#: src/features/weather/ui/details/sun-detail.tsx:114
 msgid "UV"
 msgstr "UV"
 
-#: src/features/settings/ui/settings.tsx:161
-#: src/features/weather/ui/tile.tsx:196
+#: src/features/settings/ui/sections/seasonal-settings.tsx:51
+#: src/features/weather/ui/tile.tsx:204
 msgid "Valentine's Day"
 msgstr "情人节"
 
-#: src/features/seasonal-events/events/valentines.tsx:55
+#: src/features/seasonal-events/definitions/valentines.tsx:17
 msgid "Valentine’s Day celebrates affection in many forms, from romantic love to friendship and quiet acts of care."
 msgstr "情人节庆祝多种形式的情感：从浪漫爱情，到友情与安静的照料。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2706
+#: src/features/weather/ui/details/detail-labels.tsx:26
 msgid "Very unhealthy"
 msgstr "非常不健康"
 
-#: src/features/integrations/ui/upcoming-events.tsx:230
+#: src/features/integrations/ui/upcoming-events.tsx:234
 msgid "View source event"
 msgstr "查看来源事件"
 
-#: src/features/weather/ui/tile.tsx:107
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:55
+msgid "Viewing from your location"
+msgstr "您所在地点的观测建议"
+
+#: src/features/seasonal-events/meteor-showers/lazy-viewing-guide.tsx:49
+msgid "Viewing guidance could not be loaded."
+msgstr "无法加载观测建议。"
+
+#: src/features/weather/ui/tile.tsx:115
 msgid "violent rain showers"
 msgstr "猛烈的阵雨"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:890
+#: src/features/weather/ui/details/conditions-detail.tsx:103
 msgid "Visibility"
 msgstr "能见度"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:687
+#: src/features/weather/ui/details/air-quality-detail.tsx:119
 msgid "Waiting for air quality data"
 msgstr "正在等待空气质量数据"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:2017
+#: src/features/weather/ui/weather-map/weather-map.tsx:426
 msgid "Waiting for map data"
 msgstr "正在等待地图数据"
 
-#: src/features/seasonal-events/events/earth-day.tsx:156
+#: src/features/seasonal-events/definitions/earth-day.tsx:63
 msgid "Ways to observe"
 msgstr "如何纪念"
 
-#: src/features/settings/ui/settings.tsx:582
+#: src/features/settings/ui/sections/integrations-settings.tsx:36
 msgid "We couldn't connect your calendar account. Please try again."
 msgstr "无法连接您的日历账户，请重试。"
 
@@ -2437,110 +2436,114 @@ msgstr "无法连接您的日历账户，请重试。"
 msgid "We couldn't reach the location service right now - this isn't an issue with your device. Please try again in a moment."
 msgstr "我们现在无法连接到位置服务。这不是您设备的问题。请稍后重试。"
 
-#: src/pages/demo.tsx:146
+#: src/features/dashboard/ui/weather-errors.tsx:62
 msgid "We couldn't reach the weather service. Please check your internet connection and try again."
 msgstr "无法连接天气服务。请检查您的网络连接并重试。"
 
-#: src/features/settings/ui/settings.tsx:111
+#: src/features/settings/ui/settings.tsx:46
 msgid "Weather"
 msgstr "天气"
 
-#: src/features/settings/ui/settings.tsx:226
+#: src/features/settings/ui/sections/about-settings.tsx:13
 msgid "Weather data by Open-Meteo"
 msgstr "天气数据来自Open-Meteo"
 
-#: src/pages/demo.tsx:137
+#: src/features/dashboard/ui/weather-errors.tsx:53
 msgid "Weather data couldn't be loaded because the weather service could not be reached. This usually isn't a problem with your device. Please try again in a moment."
 msgstr "由于无法连接天气服务，天气数据未能加载。这通常不是您设备的问题。请稍后再试。"
 
-#: src/pages/demo.tsx:118
+#: src/features/dashboard/ui/weather-errors.tsx:34
 msgid "Weather data couldn't be loaded because the weather service is having trouble. This isn't a problem with your device. Please try again in a moment."
 msgstr "由于天气服务出现故障，天气数据未能加载。这不是您设备的问题。请稍后再试。"
 
-#: src/pages/demo.tsx:97
+#: src/features/dashboard/ui/weather-errors.tsx:13
 msgid "Weather data couldn't be loaded due to a service issue — showing cached data. Please try again in a moment."
 msgstr "由于服务问题，天气数据无法加载 — 正在显示缓存数据。请稍后重试。"
 
-#: src/pages/demo.tsx:128
+#: src/features/dashboard/ui/weather-errors.tsx:44
 msgid "Weather data couldn't be loaded for this location. Please check your location settings and try again."
 msgstr "无法加载此位置的天气数据。请检查您的位置设置并重试。"
 
-#: src/features/settings/ui/settings.tsx:1069
+#: src/features/settings/ui/sections/about-settings.tsx:57
 msgid "Weather Please uses the following third-party data sources and location services."
 msgstr "Weather Please 使用以下第三方数据来源和位置服务。"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1113
+#: src/features/weather/ui/details/detail-shell.tsx:240
 msgid "Wed {hour}"
 msgstr "周三 {hour}"
 
-#: src/features/weather/ui/tile.tsx:119
+#: src/features/weather/ui/tile.tsx:127
 msgid "Wednesday"
 msgstr "星期三"
 
-#: src/features/seasonal-events/events/total-solar-eclipse.tsx:64
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:243
+msgid "West"
+msgstr "西"
+
+#: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:60
 msgid "What it feels like"
 msgstr "亲历感受"
 
-#: src/features/seasonal-events/events/black-hole.tsx:222
+#: src/features/seasonal-events/definitions/black-hole.tsx:40
 msgid "What you are seeing"
 msgstr "您所看到的"
 
-#: src/features/seasonal-events/events/quadrantids.tsx:89
+#: src/features/seasonal-events/definitions/quadrantids.tsx:58
 msgid "When conditions are favourable, they produce sharp, fast-moving meteors in high numbers."
 msgstr "条件理想时，它会带来数量众多、轨迹锐利、速度很快的流星。"
 
-#: src/features/seasonal-events/events/leonids.tsx:122
+#: src/features/seasonal-events/definitions/leonids.tsx:91
 msgid "When this occurs, meteor rates can rise dramatically for a short period of time."
 msgstr "当这种情况发生时，流星数量会在短时间内急剧上升。"
 
-#: src/features/seasonal-events/events/geminids.tsx:121
+#: src/features/seasonal-events/definitions/geminids.tsx:90
 msgid "Whether your night air is warm or cool, a comfortable place to sit or lie back makes the experience far more enjoyable."
 msgstr "无论夜风温暖还是清凉，找个舒服的地方坐下或躺下，体验都会好得多。"
 
-#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:66
+#: src/features/seasonal-events/definitions/total-lunar-eclipse.tsx:62
 msgid "While eclipses were once viewed as omens, today they are widely appreciated as shared moments of skywatching and wonder."
 msgstr "过去人们曾将月食视为征兆，如今它更常被当作共同仰望天空、共享惊奇的时刻。"
 
-#: src/features/seasonal-events/events/leonids.tsx:113
+#: src/features/seasonal-events/definitions/leonids.tsx:82
 msgid "Why it can storm"
 msgstr "为何会出现“流星暴”"
 
-#: src/features/seasonal-events/events/black-hole.tsx:238
+#: src/features/seasonal-events/definitions/black-hole.tsx:56
 msgid "Why it matters"
 msgstr "为何这很重要"
 
-#: src/features/seasonal-events/events/total-lunar-eclipse.tsx:73
+#: src/features/seasonal-events/definitions/total-lunar-eclipse.tsx:69
 msgid "Why it turns red"
 msgstr "为何会变红"
 
-#: src/features/seasonal-events/events/quadrantids.tsx:112
+#: src/features/seasonal-events/definitions/quadrantids.tsx:81
 msgid "Why the peak is brief"
 msgstr "为何极大期短暂"
 
-#: src/pages/demo.tsx:771
+#: src/features/dashboard/ui/view-indicator.tsx:37
 msgid "wind"
 msgstr "风"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:793
-#: src/features/weather/ui/next-24-hours-tile.tsx:807
-#: src/features/weather/ui/next-24-hours-tile.tsx:1879
+#: src/features/weather/ui/details/wind-detail.tsx:93
+#: src/features/weather/ui/details/wind-detail.tsx:107
+#: src/features/weather/ui/weather-map/tooltip.tsx:136
 msgid "Wind"
 msgstr "风"
 
-#: src/features/weather/ui/next-24-hours-tile.tsx:1002
+#: src/features/weather/ui/details/detail-shell.tsx:129
 msgid "Wind is making it feel cooler than the measured temperature right now."
 msgstr "风使当前体感温度低于实测温度。"
 
-#: src/features/settings/ui/settings.tsx:162
-#: src/features/weather/ui/tile.tsx:197
+#: src/features/settings/ui/sections/seasonal-settings.tsx:52
+#: src/features/weather/ui/tile.tsx:205
 msgid "Winter Solstice"
 msgstr "冬至"
 
-#: src/features/seasonal-events/events/holi.tsx:251
+#: src/features/seasonal-events/definitions/holi.tsx:75
 msgid "Within minutes of stepping outside, everyone looks the same — drenched head to toe in colour, impossible to tell apart."
 msgstr "走到户外几分钟后，所有人看起来都一样——从头到脚被颜色浸透，无法分辨。"
 
-#: src/features/settings/ui/settings.tsx:606
+#: src/features/settings/ui/sections/integrations-settings.tsx:60
 msgid "Work"
 msgstr "工作"
 
@@ -2568,6 +2571,6 @@ msgstr "您的位置当前不可用。请确认设备上的位置服务已启用
 msgid "Your message"
 msgstr "您的信息"
 
-#: src/features/seasonal-events/events/eid-al-fitr.tsx:78
+#: src/features/seasonal-events/definitions/eid-al-fitr.tsx:51
 msgid "Zakat al-Fitr, a form of charitable giving, is a central obligation of the day, ensuring that all can take part in the celebration."
 msgstr "开斋捐（Zakat al‑Fitr）是一项核心义务，确保每个人都能参与庆祝。"

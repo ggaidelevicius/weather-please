@@ -11,8 +11,8 @@ import { getMeteorShower } from './catalog'
 import { getMeteorViewingGuide } from './viewing'
 
 type MeteorViewingGuideProps = {
-	eventId: SeasonalEventId
 	date: Date
+	eventId: SeasonalEventId
 	latitude: number
 	longitude: number
 }
@@ -20,8 +20,8 @@ type MeteorViewingGuideProps = {
 type ViewingGuide = ReturnType<typeof getMeteorViewingGuide>
 
 export function MeteorViewingGuide({
-	eventId,
 	date,
+	eventId,
 	latitude,
 	longitude,
 }: Readonly<MeteorViewingGuideProps>) {
@@ -32,11 +32,11 @@ export function MeteorViewingGuide({
 	let content: ReactNode
 	try {
 		content = getGuideContent({
-			eventId,
 			date,
+			eventId,
 			latitude,
-			longitude,
 			locale: i18n.locale,
+			longitude,
 		})
 	} catch {
 		content = getUnavailableMessage('unavailable')
@@ -60,19 +60,19 @@ export function MeteorViewingGuide({
 }
 
 function getGuideContent({
-	eventId,
 	date,
+	eventId,
 	latitude,
-	longitude,
 	locale,
+	longitude,
 }: MeteorViewingGuideProps & { locale: string }): ReactNode {
-	const guide = getMeteorViewingGuide({ eventId, date, latitude, longitude })
+	const guide = getMeteorViewingGuide({ date, eventId, latitude, longitude })
 	if (guide.status === 'out-of-season') {
 		const shower = getMeteorShower(eventId)
 		const peakLabel = shower
 			? new Intl.DateTimeFormat(locale, {
-					month: 'long',
 					day: 'numeric',
+					month: 'long',
 					timeZone: 'UTC',
 				}).format(
 					new Date(Date.UTC(2000, shower.peakMonth - 1, shower.peakDay)),
@@ -126,8 +126,8 @@ function getGuideContent({
 		maximumFractionDigits: 0,
 	}).format(guide.radiantAltitude)
 	const moonBrightness = new Intl.NumberFormat(locale, {
-		style: 'percent',
 		maximumFractionDigits: 0,
+		style: 'percent',
 	}).format(guide.moonIllumination)
 
 	return (
@@ -211,6 +211,19 @@ function getGuideContent({
 	)
 }
 
+function getMoonVisibility(
+	visibility: Extract<ViewingGuide, { status: 'available' }>['moonVisibility'],
+): ReactNode {
+	switch (visibility) {
+		case 'above':
+			return <Trans>Above the horizon throughout this window.</Trans>
+		case 'below':
+			return <Trans>Below the horizon throughout this window.</Trans>
+		case 'mixed':
+			return <Trans>Above the horizon for part of this window.</Trans>
+	}
+}
+
 function getRadiantDirection(azimuth: number): ReactNode {
 	const sector = Math.round((((azimuth % 360) + 360) % 360) / 45) % 8
 	switch (sector) {
@@ -233,19 +246,6 @@ function getRadiantDirection(azimuth: number): ReactNode {
 	}
 }
 
-function getMoonVisibility(
-	visibility: Extract<ViewingGuide, { status: 'available' }>['moonVisibility'],
-): ReactNode {
-	switch (visibility) {
-		case 'below':
-			return <Trans>Below the horizon throughout this window.</Trans>
-		case 'above':
-			return <Trans>Above the horizon throughout this window.</Trans>
-		case 'mixed':
-			return <Trans>Above the horizon for part of this window.</Trans>
-	}
-}
-
 function getUnavailableMessage(
 	status: Exclude<ViewingGuide['status'], 'available' | 'out-of-season'>,
 ): ReactNode {
@@ -259,20 +259,20 @@ function getUnavailableMessage(
 					</Trans>
 				</p>
 			)
+		case 'no-window':
+			return (
+				<p>
+					<Trans>
+						No useful local viewing window was found for this night.
+					</Trans>
+				</p>
+			)
 		case 'radiant-too-low':
 			return (
 				<p>
 					<Trans>
 						This shower’s radiant stays too low while your sky is dark for a
 						useful viewing window on this night.
-					</Trans>
-				</p>
-			)
-		case 'no-window':
-			return (
-				<p>
-					<Trans>
-						No useful local viewing window was found for this night.
 					</Trans>
 				</p>
 			)

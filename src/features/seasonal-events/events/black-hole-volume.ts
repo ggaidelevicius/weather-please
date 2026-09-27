@@ -8,11 +8,11 @@ import {
 } from 'three'
 
 type NoiseLayer = {
-	values: Float32Array
-	lower: Uint16Array
-	upper: Uint16Array
 	blend: Float32Array
+	lower: Uint16Array
 	period: number
+	upper: Uint16Array
+	values: Float32Array
 }
 
 export function createAccretionVolumeTexture(): Data3DTexture {
@@ -77,11 +77,11 @@ function createNoiseLayer({
 		upper[coordinate] = (cell + 1) % period
 		blend[coordinate] = fraction ** 3 * (fraction * (fraction * 6 - 15) + 10)
 	}
-	return { values, lower, upper, blend, period }
+	return { blend, lower, period, upper, values }
 }
 
 function sampleNoise(layer: NoiseLayer, x: number, y: number, z: number) {
-	const { values, lower, upper, blend, period } = layer
+	const { blend, lower, period, upper, values } = layer
 	const x0 = lower[x]
 	const x1 = upper[x]
 	const y0 = lower[y] * period

@@ -1,30 +1,13 @@
-import { renderHook, waitFor } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { act, renderHook, waitFor } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { AsyncStatus } from '../../../../shared/hooks/async-status'
+import { invalidateSharedResource } from '../../../../shared/lib/shared-resource'
 import { useIdentifiedLocation } from '../use-identified-location'
 
 const IDENTIFIED_LOCATION_CACHE_STORAGE_KEY = 'identifiedLocationCache'
 
-const localStorageMock = (() => {
-	let store: Record<string, string> = {}
-	return {
-		clear: () => {
-			store = {}
-		},
-		getItem: (key: string) => store[key] || null,
-		removeItem: (key: string) => {
-			delete store[key]
-		},
-		setItem: (key: string, value: string) => {
-			store[key] = value
-		},
-	}
-})()
-
-Object.defineProperty(window, 'localStorage', {
-	value: localStorageMock,
-})
+const localStorageMock = localStorage
 
 const fetchMock = vi.fn()
 global.fetch = fetchMock
@@ -41,9 +24,20 @@ const createReverseGeocodeResponse = (geocoding: Record<string, string>) => ({
 
 describe('useIdentifiedLocation', () => {
 	beforeEach(() => {
-		vi.clearAllMocks()
+		fetchMock.mockReset()
+		for (const cacheKey of [
+			'en:40.713:-74.006',
+			'en:-31.952:115.861',
+			'en:51.507:-0.128',
+			'fr:-31.952:115.861',
+		]) {
+			invalidateSharedResource({ key: `location-label:${cacheKey}` })
+		}
 		localStorageMock.clear()
+		vi.spyOn(document, 'visibilityState', 'get').mockReturnValue('visible')
 	})
+
+	afterEach(() => vi.restoreAllMocks())
 
 	it('stays idle without coordinates', () => {
 		const { result } = renderHook(() =>
@@ -158,5 +152,107 @@ describe('useIdentifiedLocation', () => {
 				status: AsyncStatus.Error,
 			})
 		})
+	})
+
+	it('shares a pending lookup with other consumers of the same coordinates and locale', async () => {
+		let finish!: (response: Response) => void
+		fetchMock.mockReturnValue(
+			new Promise<Response>((resolve) => {
+				finish = resolve
+			}),
+		)
+		const first = renderHook(() =>
+			useIdentifiedLocation({ lat: '-31.9523', locale: 'en', lon: '115.8613' }),
+		)
+		const second = renderHook(() =>
+			useIdentifiedLocation({ lat: '-31.9523', locale: 'en', lon: '115.8613' }),
+		)
+		await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1))
+
+		await act(async () =>
+			finish(
+				new Response(
+					JSON.stringify(createReverseGeocodeResponse({ city: 'Perth' })),
+					{ status: 200 },
+				),
+			),
+		)
+		await waitFor(() => {
+			expect(first.result.current.label).toBe('Perth')
+			expect(second.result.current.label).toBe('Perth')
+		})
+		expect(fetchMock).toHaveBeenCalledTimes(1)
+	})
+
+	it('keeps labels in different languages separate', async () => {
+		fetchMock.mockImplementation(
+			async (url: string) =>
+				new Response(
+					JSON.stringify(
+						createReverseGeocodeResponse({
+							city:
+								new URL(url).searchParams.get('accept-language') === 'fr'
+									? 'Perth français'
+									: 'Perth English',
+						}),
+					),
+					{ status: 200 },
+				),
+		)
+		const first = renderHook(() =>
+			useIdentifiedLocation({ lat: '-31.9523', locale: 'en', lon: '115.8613' }),
+		)
+		const second = renderHook(() =>
+			useIdentifiedLocation({ lat: '-31.9523', locale: 'fr', lon: '115.8613' }),
+		)
+
+		await waitFor(() => {
+			expect(first.result.current.label).toBe('Perth English')
+			expect(second.result.current.label).toBe('Perth français')
+		})
+		expect(fetchMock).toHaveBeenCalledTimes(2)
+	})
+
+	it('waits until visible before requesting an uncached label', async () => {
+		const visibility = vi
+			.spyOn(document, 'visibilityState', 'get')
+			.mockReturnValue('hidden')
+		fetchMock.mockResolvedValue(
+			new Response(
+				JSON.stringify(createReverseGeocodeResponse({ city: 'Perth' })),
+				{ status: 200 },
+			),
+		)
+		const { result } = renderHook(() =>
+			useIdentifiedLocation({ lat: '-31.9523', locale: 'en', lon: '115.8613' }),
+		)
+		expect(fetchMock).not.toHaveBeenCalled()
+
+		act(() => {
+			visibility.mockReturnValue('visible')
+			document.dispatchEvent(new Event('visibilitychange'))
+		})
+		await waitFor(() => expect(result.current.label).toBe('Perth'))
+		expect(fetchMock).toHaveBeenCalledTimes(1)
+	})
+
+	it('still resolves a label when browser storage is unavailable', async () => {
+		vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+			throw new Error('Storage blocked')
+		})
+		vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+			throw new Error('Storage blocked')
+		})
+		fetchMock.mockResolvedValue(
+			new Response(
+				JSON.stringify(createReverseGeocodeResponse({ city: 'Perth' })),
+				{ status: 200 },
+			),
+		)
+		const { result } = renderHook(() =>
+			useIdentifiedLocation({ lat: '-31.9523', locale: 'en', lon: '115.8613' }),
+		)
+
+		await waitFor(() => expect(result.current.label).toBe('Perth'))
 	})
 })

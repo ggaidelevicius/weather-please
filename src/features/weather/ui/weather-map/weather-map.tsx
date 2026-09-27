@@ -1,43 +1,46 @@
-import type { WeatherMapData } from '../../model/types'
 import type { PointerEvent } from 'react'
-import { useState, useEffect, useRef } from 'react'
-import type {
-	WeatherMapViewport,
-	WeatherMapPlaybackState,
-	WeatherMapDisplaySize,
-	WeatherMapPointerPoint,
-} from '../../model/detail-types'
-import { IconMap2, IconCloudRain, IconWind } from '@tabler/icons-react'
+
 import { Trans } from '@lingui/react/macro'
+import { IconCloudRain, IconMap2, IconWind } from '@tabler/icons-react'
+import { useEffect, useRef, useState } from 'react'
+
+import type {
+	WeatherMapDisplaySize,
+	WeatherMapPlaybackState,
+	WeatherMapPointerPoint,
+	WeatherMapViewport,
+} from '../../model/detail-types'
+import type { WeatherMapData } from '../../model/types'
+
+import { getPeakPoint } from '../../model/chart-geometry'
+import { average, convertWind, formatHour } from '../../model/detail-formatting'
 import {
-	getWeatherMapPlaybackState,
-	getWeatherMapFrame,
+	WEATHER_MAP_PRECIPITATION_BANDS,
+	WEATHER_MAP_TILE_SIZE,
+} from '../../model/weather-map/constants'
+import {
 	getWeatherMapDimensions,
+	getWeatherMapFrame,
+	getWeatherMapOverlayScale,
+	getWeatherMapPlaybackState,
 	getWeatherMapTiles,
 	getWeatherMapViewport,
-	getWeatherMapOverlayScale,
 	projectWeatherMapPoint,
 } from '../../model/weather-map/geometry'
 import {
-	DetailViewShell,
-	WeekdayHourLabel,
-	Metric,
-} from '../details/detail-shell'
-import {
-	WEATHER_MAP_TILE_SIZE,
-	WEATHER_MAP_PRECIPITATION_BANDS,
-} from '../../model/weather-map/constants'
-import { WeatherMapPrecipitationCanvas } from './precipitation-canvas'
-import { WeatherMapWindParticleCanvas } from './wind-canvas'
-import { WeatherMapTooltip } from './tooltip'
-import {
-	getWeatherMapPrecipitationBandColor,
 	formatWeatherMapPrecipitationBandLabel,
+	getWeatherMapPrecipitationBandColor,
 } from '../../model/weather-map/precipitation'
-import { formatHour, convertWind, average } from '../../model/detail-formatting'
 import { getInterpolatedWeatherMapMetricPoints } from '../../model/weather-map/wind'
-import { getPeakPoint } from '../../model/chart-geometry'
 import { AnimatedNumber } from '../charts/chart'
+import {
+	DetailViewShell,
+	Metric,
+	WeekdayHourLabel,
+} from '../details/detail-shell'
+import { WeatherMapPrecipitationCanvas } from './precipitation-canvas'
+import { WeatherMapTooltip } from './tooltip'
+import { WeatherMapWindParticleCanvas } from './wind-canvas'
 
 export const WeatherMapDetail = ({
 	isActive,

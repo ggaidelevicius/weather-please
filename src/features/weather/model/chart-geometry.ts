@@ -1,5 +1,6 @@
 import type { ChartScale, PointSummary } from './detail-types'
-import { min, max, formatAxisValue } from './detail-formatting'
+
+import { formatAxisValue, max, min } from './detail-formatting'
 export const CHART_HEIGHT = 150
 
 export const CHART_WIDTH = 360

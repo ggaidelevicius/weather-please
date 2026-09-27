@@ -28,6 +28,10 @@ export async function launchTotalLunarEclipse(): Promise<() => void> {
 	}
 }
 
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
 function mountTotalLunarEclipse() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
@@ -37,25 +41,25 @@ function mountTotalLunarEclipse() {
 	const stars = Array.from({ length: 230 }, (_, index) => {
 		const isBright = index % 17 === 0
 		return {
+			isBright,
+			opacity: isBright
+				? randomInRange({ max: 0.94, min: 0.68 })
+				: randomInRange({ max: 0.76, min: 0.3 }),
+			phase: Math.random() * Math.PI * 2,
+			size: isBright
+				? randomInRange({ max: 17, min: 11 })
+				: randomInRange({ max: 7.5, min: 3.2 }),
+			speed: randomInRange({ max: 0.38, min: 0.17 }),
 			x: Math.random(),
 			y: Math.random(),
-			isBright,
-			size: isBright
-				? randomInRange({ min: 11, max: 17 })
-				: randomInRange({ min: 3.2, max: 7.5 }),
-			opacity: isBright
-				? randomInRange({ min: 0.68, max: 0.94 })
-				: randomInRange({ min: 0.3, max: 0.76 }),
-			phase: Math.random() * Math.PI * 2,
-			speed: randomInRange({ min: 0.17, max: 0.38 }),
 		}
 	})
 	let width = Math.max(1, window.innerWidth)
 	let height = Math.max(1, window.innerHeight)
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -157,7 +161,7 @@ function mountTotalLunarEclipse() {
 		if (hasCanceled) return
 		width = Math.max(1, window.innerWidth)
 		height = Math.max(1, window.innerHeight)
-		const dpr = getCanvasDpr({ height, width, maxDpr: 2, maxPixels: 4_000_000 })
+		const dpr = getCanvasDpr({ height, maxDpr: 2, maxPixels: 4_000_000, width })
 		canvas.width = Math.round(width * dpr)
 		canvas.height = Math.round(height * dpr)
 		canvas.style.width = `${width}px`
@@ -255,8 +259,4 @@ function mountTotalLunarEclipse() {
 		throw error
 	}
 	return cleanup
-}
-
-function easeOut(progress: number) {
-	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
 }

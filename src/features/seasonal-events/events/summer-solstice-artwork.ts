@@ -1,13 +1,13 @@
 type SummerSolsticeArtwork = {
-	sunlight: HTMLCanvasElement
-	pollen: HTMLCanvasElement[]
 	bokeh: HTMLCanvasElement
+	pollen: HTMLCanvasElement[]
+	sunlight: HTMLCanvasElement
 }
 
 export function createSummerSolsticeArtwork(): SummerSolsticeArtwork {
 	const sunlight = createRadialSprite({
-		size: 256,
 		radius: 128,
+		size: 256,
 		stops: [
 			[0, 'rgba(255, 218, 110, 0.9)'],
 			[0.18, 'rgba(255, 218, 110, 0.64)'],
@@ -25,8 +25,8 @@ export function createSummerSolsticeArtwork(): SummerSolsticeArtwork {
 		'253, 164, 175',
 	].map((color) =>
 		createRadialSprite({
-			size: 64,
 			radius: 28,
+			size: 64,
 			stops: [
 				[0, `rgba(${color}, 0.95)`],
 				[0.35, `rgba(${color}, 0.8)`],
@@ -37,8 +37,8 @@ export function createSummerSolsticeArtwork(): SummerSolsticeArtwork {
 		}),
 	)
 	const bokeh = createRadialSprite({
-		size: 64,
 		radius: 27,
+		size: 64,
 		stops: [
 			[0, 'rgba(245, 210, 142, 0.36)'],
 			[0.47, 'rgba(245, 210, 142, 0.35)'],
@@ -47,19 +47,30 @@ export function createSummerSolsticeArtwork(): SummerSolsticeArtwork {
 			[1, 'rgba(245, 210, 142, 0)'],
 		],
 	})
-	return { sunlight, pollen, bokeh }
+	return { bokeh, pollen, sunlight }
+}
+
+function createCanvas({ height, width }: { height: number; width: number }) {
+	const canvas = document.createElement('canvas')
+	canvas.width = width
+	canvas.height = height
+	const context = canvas.getContext('2d')
+	if (!context) {
+		throw new Error('Unable to create the summer solstice artwork canvas')
+	}
+	return { canvas, context }
 }
 
 function createRadialSprite({
-	size,
 	radius,
+	size,
 	stops,
 }: {
-	size: number
 	radius: number
+	size: number
 	stops: readonly (readonly [number, string])[]
 }): HTMLCanvasElement {
-	const { canvas, context } = createCanvas({ width: size, height: size })
+	const { canvas, context } = createCanvas({ height: size, width: size })
 	const center = size / 2
 	const gradient = context.createRadialGradient(
 		center,
@@ -75,15 +86,4 @@ function createRadialSprite({
 	context.fillStyle = gradient
 	context.fillRect(0, 0, size, size)
 	return canvas
-}
-
-function createCanvas({ width, height }: { width: number; height: number }) {
-	const canvas = document.createElement('canvas')
-	canvas.width = width
-	canvas.height = height
-	const context = canvas.getContext('2d')
-	if (!context) {
-		throw new Error('Unable to create the summer solstice artwork canvas')
-	}
-	return { canvas, context }
 }

@@ -1,28 +1,30 @@
-import type { DetailViewProps } from './detail-data'
-import { getDetailViewData } from './detail-data'
-import { getTemperatureAccentColor } from '../../model/temperature-colour'
-import { IconTemperature } from '@tabler/icons-react'
 import { Trans } from '@lingui/react/macro'
-import {
-	Metric,
-	getFeelsLikeExplanation,
-	DetailViewShell,
-} from '../details/detail-shell'
+import { IconTemperature } from '@tabler/icons-react'
+
+import type { DetailViewProps } from './detail-data'
+
 import { getChartScale, getScaleLabels } from '../../model/chart-geometry'
-import { ChartFrame, LineChart } from '../charts/chart'
 import { formatDecimal } from '../../model/detail-formatting'
+import { getTemperatureAccentColor } from '../../model/temperature-colour'
+import { ChartFrame, LineChart } from '../charts/chart'
+import {
+	DetailViewShell,
+	getFeelsLikeExplanation,
+	Metric,
+} from '../details/detail-shell'
+import { getDetailViewData } from './detail-data'
 
 export const TemperatureDetail = (props: Readonly<DetailViewProps>) => {
 	const {
-		data,
-		isActive,
-		temperatures,
 		apparentTemperatures,
-		times,
-		temperatureUnitLabel,
-		startLabel,
-		middleLabel,
+		data,
 		endLabel,
+		isActive,
+		middleLabel,
+		startLabel,
+		temperatures,
+		temperatureUnitLabel,
+		times,
 	} = getDetailViewData(props)
 
 	const scale = getChartScale(temperatures)

@@ -49,6 +49,9 @@ export const useSeasonalEvents = ({
 	const [dateKey, setDateKey] = useState(() => getDateKey(new Date()))
 	const [activeEvent, setActiveEvent] = useState<null | SeasonalEventId>()
 	const shouldResolveActiveEvent = isHydrated && isEnabled && isOnboarded
+	if (!shouldResolveActiveEvent && activeEvent !== undefined) {
+		setActiveEvent(undefined)
+	}
 	const hasPermanentBackground =
 		seasonalBackground !== SEASONAL_BACKGROUND_AUTOMATIC
 	const shouldUseSeasonalBackground =
@@ -68,8 +71,6 @@ export const useSeasonalEvents = ({
 
 	useEffect(() => {
 		if (!shouldResolveActiveEvent) {
-			// Re-enabling must resolve today's event instead of reusing an old date.
-			setActiveEvent(undefined)
 			return
 		}
 

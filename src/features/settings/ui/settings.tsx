@@ -1,30 +1,32 @@
-import type {
-	SettingsProps,
-	SettingsContentProps,
-	SettingsSectionDefinition,
-	SettingsSectionId,
-} from './settings-types'
-import {
-	IconSettings,
-	IconCloud,
-	IconSparkles,
-	IconPlugConnected,
-	IconInfoCircle,
-	IconCode,
-} from '@tabler/icons-react'
-import { Trans } from '@lingui/react/macro'
-import { useState, useEffect } from 'react'
-import { isLikelySoftwareRenderer } from '../../seasonal-events/core/utils'
-import type { LocaleKey } from '../../../shared/lib/i18n'
-import { locales } from '../../../shared/lib/i18n'
-import { setSettingsModalOpenState } from '../../../shared/lib/settings-modal-state'
-import { IconButton } from '../../../shared/ui/button'
 import {
 	Dialog,
 	DialogBackdrop,
 	DialogPanel,
 	DialogTitle,
 } from '@headlessui/react'
+import { Trans } from '@lingui/react/macro'
+import {
+	IconCloud,
+	IconCode,
+	IconInfoCircle,
+	IconPlugConnected,
+	IconSettings,
+	IconSparkles,
+} from '@tabler/icons-react'
+import { useEffect, useState } from 'react'
+
+import type { LocaleKey } from '../../../shared/lib/i18n'
+import type {
+	SettingsContentProps,
+	SettingsProps,
+	SettingsSectionDefinition,
+	SettingsSectionId,
+} from './settings-types'
+
+import { locales } from '../../../shared/lib/i18n'
+import { setSettingsModalOpenState } from '../../../shared/lib/settings-modal-state'
+import { IconButton } from '../../../shared/ui/button'
+import { isLikelySoftwareRenderer } from '../../seasonal-events/core/utils'
 import { AboutSettingsSection } from './sections/about-settings'
 import { DeveloperSettingsSection } from './sections/developer-settings'
 import { GeneralSettingsSection } from './sections/general-settings'

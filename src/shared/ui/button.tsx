@@ -36,20 +36,20 @@ interface UncontrolledButtonProps extends BaseButtonProps {
 }
 
 const isAnchorClick = (
-	handler:
+	_handler:
 		| MouseEventHandler<HTMLAnchorElement>
 		| MouseEventHandler<HTMLButtonElement>
 		| undefined,
 	href: string | undefined,
-): handler is MouseEventHandler<HTMLAnchorElement> => typeof href === 'string'
+): _handler is MouseEventHandler<HTMLAnchorElement> => typeof href === 'string'
 
 const isButtonClick = (
-	handler:
+	_handler:
 		| MouseEventHandler<HTMLAnchorElement>
 		| MouseEventHandler<HTMLButtonElement>
 		| undefined,
 	href: string | undefined,
-): handler is MouseEventHandler<HTMLButtonElement> => typeof href !== 'string'
+): _handler is MouseEventHandler<HTMLButtonElement> => typeof href !== 'string'
 
 export const Button = ({
 	children,

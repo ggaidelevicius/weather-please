@@ -1,16 +1,18 @@
-import type { SettingsContentProps } from '../settings-types'
 import { Trans } from '@lingui/react/macro'
+
 import type { SeasonalEventOverride } from '../../../seasonal-events/core/types'
-import { SEASONAL_EVENT_OVERRIDE_NONE } from '../../../seasonal-events/core/types'
+import type { SettingsContentProps } from '../settings-types'
+
 import { Select, Switch } from '../../../../shared/ui/input'
+import { SEASONAL_EVENT_OVERRIDE_NONE } from '../../../seasonal-events/core/types'
 import {
-	SEASONAL_EVENT_OPTIONS,
 	SEASONAL_EVENT_OPTION_LABELS,
+	SEASONAL_EVENT_OPTIONS,
 } from './seasonal-settings'
 import {
+	SETTINGS_FIELD_LAYOUT,
 	SettingsSectionLayout,
 	SettingsSubsection,
-	SETTINGS_FIELD_LAYOUT,
 } from './section-layout'
 
 export const getSeasonalEventOverrideOptions = () => [

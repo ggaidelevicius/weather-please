@@ -31,6 +31,8 @@ Repository-specific guidance for agents working in this codebase.
 - Prefer type inference where obvious. Add explicit types for exported
   functions, complex objects, and tricky boundaries.
 - Avoid double assertions like `as unknown as T`.
+- Use `_` or an underscore-prefixed name for intentionally discarded variables
+  and parameters. ESLint ignores these names throughout the project.
 
 ## React
 

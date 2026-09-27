@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
-	SETTINGS_MODAL_STATE_EVENT,
 	setSettingsModalOpenState,
+	SETTINGS_MODAL_STATE_EVENT,
 } from '../../../../shared/lib/settings-modal-state'
 import { launchValentinesHearts } from '../valentines'
 import * as artwork from '../valentines-artwork'
@@ -457,10 +457,6 @@ const createScene = async ({
 	if (shouldMount) vi.advanceTimersByTime(900)
 
 	return {
-		context,
-		motion,
-		pending,
-		runFrame,
 		captureFrame: (time: number) => {
 			context.clearRect.mockClear()
 			context.drawImage.mockClear()
@@ -476,6 +472,10 @@ const createScene = async ({
 				translations: [...context.translate.mock.calls],
 			}
 		},
+		context,
+		motion,
+		pending,
+		runFrame,
 		setHidden: (isNextHidden: boolean) => {
 			isDocumentHidden = isNextHidden
 			document.dispatchEvent(new Event('visibilitychange'))

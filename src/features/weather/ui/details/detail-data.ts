@@ -1,17 +1,19 @@
 import type { Dispatch, SetStateAction } from 'react'
+
 import type {
-	WeatherDetailSeriesId,
 	Next24HoursDetailViewProps,
+	WeatherDetailSeriesId,
 } from '../../model/detail-types'
+
 import {
 	TemperatureUnit,
 	UnitSystem,
 } from '../../../settings/model/unit-system'
 import {
-	convertTemperature,
 	convertPrecipitation,
-	convertWind,
+	convertTemperature,
 	convertVisibility,
+	convertWind,
 	formatHour,
 } from '../../model/detail-formatting'
 
@@ -20,13 +22,13 @@ export type DetailViewProps = Omit<Next24HoursDetailViewProps, 'viewId'> & {
 	setActiveSeriesId: Dispatch<SetStateAction<null | WeatherDetailSeriesId>>
 }
 export const getDetailViewData = ({
+	activeSeriesId,
 	data,
 	isActive,
+	setActiveSeriesId,
 	temperatureUnit,
 	unitSystem,
 	weatherMapData,
-	activeSeriesId,
-	setActiveSeriesId,
 }: DetailViewProps) => {
 	const usesMetricTemperature = temperatureUnit === TemperatureUnit.Celsius
 	const usesMetricUnits = unitSystem === UnitSystem.Metric
@@ -70,36 +72,36 @@ export const getDetailViewData = ({
 	const endLabel = formatHour(data[data.length - 1]?.time)
 	const referenceTime = times[0]
 	return {
-		data,
-		isActive,
-		temperatureUnit,
-		unitSystem,
-		weatherMapData,
 		activeSeriesId,
-		setActiveSeriesId,
-		usesMetricTemperature,
-		usesMetricUnits,
-		temperatures,
+		airQualityAqi,
+		airQualityNitrogenDioxide,
+		airQualityOzone,
+		airQualityPm10,
+		airQualityPm25,
 		apparentTemperatures,
+		data,
+		endLabel,
+		isActive,
+		middleLabel,
 		precipitation,
 		precipitationProbability,
-		wind,
-		windGust,
+		precipitationUnitLabel,
+		referenceTime,
+		setActiveSeriesId,
+		startLabel,
+		temperatures,
+		temperatureUnit,
+		temperatureUnitLabel,
+		times,
+		unitSystem,
+		usesMetricTemperature,
+		usesMetricUnits,
 		uv,
 		visibility,
-		times,
-		airQualityAqi,
-		airQualityPm25,
-		airQualityPm10,
-		airQualityOzone,
-		airQualityNitrogenDioxide,
-		temperatureUnitLabel,
-		precipitationUnitLabel,
-		windUnitLabel,
 		visibilityUnitLabel,
-		startLabel,
-		middleLabel,
-		endLabel,
-		referenceTime,
+		weatherMapData,
+		wind,
+		windGust,
+		windUnitLabel,
 	}
 }

@@ -1,6 +1,8 @@
 import { Trans } from '@lingui/react/macro'
+
 import type { SeasonalEvent, SeasonalEventContext } from '../core/types'
-import { SeasonalEventId, Hemisphere } from '../core/types'
+
+import { Hemisphere, SeasonalEventId } from '../core/types'
 
 const SUMMER_SOLSTICE_DATES_NORTHERN = new Set([
 	'2026-06-21',

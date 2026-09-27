@@ -21,8 +21,8 @@ type AvailableGuide = Extract<MeteorViewingGuide, { status: 'available' }>
 describe('meteor shower viewing guidance', () => {
 	it('finds a dark pre-dawn Eta Aquariids window in Perth', () => {
 		const guide = getMeteorViewingGuide({
-			eventId: SeasonalEventId.EtaAquariids,
 			date: new Date(2026, 4, 6),
+			eventId: SeasonalEventId.EtaAquariids,
 			latitude: -31.95,
 			longitude: 115.86,
 		})
@@ -35,8 +35,8 @@ describe('meteor shower viewing guidance', () => {
 		})
 		expect(localParts(guide.end, guide.timeZone).hour).toBeLessThanOrEqual(6)
 		assertPhysicallyUsable({
-			guide,
 			eventId: SeasonalEventId.EtaAquariids,
+			guide,
 			latitude: -31.95,
 			longitude: 115.86,
 		})
@@ -44,8 +44,8 @@ describe('meteor shower viewing guidance', () => {
 
 	it('offers the Perseids in London but rejects the low radiant in Perth', () => {
 		const request = {
-			eventId: SeasonalEventId.Perseids,
 			date: new Date(2026, 7, 13),
+			eventId: SeasonalEventId.Perseids,
 		}
 		const london = getMeteorViewingGuide({
 			...request,
@@ -55,8 +55,8 @@ describe('meteor shower viewing guidance', () => {
 		expectAvailable(london)
 		expect(london.timeZone).toBe('Europe/London')
 		assertPhysicallyUsable({
-			guide: london,
 			eventId: request.eventId,
+			guide: london,
 			latitude: 51.51,
 			longitude: -0.13,
 		})
@@ -72,8 +72,8 @@ describe('meteor shower viewing guidance', () => {
 	it('does not suggest a window during polar daylight', () => {
 		expect(
 			getMeteorViewingGuide({
-				eventId: SeasonalEventId.Perseids,
 				date: new Date(2026, 7, 13),
+				eventId: SeasonalEventId.Perseids,
 				latitude: 80,
 				longitude: 20,
 				timeZone: 'Arctic/Longyearbyen',
@@ -83,25 +83,25 @@ describe('meteor shower viewing guidance', () => {
 
 	it.each([
 		{
-			name: 'Auckland',
+			firstNoon: '2026-12-13T23:00:00Z',
 			latitude: -36.85,
 			longitude: 174.76,
-			timeZone: 'Pacific/Auckland',
-			firstNoon: '2026-12-13T23:00:00Z',
+			name: 'Auckland',
 			nextNoon: '2026-12-14T23:00:00Z',
+			timeZone: 'Pacific/Auckland',
 		},
 		{
-			name: 'Los Angeles',
+			firstNoon: '2026-12-14T20:00:00Z',
 			latitude: 34.05,
 			longitude: -118.24,
-			timeZone: 'America/Los_Angeles',
-			firstNoon: '2026-12-14T20:00:00Z',
+			name: 'Los Angeles',
 			nextNoon: '2026-12-15T20:00:00Z',
+			timeZone: 'America/Los_Angeles',
 		},
 	])('uses the selected civil night in $name across the date line', (place) => {
 		const guide = getMeteorViewingGuide({
-			eventId: SeasonalEventId.Geminids,
 			date: new Date(2026, 11, 14, 0, 0),
+			eventId: SeasonalEventId.Geminids,
 			latitude: place.latitude,
 			longitude: place.longitude,
 		})
@@ -112,8 +112,8 @@ describe('meteor shower viewing guidance', () => {
 		)
 		expect(guide.end.getTime()).toBeLessThanOrEqual(Date.parse(place.nextNoon))
 		assertPhysicallyUsable({
-			guide,
 			eventId: SeasonalEventId.Geminids,
+			guide,
 			latitude: place.latitude,
 			longitude: place.longitude,
 		})
@@ -121,8 +121,8 @@ describe('meteor shower viewing guidance', () => {
 
 	it('handles a night whose clocks move forward', () => {
 		const guide = getMeteorViewingGuide({
-			eventId: SeasonalEventId.Lyrids,
 			date: new Date(1982, 3, 24),
+			eventId: SeasonalEventId.Lyrids,
 			latitude: 40.71,
 			longitude: -74.01,
 			timeZone: 'America/New_York',
@@ -137,8 +137,8 @@ describe('meteor shower viewing guidance', () => {
 		)
 		expect(localParts(guide.referenceTime, guide.timeZone).day).toBe(25)
 		assertPhysicallyUsable({
-			guide,
 			eventId: SeasonalEventId.Lyrids,
+			guide,
 			latitude: 40.71,
 			longitude: -74.01,
 		})
@@ -146,8 +146,8 @@ describe('meteor shower viewing guidance', () => {
 
 	it('handles a night whose clocks move backward', () => {
 		const guide = getMeteorViewingGuide({
-			eventId: SeasonalEventId.Orionids,
 			date: new Date(1981, 9, 24),
+			eventId: SeasonalEventId.Orionids,
 			latitude: 51.51,
 			longitude: -0.13,
 			timeZone: 'Europe/London',
@@ -161,8 +161,8 @@ describe('meteor shower viewing guidance', () => {
 		)
 		expect(localParts(guide.referenceTime, guide.timeZone).day).toBe(25)
 		assertPhysicallyUsable({
-			guide,
 			eventId: SeasonalEventId.Orionids,
+			guide,
 			latitude: 51.51,
 			longitude: -0.13,
 		})
@@ -170,15 +170,15 @@ describe('meteor shower viewing guidance', () => {
 
 	it('continues calculating precessed radiant positions in 2043', () => {
 		const guide = getMeteorViewingGuide({
-			eventId: SeasonalEventId.Geminids,
 			date: new Date(2043, 11, 14),
+			eventId: SeasonalEventId.Geminids,
 			latitude: 51.51,
 			longitude: -0.13,
 		})
 		expectAvailable(guide)
 		assertPhysicallyUsable({
-			guide,
 			eventId: SeasonalEventId.Geminids,
+			guide,
 			latitude: 51.51,
 			longitude: -0.13,
 		})
@@ -210,8 +210,8 @@ describe('meteor shower viewing guidance', () => {
 
 	it('handles a peak window that crosses New Year', () => {
 		const guide = getMeteorViewingGuide({
-			eventId: SeasonalEventId.Quadrantids,
 			date: new Date(2026, 11, 31),
+			eventId: SeasonalEventId.Quadrantids,
 			latitude: 51.51,
 			longitude: -0.13,
 		})
@@ -234,8 +234,8 @@ describe('meteor shower viewing guidance', () => {
 		(override) => {
 			expect(
 				getMeteorViewingGuide({
-					eventId: SeasonalEventId.Geminids,
 					date: new Date(2026, 11, 14),
+					eventId: SeasonalEventId.Geminids,
 					latitude: 51.51,
 					longitude: -0.13,
 					...override,
@@ -245,39 +245,14 @@ describe('meteor shower viewing guidance', () => {
 	)
 })
 
-function expectAvailable(
-	guide: MeteorViewingGuide,
-): asserts guide is AvailableGuide {
-	expect(guide.status).toBe('available')
-}
-
-function localParts(date: Date, timeZone: string) {
-	const parts = new Intl.DateTimeFormat('en-GB', {
-		timeZone,
-		year: 'numeric',
-		month: '2-digit',
-		day: '2-digit',
-		hour: '2-digit',
-		hourCycle: 'h23',
-	}).formatToParts(date)
-	const read = (type: Intl.DateTimeFormatPartTypes) =>
-		Number(parts.find((part) => part.type === type)?.value)
-	return {
-		year: read('year'),
-		month: read('month'),
-		day: read('day'),
-		hour: read('hour'),
-	}
-}
-
 function assertPhysicallyUsable({
-	guide,
 	eventId,
+	guide,
 	latitude,
 	longitude,
 }: {
-	guide: AvailableGuide
 	eventId: SeasonalEventId
+	guide: AvailableGuide
 	latitude: number
 	longitude: number
 }) {
@@ -350,5 +325,30 @@ function assertPhysicallyUsable({
 	} else {
 		expect(Math.min(...moonAltitudes)).toBeLessThan(0)
 		expect(Math.max(...moonAltitudes)).toBeGreaterThanOrEqual(0)
+	}
+}
+
+function expectAvailable(
+	guide: MeteorViewingGuide,
+): asserts guide is AvailableGuide {
+	expect(guide.status).toBe('available')
+}
+
+function localParts(date: Date, timeZone: string) {
+	const parts = new Intl.DateTimeFormat('en-GB', {
+		day: '2-digit',
+		hour: '2-digit',
+		hourCycle: 'h23',
+		month: '2-digit',
+		timeZone,
+		year: 'numeric',
+	}).formatToParts(date)
+	const read = (type: Intl.DateTimeFormatPartTypes) =>
+		Number(parts.find((part) => part.type === type)?.value)
+	return {
+		day: read('day'),
+		hour: read('hour'),
+		month: read('month'),
+		year: read('year'),
 	}
 }

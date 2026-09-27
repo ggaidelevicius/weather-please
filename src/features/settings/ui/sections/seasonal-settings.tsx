@@ -1,22 +1,25 @@
-import type {
-	SettingsContentProps,
-	SeasonalEventSection,
-} from '../settings-types'
-import { SeasonalEventId } from '../../../seasonal-events/core/types'
-import { Trans } from '@lingui/react/macro'
 import type { ReactNode } from 'react'
-import { Switch } from '../../../../shared/ui/input'
-import { Alert } from '../../../../shared/ui/alert'
+
+import { Trans } from '@lingui/react/macro'
 import { IconAlertTriangle } from '@tabler/icons-react'
+
+import type {
+	SeasonalEventSection,
+	SettingsContentProps,
+} from '../settings-types'
+
+import { Alert } from '../../../../shared/ui/alert'
 import { AlertVariant } from '../../../../shared/ui/alert-variant'
+import { Switch } from '../../../../shared/ui/input'
+import { SeasonalEventId } from '../../../seasonal-events/core/types'
 import {
 	SEASONAL_EVENT_BACKGROUND_TOGGLE_KEY_BY_ID,
 	SEASONAL_EVENT_TOGGLE_KEY_BY_ID,
 } from '../../model/seasonal-event-toggle-map'
 import {
+	SETTINGS_FIELD_LAYOUT,
 	SettingsSectionLayout,
 	SettingsSubsection,
-	SETTINGS_FIELD_LAYOUT,
 } from './section-layout'
 
 export const SEASONAL_EVENT_OPTION_LABELS = {

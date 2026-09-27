@@ -1,5 +1,7 @@
 import type { BrowserContext, Page } from '@playwright/test'
+
 import { expect } from '@playwright/test'
+
 import { createWeatherResponse } from '../src/features/weather/testing/weather-response'
 
 export const prepareWeather = async (context: BrowserContext) => {
@@ -9,12 +11,12 @@ export const prepareWeather = async (context: BrowserContext) => {
 				getCurrentPosition: (success: PositionCallback) =>
 					success({
 						coords: {
-							latitude: 40.7128,
-							longitude: -74.006,
 							accuracy: 10,
 							altitude: null,
 							altitudeAccuracy: null,
 							heading: null,
+							latitude: 40.7128,
+							longitude: -74.006,
 							speed: null,
 							toJSON: () => ({}),
 						},
@@ -42,15 +44,15 @@ export const prepareWeather = async (context: BrowserContext) => {
 		) {
 			await route.fulfill({
 				json: {
-					latitude: 40.7128,
-					longitude: -74.006,
 					hourly: {
-						time: weather.hourly.time.slice(0, 7),
 						precipitation: Array(7).fill(0),
 						precipitation_probability: Array(7).fill(0),
+						time: weather.hourly.time.slice(0, 7),
 						winddirection_10m: Array(7).fill(90),
 						windspeed_10m: Array(7).fill(10),
 					},
+					latitude: 40.7128,
+					longitude: -74.006,
 				},
 			})
 		} else if (url.hostname === 'api.open-meteo.com') {
@@ -59,10 +61,10 @@ export const prepareWeather = async (context: BrowserContext) => {
 			await route.fulfill({
 				json: {
 					hourly: {
-						time: weather.hourly.time,
-						uv_index: weather.hourly.time.map(() => 1),
-						us_aqi: weather.hourly.time.map(() => 25),
 						pm2_5: weather.hourly.time.map(() => 5),
+						time: weather.hourly.time,
+						us_aqi: weather.hourly.time.map(() => 25),
+						uv_index: weather.hourly.time.map(() => 1),
 					},
 				},
 			})
@@ -86,26 +88,26 @@ export const prepareWeather = async (context: BrowserContext) => {
 
 export const exerciseDashboard = async (page: Page) => {
 	await expect(
-		page.getByRole('button', { name: 'Set my location', exact: true }),
+		page.getByRole('button', { exact: true, name: 'Set my location' }),
 	).toBeVisible()
 	await page
-		.getByRole('button', { name: 'Set my location', exact: true })
+		.getByRole('button', { exact: true, name: 'Set my location' })
 		.click()
 	await expect(page.getByRole('dialog')).toHaveCount(0)
 	await expect(
 		page.getByText('New York, United States', { exact: true }),
 	).toBeVisible()
-	await page.getByRole('button', { name: 'Settings', exact: true }).click()
-	await page.getByRole('button', { name: 'Weather', exact: true }).click()
+	await page.getByRole('button', { exact: true, name: 'Settings' }).click()
+	await page.getByRole('button', { exact: true, name: 'Weather' }).click()
 	await page.getByLabel('Number of days to forecast').selectOption('4')
 	await page.keyboard.press('Escape')
 	await expect(page.getByRole('dialog')).toHaveCount(0)
 	await page.reload()
 	await expect(
-		page.getByRole('button', { name: 'Set my location', exact: true }),
+		page.getByRole('button', { exact: true, name: 'Set my location' }),
 	).toHaveCount(0)
-	await page.getByRole('button', { name: 'Settings', exact: true }).click()
-	await page.getByRole('button', { name: 'Weather', exact: true }).click()
+	await page.getByRole('button', { exact: true, name: 'Settings' }).click()
+	await page.getByRole('button', { exact: true, name: 'Weather' }).click()
 	await expect(page.getByLabel('Number of days to forecast')).toHaveValue('4')
 	await page.keyboard.press('Escape')
 	await expect(page.getByRole('dialog')).toHaveCount(0)
@@ -115,7 +117,7 @@ export const exerciseDashboard = async (page: Page) => {
 		page.getByRole('button', { name: 'Show temperature view' }),
 	).toHaveAttribute('aria-current', 'page')
 	await expect(
-		page.getByRole('heading', { name: 'Temperature', exact: true }),
+		page.getByRole('heading', { exact: true, name: 'Temperature' }),
 	).toBeVisible()
 	await page
 		.getByRole('navigation', { name: 'Weather view navigation' })

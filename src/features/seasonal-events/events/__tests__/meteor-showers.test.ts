@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
-	SETTINGS_MODAL_STATE_EVENT,
 	setSettingsModalOpenState,
+	SETTINGS_MODAL_STATE_EVENT,
 } from '../../../../shared/lib/settings-modal-state'
 import { launchEtaAquariidsShower } from '../eta-aquariids'
 import { launchGeminidsShower } from '../geminids'
@@ -12,19 +12,19 @@ import { launchOrionidsShower } from '../orionids'
 import { launchPerseidsShower } from '../perseids'
 import { launchQuadrantidsShower } from '../quadrantids'
 
+type Frame = { meteors: MeteorDraw[]; stars: StarDraw[] }
 type Launcher = () => Promise<() => void>
-type StarDraw = { x: number; y: number; radius: number; alpha: number }
 type MeteorDraw = {
+	alpha: number
+	color: string
+	glow: number
+	length: number
+	rotation: number
+	width: number
 	x: number
 	y: number
-	rotation: number
-	alpha: number
-	width: number
-	length: number
-	glow: number
-	color: string
 }
-type Frame = { stars: StarDraw[]; meteors: MeteorDraw[] }
+type StarDraw = { alpha: number; radius: number; x: number; y: number }
 
 let cleanupEffect = () => {}
 
@@ -114,7 +114,7 @@ describe.each([
 
 	it('waits for both settings and document visibility before scheduling its first frame', async () => {
 		setSettingsModalOpenState(true)
-		const scene = await createScene({ launch, isHidden: true })
+		const scene = await createScene({ isHidden: true, launch })
 		expect(document.querySelectorAll('canvas')).toHaveLength(1)
 		expect(scene.pending.size).toBe(0)
 		setSettingsModalOpenState(false)
@@ -142,13 +142,13 @@ describe.each([
 		expect(vi.mocked(Math.random)).toHaveBeenCalledTimes(randomCalls)
 		expect(scene.pending.size).toBe(0)
 		expect(document.querySelector('canvas')).toHaveStyle({
-			width: '512px',
 			height: '576px',
+			width: '512px',
 		})
 	})
 
 	it('keeps a stable reduced-motion tableau on resize and responds to live preference changes', async () => {
-		const scene = await createScene({ launch, isReducedMotion: true })
+		const scene = await createScene({ isReducedMotion: true, launch })
 		const initial = scene.snapshot()
 		expect(initial.stars.length).toBeGreaterThan(0)
 		expect(initial.meteors.length).toBeGreaterThan(0)
@@ -261,7 +261,7 @@ describe.each([
 
 	it('handles an unavailable canvas context without mounting or leaving scheduled work', async () => {
 		vi.spyOn(console, 'error').mockImplementation(() => {})
-		const scene = await createScene({ launch, hasContext: false })
+		const scene = await createScene({ hasContext: false, launch })
 		setSettingsModalOpenState(true)
 		setSettingsModalOpenState(false)
 		scene.setHidden(false)
@@ -277,17 +277,17 @@ describe.each([
 })
 
 async function createScene({
-	launch,
-	shouldMount = true,
+	hasContext = true,
 	isHidden = false,
 	isReducedMotion = false,
-	hasContext = true,
+	launch,
+	shouldMount = true,
 }: {
-	launch: Launcher
-	shouldMount?: boolean
+	hasContext?: boolean
 	isHidden?: boolean
 	isReducedMotion?: boolean
-	hasContext?: boolean
+	launch: Launcher
+	shouldMount?: boolean
 }) {
 	let seed = 314159
 	vi.spyOn(Math, 'random').mockImplementation(() => {
@@ -308,11 +308,11 @@ async function createScene({
 	})
 	const motionTarget = new EventTarget()
 	const motion = {
-		matches: isReducedMotion,
 		addEventListener: vi.fn(
 			(type: string, listener: EventListenerOrEventListenerObject) =>
 				motionTarget.addEventListener(type, listener),
 		),
+		matches: isReducedMotion,
 		removeEventListener: vi.fn(
 			(type: string, listener: EventListenerOrEventListenerObject) =>
 				motionTarget.removeEventListener(type, listener),
@@ -322,50 +322,29 @@ async function createScene({
 		'matchMedia',
 		vi.fn(() => motion),
 	)
-	const frame: Frame = { stars: [], meteors: [] }
-	let transform = { x: 0, y: 0, rotation: 0 }
-	const savedStates: { transform: typeof transform; alpha: number }[] = []
-	let currentArc = { x: 0, y: 0, radius: 0 }
+	const frame: Frame = { meteors: [], stars: [] }
+	let transform = { rotation: 0, x: 0, y: 0 }
+	const savedStates: { alpha: number; transform: typeof transform }[] = []
+	let currentArc = { radius: 0, x: 0, y: 0 }
 	let tailX = 0
 	const context = {
-		globalAlpha: 1,
-		lineWidth: 1,
-		shadowBlur: 0,
-		shadowColor: 'transparent',
+		arc: (x: number, y: number, radius: number) => {
+			currentArc = { radius, x, y }
+		},
+		beginPath: () => {},
 		clearRect: vi.fn(() => {
 			frame.stars.length = 0
 			frame.meteors.length = 0
 		}),
-		beginPath: () => {},
-		arc: (x: number, y: number, radius: number) => {
-			currentArc = { x, y, radius }
-		},
+		createLinearGradient: () => ({ addColorStop: () => {} }),
 		fill: () => {
 			frame.stars.push({ ...currentArc, alpha: context.globalAlpha })
 		},
-		stroke: () => {
-			frame.meteors.push({
-				...transform,
-				alpha: context.globalAlpha,
-				width: context.lineWidth,
-				length: -tailX,
-				glow: context.shadowBlur,
-				color: context.shadowColor,
-			})
-		},
+		globalAlpha: 1,
+		lineTo: () => {},
+		lineWidth: 1,
 		moveTo: (x: number) => {
 			tailX = x
-		},
-		lineTo: () => {},
-		createLinearGradient: () => ({ addColorStop: () => {} }),
-		setTransform: () => {
-			transform = { x: 0, y: 0, rotation: 0 }
-		},
-		save: () => {
-			savedStates.push({
-				transform: { ...transform },
-				alpha: context.globalAlpha,
-			})
 		},
 		restore: () => {
 			const state = savedStates.pop()
@@ -374,12 +353,33 @@ async function createScene({
 				context.globalAlpha = state.alpha
 			}
 		},
+		rotate: (angle: number) => {
+			transform.rotation += angle
+		},
+		save: () => {
+			savedStates.push({
+				alpha: context.globalAlpha,
+				transform: { ...transform },
+			})
+		},
+		setTransform: () => {
+			transform = { rotation: 0, x: 0, y: 0 }
+		},
+		shadowBlur: 0,
+		shadowColor: 'transparent',
+		stroke: () => {
+			frame.meteors.push({
+				...transform,
+				alpha: context.globalAlpha,
+				color: context.shadowColor,
+				glow: context.shadowBlur,
+				length: -tailX,
+				width: context.lineWidth,
+			})
+		},
 		translate: (x: number, y: number) => {
 			transform.x += x
 			transform.y += y
-		},
-		rotate: (angle: number) => {
-			transform.rotation += angle
 		},
 	}
 	const partialContext: Partial<CanvasRenderingContext2D> = context
@@ -398,19 +398,15 @@ async function createScene({
 	if (shouldMount) vi.advanceTimersByTime(900)
 	return {
 		context,
-		motion,
-		pending,
 		dispose,
-		runFrame,
-		snapshot: (): Frame => ({
-			stars: frame.stars.map((star) => ({ ...star })),
-			meteors: frame.meteors.map((meteor) => ({ ...meteor })),
-		}),
 		getPendingCallback: () => {
 			const callback = pending.values().next().value
 			if (!callback) throw new Error('Expected a scheduled meteor shower frame')
 			return callback
 		},
+		motion,
+		pending,
+		runFrame,
 		setHidden: (isNextHidden: boolean) => {
 			isDocumentHidden = isNextHidden
 			document.dispatchEvent(new Event('visibilitychange'))
@@ -419,6 +415,10 @@ async function createScene({
 			motion.matches = isReduced
 			motionTarget.dispatchEvent(new Event('change'))
 		},
+		snapshot: (): Frame => ({
+			meteors: frame.meteors.map((meteor) => ({ ...meteor })),
+			stars: frame.stars.map((star) => ({ ...star })),
+		}),
 	}
 }
 

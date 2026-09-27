@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
-	SETTINGS_MODAL_STATE_EVENT,
 	setSettingsModalOpenState,
+	SETTINGS_MODAL_STATE_EVENT,
 } from '../../../../shared/lib/settings-modal-state'
 import { launchTotalLunarEclipse } from '../total-lunar-eclipse'
 import { createTotalLunarEclipseArtwork } from '../total-lunar-eclipse-artwork'
@@ -11,14 +11,14 @@ vi.mock('../total-lunar-eclipse-artwork', () => ({
 	createTotalLunarEclipseArtwork: vi.fn(),
 }))
 
-type Transform = [string, ...number[]]
 type ImageDraw = {
-	source: string
-	coordinates: number[]
 	alpha: number
 	composition: GlobalCompositeOperation
+	coordinates: number[]
+	source: string
 	transforms: Transform[]
 }
+type Transform = [string, ...number[]]
 
 let cleanupEffect = () => {}
 
@@ -64,8 +64,8 @@ describe('Total lunar eclipse scene', () => {
 		const canvas = document.querySelector('canvas[data-total-lunar-eclipse]')
 		expect(canvas).toHaveAttribute('aria-hidden', 'true')
 		expect(canvas).toHaveStyle({
-			position: 'fixed',
 			pointerEvents: 'none',
+			position: 'fixed',
 			zIndex: '0',
 		})
 		expect(document.body.querySelectorAll('canvas')).toHaveLength(1)
@@ -75,7 +75,7 @@ describe('Total lunar eclipse scene', () => {
 				scene
 					.snapshot()
 					.some(
-						({ source, alpha }) => source.startsWith(artworkName) && alpha > 0,
+						({ alpha, source }) => source.startsWith(artworkName) && alpha > 0,
 					),
 			).toBe(true)
 		}
@@ -95,7 +95,7 @@ describe('Total lunar eclipse scene', () => {
 		window.dispatchEvent(new Event('resize'))
 		expect(canvas).toHaveAttribute('width', '780')
 		expect(canvas).toHaveAttribute('height', '1688')
-		expect(canvas).toHaveStyle({ width: '390px', height: '844px' })
+		expect(canvas).toHaveStyle({ height: '844px', width: '390px' })
 		expect(scene.context.clearRect).toHaveBeenCalledTimes(drawCount + 2)
 		expect(createTotalLunarEclipseArtwork).toHaveBeenCalledOnce()
 		expect(Math.random).toHaveBeenCalledTimes(randomCount)
@@ -348,14 +348,84 @@ describe('Total lunar eclipse scene', () => {
 	})
 })
 
+function createCanvasContext() {
+	const images: ImageDraw[] = []
+	let transforms: Transform[] = []
+	const savedStates: {
+		alpha: number
+		composition: GlobalCompositeOperation
+		transforms: Transform[]
+	}[] = []
+	const context = {
+		arc: vi.fn(),
+		beginPath: vi.fn(),
+		bezierCurveTo: vi.fn(),
+		clearRect: vi.fn(() => {
+			images.length = 0
+		}),
+		clip: vi.fn(),
+		closePath: vi.fn(),
+		createLinearGradient: vi.fn(() => ({ addColorStop: vi.fn() })),
+		createRadialGradient: vi.fn(() => ({ addColorStop: vi.fn() })),
+		drawImage: vi.fn((source: CanvasImageSource, ...coordinates: number[]) => {
+			images.push({
+				alpha: context.globalAlpha,
+				composition: context.globalCompositeOperation,
+				coordinates,
+				source:
+					source instanceof HTMLCanvasElement
+						? (source.dataset.testSprite ?? 'cache')
+						: 'image',
+				transforms: [...transforms],
+			})
+		}),
+		ellipse: vi.fn(),
+		fill: vi.fn(),
+		fillRect: vi.fn(),
+		globalAlpha: 1,
+		globalCompositeOperation: 'source-over' as GlobalCompositeOperation,
+		images,
+		lineTo: vi.fn(),
+		moveTo: vi.fn(),
+		quadraticCurveTo: vi.fn(),
+		restore: () => {
+			const state = savedStates.pop()
+			if (!state) return
+			context.globalAlpha = state.alpha
+			context.globalCompositeOperation = state.composition
+			transforms = state.transforms
+		},
+		rotate: (angle: number) => {
+			transforms.push(['rotate', angle])
+		},
+		save: () =>
+			savedStates.push({
+				alpha: context.globalAlpha,
+				composition: context.globalCompositeOperation,
+				transforms: [...transforms],
+			}),
+		scale: (x: number, y: number) => {
+			transforms.push(['scale', x, y])
+		},
+		setTransform: vi.fn(() => {
+			transforms = []
+		}),
+		stroke: vi.fn(),
+		translate: (x: number, y: number) => {
+			transforms.push(['translate', x, y])
+		},
+	}
+	return context
+}
+
 async function createScene({
-	shouldMount = true,
 	isHidden = false,
 	isReducedMotion = false,
+	shouldMount = true,
 }: {
-	shouldMount?: boolean
 	isHidden?: boolean
 	isReducedMotion?: boolean
+	shouldMount?: boolean
 } = {}) {
 	let isDocumentHidden = isHidden
 	vi.spyOn(document, 'hidden', 'get').mockImplementation(() => isDocumentHidden)
@@ -370,11 +440,11 @@ async function createScene({
 	)
 	const motionTarget = new EventTarget()
 	const motion = {
-		matches: isReducedMotion,
 		addEventListener: vi.fn(
 			(type: string, listener: EventListenerOrEventListenerObject) =>
 				motionTarget.addEventListener(type, listener),
 		),
+		matches: isReducedMotion,
 		removeEventListener: vi.fn(
 			(type: string, listener: EventListenerOrEventListenerObject) =>
 				motionTarget.removeEventListener(type, listener),
@@ -385,14 +455,14 @@ async function createScene({
 		vi.fn(() => motion),
 	)
 	vi.mocked(createTotalLunarEclipseArtwork).mockImplementation(({ dpr }) => ({
-		moon: createSprite({ name: 'moon', width: 640, dpr }),
-		shade: createSprite({ name: 'shade', width: 640, dpr }),
-		glow: createSprite({ name: 'glow', width: 512, dpr }),
-		star: createSprite({ name: 'star', width: 64, dpr }),
-		glint: createSprite({ name: 'glint', width: 64, dpr }),
-		nebula: createSprite({ name: 'nebula', width: 1024, height: 640, dpr }),
-		haze: createSprite({ name: 'haze', width: 512, dpr }),
+		glint: createSprite({ dpr, name: 'glint', width: 64 }),
+		glow: createSprite({ dpr, name: 'glow', width: 512 }),
+		haze: createSprite({ dpr, name: 'haze', width: 512 }),
+		moon: createSprite({ dpr, name: 'moon', width: 640 }),
+		nebula: createSprite({ dpr, height: 640, name: 'nebula', width: 1024 }),
 		radius: 240,
+		shade: createSprite({ dpr, name: 'shade', width: 640 }),
+		star: createSprite({ dpr, name: 'star', width: 64 }),
 	}))
 	const context = createCanvasContext()
 	const partial: Partial<CanvasRenderingContext2D> = context
@@ -404,9 +474,6 @@ async function createScene({
 	return {
 		context,
 		getContext,
-		motion,
-		pending,
-		snapshot: () => [...context.images],
 		getGradientCount: () =>
 			context.createLinearGradient.mock.calls.length +
 			context.createRadialGradient.mock.calls.length,
@@ -416,6 +483,8 @@ async function createScene({
 				throw new Error('Expected a scheduled Total lunar eclipse frame')
 			return callback
 		},
+		motion,
+		pending,
 		runFrame: (time: number) => {
 			vi.mocked(performance.now).mockReturnValue(time)
 			for (const [id, callback] of [...pending]) {
@@ -431,114 +500,26 @@ async function createScene({
 			motion.matches = isReduced
 			motionTarget.dispatchEvent(new Event('change'))
 		},
+		snapshot: () => [...context.images],
 	}
-}
-
-function createCanvasContext() {
-	const images: ImageDraw[] = []
-	let transforms: Transform[] = []
-	const savedStates: {
-		alpha: number
-		composition: GlobalCompositeOperation
-		transforms: Transform[]
-	}[] = []
-	const context = {
-		images,
-		globalAlpha: 1,
-		globalCompositeOperation: 'source-over' as GlobalCompositeOperation,
-		clearRect: vi.fn(() => {
-			images.length = 0
-		}),
-		drawImage: vi.fn((source: CanvasImageSource, ...coordinates: number[]) => {
-			images.push({
-				source:
-					source instanceof HTMLCanvasElement
-						? (source.dataset.testSprite ?? 'cache')
-						: 'image',
-				coordinates,
-				alpha: context.globalAlpha,
-				composition: context.globalCompositeOperation,
-				transforms: [...transforms],
-			})
-		}),
-		save: () =>
-			savedStates.push({
-				alpha: context.globalAlpha,
-				composition: context.globalCompositeOperation,
-				transforms: [...transforms],
-			}),
-		restore: () => {
-			const state = savedStates.pop()
-			if (!state) return
-			context.globalAlpha = state.alpha
-			context.globalCompositeOperation = state.composition
-			transforms = state.transforms
-		},
-		translate: (x: number, y: number) => {
-			transforms.push(['translate', x, y])
-		},
-		rotate: (angle: number) => {
-			transforms.push(['rotate', angle])
-		},
-		scale: (x: number, y: number) => {
-			transforms.push(['scale', x, y])
-		},
-		setTransform: vi.fn(() => {
-			transforms = []
-		}),
-		createLinearGradient: vi.fn(() => ({ addColorStop: vi.fn() })),
-		createRadialGradient: vi.fn(() => ({ addColorStop: vi.fn() })),
-		fillRect: vi.fn(),
-		beginPath: vi.fn(),
-		closePath: vi.fn(),
-		moveTo: vi.fn(),
-		lineTo: vi.fn(),
-		bezierCurveTo: vi.fn(),
-		quadraticCurveTo: vi.fn(),
-		arc: vi.fn(),
-		ellipse: vi.fn(),
-		fill: vi.fn(),
-		stroke: vi.fn(),
-		clip: vi.fn(),
-	}
-	return context
 }
 
 function createSprite({
-	name,
+	dpr,
 	width,
 	height = width,
-	dpr,
+	name,
 }: {
+	dpr: number
+	height?: number
 	name: string
 	width: number
-	height?: number
-	dpr: number
 }) {
 	const canvas = document.createElement('canvas')
 	canvas.width = Math.round(width * dpr)
 	canvas.height = Math.round(height * dpr)
 	canvas.dataset.testSprite = name
-	return { canvas, width, height }
-}
-
-function getImagePoint(image: ImageDraw, relativeX = 0.5, relativeY = 0.5) {
-	let x = image.coordinates[0] + image.coordinates[2] * relativeX
-	let y = image.coordinates[1] + image.coordinates[3] * relativeY
-	for (const [operation, first, second] of [...image.transforms].reverse()) {
-		if (operation === 'translate') {
-			x += first
-			y += second
-		} else if (operation === 'scale') {
-			x *= first
-			y *= second
-		} else if (operation === 'rotate') {
-			const nextX = x * Math.cos(first) - y * Math.sin(first)
-			y = x * Math.sin(first) + y * Math.cos(first)
-			x = nextX
-		}
-	}
-	return { x, y }
+	return { canvas, height, width }
 }
 
 function expectEclipseAlignment(images: ImageDraw[]) {
@@ -558,4 +539,23 @@ function expectEclipseAlignment(images: ImageDraw[]) {
 		expect(shadePoint.x).toBeCloseTo(moonPoint.x, 8)
 		expect(shadePoint.y).toBeCloseTo(moonPoint.y, 8)
 	}
+}
+
+function getImagePoint(image: ImageDraw, relativeX = 0.5, relativeY = 0.5) {
+	let x = image.coordinates[0] + image.coordinates[2] * relativeX
+	let y = image.coordinates[1] + image.coordinates[3] * relativeY
+	for (const [operation, first, second] of [...image.transforms].reverse()) {
+		if (operation === 'translate') {
+			x += first
+			y += second
+		} else if (operation === 'scale') {
+			x *= first
+			y *= second
+		} else if (operation === 'rotate') {
+			const nextX = x * Math.cos(first) - y * Math.sin(first)
+			y = x * Math.sin(first) + y * Math.cos(first)
+			x = nextX
+		}
+	}
+	return { x, y }
 }

@@ -1,4 +1,5 @@
 import { PerspectiveCamera, Scene, WebGLRenderer } from 'three'
+
 import {
 	isSettingsModalOpen,
 	onSettingsModalStateChange,
@@ -34,15 +35,15 @@ function mountHoli() {
 	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
 	const scene = new Scene()
 	const camera = new PerspectiveCamera(60, 1, 0.1, 30)
-	let renderer: WebGLRenderer | null = null
-	let particles: ReturnType<typeof createHoliParticles> | null = null
+	let renderer: null | WebGLRenderer = null
+	let particles: null | ReturnType<typeof createHoliParticles> = null
 	let width = Math.max(1, window.innerWidth)
 	let height = Math.max(1, window.innerHeight)
 	let dpr = 1
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -60,11 +61,11 @@ function mountHoli() {
 	const drawScene = () => {
 		if (!renderer || !particles) return
 		updateHoliParticles({
-			particles,
+			dpr,
 			elapsed,
 			hasRevealed,
 			isCompact: width < 600,
-			dpr,
+			particles,
 		})
 		renderer.render(scene, camera)
 	}
@@ -137,9 +138,9 @@ function mountHoli() {
 
 	try {
 		renderer = new WebGLRenderer({
-			canvas,
 			alpha: true,
 			antialias: false,
+			canvas,
 			powerPreference: 'low-power',
 		})
 		renderer.setClearColor(0x000000, 0)

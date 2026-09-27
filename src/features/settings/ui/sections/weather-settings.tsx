@@ -1,13 +1,15 @@
-import type { SettingsContentProps, SwitchDefinition } from '../settings-types'
 import { Trans } from '@lingui/react/macro'
 import { IconShieldCheckFilled } from '@tabler/icons-react'
-import { Input, Switch, Select } from '../../../../shared/ui/input'
-import { TileIdentifier } from '../../model/tile-identifier'
+
+import type { SettingsContentProps, SwitchDefinition } from '../settings-types'
+
 import { HelpPopover } from '../../../../shared/ui/help-popover'
+import { Input, Select, Switch } from '../../../../shared/ui/input'
+import { TileIdentifier } from '../../model/tile-identifier'
 import {
+	SETTINGS_FIELD_LAYOUT,
 	SettingsSectionLayout,
 	SettingsSubsection,
-	SETTINGS_FIELD_LAYOUT,
 } from './section-layout'
 
 export const ALERT_DETAIL_SWITCHES = [

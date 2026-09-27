@@ -1,10 +1,11 @@
+import type { EarthParticleKind } from './earth-day-artwork'
+
 import {
 	isSettingsModalOpen,
 	onSettingsModalStateChange,
 } from '../../../shared/lib/settings-modal-state'
 import { getCanvasDpr, randomInRange } from '../core/utils'
 import { createEarthDayArtwork } from './earth-day-artwork'
-import type { EarthParticleKind } from './earth-day-artwork'
 
 const EARTH_MOUNT_DELAY_MS = 900
 const EARTH_PARTICLE_COUNT = 90
@@ -23,16 +24,16 @@ const EARTH_KINDS: readonly EarthParticleKind[] = [
 	'flower',
 ]
 const EARTH_SIZES = {
-	leaf: { min: 24, max: 48 },
-	sprout: { min: 24, max: 44 },
-	drop: { min: 20, max: 38 },
-	flower: { min: 24, max: 44 },
+	drop: { max: 38, min: 20 },
+	flower: { max: 44, min: 24 },
+	leaf: { max: 48, min: 24 },
+	sprout: { max: 44, min: 24 },
 }
 const EARTH_VERTICAL_SPEEDS = {
-	leaf: { min: -0.009, max: -0.002 },
-	sprout: { min: -0.007, max: -0.001 },
-	drop: { min: -0.003, max: 0.006 },
-	flower: { min: -0.007, max: 0.003 },
+	drop: { max: 0.006, min: -0.003 },
+	flower: { max: 0.003, min: -0.007 },
+	leaf: { max: -0.002, min: -0.009 },
+	sprout: { max: -0.001, min: -0.007 },
 }
 
 export async function launchEarthDay(): Promise<() => void> {
@@ -56,13 +57,54 @@ export async function launchEarthDay(): Promise<() => void> {
 	}
 }
 
+function createParticle({
+	index,
+	kind,
+	variant,
+}: {
+	index: number
+	kind: EarthParticleKind
+	variant: number
+}) {
+	const depth = index % 6 === 0 ? 1.12 : index % 5 === 0 ? 0.82 : 1
+	const isGrowing = kind === 'sprout' || kind === 'flower'
+	return {
+		delay: randomInRange({ max: 2.2, min: 0 }),
+		depth,
+		growthDuration: randomInRange({
+			max: isGrowing ? 2.2 : 1.6,
+			min: isGrowing ? 1.4 : 0.9,
+		}),
+		kind,
+		opacity: randomInRange({ max: 0.88, min: 0.52 }) * Math.min(1, depth),
+		phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+		rotation:
+			kind === 'flower'
+				? randomInRange({ max: Math.PI, min: -Math.PI })
+				: randomInRange({ max: 0.8, min: -0.8 }),
+		size: randomInRange(EARTH_SIZES[kind]) * depth,
+		speedX: randomInRange({ max: 0.004, min: -0.004 }) * depth,
+		speedY: randomInRange(EARTH_VERTICAL_SPEEDS[kind]) * depth,
+		spin:
+			randomInRange({ max: 0.08, min: -0.08 }) * (kind === 'sprout' ? 0.3 : 1),
+		sway: randomInRange({ max: 6, min: 2 }),
+		variant,
+		x: Math.random(),
+		y: Math.random(),
+	}
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
 function mountEarthDay() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
 	if (!context) throw new Error('Unable to create Earth Day canvas')
 	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
 	const artwork = createEarthDayArtwork()
-	const nextVariant = { leaf: 0, sprout: 0, drop: 0, flower: 0 }
+	const nextVariant = { drop: 0, flower: 0, leaf: 0, sprout: 0 }
 	const particles = Array.from({ length: EARTH_PARTICLE_COUNT }, (_, index) => {
 		const kind = EARTH_KINDS[index % EARTH_KINDS.length]
 		const variant = nextVariant[kind] % artwork.sprites[kind].length
@@ -77,8 +119,8 @@ function mountEarthDay() {
 	let height = Math.max(1, window.innerHeight)
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -86,9 +128,9 @@ function mountEarthDay() {
 	canvas.dataset.earthDay = 'true'
 	canvas.setAttribute('aria-hidden', 'true')
 	Object.assign(canvas.style, {
+		filter: 'saturate(130%)',
 		inset: '0',
 		mixBlendMode: 'screen',
-		filter: 'saturate(130%)',
 		pointerEvents: 'none',
 		position: 'fixed',
 		zIndex: '0',
@@ -234,47 +276,6 @@ function mountEarthDay() {
 		throw error
 	}
 	return cleanup
-}
-
-function easeOut(progress: number) {
-	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
-}
-
-function createParticle({
-	index,
-	kind,
-	variant,
-}: {
-	index: number
-	kind: EarthParticleKind
-	variant: number
-}) {
-	const depth = index % 6 === 0 ? 1.12 : index % 5 === 0 ? 0.82 : 1
-	const isGrowing = kind === 'sprout' || kind === 'flower'
-	return {
-		kind,
-		depth,
-		variant,
-		x: Math.random(),
-		y: Math.random(),
-		phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-		size: randomInRange(EARTH_SIZES[kind]) * depth,
-		delay: randomInRange({ min: 0, max: 2.2 }),
-		growthDuration: randomInRange({
-			min: isGrowing ? 1.4 : 0.9,
-			max: isGrowing ? 2.2 : 1.6,
-		}),
-		opacity: randomInRange({ min: 0.52, max: 0.88 }) * Math.min(1, depth),
-		speedX: randomInRange({ min: -0.004, max: 0.004 }) * depth,
-		speedY: randomInRange(EARTH_VERTICAL_SPEEDS[kind]) * depth,
-		rotation:
-			kind === 'flower'
-				? randomInRange({ min: -Math.PI, max: Math.PI })
-				: randomInRange({ min: -0.8, max: 0.8 }),
-		spin:
-			randomInRange({ min: -0.08, max: 0.08 }) * (kind === 'sprout' ? 0.3 : 1),
-		sway: randomInRange({ min: 2, max: 6 }),
-	}
 }
 
 function wrap(value: number) {

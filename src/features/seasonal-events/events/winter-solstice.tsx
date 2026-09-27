@@ -1,10 +1,11 @@
+import type { WinterCrystal } from './winter-solstice-artwork'
+
 import {
 	isSettingsModalOpen,
 	onSettingsModalStateChange,
 } from '../../../shared/lib/settings-modal-state'
-import { randomInRange, getCanvasDpr } from '../core/utils'
+import { getCanvasDpr, randomInRange } from '../core/utils'
 import { createWinterCrystalArtwork } from './winter-solstice-artwork'
-import type { WinterCrystal } from './winter-solstice-artwork'
 
 const WINTER_MOUNT_DELAY_MS = 900
 const WINTER_FIELD_MARGIN = 150
@@ -76,6 +77,10 @@ export async function launchWinterSolstice() {
 	}
 }
 
+function easeOutCubic(value: number) {
+	return 1 - Math.pow(1 - value, 3)
+}
+
 function mountWinterSolstice() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
@@ -89,10 +94,10 @@ function mountWinterSolstice() {
 		const layer = document.createElement('div')
 		layer.dataset.winterAurora = String(index)
 		Object.assign(layer.style, {
-			position: 'absolute',
-			inset: '0',
 			background: gradient,
 			filter: 'blur(24px)',
+			inset: '0',
+			position: 'absolute',
 			willChange: 'transform',
 		})
 		aurora.appendChild(layer)
@@ -104,32 +109,32 @@ function mountWinterSolstice() {
 	for (const root of [overlay, canvas]) {
 		root.setAttribute('aria-hidden', 'true')
 		Object.assign(root.style, {
-			position: 'fixed',
 			inset: '0',
-			pointerEvents: 'none',
 			mixBlendMode: 'screen',
+			pointerEvents: 'none',
+			position: 'fixed',
 		})
 	}
 	overlay.style.zIndex = '0'
 	Object.assign(aurora.style, {
-		position: 'absolute',
 		inset: '-15% -10% 0 -10%',
 		opacity: '0',
+		position: 'absolute',
 		willChange: 'opacity, transform',
 	})
 	overlay.appendChild(aurora)
 	Object.assign(canvas.style, {
-		zIndex: '1',
-		opacity: '0.6',
 		filter: 'saturate(115%)',
+		opacity: '0.6',
+		zIndex: '1',
 	})
 
 	let width = window.innerWidth
 	let height = window.innerHeight
 	let dpr = 0
 	let elapsed = 0
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let hasRevealedAurora = false
@@ -162,8 +167,8 @@ function mountWinterSolstice() {
 		createParticle(elapsed),
 	)
 	const respawnParticle = (particle: Particle) => {
-		const { color, size, glow } = particle
-		Object.assign(particle, createParticle(elapsed), { color, size, glow })
+		const { color, glow, size } = particle
+		Object.assign(particle, createParticle(elapsed), { color, glow, size })
 	}
 	const isOutsideField = ({ x, y }: Particle) =>
 		x < -WINTER_FIELD_MARGIN ||
@@ -193,7 +198,7 @@ function mountWinterSolstice() {
 			const twinkle = 0.6 + Math.sin(elapsed * 0.002 + particle.phase) * 0.4
 			const alpha =
 				particle.opacity * easeOutCubic(Math.min(1, lifeProgress)) * twinkle
-			const { glow, crystal, displaySize } = artwork[index]
+			const { crystal, displaySize, glow } = artwork[index]
 			const origin = -displaySize / 2
 
 			context.save()
@@ -219,8 +224,8 @@ function mountWinterSolstice() {
 		context.setTransform(nextDpr, 0, 0, nextDpr, 0, 0)
 		if (dpr !== nextDpr) {
 			artwork = createWinterCrystalArtwork({
-				dpr: nextDpr,
 				crystals: particles,
+				dpr: nextDpr,
 			})
 			dpr = nextDpr
 		}
@@ -307,8 +312,4 @@ function mountWinterSolstice() {
 		throw error
 	}
 	return cleanup
-}
-
-function easeOutCubic(value: number) {
-	return 1 - Math.pow(1 - value, 3)
 }

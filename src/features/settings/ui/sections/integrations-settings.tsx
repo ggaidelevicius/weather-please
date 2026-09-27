@@ -1,27 +1,30 @@
-import type {
-	CalendarConnection,
-	CalendarAccountSummary,
-} from '../../../integrations/hooks/use-calendar-connection'
-import { CalendarConnectionError } from '../../../integrations/hooks/use-calendar-connection'
-import type { SettingsContentProps } from '../settings-types'
-import { Trans } from '@lingui/react/macro'
 import type { ReactNode } from 'react'
-import { CalendarProvider } from '../../../integrations/model/calendar-provider'
-import {
-	CalendarAccountCategory,
-	CALENDAR_ACCOUNT_CATEGORIES,
-	CALENDAR_ACCOUNT_CATEGORY_STYLES,
-} from '../../../integrations/model/account-category'
-import { clsx } from 'clsx'
-import { Button } from '../../../../shared/ui/button'
-import { Select, Switch } from '../../../../shared/ui/input'
-import { Alert } from '../../../../shared/ui/alert'
+
+import { Trans } from '@lingui/react/macro'
 import {
 	IconAlertTriangle,
-	IconShieldCheckFilled,
 	IconInfoCircle,
+	IconShieldCheckFilled,
 } from '@tabler/icons-react'
+import { clsx } from 'clsx'
+
+import type {
+	CalendarAccountSummary,
+	CalendarConnection,
+} from '../../../integrations/hooks/use-calendar-connection'
+import type { SettingsContentProps } from '../settings-types'
+
+import { Alert } from '../../../../shared/ui/alert'
 import { AlertVariant } from '../../../../shared/ui/alert-variant'
+import { Button } from '../../../../shared/ui/button'
+import { Select, Switch } from '../../../../shared/ui/input'
+import { CalendarConnectionError } from '../../../integrations/hooks/use-calendar-connection'
+import {
+	CALENDAR_ACCOUNT_CATEGORIES,
+	CALENDAR_ACCOUNT_CATEGORY_STYLES,
+	CalendarAccountCategory,
+} from '../../../integrations/model/account-category'
+import { CalendarProvider } from '../../../integrations/model/calendar-provider'
 import {
 	SETTINGS_FIELD_LAYOUT,
 	SettingsSectionLayout,

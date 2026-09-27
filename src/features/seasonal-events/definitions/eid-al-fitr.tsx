@@ -1,5 +1,7 @@
 import { Trans } from '@lingui/react/macro'
+
 import type { SeasonalEvent, SeasonalEventContext } from '../core/types'
+
 import { SeasonalEventId } from '../core/types'
 
 const EID_AL_FITR_DATES = new Set([

@@ -1,43 +1,45 @@
-import { formatOptionalHour } from './detail-labels'
-import type { DetailViewProps } from './detail-data'
-import { getDetailViewData } from './detail-data'
-import { UV_CHART_DEFAULT_MAX } from './constants'
 import { Trans } from '@lingui/react/macro'
 import {
 	IconSun,
-	IconUvIndex,
 	IconSunrise,
 	IconSunset,
+	IconUvIndex,
 } from '@tabler/icons-react'
-import {
-	Metric,
-	DetailViewShell,
-	RelativeHourLabel,
-} from '../details/detail-shell'
+
+import type { DetailViewProps } from './detail-data'
+
 import {
 	getChartScale,
-	getScaleLabels,
 	getPeakPoint,
+	getScaleLabels,
 } from '../../model/chart-geometry'
-import { ChartFrame, LineChart } from '../charts/chart'
 import {
 	formatDecimal,
-	max,
 	getNextSunEvent,
+	max,
 } from '../../model/detail-formatting'
+import { ChartFrame, LineChart } from '../charts/chart'
+import {
+	DetailViewShell,
+	Metric,
+	RelativeHourLabel,
+} from '../details/detail-shell'
+import { UV_CHART_DEFAULT_MAX } from './constants'
+import { getDetailViewData } from './detail-data'
+import { formatOptionalHour } from './detail-labels'
 
 export const SunDetail = (props: Readonly<DetailViewProps>) => {
 	const {
-		data,
-		isActive,
 		activeSeriesId,
-		setActiveSeriesId,
-		uv,
-		times,
-		startLabel,
-		middleLabel,
+		data,
 		endLabel,
+		isActive,
+		middleLabel,
 		referenceTime,
+		setActiveSeriesId,
+		startLabel,
+		times,
+		uv,
 	} = getDetailViewData(props)
 
 	const uvScale = getChartScale(uv, {

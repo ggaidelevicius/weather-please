@@ -30,6 +30,71 @@ export async function launchEidAlFitrGlow(): Promise<() => void> {
 	}
 }
 
+function drawHangingLantern({
+	artwork,
+	context,
+	cord,
+	opacity,
+	phase,
+	scale,
+	time,
+	variant,
+	x,
+}: {
+	artwork: EidArtwork
+	context: CanvasRenderingContext2D
+	cord: number
+	opacity: number
+	phase: number
+	scale: number
+	time: number
+	variant: number
+	x: number
+}) {
+	const sprite = artwork.lanterns[variant % artwork.lanterns.length]
+	const angle =
+		Math.sin(time * 0.48 + phase) * 0.018 +
+		Math.sin(time * 0.21 + phase) * 0.009
+	const light =
+		0.92 +
+		Math.sin(time * 1.1 + phase) * 0.055 +
+		Math.sin(time * 3.5 + phase) * 0.025
+	const lightX = (sprite.lightX - sprite.anchorX) * scale
+	const lightY = cord + (sprite.lightY - sprite.anchorY) * scale
+	const glowSize = 450 * scale
+	context.save()
+	context.translate(x, -8)
+	context.rotate(angle)
+	context.globalAlpha = opacity * 0.58
+	context.strokeStyle = '#c6a467'
+	context.lineWidth = 0.85
+	context.beginPath()
+	context.moveTo(0, 0)
+	context.lineTo(0, cord)
+	context.stroke()
+	context.globalAlpha = opacity * light * 0.65
+	context.drawImage(
+		artwork.glow.canvas,
+		lightX - glowSize / 2,
+		lightY - glowSize / 2,
+		glowSize,
+		glowSize,
+	)
+	context.globalAlpha = opacity * light
+	context.drawImage(
+		sprite.canvas,
+		-sprite.anchorX * scale,
+		cord - sprite.anchorY * scale,
+		sprite.width * scale,
+		sprite.height * scale,
+	)
+	context.restore()
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
 function mountEidAlFitr() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
@@ -37,30 +102,30 @@ function mountEidAlFitr() {
 	const artwork = createEidAlFitrArtwork({ dpr: 2 })
 	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
 	const stars = Array.from({ length: 125 }, (_, index) => ({
+		opacity: randomInRange({ max: 0.56, min: 0.13 }),
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ max: index % 11 === 0 ? 11 : 5.5, min: 2.5 }),
+		speed: randomInRange({ max: 0.75, min: 0.35 }),
 		x: Math.random(),
 		y: Math.random(),
-		size: randomInRange({ min: 2.5, max: index % 11 === 0 ? 11 : 5.5 }),
-		opacity: randomInRange({ min: 0.13, max: 0.56 }),
-		phase: Math.random() * Math.PI * 2,
-		speed: randomInRange({ min: 0.35, max: 0.75 }),
 	}))
 	const motes = Array.from({ length: 22 }, (_, index) => ({
+		opacity: randomInRange({ max: 0.4, min: 0.17 }),
+		phase: Math.random() * Math.PI * 2,
+		progress: Math.random(),
+		size: randomInRange({ max: 24, min: 9 }),
+		speed: randomInRange({ max: 0.01, min: 0.004 }),
 		x:
 			index % 2
-				? randomInRange({ min: 0.04, max: 0.27 })
-				: randomInRange({ min: 0.76, max: 0.96 }),
-		progress: Math.random(),
-		phase: Math.random() * Math.PI * 2,
-		size: randomInRange({ min: 9, max: 24 }),
-		speed: randomInRange({ min: 0.004, max: 0.01 }),
-		opacity: randomInRange({ min: 0.17, max: 0.4 }),
+				? randomInRange({ max: 0.27, min: 0.04 })
+				: randomInRange({ max: 0.96, min: 0.76 }),
 	}))
 	let width = Math.max(1, window.innerWidth)
 	let height = Math.max(1, window.innerHeight)
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -177,24 +242,24 @@ function mountEidAlFitr() {
 
 		const lanterns = isCompact
 			? [
-					{ x: width * 0.77, scale: 0.39, cord: 58, variant: 0 },
-					{ x: width * 0.945, scale: 0.27, cord: 12, variant: 1 },
+					{ cord: 58, scale: 0.39, variant: 0, x: width * 0.77 },
+					{ cord: 12, scale: 0.27, variant: 1, x: width * 0.945 },
 				]
 			: [
-					{ x: width * 0.755, scale: 0.42, cord: 35, variant: 1 },
-					{ x: width * 0.865, scale: 0.65, cord: 84, variant: 0 },
-					{ x: width * 0.96, scale: 0.39, cord: 16, variant: 2 },
+					{ cord: 35, scale: 0.42, variant: 1, x: width * 0.755 },
+					{ cord: 84, scale: 0.65, variant: 0, x: width * 0.865 },
+					{ cord: 16, scale: 0.39, variant: 2, x: width * 0.96 },
 				]
 		for (const [index, lantern] of lanterns.entries()) {
 			drawHangingLantern({
-				context,
 				artwork,
+				context,
 				...lantern,
-				scale: lantern.scale * sceneScale,
 				cord: lantern.cord * sceneScale,
-				time: elapsed,
-				phase: index * 2.1,
 				opacity: reveal,
+				phase: index * 2.1,
+				scale: lantern.scale * sceneScale,
+				time: elapsed,
 			})
 		}
 		context.globalAlpha = 1
@@ -203,7 +268,7 @@ function mountEidAlFitr() {
 		if (hasCanceled) return
 		width = Math.max(1, window.innerWidth)
 		height = Math.max(1, window.innerHeight)
-		const dpr = getCanvasDpr({ height, width, maxDpr: 2, maxPixels: 4_000_000 })
+		const dpr = getCanvasDpr({ height, maxDpr: 2, maxPixels: 4_000_000, width })
 		canvas.width = Math.round(width * dpr)
 		canvas.height = Math.round(height * dpr)
 		canvas.style.width = `${width}px`
@@ -300,71 +365,6 @@ function mountEidAlFitr() {
 		throw error
 	}
 	return cleanup
-}
-
-function drawHangingLantern({
-	context,
-	artwork,
-	x,
-	scale,
-	cord,
-	variant,
-	time,
-	phase,
-	opacity,
-}: {
-	context: CanvasRenderingContext2D
-	artwork: EidArtwork
-	x: number
-	scale: number
-	cord: number
-	variant: number
-	time: number
-	phase: number
-	opacity: number
-}) {
-	const sprite = artwork.lanterns[variant % artwork.lanterns.length]
-	const angle =
-		Math.sin(time * 0.48 + phase) * 0.018 +
-		Math.sin(time * 0.21 + phase) * 0.009
-	const light =
-		0.92 +
-		Math.sin(time * 1.1 + phase) * 0.055 +
-		Math.sin(time * 3.5 + phase) * 0.025
-	const lightX = (sprite.lightX - sprite.anchorX) * scale
-	const lightY = cord + (sprite.lightY - sprite.anchorY) * scale
-	const glowSize = 450 * scale
-	context.save()
-	context.translate(x, -8)
-	context.rotate(angle)
-	context.globalAlpha = opacity * 0.58
-	context.strokeStyle = '#c6a467'
-	context.lineWidth = 0.85
-	context.beginPath()
-	context.moveTo(0, 0)
-	context.lineTo(0, cord)
-	context.stroke()
-	context.globalAlpha = opacity * light * 0.65
-	context.drawImage(
-		artwork.glow.canvas,
-		lightX - glowSize / 2,
-		lightY - glowSize / 2,
-		glowSize,
-		glowSize,
-	)
-	context.globalAlpha = opacity * light
-	context.drawImage(
-		sprite.canvas,
-		-sprite.anchorX * scale,
-		cord - sprite.anchorY * scale,
-		sprite.width * scale,
-		sprite.height * scale,
-	)
-	context.restore()
-}
-
-function easeOut(progress: number) {
-	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
 }
 
 function wrap(value: number) {

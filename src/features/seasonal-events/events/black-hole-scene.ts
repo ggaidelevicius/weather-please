@@ -1,3 +1,5 @@
+import type { Texture, WebGLRenderer } from 'three'
+
 import {
 	ACESFilmicToneMapping,
 	Camera,
@@ -13,20 +15,20 @@ import {
 	Vector3,
 	WebGLRenderTarget,
 } from 'three'
-import type { Texture, WebGLRenderer } from 'three'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+
 import { createAccretionVolumeTexture } from './black-hole-volume'
 
 export function createBlackHoleScene({
-	renderer,
 	bgTexture,
+	renderer,
 	starTexture,
 }: {
-	renderer: WebGLRenderer
 	bgTexture: Texture
+	renderer: WebGLRenderer
 	starTexture: Texture
 }) {
 	const resources: { dispose: () => void }[] = []
@@ -61,45 +63,45 @@ export function createBlackHoleScene({
 			? own(
 					new WebGLRenderTarget(1, 1, {
 						count: 4,
-						type: HalfFloatType,
-						minFilter: NearestFilter,
-						magFilter: NearestFilter,
 						depthBuffer: false,
 						generateMipmaps: false,
+						magFilter: NearestFilter,
+						minFilter: NearestFilter,
+						type: HalfFloatType,
 					}),
 				)
 			: null
 		const uniforms = {
-			uResolution: { value: new Vector2(1, 1) },
-			uTanFov: { value: Math.tan((VERTICAL_FOV * Math.PI) / 360) },
-			uFrameCenter: { value: new Vector2(0.86, 0.74) },
-			uViewRotation: {
-				value: new Vector2(Math.cos(VIEW_ROLL), Math.sin(VIEW_ROLL)),
-			},
-			uTime: { value: 0 },
 			uBackground: { value: bgTexture },
-			uStars: { value: starTexture },
+			uDiskBrightness: { value: DISK_BRIGHTNESS },
+			uFrameCenter: { value: new Vector2(0.86, 0.74) },
 			uGasVolume: { value: gasVolume },
-			uUseCache: { value: canCache },
 			uHit0: { value: cacheTarget?.textures[0] ?? null },
 			uHit1: { value: cacheTarget?.textures[1] ?? null },
 			uHit2: { value: cacheTarget?.textures[2] ?? null },
-			uStaticBackground: { value: cacheTarget?.textures[3] ?? null },
-			uDiskBrightness: { value: DISK_BRIGHTNESS },
-			uOuterColor: { value: new Vector3(...OUTER_DISK_COLOR) },
 			uInnerColor: { value: new Vector3(...INNER_DISK_COLOR) },
+			uOuterColor: { value: new Vector3(...OUTER_DISK_COLOR) },
+			uResolution: { value: new Vector2(1, 1) },
+			uStars: { value: starTexture },
+			uStaticBackground: { value: cacheTarget?.textures[3] ?? null },
+			uTanFov: { value: Math.tan((VERTICAL_FOV * Math.PI) / 360) },
+			uTime: { value: 0 },
+			uUseCache: { value: canCache },
+			uViewRotation: {
+				value: new Vector2(Math.cos(VIEW_ROLL), Math.sin(VIEW_ROLL)),
+			},
 		}
 		const geometry = own(new PlaneGeometry(2, 2))
 		const camera = new Camera()
 		const scene = new Scene()
 		const material = own(
 			new ShaderMaterial({
-				uniforms,
-				vertexShader: VERTEX_SHADER,
-				fragmentShader: DISPLAY_FRAGMENT_SHADER,
 				depthTest: false,
 				depthWrite: false,
+				fragmentShader: DISPLAY_FRAGMENT_SHADER,
 				toneMapped: false,
+				uniforms,
+				vertexShader: VERTEX_SHADER,
 			}),
 		)
 		const mesh = new Mesh(geometry, material)
@@ -109,13 +111,13 @@ export function createBlackHoleScene({
 		if (cacheTarget) {
 			const cacheMaterial = own(
 				new ShaderMaterial({
-					uniforms,
-					vertexShader: VERTEX_SHADER,
-					fragmentShader: CACHE_FRAGMENT_SHADER,
-					glslVersion: GLSL3,
 					depthTest: false,
 					depthWrite: false,
+					fragmentShader: CACHE_FRAGMENT_SHADER,
+					glslVersion: GLSL3,
 					toneMapped: false,
+					uniforms,
+					vertexShader: VERTEX_SHADER,
 				}),
 			)
 			const cacheMesh = new Mesh(geometry, cacheMaterial)
@@ -124,8 +126,8 @@ export function createBlackHoleScene({
 		}
 
 		const outputTarget = new WebGLRenderTarget(1, 1, {
-			type: hasHalfFloat ? HalfFloatType : UnsignedByteType,
 			depthBuffer: false,
+			type: hasHalfFloat ? HalfFloatType : UnsignedByteType,
 		})
 		let composer: EffectComposer
 		try {
@@ -183,17 +185,17 @@ export function createBlackHoleScene({
 		let lastPixelWidth = 0
 		let lastPixelHeight = 0
 		const render = ({
-			width,
-			height,
 			dpr,
-			time,
+			height,
 			reveal,
+			time,
+			width,
 		}: {
-			width: number
-			height: number
 			dpr: number
-			time: number
+			height: number
 			reveal: number
+			time: number
+			width: number
 		}) => {
 			if (hasDisposed) return
 			const safeWidth = Math.max(1, width)
@@ -237,7 +239,7 @@ export function createBlackHoleScene({
 			}
 			composer.render(0)
 		}
-		return { render, dispose }
+		return { dispose, render }
 	} catch (error) {
 		dispose()
 		throw error

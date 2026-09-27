@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/react/macro'
+
 import { formatHourMinute } from '../../model/detail-formatting'
 
 export const formatOptionalHour = (time: null | number) =>

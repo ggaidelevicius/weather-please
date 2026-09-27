@@ -31,6 +31,61 @@ export async function launchLunarNewYear(): Promise<() => void> {
 	}
 }
 
+function createLanternParticle(index: number) {
+	const depth = index % 4 === 0 ? 1 : index % 3 === 0 ? 0.55 : 0.78
+	return {
+		delay: randomInRange({ max: 2.4, min: 0 }),
+		depth,
+		opacity: randomInRange({ max: 0.88, min: 0.6 }) * depth,
+		phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+		progress: Math.random(),
+		size: randomInRange({ max: 43, min: 23 }) * depth,
+		speed: randomInRange({ max: 0.014, min: 0.007 }) * depth,
+		sway: randomInRange({ max: 20, min: 6 }) * depth,
+		x: Math.random(),
+	}
+}
+
+function drawLantern({
+	anchorY,
+	artwork,
+	context,
+	opacity,
+	scale,
+	sprite,
+}: {
+	anchorY: number
+	artwork: LunarArtwork
+	context: CanvasRenderingContext2D
+	opacity: number
+	scale: number
+	sprite: LunarArtwork['lanterns'][number]
+}) {
+	const lightX = (sprite.lightX - sprite.anchorX) * scale
+	const lightY = anchorY + (sprite.lightY - sprite.anchorY) * scale
+	const glowSize = 440 * scale
+	context.globalAlpha = opacity * 0.52
+	context.drawImage(
+		artwork.glow,
+		lightX - glowSize / 2,
+		lightY - glowSize / 2,
+		glowSize,
+		glowSize,
+	)
+	context.globalAlpha = opacity
+	context.drawImage(
+		sprite.canvas,
+		-sprite.anchorX * scale,
+		anchorY - sprite.anchorY * scale,
+		sprite.width * scale,
+		sprite.height * scale,
+	)
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
 function mountLunarNewYear() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
@@ -45,8 +100,8 @@ function mountLunarNewYear() {
 	let height = Math.max(1, window.innerHeight)
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -104,12 +159,12 @@ function mountLunarNewYear() {
 			context.translate(x, y)
 			context.rotate(sway * 0.07 + Math.sin(elapsed * 0.18) * 0.025)
 			drawLantern({
-				context,
-				artwork,
-				sprite,
-				scale,
-				opacity: particle.opacity * appearance * edge * light,
 				anchorY: -(sprite.lightY - sprite.anchorY) * scale,
+				artwork,
+				context,
+				opacity: particle.opacity * appearance * edge * light,
+				scale,
+				sprite,
 			})
 			context.restore()
 		}
@@ -134,12 +189,12 @@ function mountLunarNewYear() {
 			context.lineTo(0, cordLength)
 			context.stroke()
 			drawLantern({
-				context,
-				artwork,
-				sprite: artwork.lanterns[index],
-				scale,
-				opacity: reveal * 0.92,
 				anchorY: cordLength,
+				artwork,
+				context,
+				opacity: reveal * 0.92,
+				scale,
+				sprite: artwork.lanterns[index],
 			})
 			context.restore()
 		}
@@ -218,61 +273,6 @@ function mountLunarNewYear() {
 		throw error
 	}
 	return cleanup
-}
-
-function drawLantern({
-	context,
-	artwork,
-	sprite,
-	scale,
-	opacity,
-	anchorY,
-}: {
-	context: CanvasRenderingContext2D
-	artwork: LunarArtwork
-	sprite: LunarArtwork['lanterns'][number]
-	scale: number
-	opacity: number
-	anchorY: number
-}) {
-	const lightX = (sprite.lightX - sprite.anchorX) * scale
-	const lightY = anchorY + (sprite.lightY - sprite.anchorY) * scale
-	const glowSize = 440 * scale
-	context.globalAlpha = opacity * 0.52
-	context.drawImage(
-		artwork.glow,
-		lightX - glowSize / 2,
-		lightY - glowSize / 2,
-		glowSize,
-		glowSize,
-	)
-	context.globalAlpha = opacity
-	context.drawImage(
-		sprite.canvas,
-		-sprite.anchorX * scale,
-		anchorY - sprite.anchorY * scale,
-		sprite.width * scale,
-		sprite.height * scale,
-	)
-}
-
-function createLanternParticle(index: number) {
-	const depth = index % 4 === 0 ? 1 : index % 3 === 0 ? 0.55 : 0.78
-	return {
-		depth,
-		x: Math.random(),
-		progress: Math.random(),
-		phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-		delay: randomInRange({ min: 0, max: 2.4 }),
-		size: randomInRange({ min: 23, max: 43 }) * depth,
-		speed: randomInRange({ min: 0.007, max: 0.014 }) * depth,
-		sway: randomInRange({ min: 6, max: 20 }) * depth,
-		opacity: randomInRange({ min: 0.6, max: 0.88 }) * depth,
-	}
-}
-
-function easeOut(progress: number) {
-	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
 }
 
 function wrap(value: number) {

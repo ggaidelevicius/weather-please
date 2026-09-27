@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
-	SETTINGS_MODAL_STATE_EVENT,
 	setSettingsModalOpenState,
+	SETTINGS_MODAL_STATE_EVENT,
 } from '../../../../shared/lib/settings-modal-state'
 import { launchHalloweenSpirits } from '../halloween'
 import * as artwork from '../halloween-artwork'
@@ -74,7 +74,7 @@ describe('Halloween scene', () => {
 
 		expect(canvas).toHaveAttribute('width', '780')
 		expect(canvas).toHaveAttribute('height', '1688')
-		expect(canvas).toHaveStyle({ width: '390px', height: '844px' })
+		expect(canvas).toHaveStyle({ height: '844px', width: '390px' })
 		expect(scene.context.clearRect).toHaveBeenCalledTimes(drawCount + 2)
 		expect(scene.createArtwork).toHaveBeenCalledOnce()
 		expect(Math.random).toHaveBeenCalledTimes(randomCount)
@@ -318,13 +318,13 @@ async function createScene({
 		.mockImplementation(() => {
 			const createCanvas = () => document.createElement('canvas')
 			return {
-				moon: createCanvas(),
-				pumpkins: Array.from({ length: 3 }, createCanvas),
-				pumpkinLights: Array.from({ length: 3 }, createCanvas),
-				ghosts: Array.from({ length: 3 }, createCanvas),
 				bats: Array.from({ length: 3 }, createCanvas),
-				haze: createCanvas(),
 				ember: createCanvas(),
+				ghosts: Array.from({ length: 3 }, createCanvas),
+				haze: createCanvas(),
+				moon: createCanvas(),
+				pumpkinLights: Array.from({ length: 3 }, createCanvas),
+				pumpkins: Array.from({ length: 3 }, createCanvas),
 			}
 		})
 	const images: {
@@ -383,14 +383,19 @@ async function createScene({
 	}
 	const getSnapshot = () => ({
 		images: [...images],
-		translations: [...context.translate.mock.calls],
 		rotations: [...context.rotate.mock.calls],
 		scales: [...context.scale.mock.calls],
+		translations: [...context.translate.mock.calls],
 	})
 	cleanupEffect = await launchHalloweenSpirits()
 	if (shouldMount) vi.advanceTimersByTime(900)
 
 	return {
+		captureFrame: (time: number) => {
+			clearSnapshot()
+			runFrame(time)
+			return getSnapshot()
+		},
 		clearSnapshot,
 		context,
 		createArtwork,
@@ -404,11 +409,6 @@ async function createScene({
 		motion,
 		pending,
 		runFrame,
-		captureFrame: (time: number) => {
-			clearSnapshot()
-			runFrame(time)
-			return getSnapshot()
-		},
 		setHidden: (isNextHidden: boolean) => {
 			isDocumentHidden = isNextHidden
 			document.dispatchEvent(new Event('visibilitychange'))

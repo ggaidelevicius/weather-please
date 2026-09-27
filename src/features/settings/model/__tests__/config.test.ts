@@ -54,17 +54,17 @@ describe('seasonal background configuration', () => {
 			const config = {
 				...createDefaultConfig(),
 				seasonalBackground,
-				showSeasonalEvents: false,
 				showChristmasEvent: false,
 				showChristmasEventBackground: false,
+				showSeasonalEvents: false,
 			}
 
 			expect(configSchema.safeParse(config).success).toBe(false)
 			expect(repairConfig(config)).toMatchObject({
 				seasonalBackground: SEASONAL_BACKGROUND_AUTOMATIC,
-				showSeasonalEvents: false,
 				showChristmasEvent: false,
 				showChristmasEventBackground: false,
+				showSeasonalEvents: false,
 			})
 		},
 	)
@@ -73,21 +73,21 @@ describe('seasonal background configuration', () => {
 describe('repairConfig', () => {
 	it('repairs invalid fields while preserving valid preferences', () => {
 		const config = repairConfig({
+			daysToRetrieve: '900',
+			installed: -1,
+			lang: 'missing',
 			lat: 123,
 			lon: '115.8',
-			lang: 'missing',
-			daysToRetrieve: '900',
 			showAlerts: 'false',
 			showCalendarEvents: false,
 			temperatureUnit: 'invalid',
-			installed: -1,
 			unknownField: 'ignored',
 		})
 		expect(config).toMatchObject({
+			daysToRetrieve: '3',
+			lang: 'en',
 			lat: '',
 			lon: '115.8',
-			lang: 'en',
-			daysToRetrieve: '3',
 			showAlerts: true,
 			showCalendarEvents: false,
 		})

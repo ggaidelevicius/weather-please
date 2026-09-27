@@ -26,10 +26,10 @@ export const fetchUpcomingGoogleCalendarEvents = async ({
 	})
 
 	const response = await fetch(`${EVENTS_ENDPOINT}?${params.toString()}`, {
-		signal,
 		headers: {
 			Authorization: `Bearer ${accessToken}`,
 		},
+		signal,
 	})
 
 	if (response.status === 401) {

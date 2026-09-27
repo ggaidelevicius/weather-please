@@ -1,9 +1,3 @@
-type Sprite = {
-	canvas: HTMLCanvasElement
-	width: number
-	height: number
-}
-
 type LanternSprite = Sprite & {
 	anchorX: number
 	anchorY: number
@@ -11,32 +5,56 @@ type LanternSprite = Sprite & {
 	lightY: number
 }
 
+type Sprite = {
+	canvas: HTMLCanvasElement
+	height: number
+	width: number
+}
+
 export function createEidAlFitrArtwork({ dpr }: { dpr: number }): {
 	crescent: Sprite
-	lanterns: LanternSprite[]
 	glow: Sprite
 	haze: Sprite
-	star: Sprite
+	lanterns: LanternSprite[]
 	rosette: Sprite
+	star: Sprite
 } {
 	const pixelRatio = Math.min(2, Math.max(1, dpr))
 	return {
 		crescent: createCrescent(pixelRatio),
+		glow: createGlow(pixelRatio),
+		haze: createHaze(pixelRatio),
 		lanterns: [0, 1, 2].map((variant) =>
 			createLantern({ pixelRatio, variant }),
 		),
-		glow: createGlow(pixelRatio),
-		haze: createHaze(pixelRatio),
-		star: createStar(pixelRatio),
 		rosette: createRosette(pixelRatio),
+		star: createStar(pixelRatio),
 	}
 }
 
+function createCanvas({
+	height,
+	pixelRatio,
+	width,
+}: {
+	height: number
+	pixelRatio: number
+	width: number
+}) {
+	const canvas = document.createElement('canvas')
+	canvas.width = Math.round(width * pixelRatio)
+	canvas.height = Math.round(height * pixelRatio)
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Eid al-Fitr artwork')
+	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+	return { context, sprite: { canvas, height, width } }
+}
+
 function createCrescent(pixelRatio: number): Sprite {
-	const { sprite: surface, context } = createCanvas({
-		width: 320,
+	const { context, sprite: surface } = createCanvas({
 		height: 320,
 		pixelRatio,
+		width: 320,
 	})
 	const moon = context.createRadialGradient(104, 126, 4, 153, 170, 109)
 	moon.addColorStop(0, '#fff6df')
@@ -70,14 +88,53 @@ function createCrescent(pixelRatio: number): Sprite {
 	context.arc(185, 145, 93, 0, Math.PI * 2)
 	context.fill()
 	context.globalCompositeOperation = 'source-over'
-	const { sprite, context: composite } = createCanvas({
-		width: 320,
+	const { context: composite, sprite } = createCanvas({
 		height: 320,
 		pixelRatio,
+		width: 320,
 	})
 	composite.shadowColor = 'rgba(246, 225, 184, 0.19)'
 	composite.shadowBlur = 18 * pixelRatio
 	composite.drawImage(surface.canvas, 0, 0, 320, 320)
+	return sprite
+}
+
+function createGlow(pixelRatio: number): Sprite {
+	const { context, sprite } = createCanvas({
+		height: 256,
+		pixelRatio,
+		width: 256,
+	})
+	const gradient = context.createRadialGradient(128, 128, 0, 128, 128, 128)
+	gradient.addColorStop(0, 'rgba(255, 224, 160, 0.48)')
+	gradient.addColorStop(0.18, 'rgba(250, 202, 128, 0.25)')
+	gradient.addColorStop(0.48, 'rgba(230, 170, 91, 0.07)')
+	gradient.addColorStop(0.8, 'rgba(209, 147, 79, 0.012)')
+	gradient.addColorStop(1, 'rgba(202, 138, 79, 0)')
+	context.fillStyle = gradient
+	context.fillRect(0, 0, 256, 256)
+	return sprite
+}
+
+function createHaze(pixelRatio: number): Sprite {
+	const { context, sprite } = createCanvas({
+		height: 512,
+		pixelRatio,
+		width: 512,
+	})
+	const teal = context.createRadialGradient(207, 278, 0, 231, 256, 247)
+	teal.addColorStop(0, 'rgba(76, 138, 132, 0.28)')
+	teal.addColorStop(0.42, 'rgba(50, 104, 112, 0.13)')
+	teal.addColorStop(0.75, 'rgba(44, 74, 110, 0.035)')
+	teal.addColorStop(1, 'rgba(44, 74, 110, 0)')
+	context.fillStyle = teal
+	context.fillRect(0, 0, 512, 512)
+	const indigo = context.createRadialGradient(310, 176, 0, 290, 219, 203)
+	indigo.addColorStop(0, 'rgba(104, 101, 163, 0.14)')
+	indigo.addColorStop(0.6, 'rgba(75, 81, 140, 0.06)')
+	indigo.addColorStop(1, 'rgba(64, 72, 126, 0)')
+	context.fillStyle = indigo
+	context.fillRect(0, 0, 512, 512)
 	return sprite
 }
 
@@ -88,10 +145,10 @@ function createLantern({
 	pixelRatio: number
 	variant: number
 }): LanternSprite {
-	const { sprite, context } = createCanvas({
-		width: 180,
+	const { context, sprite } = createCanvas({
 		height: 280,
 		pixelRatio,
+		width: 180,
 	})
 	const brass = context.createLinearGradient(40, 0, 140, 0)
 	brass.addColorStop(0, '#725d42')
@@ -265,23 +322,11 @@ function createLantern({
 	return { ...sprite, anchorX: 90, anchorY: 14, lightX: 90, lightY: 169 }
 }
 
-function lanternBody(context: CanvasRenderingContext2D) {
-	context.beginPath()
-	context.moveTo(46, 94)
-	context.lineTo(134, 94)
-	context.lineTo(140, 190)
-	context.lineTo(118, 223)
-	context.lineTo(62, 223)
-	context.lineTo(40, 190)
-	context.closePath()
-	return context
-}
-
 function createRosette(pixelRatio: number): Sprite {
-	const { sprite, context } = createCanvas({
-		width: 384,
+	const { context, sprite } = createCanvas({
 		height: 384,
 		pixelRatio,
+		width: 384,
 	})
 	context.translate(192, 192)
 	context.strokeStyle = 'rgba(195, 171, 117, 0.69)'
@@ -343,50 +388,11 @@ function createRosette(pixelRatio: number): Sprite {
 	return sprite
 }
 
-function createGlow(pixelRatio: number): Sprite {
-	const { sprite, context } = createCanvas({
-		width: 256,
-		height: 256,
-		pixelRatio,
-	})
-	const gradient = context.createRadialGradient(128, 128, 0, 128, 128, 128)
-	gradient.addColorStop(0, 'rgba(255, 224, 160, 0.48)')
-	gradient.addColorStop(0.18, 'rgba(250, 202, 128, 0.25)')
-	gradient.addColorStop(0.48, 'rgba(230, 170, 91, 0.07)')
-	gradient.addColorStop(0.8, 'rgba(209, 147, 79, 0.012)')
-	gradient.addColorStop(1, 'rgba(202, 138, 79, 0)')
-	context.fillStyle = gradient
-	context.fillRect(0, 0, 256, 256)
-	return sprite
-}
-
-function createHaze(pixelRatio: number): Sprite {
-	const { sprite, context } = createCanvas({
-		width: 512,
-		height: 512,
-		pixelRatio,
-	})
-	const teal = context.createRadialGradient(207, 278, 0, 231, 256, 247)
-	teal.addColorStop(0, 'rgba(76, 138, 132, 0.28)')
-	teal.addColorStop(0.42, 'rgba(50, 104, 112, 0.13)')
-	teal.addColorStop(0.75, 'rgba(44, 74, 110, 0.035)')
-	teal.addColorStop(1, 'rgba(44, 74, 110, 0)')
-	context.fillStyle = teal
-	context.fillRect(0, 0, 512, 512)
-	const indigo = context.createRadialGradient(310, 176, 0, 290, 219, 203)
-	indigo.addColorStop(0, 'rgba(104, 101, 163, 0.14)')
-	indigo.addColorStop(0.6, 'rgba(75, 81, 140, 0.06)')
-	indigo.addColorStop(1, 'rgba(64, 72, 126, 0)')
-	context.fillStyle = indigo
-	context.fillRect(0, 0, 512, 512)
-	return sprite
-}
-
 function createStar(pixelRatio: number): Sprite {
-	const { sprite, context } = createCanvas({
-		width: 64,
+	const { context, sprite } = createCanvas({
 		height: 64,
 		pixelRatio,
+		width: 64,
 	})
 	const gradient = context.createRadialGradient(32, 32, 0, 32, 32, 28)
 	gradient.addColorStop(0, 'rgba(255, 239, 198, 0.8)')
@@ -406,20 +412,14 @@ function createStar(pixelRatio: number): Sprite {
 	return sprite
 }
 
-function createCanvas({
-	width,
-	height,
-	pixelRatio,
-}: {
-	width: number
-	height: number
-	pixelRatio: number
-}) {
-	const canvas = document.createElement('canvas')
-	canvas.width = Math.round(width * pixelRatio)
-	canvas.height = Math.round(height * pixelRatio)
-	const context = canvas.getContext('2d')
-	if (!context) throw new Error('Unable to create Eid al-Fitr artwork')
-	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
-	return { sprite: { canvas, width, height }, context }
+function lanternBody(context: CanvasRenderingContext2D) {
+	context.beginPath()
+	context.moveTo(46, 94)
+	context.lineTo(134, 94)
+	context.lineTo(140, 190)
+	context.lineTo(118, 223)
+	context.lineTo(62, 223)
+	context.lineTo(40, 190)
+	context.closePath()
+	return context
 }

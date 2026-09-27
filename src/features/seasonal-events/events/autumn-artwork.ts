@@ -1,9 +1,9 @@
 type AutumnArtwork = {
+	canopy: HTMLCanvasElement
+	canopyHeight: number
+	canopyWidth: number
 	leaves: HTMLCanvasElement[]
 	light: HTMLCanvasElement
-	canopy: HTMLCanvasElement
-	canopyWidth: number
-	canopyHeight: number
 }
 
 export function createAutumnArtwork({ dpr }: { dpr: number }): AutumnArtwork {
@@ -15,28 +15,79 @@ export function createAutumnArtwork({ dpr }: { dpr: number }): AutumnArtwork {
 	]
 	const leaves = palettes.flatMap((palette) =>
 		Array.from({ length: 3 }, (_, shape) =>
-			createLeaf({ pixelRatio, palette, shape }),
+			createLeaf({ palette, pixelRatio, shape }),
 		),
 	)
 	const light = createLight(pixelRatio)
 	const canopyWidth = 600
 	const canopyHeight = 230
 	const canopy = createCanopy({
+		height: canopyHeight,
 		pixelRatio,
 		width: canopyWidth,
-		height: canopyHeight,
 	})
-	return { leaves, light, canopy, canopyWidth, canopyHeight }
+	return { canopy, canopyHeight, canopyWidth, leaves, light }
+}
+
+function createCanopy({
+	height,
+	pixelRatio,
+	width,
+}: {
+	height: number
+	pixelRatio: number
+	width: number
+}): HTMLCanvasElement {
+	const source = createCanvas({ height, pixelRatio, width })
+	const random = createRandom(220927)
+	for (let cluster = 0; cluster < 17; cluster += 1) {
+		const isAlongLeft = cluster > 12
+		const x = isAlongLeft ? -7 : cluster * 47 - 20
+		const y = isAlongLeft ? 90 + (cluster - 13) * 32 : -9 + random() * 27
+		for (let leaf = 0; leaf < 4; leaf += 1) {
+			source.context.fillStyle = `rgba(0, 0, 0, ${0.32 + random() * 0.32})`
+			source.context.beginPath()
+			source.context.ellipse(
+				x + (random() - 0.5) * 52,
+				y + (random() - 0.25) * 62,
+				22 + random() * 29,
+				10 + random() * 17,
+				random() * Math.PI,
+				0,
+				Math.PI * 2,
+			)
+			source.context.fill()
+		}
+	}
+	const { canvas, context } = createCanvas({ height, pixelRatio, width })
+	context.filter = `blur(${8 * pixelRatio}px)`
+	context.drawImage(source.canvas, 0, 0, width, height)
+	context.filter = 'none'
+	context.globalCompositeOperation = 'destination-in'
+	const horizontalFade = context.createLinearGradient(0, 0, width, 0)
+	horizontalFade.addColorStop(0, '#000')
+	horizontalFade.addColorStop(0.62, 'rgba(0, 0, 0, 0.75)')
+	horizontalFade.addColorStop(1, 'rgba(0, 0, 0, 0)')
+	context.fillStyle = horizontalFade
+	context.fillRect(0, 0, width, height)
+	const verticalFade = context.createLinearGradient(0, 0, 0, height)
+	verticalFade.addColorStop(0, '#000')
+	verticalFade.addColorStop(0.5, 'rgba(0, 0, 0, 0.65)')
+	verticalFade.addColorStop(1, 'rgba(0, 0, 0, 0)')
+	context.fillStyle = verticalFade
+	context.fillRect(0, 0, width, height)
+	context.globalCompositeOperation = 'source-over'
+	return canvas
 }
 
 function createCanvas({
-	width,
 	height,
 	pixelRatio,
+	width,
 }: {
-	width: number
 	height: number
 	pixelRatio: number
+	width: number
 }) {
 	const canvas = document.createElement('canvas')
 	canvas.width = Math.round(width * pixelRatio)
@@ -49,18 +100,18 @@ function createCanvas({
 }
 
 function createLeaf({
-	pixelRatio,
 	palette,
+	pixelRatio,
 	shape,
 }: {
-	pixelRatio: number
 	palette: string[]
+	pixelRatio: number
 	shape: number
 }): HTMLCanvasElement {
 	const { canvas, context } = createCanvas({
-		width: 64,
 		height: 64,
 		pixelRatio,
+		width: 64,
 	})
 	context.translate(32, 30)
 	const fold = context.createLinearGradient(-20, -5, 18, 5)
@@ -115,9 +166,9 @@ function createLeaf({
 
 function createLight(pixelRatio: number): HTMLCanvasElement {
 	const { canvas, context } = createCanvas({
-		width: 128,
 		height: 128,
 		pixelRatio,
+		width: 128,
 	})
 	const light = context.createRadialGradient(64, 64, 0, 64, 64, 64)
 	light.addColorStop(0, 'rgba(255, 232, 187, 0.8)')
@@ -127,57 +178,6 @@ function createLight(pixelRatio: number): HTMLCanvasElement {
 	light.addColorStop(1, 'rgba(218, 162, 101, 0)')
 	context.fillStyle = light
 	context.fillRect(0, 0, 128, 128)
-	return canvas
-}
-
-function createCanopy({
-	pixelRatio,
-	width,
-	height,
-}: {
-	pixelRatio: number
-	width: number
-	height: number
-}): HTMLCanvasElement {
-	const source = createCanvas({ width, height, pixelRatio })
-	const random = createRandom(220927)
-	for (let cluster = 0; cluster < 17; cluster += 1) {
-		const isAlongLeft = cluster > 12
-		const x = isAlongLeft ? -7 : cluster * 47 - 20
-		const y = isAlongLeft ? 90 + (cluster - 13) * 32 : -9 + random() * 27
-		for (let leaf = 0; leaf < 4; leaf += 1) {
-			source.context.fillStyle = `rgba(0, 0, 0, ${0.32 + random() * 0.32})`
-			source.context.beginPath()
-			source.context.ellipse(
-				x + (random() - 0.5) * 52,
-				y + (random() - 0.25) * 62,
-				22 + random() * 29,
-				10 + random() * 17,
-				random() * Math.PI,
-				0,
-				Math.PI * 2,
-			)
-			source.context.fill()
-		}
-	}
-	const { canvas, context } = createCanvas({ width, height, pixelRatio })
-	context.filter = `blur(${8 * pixelRatio}px)`
-	context.drawImage(source.canvas, 0, 0, width, height)
-	context.filter = 'none'
-	context.globalCompositeOperation = 'destination-in'
-	const horizontalFade = context.createLinearGradient(0, 0, width, 0)
-	horizontalFade.addColorStop(0, '#000')
-	horizontalFade.addColorStop(0.62, 'rgba(0, 0, 0, 0.75)')
-	horizontalFade.addColorStop(1, 'rgba(0, 0, 0, 0)')
-	context.fillStyle = horizontalFade
-	context.fillRect(0, 0, width, height)
-	const verticalFade = context.createLinearGradient(0, 0, 0, height)
-	verticalFade.addColorStop(0, '#000')
-	verticalFade.addColorStop(0.5, 'rgba(0, 0, 0, 0.65)')
-	verticalFade.addColorStop(1, 'rgba(0, 0, 0, 0)')
-	context.fillStyle = verticalFade
-	context.fillRect(0, 0, width, height)
-	context.globalCompositeOperation = 'source-over'
 	return canvas
 }
 

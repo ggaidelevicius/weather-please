@@ -2,8 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { createSettingsModalAnimationController } from '../settings-modal-animation-controller'
 import {
-	SETTINGS_MODAL_STATE_EVENT,
 	setSettingsModalOpenState,
+	SETTINGS_MODAL_STATE_EVENT,
 } from '../settings-modal-state'
 
 const controllers: ReturnType<typeof createSettingsModalAnimationController>[] =
@@ -182,8 +182,8 @@ describe('settings modal animation controller', () => {
 	it('preserves interval pausing and CSS overlay marking', () => {
 		const overlay = document.createElement('div')
 		Object.assign(overlay.style, {
-			position: 'fixed',
 			pointerEvents: 'none',
+			position: 'fixed',
 			zIndex: '0',
 		})
 		document.body.appendChild(overlay)

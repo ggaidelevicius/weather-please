@@ -4,24 +4,24 @@ type EasterArtwork = {
 	glow: HTMLCanvasElement
 }
 
-type Palette = { light: string; color: string; shade: string }
+type Palette = { color: string; light: string; shade: string }
 
 export function createEasterArtwork({ dpr }: { dpr: number }): EasterArtwork {
 	const pixelRatio = Math.min(2, Math.max(1, dpr))
 	const eggs = [
-		{ light: '#e7ddff', color: '#c4b5fd', shade: '#a182d2' },
-		{ light: '#ffdaec', color: '#f9a8d4', shade: '#df80b1' },
-		{ light: '#d0eaff', color: '#93c5fd', shade: '#659ddd' },
-		{ light: '#d4fae0', color: '#86efac', shade: '#5ac399' },
-		{ light: '#fff5c4', color: '#fde68a', shade: '#e0bd58' },
-		{ light: '#ffdfc9', color: '#fdba74', shade: '#e69a69' },
-	].map((palette, variant) => createEgg({ pixelRatio, palette, variant }))
+		{ color: '#c4b5fd', light: '#e7ddff', shade: '#a182d2' },
+		{ color: '#f9a8d4', light: '#ffdaec', shade: '#df80b1' },
+		{ color: '#93c5fd', light: '#d0eaff', shade: '#659ddd' },
+		{ color: '#86efac', light: '#d4fae0', shade: '#5ac399' },
+		{ color: '#fde68a', light: '#fff5c4', shade: '#e0bd58' },
+		{ color: '#fdba74', light: '#ffdfc9', shade: '#e69a69' },
+	].map((palette, variant) => createEgg({ palette, pixelRatio, variant }))
 	const flowers = [
-		{ light: '#fffdf0', color: '#fff3ce', shade: '#efd99d' },
-		{ light: '#ffe0ee', color: '#f9a8d4', shade: '#e879af' },
-		{ light: '#f0e6ff', color: '#d0b7f4', shade: '#aa89da' },
-	].map((palette, variant) => createFlower({ pixelRatio, palette, variant }))
-	const { canvas: glow, context } = createCanvas({ size: 256, pixelRatio })
+		{ color: '#fff3ce', light: '#fffdf0', shade: '#efd99d' },
+		{ color: '#f9a8d4', light: '#ffe0ee', shade: '#e879af' },
+		{ color: '#d0b7f4', light: '#f0e6ff', shade: '#aa89da' },
+	].map((palette, variant) => createFlower({ palette, pixelRatio, variant }))
+	const { canvas: glow, context } = createCanvas({ pixelRatio, size: 256 })
 	const gradient = context.createRadialGradient(128, 128, 0, 128, 128, 128)
 	gradient.addColorStop(0, 'rgba(255, 215, 195, 0.58)')
 	gradient.addColorStop(0.24, 'rgba(253, 193, 204, 0.43)')
@@ -33,16 +33,32 @@ export function createEasterArtwork({ dpr }: { dpr: number }): EasterArtwork {
 	return { eggs, flowers, glow }
 }
 
-function createEgg({
+function createCanvas({
 	pixelRatio,
-	palette,
-	variant,
+	size,
 }: {
 	pixelRatio: number
+	size: number
+}) {
+	const canvas = document.createElement('canvas')
+	canvas.width = Math.round(size * pixelRatio)
+	canvas.height = canvas.width
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create the Easter artwork canvas')
+	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+	return { canvas, context }
+}
+
+function createEgg({
+	palette,
+	pixelRatio,
+	variant,
+}: {
 	palette: Palette
+	pixelRatio: number
 	variant: number
 }): HTMLCanvasElement {
-	const { canvas, context } = createCanvas({ size: 128, pixelRatio })
+	const { canvas, context } = createCanvas({ pixelRatio, size: 128 })
 	const shell = context.createRadialGradient(52, 44, 6, 66, 64, 46)
 	shell.addColorStop(0, palette.light)
 	shell.addColorStop(0.47, palette.color)
@@ -74,119 +90,16 @@ function createEgg({
 	return canvas
 }
 
-function drawEggPattern({
-	context,
-	variant,
-}: {
-	context: CanvasRenderingContext2D
-	variant: number
-}) {
-	context.lineCap = 'round'
-	context.lineJoin = 'round'
-	if (variant === 0) {
-		for (const y of [53, 78]) {
-			drawBand({ context, y, color: '#fff0bf', width: 8 })
-		}
-		drawBand({ context, y: 66, color: '#f179ae', width: 4 })
-	} else if (variant === 1) {
-		context.fillStyle = '#fff5cc'
-		for (const [x, y] of [
-			[56, 44],
-			[76, 51],
-			[47, 63],
-			[64, 66],
-			[82, 73],
-			[52, 84],
-			[72, 89],
-		]) {
-			context.beginPath()
-			context.arc(x, y, 4.7, 0, Math.PI * 2)
-			context.fill()
-		}
-	} else if (variant === 2 || variant === 4) {
-		context.strokeStyle = variant === 2 ? '#fff2c7' : '#b598dc'
-		context.lineWidth = variant === 2 ? 5.2 : 5.8
-		for (const y of [56, 78]) {
-			context.beginPath()
-			context.moveTo(32, y - 4)
-			for (let point = 0; point < 7; point += 1) {
-				context.lineTo(38 + point * 10, y + (point % 2 === 0 ? 4 : -4))
-			}
-			context.stroke()
-		}
-		if (variant === 4) {
-			drawBand({ context, y: 67, color: '#fff8df', width: 4 })
-		}
-	} else if (variant === 3) {
-		for (const { x, y } of [
-			{ x: 56, y: 52 },
-			{ x: 72, y: 78 },
-		]) {
-			context.fillStyle = '#fff7da'
-			for (let petal = 0; petal < 5; petal += 1) {
-				const angle = (petal * Math.PI * 2) / 5
-				context.beginPath()
-				context.ellipse(
-					x + Math.cos(angle) * 5.5,
-					y + Math.sin(angle) * 5.5,
-					4.2,
-					3.4,
-					angle,
-					0,
-					Math.PI * 2,
-				)
-				context.fill()
-			}
-			context.fillStyle = '#f1b955'
-			context.beginPath()
-			context.arc(x, y, 3.3, 0, Math.PI * 2)
-			context.fill()
-		}
-	} else {
-		for (const y of [52, 81]) {
-			drawBand({ context, y, color: '#87cdb9', width: 6.5 })
-		}
-		context.fillStyle = '#fff4d6'
-		for (const x of [48, 64, 80]) {
-			context.beginPath()
-			context.arc(x, 67, 4.3, 0, Math.PI * 2)
-			context.fill()
-		}
-	}
-	return context
-}
-
-function drawBand({
-	context,
-	y,
-	color,
-	width,
-}: {
-	context: CanvasRenderingContext2D
-	y: number
-	color: string
-	width: number
-}) {
-	context.strokeStyle = color
-	context.lineWidth = width
-	context.beginPath()
-	context.moveTo(31, y - 2)
-	context.bezierCurveTo(48, y + 1, 60, y + 5, 73, y + 2)
-	context.quadraticCurveTo(86, y, 97, y - 2)
-	context.stroke()
-	return context
-}
-
 function createFlower({
-	pixelRatio,
 	palette,
+	pixelRatio,
 	variant,
 }: {
-	pixelRatio: number
 	palette: Palette
+	pixelRatio: number
 	variant: number
 }): HTMLCanvasElement {
-	const { canvas, context } = createCanvas({ size: 128, pixelRatio })
+	const { canvas, context } = createCanvas({ pixelRatio, size: 128 })
 	context.translate(64, 64)
 	context.shadowColor = palette.color
 	context.shadowBlur = 7 * pixelRatio
@@ -221,18 +134,105 @@ function createFlower({
 	return canvas
 }
 
-function createCanvas({
-	size,
-	pixelRatio,
+function drawBand({
+	color,
+	context,
+	width,
+	y,
 }: {
-	size: number
-	pixelRatio: number
+	color: string
+	context: CanvasRenderingContext2D
+	width: number
+	y: number
 }) {
-	const canvas = document.createElement('canvas')
-	canvas.width = Math.round(size * pixelRatio)
-	canvas.height = canvas.width
-	const context = canvas.getContext('2d')
-	if (!context) throw new Error('Unable to create the Easter artwork canvas')
-	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
-	return { canvas, context }
+	context.strokeStyle = color
+	context.lineWidth = width
+	context.beginPath()
+	context.moveTo(31, y - 2)
+	context.bezierCurveTo(48, y + 1, 60, y + 5, 73, y + 2)
+	context.quadraticCurveTo(86, y, 97, y - 2)
+	context.stroke()
+	return context
+}
+
+function drawEggPattern({
+	context,
+	variant,
+}: {
+	context: CanvasRenderingContext2D
+	variant: number
+}) {
+	context.lineCap = 'round'
+	context.lineJoin = 'round'
+	if (variant === 0) {
+		for (const y of [53, 78]) {
+			drawBand({ color: '#fff0bf', context, width: 8, y })
+		}
+		drawBand({ color: '#f179ae', context, width: 4, y: 66 })
+	} else if (variant === 1) {
+		context.fillStyle = '#fff5cc'
+		for (const [x, y] of [
+			[56, 44],
+			[76, 51],
+			[47, 63],
+			[64, 66],
+			[82, 73],
+			[52, 84],
+			[72, 89],
+		]) {
+			context.beginPath()
+			context.arc(x, y, 4.7, 0, Math.PI * 2)
+			context.fill()
+		}
+	} else if (variant === 2 || variant === 4) {
+		context.strokeStyle = variant === 2 ? '#fff2c7' : '#b598dc'
+		context.lineWidth = variant === 2 ? 5.2 : 5.8
+		for (const y of [56, 78]) {
+			context.beginPath()
+			context.moveTo(32, y - 4)
+			for (let point = 0; point < 7; point += 1) {
+				context.lineTo(38 + point * 10, y + (point % 2 === 0 ? 4 : -4))
+			}
+			context.stroke()
+		}
+		if (variant === 4) {
+			drawBand({ color: '#fff8df', context, width: 4, y: 67 })
+		}
+	} else if (variant === 3) {
+		for (const { x, y } of [
+			{ x: 56, y: 52 },
+			{ x: 72, y: 78 },
+		]) {
+			context.fillStyle = '#fff7da'
+			for (let petal = 0; petal < 5; petal += 1) {
+				const angle = (petal * Math.PI * 2) / 5
+				context.beginPath()
+				context.ellipse(
+					x + Math.cos(angle) * 5.5,
+					y + Math.sin(angle) * 5.5,
+					4.2,
+					3.4,
+					angle,
+					0,
+					Math.PI * 2,
+				)
+				context.fill()
+			}
+			context.fillStyle = '#f1b955'
+			context.beginPath()
+			context.arc(x, y, 3.3, 0, Math.PI * 2)
+			context.fill()
+		}
+	} else {
+		for (const y of [52, 81]) {
+			drawBand({ color: '#87cdb9', context, width: 6.5, y })
+		}
+		context.fillStyle = '#fff4d6'
+		for (const x of [48, 64, 80]) {
+			context.beginPath()
+			context.arc(x, 67, 4.3, 0, Math.PI * 2)
+			context.fill()
+		}
+	}
+	return context
 }

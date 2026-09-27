@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
-	SETTINGS_MODAL_STATE_EVENT,
 	setSettingsModalOpenState,
+	SETTINGS_MODAL_STATE_EVENT,
 } from '../../../../shared/lib/settings-modal-state'
 import { launchLunarNewYear } from '../lunar-new-year'
 import * as artwork from '../lunar-new-year-artwork'
@@ -371,10 +371,6 @@ const createScene = async ({
 	if (shouldMount) vi.advanceTimersByTime(900)
 
 	return {
-		context,
-		motion,
-		pending,
-		runFrame,
 		captureFrame: (time: number) => {
 			context.translate.mockClear()
 			context.rotate.mockClear()
@@ -388,6 +384,10 @@ const createScene = async ({
 				translations: [...context.translate.mock.calls],
 			}
 		},
+		context,
+		motion,
+		pending,
+		runFrame,
 		setHidden: (isNextHidden: boolean) => {
 			isDocumentHidden = isNextHidden
 			document.dispatchEvent(new Event('visibilitychange'))

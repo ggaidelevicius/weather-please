@@ -44,7 +44,6 @@ it('packages an enabled application identity rule for map tile requests', () => 
 		expect(rules).toContainEqual(
 			expect.objectContaining({
 				action: {
-					type: 'modifyHeaders',
 					requestHeaders: [
 						{
 							header: 'User-Agent',
@@ -52,14 +51,15 @@ it('packages an enabled application identity rule for map tile requests', () => 
 							value: expect.stringContaining('WeatherPlease'),
 						},
 					],
+					type: 'modifyHeaders',
 				},
 				condition: {
-					urlFilter: '||tile.openstreetmap.org/',
 					resourceTypes: ['image'],
+					urlFilter: '||tile.openstreetmap.org/',
 				},
 			}),
 		)
 	} finally {
-		fs.rmSync(rootDirectory, { recursive: true, force: true })
+		fs.rmSync(rootDirectory, { force: true, recursive: true })
 	}
 })

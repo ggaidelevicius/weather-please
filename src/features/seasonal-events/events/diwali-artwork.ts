@@ -1,30 +1,88 @@
-type Sprite = {
-	canvas: HTMLCanvasElement
-	width: number
-	height: number
-}
-
 type DiyaSprite = Sprite & {
+	baseY: number
 	flameX: number
 	flameY: number
-	baseY: number
+}
+
+type Sprite = {
+	canvas: HTMLCanvasElement
+	height: number
+	width: number
 }
 
 export function createDiwaliArtwork({ dpr }: { dpr: number }): {
 	diyas: DiyaSprite[]
-	flame: Sprite
-	rangoli: Sprite
-	glow: Sprite
 	ember: Sprite
+	flame: Sprite
+	glow: Sprite
+	rangoli: Sprite
 } {
 	const pixelRatio = Math.min(2, Math.max(1, dpr))
 	return {
 		diyas: [0, 1, 2].map((variant) => createDiya({ pixelRatio, variant })),
+		ember: createGlow({ isEmber: true, pixelRatio }),
 		flame: createFlame(pixelRatio),
+		glow: createGlow({ isEmber: false, pixelRatio }),
 		rangoli: createRangoli(pixelRatio),
-		glow: createGlow({ pixelRatio, isEmber: false }),
-		ember: createGlow({ pixelRatio, isEmber: true }),
 	}
+}
+
+function applyRangoliPowder(context: CanvasRenderingContext2D) {
+	context.save()
+	context.globalCompositeOperation = 'source-atop'
+	for (let patch = 0; patch < 24; patch += 1) {
+		const x = (rangoliGrain(patch * 3 + 503) - 0.5) * 460
+		const y = (rangoliGrain(patch * 3 + 504) - 0.5) * 460
+		const radius = 18 + rangoliGrain(patch * 3 + 505) * 35
+		const pigment = context.createRadialGradient(x, y, 0, x, y, radius)
+		pigment.addColorStop(0, 'rgba(94, 59, 57, 0.11)')
+		pigment.addColorStop(1, 'rgba(94, 59, 57, 0)')
+		context.fillStyle = pigment
+		context.fillRect(x - radius, y - radius, radius * 2, radius * 2)
+	}
+	for (let grain = 0; grain < 7_500; grain += 1) {
+		const seed = grain * 4 + 1201
+		const x = (rangoliGrain(seed) - 0.5) * 480
+		const y = (rangoliGrain(seed + 1) - 0.5) * 480
+		const size = 0.3 + rangoliGrain(seed + 2) * 0.65
+		context.fillStyle = grain % 3 === 0 ? '#f4d3a4' : '#735155'
+		context.globalAlpha = 0.08 + rangoliGrain(seed + 3) * 0.18
+		context.beginPath()
+		context.arc(x, y, size, 0, Math.PI * 2)
+		context.fill()
+	}
+	context.globalCompositeOperation = 'destination-out'
+	context.fillStyle = '#000'
+	for (let grain = 0; grain < 6_000; grain += 1) {
+		const seed = grain * 4 + 41003
+		const x = (rangoliGrain(seed) - 0.5) * 480
+		const y = (rangoliGrain(seed + 1) - 0.5) * 480
+		const size = 0.45 + rangoliGrain(seed + 2) * 0.65
+		context.globalAlpha = 0.14 + rangoliGrain(seed + 3) * 0.3
+		context.beginPath()
+		context.arc(x, y, size, 0, Math.PI * 2)
+		context.fill()
+	}
+	context.restore()
+	return context
+}
+
+function createCanvas({
+	height,
+	pixelRatio,
+	width,
+}: {
+	height: number
+	pixelRatio: number
+	width: number
+}) {
+	const canvas = document.createElement('canvas')
+	canvas.width = Math.round(width * pixelRatio)
+	canvas.height = Math.round(height * pixelRatio)
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Diwali artwork')
+	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+	return { context, sprite: { canvas, height, width } }
 }
 
 function createDiya({
@@ -34,10 +92,10 @@ function createDiya({
 	pixelRatio: number
 	variant: number
 }): DiyaSprite {
-	const { sprite, context } = createCanvas({
-		width: 220,
+	const { context, sprite } = createCanvas({
 		height: 130,
 		pixelRatio,
+		width: 220,
 	})
 	const palettes = [
 		['#e5a261', '#b86135', '#703727'],
@@ -152,24 +210,14 @@ function createDiya({
 	context.moveTo(179.6, 43)
 	context.lineTo(182, 37)
 	context.stroke()
-	return { ...sprite, flameX: 182, flameY: 37, baseY: 118 }
-}
-
-function diyaOutline(context: CanvasRenderingContext2D) {
-	context.beginPath()
-	context.moveTo(29, 58)
-	context.bezierCurveTo(37, 94, 58, 116, 107, 117)
-	context.bezierCurveTo(144, 118, 177, 95, 191, 49)
-	context.bezierCurveTo(156, 64, 79, 75, 29, 58)
-	context.closePath()
-	return context
+	return { ...sprite, baseY: 118, flameX: 182, flameY: 37 }
 }
 
 function createFlame(pixelRatio: number): Sprite {
-	const { sprite, context } = createCanvas({
-		width: 96,
+	const { context, sprite } = createCanvas({
 		height: 128,
 		pixelRatio,
+		width: 96,
 	})
 	const halo = context.createRadialGradient(48, 78, 0, 48, 78, 47)
 	halo.addColorStop(0, 'rgba(255, 201, 98, 0.22)')
@@ -199,11 +247,50 @@ function createFlame(pixelRatio: number): Sprite {
 	return sprite
 }
 
+function createGlow({
+	isEmber,
+	pixelRatio,
+}: {
+	isEmber: boolean
+	pixelRatio: number
+}): Sprite {
+	const size = isEmber ? 64 : 256
+	const { context, sprite } = createCanvas({
+		height: size,
+		pixelRatio,
+		width: size,
+	})
+	const center = size / 2
+	const gradient = context.createRadialGradient(
+		center,
+		center,
+		0,
+		center,
+		center,
+		center,
+	)
+	if (isEmber) {
+		gradient.addColorStop(0, 'rgba(255, 248, 211, 0.95)')
+		gradient.addColorStop(0.06, 'rgba(255, 221, 145, 0.83)')
+		gradient.addColorStop(0.18, 'rgba(247, 179, 77, 0.38)')
+		gradient.addColorStop(0.46, 'rgba(245, 142, 44, 0.065)')
+	} else {
+		gradient.addColorStop(0, 'rgba(255, 198, 106, 0.56)')
+		gradient.addColorStop(0.22, 'rgba(245, 165, 71, 0.29)')
+		gradient.addColorStop(0.52, 'rgba(220, 120, 47, 0.095)')
+		gradient.addColorStop(0.8, 'rgba(191, 88, 43, 0.018)')
+	}
+	gradient.addColorStop(1, 'rgba(198, 97, 40, 0)')
+	context.fillStyle = gradient
+	context.fillRect(0, 0, size, size)
+	return sprite
+}
+
 function createRangoli(pixelRatio: number): Sprite {
-	const { sprite, context } = createCanvas({
-		width: 512,
+	const { context, sprite } = createCanvas({
 		height: 512,
 		pixelRatio,
+		width: 512,
 	})
 	context.translate(256, 256)
 	context.lineJoin = 'round'
@@ -211,13 +298,13 @@ function createRangoli(pixelRatio: number): Sprite {
 		context.save()
 		context.rotate((petal / 32) * Math.PI * 2)
 		drawRangoliPetal({
+			border: '#edbd73',
+			color: petal % 2 === 0 ? '#b24774' : '#d16683',
 			context,
 			inner: 179,
 			outer: 233,
-			width: 12,
-			color: petal % 2 === 0 ? '#b24774' : '#d16683',
-			border: '#edbd73',
 			seed: petal,
+			width: 12,
 		})
 		context.restore()
 	}
@@ -225,28 +312,28 @@ function createRangoli(pixelRatio: number): Sprite {
 		context.save()
 		context.rotate(((petal + 0.5) / 16) * Math.PI * 2)
 		drawRangoliPetal({
+			border: '#edc47d',
+			color: petal % 2 === 0 ? '#3faaa2' : '#277f81',
 			context,
 			inner: 126,
 			outer: 203,
-			width: 24,
-			color: petal % 2 === 0 ? '#3faaa2' : '#277f81',
-			border: '#edc47d',
 			seed: petal + 32,
+			width: 24,
 		})
 		context.restore()
 	}
-	drawDottedRing({ context, radius: 198, count: 64, size: 2, color: '#f7d99e' })
+	drawDottedRing({ color: '#f7d99e', context, count: 64, radius: 198, size: 2 })
 	for (let petal = 0; petal < 16; petal += 1) {
 		context.save()
 		context.rotate((petal / 16) * Math.PI * 2)
 		drawRangoliPetal({
+			border: '#f1c382',
+			color: petal % 2 === 0 ? '#d65e8b' : '#ac3d70',
 			context,
 			inner: 65,
 			outer: 160,
-			width: 28,
-			color: petal % 2 === 0 ? '#d65e8b' : '#ac3d70',
-			border: '#f1c382',
 			seed: petal + 48,
+			width: 28,
 		})
 		context.restore()
 	}
@@ -254,22 +341,22 @@ function createRangoli(pixelRatio: number): Sprite {
 		context.save()
 		context.rotate(((petal + 0.25) / 8) * Math.PI * 2)
 		drawRangoliPetal({
+			border: '#ffdfa0',
+			color: petal % 2 === 0 ? '#e7a443' : '#f3bf65',
 			context,
 			inner: 24,
 			outer: 112,
-			width: 29,
-			color: petal % 2 === 0 ? '#e7a443' : '#f3bf65',
-			border: '#ffdfa0',
 			seed: petal + 64,
+			width: 29,
 		})
 		context.restore()
 	}
 	drawDottedRing({
-		context,
-		radius: 127,
-		count: 48,
-		size: 2.2,
 		color: '#f5d294',
+		context,
+		count: 48,
+		radius: 127,
+		size: 2.2,
 	})
 	for (const [radius, color] of [
 		[44, '#763457'],
@@ -294,39 +381,85 @@ function createRangoli(pixelRatio: number): Sprite {
 	}
 	context.globalAlpha = 1
 	drawDottedRing({
-		context,
-		radius: 32,
-		count: 16,
-		size: 1.5,
 		color: '#864555',
+		context,
+		count: 16,
+		radius: 32,
+		size: 1.5,
 	})
 	drawDottedRing({
-		context,
-		radius: 20,
-		count: 12,
-		size: 1.5,
 		color: '#ffdea1',
+		context,
+		count: 12,
+		radius: 20,
+		size: 1.5,
 	})
 	applyRangoliPowder(context)
 	return sprite
 }
 
+function diyaOutline(context: CanvasRenderingContext2D) {
+	context.beginPath()
+	context.moveTo(29, 58)
+	context.bezierCurveTo(37, 94, 58, 116, 107, 117)
+	context.bezierCurveTo(144, 118, 177, 95, 191, 49)
+	context.bezierCurveTo(156, 64, 79, 75, 29, 58)
+	context.closePath()
+	return context
+}
+
+function drawDottedRing({
+	color,
+	context,
+	count,
+	radius,
+	size,
+}: {
+	color: string
+	context: CanvasRenderingContext2D
+	count: number
+	radius: number
+	size: number
+}) {
+	context.fillStyle = color
+	for (let dot = 0; dot < count; dot += 1) {
+		const seed = radius * 13 + dot * 5
+		const angle =
+			(dot / count) * Math.PI * 2 + (rangoliGrain(seed) - 0.5) * 0.005
+		const distance = radius + (rangoliGrain(seed + 1) - 0.5) * 1.2
+		context.globalAlpha = 0.62 + rangoliGrain(seed + 2) * 0.16
+		context.beginPath()
+		context.ellipse(
+			Math.cos(angle) * distance,
+			Math.sin(angle) * distance,
+			size * (0.9 + rangoliGrain(seed + 3) * 0.2),
+			size,
+			angle,
+			0,
+			Math.PI * 2,
+		)
+		context.fill()
+	}
+	context.globalAlpha = 1
+	return context
+}
+
 function drawRangoliPetal({
+	border,
+	color,
 	context,
 	inner,
 	outer,
-	width,
-	color,
-	border,
 	seed,
+	width,
 }: {
+	border: string
+	color: string
 	context: CanvasRenderingContext2D
 	inner: number
 	outer: number
-	width: number
-	color: string
-	border: string
 	seed: number
+	width: number
 }) {
 	const length = outer - inner
 	const leftWidth = width * (0.97 + rangoliGrain(seed * 7) * 0.06)
@@ -379,141 +512,8 @@ function drawRangoliPetal({
 	return context
 }
 
-function drawDottedRing({
-	context,
-	radius,
-	count,
-	size,
-	color,
-}: {
-	context: CanvasRenderingContext2D
-	radius: number
-	count: number
-	size: number
-	color: string
-}) {
-	context.fillStyle = color
-	for (let dot = 0; dot < count; dot += 1) {
-		const seed = radius * 13 + dot * 5
-		const angle =
-			(dot / count) * Math.PI * 2 + (rangoliGrain(seed) - 0.5) * 0.005
-		const distance = radius + (rangoliGrain(seed + 1) - 0.5) * 1.2
-		context.globalAlpha = 0.62 + rangoliGrain(seed + 2) * 0.16
-		context.beginPath()
-		context.ellipse(
-			Math.cos(angle) * distance,
-			Math.sin(angle) * distance,
-			size * (0.9 + rangoliGrain(seed + 3) * 0.2),
-			size,
-			angle,
-			0,
-			Math.PI * 2,
-		)
-		context.fill()
-	}
-	context.globalAlpha = 1
-	return context
-}
-
-function applyRangoliPowder(context: CanvasRenderingContext2D) {
-	context.save()
-	context.globalCompositeOperation = 'source-atop'
-	for (let patch = 0; patch < 24; patch += 1) {
-		const x = (rangoliGrain(patch * 3 + 503) - 0.5) * 460
-		const y = (rangoliGrain(patch * 3 + 504) - 0.5) * 460
-		const radius = 18 + rangoliGrain(patch * 3 + 505) * 35
-		const pigment = context.createRadialGradient(x, y, 0, x, y, radius)
-		pigment.addColorStop(0, 'rgba(94, 59, 57, 0.11)')
-		pigment.addColorStop(1, 'rgba(94, 59, 57, 0)')
-		context.fillStyle = pigment
-		context.fillRect(x - radius, y - radius, radius * 2, radius * 2)
-	}
-	for (let grain = 0; grain < 7_500; grain += 1) {
-		const seed = grain * 4 + 1201
-		const x = (rangoliGrain(seed) - 0.5) * 480
-		const y = (rangoliGrain(seed + 1) - 0.5) * 480
-		const size = 0.3 + rangoliGrain(seed + 2) * 0.65
-		context.fillStyle = grain % 3 === 0 ? '#f4d3a4' : '#735155'
-		context.globalAlpha = 0.08 + rangoliGrain(seed + 3) * 0.18
-		context.beginPath()
-		context.arc(x, y, size, 0, Math.PI * 2)
-		context.fill()
-	}
-	context.globalCompositeOperation = 'destination-out'
-	context.fillStyle = '#000'
-	for (let grain = 0; grain < 6_000; grain += 1) {
-		const seed = grain * 4 + 41003
-		const x = (rangoliGrain(seed) - 0.5) * 480
-		const y = (rangoliGrain(seed + 1) - 0.5) * 480
-		const size = 0.45 + rangoliGrain(seed + 2) * 0.65
-		context.globalAlpha = 0.14 + rangoliGrain(seed + 3) * 0.3
-		context.beginPath()
-		context.arc(x, y, size, 0, Math.PI * 2)
-		context.fill()
-	}
-	context.restore()
-	return context
-}
-
 function rangoliGrain(seed: number) {
 	let hash = Math.imul(seed ^ 0x9e3779b9, 0x7feb352d)
 	hash = Math.imul(hash ^ (hash >>> 16), 0x846ca68b)
 	return ((hash ^ (hash >>> 15)) >>> 0) / 0xffffffff
-}
-
-function createGlow({
-	pixelRatio,
-	isEmber,
-}: {
-	pixelRatio: number
-	isEmber: boolean
-}): Sprite {
-	const size = isEmber ? 64 : 256
-	const { sprite, context } = createCanvas({
-		width: size,
-		height: size,
-		pixelRatio,
-	})
-	const center = size / 2
-	const gradient = context.createRadialGradient(
-		center,
-		center,
-		0,
-		center,
-		center,
-		center,
-	)
-	if (isEmber) {
-		gradient.addColorStop(0, 'rgba(255, 248, 211, 0.95)')
-		gradient.addColorStop(0.06, 'rgba(255, 221, 145, 0.83)')
-		gradient.addColorStop(0.18, 'rgba(247, 179, 77, 0.38)')
-		gradient.addColorStop(0.46, 'rgba(245, 142, 44, 0.065)')
-	} else {
-		gradient.addColorStop(0, 'rgba(255, 198, 106, 0.56)')
-		gradient.addColorStop(0.22, 'rgba(245, 165, 71, 0.29)')
-		gradient.addColorStop(0.52, 'rgba(220, 120, 47, 0.095)')
-		gradient.addColorStop(0.8, 'rgba(191, 88, 43, 0.018)')
-	}
-	gradient.addColorStop(1, 'rgba(198, 97, 40, 0)')
-	context.fillStyle = gradient
-	context.fillRect(0, 0, size, size)
-	return sprite
-}
-
-function createCanvas({
-	width,
-	height,
-	pixelRatio,
-}: {
-	width: number
-	height: number
-	pixelRatio: number
-}) {
-	const canvas = document.createElement('canvas')
-	canvas.width = Math.round(width * pixelRatio)
-	canvas.height = Math.round(height * pixelRatio)
-	const context = canvas.getContext('2d')
-	if (!context) throw new Error('Unable to create Diwali artwork')
-	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
-	return { sprite: { canvas, width, height }, context }
 }

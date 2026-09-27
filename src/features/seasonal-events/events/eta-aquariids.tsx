@@ -1,6 +1,7 @@
+import type { MeteorShowerFrame } from './meteor-shower-animation'
+
 import { createAdaptiveDprController, randomInRange } from '../core/utils'
 import { startMeteorShowerAnimation } from './meteor-shower-animation'
-import type { MeteorShowerFrame } from './meteor-shower-animation'
 
 const ETA_AQUARIIDS_MOUNT_DELAY_MS = 900
 

@@ -39,14 +39,14 @@ export async function launchChristmasScene({
 	}))
 	const glints = Array.from({ length: isSummer ? 10 : 0 }, (_, index) => ({
 		phase: Math.random() * Math.PI * 2,
-		size: randomInRange({ min: 5, max: 12 }),
-		speed: randomInRange({ min: 0.005, max: 0.012 }),
+		size: randomInRange({ max: 12, min: 5 }),
+		speed: randomInRange({ max: 0.012, min: 0.005 }),
 		x: index % 2 === 0 ? Math.random() * 0.28 : 0.78 + Math.random() * 0.22,
 		y: 0.45 + Math.random() * 0.55,
 	}))
-	let artwork: ReturnType<typeof createChristmasArtwork> | null = null
+	let artwork: null | ReturnType<typeof createChristmasArtwork> = null
 	let landscape: HTMLCanvasElement | null = null
-	let barbecue: ReturnType<typeof createChristmasBarbecueArtwork> | null = null
+	let barbecue: null | ReturnType<typeof createChristmasBarbecueArtwork> = null
 	let artworkDpr = 0
 	let landscapeHeight = 0
 	let width = window.innerWidth
@@ -258,7 +258,7 @@ export async function launchChristmasScene({
 		landscapeHeight = Math.min(height * 0.22, 160)
 		landscape = isSummer
 			? null
-			: createLandscape({ width, height: landscapeHeight, dpr })
+			: createLandscape({ dpr, height: landscapeHeight, width })
 		drawScene()
 	}
 
@@ -320,58 +320,14 @@ export async function launchChristmasScene({
 	return cleanup
 }
 
-function createSnowflake(index: number): Snowflake {
-	const depth = index < 90 ? 0 : index < 160 ? 1 : 2
-	return {
-		depth,
-		phase: Math.random() * Math.PI * 2,
-		size: randomInRange({ min: 0.6 + depth * 0.6, max: 1.1 + depth * 0.9 }),
-		speed: randomInRange({ min: 9 + depth * 13, max: 17 + depth * 15 }),
-		x: Math.random(),
-		y: Math.random(),
-	}
-}
-
-function createLightSprite(): HTMLCanvasElement {
-	const canvas = document.createElement('canvas')
-	canvas.width = 64
-	canvas.height = 64
-	const context = canvas.getContext('2d')
-	if (!context) throw new Error('Unable to create Christmas light glow')
-	const gradient = context.createRadialGradient(32, 32, 0, 32, 32, 32)
-	gradient.addColorStop(0, '#fffbe7')
-	gradient.addColorStop(0.12, '#ffe5abe0')
-	gradient.addColorStop(0.38, '#eeba5a55')
-	gradient.addColorStop(1, '#eeba5a00')
-	context.fillStyle = gradient
-	context.fillRect(0, 0, 64, 64)
-	return canvas
-}
-
-function createSnowSprite(): HTMLCanvasElement {
-	const canvas = document.createElement('canvas')
-	canvas.width = 32
-	canvas.height = 32
-	const context = canvas.getContext('2d')
-	if (!context) throw new Error('Unable to create Christmas snowflake')
-	const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16)
-	gradient.addColorStop(0, '#f1f6ff')
-	gradient.addColorStop(0.25, '#e2edf9e0')
-	gradient.addColorStop(0.55, '#dce8f34d')
-	gradient.addColorStop(1, '#dce8f300')
-	context.fillStyle = gradient
-	context.fillRect(0, 0, 32, 32)
-	return canvas
-}
-
 function createLandscape({
-	width,
-	height,
 	dpr,
+	height,
+	width,
 }: {
-	width: number
-	height: number
 	dpr: number
+	height: number
+	width: number
 }): HTMLCanvasElement {
 	const canvas = document.createElement('canvas')
 	canvas.width = Math.round(width * dpr)
@@ -427,8 +383,8 @@ function createLandscape({
 		const topY = baseY - treeHeight
 		const trunkWidth = Math.max(1.5, treeHeight * 0.045)
 		const tiers = Array.from({ length: 6 }, (_, tier) => ({
-			y: topY + treeHeight * (0.2 + tier * 0.14),
 			halfWidth: treeHeight * (0.07 + tier * 0.04),
+			y: topY + treeHeight * (0.2 + tier * 0.14),
 		}))
 
 		context.fillStyle = '#14252bb3'
@@ -478,5 +434,49 @@ function createLandscape({
 		context.closePath()
 		context.fill()
 	}
+	return canvas
+}
+
+function createLightSprite(): HTMLCanvasElement {
+	const canvas = document.createElement('canvas')
+	canvas.width = 64
+	canvas.height = 64
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Christmas light glow')
+	const gradient = context.createRadialGradient(32, 32, 0, 32, 32, 32)
+	gradient.addColorStop(0, '#fffbe7')
+	gradient.addColorStop(0.12, '#ffe5abe0')
+	gradient.addColorStop(0.38, '#eeba5a55')
+	gradient.addColorStop(1, '#eeba5a00')
+	context.fillStyle = gradient
+	context.fillRect(0, 0, 64, 64)
+	return canvas
+}
+
+function createSnowflake(index: number): Snowflake {
+	const depth = index < 90 ? 0 : index < 160 ? 1 : 2
+	return {
+		depth,
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ max: 1.1 + depth * 0.9, min: 0.6 + depth * 0.6 }),
+		speed: randomInRange({ max: 17 + depth * 15, min: 9 + depth * 13 }),
+		x: Math.random(),
+		y: Math.random(),
+	}
+}
+
+function createSnowSprite(): HTMLCanvasElement {
+	const canvas = document.createElement('canvas')
+	canvas.width = 32
+	canvas.height = 32
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create Christmas snowflake')
+	const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16)
+	gradient.addColorStop(0, '#f1f6ff')
+	gradient.addColorStop(0.25, '#e2edf9e0')
+	gradient.addColorStop(0.55, '#dce8f34d')
+	gradient.addColorStop(1, '#dce8f300')
+	context.fillStyle = gradient
+	context.fillRect(0, 0, 32, 32)
 	return canvas
 }

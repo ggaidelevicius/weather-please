@@ -235,11 +235,11 @@ interface TileProps {
 	max: number
 	min: number
 	observingLocation?: Readonly<{ latitude: number; longitude: number }>
+	onToggleSeasonalEvent: (eventId: SeasonalEventId, enabled: boolean) => void
 	onToggleSeasonalEventBackground: (
 		eventId: SeasonalEventId,
 		enabled: boolean,
 	) => void
-	onToggleSeasonalEvent: (eventId: SeasonalEventId, enabled: boolean) => void
 	rain: number
 	seasonalEventOverride?: SeasonalEventOverride
 	showSeasonalEvents: boolean
@@ -290,8 +290,8 @@ export const Tile = ({
 	max,
 	min,
 	observingLocation,
-	onToggleSeasonalEventBackground,
 	onToggleSeasonalEvent,
+	onToggleSeasonalEventBackground,
 	rain,
 	seasonalEventOverride,
 	showSeasonalEvents,

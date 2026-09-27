@@ -1,17 +1,17 @@
 type LanternArtwork = {
-	canvas: HTMLCanvasElement
-	width: number
-	height: number
 	anchorX: number
 	anchorY: number
+	canvas: HTMLCanvasElement
+	height: number
 	lightX: number
 	lightY: number
+	width: number
 }
 
 type LunarNewYearArtwork = {
-	lanterns: LanternArtwork[]
 	glow: HTMLCanvasElement
 	haze: HTMLCanvasElement
+	lanterns: LanternArtwork[]
 }
 
 export function createLunarNewYearArtwork({
@@ -21,10 +21,10 @@ export function createLunarNewYearArtwork({
 }): LunarNewYearArtwork {
 	const pixelRatio = Math.min(2, Math.max(1, dpr))
 	const lanterns = [
-		{ radius: 80, edge: '#82172a', middle: '#da3632', center: '#f57538' },
-		{ radius: 68, edge: '#78152d', middle: '#c52f43', center: '#ec6545' },
-		{ radius: 76, edge: '#951921', middle: '#e23b29', center: '#fb8339' },
-	].map((palette, variant) => createLantern({ pixelRatio, palette, variant }))
+		{ center: '#f57538', edge: '#82172a', middle: '#da3632', radius: 80 },
+		{ center: '#ec6545', edge: '#78152d', middle: '#c52f43', radius: 68 },
+		{ center: '#fb8339', edge: '#951921', middle: '#e23b29', radius: 76 },
+	].map((palette, variant) => createLantern({ palette, pixelRatio, variant }))
 	const glow = createRadialSprite({
 		pixelRatio,
 		stops: [
@@ -45,21 +45,40 @@ export function createLunarNewYearArtwork({
 			[1, 'rgba(222, 74, 61, 0)'],
 		],
 	})
-	return { lanterns, glow, haze }
+	return { glow, haze, lanterns }
+}
+
+function createCanvas({
+	height,
+	pixelRatio,
+	width,
+}: {
+	height: number
+	pixelRatio: number
+	width: number
+}) {
+	const canvas = document.createElement('canvas')
+	canvas.width = Math.round(width * pixelRatio)
+	canvas.height = Math.round(height * pixelRatio)
+	const context = canvas.getContext('2d')
+	if (!context)
+		throw new Error('Unable to create the lunar new year artwork canvas')
+	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+	return { canvas, context }
 }
 
 function createLantern({
-	pixelRatio,
 	palette,
+	pixelRatio,
 	variant,
 }: {
+	palette: { center: string; edge: string; middle: string; radius: number }
 	pixelRatio: number
-	palette: { radius: number; edge: string; middle: string; center: string }
 	variant: number
 }): LanternArtwork {
 	const width = 240
 	const height = 300
-	const { canvas, context } = createCanvas({ width, height, pixelRatio })
+	const { canvas, context } = createCanvas({ height, pixelRatio, width })
 	const { radius } = palette
 	context.lineCap = 'round'
 	context.lineJoin = 'round'
@@ -146,8 +165,8 @@ function createLantern({
 		context.stroke()
 	}
 	drawPaperPattern({ context, radius, variant })
-	drawCap({ context, y: 43, width: 65, height: 12 })
-	drawCap({ context, y: 194, width: 57, height: 11 })
+	drawCap({ context, height: 12, width: 65, y: 43 })
+	drawCap({ context, height: 11, width: 57, y: 194 })
 	context.strokeStyle = '#d6ab5c'
 	context.lineWidth = 2.1
 	context.beginPath()
@@ -160,57 +179,45 @@ function createLantern({
 	context.stroke()
 	drawTassel({ context, variant })
 	return {
-		canvas,
-		width,
-		height,
 		anchorX: 120,
 		anchorY: 36,
+		canvas,
+		height,
 		lightX: 120,
 		lightY: 124,
+		width,
 	}
 }
 
-function drawPaperPattern({
-	context,
-	radius,
-	variant,
+function createRadialSprite({
+	pixelRatio,
+	stops,
 }: {
-	context: CanvasRenderingContext2D
-	radius: number
-	variant: number
-}) {
-	context.strokeStyle = 'rgba(255, 203, 108, 0.32)'
-	context.lineWidth = 0.75
-	for (const side of [-1, 1]) {
-		for (const y of [105, 143]) {
-			const x = 120 + side * radius * 0.39
-			const spread = variant === 1 ? 6.5 : 5.5
-			context.beginPath()
-			context.moveTo(x, y - spread)
-			context.quadraticCurveTo(x + 1.5, y - 1.5, x + spread, y)
-			context.quadraticCurveTo(x + 1.5, y + 1.5, x, y + spread)
-			context.quadraticCurveTo(x - 1.5, y + 1.5, x - spread, y)
-			context.quadraticCurveTo(x - 1.5, y - 1.5, x, y - spread)
-			context.stroke()
-			context.fillStyle = 'rgba(255, 207, 118, 0.36)'
-			context.beginPath()
-			context.arc(x, y, 0.9, 0, Math.PI * 2)
-			context.fill()
-		}
-	}
-	return context
+	pixelRatio: number
+	stops: readonly (readonly [number, string])[]
+}): HTMLCanvasElement {
+	const { canvas, context } = createCanvas({
+		height: 256,
+		pixelRatio,
+		width: 256,
+	})
+	const gradient = context.createRadialGradient(128, 128, 0, 128, 128, 128)
+	for (const [offset, color] of stops) gradient.addColorStop(offset, color)
+	context.fillStyle = gradient
+	context.fillRect(0, 0, 256, 256)
+	return canvas
 }
 
 function drawCap({
 	context,
-	y,
-	width,
 	height,
+	width,
+	y,
 }: {
 	context: CanvasRenderingContext2D
-	y: number
-	width: number
 	height: number
+	width: number
+	y: number
 }) {
 	const left = 120 - width / 2
 	const right = 120 + width / 2
@@ -246,6 +253,37 @@ function drawCap({
 		context.moveTo(x, y + 3)
 		context.lineTo(x, y + height - 3)
 		context.stroke()
+	}
+	return context
+}
+
+function drawPaperPattern({
+	context,
+	radius,
+	variant,
+}: {
+	context: CanvasRenderingContext2D
+	radius: number
+	variant: number
+}) {
+	context.strokeStyle = 'rgba(255, 203, 108, 0.32)'
+	context.lineWidth = 0.75
+	for (const side of [-1, 1]) {
+		for (const y of [105, 143]) {
+			const x = 120 + side * radius * 0.39
+			const spread = variant === 1 ? 6.5 : 5.5
+			context.beginPath()
+			context.moveTo(x, y - spread)
+			context.quadraticCurveTo(x + 1.5, y - 1.5, x + spread, y)
+			context.quadraticCurveTo(x + 1.5, y + 1.5, x, y + spread)
+			context.quadraticCurveTo(x - 1.5, y + 1.5, x - spread, y)
+			context.quadraticCurveTo(x - 1.5, y - 1.5, x, y - spread)
+			context.stroke()
+			context.fillStyle = 'rgba(255, 207, 118, 0.36)'
+			context.beginPath()
+			context.arc(x, y, 0.9, 0, Math.PI * 2)
+			context.fill()
+		}
 	}
 	return context
 }
@@ -309,42 +347,4 @@ function drawTassel({
 	context.quadraticCurveTo(117.9, 251, 118.5, 272)
 	context.stroke()
 	return context
-}
-
-function createRadialSprite({
-	pixelRatio,
-	stops,
-}: {
-	pixelRatio: number
-	stops: readonly (readonly [number, string])[]
-}): HTMLCanvasElement {
-	const { canvas, context } = createCanvas({
-		width: 256,
-		height: 256,
-		pixelRatio,
-	})
-	const gradient = context.createRadialGradient(128, 128, 0, 128, 128, 128)
-	for (const [offset, color] of stops) gradient.addColorStop(offset, color)
-	context.fillStyle = gradient
-	context.fillRect(0, 0, 256, 256)
-	return canvas
-}
-
-function createCanvas({
-	width,
-	height,
-	pixelRatio,
-}: {
-	width: number
-	height: number
-	pixelRatio: number
-}) {
-	const canvas = document.createElement('canvas')
-	canvas.width = Math.round(width * pixelRatio)
-	canvas.height = Math.round(height * pixelRatio)
-	const context = canvas.getContext('2d')
-	if (!context)
-		throw new Error('Unable to create the lunar new year artwork canvas')
-	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
-	return { canvas, context }
 }

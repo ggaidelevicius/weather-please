@@ -1,22 +1,22 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
-	SETTINGS_MODAL_STATE_EVENT,
 	setSettingsModalOpenState,
+	SETTINGS_MODAL_STATE_EVENT,
 } from '../../../../shared/lib/settings-modal-state'
 import { launchEidAlFitrGlow } from '../eid-al-fitr'
 import { createEidAlFitrArtwork } from '../eid-al-fitr-artwork'
 
 vi.mock('../eid-al-fitr-artwork', () => ({ createEidAlFitrArtwork: vi.fn() }))
 
-type Transform = [string, ...number[]]
 type ImageDraw = {
-	source: string
-	coordinates: number[]
 	alpha: number
 	composition: GlobalCompositeOperation
+	coordinates: number[]
+	source: string
 	transforms: Transform[]
 }
+type Transform = [string, ...number[]]
 
 let cleanupEffect = () => {}
 
@@ -62,8 +62,8 @@ describe('Eid al-Fitr scene', () => {
 		const canvas = document.querySelector('canvas[data-eid-al-fitr]')
 		expect(canvas).toHaveAttribute('aria-hidden', 'true')
 		expect(canvas).toHaveStyle({
-			position: 'fixed',
 			pointerEvents: 'none',
+			position: 'fixed',
 			zIndex: '0',
 		})
 		expect(document.body.querySelectorAll('canvas')).toHaveLength(1)
@@ -73,7 +73,7 @@ describe('Eid al-Fitr scene', () => {
 				scene
 					.snapshot()
 					.some(
-						({ source, alpha }) => source.startsWith(artworkName) && alpha > 0,
+						({ alpha, source }) => source.startsWith(artworkName) && alpha > 0,
 					),
 			).toBe(true)
 		}
@@ -93,7 +93,7 @@ describe('Eid al-Fitr scene', () => {
 		window.dispatchEvent(new Event('resize'))
 		expect(canvas).toHaveAttribute('width', '780')
 		expect(canvas).toHaveAttribute('height', '1688')
-		expect(canvas).toHaveStyle({ width: '390px', height: '844px' })
+		expect(canvas).toHaveStyle({ height: '844px', width: '390px' })
 		expect(scene.context.clearRect).toHaveBeenCalledTimes(drawCount + 2)
 		expect(createEidAlFitrArtwork).toHaveBeenCalledOnce()
 		expect(Math.random).toHaveBeenCalledTimes(randomCount)
@@ -284,14 +284,84 @@ describe('Eid al-Fitr scene', () => {
 	})
 })
 
+function createCanvasContext() {
+	const images: ImageDraw[] = []
+	let transforms: Transform[] = []
+	const savedStates: {
+		alpha: number
+		composition: GlobalCompositeOperation
+		transforms: Transform[]
+	}[] = []
+	const context = {
+		arc: vi.fn(),
+		beginPath: vi.fn(),
+		bezierCurveTo: vi.fn(),
+		clearRect: vi.fn(() => {
+			images.length = 0
+		}),
+		clip: vi.fn(),
+		closePath: vi.fn(),
+		createLinearGradient: vi.fn(() => ({ addColorStop: vi.fn() })),
+		createRadialGradient: vi.fn(() => ({ addColorStop: vi.fn() })),
+		drawImage: vi.fn((source: CanvasImageSource, ...coordinates: number[]) => {
+			images.push({
+				alpha: context.globalAlpha,
+				composition: context.globalCompositeOperation,
+				coordinates,
+				source:
+					source instanceof HTMLCanvasElement
+						? (source.dataset.testSprite ?? 'cache')
+						: 'image',
+				transforms: [...transforms],
+			})
+		}),
+		ellipse: vi.fn(),
+		fill: vi.fn(),
+		fillRect: vi.fn(),
+		globalAlpha: 1,
+		globalCompositeOperation: 'source-over' as GlobalCompositeOperation,
+		images,
+		lineTo: vi.fn(),
+		moveTo: vi.fn(),
+		quadraticCurveTo: vi.fn(),
+		restore: () => {
+			const state = savedStates.pop()
+			if (!state) return
+			context.globalAlpha = state.alpha
+			context.globalCompositeOperation = state.composition
+			transforms = state.transforms
+		},
+		rotate: (angle: number) => {
+			transforms.push(['rotate', angle])
+		},
+		save: () =>
+			savedStates.push({
+				alpha: context.globalAlpha,
+				composition: context.globalCompositeOperation,
+				transforms: [...transforms],
+			}),
+		scale: (x: number, y: number) => {
+			transforms.push(['scale', x, y])
+		},
+		setTransform: vi.fn(() => {
+			transforms = []
+		}),
+		stroke: vi.fn(),
+		translate: (x: number, y: number) => {
+			transforms.push(['translate', x, y])
+		},
+	}
+	return context
+}
+
 async function createScene({
-	shouldMount = true,
 	isHidden = false,
 	isReducedMotion = false,
+	shouldMount = true,
 }: {
-	shouldMount?: boolean
 	isHidden?: boolean
 	isReducedMotion?: boolean
+	shouldMount?: boolean
 } = {}) {
 	let isDocumentHidden = isHidden
 	vi.spyOn(document, 'hidden', 'get').mockImplementation(() => isDocumentHidden)
@@ -306,11 +376,11 @@ async function createScene({
 	)
 	const motionTarget = new EventTarget()
 	const motion = {
-		matches: isReducedMotion,
 		addEventListener: vi.fn(
 			(type: string, listener: EventListenerOrEventListenerObject) =>
 				motionTarget.addEventListener(type, listener),
 		),
+		matches: isReducedMotion,
 		removeEventListener: vi.fn(
 			(type: string, listener: EventListenerOrEventListenerObject) =>
 				motionTarget.removeEventListener(type, listener),
@@ -321,23 +391,23 @@ async function createScene({
 		vi.fn(() => motion),
 	)
 	vi.mocked(createEidAlFitrArtwork).mockImplementation(({ dpr }) => ({
+		crescent: createSprite({ dpr, name: 'crescent', width: 320 }),
+		glow: createSprite({ dpr, name: 'glow', width: 256 }),
+		haze: createSprite({ dpr, name: 'haze', width: 256 }),
 		lanterns: [0, 1, 2].map((variant) => ({
 			...createSprite({
+				dpr,
+				height: 300,
 				name: `lantern-${variant}`,
 				width: 240,
-				height: 300,
-				dpr,
 			}),
 			anchorX: 120,
 			anchorY: 30,
 			lightX: 120,
 			lightY: 144,
 		})),
-		crescent: createSprite({ name: 'crescent', width: 320, dpr }),
-		glow: createSprite({ name: 'glow', width: 256, dpr }),
-		haze: createSprite({ name: 'haze', width: 256, dpr }),
-		star: createSprite({ name: 'star', width: 64, dpr }),
-		rosette: createSprite({ name: 'rosette', width: 128, dpr }),
+		rosette: createSprite({ dpr, name: 'rosette', width: 128 }),
+		star: createSprite({ dpr, name: 'star', width: 64 }),
 	}))
 	const context = createCanvasContext()
 	const partial: Partial<CanvasRenderingContext2D> = context
@@ -349,9 +419,6 @@ async function createScene({
 	return {
 		context,
 		getContext,
-		motion,
-		pending,
-		snapshot: () => [...context.images],
 		getGradientCount: () =>
 			context.createLinearGradient.mock.calls.length +
 			context.createRadialGradient.mock.calls.length,
@@ -360,6 +427,8 @@ async function createScene({
 			if (!callback) throw new Error('Expected a scheduled Eid al-Fitr frame')
 			return callback
 		},
+		motion,
+		pending,
 		runFrame: (time: number) => {
 			vi.mocked(performance.now).mockReturnValue(time)
 			for (const [id, callback] of [...pending]) {
@@ -375,93 +444,24 @@ async function createScene({
 			motion.matches = isReduced
 			motionTarget.dispatchEvent(new Event('change'))
 		},
+		snapshot: () => [...context.images],
 	}
-}
-
-function createCanvasContext() {
-	const images: ImageDraw[] = []
-	let transforms: Transform[] = []
-	const savedStates: {
-		alpha: number
-		composition: GlobalCompositeOperation
-		transforms: Transform[]
-	}[] = []
-	const context = {
-		images,
-		globalAlpha: 1,
-		globalCompositeOperation: 'source-over' as GlobalCompositeOperation,
-		clearRect: vi.fn(() => {
-			images.length = 0
-		}),
-		drawImage: vi.fn((source: CanvasImageSource, ...coordinates: number[]) => {
-			images.push({
-				source:
-					source instanceof HTMLCanvasElement
-						? (source.dataset.testSprite ?? 'cache')
-						: 'image',
-				coordinates,
-				alpha: context.globalAlpha,
-				composition: context.globalCompositeOperation,
-				transforms: [...transforms],
-			})
-		}),
-		save: () =>
-			savedStates.push({
-				alpha: context.globalAlpha,
-				composition: context.globalCompositeOperation,
-				transforms: [...transforms],
-			}),
-		restore: () => {
-			const state = savedStates.pop()
-			if (!state) return
-			context.globalAlpha = state.alpha
-			context.globalCompositeOperation = state.composition
-			transforms = state.transforms
-		},
-		translate: (x: number, y: number) => {
-			transforms.push(['translate', x, y])
-		},
-		rotate: (angle: number) => {
-			transforms.push(['rotate', angle])
-		},
-		scale: (x: number, y: number) => {
-			transforms.push(['scale', x, y])
-		},
-		setTransform: vi.fn(() => {
-			transforms = []
-		}),
-		createLinearGradient: vi.fn(() => ({ addColorStop: vi.fn() })),
-		createRadialGradient: vi.fn(() => ({ addColorStop: vi.fn() })),
-		fillRect: vi.fn(),
-		beginPath: vi.fn(),
-		closePath: vi.fn(),
-		moveTo: vi.fn(),
-		lineTo: vi.fn(),
-		bezierCurveTo: vi.fn(),
-		quadraticCurveTo: vi.fn(),
-		arc: vi.fn(),
-		ellipse: vi.fn(),
-		fill: vi.fn(),
-		stroke: vi.fn(),
-		clip: vi.fn(),
-	}
-	return context
 }
 
 function createSprite({
-	name,
+	dpr,
 	width,
 	height = width,
-	dpr,
+	name,
 }: {
+	dpr: number
+	height?: number
 	name: string
 	width: number
-	height?: number
-	dpr: number
 }) {
 	const canvas = document.createElement('canvas')
 	canvas.width = Math.round(width * dpr)
 	canvas.height = Math.round(height * dpr)
 	canvas.dataset.testSprite = name
-	return { canvas, width, height }
+	return { canvas, height, width }
 }

@@ -1,8 +1,21 @@
 import { useEffect, useEffectEvent } from 'react'
 
+import {
+	readSharedResource,
+	requestSharedResource,
+	subscribeSharedResource,
+} from '../../../shared/lib/shared-resource'
+import {
+	type DeviceLocationResult,
+	deviceLocationResultSchema,
+	fetchDeviceLocation,
+} from '../../location/api/device-location'
+import { isAbortError } from '../model/error-names'
+
 const DEFAULT_LOCATION_CHANGE_THRESHOLD_KM = 1
 const DEFAULT_LOCATION_CHECK_INTERVAL_MS = 60 * 1000
 const EARTH_RADIUS_KM = 6371
+const DEVICE_LOCATION_RESOURCE_KEY = 'device-location'
 
 type UsePeriodicLocationRefreshOptions = {
 	changeThresholdKm?: number
@@ -42,57 +55,104 @@ export const usePeriodicLocationRefresh = ({
 	lon,
 	onLocationChange,
 }: Readonly<UsePeriodicLocationRefreshOptions>) => {
-	const handleDetectedLocationChange = useEffectEvent(onLocationChange)
+	const handleDetectedLocation = useEffectEvent(
+		(location: DeviceLocationResult) => {
+			if (!enabled || location.status !== 'success') return
+			const currentLat = Number.parseFloat(lat)
+			const currentLon = Number.parseFloat(lon)
+			const hasCurrentLocation =
+				Number.isFinite(currentLat) && Number.isFinite(currentLon)
+			if (
+				!hasCurrentLocation ||
+				calculateDistanceKm(
+					currentLat,
+					currentLon,
+					location.lat,
+					location.lon,
+				) > changeThresholdKm
+			) {
+				onLocationChange({
+					lat: location.lat.toString(),
+					lon: location.lon.toString(),
+				})
+			}
+		},
+	)
 
 	useEffect(() => {
 		if (!enabled) {
 			return
 		}
 
-		const handleLocationUpdate = () => {
-			if (!navigator.geolocation) {
-				console.error('Geolocation is not supported in this browser.')
+		const controller = new AbortController()
+		let timeoutId: ReturnType<typeof setTimeout> | undefined
+		let lastAppliedAt: null | number = null
+		const scheduleNextCheck = (updatedAt = Date.now()) => {
+			clearTimeout(timeoutId)
+			if (controller.signal.aborted || document.visibilityState !== 'visible')
 				return
-			}
-
-			navigator.geolocation.getCurrentPosition(
-				(pos) => {
-					const nextLat = pos.coords.latitude
-					const nextLon = pos.coords.longitude
-
-					if (!lat || !lon) {
-						handleDetectedLocationChange({
-							lat: nextLat.toString(),
-							lon: nextLon.toString(),
-						})
-						return
-					}
-
-					const currentLat = Number.parseFloat(lat)
-					const currentLon = Number.parseFloat(lon)
-					const distance = calculateDistanceKm(
-						currentLat,
-						currentLon,
-						nextLat,
-						nextLon,
-					)
-
-					if (distance > changeThresholdKm) {
-						handleDetectedLocationChange({
-							lat: nextLat.toString(),
-							lon: nextLon.toString(),
-						})
-					}
-				},
-				(geoError) => {
-					console.error('Geolocation error:', geoError)
-				},
+			timeoutId = setTimeout(
+				checkLocation,
+				Math.max(1, updatedAt + intervalMs + 1 - Date.now()),
 			)
 		}
+		const adoptSharedLocation = () => {
+			if (controller.signal.aborted) return false
+			const sharedLocation = readSharedResource({
+				key: DEVICE_LOCATION_RESOURCE_KEY,
+				maxAgeMs: intervalMs,
+				schema: deviceLocationResultSchema,
+			})
+			if (!sharedLocation) return false
+			if (sharedLocation.updatedAt !== lastAppliedAt) {
+				lastAppliedAt = sharedLocation.updatedAt
+				handleDetectedLocation(sharedLocation.value)
+			}
+			scheduleNextCheck(sharedLocation.updatedAt)
+			return true
+		}
+		const checkLocation = () => {
+			clearTimeout(timeoutId)
+			if (document.visibilityState !== 'visible') return
+			void requestSharedResource({
+				fetcher: fetchDeviceLocation,
+				key: DEVICE_LOCATION_RESOURCE_KEY,
+				maxAgeMs: intervalMs,
+				schema: deviceLocationResultSchema,
+				signal: controller.signal,
+			})
+				.then(() => {
+					if (!adoptSharedLocation()) scheduleNextCheck()
+				})
+				.catch((error) => {
+					if (!controller.signal.aborted && !isAbortError(error)) {
+						console.error('Location check failed:', error)
+					}
+					scheduleNextCheck()
+				})
+		}
+		const handleVisibilityChange = () => {
+			clearTimeout(timeoutId)
+			if (!adoptSharedLocation() && document.visibilityState === 'visible') {
+				checkLocation()
+			}
+		}
+		const unsubscribe = subscribeSharedResource({
+			key: DEVICE_LOCATION_RESOURCE_KEY,
+			onChange: adoptSharedLocation,
+		})
+		document.addEventListener('visibilitychange', handleVisibilityChange)
+		document.addEventListener('resume', handleVisibilityChange)
+		window.addEventListener('pageshow', handleVisibilityChange)
+		handleVisibilityChange()
 
-		handleLocationUpdate()
-		const intervalId = setInterval(handleLocationUpdate, intervalMs)
-
-		return () => clearInterval(intervalId)
-	}, [enabled, lat, lon, changeThresholdKm, intervalMs])
+		return () => {
+			controller.abort()
+			clearTimeout(timeoutId)
+			unsubscribe()
+			document.removeEventListener('visibilitychange', handleVisibilityChange)
+			document.removeEventListener('resume', handleVisibilityChange)
+			window.removeEventListener('pageshow', handleVisibilityChange)
+		}
+	}, [enabled, intervalMs])
 }

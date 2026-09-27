@@ -1,18 +1,19 @@
-import { Texture, TextureLoader, WebGLRenderer } from 'three'
 import type { WebGLRendererParameters } from 'three'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { MockInstance } from 'vitest'
 
+import { Texture, TextureLoader, WebGLRenderer } from 'three'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
 import {
-	SETTINGS_MODAL_STATE_EVENT,
 	setSettingsModalOpenState,
+	SETTINGS_MODAL_STATE_EVENT,
 } from '../../../../shared/lib/settings-modal-state'
 import { launchBlackHoleEvent } from '../black-hole'
 import { createBlackHoleScene } from '../black-hole-scene'
 
 vi.mock('three', async (importOriginal) => {
 	const original = await importOriginal<typeof import('three')>()
-	return { ...original, WebGLRenderer: vi.fn(), TextureLoader: vi.fn() }
+	return { ...original, TextureLoader: vi.fn(), WebGLRenderer: vi.fn() }
 })
 vi.mock('../black-hole-scene', () => ({ createBlackHoleScene: vi.fn() }))
 vi.mock('../../assets/milkyway.jpg', () => ({
@@ -106,8 +107,8 @@ describe('Event Horizon Day scene', () => {
 		const canvas = document.querySelector('canvas[data-black-hole]')
 		expect(canvas).toHaveAttribute('aria-hidden', 'true')
 		expect(canvas).toHaveStyle({
-			position: 'fixed',
 			pointerEvents: 'none',
+			position: 'fixed',
 			zIndex: '0',
 		})
 		expect(document.body.querySelectorAll('canvas')).toHaveLength(1)
@@ -261,14 +262,14 @@ describe('Event Horizon Day scene', () => {
 		window.dispatchEvent(new Event('resize'))
 		expect(scene.getState()).toEqual({
 			...frozen,
-			width: 390,
-			height: 844,
 			dpr: 1.2,
+			height: 844,
+			width: 390,
 		})
 		expect(scene.setSize).toHaveBeenLastCalledWith(390, 844, expect.anything())
 		expect(document.querySelector('canvas[data-black-hole]')).toHaveStyle({
-			width: '390px',
 			height: '844px',
+			width: '390px',
 		})
 		vi.stubGlobal('innerWidth', 8000)
 		vi.stubGlobal('innerHeight', 5000)
@@ -369,15 +370,15 @@ describe('Event Horizon Day scene', () => {
 })
 
 async function createScene({
-	shouldStart = true,
-	shouldLoad = true,
 	isHidden = false,
 	isReducedMotion = false,
+	shouldLoad = true,
+	shouldStart = true,
 }: {
-	shouldStart?: boolean
-	shouldLoad?: boolean
 	isHidden?: boolean
 	isReducedMotion?: boolean
+	shouldLoad?: boolean
+	shouldStart?: boolean
 } = {}) {
 	let isDocumentHidden = isHidden
 	vi.spyOn(document, 'hidden', 'get').mockImplementation(() => isDocumentHidden)
@@ -392,11 +393,11 @@ async function createScene({
 	})
 	const motionTarget = new EventTarget()
 	const motion = {
-		matches: isReducedMotion,
 		addEventListener: vi.fn(
 			(type: string, listener: EventListenerOrEventListenerObject) =>
 				motionTarget.addEventListener(type, listener),
 		),
+		matches: isReducedMotion,
 		removeEventListener: vi.fn(
 			(type: string, listener: EventListenerOrEventListenerObject) =>
 				motionTarget.removeEventListener(type, listener),
@@ -407,22 +408,22 @@ async function createScene({
 		vi.fn(() => motion),
 	)
 	const requests: {
-		url: string
-		texture: Texture
-		dispose: MockInstance<Texture['dispose']>
 		complete: () => void
+		dispose: MockInstance<Texture['dispose']>
 		fail: () => void
+		texture: Texture
+		url: string
 	}[] = []
 	vi.mocked(TextureLoader).mockImplementation(function () {
 		const loader: Partial<TextureLoader> = {
 			load: (url, onLoad, _onProgress, onError) => {
 				const texture = new Texture(document.createElement('img'))
 				requests.push({
-					url,
-					texture,
-					dispose: vi.spyOn(texture, 'dispose'),
 					complete: () => onLoad?.(texture),
+					dispose: vi.spyOn(texture, 'dispose'),
 					fail: () => onError?.(new Error('Texture unavailable')),
+					texture,
+					url,
 				})
 				return texture
 			},
@@ -452,30 +453,30 @@ async function createScene({
 		if (parameters?.canvas instanceof HTMLCanvasElement)
 			canvas = parameters.canvas
 		const renderer: Partial<WebGLRenderer> = {
-			domElement: canvas,
 			dispose: disposeRenderer,
+			domElement: canvas,
 			forceContextLoss,
+			getPixelRatio: () => pixelRatio,
+			setClearColor: vi.fn(),
 			setPixelRatio,
 			setSize,
-			setClearColor: vi.fn(),
-			getPixelRatio: () => pixelRatio,
 		}
 		return renderer as WebGLRenderer
 	})
 	const render =
 		vi.fn<
 			(frame: {
-				width: number
-				height: number
 				dpr: number
-				time: number
+				height: number
 				reveal: number
+				time: number
+				width: number
 			}) => void
 		>()
 	const disposeScene = vi.fn()
 	vi.mocked(createBlackHoleScene).mockReturnValue({
-		render,
 		dispose: disposeScene,
+		render,
 	})
 	cleanupEffect = await launchBlackHoleEvent()
 	if (shouldStart) {
@@ -487,25 +488,23 @@ async function createScene({
 		}
 	}
 	return {
-		requests,
-		pending,
-		motion,
-		render,
-		disposeScene,
 		disposeRenderer,
+		disposeScene,
 		forceContextLoss,
-		setPixelRatio,
-		setSize,
-		getState: () => {
-			const state = render.mock.lastCall?.[0]
-			if (!state) throw new Error('Expected the black hole scene to render')
-			return { ...state }
-		},
 		getPendingCallback: () => {
 			const callback = pending.values().next().value
 			if (!callback) throw new Error('Expected a scheduled black hole frame')
 			return callback
 		},
+		getState: () => {
+			const state = render.mock.lastCall?.[0]
+			if (!state) throw new Error('Expected the black hole scene to render')
+			return { ...state }
+		},
+		motion,
+		pending,
+		render,
+		requests,
 		runFrame: (time: number) => {
 			vi.mocked(performance.now).mockReturnValue(time)
 			for (const [id, callback] of [...pending]) {
@@ -517,10 +516,12 @@ async function createScene({
 			isDocumentHidden = isNextHidden
 			document.dispatchEvent(new Event('visibilitychange'))
 		},
+		setPixelRatio,
 		setReducedMotion: (isReduced: boolean) => {
 			motion.matches = isReduced
 			motionTarget.dispatchEvent(new Event('change'))
 		},
+		setSize,
 	}
 }
 

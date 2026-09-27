@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react'
-import type { WeatherMapData } from '../../../model/types'
 
 import { render } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+
+import type { WeatherMapData } from '../../../model/types'
 
 import { getWeatherMapPlaybackState } from '../../../model/weather-map/geometry'
 import { WeatherMap } from '../weather-map'
@@ -23,8 +24,8 @@ describe('WeatherMap tiles', () => {
 		const weatherMapData: WeatherMapData = {
 			center: { lat: 0, lon: 0 },
 			frames: [
-				{ time: 100, points: [] },
-				{ time: 3700, points: [] },
+				{ points: [], time: 100 },
+				{ points: [], time: 3700 },
 			],
 		}
 		const props = {
@@ -84,10 +85,10 @@ describe('WeatherMap tiles', () => {
 })
 
 class ResizeObserverMock implements ResizeObserver {
-	constructor(private readonly callback: ResizeObserverCallback) {}
-
 	disconnect = vi.fn()
+
 	unobserve = vi.fn()
+	constructor(private readonly callback: ResizeObserverCallback) {}
 	observe = (target: Element) => {
 		this.callback(
 			[

@@ -1,6 +1,8 @@
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import type { Config } from '../../model/config'
+
 import {
 	SEASONAL_BACKGROUND_AUTOMATIC,
 	SEASONAL_EVENT_OVERRIDE_NONE,
@@ -19,7 +21,6 @@ import {
 import { TileIdentifier } from '../../model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../model/unit-system'
 import { useConfig } from '../use-config'
-import type { Config } from '../../model/config'
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -246,20 +247,20 @@ describe('useConfig - Core Functionality', () => {
 			...mockValidConfig,
 			configVersion: CURRENT_CONFIG_VERSION,
 			lang: 'fr',
-			showSeasonalEvents: false,
-			showChristmasEventBackground: false,
 			showChristmasEvent: false,
+			showChristmasEventBackground: false,
+			showSeasonalEvents: false,
 		}
 		delete previousConfig.seasonalBackground
 		localStorageMock.config = JSON.stringify(previousConfig)
 
 		const { result } = renderHook(() => useConfig())
 		const expectedPreferences = {
-			seasonalBackground: SEASONAL_BACKGROUND_AUTOMATIC,
 			lang: 'fr',
-			showSeasonalEvents: false,
-			showChristmasEventBackground: false,
+			seasonalBackground: SEASONAL_BACKGROUND_AUTOMATIC,
 			showChristmasEvent: false,
+			showChristmasEventBackground: false,
+			showSeasonalEvents: false,
 		}
 
 		await waitFor(() => {

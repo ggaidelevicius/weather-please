@@ -8,15 +8,15 @@ import {
 } from 'three'
 
 type HoliParticles = {
-	points: Points<BufferGeometry, ShaderMaterial>
 	geometry: BufferGeometry
 	material: ShaderMaterial
+	points: Points<BufferGeometry, ShaderMaterial>
 }
 
 export function createHoliParticles(): HoliParticles {
 	const geometry = new BufferGeometry()
 	const attributes = createAttributes()
-	for (const [name, { values, size }] of Object.entries(attributes)) {
+	for (const [name, { size, values }] of Object.entries(attributes)) {
 		geometry.setAttribute(name, new BufferAttribute(values, size))
 	}
 	geometry.setDrawRange(0, PARTICLE_COUNT)
@@ -25,35 +25,35 @@ export function createHoliParticles(): HoliParticles {
 		blending: NormalBlending,
 		depthTest: false,
 		depthWrite: false,
-		transparent: true,
-		toneMapped: false,
-		vertexShader: VERTEX_SHADER,
 		fragmentShader: FRAGMENT_SHADER,
+		toneMapped: false,
+		transparent: true,
 		uniforms: {
-			uTime: { value: 0 },
+			uCompact: { value: 0 },
+			uDpr: { value: 1 },
 			uMorph: { value: 0 },
 			uReveal: { value: 0 },
-			uDpr: { value: 1 },
-			uCompact: { value: 0 },
+			uTime: { value: 0 },
 		},
+		vertexShader: VERTEX_SHADER,
 	})
 	const points = new Points(geometry, material)
 	points.frustumCulled = false
-	return { points, geometry, material }
+	return { geometry, material, points }
 }
 
 export function updateHoliParticles({
-	particles,
+	dpr,
 	elapsed,
 	hasRevealed,
 	isCompact,
-	dpr,
+	particles,
 }: {
-	particles: HoliParticles
+	dpr: number
 	elapsed: number
 	hasRevealed: boolean
 	isCompact: boolean
-	dpr: number
+	particles: HoliParticles
 }): HoliParticles {
 	const { uniforms } = particles.material
 	uniforms.uTime.value = elapsed
@@ -163,7 +163,7 @@ void main() {
 
 function createAttributes(): Record<
 	string,
-	{ values: Float32Array; size: number }
+	{ size: number; values: Float32Array }
 > {
 	const positions = new Float32Array(PARTICLE_COUNT * 3)
 	const lotus = new Float32Array(PARTICLE_COUNT * 3)
@@ -222,13 +222,13 @@ function createAttributes(): Record<
 		powder[index] = softness
 	}
 	return {
-		position: { values: positions, size: 3 },
-		aLotus: { values: lotus, size: 3 },
-		aMandala: { values: mandala, size: 3 },
-		aColor: { values: colors, size: 3 },
-		aColor2: { values: colors2, size: 3 },
-		aSeed: { values: seeds, size: 1 },
-		aScale: { values: scales, size: 1 },
-		aPowder: { values: powder, size: 1 },
+		aColor: { size: 3, values: colors },
+		aColor2: { size: 3, values: colors2 },
+		aLotus: { size: 3, values: lotus },
+		aMandala: { size: 3, values: mandala },
+		aPowder: { size: 1, values: powder },
+		aScale: { size: 1, values: scales },
+		aSeed: { size: 1, values: seeds },
+		position: { size: 3, values: positions },
 	}
 }

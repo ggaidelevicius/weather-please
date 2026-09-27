@@ -28,6 +28,14 @@ export async function launchHalloweenSpirits(): Promise<() => void> {
 	}
 }
 
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
+function edgeFade(position: number) {
+	return Math.min(1, position * 12, (1 - position) * 12)
+}
+
 function mountHalloween() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
@@ -35,40 +43,40 @@ function mountHalloween() {
 	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
 	const artwork = createHalloweenArtwork({ dpr: 2 })
 	const bats = Array.from({ length: 14 }, (_, index) => ({
-		x: Math.random(),
-		y: randomInRange({ min: 0.06, max: 0.34 }),
-		size: randomInRange({ min: 30, max: 56 }),
-		speed: randomInRange({ min: 0.008, max: 0.018 }) * (index % 3 ? 1 : -1),
+		opacity: randomInRange({ max: 0.76, min: 0.48 }),
 		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ max: 56, min: 30 }),
+		speed: randomInRange({ max: 0.018, min: 0.008 }) * (index % 3 ? 1 : -1),
 		variant: index % artwork.bats.length,
-		opacity: randomInRange({ min: 0.48, max: 0.76 }),
+		x: Math.random(),
+		y: randomInRange({ max: 0.34, min: 0.06 }),
 	}))
 	const ghosts = Array.from({ length: 9 }, (_, index) => ({
+		opacity: randomInRange({ max: 0.34, min: 0.19 }),
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ max: 104, min: 66 }),
+		speed: randomInRange({ max: 0.005, min: 0.002 }),
+		variant: index % artwork.ghosts.length,
 		x:
 			index % 2
-				? randomInRange({ min: 0.78, max: 0.94 })
-				: randomInRange({ min: 0.06, max: 0.22 }),
+				? randomInRange({ max: 0.94, min: 0.78 })
+				: randomInRange({ max: 0.22, min: 0.06 }),
 		y: Math.random(),
-		size: randomInRange({ min: 66, max: 104 }),
-		speed: randomInRange({ min: 0.002, max: 0.005 }),
-		phase: Math.random() * Math.PI * 2,
-		variant: index % artwork.ghosts.length,
-		opacity: randomInRange({ min: 0.19, max: 0.34 }),
 	}))
 	const embers = Array.from({ length: 28 }, (_, index) => ({
+		delay: (index % 7) * 0.3,
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ max: 19, min: 9 }),
+		speed: randomInRange({ max: 0.019, min: 0.009 }),
 		x: Math.random(),
 		y: Math.random(),
-		size: randomInRange({ min: 9, max: 19 }),
-		speed: randomInRange({ min: 0.009, max: 0.019 }),
-		phase: Math.random() * Math.PI * 2,
-		delay: (index % 7) * 0.3,
 	}))
 	let width = Math.max(1, window.innerWidth)
 	let height = Math.max(1, window.innerHeight)
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -85,21 +93,21 @@ function mountHalloween() {
 	const drawSprite = (
 		sprite: HTMLCanvasElement,
 		{
-			x,
-			y,
-			size,
 			alpha,
 			rotation = 0,
 			scaleX = 1,
 			scaleY = 1,
+			size,
+			x,
+			y,
 		}: {
-			x: number
-			y: number
-			size: number
 			alpha: number
 			rotation?: number
 			scaleX?: number
 			scaleY?: number
+			size: number
+			x: number
+			y: number
 		},
 	) => {
 		context.save()
@@ -135,10 +143,10 @@ function mountHalloween() {
 
 		const moonSize = (isCompact ? 250 : 340) * sceneScale
 		drawSprite(artwork.moon, {
+			alpha: reveal * 0.8,
+			size: moonSize,
 			x: width * (isCompact ? 0.78 : 0.84),
 			y: Math.max(moonSize * 0.36, height * 0.19),
-			size: moonSize,
-			alpha: reveal * 0.8,
 		})
 
 		const batCount = isCompact ? 8 : bats.length
@@ -147,13 +155,13 @@ function mountHalloween() {
 			const horizontal = wrap(bat.x + elapsed * bat.speed)
 			const flap = Math.sin(elapsed * 4.2 + bat.phase)
 			drawSprite(artwork.bats[bat.variant], {
-				x: horizontal * (width + 100) - 50,
-				y: bat.y * height + Math.sin(elapsed * 0.8 + bat.phase) * 12,
-				size: bat.size * (isCompact ? 0.8 : 1),
 				alpha: reveal * bat.opacity * edgeFade(horizontal),
 				rotation: Math.sin(elapsed * 0.9 + bat.phase) * 0.16,
 				scaleX: bat.speed < 0 ? -1 : 1,
 				scaleY: 0.76 + flap * 0.24,
+				size: bat.size * (isCompact ? 0.8 : 1),
+				x: horizontal * (width + 100) - 50,
+				y: bat.y * height + Math.sin(elapsed * 0.8 + bat.phase) * 12,
 			})
 		}
 
@@ -163,9 +171,6 @@ function mountHalloween() {
 			const vertical = wrap(ghost.y - elapsed * ghost.speed)
 			const sway = Math.sin(elapsed * 0.36 + ghost.phase)
 			drawSprite(artwork.ghosts[ghost.variant], {
-				x: ghost.x * width + sway * (isCompact ? 10 : 22),
-				y: vertical * (height + 150) - 75,
-				size: ghost.size * (isCompact ? 0.8 : 1),
 				alpha:
 					reveal *
 					ghost.opacity *
@@ -173,6 +178,9 @@ function mountHalloween() {
 					(0.83 + Math.sin(elapsed * 0.6 + ghost.phase) * 0.17),
 				rotation: sway * 0.12,
 				scaleX: 1 + Math.sin(elapsed * 0.5 + ghost.phase) * 0.04,
+				size: ghost.size * (isCompact ? 0.8 : 1),
+				x: ghost.x * width + sway * (isCompact ? 10 : 22),
+				y: vertical * (height + 150) - 75,
 			})
 		}
 
@@ -184,28 +192,28 @@ function mountHalloween() {
 			const x = ember.x * width + Math.sin(elapsed * 0.5 + ember.phase) * 18
 			const isCentral = x > width * 0.28 && x < width * 0.72
 			drawSprite(artwork.ember, {
-				x,
-				y: height * (0.35 + vertical * 0.7),
-				size: ember.size,
 				alpha:
 					fade *
 					edgeFade(vertical) *
 					(isCentral ? 0.22 : 0.52) *
 					(0.7 + Math.sin(elapsed * 1.2 + ember.phase) * 0.3),
+				size: ember.size,
+				x,
+				y: height * (0.35 + vertical * 0.7),
 			})
 		}
 
 		const pumpkins = isCompact
 			? [
-					{ x: 57, size: 170, variant: 0 },
-					{ x: 145, size: 112, variant: 1 },
+					{ size: 170, variant: 0, x: 57 },
+					{ size: 112, variant: 1, x: 145 },
 				]
 			: [
-					{ x: 110, size: 244, variant: 0 },
-					{ x: 243, size: 160, variant: 1 },
-					{ x: width - 94, size: 154, variant: 2 },
+					{ size: 244, variant: 0, x: 110 },
+					{ size: 160, variant: 1, x: 243 },
+					{ size: 154, variant: 2, x: width - 94 },
 				]
-		for (const { x, size: baseSize, variant } of pumpkins) {
+		for (const { size: baseSize, variant, x } of pumpkins) {
 			const size = baseSize * sceneScale
 			const left = x - size / 2
 			const top = height + 4 - size * (226 / 256)
@@ -302,14 +310,6 @@ function mountHalloween() {
 	return cleanup
 }
 
-function easeOut(progress: number) {
-	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
-}
-
 function wrap(value: number) {
 	return ((value % 1) + 1) % 1
-}
-
-function edgeFade(position: number) {
-	return Math.min(1, position * 12, (1 - position) * 12)
 }

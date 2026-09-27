@@ -31,11 +31,11 @@ export const fetchUpcomingCalendarEvents = async ({
 	const response = await fetch(
 		`${CALENDAR_VIEW_ENDPOINT}?${params.toString()}`,
 		{
-			signal,
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 				Prefer: `outlook.timezone="${timeZone}"`,
 			},
+			signal,
 		},
 	)
 

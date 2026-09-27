@@ -1,21 +1,23 @@
-import type { SettingsContentProps } from '../settings-types'
-import type { SeasonalBackground } from '../../../seasonal-events/core/types'
 import { Trans } from '@lingui/react/macro'
 import { IconAlertTriangle } from '@tabler/icons-react'
-import { SEASONAL_BACKGROUND_AUTOMATIC } from '../../../seasonal-events/core/types'
-import { TemperatureUnit, UnitSystem } from '../../model/unit-system'
-import { Select, Switch } from '../../../../shared/ui/input'
+
+import type { SeasonalBackground } from '../../../seasonal-events/core/types'
+import type { SettingsContentProps } from '../settings-types'
+
+import { locales } from '../../../../shared/lib/i18n'
 import { Alert } from '../../../../shared/ui/alert'
 import { AlertVariant } from '../../../../shared/ui/alert-variant'
-import { locales } from '../../../../shared/lib/i18n'
+import { Select, Switch } from '../../../../shared/ui/input'
+import { SEASONAL_BACKGROUND_AUTOMATIC } from '../../../seasonal-events/core/types'
+import { TemperatureUnit, UnitSystem } from '../../model/unit-system'
 import {
-	SEASONAL_EVENT_OPTIONS,
 	SEASONAL_EVENT_OPTION_LABELS,
+	SEASONAL_EVENT_OPTIONS,
 } from './seasonal-settings'
 import {
+	SETTINGS_FIELD_LAYOUT,
 	SettingsSectionLayout,
 	SettingsSubsection,
-	SETTINGS_FIELD_LAYOUT,
 } from './section-layout'
 
 export const getTemperatureUnitOptions = () => [

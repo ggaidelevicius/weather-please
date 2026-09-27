@@ -3,21 +3,22 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createEmptyAlerts } from '../alerts'
 import {
 	getCachedWeather,
+	WEATHER_CACHE_STORAGE_KEY,
 	writeCachedWeather,
 	writeCachedWeatherMapData,
-	WEATHER_CACHE_STORAGE_KEY,
 } from '../cache'
 
 const identity = {
 	lat: '40',
 	lon: '-74',
-	timeZone: 'UTC',
 	shouldUseAirQualityUv: false,
+	timeZone: 'UTC',
 }
 const forecast = () => ({
 	...identity,
 	alertData: createEmptyAlerts(),
 	lastUpdatedDate: new Date(),
+	next24HoursData: [],
 	weatherData: [
 		{
 			day: Math.floor(Date.now() / 1000),
@@ -29,7 +30,6 @@ const forecast = () => ({
 			wind: 2,
 		},
 	],
-	next24HoursData: [],
 	weatherMapData: null,
 })
 

@@ -1,20 +1,21 @@
-import type { WeatherMapData } from '../types'
 import type {
-	WeatherMapViewport,
 	WeatherMapDimensions,
-	WeatherMapProjectedPrecipitationPoint,
 	WeatherMapPointerPoint,
+	WeatherMapProjectedPrecipitationPoint,
+	WeatherMapViewport,
 } from '../detail-types'
+import type { WeatherMapData } from '../types'
+
+import { convertPrecipitation, formatDecimal } from '../detail-formatting'
+import {
+	WEATHER_MAP_PRECIPITATION_BANDS,
+	WEATHER_MAP_PRECIPITATION_MESH_CELL_SIZE,
+	WEATHER_MAP_PRECIPITATION_MIN_VISIBLE,
+} from './constants'
 import {
 	getWeatherMapFrameInterpolation,
 	projectWeatherMapPoint,
 } from './geometry'
-import {
-	WEATHER_MAP_PRECIPITATION_MESH_CELL_SIZE,
-	WEATHER_MAP_PRECIPITATION_BANDS,
-	WEATHER_MAP_PRECIPITATION_MIN_VISIBLE,
-} from './constants'
-import { convertPrecipitation, formatDecimal } from '../detail-formatting'
 
 export const getInterpolatedWeatherMapPrecipitationPoints = ({
 	framePosition,

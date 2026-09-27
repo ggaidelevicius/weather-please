@@ -1,27 +1,27 @@
 type BotanicalSprite = {
-	canvas: HTMLCanvasElement
-	width: number
-	height: number
 	baseX: number
 	baseY: number
+	canvas: HTMLCanvasElement
+	height: number
+	width: number
 }
 
-type FlowerKind = 'ivory' | 'pink' | 'blue' | 'yellow'
-
-type FlowerStem = {
-	x: number
-	y: number
-	radius: number
-	bend: number
-	tilt: number
-	isBud?: boolean
-}
+type FlowerKind = 'blue' | 'ivory' | 'pink' | 'yellow'
 
 type FlowerSpec = {
-	width: number
 	height: number
 	kind: FlowerKind
 	stems: FlowerStem[]
+	width: number
+}
+
+type FlowerStem = {
+	bend: number
+	isBud?: boolean
+	radius: number
+	tilt: number
+	x: number
+	y: number
 }
 
 type Point = { x: number; y: number }
@@ -33,87 +33,87 @@ export function createSpringMeadowArtwork({ dpr }: { dpr: number }): {
 	const pixelRatio = Math.min(2, Math.max(1, dpr))
 	const flowers: FlowerSpec[] = [
 		{
-			width: 112,
 			height: 218,
 			kind: 'ivory',
 			stems: [
-				{ x: 48, y: 41, radius: 23, bend: 19, tilt: -0.15 },
-				{ x: 82, y: 98, radius: 11, bend: -4, tilt: 0.2 },
-				{ x: 26, y: 129, radius: 5, bend: -14, tilt: -0.3, isBud: true },
+				{ bend: 19, radius: 23, tilt: -0.15, x: 48, y: 41 },
+				{ bend: -4, radius: 11, tilt: 0.2, x: 82, y: 98 },
+				{ bend: -14, isBud: true, radius: 5, tilt: -0.3, x: 26, y: 129 },
 			],
+			width: 112,
 		},
 		{
-			width: 112,
 			height: 230,
 			kind: 'pink',
 			stems: [
-				{ x: 64, y: 40, radius: 25, bend: -13, tilt: 0.14 },
-				{ x: 29, y: 102, radius: 6, bend: -18, tilt: -0.4, isBud: true },
-				{ x: 88, y: 134, radius: 13, bend: 20, tilt: 0.3 },
+				{ bend: -13, radius: 25, tilt: 0.14, x: 64, y: 40 },
+				{ bend: -18, isBud: true, radius: 6, tilt: -0.4, x: 29, y: 102 },
+				{ bend: 20, radius: 13, tilt: 0.3, x: 88, y: 134 },
 			],
+			width: 112,
 		},
 		{
-			width: 100,
 			height: 210,
 			kind: 'blue',
 			stems: [
-				{ x: 57, y: 37, radius: 9, bend: 9, tilt: 0.1 },
-				{ x: 28, y: 64, radius: 8, bend: -17, tilt: -0.25 },
-				{ x: 75, y: 87, radius: 9, bend: 18, tilt: 0.3 },
-				{ x: 33, y: 112, radius: 7, bend: -19, tilt: -0.1 },
-				{ x: 45, y: 22, radius: 3.5, bend: -8, tilt: -0.3, isBud: true },
+				{ bend: 9, radius: 9, tilt: 0.1, x: 57, y: 37 },
+				{ bend: -17, radius: 8, tilt: -0.25, x: 28, y: 64 },
+				{ bend: 18, radius: 9, tilt: 0.3, x: 75, y: 87 },
+				{ bend: -19, radius: 7, tilt: -0.1, x: 33, y: 112 },
+				{ bend: -8, isBud: true, radius: 3.5, tilt: -0.3, x: 45, y: 22 },
 			],
+			width: 100,
 		},
 		{
-			width: 100,
 			height: 182,
 			kind: 'yellow',
 			stems: [
-				{ x: 40, y: 40, radius: 17, bend: 17, tilt: -0.2 },
-				{ x: 75, y: 87, radius: 11, bend: 18, tilt: 0.3 },
-				{ x: 23, y: 103, radius: 4, bend: -19, tilt: -0.4, isBud: true },
+				{ bend: 17, radius: 17, tilt: -0.2, x: 40, y: 40 },
+				{ bend: 18, radius: 11, tilt: 0.3, x: 75, y: 87 },
+				{ bend: -19, isBud: true, radius: 4, tilt: -0.4, x: 23, y: 103 },
 			],
+			width: 100,
 		},
 		{
-			width: 112,
 			height: 174,
 			kind: 'ivory',
 			stems: [
-				{ x: 37, y: 41, radius: 17, bend: -16, tilt: -0.23 },
-				{ x: 81, y: 75, radius: 15, bend: 16, tilt: 0.22 },
-				{ x: 58, y: 103, radius: 4, bend: -9, tilt: 0.12, isBud: true },
+				{ bend: -16, radius: 17, tilt: -0.23, x: 37, y: 41 },
+				{ bend: 16, radius: 15, tilt: 0.22, x: 81, y: 75 },
+				{ bend: -9, isBud: true, radius: 4, tilt: 0.12, x: 58, y: 103 },
 			],
+			width: 112,
 		},
 		{
-			width: 108,
 			height: 196,
 			kind: 'pink',
 			stems: [
-				{ x: 39, y: 42, radius: 21, bend: -13, tilt: -0.17 },
-				{ x: 80, y: 90, radius: 6, bend: 20, tilt: 0.28, isBud: true },
+				{ bend: -13, radius: 21, tilt: -0.17, x: 39, y: 42 },
+				{ bend: 20, isBud: true, radius: 6, tilt: 0.28, x: 80, y: 90 },
 			],
+			width: 108,
 		},
 	]
 	return {
 		flowers: flowers.map((spec, index) =>
-			createFlowerSprite({ spec, index, dpr: pixelRatio }),
+			createFlowerSprite({ dpr: pixelRatio, index, spec }),
 		),
 		grasses: Array.from({ length: 4 }, (_, index) =>
-			createGrassSprite({ index, dpr: pixelRatio }),
+			createGrassSprite({ dpr: pixelRatio, index }),
 		),
 	}
 }
 
 function createFlowerSprite({
-	spec,
-	index,
 	dpr,
+	index,
+	spec,
 }: {
-	spec: FlowerSpec
-	index: number
 	dpr: number
+	index: number
+	spec: FlowerSpec
 }): BotanicalSprite {
-	const { sprite, context } = createSurface({ ...spec, dpr })
+	const { context, sprite } = createSurface({ ...spec, dpr })
 	const base = { x: sprite.baseX, y: sprite.baseY }
 	for (const [stemIndex, stem] of spec.stems.entries()) {
 		const control = {
@@ -177,13 +177,13 @@ function createFlowerSprite({
 }
 
 function createGrassSprite({
-	index,
 	dpr,
+	index,
 }: {
-	index: number
 	dpr: number
+	index: number
 }): BotanicalSprite {
-	const { sprite, context } = createSurface({ width: 130, height: 98, dpr })
+	const { context, sprite } = createSurface({ dpr, height: 98, width: 130 })
 	for (let blade = 0; blade < 25; blade += 1) {
 		const seed = index * 101 + blade * 3.7
 		const rootX = sprite.baseX + (noise(seed) - 0.5) * 55
@@ -228,55 +228,67 @@ function createGrassSprite({
 	return sprite
 }
 
-function drawLeaf({
-	context,
-	length,
+function createSurface({
+	dpr,
+	height,
 	width,
 }: {
-	context: CanvasRenderingContext2D
-	length: number
+	dpr: number
+	height: number
 	width: number
 }) {
-	const gradient = context.createLinearGradient(-width, 0, width, -length)
-	gradient.addColorStop(0, '#446e49')
-	gradient.addColorStop(0.48, '#6c955a')
-	gradient.addColorStop(1, '#a9bb7c')
+	const canvas = document.createElement('canvas')
+	canvas.width = Math.round(width * dpr)
+	canvas.height = Math.round(height * dpr)
+	const context = canvas.getContext('2d')
+	if (!context) {
+		throw new Error('Unable to create spring meadow artwork')
+	}
+	context.setTransform(dpr, 0, 0, dpr, 0, 0)
+	return {
+		context,
+		sprite: { baseX: width / 2, baseY: height - 3, canvas, height, width },
+	}
+}
+
+function drawBud({
+	context,
+	kind,
+	radius,
+}: {
+	context: CanvasRenderingContext2D
+	kind: FlowerKind
+	radius: number
+}) {
+	const gradient = context.createLinearGradient(-radius, 0, radius, -radius)
+	gradient.addColorStop(0, kind === 'pink' ? '#a6798a' : '#879d70')
+	gradient.addColorStop(0.5, kind === 'pink' ? '#e4b6c4' : '#d9dfbd')
+	gradient.addColorStop(1, kind === 'blue' ? '#b7bcdd' : '#e5d6b4')
 	context.fillStyle = gradient
 	context.beginPath()
-	context.moveTo(0, 0)
-	context.bezierCurveTo(
-		-width,
-		-length * 0.28,
-		-width,
-		-length * 0.64,
-		1,
-		-length,
-	)
-	context.bezierCurveTo(width * 0.8, -length * 0.59, width, -length * 0.3, 0, 0)
+	context.ellipse(0, -radius * 0.5, radius * 0.7, radius, 0, 0, Math.PI * 2)
 	context.fill()
-	context.strokeStyle = 'rgba(204, 216, 151, 0.52)'
-	context.lineWidth = 0.65
+	context.strokeStyle = 'rgba(90, 113, 75, 0.55)'
+	context.lineWidth = 0.5
 	context.beginPath()
-	context.moveTo(0, 0)
-	context.quadraticCurveTo(-1, -length * 0.48, 1, -length + 1)
-	for (let vein = 1; vein < 4; vein += 1) {
-		const y = -length * (0.17 + vein * 0.15)
-		context.moveTo(0, y)
-		context.quadraticCurveTo(
-			-width * 0.3,
-			y - 1,
-			-width * 0.53,
-			y - length * 0.14,
-		)
-		context.moveTo(0, y - 1)
-		context.quadraticCurveTo(
-			width * 0.3,
-			y - 3,
-			width * 0.49,
-			y - length * 0.18,
-		)
-	}
+	context.moveTo(0, radius * 0.4)
+	context.quadraticCurveTo(-radius * 0.3, -radius * 0.5, 0, -radius * 1.4)
 	context.stroke()
+	context.fillStyle = '#718b57'
+	context.beginPath()
+	context.moveTo(-radius * 0.75, -radius * 0.4)
+	context.quadraticCurveTo(-radius * 0.5, radius * 0.9, 0, radius * 0.7)
+	context.quadraticCurveTo(
+		radius * 0.5,
+		radius * 0.8,
+		radius * 0.75,
+		-radius * 0.4,
+	)
+	context.lineTo(radius * 0.25, radius * 0.1)
+	context.lineTo(0, -radius * 0.2)
+	context.lineTo(-radius * 0.25, radius * 0.1)
+	context.closePath()
+	context.fill()
 	return context
 }
 
@@ -429,68 +441,56 @@ function drawFlower({
 	return context
 }
 
-function drawBud({
+function drawLeaf({
 	context,
-	kind,
-	radius,
+	length,
+	width,
 }: {
 	context: CanvasRenderingContext2D
-	kind: FlowerKind
-	radius: number
+	length: number
+	width: number
 }) {
-	const gradient = context.createLinearGradient(-radius, 0, radius, -radius)
-	gradient.addColorStop(0, kind === 'pink' ? '#a6798a' : '#879d70')
-	gradient.addColorStop(0.5, kind === 'pink' ? '#e4b6c4' : '#d9dfbd')
-	gradient.addColorStop(1, kind === 'blue' ? '#b7bcdd' : '#e5d6b4')
+	const gradient = context.createLinearGradient(-width, 0, width, -length)
+	gradient.addColorStop(0, '#446e49')
+	gradient.addColorStop(0.48, '#6c955a')
+	gradient.addColorStop(1, '#a9bb7c')
 	context.fillStyle = gradient
 	context.beginPath()
-	context.ellipse(0, -radius * 0.5, radius * 0.7, radius, 0, 0, Math.PI * 2)
-	context.fill()
-	context.strokeStyle = 'rgba(90, 113, 75, 0.55)'
-	context.lineWidth = 0.5
-	context.beginPath()
-	context.moveTo(0, radius * 0.4)
-	context.quadraticCurveTo(-radius * 0.3, -radius * 0.5, 0, -radius * 1.4)
-	context.stroke()
-	context.fillStyle = '#718b57'
-	context.beginPath()
-	context.moveTo(-radius * 0.75, -radius * 0.4)
-	context.quadraticCurveTo(-radius * 0.5, radius * 0.9, 0, radius * 0.7)
-	context.quadraticCurveTo(
-		radius * 0.5,
-		radius * 0.8,
-		radius * 0.75,
-		-radius * 0.4,
+	context.moveTo(0, 0)
+	context.bezierCurveTo(
+		-width,
+		-length * 0.28,
+		-width,
+		-length * 0.64,
+		1,
+		-length,
 	)
-	context.lineTo(radius * 0.25, radius * 0.1)
-	context.lineTo(0, -radius * 0.2)
-	context.lineTo(-radius * 0.25, radius * 0.1)
-	context.closePath()
+	context.bezierCurveTo(width * 0.8, -length * 0.59, width, -length * 0.3, 0, 0)
 	context.fill()
+	context.strokeStyle = 'rgba(204, 216, 151, 0.52)'
+	context.lineWidth = 0.65
+	context.beginPath()
+	context.moveTo(0, 0)
+	context.quadraticCurveTo(-1, -length * 0.48, 1, -length + 1)
+	for (let vein = 1; vein < 4; vein += 1) {
+		const y = -length * (0.17 + vein * 0.15)
+		context.moveTo(0, y)
+		context.quadraticCurveTo(
+			-width * 0.3,
+			y - 1,
+			-width * 0.53,
+			y - length * 0.14,
+		)
+		context.moveTo(0, y - 1)
+		context.quadraticCurveTo(
+			width * 0.3,
+			y - 3,
+			width * 0.49,
+			y - length * 0.18,
+		)
+	}
+	context.stroke()
 	return context
-}
-
-function createSurface({
-	width,
-	height,
-	dpr,
-}: {
-	width: number
-	height: number
-	dpr: number
-}) {
-	const canvas = document.createElement('canvas')
-	canvas.width = Math.round(width * dpr)
-	canvas.height = Math.round(height * dpr)
-	const context = canvas.getContext('2d')
-	if (!context) {
-		throw new Error('Unable to create spring meadow artwork')
-	}
-	context.setTransform(dpr, 0, 0, dpr, 0, 0)
-	return {
-		context,
-		sprite: { canvas, width, height, baseX: width / 2, baseY: height - 3 },
-	}
 }
 
 function getStemPoint({

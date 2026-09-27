@@ -1,41 +1,43 @@
-import type { DetailViewProps } from './detail-data'
-import { getDetailViewData } from './detail-data'
-import { PRECIPITATION_CHART_DEFAULT_MAX_MM } from './constants'
 import { Trans } from '@lingui/react/macro'
 import { IconCloudRain } from '@tabler/icons-react'
+
+import type { DetailViewProps } from './detail-data'
+
 import {
-	Metric,
-	DetailViewShell,
-	RelativeHourLabel,
-	HourIntervalLabel,
-} from '../details/detail-shell'
+	getChartScale,
+	getPeakPoint,
+	getScaleLabels,
+} from '../../model/chart-geometry'
 import {
 	convertPrecipitation,
 	formatPrecipitationValue,
 	sum,
 } from '../../model/detail-formatting'
-import {
-	getChartScale,
-	getScaleLabels,
-	getPeakPoint,
-} from '../../model/chart-geometry'
 import { ChartFrame, PrecipitationChart } from '../charts/chart'
+import {
+	DetailViewShell,
+	HourIntervalLabel,
+	Metric,
+	RelativeHourLabel,
+} from '../details/detail-shell'
+import { PRECIPITATION_CHART_DEFAULT_MAX_MM } from './constants'
+import { getDetailViewData } from './detail-data'
 
 export const PrecipitationDetail = (props: Readonly<DetailViewProps>) => {
 	const {
-		data,
-		isActive,
 		activeSeriesId,
-		setActiveSeriesId,
-		usesMetricUnits,
+		data,
+		endLabel,
+		isActive,
+		middleLabel,
 		precipitation,
 		precipitationProbability,
-		times,
 		precipitationUnitLabel,
-		startLabel,
-		middleLabel,
-		endLabel,
 		referenceTime,
+		setActiveSeriesId,
+		startLabel,
+		times,
+		usesMetricUnits,
 	} = getDetailViewData(props)
 
 	const probabilityScale = { maxValue: 100, minValue: 0 }

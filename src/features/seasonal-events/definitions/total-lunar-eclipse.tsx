@@ -1,5 +1,7 @@
 import { Trans } from '@lingui/react/macro'
+
 import type { SeasonalEvent, SeasonalEventContext } from '../core/types'
+
 import { SeasonalEventId } from '../core/types'
 
 const TOTAL_LUNAR_ECLIPSE_DATES = new Set([

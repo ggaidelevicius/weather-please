@@ -1,12 +1,19 @@
-import type { SeasonalEventId } from '../../seasonal-events/core/types'
 import type { ReactNode } from 'react'
-import type { CalendarConnection } from '../../integrations/hooks/use-calendar-connection'
+
 import type { LocaleKey } from '../../../shared/lib/i18n'
+import type { CalendarConnection } from '../../integrations/hooks/use-calendar-connection'
+import type { SeasonalEventId } from '../../seasonal-events/core/types'
 import type { Config } from '../model/config'
 
 export type BooleanConfigKey = {
 	[K in keyof Config]: Config[K] extends boolean ? K : never
 }[keyof Config]
+
+export type IntegrationsPromo = {
+	onIntegrationsViewed: () => void
+	onSettingsOpened: () => void
+	shouldHighlightIntegrations: boolean
+}
 
 export type SeasonalEventSection = {
 	eventIds: SeasonalEventId[]
@@ -23,6 +30,13 @@ export type SettingsContentProps = {
 	platformReviewLink: string
 }
 
+export interface SettingsProps {
+	calendarConnection: CalendarConnection
+	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
+	input: Config
+	integrationsPromo: IntegrationsPromo
+}
+
 export type SettingsSectionDefinition = {
 	icon: ReactNode
 	id: SettingsSectionId
@@ -35,17 +49,4 @@ export type SettingsSectionId =
 export type SwitchDefinition<K extends BooleanConfigKey = BooleanConfigKey> = {
 	key: K
 	label: ReactNode
-}
-
-export type IntegrationsPromo = {
-	onIntegrationsViewed: () => void
-	onSettingsOpened: () => void
-	shouldHighlightIntegrations: boolean
-}
-
-export interface SettingsProps {
-	calendarConnection: CalendarConnection
-	handleChange: (k: keyof Config, v: Config[keyof Config]) => void
-	input: Config
-	integrationsPromo: IntegrationsPromo
 }

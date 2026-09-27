@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
-	SETTINGS_MODAL_STATE_EVENT,
 	setSettingsModalOpenState,
+	SETTINGS_MODAL_STATE_EVENT,
 } from '../../../../shared/lib/settings-modal-state'
 import { launchDayOfTheDead } from '../day-of-the-dead'
 import * as artwork from '../day-of-the-dead-artwork'
@@ -102,7 +102,7 @@ describe('Day of the Dead scene', () => {
 
 		expect(canvas).toHaveAttribute('width', '780')
 		expect(canvas).toHaveAttribute('height', '1688')
-		expect(canvas).toHaveStyle({ width: '390px', height: '844px' })
+		expect(canvas).toHaveStyle({ height: '844px', width: '390px' })
 		expect(scene.context.clearRect).toHaveBeenCalledTimes(drawCount + 3)
 		expect(scene.createArtwork).toHaveBeenCalledOnce()
 		expect(scene.createBanners).toHaveBeenCalledOnce()
@@ -353,13 +353,13 @@ async function createScene({
 		.mockImplementation(() => {
 			const createCanvas = () => document.createElement('canvas')
 			return {
-				skulls: Array.from({ length: 2 }, createCanvas),
-				marigolds: Array.from({ length: 3 }, createCanvas),
-				petals: Array.from({ length: 3 }, createCanvas),
 				butterflies: Array.from({ length: 2 }, createCanvas),
 				candle: createCanvas(),
 				flame: createCanvas(),
 				glow: createCanvas(),
+				marigolds: Array.from({ length: 3 }, createCanvas),
+				petals: Array.from({ length: 3 }, createCanvas),
+				skulls: Array.from({ length: 2 }, createCanvas),
 			}
 		})
 	const createBanners = vi
@@ -379,10 +379,6 @@ async function createScene({
 	}[] = []
 	const context = {
 		beginPath: vi.fn(),
-		moveTo: vi.fn<(x: number, y: number) => void>(),
-		quadraticCurveTo:
-			vi.fn<(cpx: number, cpy: number, x: number, y: number) => void>(),
-		stroke: vi.fn(),
 		clearRect: vi.fn(() => {
 			images.length = 0
 		}),
@@ -396,6 +392,9 @@ async function createScene({
 		}),
 		globalAlpha: 1,
 		globalCompositeOperation: 'source-over' as GlobalCompositeOperation,
+		moveTo: vi.fn<(x: number, y: number) => void>(),
+		quadraticCurveTo:
+			vi.fn<(cpx: number, cpy: number, x: number, y: number) => void>(),
 		restore: () => {
 			const state = savedStates.pop()
 			if (!state) return
@@ -410,6 +409,7 @@ async function createScene({
 			}),
 		scale: vi.fn<(x: number, y: number) => void>(),
 		setTransform: vi.fn(),
+		stroke: vi.fn(),
 		translate: vi.fn<(x: number, y: number) => void>(),
 	}
 	const partialContext: Partial<CanvasRenderingContext2D> = context
@@ -431,17 +431,22 @@ async function createScene({
 		context.quadraticCurveTo.mockClear()
 	}
 	const getSnapshot = () => ({
+		curves: [...context.quadraticCurveTo.mock.calls],
 		images: [...images],
-		translations: [...context.translate.mock.calls],
+		pathStarts: [...context.moveTo.mock.calls],
 		rotations: [...context.rotate.mock.calls],
 		scales: [...context.scale.mock.calls],
-		pathStarts: [...context.moveTo.mock.calls],
-		curves: [...context.quadraticCurveTo.mock.calls],
+		translations: [...context.translate.mock.calls],
 	})
 	cleanupEffect = await launchDayOfTheDead()
 	if (shouldMount) vi.advanceTimersByTime(900)
 
 	return {
+		captureFrame: (time: number) => {
+			clearSnapshot()
+			runFrame(time)
+			return getSnapshot()
+		},
 		clearSnapshot,
 		context,
 		createArtwork,
@@ -457,11 +462,6 @@ async function createScene({
 		motion,
 		pending,
 		runFrame,
-		captureFrame: (time: number) => {
-			clearSnapshot()
-			runFrame(time)
-			return getSnapshot()
-		},
 		setHidden: (isNextHidden: boolean) => {
 			isDocumentHidden = isNextHidden
 			document.dispatchEvent(new Event('visibilitychange'))

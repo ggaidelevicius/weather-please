@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { setSettingsModalOpenState } from '../../../../shared/lib/settings-modal-state'
-import { launchAutumnEquinoxLeaves } from '../autumn-equinox'
 import * as artwork from '../autumn-artwork'
+import { launchAutumnEquinoxLeaves } from '../autumn-equinox'
 
 let cleanupEffect = () => {}
 

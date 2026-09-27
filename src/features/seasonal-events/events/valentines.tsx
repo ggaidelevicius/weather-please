@@ -11,8 +11,8 @@ const VALENTINES_COMPACT_HEART_COUNT = 44
 const VALENTINES_LIGHT_COUNT = 12
 const VALENTINES_CLOUD_DRIFT_RATE = 0.12
 
-type ValentinesArtwork = ReturnType<typeof createValentinesArtwork>
 type ParticleKind = 'heart' | 'light'
+type ValentinesArtwork = ReturnType<typeof createValentinesArtwork>
 
 export async function launchValentinesHearts(): Promise<() => void> {
 	if (typeof window === 'undefined') return () => {}
@@ -35,6 +35,66 @@ export async function launchValentinesHearts(): Promise<() => void> {
 	}
 }
 
+function createParticle({
+	cloudAngleOffset,
+	index,
+	kind,
+}: {
+	cloudAngleOffset: number
+	index: number
+	kind: ParticleKind
+}) {
+	const depth = index % 6 === 0 ? 1.15 : index % 3 === 0 ? 0.6 : 0.88
+	const isLight = kind === 'light'
+	const cloudPosition = index + Math.random() * 0.15
+	const cloudFill = randomInRange({ max: 1.02, min: 0.95 })
+	const cloudJitter = randomInRange({ max: 0.06, min: 0.02 })
+	const spreadAngle = Math.random() * Math.PI * 2
+	const spread = randomInRange({ max: cloudJitter, min: 0 })
+	const getCloudPoint = (count: number) => {
+		const angle = cloudAngleOffset + (cloudPosition / count) * Math.PI * 2
+		const scale = (1.22 / 34) * cloudFill
+		return {
+			x: 16 * Math.sin(angle) ** 3 * scale + Math.cos(spreadAngle) * spread,
+			y:
+				(-13 * Math.cos(angle) +
+					5 * Math.cos(angle * 2) +
+					2 * Math.cos(angle * 3) +
+					Math.cos(angle * 4)) *
+					scale +
+				Math.sin(spreadAngle) * spread,
+		}
+	}
+
+	return {
+		cloud: getCloudPoint(VALENTINES_HEART_COUNT),
+		compactCloud: getCloudPoint(VALENTINES_COMPACT_HEART_COUNT),
+		delay: randomInRange({ max: 2.2, min: 0 }),
+		depth,
+		index,
+		kind,
+		opacity:
+			randomInRange(
+				isLight ? { max: 0.18, min: 0.08 } : { max: 0.9, min: 0.64 },
+			) *
+			(0.6 + depth * 0.35),
+		phase: randomInRange({ max: Math.PI * 2, min: 0 }),
+		rotation: randomInRange({ max: 0.24, min: -0.24 }),
+		size:
+			randomInRange(isLight ? { max: 78, min: 36 } : { max: 42, min: 24 }) *
+			depth,
+		speedX: randomInRange({ max: 0.0011, min: -0.0011 }) * depth,
+		speedY: randomInRange({ max: -0.003, min: -0.007 }) * depth,
+		sway: randomInRange({ max: 15, min: 5 }) * depth,
+		x: Math.random(),
+		y: Math.random(),
+	}
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
 function mountValentines() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
@@ -44,20 +104,20 @@ function mountValentines() {
 	const cloudAngleOffset = Math.random() * Math.PI * 2
 	const particles = [
 		...Array.from({ length: VALENTINES_LIGHT_COUNT }, (_, index) =>
-			createParticle({ index, kind: 'light', cloudAngleOffset }),
+			createParticle({ cloudAngleOffset, index, kind: 'light' }),
 		),
 		...Array.from({ length: VALENTINES_HEART_COUNT }, (_, index) =>
-			createParticle({ index, kind: 'heart', cloudAngleOffset }),
+			createParticle({ cloudAngleOffset, index, kind: 'heart' }),
 		),
 	]
-	let artwork: ValentinesArtwork | null = null
+	let artwork: null | ValentinesArtwork = null
 	let artworkDpr = 0
 	let width = Math.max(1, window.innerWidth)
 	let height = Math.max(1, window.innerHeight)
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -90,7 +150,7 @@ function mountValentines() {
 		const margin = isCompact ? 65 : 100
 		const cloudScale = Math.min(width, height)
 		for (const particle of particles) {
-			const { kind, index } = particle
+			const { index, kind } = particle
 			if (
 				isCompact &&
 				index >= (kind === 'heart' ? VALENTINES_COMPACT_HEART_COUNT : 6)
@@ -227,66 +287,6 @@ function mountValentines() {
 		throw error
 	}
 	return cleanup
-}
-
-function createParticle({
-	index,
-	kind,
-	cloudAngleOffset,
-}: {
-	index: number
-	kind: ParticleKind
-	cloudAngleOffset: number
-}) {
-	const depth = index % 6 === 0 ? 1.15 : index % 3 === 0 ? 0.6 : 0.88
-	const isLight = kind === 'light'
-	const cloudPosition = index + Math.random() * 0.15
-	const cloudFill = randomInRange({ min: 0.95, max: 1.02 })
-	const cloudJitter = randomInRange({ min: 0.02, max: 0.06 })
-	const spreadAngle = Math.random() * Math.PI * 2
-	const spread = randomInRange({ min: 0, max: cloudJitter })
-	const getCloudPoint = (count: number) => {
-		const angle = cloudAngleOffset + (cloudPosition / count) * Math.PI * 2
-		const scale = (1.22 / 34) * cloudFill
-		return {
-			x: 16 * Math.sin(angle) ** 3 * scale + Math.cos(spreadAngle) * spread,
-			y:
-				(-13 * Math.cos(angle) +
-					5 * Math.cos(angle * 2) +
-					2 * Math.cos(angle * 3) +
-					Math.cos(angle * 4)) *
-					scale +
-				Math.sin(spreadAngle) * spread,
-		}
-	}
-
-	return {
-		index,
-		kind,
-		depth,
-		x: Math.random(),
-		y: Math.random(),
-		cloud: getCloudPoint(VALENTINES_HEART_COUNT),
-		compactCloud: getCloudPoint(VALENTINES_COMPACT_HEART_COUNT),
-		phase: randomInRange({ min: 0, max: Math.PI * 2 }),
-		delay: randomInRange({ min: 0, max: 2.2 }),
-		size:
-			randomInRange(isLight ? { min: 36, max: 78 } : { min: 24, max: 42 }) *
-			depth,
-		speedX: randomInRange({ min: -0.0011, max: 0.0011 }) * depth,
-		speedY: randomInRange({ min: -0.007, max: -0.003 }) * depth,
-		sway: randomInRange({ min: 5, max: 15 }) * depth,
-		rotation: randomInRange({ min: -0.24, max: 0.24 }),
-		opacity:
-			randomInRange(
-				isLight ? { min: 0.08, max: 0.18 } : { min: 0.64, max: 0.9 },
-			) *
-			(0.6 + depth * 0.35),
-	}
-}
-
-function easeOut(progress: number) {
-	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
 }
 
 function wrap(value: number) {

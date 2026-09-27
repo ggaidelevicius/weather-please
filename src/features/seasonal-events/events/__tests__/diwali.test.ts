@@ -1,22 +1,22 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
-	SETTINGS_MODAL_STATE_EVENT,
 	setSettingsModalOpenState,
+	SETTINGS_MODAL_STATE_EVENT,
 } from '../../../../shared/lib/settings-modal-state'
 import { launchDiwaliLights } from '../diwali'
 import { createDiwaliArtwork } from '../diwali-artwork'
 
 vi.mock('../diwali-artwork', () => ({ createDiwaliArtwork: vi.fn() }))
 
-type Transform = [string, ...number[]]
 type ImageDraw = {
-	source: string
-	coordinates: number[]
 	alpha: number
 	composition: GlobalCompositeOperation
+	coordinates: number[]
+	source: string
 	transforms: Transform[]
 }
+type Transform = [string, ...number[]]
 
 let cleanupEffect = () => {}
 
@@ -62,8 +62,8 @@ describe('Diwali scene', () => {
 		const canvas = document.querySelector('canvas[data-diwali]')
 		expect(canvas).toHaveAttribute('aria-hidden', 'true')
 		expect(canvas).toHaveStyle({
-			position: 'fixed',
 			pointerEvents: 'none',
+			position: 'fixed',
 			zIndex: '0',
 		})
 		expect(document.body.querySelectorAll('canvas')).toHaveLength(1)
@@ -87,7 +87,7 @@ describe('Diwali scene', () => {
 		window.dispatchEvent(new Event('resize'))
 		expect(canvas).toHaveAttribute('width', '780')
 		expect(canvas).toHaveAttribute('height', '1688')
-		expect(canvas).toHaveStyle({ width: '390px', height: '844px' })
+		expect(canvas).toHaveStyle({ height: '844px', width: '390px' })
 		expect(scene.context.clearRect).toHaveBeenCalledTimes(drawCount + 2)
 		expect(createDiwaliArtwork).toHaveBeenCalledOnce()
 		expect(Math.random).toHaveBeenCalledTimes(randomCount)
@@ -278,14 +278,84 @@ describe('Diwali scene', () => {
 	})
 })
 
+function createCanvasContext() {
+	const images: ImageDraw[] = []
+	let transforms: Transform[] = []
+	const savedStates: {
+		alpha: number
+		composition: GlobalCompositeOperation
+		transforms: Transform[]
+	}[] = []
+	const context = {
+		arc: vi.fn(),
+		beginPath: vi.fn(),
+		bezierCurveTo: vi.fn(),
+		clearRect: vi.fn(() => {
+			images.length = 0
+		}),
+		clip: vi.fn(),
+		closePath: vi.fn(),
+		createLinearGradient: vi.fn(() => ({ addColorStop: vi.fn() })),
+		createRadialGradient: vi.fn(() => ({ addColorStop: vi.fn() })),
+		drawImage: vi.fn((source: CanvasImageSource, ...coordinates: number[]) => {
+			images.push({
+				alpha: context.globalAlpha,
+				composition: context.globalCompositeOperation,
+				coordinates,
+				source:
+					source instanceof HTMLCanvasElement
+						? (source.dataset.testSprite ?? 'cache')
+						: 'image',
+				transforms: [...transforms],
+			})
+		}),
+		ellipse: vi.fn(),
+		fill: vi.fn(),
+		fillRect: vi.fn(),
+		globalAlpha: 1,
+		globalCompositeOperation: 'source-over' as GlobalCompositeOperation,
+		images,
+		lineTo: vi.fn(),
+		moveTo: vi.fn(),
+		quadraticCurveTo: vi.fn(),
+		restore: () => {
+			const state = savedStates.pop()
+			if (!state) return
+			context.globalAlpha = state.alpha
+			context.globalCompositeOperation = state.composition
+			transforms = state.transforms
+		},
+		rotate: (angle: number) => {
+			transforms.push(['rotate', angle])
+		},
+		save: () =>
+			savedStates.push({
+				alpha: context.globalAlpha,
+				composition: context.globalCompositeOperation,
+				transforms: [...transforms],
+			}),
+		scale: (x: number, y: number) => {
+			transforms.push(['scale', x, y])
+		},
+		setTransform: vi.fn(() => {
+			transforms = []
+		}),
+		stroke: vi.fn(),
+		translate: (x: number, y: number) => {
+			transforms.push(['translate', x, y])
+		},
+	}
+	return context
+}
+
 async function createScene({
-	shouldMount = true,
 	isHidden = false,
 	isReducedMotion = false,
+	shouldMount = true,
 }: {
-	shouldMount?: boolean
 	isHidden?: boolean
 	isReducedMotion?: boolean
+	shouldMount?: boolean
 } = {}) {
 	let isDocumentHidden = isHidden
 	vi.spyOn(document, 'hidden', 'get').mockImplementation(() => isDocumentHidden)
@@ -300,11 +370,11 @@ async function createScene({
 	)
 	const motionTarget = new EventTarget()
 	const motion = {
-		matches: isReducedMotion,
 		addEventListener: vi.fn(
 			(type: string, listener: EventListenerOrEventListenerObject) =>
 				motionTarget.addEventListener(type, listener),
 		),
+		matches: isReducedMotion,
 		removeEventListener: vi.fn(
 			(type: string, listener: EventListenerOrEventListenerObject) =>
 				motionTarget.removeEventListener(type, listener),
@@ -317,19 +387,19 @@ async function createScene({
 	vi.mocked(createDiwaliArtwork).mockImplementation(({ dpr }) => ({
 		diyas: [0, 1, 2].map((variant) => ({
 			...createSprite({
+				dpr,
+				height: 200,
 				name: `diya-${variant}`,
 				width: 256,
-				height: 200,
-				dpr,
 			}),
+			baseY: 184,
 			flameX: 128,
 			flameY: 50,
-			baseY: 184,
 		})),
-		flame: createSprite({ name: 'flame', width: 128, dpr }),
-		rangoli: createSprite({ name: 'rangoli', width: 512, dpr }),
-		glow: createSprite({ name: 'glow', width: 256, dpr }),
-		ember: createSprite({ name: 'ember', width: 64, dpr }),
+		ember: createSprite({ dpr, name: 'ember', width: 64 }),
+		flame: createSprite({ dpr, name: 'flame', width: 128 }),
+		glow: createSprite({ dpr, name: 'glow', width: 256 }),
+		rangoli: createSprite({ dpr, name: 'rangoli', width: 512 }),
 	}))
 	const context = createCanvasContext()
 	const contexts = new Map<
@@ -352,9 +422,6 @@ async function createScene({
 	return {
 		context,
 		getContext,
-		motion,
-		pending,
-		snapshot: () => [...context.images],
 		getGradientCount: () =>
 			[...contexts.values()].reduce(
 				(sum, entry) =>
@@ -368,6 +435,8 @@ async function createScene({
 			if (!callback) throw new Error('Expected a scheduled Diwali frame')
 			return callback
 		},
+		motion,
+		pending,
 		runFrame: (time: number) => {
 			vi.mocked(performance.now).mockReturnValue(time)
 			for (const [id, callback] of [...pending]) {
@@ -383,93 +452,24 @@ async function createScene({
 			motion.matches = isReduced
 			motionTarget.dispatchEvent(new Event('change'))
 		},
+		snapshot: () => [...context.images],
 	}
-}
-
-function createCanvasContext() {
-	const images: ImageDraw[] = []
-	let transforms: Transform[] = []
-	const savedStates: {
-		alpha: number
-		composition: GlobalCompositeOperation
-		transforms: Transform[]
-	}[] = []
-	const context = {
-		images,
-		globalAlpha: 1,
-		globalCompositeOperation: 'source-over' as GlobalCompositeOperation,
-		clearRect: vi.fn(() => {
-			images.length = 0
-		}),
-		drawImage: vi.fn((source: CanvasImageSource, ...coordinates: number[]) => {
-			images.push({
-				source:
-					source instanceof HTMLCanvasElement
-						? (source.dataset.testSprite ?? 'cache')
-						: 'image',
-				coordinates,
-				alpha: context.globalAlpha,
-				composition: context.globalCompositeOperation,
-				transforms: [...transforms],
-			})
-		}),
-		save: () =>
-			savedStates.push({
-				alpha: context.globalAlpha,
-				composition: context.globalCompositeOperation,
-				transforms: [...transforms],
-			}),
-		restore: () => {
-			const state = savedStates.pop()
-			if (!state) return
-			context.globalAlpha = state.alpha
-			context.globalCompositeOperation = state.composition
-			transforms = state.transforms
-		},
-		translate: (x: number, y: number) => {
-			transforms.push(['translate', x, y])
-		},
-		rotate: (angle: number) => {
-			transforms.push(['rotate', angle])
-		},
-		scale: (x: number, y: number) => {
-			transforms.push(['scale', x, y])
-		},
-		setTransform: vi.fn(() => {
-			transforms = []
-		}),
-		createLinearGradient: vi.fn(() => ({ addColorStop: vi.fn() })),
-		createRadialGradient: vi.fn(() => ({ addColorStop: vi.fn() })),
-		fillRect: vi.fn(),
-		beginPath: vi.fn(),
-		closePath: vi.fn(),
-		moveTo: vi.fn(),
-		lineTo: vi.fn(),
-		bezierCurveTo: vi.fn(),
-		quadraticCurveTo: vi.fn(),
-		arc: vi.fn(),
-		ellipse: vi.fn(),
-		fill: vi.fn(),
-		stroke: vi.fn(),
-		clip: vi.fn(),
-	}
-	return context
 }
 
 function createSprite({
-	name,
+	dpr,
 	width,
 	height = width,
-	dpr,
+	name,
 }: {
+	dpr: number
+	height?: number
 	name: string
 	width: number
-	height?: number
-	dpr: number
 }) {
 	const canvas = document.createElement('canvas')
 	canvas.width = Math.round(width * dpr)
 	canvas.height = Math.round(height * dpr)
 	canvas.dataset.testSprite = name
-	return { canvas, width, height }
+	return { canvas, height, width }
 }

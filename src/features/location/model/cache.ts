@@ -1,5 +1,11 @@
 import { z } from 'zod'
 
+import {
+	readLocalStorage,
+	removeLocalStorage,
+	writeLocalStorage,
+} from '../../../shared/lib/local-storage'
+
 const IDENTIFIED_LOCATION_CACHE_STORAGE_KEY = 'identifiedLocationCache'
 const IDENTIFIED_LOCATION_CACHE_ENTRY_LIMIT = 24
 const LOCATION_CACHE_COORDINATE_PRECISION = 3
@@ -58,7 +64,7 @@ const readIdentifiedLocationCache = () => {
 	}
 
 	try {
-		const rawCache = localStorage.getItem(IDENTIFIED_LOCATION_CACHE_STORAGE_KEY)
+		const rawCache = readLocalStorage(IDENTIFIED_LOCATION_CACHE_STORAGE_KEY)
 		if (!rawCache) {
 			return null
 		}
@@ -72,7 +78,7 @@ const readIdentifiedLocationCache = () => {
 		console.warn('Invalid identified location cache, ignoring stored value')
 	}
 
-	localStorage.removeItem(IDENTIFIED_LOCATION_CACHE_STORAGE_KEY)
+	removeLocalStorage(IDENTIFIED_LOCATION_CACHE_STORAGE_KEY)
 	return null
 }
 
@@ -95,8 +101,8 @@ const writeIdentifiedLocationCache = (
 		return
 	}
 
-	localStorage.setItem(
-		IDENTIFIED_LOCATION_CACHE_STORAGE_KEY,
-		JSON.stringify(cache),
-	)
+	return writeLocalStorage({
+		key: IDENTIFIED_LOCATION_CACHE_STORAGE_KEY,
+		value: JSON.stringify(cache),
+	})
 }

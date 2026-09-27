@@ -59,19 +59,24 @@ export const exchangeMicrosoftAuthorizationCode = async ({
 
 export const refreshMicrosoftTokens = async ({
 	previousTokens,
+	signal,
 }: Readonly<{
 	previousTokens: ProviderTokens
+	signal?: AbortSignal
 }>): Promise<ProviderTokens> => {
 	if (!previousTokens.refreshToken) {
 		throw new CalendarReauthRequiredError()
 	}
 
-	const refreshedTokens = await requestMicrosoftTokens({
-		client_id: getMicrosoftClientId(),
-		grant_type: 'refresh_token',
-		refresh_token: previousTokens.refreshToken,
-		scope: MICROSOFT_AUTH_SCOPES,
-	})
+	const refreshedTokens = await requestMicrosoftTokens(
+		{
+			client_id: getMicrosoftClientId(),
+			grant_type: 'refresh_token',
+			refresh_token: previousTokens.refreshToken,
+			scope: MICROSOFT_AUTH_SCOPES,
+		},
+		signal,
+	)
 
 	return {
 		...refreshedTokens,
@@ -109,11 +114,13 @@ const idTokenClaimsSchema = z.object({
 
 const requestMicrosoftTokens = async (
 	body: Record<string, string>,
+	signal?: AbortSignal,
 ): Promise<ProviderTokens> => {
 	const response = await fetch(TOKEN_ENDPOINT, {
 		body: new URLSearchParams(body).toString(),
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		method: 'POST',
+		signal,
 	})
 
 	if (!response.ok) {

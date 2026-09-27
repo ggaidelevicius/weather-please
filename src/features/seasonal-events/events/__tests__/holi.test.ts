@@ -1,10 +1,11 @@
-import { BufferGeometry, ShaderMaterial, WebGLRenderer } from 'three'
 import type { WebGLRendererParameters } from 'three'
+
+import { BufferGeometry, ShaderMaterial, WebGLRenderer } from 'three'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
-	SETTINGS_MODAL_STATE_EVENT,
 	setSettingsModalOpenState,
+	SETTINGS_MODAL_STATE_EVENT,
 } from '../../../../shared/lib/settings-modal-state'
 import { launchHoliColors } from '../holi'
 import * as artwork from '../holi-particles'
@@ -63,8 +64,8 @@ describe('Holi scene', () => {
 		expect(canvas).toHaveAttribute('data-holi', 'true')
 		expect(canvas).toHaveAttribute('aria-hidden', 'true')
 		expect(canvas).toHaveStyle({
-			position: 'fixed',
 			pointerEvents: 'none',
+			position: 'fixed',
 			zIndex: '0',
 		})
 		expect(document.body.querySelectorAll('canvas')).toHaveLength(1)
@@ -79,7 +80,7 @@ describe('Holi scene', () => {
 		vi.stubGlobal('innerHeight', 844)
 		window.dispatchEvent(new Event('resize'))
 		expect(scene.render).toHaveBeenCalledTimes(initialDrawCount + 1)
-		expect(canvas).toHaveStyle({ width: '390px', height: '844px' })
+		expect(canvas).toHaveStyle({ height: '844px', width: '390px' })
 		vi.stubGlobal('devicePixelRatio', 3)
 		window.dispatchEvent(new Event('resize'))
 
@@ -323,8 +324,8 @@ const createScene = async ({
 				: document.createElement('canvas')
 		let dpr = 1
 		const renderer: Partial<WebGLRenderer> = {
-			domElement: canvas,
 			dispose,
+			domElement: canvas,
 			forceContextLoss,
 			getPixelRatio: () => dpr,
 			render,

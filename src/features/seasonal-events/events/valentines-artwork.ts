@@ -1,10 +1,10 @@
+type HeartPalette = { inner: string; mid: string; outer: string }
+
 type ValentinesArtwork = {
-	hearts: HTMLCanvasElement[]
 	bokeh: HTMLCanvasElement
 	haze: HTMLCanvasElement
+	hearts: HTMLCanvasElement[]
 }
-
-type HeartPalette = { inner: string; mid: string; outer: string }
 
 export function createValentinesArtwork({
 	dpr,
@@ -13,15 +13,15 @@ export function createValentinesArtwork({
 }): ValentinesArtwork {
 	const pixelRatio = Math.min(2, Math.max(1, dpr))
 	const hearts = HEART_PALETTES.map((palette) =>
-		createHeart({ palette, pixelRatio, isOutline: false }),
+		createHeart({ isOutline: false, palette, pixelRatio }),
 	)
 	for (const palette of [HEART_PALETTES[0], HEART_PALETTES[7]]) {
-		hearts.push(createHeart({ palette, pixelRatio, isOutline: true }))
+		hearts.push(createHeart({ isOutline: true, palette, pixelRatio }))
 	}
 	const bokeh = createRadialSprite({
-		size: 128,
 		pixelRatio,
 		radius: 53,
+		size: 128,
 		stops: [
 			[0, 'rgba(255, 184, 186, 0.36)'],
 			[0.4, 'rgba(255, 184, 186, 0.34)'],
@@ -31,9 +31,9 @@ export function createValentinesArtwork({
 		],
 	})
 	const haze = createRadialSprite({
-		size: 256,
 		pixelRatio,
 		radius: 128,
+		size: 256,
 		stops: [
 			[0, 'rgba(244, 114, 182, 0.5)'],
 			[0.24, 'rgba(246, 113, 163, 0.38)'],
@@ -42,7 +42,7 @@ export function createValentinesArtwork({
 			[1, 'rgba(251, 123, 147, 0)'],
 		],
 	})
-	return { hearts, bokeh, haze }
+	return { bokeh, haze, hearts }
 }
 
 const HEART_PALETTES = [
@@ -56,16 +56,32 @@ const HEART_PALETTES = [
 	{ inner: '#ffe4e6', mid: '#fb7185', outer: '#e11d48' },
 ] as const
 
+function createCanvas({
+	pixelRatio,
+	size,
+}: {
+	pixelRatio: number
+	size: number
+}) {
+	const canvas = document.createElement('canvas')
+	canvas.width = Math.round(size * pixelRatio)
+	canvas.height = canvas.width
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create the Valentine artwork canvas')
+	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+	return { canvas, context }
+}
+
 function createHeart({
+	isOutline,
 	palette,
 	pixelRatio,
-	isOutline,
 }: {
+	isOutline: boolean
 	palette: HeartPalette
 	pixelRatio: number
-	isOutline: boolean
 }): HTMLCanvasElement {
-	const { canvas, context } = createCanvas({ size: 128, pixelRatio })
+	const { canvas, context } = createCanvas({ pixelRatio, size: 128 })
 	context.lineCap = 'round'
 	context.lineJoin = 'round'
 	context.shadowColor = palette.mid
@@ -112,17 +128,17 @@ function createHeart({
 }
 
 function createRadialSprite({
-	size,
 	pixelRatio,
 	radius,
+	size,
 	stops,
 }: {
-	size: number
 	pixelRatio: number
 	radius: number
+	size: number
 	stops: readonly (readonly [number, string])[]
 }): HTMLCanvasElement {
-	const { canvas, context } = createCanvas({ size, pixelRatio })
+	const { canvas, context } = createCanvas({ pixelRatio, size })
 	const center = size / 2
 	const gradient = context.createRadialGradient(
 		center,
@@ -136,20 +152,4 @@ function createRadialSprite({
 	context.fillStyle = gradient
 	context.fillRect(0, 0, size, size)
 	return canvas
-}
-
-function createCanvas({
-	size,
-	pixelRatio,
-}: {
-	size: number
-	pixelRatio: number
-}) {
-	const canvas = document.createElement('canvas')
-	canvas.width = Math.round(size * pixelRatio)
-	canvas.height = canvas.width
-	const context = canvas.getContext('2d')
-	if (!context) throw new Error('Unable to create the Valentine artwork canvas')
-	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
-	return { canvas, context }
 }

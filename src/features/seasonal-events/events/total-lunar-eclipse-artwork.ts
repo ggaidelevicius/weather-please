@@ -1,43 +1,183 @@
 type Sprite = {
 	canvas: HTMLCanvasElement
-	width: number
 	height: number
+	width: number
 }
 
 export function createTotalLunarEclipseArtwork({ dpr }: { dpr: number }): {
-	moon: Sprite
-	shade: Sprite
+	glint: Sprite
 	glow: Sprite
 	haze: Sprite
-	star: Sprite
-	glint: Sprite
+	moon: Sprite
 	nebula: Sprite
 	radius: number
+	shade: Sprite
+	star: Sprite
 } {
 	const pixelRatio = Number.isFinite(dpr) ? Math.min(2, Math.max(1, dpr)) : 1
 	const { moon, shade } = createMoon(Math.min(1.5, pixelRatio))
 	return {
-		moon,
-		shade,
+		glint: createGlint(pixelRatio),
 		glow: createGlow(pixelRatio),
 		haze: createHaze(pixelRatio),
-		star: createStar(pixelRatio),
-		glint: createGlint(pixelRatio),
+		moon,
 		nebula: createNebula(),
 		radius: 240,
+		shade,
+		star: createStar(pixelRatio),
 	}
 }
 
-function createMoon(pixelRatio: number) {
-	const { sprite: moon, context } = createCanvas({
-		width: 640,
-		height: 640,
+function createCanvas({
+	height,
+	pixelRatio,
+	width,
+}: {
+	height: number
+	pixelRatio: number
+	width: number
+}) {
+	const canvas = document.createElement('canvas')
+	canvas.width = Math.round(width * pixelRatio)
+	canvas.height = Math.round(height * pixelRatio)
+	const context = canvas.getContext('2d')
+	if (!context) throw new Error('Unable to create total lunar eclipse artwork')
+	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+	return { context, sprite: { canvas, height, width } }
+}
+
+function createCraterField(noise: Float32Array) {
+	const field = new Float32Array(512 * 512)
+	const craters = [
+		[-0.34, 0.055, 0.049, 0.87],
+		[-0.55, 0.12, 0.027, 0.73],
+		[-0.07, 0.58, 0.039, 0.9],
+		[0.41, 0.49, 0.043, 0.63],
+		[0.17, 0.61, 0.068, 0.41],
+		[0.44, -0.53, 0.034, 0.64],
+	]
+	for (let index = 0; index < 165; index += 1) {
+		const x = noise[(index * 173 + 23) & 65535] * 1.96 - 0.98
+		const y = noise[(index * 173 + 47) & 65535] * 1.96 - 0.98
+		const size = noise[(index * 173 + 79) & 65535]
+		craters.push([
+			x,
+			y,
+			0.006 + size * size * 0.034,
+			0.27 + noise[(index * 173 + 137) & 65535] * 0.45,
+		])
+	}
+	for (const [centerU, centerV, radius, strength] of craters) {
+		const centerX = (centerU + 1) * 255.5
+		const centerY = (centerV + 1) * 255.5
+		const pixelRadius = radius * 255.5
+		const bound = Math.ceil(pixelRadius * 1.4)
+		const minimumX = Math.max(0, Math.floor(centerX - bound))
+		const maximumX = Math.min(511, Math.ceil(centerX + bound))
+		const minimumY = Math.max(0, Math.floor(centerY - bound))
+		const maximumY = Math.min(511, Math.ceil(centerY + bound))
+		for (let y = minimumY; y <= maximumY; y += 1) {
+			for (let x = minimumX; x <= maximumX; x += 1) {
+				const dx = (x - centerX) / pixelRadius
+				const dy = (y - centerY) / pixelRadius
+				const distance = Math.sqrt(dx * dx + dy * dy)
+				if (distance > 1.35) continue
+				const irregularity = sampleNoise(x * 0.28, y * 0.28, noise)
+				const edge = distance + (irregularity - 0.5) * 0.1
+				const rim = Math.exp(-((edge - 0.94) ** 2) / 0.035)
+				const basin = Math.max(0, 1 - edge * edge)
+				const direction = (-dx * 0.64 - dy * 0.77) / Math.max(0.15, distance)
+				// Diffuse relief lights one side of the rim instead of outlining a circle.
+				field[y * 512 + x] +=
+					strength *
+					(rim * direction * 0.15 - basin * direction * 0.035 - basin * 0.028)
+			}
+		}
+	}
+	return field
+}
+
+function createGlint(pixelRatio: number): Sprite {
+	const { context, sprite } = createCanvas({
+		height: 64,
 		pixelRatio,
+		width: 64,
 	})
-	const { sprite: shade, context: shadeContext } = createCanvas({
-		width: 640,
+	const glow = context.createRadialGradient(32, 32, 0, 32, 32, 29)
+	glow.addColorStop(0, 'rgba(242, 249, 255, 0.75)')
+	glow.addColorStop(0.17, 'rgba(210, 229, 255, 0.34)')
+	glow.addColorStop(0.44, 'rgba(163, 192, 239, 0.09)')
+	glow.addColorStop(1, 'rgba(163, 192, 239, 0)')
+	context.fillStyle = glow
+	context.fillRect(0, 0, 64, 64)
+	context.fillStyle = 'rgba(226, 240, 255, 0.66)'
+	context.beginPath()
+	context.moveTo(32, 17)
+	context.quadraticCurveTo(34, 29, 45, 32)
+	context.quadraticCurveTo(34, 34, 32, 47)
+	context.quadraticCurveTo(30, 34, 19, 32)
+	context.quadraticCurveTo(30, 30, 32, 17)
+	context.fill()
+	context.fillStyle = '#edf4ff'
+	context.beginPath()
+	context.arc(32, 32, 4.7, 0, Math.PI * 2)
+	context.fill()
+	context.fillStyle = '#fffefa'
+	context.beginPath()
+	context.arc(32, 32, 2.7, 0, Math.PI * 2)
+	context.fill()
+	return sprite
+}
+
+function createGlow(pixelRatio: number): Sprite {
+	const { context, sprite } = createCanvas({
+		height: 512,
+		pixelRatio,
+		width: 512,
+	})
+	const glow = context.createRadialGradient(256, 256, 0, 256, 256, 254)
+	glow.addColorStop(0, 'rgba(188, 108, 73, 0.2)')
+	glow.addColorStop(0.26, 'rgba(163, 80, 66, 0.13)')
+	glow.addColorStop(0.55, 'rgba(123, 57, 65, 0.044)')
+	glow.addColorStop(0.8, 'rgba(105, 49, 67, 0.009)')
+	glow.addColorStop(1, 'rgba(105, 49, 67, 0)')
+	context.fillStyle = glow
+	context.fillRect(0, 0, 512, 512)
+	return sprite
+}
+
+function createHaze(pixelRatio: number): Sprite {
+	const { context, sprite } = createCanvas({
+		height: 512,
+		pixelRatio,
+		width: 512,
+	})
+	const indigo = context.createRadialGradient(222, 222, 0, 246, 243, 244)
+	indigo.addColorStop(0, 'rgba(78, 94, 146, 0.26)')
+	indigo.addColorStop(0.42, 'rgba(65, 73, 125, 0.14)')
+	indigo.addColorStop(0.75, 'rgba(53, 52, 102, 0.035)')
+	indigo.addColorStop(1, 'rgba(53, 52, 102, 0)')
+	context.fillStyle = indigo
+	context.fillRect(0, 0, 512, 512)
+	const plum = context.createRadialGradient(311, 300, 0, 282, 273, 226)
+	plum.addColorStop(0, 'rgba(110, 61, 97, 0.13)')
+	plum.addColorStop(0.56, 'rgba(83, 46, 94, 0.05)')
+	plum.addColorStop(1, 'rgba(83, 46, 94, 0)')
+	context.fillStyle = plum
+	context.fillRect(0, 0, 512, 512)
+	return sprite
+}
+
+function createMoon(pixelRatio: number) {
+	const { context, sprite: moon } = createCanvas({
 		height: 640,
 		pixelRatio,
+		width: 640,
+	})
+	const { context: shadeContext, sprite: shade } = createCanvas({
+		height: 640,
+		pixelRatio,
+		width: 640,
 	})
 	const size = moon.canvas.width
 	const pixels = context.createImageData(size, size)
@@ -123,205 +263,11 @@ function createMoon(pixelRatio: number) {
 	return { moon, shade }
 }
 
-function createCraterField(noise: Float32Array) {
-	const field = new Float32Array(512 * 512)
-	const craters = [
-		[-0.34, 0.055, 0.049, 0.87],
-		[-0.55, 0.12, 0.027, 0.73],
-		[-0.07, 0.58, 0.039, 0.9],
-		[0.41, 0.49, 0.043, 0.63],
-		[0.17, 0.61, 0.068, 0.41],
-		[0.44, -0.53, 0.034, 0.64],
-	]
-	for (let index = 0; index < 165; index += 1) {
-		const x = noise[(index * 173 + 23) & 65535] * 1.96 - 0.98
-		const y = noise[(index * 173 + 47) & 65535] * 1.96 - 0.98
-		const size = noise[(index * 173 + 79) & 65535]
-		craters.push([
-			x,
-			y,
-			0.006 + size * size * 0.034,
-			0.27 + noise[(index * 173 + 137) & 65535] * 0.45,
-		])
-	}
-	for (const [centerU, centerV, radius, strength] of craters) {
-		const centerX = (centerU + 1) * 255.5
-		const centerY = (centerV + 1) * 255.5
-		const pixelRadius = radius * 255.5
-		const bound = Math.ceil(pixelRadius * 1.4)
-		const minimumX = Math.max(0, Math.floor(centerX - bound))
-		const maximumX = Math.min(511, Math.ceil(centerX + bound))
-		const minimumY = Math.max(0, Math.floor(centerY - bound))
-		const maximumY = Math.min(511, Math.ceil(centerY + bound))
-		for (let y = minimumY; y <= maximumY; y += 1) {
-			for (let x = minimumX; x <= maximumX; x += 1) {
-				const dx = (x - centerX) / pixelRadius
-				const dy = (y - centerY) / pixelRadius
-				const distance = Math.sqrt(dx * dx + dy * dy)
-				if (distance > 1.35) continue
-				const irregularity = sampleNoise(x * 0.28, y * 0.28, noise)
-				const edge = distance + (irregularity - 0.5) * 0.1
-				const rim = Math.exp(-((edge - 0.94) ** 2) / 0.035)
-				const basin = Math.max(0, 1 - edge * edge)
-				const direction = (-dx * 0.64 - dy * 0.77) / Math.max(0.15, distance)
-				// Diffuse relief lights one side of the rim instead of outlining a circle.
-				field[y * 512 + x] +=
-					strength *
-					(rim * direction * 0.15 - basin * direction * 0.035 - basin * 0.028)
-			}
-		}
-	}
-	return field
-}
-
-function sampleCraterField(u: number, v: number, field: Float32Array) {
-	const x = Math.max(0, Math.min(511, (u + 1) * 255.5))
-	const y = Math.max(0, Math.min(511, (v + 1) * 255.5))
-	const left = Math.min(510, Math.floor(x))
-	const top = Math.min(510, Math.floor(y))
-	const fx = x - left
-	const fy = y - top
-	const index = top * 512 + left
-	const first = field[index] * (1 - fx) + field[index + 1] * fx
-	const second = field[index + 512] * (1 - fx) + field[index + 513] * fx
-	return first * (1 - fy) + second * fy
-}
-
-function createNoiseTable() {
-	const noise = new Float32Array(65536)
-	for (let index = 0; index < noise.length; index += 1) {
-		let value = Math.imul(index + 7517, 0x45d9f3b)
-		value = Math.imul(value ^ (value >>> 16), 0x45d9f3b)
-		noise[index] = ((value ^ (value >>> 16)) >>> 0) / 4294967295
-	}
-	return noise
-}
-
-function sampleNoise(x: number, y: number, noise: Float32Array) {
-	const left = Math.floor(x)
-	const top = Math.floor(y)
-	const fractionX = x - left
-	const fractionY = y - top
-	const blendX = fractionX * fractionX * (3 - 2 * fractionX)
-	const blendY = fractionY * fractionY * (3 - 2 * fractionY)
-	const firstRow = (top & 255) * 256
-	const secondRow = ((top + 1) & 255) * 256
-	const firstColumn = left & 255
-	const secondColumn = (left + 1) & 255
-	const first =
-		noise[firstRow + firstColumn] * (1 - blendX) +
-		noise[firstRow + secondColumn] * blendX
-	const second =
-		noise[secondRow + firstColumn] * (1 - blendX) +
-		noise[secondRow + secondColumn] * blendX
-	return first * (1 - blendY) + second * blendY
-}
-
-function smoothstep(start: number, end: number, value: number) {
-	const fraction = Math.max(0, Math.min(1, (value - start) / (end - start)))
-	return fraction * fraction * (3 - 2 * fraction)
-}
-
-function createGlow(pixelRatio: number): Sprite {
-	const { sprite, context } = createCanvas({
-		width: 512,
-		height: 512,
-		pixelRatio,
-	})
-	const glow = context.createRadialGradient(256, 256, 0, 256, 256, 254)
-	glow.addColorStop(0, 'rgba(188, 108, 73, 0.2)')
-	glow.addColorStop(0.26, 'rgba(163, 80, 66, 0.13)')
-	glow.addColorStop(0.55, 'rgba(123, 57, 65, 0.044)')
-	glow.addColorStop(0.8, 'rgba(105, 49, 67, 0.009)')
-	glow.addColorStop(1, 'rgba(105, 49, 67, 0)')
-	context.fillStyle = glow
-	context.fillRect(0, 0, 512, 512)
-	return sprite
-}
-
-function createHaze(pixelRatio: number): Sprite {
-	const { sprite, context } = createCanvas({
-		width: 512,
-		height: 512,
-		pixelRatio,
-	})
-	const indigo = context.createRadialGradient(222, 222, 0, 246, 243, 244)
-	indigo.addColorStop(0, 'rgba(78, 94, 146, 0.26)')
-	indigo.addColorStop(0.42, 'rgba(65, 73, 125, 0.14)')
-	indigo.addColorStop(0.75, 'rgba(53, 52, 102, 0.035)')
-	indigo.addColorStop(1, 'rgba(53, 52, 102, 0)')
-	context.fillStyle = indigo
-	context.fillRect(0, 0, 512, 512)
-	const plum = context.createRadialGradient(311, 300, 0, 282, 273, 226)
-	plum.addColorStop(0, 'rgba(110, 61, 97, 0.13)')
-	plum.addColorStop(0.56, 'rgba(83, 46, 94, 0.05)')
-	plum.addColorStop(1, 'rgba(83, 46, 94, 0)')
-	context.fillStyle = plum
-	context.fillRect(0, 0, 512, 512)
-	return sprite
-}
-
-function createStar(pixelRatio: number): Sprite {
-	const { sprite, context } = createCanvas({
-		width: 64,
-		height: 64,
-		pixelRatio,
-	})
-	const glow = context.createRadialGradient(32, 32, 0, 32, 32, 24)
-	glow.addColorStop(0, 'rgba(255, 247, 223, 0.64)')
-	glow.addColorStop(0.2, 'rgba(230, 235, 247, 0.26)')
-	glow.addColorStop(0.46, 'rgba(187, 209, 245, 0.055)')
-	glow.addColorStop(1, 'rgba(176, 199, 237, 0)')
-	context.fillStyle = glow
-	context.fillRect(0, 0, 64, 64)
-	context.fillStyle = '#fff3d9'
-	context.beginPath()
-	context.arc(32, 32, 5, 0, Math.PI * 2)
-	context.fill()
-	context.fillStyle = '#fffefa'
-	context.beginPath()
-	context.arc(32, 32, 2.6, 0, Math.PI * 2)
-	context.fill()
-	return sprite
-}
-
-function createGlint(pixelRatio: number): Sprite {
-	const { sprite, context } = createCanvas({
-		width: 64,
-		height: 64,
-		pixelRatio,
-	})
-	const glow = context.createRadialGradient(32, 32, 0, 32, 32, 29)
-	glow.addColorStop(0, 'rgba(242, 249, 255, 0.75)')
-	glow.addColorStop(0.17, 'rgba(210, 229, 255, 0.34)')
-	glow.addColorStop(0.44, 'rgba(163, 192, 239, 0.09)')
-	glow.addColorStop(1, 'rgba(163, 192, 239, 0)')
-	context.fillStyle = glow
-	context.fillRect(0, 0, 64, 64)
-	context.fillStyle = 'rgba(226, 240, 255, 0.66)'
-	context.beginPath()
-	context.moveTo(32, 17)
-	context.quadraticCurveTo(34, 29, 45, 32)
-	context.quadraticCurveTo(34, 34, 32, 47)
-	context.quadraticCurveTo(30, 34, 19, 32)
-	context.quadraticCurveTo(30, 30, 32, 17)
-	context.fill()
-	context.fillStyle = '#edf4ff'
-	context.beginPath()
-	context.arc(32, 32, 4.7, 0, Math.PI * 2)
-	context.fill()
-	context.fillStyle = '#fffefa'
-	context.beginPath()
-	context.arc(32, 32, 2.7, 0, Math.PI * 2)
-	context.fill()
-	return sprite
-}
-
 function createNebula(): Sprite {
-	const { sprite, context } = createCanvas({
-		width: 1024,
+	const { context, sprite } = createCanvas({
 		height: 640,
 		pixelRatio: 1,
+		width: 1024,
 	})
 	const pixels = context.createImageData(1024, 640)
 	const noise = createNoiseTable()
@@ -377,20 +323,74 @@ function createNebula(): Sprite {
 	return sprite
 }
 
-function createCanvas({
-	width,
-	height,
-	pixelRatio,
-}: {
-	width: number
-	height: number
-	pixelRatio: number
-}) {
-	const canvas = document.createElement('canvas')
-	canvas.width = Math.round(width * pixelRatio)
-	canvas.height = Math.round(height * pixelRatio)
-	const context = canvas.getContext('2d')
-	if (!context) throw new Error('Unable to create total lunar eclipse artwork')
-	context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
-	return { sprite: { canvas, width, height }, context }
+function createNoiseTable() {
+	const noise = new Float32Array(65536)
+	for (let index = 0; index < noise.length; index += 1) {
+		let value = Math.imul(index + 7517, 0x45d9f3b)
+		value = Math.imul(value ^ (value >>> 16), 0x45d9f3b)
+		noise[index] = ((value ^ (value >>> 16)) >>> 0) / 4294967295
+	}
+	return noise
+}
+
+function createStar(pixelRatio: number): Sprite {
+	const { context, sprite } = createCanvas({
+		height: 64,
+		pixelRatio,
+		width: 64,
+	})
+	const glow = context.createRadialGradient(32, 32, 0, 32, 32, 24)
+	glow.addColorStop(0, 'rgba(255, 247, 223, 0.64)')
+	glow.addColorStop(0.2, 'rgba(230, 235, 247, 0.26)')
+	glow.addColorStop(0.46, 'rgba(187, 209, 245, 0.055)')
+	glow.addColorStop(1, 'rgba(176, 199, 237, 0)')
+	context.fillStyle = glow
+	context.fillRect(0, 0, 64, 64)
+	context.fillStyle = '#fff3d9'
+	context.beginPath()
+	context.arc(32, 32, 5, 0, Math.PI * 2)
+	context.fill()
+	context.fillStyle = '#fffefa'
+	context.beginPath()
+	context.arc(32, 32, 2.6, 0, Math.PI * 2)
+	context.fill()
+	return sprite
+}
+
+function sampleCraterField(u: number, v: number, field: Float32Array) {
+	const x = Math.max(0, Math.min(511, (u + 1) * 255.5))
+	const y = Math.max(0, Math.min(511, (v + 1) * 255.5))
+	const left = Math.min(510, Math.floor(x))
+	const top = Math.min(510, Math.floor(y))
+	const fx = x - left
+	const fy = y - top
+	const index = top * 512 + left
+	const first = field[index] * (1 - fx) + field[index + 1] * fx
+	const second = field[index + 512] * (1 - fx) + field[index + 513] * fx
+	return first * (1 - fy) + second * fy
+}
+
+function sampleNoise(x: number, y: number, noise: Float32Array) {
+	const left = Math.floor(x)
+	const top = Math.floor(y)
+	const fractionX = x - left
+	const fractionY = y - top
+	const blendX = fractionX * fractionX * (3 - 2 * fractionX)
+	const blendY = fractionY * fractionY * (3 - 2 * fractionY)
+	const firstRow = (top & 255) * 256
+	const secondRow = ((top + 1) & 255) * 256
+	const firstColumn = left & 255
+	const secondColumn = (left + 1) & 255
+	const first =
+		noise[firstRow + firstColumn] * (1 - blendX) +
+		noise[firstRow + secondColumn] * blendX
+	const second =
+		noise[secondRow + firstColumn] * (1 - blendX) +
+		noise[secondRow + secondColumn] * blendX
+	return first * (1 - blendY) + second * blendY
+}
+
+function smoothstep(start: number, end: number, value: number) {
+	const fraction = Math.max(0, Math.min(1, (value - start) / (end - start)))
+	return fraction * fraction * (3 - 2 * fraction)
 }

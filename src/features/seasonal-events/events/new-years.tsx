@@ -1,6 +1,7 @@
+import type { NewYearsFirework } from './new-years-fireworks'
+
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
 import { getCanvasDpr, randomInRange } from '../core/utils'
-import type { NewYearsFirework } from './new-years-fireworks'
 import {
 	createNewYearsFirework,
 	drawNewYearsFirework,
@@ -16,8 +17,8 @@ const FOUNTAIN_ORIGINS = [0.04, 0.2, 0.8, 0.96]
 
 type Spark = {
 	cosine: number
-	sine: number
 	phase: number
+	sine: number
 	size: number
 	x: number
 	y: number
@@ -39,7 +40,7 @@ export async function launchNewYearsCelebration(): Promise<() => void> {
 	const year = String(
 		now.getFullYear() + (now.getMonth() === 0 && now.getDate() === 1 ? 0 : 1),
 	)
-	const { points, textWidth, lettering } = createYearArtwork(year)
+	const { lettering, points, textWidth } = createYearArtwork(year)
 	const sparkSprite = createSparkSprite()
 	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
 	let shouldAnimate = !motionPreference.matches
@@ -232,21 +233,21 @@ export async function launchNewYearsCelebration(): Promise<() => void> {
 						index === 2
 							? 0.5
 							: index === 0
-								? randomInRange({ min: 0.1, max: 0.27 })
-								: randomInRange({ min: 0.73, max: 0.9 })
+								? randomInRange({ max: 0.27, min: 0.1 })
+								: randomInRange({ max: 0.9, min: 0.73 })
 					fireworks.push(
 						createNewYearsFirework({
 							delay: index * 0.24,
 							paletteIndex: isFinale ? 0 : volleyIndex + index,
 							variant: isFinale ? 'willow' : undefined,
 							x,
-							y: index === 2 ? 0.14 : randomInRange({ min: 0.18, max: 0.48 }),
+							y: index === 2 ? 0.14 : randomInRange({ max: 0.48, min: 0.18 }),
 						}),
 					)
 				}
 				volleyIndex += 1
 				nextFirework =
-					elapsed + (isFinale ? 2.5 : randomInRange({ min: 1.5, max: 2.1 }))
+					elapsed + (isFinale ? 2.5 : randomInRange({ max: 2.1, min: 1.5 }))
 			}
 			fireworks = fireworks.filter((firework) => {
 				firework.age += delta
@@ -271,9 +272,9 @@ export async function launchNewYearsCelebration(): Promise<() => void> {
 		if (!shouldAnimate) {
 			fireworks = [0.15, 0.85, 0.3, 0.7].map((x, index) => ({
 				...createNewYearsFirework({
+					paletteIndex: index,
 					x,
 					y: index < 2 ? 0.32 : 0.65,
-					paletteIndex: index,
 				}),
 				age: 2.3 + index * 0.35,
 			}))
@@ -314,6 +315,36 @@ export async function launchNewYearsCelebration(): Promise<() => void> {
 	}
 
 	return cleanup
+}
+
+function createSpark(): Spark {
+	const phase = Math.random() * Math.PI * 2
+	return {
+		cosine: Math.cos(phase),
+		phase,
+		sine: Math.sin(phase),
+		size: randomInRange({ max: 1.8, min: 0.7 }),
+		x: Math.random(),
+		y: Math.random(),
+	}
+}
+
+function createSparkSprite(): HTMLCanvasElement {
+	const sprite = document.createElement('canvas')
+	sprite.width = 48
+	sprite.height = 48
+	const context = sprite.getContext('2d')
+	if (!context) {
+		throw new Error('Unable to create New Year spark glow')
+	}
+	const glow = context.createRadialGradient(24, 24, 0, 24, 24, 24)
+	glow.addColorStop(0, '#fffef5')
+	glow.addColorStop(0.12, '#fff4d6e6')
+	glow.addColorStop(0.35, '#ffe9b366')
+	glow.addColorStop(1, '#ffe9b300')
+	context.fillStyle = glow
+	context.fillRect(0, 0, 48, 48)
+	return sprite
 }
 
 function createYearArtwork(year: string) {
@@ -358,38 +389,8 @@ function createYearArtwork(year: string) {
 	context.lineWidth = 0.6
 	context.strokeText(year, SAMPLE_WIDTH / 2, SAMPLE_HEIGHT / 2)
 	return {
+		lettering: sample,
 		points,
 		textWidth: context.measureText(year).width,
-		lettering: sample,
 	}
-}
-
-function createSpark(): Spark {
-	const phase = Math.random() * Math.PI * 2
-	return {
-		cosine: Math.cos(phase),
-		sine: Math.sin(phase),
-		phase,
-		size: randomInRange({ max: 1.8, min: 0.7 }),
-		x: Math.random(),
-		y: Math.random(),
-	}
-}
-
-function createSparkSprite(): HTMLCanvasElement {
-	const sprite = document.createElement('canvas')
-	sprite.width = 48
-	sprite.height = 48
-	const context = sprite.getContext('2d')
-	if (!context) {
-		throw new Error('Unable to create New Year spark glow')
-	}
-	const glow = context.createRadialGradient(24, 24, 0, 24, 24, 24)
-	glow.addColorStop(0, '#fffef5')
-	glow.addColorStop(0.12, '#fff4d6e6')
-	glow.addColorStop(0.35, '#ffe9b366')
-	glow.addColorStop(1, '#ffe9b300')
-	context.fillStyle = glow
-	context.fillRect(0, 0, 48, 48)
-	return sprite
 }

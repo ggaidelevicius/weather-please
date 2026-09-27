@@ -4,28 +4,28 @@ import { createSpringBranchArtwork } from './spring-branch-artwork'
 import { createSpringMeadowArtwork } from './spring-meadow-artwork'
 
 type PlantPlacement = {
-	x: number
+	phase: number
 	scale: number
 	variant: number
-	phase: number
+	x: number
 }
 
 const FLOWER_PLACEMENTS: PlantPlacement[] = [
-	{ x: 0.01, scale: 0.48, variant: 4, phase: 0.2 },
-	{ x: 0.055, scale: 0.61, variant: 5, phase: 1.4 },
-	{ x: 0.105, scale: 0.4, variant: 3, phase: 2.6 },
-	{ x: 0.16, scale: 0.57, variant: 0, phase: 0.7 },
-	{ x: 0.24, scale: 0.39, variant: 2, phase: 3.1 },
-	{ x: 0.35, scale: 0.29, variant: 4, phase: 1.1 },
-	{ x: 0.52, scale: 0.26, variant: 3, phase: 2.2 },
-	{ x: 0.63, scale: 0.35, variant: 4, phase: 0.5 },
-	{ x: 0.725, scale: 0.52, variant: 2, phase: 1.8 },
-	{ x: 0.785, scale: 0.76, variant: 1, phase: 2.8 },
-	{ x: 0.835, scale: 0.65, variant: 3, phase: 0.9 },
-	{ x: 0.885, scale: 0.98, variant: 0, phase: 2.1 },
-	{ x: 0.935, scale: 0.85, variant: 2, phase: 0.3 },
-	{ x: 0.98, scale: 1, variant: 1, phase: 1.3 },
-	{ x: 1.025, scale: 0.64, variant: 4, phase: 3.2 },
+	{ phase: 0.2, scale: 0.48, variant: 4, x: 0.01 },
+	{ phase: 1.4, scale: 0.61, variant: 5, x: 0.055 },
+	{ phase: 2.6, scale: 0.4, variant: 3, x: 0.105 },
+	{ phase: 0.7, scale: 0.57, variant: 0, x: 0.16 },
+	{ phase: 3.1, scale: 0.39, variant: 2, x: 0.24 },
+	{ phase: 1.1, scale: 0.29, variant: 4, x: 0.35 },
+	{ phase: 2.2, scale: 0.26, variant: 3, x: 0.52 },
+	{ phase: 0.5, scale: 0.35, variant: 4, x: 0.63 },
+	{ phase: 1.8, scale: 0.52, variant: 2, x: 0.725 },
+	{ phase: 2.8, scale: 0.76, variant: 1, x: 0.785 },
+	{ phase: 0.9, scale: 0.65, variant: 3, x: 0.835 },
+	{ phase: 2.1, scale: 0.98, variant: 0, x: 0.885 },
+	{ phase: 0.3, scale: 0.85, variant: 2, x: 0.935 },
+	{ phase: 1.3, scale: 1, variant: 1, x: 0.98 },
+	{ phase: 3.2, scale: 0.64, variant: 4, x: 1.025 },
 ]
 
 export async function launchSpringEquinoxGrowth(): Promise<() => void> {
@@ -36,17 +36,17 @@ export async function launchSpringEquinoxGrowth(): Promise<() => void> {
 	if (!context) throw new Error('Unable to create spring garden canvas')
 	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
 	const petals = Array.from({ length: 26 }, (_, index) => ({
-		phase: randomInRange({ min: 0, max: Math.PI * 2 }),
+		phase: randomInRange({ max: Math.PI * 2, min: 0 }),
 		progress: (index + Math.random()) / 26,
-		size: randomInRange({ min: 5, max: 10 }),
-		speed: randomInRange({ min: 0.009, max: 0.015 }),
+		size: randomInRange({ max: 10, min: 5 }),
 		source: index * 7,
+		speed: randomInRange({ max: 0.015, min: 0.009 }),
 	}))
 	const petalSprite = createPetalSprite()
 	const dawnGlow = createHazeSprite('#e4b08f')
 	const meadowGlow = createHazeSprite('#9bbd89')
-	let branch: ReturnType<typeof createSpringBranchArtwork> | null = null
-	let meadow: ReturnType<typeof createSpringMeadowArtwork> | null = null
+	let branch: null | ReturnType<typeof createSpringBranchArtwork> = null
+	let meadow: null | ReturnType<typeof createSpringMeadowArtwork> = null
 	let grasses: PlantPlacement[] = []
 	let artworkDpr = 0
 	let width = window.innerWidth
@@ -221,10 +221,10 @@ export async function launchSpringEquinoxGrowth(): Promise<() => void> {
 		const grassCount = Math.min(32, Math.ceil(width / 65) + 1)
 		const grassVariantCount = meadow.grasses.length
 		grasses = Array.from({ length: grassCount }, (_, index) => ({
-			x: index / (grassCount - 1),
+			phase: index * 1.7,
 			scale: 0.48 + ((index * 7) % 9) * 0.04,
 			variant: index % grassVariantCount,
-			phase: index * 1.7,
+			x: index / (grassCount - 1),
 		}))
 		drawScene()
 	}
@@ -288,10 +288,6 @@ export async function launchSpringEquinoxGrowth(): Promise<() => void> {
 	return cleanup
 }
 
-function easeOut(progress: number) {
-	return 1 - (1 - Math.min(1, Math.max(0, progress))) ** 3
-}
-
 function createHazeSprite(color: string): HTMLCanvasElement {
 	const canvas = document.createElement('canvas')
 	canvas.width = 128
@@ -332,4 +328,8 @@ function createPetalSprite(): HTMLCanvasElement {
 	context.quadraticCurveTo(25, 24, 29, 11)
 	context.stroke()
 	return canvas
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.min(1, Math.max(0, progress))) ** 3
 }

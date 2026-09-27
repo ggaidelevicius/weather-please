@@ -18,43 +18,43 @@ import { getMeteorShower, type MeteorShower } from './catalog'
 
 export type MeteorViewingGuide =
 	| {
-			status: 'available'
-			timeZone: string
-			start: Date
 			end: Date
-			referenceTime: Date
+			hasTwilight: boolean
+			moonIllumination: number
+			moonVisibility: 'above' | 'below' | 'mixed'
 			radiantAltitude: number
 			radiantAzimuth: number
-			moonIllumination: number
-			moonVisibility: 'below' | 'above' | 'mixed'
-			hasTwilight: boolean
+			referenceTime: Date
+			start: Date
+			status: 'available'
+			timeZone: string
 	  }
 	| {
 			status:
-				| 'out-of-season'
-				| 'unavailable'
 				| 'no-darkness'
-				| 'radiant-too-low'
 				| 'no-window'
+				| 'out-of-season'
+				| 'radiant-too-low'
+				| 'unavailable'
 			timeZone?: string
 	  }
 
 export function getMeteorViewingGuide({
-	eventId,
 	date,
+	eventId,
 	latitude,
 	longitude,
 	timeZone,
 }: {
-	eventId: SeasonalEventId
 	date: Date
+	eventId: SeasonalEventId
 	latitude: number
 	longitude: number
 	timeZone?: string
 }): MeteorViewingGuide {
 	const request = viewingRequestSchema.safeParse({
-		eventId,
 		date,
+		eventId,
 		latitude,
 		longitude,
 		timeZone,
@@ -100,7 +100,7 @@ export function getMeteorViewingGuide({
 		const observer = new Observer(latitude, longitude, 0)
 		const samples: SkySample[] = []
 		for (let time = start; time <= end; time += SAMPLE_MS) {
-			samples.push(getSkySample({ time, shower, observer }))
+			samples.push(getSkySample({ observer, shower, time }))
 		}
 		if (!samples.some((sample) => sample.sunAltitude <= -12)) {
 			return { status: 'no-darkness', timeZone: selectedTimeZone }
@@ -116,28 +116,28 @@ export function getMeteorViewingGuide({
 		const first = window[0]
 		const last = window[window.length - 1]
 		const reference = getSkySample({
-			time: (first.time + last.time) / 2,
-			shower,
 			observer,
+			shower,
+			time: (first.time + last.time) / 2,
 		})
 		const hasMoonAbove = window.some((sample) => sample.moonAltitude >= 0)
 		const hasMoonBelow = window.some((sample) => sample.moonAltitude < 0)
 
 		return {
-			status: 'available',
-			timeZone: selectedTimeZone,
-			start: new Date(first.time),
 			end: new Date(last.time),
-			referenceTime: new Date(reference.time),
-			radiantAltitude: reference.radiantAltitude,
-			radiantAzimuth: reference.radiantAzimuth,
+			hasTwilight: window.some((sample) => sample.sunAltitude > -18),
 			moonIllumination: reference.moonIllumination,
 			moonVisibility: hasMoonAbove
 				? hasMoonBelow
 					? 'mixed'
 					: 'above'
 				: 'below',
-			hasTwilight: window.some((sample) => sample.sunAltitude > -18),
+			radiantAltitude: reference.radiantAltitude,
+			radiantAzimuth: reference.radiantAzimuth,
+			referenceTime: new Date(reference.time),
+			start: new Date(first.time),
+			status: 'available',
+			timeZone: selectedTimeZone,
 		}
 	} catch {
 		return { status: 'unavailable' }
@@ -151,114 +151,28 @@ const MAX_WINDOW_INTERVALS = 12
 const DEG_TO_RAD = Math.PI / 180
 
 const viewingRequestSchema = z.object({
-	eventId: z.enum(SeasonalEventId),
 	date: z
 		.date()
 		.refine(
 			(value) => value.getFullYear() >= 1900 && value.getFullYear() <= 2100,
 		),
+	eventId: z.enum(SeasonalEventId),
 	latitude: z.number().min(-90).max(90),
 	longitude: z.number().min(-180).max(180),
 	timeZone: z.string().min(1).optional(),
 })
 
 type SkySample = {
-	time: number
-	sunAltitude: number
-	radiantAltitude: number
-	radiantAzimuth: number
 	moonAltitude: number
 	moonIllumination: number
-}
-
-function isNearPeak({
-	date,
-	shower,
-}: {
-	date: Date
-	shower: MeteorShower
-}): boolean {
-	const year = date.getFullYear()
-	const civilDay = Date.UTC(year, date.getMonth(), date.getDate())
-	return [year - 1, year, year + 1].some(
-		(peakYear) =>
-			Math.abs(
-				civilDay - Date.UTC(peakYear, shower.peakMonth - 1, shower.peakDay),
-			) <=
-			shower.peakWindowDays * DAY_MS,
-	)
-}
-
-function getZonedInstant({
-	civilTime,
-	formatter,
-}: {
-	civilTime: number
-	formatter: Intl.DateTimeFormat
-}): number | null {
-	let instant = civilTime
-	for (let attempt = 0; attempt < 4; attempt += 1) {
-		const parts = formatter.formatToParts(new Date(instant))
-		const read = (type: Intl.DateTimeFormatPartTypes) =>
-			Number(parts.find((part) => part.type === type)?.value)
-		const displayedTime = Date.UTC(
-			read('year'),
-			read('month') - 1,
-			read('day'),
-			read('hour'),
-			read('minute'),
-			read('second'),
-		)
-		const difference = civilTime - displayedTime
-		if (difference === 0) return instant
-		instant += difference
-	}
-	return null
-}
-
-function getSkySample({
-	time,
-	shower,
-	observer,
-}: {
+	radiantAltitude: number
+	radiantAzimuth: number
+	sunAltitude: number
 	time: number
-	shower: MeteorShower
-	observer: Observer
-}): SkySample {
-	const date = new Date(time)
-	const radiant = HorizonFromVector(
-		RotateVector(
-			Rotation_EQJ_HOR(date, observer),
-			VectorFromSphere(
-				new Spherical(
-					shower.radiantDeclinationDegrees,
-					shower.radiantRightAscensionDegrees,
-					1,
-				),
-				date,
-			),
-		),
-		'',
-	)
-	const sun = Equator(Body.Sun, date, observer, true, true)
-	const moon = Equator(Body.Moon, date, observer, true, true)
-
-	return {
-		time,
-		sunAltitude: Horizon(date, observer, sun.ra, sun.dec).altitude,
-		radiantAltitude: radiant.lat,
-		radiantAzimuth: radiant.lon,
-		moonAltitude: Horizon(date, observer, moon.ra, moon.dec, 'normal').altitude,
-		moonIllumination: Illumination(Body.Moon, date).phase_fraction,
-	}
 }
 
-function isEligible(sample: SkySample): boolean {
-	return sample.sunAltitude <= -12 && sample.radiantAltitude >= 10
-}
-
-function findBestWindow(samples: SkySample[]): SkySample[] | null {
-	let bestWindow: SkySample[] | null = null
+function findBestWindow(samples: SkySample[]): null | SkySample[] {
+	let bestWindow: null | SkySample[] = null
 	let bestScore = -Infinity
 	let runStart = 0
 
@@ -288,6 +202,92 @@ function findBestWindow(samples: SkySample[]): SkySample[] | null {
 		runStart = runEnd + 1
 	}
 	return bestWindow
+}
+
+function getSkySample({
+	observer,
+	shower,
+	time,
+}: {
+	observer: Observer
+	shower: MeteorShower
+	time: number
+}): SkySample {
+	const date = new Date(time)
+	const radiant = HorizonFromVector(
+		RotateVector(
+			Rotation_EQJ_HOR(date, observer),
+			VectorFromSphere(
+				new Spherical(
+					shower.radiantDeclinationDegrees,
+					shower.radiantRightAscensionDegrees,
+					1,
+				),
+				date,
+			),
+		),
+		'',
+	)
+	const sun = Equator(Body.Sun, date, observer, true, true)
+	const moon = Equator(Body.Moon, date, observer, true, true)
+
+	return {
+		moonAltitude: Horizon(date, observer, moon.ra, moon.dec, 'normal').altitude,
+		moonIllumination: Illumination(Body.Moon, date).phase_fraction,
+		radiantAltitude: radiant.lat,
+		radiantAzimuth: radiant.lon,
+		sunAltitude: Horizon(date, observer, sun.ra, sun.dec).altitude,
+		time,
+	}
+}
+
+function getZonedInstant({
+	civilTime,
+	formatter,
+}: {
+	civilTime: number
+	formatter: Intl.DateTimeFormat
+}): null | number {
+	let instant = civilTime
+	for (let attempt = 0; attempt < 4; attempt += 1) {
+		const parts = formatter.formatToParts(new Date(instant))
+		const read = (type: Intl.DateTimeFormatPartTypes) =>
+			Number(parts.find((part) => part.type === type)?.value)
+		const displayedTime = Date.UTC(
+			read('year'),
+			read('month') - 1,
+			read('day'),
+			read('hour'),
+			read('minute'),
+			read('second'),
+		)
+		const difference = civilTime - displayedTime
+		if (difference === 0) return instant
+		instant += difference
+	}
+	return null
+}
+
+function isEligible(sample: SkySample): boolean {
+	return sample.sunAltitude <= -12 && sample.radiantAltitude >= 10
+}
+
+function isNearPeak({
+	date,
+	shower,
+}: {
+	date: Date
+	shower: MeteorShower
+}): boolean {
+	const year = date.getFullYear()
+	const civilDay = Date.UTC(year, date.getMonth(), date.getDate())
+	return [year - 1, year, year + 1].some(
+		(peakYear) =>
+			Math.abs(
+				civilDay - Date.UTC(peakYear, shower.peakMonth - 1, shower.peakDay),
+			) <=
+			shower.peakWindowDays * DAY_MS,
+	)
 }
 
 function scoreSample(sample: SkySample): number {

@@ -30,6 +30,78 @@ export async function launchEidAlAdhaGlow(): Promise<() => void> {
 	}
 }
 
+function drawStandingLantern({
+	artwork,
+	baseline,
+	context,
+	opacity,
+	phase,
+	scale,
+	time,
+	variant,
+	x,
+}: {
+	artwork: EidArtwork
+	baseline: number
+	context: CanvasRenderingContext2D
+	opacity: number
+	phase: number
+	scale: number
+	time: number
+	variant: number
+	x: number
+}) {
+	const sprite = artwork.lanterns[variant % artwork.lanterns.length]
+	const left = x - (sprite.width * scale) / 2
+	const top = baseline - sprite.baseY * scale
+	const lightX = left + sprite.lightX * scale
+	const lightY = top + sprite.lightY * scale
+	const light =
+		0.91 +
+		Math.sin(time * 0.9 + phase) * 0.06 +
+		Math.sin(time * 2.7 + phase) * 0.03
+	const glowSize = 410 * scale
+	context.globalAlpha = opacity * light * 0.48
+	context.drawImage(
+		artwork.glow.canvas,
+		lightX - glowSize / 2,
+		lightY - glowSize / 2,
+		glowSize,
+		glowSize,
+	)
+	context.globalAlpha = opacity * light * 0.32
+	context.drawImage(
+		artwork.glow.canvas,
+		x - glowSize * 0.65,
+		baseline - 42 * scale,
+		glowSize * 1.3,
+		80 * scale,
+	)
+	context.globalAlpha = opacity
+	context.drawImage(
+		sprite.canvas,
+		left,
+		top,
+		sprite.width * scale,
+		sprite.height * scale,
+	)
+	context.globalCompositeOperation = 'screen'
+	context.globalAlpha = opacity * light * 0.22
+	const coreSize = 85 * scale
+	context.drawImage(
+		artwork.glow.canvas,
+		lightX - coreSize / 2,
+		lightY - coreSize / 2,
+		coreSize,
+		coreSize,
+	)
+	context.globalCompositeOperation = 'source-over'
+}
+
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
 function mountEidAlAdha() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
@@ -37,30 +109,30 @@ function mountEidAlAdha() {
 	const artwork = createEidAlAdhaArtwork({ dpr: 2 })
 	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
 	const stars = Array.from({ length: 110 }, (_, index) => ({
+		opacity: randomInRange({ max: 0.56, min: 0.13 }),
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ max: index % 11 === 0 ? 11 : 5.5, min: 2.5 }),
+		speed: randomInRange({ max: 0.75, min: 0.35 }),
 		x: Math.random(),
 		y: Math.random(),
-		size: randomInRange({ min: 2.5, max: index % 11 === 0 ? 11 : 5.5 }),
-		opacity: randomInRange({ min: 0.13, max: 0.56 }),
-		phase: Math.random() * Math.PI * 2,
-		speed: randomInRange({ min: 0.35, max: 0.75 }),
 	}))
 	const motes = Array.from({ length: 24 }, (_, index) => ({
+		opacity: randomInRange({ max: 0.4, min: 0.17 }),
+		phase: Math.random() * Math.PI * 2,
+		progress: Math.random(),
+		size: randomInRange({ max: 20, min: 7 }),
+		speed: randomInRange({ max: 0.007, min: 0.003 }),
 		x:
 			index % 2
-				? randomInRange({ min: 0.04, max: 0.27 })
-				: randomInRange({ min: 0.76, max: 0.96 }),
-		progress: Math.random(),
-		phase: Math.random() * Math.PI * 2,
-		size: randomInRange({ min: 7, max: 20 }),
-		speed: randomInRange({ min: 0.003, max: 0.007 }),
-		opacity: randomInRange({ min: 0.17, max: 0.4 }),
+				? randomInRange({ max: 0.27, min: 0.04 })
+				: randomInRange({ max: 0.96, min: 0.76 }),
 	}))
 	let width = Math.max(1, window.innerWidth)
 	let height = Math.max(1, window.innerHeight)
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -159,24 +231,24 @@ function mountEidAlAdha() {
 
 		const lanterns = isCompact
 			? [
-					{ x: width * 0.14, scale: 0.58, variant: 0 },
-					{ x: width * 0.88, scale: 0.42, variant: 1 },
+					{ scale: 0.58, variant: 0, x: width * 0.14 },
+					{ scale: 0.42, variant: 1, x: width * 0.88 },
 				]
 			: [
-					{ x: width * 0.185, scale: 0.57, variant: 1 },
-					{ x: width * 0.078, scale: 0.84, variant: 0 },
-					{ x: width * 0.92, scale: 0.65, variant: 2 },
+					{ scale: 0.57, variant: 1, x: width * 0.185 },
+					{ scale: 0.84, variant: 0, x: width * 0.078 },
+					{ scale: 0.65, variant: 2, x: width * 0.92 },
 				]
 		for (const [index, lantern] of lanterns.entries()) {
 			drawStandingLantern({
-				context,
 				artwork,
+				context,
 				...lantern,
 				baseline: height + 3,
+				opacity: reveal,
+				phase: index * 2.1,
 				scale: lantern.scale * sceneScale,
 				time: elapsed,
-				phase: index * 2.1,
-				opacity: reveal,
 			})
 		}
 		context.globalAlpha = 1
@@ -185,7 +257,7 @@ function mountEidAlAdha() {
 		if (hasCanceled) return
 		width = Math.max(1, window.innerWidth)
 		height = Math.max(1, window.innerHeight)
-		const dpr = getCanvasDpr({ height, width, maxDpr: 2, maxPixels: 4_000_000 })
+		const dpr = getCanvasDpr({ height, maxDpr: 2, maxPixels: 4_000_000, width })
 		canvas.width = Math.round(width * dpr)
 		canvas.height = Math.round(height * dpr)
 		canvas.style.width = `${width}px`
@@ -281,78 +353,6 @@ function mountEidAlAdha() {
 		throw error
 	}
 	return cleanup
-}
-
-function drawStandingLantern({
-	context,
-	artwork,
-	x,
-	baseline,
-	scale,
-	variant,
-	time,
-	phase,
-	opacity,
-}: {
-	context: CanvasRenderingContext2D
-	artwork: EidArtwork
-	x: number
-	baseline: number
-	scale: number
-	variant: number
-	time: number
-	phase: number
-	opacity: number
-}) {
-	const sprite = artwork.lanterns[variant % artwork.lanterns.length]
-	const left = x - (sprite.width * scale) / 2
-	const top = baseline - sprite.baseY * scale
-	const lightX = left + sprite.lightX * scale
-	const lightY = top + sprite.lightY * scale
-	const light =
-		0.91 +
-		Math.sin(time * 0.9 + phase) * 0.06 +
-		Math.sin(time * 2.7 + phase) * 0.03
-	const glowSize = 410 * scale
-	context.globalAlpha = opacity * light * 0.48
-	context.drawImage(
-		artwork.glow.canvas,
-		lightX - glowSize / 2,
-		lightY - glowSize / 2,
-		glowSize,
-		glowSize,
-	)
-	context.globalAlpha = opacity * light * 0.32
-	context.drawImage(
-		artwork.glow.canvas,
-		x - glowSize * 0.65,
-		baseline - 42 * scale,
-		glowSize * 1.3,
-		80 * scale,
-	)
-	context.globalAlpha = opacity
-	context.drawImage(
-		sprite.canvas,
-		left,
-		top,
-		sprite.width * scale,
-		sprite.height * scale,
-	)
-	context.globalCompositeOperation = 'screen'
-	context.globalAlpha = opacity * light * 0.22
-	const coreSize = 85 * scale
-	context.drawImage(
-		artwork.glow.canvas,
-		lightX - coreSize / 2,
-		lightY - coreSize / 2,
-		coreSize,
-		coreSize,
-	)
-	context.globalCompositeOperation = 'source-over'
-}
-
-function easeOut(progress: number) {
-	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
 }
 
 function wrap(value: number) {

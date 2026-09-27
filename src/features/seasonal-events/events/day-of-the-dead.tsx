@@ -29,6 +29,14 @@ export async function launchDayOfTheDead(): Promise<() => void> {
 	}
 }
 
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
+function edgeFade(position: number) {
+	return Math.min(1, position * 12, (1 - position) * 12)
+}
+
 function mountDayOfTheDead() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
@@ -37,39 +45,39 @@ function mountDayOfTheDead() {
 	const artwork = createDayOfTheDeadArtwork({ dpr: 2 })
 	const banners = createDayOfTheDeadBanners({ dpr: 2 })
 	const petals = Array.from({ length: 40 }, (_, index) => ({
+		opacity: randomInRange({ max: 0.66, min: 0.32 }),
+		phase: Math.random() * Math.PI * 2,
+		rotation: Math.random() * Math.PI * 2,
+		size: randomInRange({ max: 48, min: 27 }),
+		speed: randomInRange({ max: 0.022, min: 0.01 }),
+		spin: randomInRange({ max: 0.2, min: -0.2 }),
+		variant: index % artwork.petals.length,
 		x:
 			index % 4 === 0
 				? Math.random()
 				: index % 2
-					? randomInRange({ min: 0.03, max: 0.24 })
-					: randomInRange({ min: 0.76, max: 0.97 }),
+					? randomInRange({ max: 0.24, min: 0.03 })
+					: randomInRange({ max: 0.97, min: 0.76 }),
 		y: Math.random(),
-		size: randomInRange({ min: 27, max: 48 }),
-		speed: randomInRange({ min: 0.01, max: 0.022 }),
-		phase: Math.random() * Math.PI * 2,
-		rotation: Math.random() * Math.PI * 2,
-		spin: randomInRange({ min: -0.2, max: 0.2 }),
-		variant: index % artwork.petals.length,
-		opacity: randomInRange({ min: 0.32, max: 0.66 }),
 	}))
 	const butterflies = Array.from({ length: 6 }, (_, index) => ({
+		opacity: randomInRange({ max: 0.78, min: 0.5 }),
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ max: 76, min: 48 }),
+		speed: randomInRange({ max: 0.009, min: 0.004 }),
+		variant: index % artwork.butterflies.length,
 		x:
 			index % 2
-				? randomInRange({ min: 0.76, max: 0.93 })
-				: randomInRange({ min: 0.07, max: 0.24 }),
+				? randomInRange({ max: 0.93, min: 0.76 })
+				: randomInRange({ max: 0.24, min: 0.07 }),
 		y: Math.random(),
-		size: randomInRange({ min: 48, max: 76 }),
-		speed: randomInRange({ min: 0.004, max: 0.009 }),
-		phase: Math.random() * Math.PI * 2,
-		variant: index % artwork.butterflies.length,
-		opacity: randomInRange({ min: 0.5, max: 0.78 }),
 	}))
 	let width = Math.max(1, window.innerWidth)
 	let height = Math.max(1, window.innerHeight)
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -86,21 +94,21 @@ function mountDayOfTheDead() {
 	const drawSprite = (
 		sprite: HTMLCanvasElement,
 		{
-			x,
-			y,
-			size,
 			alpha,
 			rotation = 0,
 			scaleX = 1,
 			scaleY = 1,
+			size,
+			x,
+			y,
 		}: {
-			x: number
-			y: number
-			size: number
 			alpha: number
 			rotation?: number
 			scaleX?: number
 			scaleY?: number
+			size: number
+			x: number
+			y: number
 		},
 	) => {
 		context.save()
@@ -112,15 +120,15 @@ function mountDayOfTheDead() {
 		context.restore()
 	}
 	const drawCandle = ({
-		x,
-		size,
 		phase,
 		reveal,
+		size,
+		x,
 	}: {
-		x: number
-		size: number
 		phase: number
 		reveal: number
+		size: number
+		x: number
 	}) => {
 		const scale = size / 256
 		const top = height + 4 - 238 * scale
@@ -213,13 +221,13 @@ function mountDayOfTheDead() {
 			const sway = Math.sin(elapsed * 0.45 + petal.phase)
 			const isCentral = petal.x > 0.28 && petal.x < 0.72
 			drawSprite(artwork.petals[petal.variant], {
-				x: petal.x * width + sway * (isCompact ? 12 : 27),
-				y: vertical * (height + 110) - 55,
-				size: petal.size * (isCompact ? 0.85 : 1),
 				alpha:
 					reveal * petal.opacity * edgeFade(vertical) * (isCentral ? 0.4 : 1),
 				rotation: petal.rotation + elapsed * petal.spin + sway * 0.25,
 				scaleX: 0.7 + Math.sin(elapsed * 0.8 + petal.phase) * 0.3,
+				size: petal.size * (isCompact ? 0.85 : 1),
+				x: petal.x * width + sway * (isCompact ? 12 : 27),
+				y: vertical * (height + 110) - 55,
 			})
 		}
 		const butterflyCount = isCompact ? 3 : butterflies.length
@@ -228,41 +236,41 @@ function mountDayOfTheDead() {
 			const vertical = wrap(butterfly.y - elapsed * butterfly.speed)
 			const sway = Math.sin(elapsed * 0.42 + butterfly.phase)
 			drawSprite(artwork.butterflies[butterfly.variant], {
+				alpha: reveal * butterfly.opacity * edgeFade(vertical),
+				rotation: sway * 0.2,
+				scaleX:
+					0.24 + Math.abs(Math.cos(elapsed * 3.5 + butterfly.phase)) * 0.76,
+				size: butterfly.size * (isCompact ? 0.8 : 1),
 				x: butterfly.x * width + sway * (isCompact ? 15 : 34),
 				y:
 					vertical * (height + 140) -
 					70 +
 					Math.sin(elapsed * 0.8 + butterfly.phase) * 8,
-				size: butterfly.size * (isCompact ? 0.8 : 1),
-				alpha: reveal * butterfly.opacity * edgeFade(vertical),
-				rotation: sway * 0.2,
-				scaleX:
-					0.24 + Math.abs(Math.cos(elapsed * 3.5 + butterfly.phase)) * 0.76,
 			})
 		}
 
 		const candles = isCompact
 			? [
-					{ x: width - 74, size: 184, phase: 0 },
-					{ x: width - 31, size: 132, phase: 2 },
+					{ phase: 0, size: 184, x: width - 74 },
+					{ phase: 2, size: 132, x: width - 31 },
 				]
 			: [
-					{ x: 207, size: 190, phase: 1 },
-					{ x: 262, size: 136, phase: 3 },
-					{ x: width - 142, size: 177, phase: 2 },
-					{ x: width - 90, size: 250, phase: 0 },
-					{ x: width - 40, size: 148, phase: 4 },
+					{ phase: 1, size: 190, x: 207 },
+					{ phase: 3, size: 136, x: 262 },
+					{ phase: 2, size: 177, x: width - 142 },
+					{ phase: 0, size: 250, x: width - 90 },
+					{ phase: 4, size: 148, x: width - 40 },
 				]
 		for (const candle of candles) {
-			drawCandle({ ...candle, size: candle.size * sceneScale, reveal })
+			drawCandle({ ...candle, reveal, size: candle.size * sceneScale })
 		}
 		const skulls = isCompact
-			? [{ x: 67, size: 172, variant: 0 }]
+			? [{ size: 172, variant: 0, x: 67 }]
 			: [
-					{ x: 103, size: 232, variant: 0 },
-					{ x: width - 242, size: 164, variant: 1 },
+					{ size: 232, variant: 0, x: 103 },
+					{ size: 164, variant: 1, x: width - 242 },
 				]
-		for (const { x, size: baseSize, variant } of skulls) {
+		for (const { size: baseSize, variant, x } of skulls) {
 			const size = baseSize * sceneScale
 			context.globalAlpha = reveal * 0.85
 			context.drawImage(
@@ -275,29 +283,29 @@ function mountDayOfTheDead() {
 		}
 		const flowers = isCompact
 			? [
-					{ x: 11, size: 58, lift: 12 },
-					{ x: 115, size: 60, lift: 9 },
-					{ x: 153, size: 43, lift: 4 },
-					{ x: width - 115, size: 48, lift: 7 },
-					{ x: width - 5, size: 54, lift: 10 },
+					{ lift: 12, size: 58, x: 11 },
+					{ lift: 9, size: 60, x: 115 },
+					{ lift: 4, size: 43, x: 153 },
+					{ lift: 7, size: 48, x: width - 115 },
+					{ lift: 10, size: 54, x: width - 5 },
 				]
 			: [
-					{ x: 17, size: 76, lift: 18 },
-					{ x: 43, size: 59, lift: 9 },
-					{ x: 162, size: 67, lift: 13 },
-					{ x: 194, size: 51, lift: 5 },
-					{ x: 284, size: 60, lift: 6 },
-					{ x: width - 304, size: 62, lift: 11 },
-					{ x: width - 185, size: 63, lift: 11 },
-					{ x: width - 11, size: 68, lift: 12 },
+					{ lift: 18, size: 76, x: 17 },
+					{ lift: 9, size: 59, x: 43 },
+					{ lift: 13, size: 67, x: 162 },
+					{ lift: 5, size: 51, x: 194 },
+					{ lift: 6, size: 60, x: 284 },
+					{ lift: 11, size: 62, x: width - 304 },
+					{ lift: 11, size: 63, x: width - 185 },
+					{ lift: 12, size: 68, x: width - 11 },
 				]
 		for (const [index, flower] of flowers.entries()) {
 			drawSprite(artwork.marigolds[index % artwork.marigolds.length], {
-				x: flower.x,
-				y: height - flower.lift * sceneScale,
-				size: flower.size * sceneScale,
 				alpha: reveal * 0.94,
 				rotation: index * 0.83,
+				size: flower.size * sceneScale,
+				x: flower.x,
+				y: height - flower.lift * sceneScale,
 			})
 		}
 		context.globalAlpha = 1
@@ -376,14 +384,6 @@ function mountDayOfTheDead() {
 	return cleanup
 }
 
-function easeOut(progress: number) {
-	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
-}
-
 function wrap(value: number) {
 	return ((value % 1) + 1) % 1
-}
-
-function edgeFade(position: number) {
-	return Math.min(1, position * 12, (1 - position) * 12)
 }

@@ -6,18 +6,18 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { SeasonalEventId } from '../../core/types'
 import { LazyMeteorViewingGuide } from '../lazy-viewing-guide'
 
-type GuideProps = ComponentProps<typeof LazyMeteorViewingGuide>
 type GuideModule = {
 	MeteorViewingGuide: (props: GuideProps) => ReactNode
 }
+type GuideProps = ComponentProps<typeof LazyMeteorViewingGuide>
 
 vi.mock('@lingui/react/macro', () => ({
 	Trans: ({ children }: { children: ReactNode }) => children,
 }))
 
 const props = {
-	eventId: SeasonalEventId.Geminids,
 	date: new Date(2026, 11, 14),
+	eventId: SeasonalEventId.Geminids,
 	latitude: -31.95,
 	longitude: 115.86,
 }

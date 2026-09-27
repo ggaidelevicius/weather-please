@@ -1,28 +1,31 @@
-import type {
-	ChartFrameProps,
-	AnimatedNumberProps,
-	LineChartProps,
-	ChartLineProps,
-	PrecipitationChartProps,
-	ChartTooltipState,
-} from '../../model/detail-types'
-import type { ReactNode, PointerEvent } from 'react'
-import { useState, useEffect } from 'react'
-import {
-	useMotionValue,
-	useSpring,
-	useReducedMotion,
-	useMotionValueEvent,
-} from 'framer-motion'
+import type { PointerEvent, ReactNode } from 'react'
+
 import { Trans } from '@lingui/react/macro'
 import {
+	useMotionValue,
+	useMotionValueEvent,
+	useReducedMotion,
+	useSpring,
+} from 'framer-motion'
+import { useEffect, useState } from 'react'
+
+import type {
+	AnimatedNumberProps,
+	ChartFrameProps,
+	ChartLineProps,
+	ChartTooltipState,
+	LineChartProps,
+	PrecipitationChartProps,
+} from '../../model/detail-types'
+
+import {
 	CHART_HEIGHT,
-	CHART_WIDTH,
 	CHART_PADDING,
-	getLinePath,
-	getNearestPointIndex,
+	CHART_WIDTH,
 	getChartX,
 	getChartY,
+	getLinePath,
+	getNearestPointIndex,
 } from '../../model/chart-geometry'
 import { WeekdayHourLabel } from '../details/detail-shell'
 

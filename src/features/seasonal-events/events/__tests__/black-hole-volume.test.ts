@@ -1,4 +1,3 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
 	Data3DTexture,
 	LinearFilter,
@@ -8,6 +7,8 @@ import {
 	RGBAFormat,
 	UnsignedByteType,
 } from 'three'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+
 import { createAccretionVolumeTexture } from '../black-hole-volume'
 
 const textures: Data3DTexture[] = []
@@ -21,7 +22,7 @@ describe('accretion gas volume', () => {
 	it('creates a compact, linear RGBA volume ready for seamless mipmapped sampling', () => {
 		const texture = createTexture()
 		expect(texture).toBeInstanceOf(Data3DTexture)
-		expect(texture.image).toMatchObject({ width: 64, height: 64, depth: 64 })
+		expect(texture.image).toMatchObject({ depth: 64, height: 64, width: 64 })
 		expect(getData(texture)).toHaveLength(64 ** 3 * 4)
 		expect(texture.format).toBe(RGBAFormat)
 		expect(texture.type).toBe(UnsignedByteType)
@@ -54,8 +55,8 @@ describe('accretion gas volume', () => {
 	it('provides varied, finite channel values with progressively finer spatial detail', () => {
 		const data = getData(createTexture())
 		const ranges = Array.from({ length: 4 }, () => ({
-			min: 255,
 			max: 0,
+			min: 255,
 			values: new Set<number>(),
 		}))
 		for (let offset = 0; offset < data.length; offset += 1) {
@@ -71,7 +72,7 @@ describe('accretion gas volume', () => {
 			expect(channel.values.size).toBeGreaterThan(64)
 		}
 		const differences = [0, 1, 2, 3].map(
-			(channel) => getAdjacentDifferences({ data, channel, axis: 0 }).interior,
+			(channel) => getAdjacentDifferences({ axis: 0, channel, data }).interior,
 		)
 		for (let channel = 1; channel < differences.length; channel += 1) {
 			expect(differences[channel]).toBeGreaterThan(differences[channel - 1])
@@ -83,9 +84,9 @@ describe('accretion gas volume', () => {
 		for (const axis of [0, 1, 2]) {
 			for (const channel of [0, 1, 2, 3]) {
 				const { interior, seam } = getAdjacentDifferences({
-					data,
-					channel,
 					axis,
+					channel,
+					data,
 				})
 				expect(seam).toBeLessThan(interior * 1.5 + 1)
 			}
@@ -99,21 +100,14 @@ function createTexture() {
 	return texture
 }
 
-function getData(texture: Data3DTexture) {
-	const data = texture.image.data
-	if (!(data instanceof Uint8Array))
-		throw new Error('Expected unsigned byte gas data')
-	return data
-}
-
 function getAdjacentDifferences({
-	data,
-	channel,
 	axis,
+	channel,
+	data,
 }: {
-	data: Uint8Array
-	channel: number
 	axis: number
+	channel: number
+	data: Uint8Array
 }) {
 	const size = 64
 	const stride = size ** axis
@@ -132,4 +126,11 @@ function getAdjacentDifferences({
 		interior: interior / (size ** 2 * (size - 1)),
 		seam: seam / size ** 2,
 	}
+}
+
+function getData(texture: Data3DTexture) {
+	const data = texture.image.data
+	if (!(data instanceof Uint8Array))
+		throw new Error('Expected unsigned byte gas data')
+	return data
 }

@@ -28,6 +28,10 @@ export async function launchTotalSolarEclipse(): Promise<() => void> {
 	}
 }
 
+function easeOut(progress: number) {
+	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
+}
+
 function mountTotalSolarEclipse() {
 	const canvas = document.createElement('canvas')
 	const context = canvas.getContext('2d')
@@ -35,19 +39,19 @@ function mountTotalSolarEclipse() {
 	const artwork = createTotalSolarEclipseArtwork({ dpr: 2 })
 	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
 	const stars = Array.from({ length: 72 }, (_, index) => ({
+		opacity: randomInRange({ max: 0.43, min: 0.12 }),
+		phase: Math.random() * Math.PI * 2,
+		size: randomInRange({ max: index % 17 === 0 ? 9 : 4, min: 2.5 }),
+		speed: randomInRange({ max: 0.42, min: 0.18 }),
 		x: Math.random(),
 		y: Math.random(),
-		size: randomInRange({ min: 2.5, max: index % 17 === 0 ? 9 : 4 }),
-		opacity: randomInRange({ min: 0.12, max: 0.43 }),
-		phase: Math.random() * Math.PI * 2,
-		speed: randomInRange({ min: 0.18, max: 0.42 }),
 	}))
 	let width = Math.max(1, window.innerWidth)
 	let height = Math.max(1, window.innerHeight)
 	let elapsed = 0
 	let hasRevealed = motionPreference.matches
-	let lastTime: number | null = null
-	let animationFrameId: number | null = null
+	let lastTime: null | number = null
+	let animationFrameId: null | number = null
 	let animationGeneration = 0
 	let hasCanceled = false
 	let unsubscribeSettings = () => {}
@@ -140,7 +144,7 @@ function mountTotalSolarEclipse() {
 		if (hasCanceled) return
 		width = Math.max(1, window.innerWidth)
 		height = Math.max(1, window.innerHeight)
-		const dpr = getCanvasDpr({ height, width, maxDpr: 2, maxPixels: 4_000_000 })
+		const dpr = getCanvasDpr({ height, maxDpr: 2, maxPixels: 4_000_000, width })
 		canvas.width = Math.round(width * dpr)
 		canvas.height = Math.round(height * dpr)
 		canvas.style.width = `${width}px`
@@ -237,8 +241,4 @@ function mountTotalSolarEclipse() {
 		throw error
 	}
 	return cleanup
-}
-
-function easeOut(progress: number) {
-	return 1 - (1 - Math.max(0, Math.min(1, progress))) ** 3
 }

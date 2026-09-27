@@ -1,7 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
 import { createWeatherResponse } from '../../testing/weather-response'
-
 import {
 	fetchWeatherMapData,
 	fetchWeatherResponse,

@@ -1,24 +1,24 @@
 export type WinterCrystal = {
 	color: string
-	size: number
 	glow: number
+	size: number
 }
 
 type WinterCrystalArtwork = {
-	glow: HTMLCanvasElement
 	crystal: HTMLCanvasElement
 	displaySize: number
+	glow: HTMLCanvasElement
 }
 
 export function createWinterCrystalArtwork({
-	dpr,
 	crystals,
+	dpr,
 }: {
-	dpr: number
 	crystals: readonly WinterCrystal[]
+	dpr: number
 }): WinterCrystalArtwork[] {
 	const pixelRatio = Math.min(2, dpr)
-	return crystals.map(({ color, size, glow }) => {
+	return crystals.map(({ color, glow, size }) => {
 		const glowRadius = size * 2.3
 		const radius = Math.max(glowRadius, size + (glow / pixelRatio) * 3) + 2
 		const displaySize = (Math.ceil(radius * pixelRatio) * 2) / pixelRatio
@@ -52,9 +52,9 @@ export function createWinterCrystalArtwork({
 		cross.context.stroke()
 
 		return {
-			glow: halo.canvas,
 			crystal: cross.canvas,
 			displaySize,
+			glow: halo.canvas,
 		}
 	})
 }

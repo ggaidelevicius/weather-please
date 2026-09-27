@@ -229,7 +229,7 @@ describe('permanent seasonal backgrounds', () => {
 			.mockResolvedValueOnce(cleanupChristmas)
 			.mockResolvedValueOnce(cleanupHalloween)
 			.mockResolvedValueOnce(cleanupChristmasAgain)
-		const { result, rerender, unmount } = renderHook(
+		const { rerender, result, unmount } = renderHook(
 			({ seasonalBackground }: { seasonalBackground: SeasonalBackground }) =>
 				useSeasonalEvents({ isEnabled: true, seasonalBackground }),
 			{
@@ -319,7 +319,7 @@ describe('permanent seasonal backgrounds', () => {
 	it('keeps its scene when seasonal preferences change and stops on disabled automatic mode', async () => {
 		const cleanup = vi.fn()
 		effects.run.mockResolvedValue(cleanup)
-		const { result, rerender, unmount } = renderHook(
+		const { rerender, result, unmount } = renderHook(
 			({
 				enabledEvents,
 				isEnabled,
@@ -424,11 +424,11 @@ describe('permanent seasonal backgrounds', () => {
 		async (gate) => {
 			const cleanup = vi.fn()
 			effects.run.mockResolvedValue(cleanup)
-			const { result, rerender, unmount } = renderHook(
+			const { rerender, result, unmount } = renderHook(
 				({ isReady }) =>
 					useSeasonalEvents({
-						isEnabled: false,
 						[gate]: isReady,
+						isEnabled: false,
 						seasonalBackground: SeasonalEventId.Halloween,
 					}),
 				{ initialProps: { isReady: false } },
@@ -469,7 +469,7 @@ describe('permanent seasonal backgrounds', () => {
 		effects.run
 			.mockResolvedValueOnce(cleanupHalloween)
 			.mockResolvedValueOnce(cleanupNewYears)
-		const { result, rerender, unmount } = renderHook(
+		const { rerender, result, unmount } = renderHook(
 			({ seasonalBackground }: { seasonalBackground: SeasonalBackground }) =>
 				useSeasonalEvents({ isEnabled: true, seasonalBackground }),
 			{
@@ -502,7 +502,7 @@ describe('permanent seasonal backgrounds', () => {
 	})
 
 	it('uses today when automatic seasonal events are enabled after several days', async () => {
-		const { result, rerender, unmount } = renderHook(
+		const { rerender, result, unmount } = renderHook(
 			({
 				isEnabled,
 				seasonalBackground,
@@ -541,7 +541,7 @@ describe('permanent backgrounds with seasonal priority', () => {
 		const enabledEvents = new Set([SeasonalEventId.ChristmasDay])
 		const cleanupChristmas = vi.fn()
 		effects.run.mockResolvedValueOnce(cleanupChristmas)
-		const { result, rerender, unmount } = renderHook(
+		const { rerender, result, unmount } = renderHook(
 			({ isEnabled }) =>
 				useSeasonalEvents({
 					enabledEvents,
@@ -573,6 +573,41 @@ describe('permanent backgrounds with seasonal priority', () => {
 		})
 		unmount()
 	})
+
+	it.each(['isHydrated', 'isOnboarded'] as const)(
+		'discards an expired holiday before %s becomes ready again',
+		async (readinessOption) => {
+			const enabledEvents = new Set([SeasonalEventId.ChristmasDay])
+			const cleanupChristmas = vi.fn()
+			effects.run.mockResolvedValueOnce(cleanupChristmas)
+			const { rerender, result, unmount } = renderHook(
+				({ isReady }) =>
+					useSeasonalEvents({
+						enabledEvents,
+						isEnabled: true,
+						[readinessOption]: isReady,
+						seasonalBackground: SeasonalEventId.Halloween,
+						shouldPreferSeasonalBackgrounds: true,
+					}),
+				{ initialProps: { isReady: true } },
+			)
+			await waitFor(() => expect(effects.run).toHaveBeenCalledOnce())
+			rerender({ isReady: false })
+			expect(result.current).toBeNull()
+			expect(cleanupChristmas).toHaveBeenCalledOnce()
+
+			vi.setSystemTime(new Date(2026, 11, 28, 12))
+			rerender({ isReady: true })
+			expect(result.current).toBeNull()
+			await waitFor(() => expect(effects.run).toHaveBeenCalledTimes(2))
+			expect(result.current).toBe(SeasonalEventId.Halloween)
+			expect(effects.run).toHaveBeenLastCalledWith({
+				eventId: SeasonalEventId.Halloween,
+				hemisphere: undefined,
+			})
+			unmount()
+		},
+	)
 
 	it('starts only the seasonal scene when loading on an enabled holiday', async () => {
 		const cleanup = vi.fn()
@@ -606,7 +641,7 @@ describe('permanent backgrounds with seasonal priority', () => {
 			.mockResolvedValueOnce(cleanupHalloween)
 			.mockResolvedValueOnce(cleanupNewYears)
 			.mockResolvedValueOnce(cleanupEarthDay)
-		const { result, rerender, unmount } = renderHook(
+		const { rerender, result, unmount } = renderHook(
 			({ seasonalBackground }) =>
 				useSeasonalEvents({
 					enabledEvents,
@@ -657,7 +692,7 @@ describe('permanent backgrounds with seasonal priority', () => {
 			.mockResolvedValueOnce(cleanupHalloween)
 			.mockResolvedValueOnce(cleanupChristmas)
 			.mockResolvedValueOnce(cleanupHalloweenAgain)
-		const { result, rerender, unmount } = renderHook(
+		const { rerender, result, unmount } = renderHook(
 			({ shouldPreferSeasonalBackgrounds }) =>
 				useSeasonalEvents({
 					isEnabled: true,
@@ -691,7 +726,7 @@ describe('permanent backgrounds with seasonal priority', () => {
 		async (seasonalBackground) => {
 			const cleanup = vi.fn()
 			effects.run.mockResolvedValue(cleanup)
-			const { result, rerender, unmount } = renderHook(
+			const { rerender, result, unmount } = renderHook(
 				({ shouldPreferSeasonalBackgrounds }) =>
 					useSeasonalEvents({
 						isEnabled: true,
@@ -718,14 +753,14 @@ describe('permanent backgrounds with seasonal priority', () => {
 
 	it.each([
 		{
-			name: 'the master switch',
-			isEnabled: false,
 			enabledEvents: new Set([SeasonalEventId.ChristmasDay]),
+			isEnabled: false,
+			name: 'the master switch',
 		},
 		{
-			name: 'the individual seasonal event',
-			isEnabled: true,
 			enabledEvents: new Set<SeasonalEventId>(),
+			isEnabled: true,
+			name: 'the individual seasonal event',
 		},
 	])(
 		'restores the chosen background when $name is disabled',
@@ -737,7 +772,7 @@ describe('permanent backgrounds with seasonal priority', () => {
 				.mockResolvedValueOnce(cleanupHalloween)
 				.mockResolvedValueOnce(cleanupChristmas)
 				.mockResolvedValueOnce(cleanupHalloweenAgain)
-			const { result, rerender, unmount } = renderHook(
+			const { rerender, result, unmount } = renderHook(
 				(props) =>
 					useSeasonalEvents({
 						...props,

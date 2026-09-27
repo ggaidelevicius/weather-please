@@ -1,9 +1,10 @@
-import type { ReactNode, CSSProperties } from 'react'
-import type { Next24HoursData, WeatherMapData } from './types'
+import type { CSSProperties, ReactNode } from 'react'
+
 import type {
 	TemperatureUnit,
 	UnitSystem,
 } from '../../settings/model/unit-system'
+import type { Next24HoursData, WeatherMapData } from './types'
 
 export const NEXT_24_HOURS_DETAIL_VIEW_IDS = [
 	'temperature',
@@ -14,9 +15,6 @@ export const NEXT_24_HOURS_DETAIL_VIEW_IDS = [
 	'conditions',
 	'map',
 ] as const
-
-export type Next24HoursDetailViewId =
-	(typeof NEXT_24_HOURS_DETAIL_VIEW_IDS)[number]
 
 export type AnimatedNumberProps = {
 	maximumFractionDigits?: number
@@ -31,6 +29,21 @@ export type ChartFrameProps = {
 	middleLabel: ReactNode
 	rightLabels?: string[]
 	startLabel: ReactNode
+}
+
+export type ChartLineProps = {
+	activeSeriesId: null | WeatherDetailSeriesId
+	className?: string
+	onSeriesFocus?: (seriesId: null | WeatherDetailSeriesId) => void
+	onTooltipChange: (tooltip: ChartTooltipState | null) => void
+	points: number[]
+	scale: Required<ChartScale>
+	seriesId?: WeatherDetailSeriesId
+	seriesLabel: ReactNode
+	strokeWidth: number
+	style?: CSSProperties
+	times: number[]
+	valueFormatter: (value: number) => ReactNode
 }
 
 export type ChartScale = {
@@ -102,6 +115,9 @@ export type MetricProps = {
 	seriesId?: WeatherDetailSeriesId
 	value: ReactNode
 }
+
+export type Next24HoursDetailViewId =
+	(typeof NEXT_24_HOURS_DETAIL_VIEW_IDS)[number]
 
 export type Next24HoursDetailViewProps = {
 	data: Next24HoursData
@@ -207,19 +223,4 @@ export type WeatherMapViewport = {
 	centerX: number
 	centerY: number
 	dimensions: WeatherMapDimensions
-}
-
-export type ChartLineProps = {
-	activeSeriesId: null | WeatherDetailSeriesId
-	className?: string
-	onSeriesFocus?: (seriesId: null | WeatherDetailSeriesId) => void
-	onTooltipChange: (tooltip: ChartTooltipState | null) => void
-	points: number[]
-	scale: Required<ChartScale>
-	seriesId?: WeatherDetailSeriesId
-	seriesLabel: ReactNode
-	strokeWidth: number
-	style?: CSSProperties
-	times: number[]
-	valueFormatter: (value: number) => ReactNode
 }
