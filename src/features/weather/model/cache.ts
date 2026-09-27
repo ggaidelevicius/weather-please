@@ -46,11 +46,13 @@ const readStorageItem = <T>({
 	normalize,
 	parse,
 	schema,
+	shouldRepair = true,
 }: {
 	key: string
 	normalize?: (value: T) => string
 	parse?: (value: string) => unknown
 	schema: z.ZodType<T>
+	shouldRepair?: boolean
 }): null | T => {
 	const raw = readLocalStorage(key)
 	if (!raw) {
@@ -62,18 +64,18 @@ const readStorageItem = <T>({
 		try {
 			parsed = parse(raw)
 		} catch {
-			removeLocalStorage(key)
+			if (shouldRepair) removeLocalStorage(key)
 			return null
 		}
 	}
 
 	const result = schema.safeParse(parsed)
 	if (!result.success) {
-		removeLocalStorage(key)
+		if (shouldRepair) removeLocalStorage(key)
 		return null
 	}
 
-	if (normalize) {
+	if (normalize && shouldRepair) {
 		const normalized = normalize(result.data)
 		if (normalized !== raw) {
 			writeLocalStorage({ key, value: normalized })
@@ -99,53 +101,62 @@ export type CacheIdentity = {
 	timeZone: string
 }
 
-const readLegacyCachedWeather = () => {
+const readLegacyCachedWeather = (shouldRepair = true) => {
 	const cachedLat = readStorageItem({
 		key: 'cachedLat',
 		schema: z.string().min(1),
+		shouldRepair,
 	})
 	const cachedLon = readStorageItem({
 		key: 'cachedLon',
 		schema: z.string().min(1),
+		shouldRepair,
 	})
 	const cachedTimeZone = readStorageItem({
 		key: 'cachedTimeZone',
 		schema: z.string().min(1),
+		shouldRepair,
 	})
 	const cachedUseAirQualityUv = readStorageItem({
 		key: 'cachedUseAirQualityUv',
 		normalize: (value) => JSON.stringify(value),
 		parse: JSON.parse,
 		schema: z.boolean(),
+		shouldRepair,
 	})
 	const lastUpdatedDate = readStorageItem({
 		key: 'lastUpdated',
 		normalize: (value) => value.toString({ fractionalSecondDigits: 3 }),
 		schema: lastUpdatedSchema,
+		shouldRepair,
 	})
 	const storedAlerts = readStorageItem({
 		key: 'alerts',
 		normalize: (value) => JSON.stringify(value),
 		parse: JSON.parse,
 		schema: alertSchema,
+		shouldRepair,
 	})
 	const storedData = readStorageItem({
 		key: 'data',
 		normalize: (value) => JSON.stringify(value),
 		parse: JSON.parse,
 		schema: dataSchema,
+		shouldRepair,
 	})
 	const storedNext24HoursData = readStorageItem({
 		key: 'next24HoursData',
 		normalize: (value) => JSON.stringify(value),
 		parse: JSON.parse,
 		schema: next24HoursDataSchema,
+		shouldRepair,
 	})
 	const storedWeatherMapData = readStorageItem({
 		key: 'weatherMapData',
 		normalize: (value) => JSON.stringify(value),
 		parse: JSON.parse,
 		schema: weatherMapDataSchema.nullable(),
+		shouldRepair,
 	})
 	const isDegraded =
 		readStorageItem({
@@ -153,6 +164,7 @@ const readLegacyCachedWeather = () => {
 			normalize: (value) => JSON.stringify(value),
 			parse: JSON.parse,
 			schema: z.boolean(),
+			shouldRepair,
 		}) ?? false
 
 	if (
@@ -210,6 +222,45 @@ export const getCachedWeather = ({
 
 export const hasCachedWeather = (): boolean => Boolean(readCache())
 
+export const readCachedWeatherSnapshot = ():
+	(CachedWeather & CacheIdentity) | null => {
+	if (typeof window === 'undefined') return null
+	let key: string
+	try {
+		key = JSON.stringify(
+			[WEATHER_CACHE_STORAGE_KEY, ...LEGACY_CACHE_KEYS].map((storageKey) =>
+				window.localStorage.getItem(storageKey),
+			),
+		)
+	} catch {
+		return cachedSnapshot
+	}
+	if (key !== cachedSnapshotKey) {
+		cachedSnapshotKey = key
+		cachedSnapshot = readCache(false)
+	}
+	return cachedSnapshot
+}
+
+export const subscribeCachedWeather = (onChange: () => void): (() => void) => {
+	// Migrate and repair persistence only after React has committed.
+	readCache()
+	cacheListeners.add(onChange)
+	const handleStorage = (event: StorageEvent) => {
+		if (
+			event.key === null ||
+			event.key === WEATHER_CACHE_STORAGE_KEY ||
+			LEGACY_CACHE_KEYS.includes(event.key)
+		)
+			onChange()
+	}
+	window.addEventListener('storage', handleStorage)
+	return () => {
+		cacheListeners.delete(onChange)
+		window.removeEventListener('storage', handleStorage)
+	}
+}
+
 export const writeCachedWeather = (
 	weather: CacheIdentity & Omit<CachedWeather, 'isDegraded'>,
 ): boolean => persistCache({ ...weather, isDegraded: false, version: 1 })
@@ -243,8 +294,8 @@ const isSameIdentity = (left: CacheIdentity, right: CacheIdentity): boolean =>
 	left.timeZone === right.timeZone &&
 	left.shouldUseAirQualityUv === right.shouldUseAirQualityUv
 
-const persistCache = (cache: z.infer<typeof cacheSchema>): boolean =>
-	writeLocalStorage({
+const persistCache = (cache: z.infer<typeof cacheSchema>): boolean => {
+	const hasPersisted = writeLocalStorage({
 		key: WEATHER_CACHE_STORAGE_KEY,
 		value: JSON.stringify({
 			...cache,
@@ -253,18 +304,24 @@ const persistCache = (cache: z.infer<typeof cacheSchema>): boolean =>
 			}),
 		}),
 	})
+	if (hasPersisted) {
+		for (const listener of cacheListeners) listener()
+	}
+	return hasPersisted
+}
 
-const readCache = (): null | z.infer<typeof cacheSchema> => {
+const readCache = (shouldRepair = true): null | z.infer<typeof cacheSchema> => {
 	const stored = readStorageItem({
 		key: WEATHER_CACHE_STORAGE_KEY,
 		parse: JSON.parse,
 		schema: cacheSchema,
+		shouldRepair,
 	})
 	if (stored) return stored
-	const legacy = readLegacyCachedWeather()
+	const legacy = readLegacyCachedWeather(shouldRepair)
 	if (!legacy) return null
 	const migrated = { ...legacy, version: 1 as const }
-	if (persistCache(migrated)) {
+	if (shouldRepair && persistCache(migrated)) {
 		for (const key of LEGACY_CACHE_KEYS) removeLocalStorage(key)
 	}
 	return migrated
@@ -282,3 +339,7 @@ const LEGACY_CACHE_KEYS = [
 	'lastUpdated',
 	WEATHER_CACHE_DEGRADED_KEY,
 ]
+
+const cacheListeners = new Set<() => void>()
+let cachedSnapshotKey: string | undefined
+let cachedSnapshot: (CachedWeather & CacheIdentity) | null = null

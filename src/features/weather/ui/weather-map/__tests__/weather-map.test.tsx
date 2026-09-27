@@ -1,11 +1,15 @@
 import type { ReactNode } from 'react'
 
-import { render } from '@testing-library/react'
+import { cleanup, render } from '@testing-library/react'
+import { Activity } from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import type { WeatherMapData } from '../../../model/types'
 
-import { getWeatherMapPlaybackState } from '../../../model/weather-map/geometry'
+import {
+	getWeatherMapDimensions,
+	getWeatherMapPlaybackState,
+} from '../../../model/weather-map/geometry'
 import { WeatherMap } from '../weather-map'
 
 vi.mock('@lingui/react/macro', () => ({
@@ -13,11 +17,65 @@ vi.mock('@lingui/react/macro', () => ({
 }))
 
 afterEach(() => {
+	cleanup()
 	vi.restoreAllMocks()
 	vi.unstubAllGlobals()
 })
 
 describe('WeatherMap tiles', () => {
+	it('reconnects its size observer and measures again after Activity reveals it', () => {
+		vi.stubGlobal('ResizeObserver', ResizeObserverMock)
+		vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null)
+		const observe = vi.spyOn(ResizeObserverMock.prototype, 'observe')
+		const weatherMapData: WeatherMapData = {
+			center: { lat: 0, lon: 0 },
+			frames: [{ points: [], time: 100 }],
+		}
+		const props = {
+			isActive: true,
+			playback: getWeatherMapPlaybackState({
+				frames: weatherMapData.frames,
+				startedAt: 0,
+				time: 0,
+			}),
+			usesMetricUnits: true,
+			weatherMapData,
+			windUnitLabel: 'km/h',
+		}
+		const { container, rerender } = render(
+			<Activity mode="visible">
+				<WeatherMap {...props} />
+			</Activity>,
+		)
+		const firstObserver = observe.mock.contexts[0]
+		if (!(firstObserver instanceof ResizeObserverMock)) {
+			throw new Error('Expected the map to observe its size')
+		}
+		rerender(
+			<Activity mode="hidden">
+				<WeatherMap {...props} />
+			</Activity>,
+		)
+		expect(firstObserver.disconnect).toHaveBeenCalledTimes(1)
+
+		observe.mockImplementation(function (this: ResizeObserverMock, target) {
+			this.measure(target, new DOMRect(0, 0, 400, 300))
+		})
+		rerender(
+			<Activity mode="visible">
+				<WeatherMap {...props} />
+			</Activity>,
+		)
+		expect(observe).toHaveBeenCalledTimes(2)
+		expect(observe.mock.contexts[1]).not.toBe(firstObserver)
+		const dimensions = getWeatherMapDimensions({ height: 300, width: 400 })
+		expect(
+			container.querySelector(
+				'[aria-label="Local precipitation and wind direction map"]',
+			),
+		).toHaveAttribute('viewBox', `0 0 ${dimensions.width} ${dimensions.height}`)
+	})
+
 	it('loads tiles only for the active map and keeps them stable during playback', () => {
 		vi.stubGlobal('ResizeObserver', ResizeObserverMock)
 		vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null)
@@ -89,18 +147,21 @@ class ResizeObserverMock implements ResizeObserver {
 
 	unobserve = vi.fn()
 	constructor(private readonly callback: ResizeObserverCallback) {}
-	observe = (target: Element) => {
+	measure(target: Element, contentRect: DOMRect) {
 		this.callback(
 			[
 				{
 					borderBoxSize: [],
 					contentBoxSize: [],
-					contentRect: new DOMRect(0, 0, 800, 384),
+					contentRect,
 					devicePixelContentBoxSize: [],
 					target,
 				},
 			],
 			this,
 		)
+	}
+	observe(target: Element) {
+		this.measure(target, new DOMRect(0, 0, 800, 384))
 	}
 }

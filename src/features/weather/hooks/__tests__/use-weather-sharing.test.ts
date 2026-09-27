@@ -9,11 +9,13 @@ import {
 import { getUserTimeZone } from '../../api/weather-api'
 import { createEmptyAlerts } from '../../model/alerts'
 import {
+	WEATHER_CACHE_STORAGE_KEY,
 	writeCachedWeather,
 	writeCachedWeatherDegraded,
 } from '../../model/cache'
 import { next24HoursDataSchema } from '../../model/types'
 import {
+	createSharedWeatherStore,
 	isWeatherCacheFresh,
 	readSharedWeatherCache,
 	requestSharedWeather,
@@ -95,6 +97,162 @@ afterEach(() => {
 })
 
 describe('shared weather fetching', () => {
+	it('keeps cached snapshots stable, including duplicate storage notifications', () => {
+		const identity = createIdentity()
+		seedWeather(identity)
+		const store = createSharedWeatherStore(identity)
+		const snapshot = store.getSnapshot()
+		expect(snapshot).not.toBeNull()
+		expect(store.getSnapshot()).toBe(snapshot)
+		expect(store.getServerSnapshot()).toBeNull()
+		let renders = 0
+		const { result, unmount } = renderHook(() => {
+			renders += 1
+			return useWeather(identity.lat, identity.lon, 0, false)
+		})
+		const initialRenders = renders
+		const data = result.current.weatherData
+		act(() =>
+			window.dispatchEvent(
+				new StorageEvent('storage', { key: WEATHER_CACHE_STORAGE_KEY }),
+			),
+		)
+		expect(renders).toBe(initialRenders)
+		expect(result.current.weatherData).toBe(data)
+		unmount()
+		act(() => seedWeather(identity))
+		expect(renders).toBe(initialRenders)
+	})
+
+	it('retains a hydrated forecast when storage becomes inaccessible', () => {
+		const identity = createIdentity()
+		seedWeather(identity)
+		const { result } = renderHook(() =>
+			useWeather(identity.lat, identity.lon, 0, false),
+		)
+		const weather = result.current.weatherData
+		const read = vi
+			.spyOn(Storage.prototype, 'getItem')
+			.mockImplementation(() => {
+				throw new DOMException('Blocked', 'SecurityError')
+			})
+		try {
+			act(() =>
+				window.dispatchEvent(
+					new StorageEvent('storage', { key: WEATHER_CACHE_STORAGE_KEY }),
+				),
+			)
+			expect(result.current.weatherData).toBe(weather)
+			expect(result.current.isLoading).toBe(false)
+		} finally {
+			read.mockRestore()
+		}
+		act(() => {
+			localStorage.clear()
+			window.dispatchEvent(new StorageEvent('storage', { key: null }))
+		})
+		expect(result.current.weatherData).toEqual([])
+	})
+
+	it('publishes persisted weather changes and clears removed cache snapshots', () => {
+		vi.useFakeTimers()
+		const identity = createIdentity()
+		seedWeather(identity)
+		const store = createSharedWeatherStore(identity)
+		const first = store.getSnapshot()
+		const onChange = vi.fn()
+		const unsubscribe = store.subscribe(onChange)
+		seedWeather(identity)
+		expect(store.getSnapshot()).toBe(first)
+		const record = JSON.parse(
+			localStorage.getItem(WEATHER_CACHE_STORAGE_KEY) ?? 'null',
+		)
+		record.weatherData[0].max = 41
+		localStorage.setItem(WEATHER_CACHE_STORAGE_KEY, JSON.stringify(record))
+		window.dispatchEvent(
+			new StorageEvent('storage', { key: WEATHER_CACHE_STORAGE_KEY }),
+		)
+		expect(onChange).toHaveBeenCalled()
+		expect(store.getSnapshot()?.weatherData[0].max).toBe(41)
+		expect(store.getSnapshot()).not.toBe(first)
+		localStorage.clear()
+		window.dispatchEvent(new StorageEvent('storage', { key: null }))
+		expect(store.getSnapshot()).toBeNull()
+		unsubscribe()
+	})
+
+	it('replaces the snapshot and aborts the old request when the location changes', async () => {
+		const first = createIdentity()
+		const second = createIdentity()
+		let completeFirst: ((response: Response) => void) | undefined
+		let firstSignal: AbortSignal | null | undefined
+		vi.spyOn(globalThis, 'fetch').mockImplementation(async (input, init) => {
+			const url = String(input)
+			if (url.includes('air-quality'))
+				return Response.json({ hourly: { time: [], uv_index: [] } })
+			if (url.includes('forecast_hours')) return Response.json(mapResponse)
+			if (url.includes(`latitude=${first.lat}`)) {
+				firstSignal = init?.signal
+				return new Promise<Response>((resolve) => {
+					completeFirst = resolve
+				})
+			}
+			return Response.json(createWeatherResponse())
+		})
+		const { rerender, result } = renderHook(
+			({ lat }) => useWeather(lat, first.lon, 0, false),
+			{ initialProps: { lat: first.lat } },
+		)
+		await waitFor(() => expect(completeFirst).toBeDefined())
+		rerender({ lat: second.lat })
+		expect(firstSignal?.aborted).toBe(true)
+		await waitFor(() => expect(result.current.weatherData[0]?.max).toBe(30))
+		await act(async () => {
+			const stale = createWeatherResponse()
+			stale.daily.temperature_2m_max = [99]
+			completeFirst?.(Response.json(stale))
+		})
+		expect(result.current.weatherData[0]?.max).toBe(30)
+		expect(readSharedWeatherCache(first)).toBeNull()
+	})
+
+	it('returns to the loading state while retrying an initial failure', async () => {
+		const identity = createIdentity()
+		vi.spyOn(console, 'error').mockImplementation(() => {})
+		const fetchSpy = vi
+			.spyOn(globalThis, 'fetch')
+			.mockRejectedValue(new Error('Offline'))
+		const { result } = renderHook(() =>
+			useWeather(identity.lat, identity.lon, 0, false),
+		)
+		await waitFor(() => expect(result.current.error?.message).toBe('Offline'))
+		fetchSpy.mockImplementation(() => new Promise(() => {}))
+		act(() => result.current.retry())
+		expect(result.current.error).toBeNull()
+		expect(result.current.isLoading).toBe(true)
+	})
+
+	it('clears a local error when another consumer publishes a successful forecast', async () => {
+		const identity = createIdentity()
+		const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+		const fetchSpy = vi
+			.spyOn(globalThis, 'fetch')
+			.mockRejectedValue(new Error('Offline'))
+		const { result } = renderHook(() =>
+			useWeather(identity.lat, identity.lon, 0, false),
+		)
+		await waitFor(() => expect(result.current.error?.message).toBe('Offline'))
+		fetchSpy.mockRestore()
+		mockForecasts()
+		await act(async () => {
+			await requestSharedWeather({ ...identity, force: true })
+		})
+		expect(result.current.error).toBeNull()
+		expect(result.current.degradedForecast).toBeNull()
+		expect(result.current.weatherData[0]?.max).toBe(30)
+		consoleSpy.mockRestore()
+	})
+
 	it.each([
 		['lastUpdatedAt', 0.5],
 		['lastUpdatedAt', 8_640_000_000_000_001],

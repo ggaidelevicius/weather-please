@@ -88,6 +88,97 @@ afterEach(() => {
 })
 
 describe('shared resource ownership', () => {
+	it('keeps validated snapshots stable until the record or schema changes', async () => {
+		await requestSharedResource({
+			fetcher: async () => ({ value: 'first' }),
+			key,
+			maxAgeMs,
+			schema,
+		})
+		const validate = vi.spyOn(schema, 'safeParse')
+		const first = readSharedResource({ key, schema })
+		expect(readSharedResource({ key, schema })).toBe(first)
+		expect(validate).toHaveBeenCalledOnce()
+
+		const transformedSchema = schema.transform(({ value }) => value.length)
+		expect(readSharedResource({ key, schema: transformedSchema })?.value).toBe(
+			5,
+		)
+		expect(readSharedResource({ key, schema })).toBe(first)
+
+		localStorage.setItem(
+			storagePrefix + key,
+			JSON.stringify({ ...getStoredRecord(), data: { value: 'updated' } }),
+		)
+		const updated = readSharedResource({ key, schema })
+		expect(updated).not.toBe(first)
+		expect(updated?.value.value).toBe('updated')
+		expect(readSharedResource({ key, schema })).toBe(updated)
+	})
+
+	it('reuses validation failures and rechecks freshness independently of snapshot identity', async () => {
+		vi.useFakeTimers()
+		await requestSharedResource({
+			fetcher: async () => ({ value: 'first' }),
+			key,
+			maxAgeMs,
+			schema,
+		})
+		const first = readSharedResource({ key, schema })
+		await vi.advanceTimersByTimeAsync(maxAgeMs + 1)
+		expect(readSharedResource({ key, maxAgeMs, schema })).toBeNull()
+		expect(readSharedResource({ key, schema })).toBe(first)
+		const invalidSchema = z.object({ value: z.number() })
+		const validate = vi.spyOn(invalidSchema, 'safeParse')
+		expect(readSharedResource({ key, schema: invalidSchema })).toBeNull()
+		expect(readSharedResource({ key, schema: invalidSchema })).toBeNull()
+		expect(validate).toHaveBeenCalledOnce()
+	})
+
+	it('does not open transport or install listeners while reading snapshots', () => {
+		const channel = vi.fn()
+		vi.stubGlobal('BroadcastChannel', channel)
+		const documentListener = vi.spyOn(document, 'addEventListener')
+		const windowListener = vi.spyOn(window, 'addEventListener')
+		expect(readSharedResource({ key, schema })).toBeNull()
+		expect(channel).not.toHaveBeenCalled()
+		expect(documentListener).not.toHaveBeenCalled()
+		expect(windowListener).not.toHaveBeenCalled()
+	})
+
+	it.each(['pageshow', 'resume', 'visibilitychange'])(
+		'reads missed persisted changes on %s and stops notifying after unsubscribe',
+		async (eventName) => {
+			await requestSharedResource({
+				fetcher: async () => ({ value: 'before sleep' }),
+				key,
+				maxAgeMs,
+				schema,
+			})
+			const snapshots: unknown[] = []
+			const unsubscribe = subscribeSharedResource({
+				key,
+				onChange: () => snapshots.push(readSharedResource({ key, schema })),
+			})
+			window.dispatchEvent(new Event('pagehide'))
+			localStorage.setItem(
+				storagePrefix + key,
+				JSON.stringify({
+					...getStoredRecord(),
+					data: { value: 'while asleep' },
+				}),
+			)
+			const target = eventName === 'pageshow' ? window : document
+			target.dispatchEvent(new Event(eventName))
+			expect(snapshots).toEqual([
+				expect.objectContaining({ value: { value: 'while asleep' } }),
+			])
+			unsubscribe()
+			target.dispatchEvent(new Event(eventName))
+			expect(snapshots).toHaveLength(1)
+		},
+	)
+
 	it('rechecks shared cache after waiting so concurrent requests fetch once', async () => {
 		const response = deferred<{ value: string }>()
 		const fetcher = vi.fn(() => response.promise)
@@ -164,6 +255,37 @@ describe('shared resource ownership', () => {
 			value: 'takeover',
 		})
 	})
+
+	it.each([false, true])(
+		'rechecks contextual freshness after a lock wait (force: %s)',
+		async (force) => {
+			const response = deferred<{ value: string }>()
+			const ownerFetcher = vi.fn(() => response.promise)
+			const owner = requestSharedResource({
+				fetcher: ownerFetcher,
+				force,
+				key,
+				maxAgeMs,
+				schema,
+			})
+			let currentSession = 'original session'
+			const followerFetcher = vi.fn(async () => ({ value: currentSession }))
+			const follower = requestSharedResource({
+				fetcher: followerFetcher,
+				force,
+				isFresh: ({ value }) => value === currentSession,
+				key,
+				maxAgeMs,
+				schema,
+			})
+			await vi.waitFor(() => expect(ownerFetcher).toHaveBeenCalledOnce())
+			currentSession = 'replacement session'
+			response.resolve({ value: 'original session' })
+			await owner
+			expect(await follower).toEqual({ value: 'replacement session' })
+			expect(followerFetcher).toHaveBeenCalledOnce()
+		},
+	)
 
 	it('releases timed-out work so a waiting request can take over', async () => {
 		vi.useFakeTimers()
@@ -301,6 +423,38 @@ describe('shared resource ownership', () => {
 		})
 	})
 
+	it('keeps the same snapshot through failed refreshes and duplicate fallback broadcasts', async () => {
+		const broadcast = stubChannel()
+		await requestSharedResource({
+			fetcher: async () => ({ value: 'retained' }),
+			key,
+			maxAgeMs,
+			schema,
+		})
+		const original = readSharedResource({ key, schema })
+		await expect(
+			requestSharedResource({
+				fetcher: async () => {
+					throw new Error('Temporary failure')
+				},
+				force: true,
+				key,
+				maxAgeMs,
+				schema,
+			}),
+		).rejects.toThrow('Temporary failure')
+		expect(readSharedResource({ key, schema })).toBe(original)
+		broadcast({ key, record: getStoredRecord() })
+		expect(readSharedResource({ key, schema })).toBe(original)
+		localStorage.setItem(
+			storagePrefix + key,
+			JSON.stringify({ ...getStoredRecord(), failureId: 'other-tab-failure' }),
+		)
+		expect(readSharedResource({ key, schema })).toBe(original)
+		invalidateSharedResource({ key })
+		expect(readSharedResource({ key, schema })).toBeNull()
+	})
+
 	it('deduplicates within a tab when Web Locks are unavailable', async () => {
 		vi.stubGlobal('navigator', {})
 		const fetcher = vi.fn(async () => ({ value: 'fallback' }))
@@ -422,6 +576,33 @@ describe('shared resource ownership', () => {
 			JSON.stringify({ ...getStoredRecord(), data: { value: 42 } }),
 		)
 		expect(readSharedResource({ key, schema })).toBeNull()
+	})
+
+	it('checks publication context after parsing and never publishes a superseded result', async () => {
+		let isCurrentSession = true
+		const requestSchema = schema.transform((value) => {
+			isCurrentSession = false
+			return value
+		})
+		const validate = vi.fn(() => {
+			if (!isCurrentSession)
+				throw new DOMException('Session changed', 'AbortError')
+		})
+		const onChange = vi.fn()
+		const unsubscribe = subscribeSharedResource({ key, onChange })
+		await expect(
+			requestSharedResource({
+				fetcher: async () => ({ value: 'superseded' }),
+				key,
+				maxAgeMs,
+				schema: requestSchema,
+				validate,
+			}),
+		).rejects.toMatchObject({ name: 'AbortError' })
+		expect(validate).toHaveBeenCalledOnce()
+		expect(readSharedResource({ key, schema })).toBeNull()
+		expect(onChange).not.toHaveBeenCalled()
+		unsubscribe()
 	})
 
 	it('does not resurrect an in-memory record after its stored copy is removed', async () => {

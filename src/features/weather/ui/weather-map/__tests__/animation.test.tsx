@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { act, cleanup, render, screen } from '@testing-library/react'
+import { Activity } from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import type { WeatherMapData } from '../../../model/types'
@@ -34,6 +35,48 @@ afterEach(() => {
 })
 
 describe('weather map animation playback', () => {
+	it.each([
+		['wind', WeatherMapWindParticleCanvas],
+		['precipitation', WeatherMapPrecipitationCanvas],
+	])(
+		'resumes the %s canvas after Activity reveals it at a new size',
+		(_, Canvas) => {
+			const animation = mockAnimationFrames()
+			mockCanvasContext()
+			const props = createMapProps()
+			const { container, rerender, unmount } = render(
+				<Activity mode="visible">
+					<Canvas {...props} />
+				</Activity>,
+			)
+			const canvas = container.querySelector('canvas')
+			expect(canvas).toHaveAttribute('width', '100')
+			expect(animation.pending.size).toBe(1)
+
+			rerender(
+				<Activity mode="hidden">
+					<Canvas {...props} />
+				</Activity>,
+			)
+			expect(canvas).not.toBeVisible()
+			expect(animation.pending.size).toBe(0)
+
+			rerender(
+				<Activity mode="visible">
+					<Canvas {...props} dimensions={{ height: 120, width: 160 }} />
+				</Activity>,
+			)
+			expect(container.querySelector('canvas')).toBe(canvas)
+			expect(canvas).toBeVisible()
+			expect(canvas).toHaveAttribute('width', '160')
+			expect(canvas).toHaveAttribute('height', '120')
+			expect(animation.pending.size).toBe(1)
+
+			unmount()
+			expect(animation.pending.size).toBe(0)
+		},
+	)
+
 	it('samples fresh wind data without resetting particles or their trails', () => {
 		const animation = mockAnimationFrames()
 		const context = mockCanvasContext()

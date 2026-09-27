@@ -6,7 +6,11 @@ export default defineConfig({
 	fullyParallel: false,
 	retries: 0,
 	testDir: './e2e',
-	testMatch: ['shared-resource.spec.ts', 'temporal.spec.ts'],
+	testMatch: [
+		'react-dashboard.spec.ts',
+		'shared-resource.spec.ts',
+		'temporal.spec.ts',
+	],
 	timeout: 20_000,
 	workers: 1,
 })

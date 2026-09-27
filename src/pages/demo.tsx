@@ -356,6 +356,7 @@ const WeatherDashboard = () => {
 							// An opacity compositing hint creates a backdrop root and prevents
 							// descendant cards from blurring the forecast behind this overlay.
 							className="absolute top-4 right-4 z-10 will-change-transform"
+							inert={activeAvailableViewId !== 'forecast'}
 							initial={false}
 							style={{
 								pointerEvents:

@@ -33,6 +33,7 @@ export const requestSharedResource = async <T>({
 	schema,
 	signal,
 	timeoutMs = 30_000,
+	validate,
 }: Readonly<{
 	fetcher: (options: { signal: AbortSignal }) => Promise<T>
 	force?: boolean
@@ -43,6 +44,7 @@ export const requestSharedResource = async <T>({
 	schema: z.ZodType<T>
 	signal?: AbortSignal
 	timeoutMs?: number
+	validate?: (value: T) => void
 }>): Promise<T> => {
 	ensureTransport()
 	signal?.throwIfAborted()
@@ -60,8 +62,8 @@ export const requestSharedResource = async <T>({
 			cached &&
 			(force
 				? record.id !== initialRecord?.id && record.updatedAt >= requestedAt
-				: isRecent(record.updatedAt, maxAgeMs) &&
-					(isFresh?.(cached.value, cached.updatedAt) ?? true))
+				: isRecent(record.updatedAt, maxAgeMs)) &&
+			(isFresh?.(cached.value, cached.updatedAt) ?? true)
 		if (isCacheFresh) return cached
 		if (
 			record.failureAt !== undefined &&
@@ -113,6 +115,7 @@ export const requestSharedResource = async <T>({
 						throw createAbortError()
 					}
 					const validated = schema.parse(value)
+					validate?.(validated)
 					writeRecord(key, {
 						data: validated,
 						hasValue: true,
@@ -162,13 +165,23 @@ export const readSharedResource = <T>({
 	schema: z.ZodType<T>
 }>): null | SharedResourceSnapshot<T> => {
 	if (typeof window === 'undefined') return null
-	ensureTransport()
 	const record = readRecord(key)
 	if (!record?.hasValue || !isRecent(record.updatedAt, maxAgeMs)) return null
+	const cached = snapshots.get(record)
+	if (cached?.has(schema)) {
+		// Each entry was validated with this exact schema. Snapshot schemas must
+		// depend only on their input, so unchanged records stay referentially stable.
+		return cached.get(schema) as null | SharedResourceSnapshot<T>
+	}
 	const parsed = schema.safeParse(record.data)
-	return parsed.success
+	const snapshot = parsed.success
 		? { updatedAt: record.updatedAt, value: parsed.data }
 		: null
+	const bySchema =
+		cached ?? new WeakMap<z.ZodType, null | SharedResourceSnapshot<unknown>>()
+	bySchema.set(schema, snapshot)
+	snapshots.set(record, bySchema)
+	return snapshot
 }
 
 export const subscribeSharedResource = ({
@@ -219,6 +232,10 @@ const messageSchema = z.object({
 })
 type ResourceRecord = z.infer<typeof recordSchema>
 const records = new Map<string, ResourceRecord>()
+const snapshots = new WeakMap<
+	ResourceRecord,
+	WeakMap<z.ZodType, null | SharedResourceSnapshot<unknown>>
+>()
 const observedStorage = new Map<string, null | string>()
 const subscriptions = new Map<string, Set<() => void>>()
 const activeRequests = new Set<{
@@ -243,12 +260,18 @@ const readRecord = (key: string): ResourceRecord | undefined => {
 			(raw !== null && !records.has(key))
 		) {
 			observedStorage.set(key, raw)
-			records.delete(key)
 			if (raw === null) {
+				records.delete(key)
 				return undefined
 			} else {
-				const parsed = recordSchema.safeParse(JSON.parse(raw))
-				if (parsed.success) records.set(key, parsed.data)
+				let parsed: ReturnType<typeof recordSchema.safeParse>
+				try {
+					parsed = recordSchema.safeParse(JSON.parse(raw))
+				} catch {
+					records.delete(key)
+					return undefined
+				}
+				if (parsed.success) cacheRecord(key, parsed.data)
 				else records.delete(key)
 			}
 		}
@@ -258,9 +281,35 @@ const readRecord = (key: string): ResourceRecord | undefined => {
 	return records.get(key)
 }
 
+const cacheRecord = (key: string, record: ResourceRecord) => {
+	const previous = records.get(key)
+	if (
+		previous?.hasValue &&
+		record.hasValue &&
+		previous.updatedAt === record.updatedAt &&
+		previous.revision === record.revision &&
+		hasSameData(previous.data, record.data)
+	) {
+		// Retry markers and duplicate broadcasts do not change the visible data.
+		const cached = snapshots.get(previous)
+		if (cached) snapshots.set(record, cached)
+	}
+	records.set(key, record)
+	return record
+}
+
+const hasSameData = (left: unknown, right: unknown) => {
+	if (left === right) return true
+	try {
+		return JSON.stringify(left) === JSON.stringify(right)
+	} catch {
+		return false
+	}
+}
+
 const writeRecord = (key: string, record: ResourceRecord) => {
 	readRecord(key)
-	records.set(key, record)
+	cacheRecord(key, record)
 	let hasPersisted = false
 	try {
 		const raw = JSON.stringify(record)
@@ -312,6 +361,7 @@ const pruneRecords = ({
 			localStorage.removeItem(key)
 			records.delete(key.slice(STORAGE_PREFIX.length))
 			observedStorage.delete(key.slice(STORAGE_PREFIX.length))
+			notifySubscribers(key.slice(STORAGE_PREFIX.length))
 			index -= 1
 			continue
 		}
@@ -338,6 +388,7 @@ const pruneRecords = ({
 		localStorage.removeItem(entry.key)
 		records.delete(entry.key.slice(STORAGE_PREFIX.length))
 		observedStorage.delete(entry.key.slice(STORAGE_PREFIX.length))
+		notifySubscribers(entry.key.slice(STORAGE_PREFIX.length))
 	}
 }
 
@@ -410,11 +461,19 @@ const ensureTransport = () => {
 		}
 		window.addEventListener('pagehide', handleInactive)
 		document.addEventListener('freeze', handleInactive)
-		document.addEventListener('resume', ensureTransport)
-		window.addEventListener('pageshow', ensureTransport)
+		const handleActive = () => {
+			ensureTransport()
+			for (const key of subscriptions.keys()) {
+				const current = readRecord(key)
+				abortRequests(key, current?.revision ?? '')
+				notifySubscribers(key)
+			}
+		}
+		document.addEventListener('resume', handleActive)
+		window.addEventListener('pageshow', handleActive)
 		document.addEventListener('visibilitychange', () => {
 			if (document.visibilityState === 'hidden') handleInactive()
-			else ensureTransport()
+			else handleActive()
 		})
 	}
 	if (
@@ -439,7 +498,7 @@ const ensureTransport = () => {
 						(!hasMatchingRevision && !isInvalidation)
 					)
 						return
-					records.set(key, record)
+					cacheRecord(key, record)
 					pruneMemory()
 				}
 				const current = records.get(key)

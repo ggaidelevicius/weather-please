@@ -22,6 +22,8 @@ import {
 	type CachedWeather,
 	type CacheIdentity,
 	getCachedWeather,
+	readCachedWeatherSnapshot,
+	subscribeCachedWeather,
 	writeCachedWeather,
 	writeCachedWeatherMapData,
 } from '../model/cache'
@@ -128,39 +130,89 @@ export const requestSharedWeatherMap = async ({
 	})
 }
 
+export const createSharedWeatherStore = (identity: CacheIdentity) => {
+	let storedForIdentity: CachedWeather | null = null
+	let previousStored: CachedWeather | null | undefined
+	let previousShared: ReturnType<typeof readSharedResource<SharedWeather>>
+	let previousMap: ReturnType<typeof readSharedResource<WeatherMapData>>
+	let snapshot: CachedWeather | null = null
+
+	return {
+		getServerSnapshot: (): null => null,
+		getSnapshot: (): CachedWeather | null => {
+			if (typeof window === 'undefined') return null
+			const persisted = readCachedWeatherSnapshot()
+			if (!persisted) storedForIdentity = null
+			// Persistence holds one location; another tab may replace it with its own.
+			else if (
+				persisted.lat === identity.lat &&
+				persisted.lon === identity.lon &&
+				persisted.timeZone === identity.timeZone &&
+				persisted.shouldUseAirQualityUv === identity.shouldUseAirQualityUv
+			)
+				storedForIdentity = persisted
+			const stored = storedForIdentity
+			const shared = readSharedResource({
+				key: getWeatherResourceKey(identity),
+				schema: sharedWeatherSchema,
+			})
+			const map = readSharedResource({
+				key: getMapResourceKey(identity),
+				schema: weatherMapDataSchema,
+			})
+			if (
+				stored === previousStored &&
+				shared === previousShared &&
+				map === previousMap
+			) {
+				return snapshot
+			}
+			previousStored = stored
+			previousShared = shared
+			previousMap = map
+			const cached =
+				shared &&
+				(!stored ||
+					shared.value.lastUpdatedAt > stored.lastUpdatedDate.epochMilliseconds)
+					? {
+							...shared.value,
+							isDegraded: false,
+							lastUpdatedDate: Temporal.Instant.fromEpochMilliseconds(
+								shared.value.lastUpdatedAt,
+							),
+							weatherMapData: null,
+						}
+					: stored
+			snapshot = cached
+				? {
+						...cached,
+						weatherMapData:
+							map && map.updatedAt >= cached.lastUpdatedDate.epochMilliseconds
+								? map.value
+								: cached.weatherMapData,
+					}
+				: null
+			return snapshot
+		},
+		subscribe: (onChange: () => void): (() => void) =>
+			subscribeSharedWeather({ identity, onChange }),
+	}
+}
+
 export const readSharedWeatherCache = (
 	identity: CacheIdentity,
 ): CachedWeather | null => {
-	const stored = getCachedWeather({ ...identity, allowStale: true })
-	const shared = readSharedResource({
-		key: getWeatherResourceKey(identity),
-		schema: sharedWeatherSchema,
-	})
-	const map = readSharedResource({
-		key: getMapResourceKey(identity),
-		schema: weatherMapDataSchema,
-	})
-	const cached =
-		shared &&
-		(!stored ||
-			shared.value.lastUpdatedAt > stored.lastUpdatedDate.epochMilliseconds)
-			? {
-					...shared.value,
-					isDegraded: false,
-					lastUpdatedDate: Temporal.Instant.fromEpochMilliseconds(
-						shared.value.lastUpdatedAt,
-					),
-					weatherMapData: null,
-				}
-			: stored
-	if (!cached) return null
-	return {
-		...cached,
-		weatherMapData:
-			map && map.updatedAt >= cached.lastUpdatedDate.epochMilliseconds
-				? map.value
-				: cached.weatherMapData,
+	const key = getWeatherResourceKey(identity)
+	let store = weatherStores.get(key)
+	if (!store) {
+		store = createSharedWeatherStore(identity)
+		weatherStores.set(key, store)
+		if (weatherStores.size > 64) {
+			const oldest = weatherStores.keys().next().value
+			if (oldest !== undefined) weatherStores.delete(oldest)
+		}
 	}
+	return store.getSnapshot()
 }
 
 export const subscribeSharedWeather = ({
@@ -170,6 +222,7 @@ export const subscribeSharedWeather = ({
 	identity: CacheIdentity
 	onChange: () => void
 }): (() => void) => {
+	const unsubscribeCache = subscribeCachedWeather(onChange)
 	const unsubscribeWeather = subscribeSharedResource({
 		key: getWeatherResourceKey(identity),
 		onChange,
@@ -179,6 +232,7 @@ export const subscribeSharedWeather = ({
 		onChange,
 	})
 	return () => {
+		unsubscribeCache()
 		unsubscribeWeather()
 		unsubscribeMap()
 	}
@@ -247,3 +301,8 @@ const getMapResourceKey = (identity: CacheIdentity): string =>
 		identity.lon,
 		identity.timeZone,
 	])}`
+
+const weatherStores = new Map<
+	string,
+	ReturnType<typeof createSharedWeatherStore>
+>()

@@ -1,9 +1,15 @@
 import type { Dispatch, RefObject, SetStateAction } from 'react'
 
-import { useEffect, useRef, useState } from 'react'
-import { z } from 'zod'
+import {
+	useEffect,
+	useEffectEvent,
+	useRef,
+	useState,
+	useSyncExternalStore,
+} from 'react'
 
 import type { ProviderTokens } from '../lib/provider-tokens'
+import type { CalendarEventsUpdate } from '../lib/shared-calendar-events'
 import type { CalendarEvent } from '../model/calendar-event'
 
 import { AsyncStatus } from '../../../shared/hooks/async-status'
@@ -12,7 +18,6 @@ import {
 	readSharedResource,
 	requestSharedResource,
 	runWithSharedLock,
-	subscribeSharedResource,
 } from '../../../shared/lib/shared-resource'
 import {
 	getCurrentTimestamp,
@@ -49,11 +54,14 @@ import {
 import { fetchUpcomingCalendarEvents } from '../lib/microsoft-calendar'
 import { parseAuthCallbackCode } from '../lib/oauth-callback'
 import { createPkcePair, createRandomState } from '../lib/pkce'
-import { CalendarAccountCategory } from '../model/account-category'
 import {
-	calendarEventSchema,
-	mergeCalendarEvents,
-} from '../model/calendar-event'
+	createCalendarEventsStore,
+	getAccountEventsKey,
+	getCalendarEventsIdentity,
+	isAccountEventsCurrent,
+	sharedAccountEventsSchema,
+} from '../lib/shared-calendar-events'
+import { CalendarAccountCategory } from '../model/account-category'
 import {
 	CALENDAR_PROVIDERS,
 	CalendarProvider,
@@ -94,7 +102,6 @@ export const useCalendarConnection = (): CalendarConnection => {
 	)
 	const [isConnecting, setIsConnecting] = useState(false)
 	const [error, setError] = useState<CalendarConnectionError | null>(null)
-	const [events, setEvents] = useState<CalendarEvent[]>([])
 	const [eventsStatus, setEventsStatus] = useState(AsyncStatus.Idle)
 	const accountsRef = useRef(accounts)
 	const storedAccountsRef = useRef(accounts)
@@ -115,7 +122,6 @@ export const useCalendarConnection = (): CalendarConnection => {
 			requestsRef,
 			setAccounts,
 			setError,
-			setEvents,
 			setEventsStatus,
 			setIsConnecting,
 			storedAccountsRef,
@@ -151,55 +157,6 @@ export const useCalendarConnection = (): CalendarConnection => {
 		}
 	}, [])
 
-	useEffect(() => {
-		const connectionState = {
-			accountsRef,
-			lastEventsFetchAtRef,
-			requestsRef,
-			setAccounts,
-			setError,
-			setEvents,
-			setEventsStatus,
-			setIsConnecting,
-			storedAccountsRef,
-		}
-		const timeZone = getSystemTimeZone()
-		const unsubscribe = accounts.map((account) =>
-			subscribeSharedResource({
-				key: getAccountEventsKey({ account, timeZone }),
-				onChange: () => {
-					const current = synchronizeAccounts(connectionState).find(
-						(candidate) =>
-							candidate.accountId === account.accountId &&
-							candidate.provider === account.provider,
-					)
-					if (!current || current.isSessionExpired) return
-					const cached = readSharedResource({
-						key: getAccountEventsKey({ account: current, timeZone }),
-						maxAgeMs: EVENTS_REFRESH_INTERVAL_MS,
-						schema: getAccountEventsSchema({
-							account: current,
-							connectionState,
-						}),
-					})
-					if (!cached) return
-					setEvents((currentEvents) =>
-						mergeCalendarEvents([
-							currentEvents.filter(
-								(event) => event.accountId !== current.accountId,
-							),
-							cached.value.events,
-						]),
-					)
-					lastEventsFetchAtRef.current = cached.updatedAt
-					setEventsStatus(AsyncStatus.Success)
-					setError(null)
-				},
-			}),
-		)
-		return () => unsubscribe.forEach((removeListener) => removeListener())
-	}, [accounts])
-
 	// Long-lived tabs would otherwise keep showing the events fetched at
 	// mount. Stale data is refreshed once it ages past the refresh interval,
 	// checked periodically and whenever the tab becomes visible again.
@@ -210,7 +167,6 @@ export const useCalendarConnection = (): CalendarConnection => {
 			requestsRef,
 			setAccounts,
 			setError,
-			setEvents,
 			setEventsStatus,
 			setIsConnecting,
 			storedAccountsRef,
@@ -250,11 +206,58 @@ export const useCalendarConnection = (): CalendarConnection => {
 		requestsRef,
 		setAccounts,
 		setError,
-		setEvents,
 		setEventsStatus,
 		setIsConnecting,
 		storedAccountsRef,
 	}
+	const handleSharedEventsUpdate = useEffectEvent(
+		({ account, snapshot }: Readonly<CalendarEventsUpdate>) => {
+			const current = synchronizeAccounts(connectionState).find(
+				(candidate) =>
+					candidate.accountId === account.accountId &&
+					candidate.provider === account.provider,
+			)
+			if (
+				!current ||
+				!isAccountEventsCurrent({ account: current, result: snapshot.value }) ||
+				getCurrentTimestamp() - snapshot.updatedAt > EVENTS_REFRESH_INTERVAL_MS
+			)
+				return
+			lastEventsFetchAtRef.current = snapshot.updatedAt
+			setEventsStatus(AsyncStatus.Success)
+			setError(null)
+		},
+	)
+	const timeZone = getSystemTimeZone()
+	const [eventsStore, setEventsStore] = useState(() =>
+		createCalendarEventsStore({
+			accounts,
+			timeZone,
+		}),
+	)
+	if (
+		eventsStore.identity !== getCalendarEventsIdentity({ accounts, timeZone })
+	) {
+		setEventsStore(
+			createCalendarEventsStore({
+				accounts,
+				timeZone,
+			}),
+		)
+	}
+	const { events } = useSyncExternalStore(
+		eventsStore.subscribe,
+		eventsStore.getSnapshot,
+		eventsStore.getServerSnapshot,
+	)
+
+	useEffect(
+		() =>
+			eventsStore.subscribeToUpdates((update) =>
+				handleSharedEventsUpdate(update),
+			),
+		[eventsStore],
+	)
 
 	const connect = async (provider: CalendarProvider) => {
 		if (isConnecting) {
@@ -276,9 +279,6 @@ export const useCalendarConnection = (): CalendarConnection => {
 				}),
 			})
 		}
-		setEvents((currentEvents) =>
-			currentEvents.filter((event) => event.accountId !== accountId),
-		)
 		setError(null)
 		void applyAccounts(connectionState, (currentAccounts) =>
 			currentAccounts.filter((account) => account.accountId !== accountId),
@@ -340,7 +340,6 @@ const EVENTS_STALE_CHECK_INTERVAL_MS = 60_000
 
 type AccountLoadResult = {
 	account: StoredCalendarAccount
-	events: CalendarEvent[]
 	status: 'error' | 'obsolete' | 'paused' | 'reauth' | 'success'
 }
 
@@ -398,7 +397,6 @@ type ConnectionState = {
 	}>
 	setAccounts: Dispatch<SetStateAction<StoredCalendarAccount[]>>
 	setError: Dispatch<SetStateAction<CalendarConnectionError | null>>
-	setEvents: Dispatch<SetStateAction<CalendarEvent[]>>
 	setEventsStatus: Dispatch<SetStateAction<AsyncStatus>>
 	setIsConnecting: Dispatch<SetStateAction<boolean>>
 	storedAccountsRef: RefObject<StoredCalendarAccount[]>
@@ -466,14 +464,6 @@ const synchronizeAccounts = (connectionState: ConnectionState) => {
 				})
 			}
 		}
-		connectionState.setEvents((currentEvents) =>
-			currentEvents.filter((event) =>
-				storedAccounts.some(
-					(account) =>
-						account.accountId === event.accountId && !account.isSessionExpired,
-				),
-			),
-		)
 	}
 	return connectionState.accountsRef.current
 }
@@ -526,7 +516,6 @@ const loadEvents = async (
 		(account) => !account.isSessionExpired,
 	)
 	if (activeAccounts.length === 0) {
-		connectionState.setEvents([])
 		connectionState.setEventsStatus(AsyncStatus.Idle)
 		return
 	}
@@ -575,17 +564,6 @@ const loadEvents = async (
 					result.status === 'paused',
 			),
 	)
-	connectionState.setEvents((currentEvents) =>
-		mergeCalendarEvents([
-			currentEvents.filter(
-				(event) =>
-					currentAccounts.some(
-						(account) => account.accountId === event.accountId,
-					) && !resultsByAccountId.has(event.accountId),
-			),
-			...acceptedResults.map((result) => result.events),
-		]),
-	)
 
 	const hasSuccess = acceptedResults.some(
 		(result) => result.status === 'success',
@@ -596,10 +574,7 @@ const loadEvents = async (
 			if (result.status !== 'success') return []
 			const cached = readSharedResource({
 				key: getAccountEventsKey({ account: result.account, timeZone }),
-				schema: getAccountEventsSchema({
-					account: result.account,
-					connectionState,
-				}),
+				schema: sharedAccountEventsSchema,
 			})
 			return cached ? [cached.updatedAt] : []
 		})
@@ -708,11 +683,29 @@ const loadAccountEvents = async ({
 				}
 			},
 			force: shouldForceRefresh,
+			isFresh: (result) => {
+				const current = synchronizeAccounts(connectionState).find(
+					(candidate) =>
+						candidate.accountId === account.accountId &&
+						candidate.provider === account.provider,
+				)
+				return Boolean(
+					current && isAccountEventsCurrent({ account: current, result }),
+				)
+			},
 			key: getAccountEventsKey({ account, timeZone }),
 			lockKey: `calendar-account:${account.provider}:${account.accountId}`,
 			maxAgeMs: EVENTS_REFRESH_INTERVAL_MS,
-			schema: getAccountEventsSchema({ account, connectionState }),
+			schema: sharedAccountEventsSchema,
 			signal,
+			validate: (result) => {
+				requireCurrentAccount({ account: freshAccount, connectionState })
+				if (!isAccountEventsCurrent({ account: freshAccount, result })) {
+					throw new Error(
+						'Calendar events did not match the connected account.',
+					)
+				}
+			},
 		})
 		const current = synchronizeAccounts(connectionState).find(
 			(candidate) =>
@@ -722,74 +715,27 @@ const loadAccountEvents = async ({
 		if (!current || !isAccountEventsCurrent({ account: current, result })) {
 			throw new CalendarAccountChangedError()
 		}
-		return { account: current, events: result.events, status: 'success' }
+		return { account: current, status: 'success' }
 	} catch (caughtError) {
-		if (signal.aborted)
-			return { account: freshAccount, events: [], status: 'obsolete' }
+		if (signal.aborted) return { account: freshAccount, status: 'obsolete' }
 		if (caughtError instanceof CalendarAccountChangedError) {
-			return { account: freshAccount, events: [], status: 'obsolete' }
+			return { account: freshAccount, status: 'obsolete' }
 		}
 		if (caughtError instanceof Error && caughtError.name === 'AbortError') {
-			return { account: freshAccount, events: [], status: 'paused' }
+			return { account: freshAccount, status: 'paused' }
 		}
 		try {
 			requireCurrentAccount({ account: freshAccount, connectionState })
 		} catch {
-			return { account: freshAccount, events: [], status: 'obsolete' }
+			return { account: freshAccount, status: 'obsolete' }
 		}
 		if (caughtError instanceof CalendarReauthRequiredError) {
-			return { account: freshAccount, events: [], status: 'reauth' }
+			return { account: freshAccount, status: 'reauth' }
 		}
 		console.error('Calendar events fetch error:', caughtError)
-		return { account: freshAccount, events: [], status: 'error' }
+		return { account: freshAccount, status: 'error' }
 	}
 }
-
-const sharedAccountEventsSchema = z.object({
-	events: z.array(calendarEventSchema),
-	expiresAt: z.number(),
-	sessionId: z.string().nullable(),
-})
-
-type SharedAccountEvents = z.infer<typeof sharedAccountEventsSchema>
-
-const getAccountEventsKey = ({
-	account,
-	timeZone,
-}: Readonly<{
-	account: StoredCalendarAccount
-	timeZone: string
-}>) => `calendar-events:${account.provider}:${account.accountId}:${timeZone}`
-
-const isAccountEventsCurrent = ({
-	account,
-	result,
-}: Readonly<{
-	account: StoredCalendarAccount
-	result: SharedAccountEvents
-}>) =>
-	!account.isSessionExpired &&
-	account.expiresAt === result.expiresAt &&
-	(account.sessionId ?? null) === result.sessionId &&
-	result.events.every((event) => event.accountId === account.accountId)
-
-const getAccountEventsSchema = ({
-	account,
-	connectionState,
-}: Readonly<{
-	account: StoredCalendarAccount
-	connectionState: ConnectionState
-}>) =>
-	sharedAccountEventsSchema.refine((result) => {
-		const current = synchronizeAccounts(connectionState).find(
-			(candidate) =>
-				candidate.accountId === account.accountId &&
-				candidate.provider === account.provider,
-		)
-		return Boolean(
-			current && isAccountEventsCurrent({ account: current, result }),
-		)
-	})
 
 class CalendarAccountChangedError extends Error {
 	// A superseded session must not delay its replacement with retry backoff.

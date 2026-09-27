@@ -7,6 +7,7 @@ import {
 import { createEmptyAlerts } from '../alerts'
 import {
 	getCachedWeather,
+	readCachedWeatherSnapshot,
 	WEATHER_CACHE_STORAGE_KEY,
 	writeCachedWeather,
 	writeCachedWeatherMapData,
@@ -40,6 +41,60 @@ const forecast = () => ({
 beforeEach(() => localStorage.clear())
 
 describe('weather cache persistence', () => {
+	it('reads invalid snapshots without repairing storage during render', () => {
+		localStorage.setItem(WEATHER_CACHE_STORAGE_KEY, '{broken json')
+		const write = vi.spyOn(Storage.prototype, 'setItem')
+		const remove = vi.spyOn(Storage.prototype, 'removeItem')
+		try {
+			expect(readCachedWeatherSnapshot()).toBeNull()
+			expect(readCachedWeatherSnapshot()).toBeNull()
+			expect(write).not.toHaveBeenCalled()
+			expect(remove).not.toHaveBeenCalled()
+			expect(localStorage.getItem(WEATHER_CACHE_STORAGE_KEY)).toBe(
+				'{broken json',
+			)
+		} finally {
+			write.mockRestore()
+			remove.mockRestore()
+		}
+	})
+
+	it('tracks legacy fallback changes without migrating or repairing during snapshot reads', () => {
+		const weather = forecast()
+		localStorage.setItem(WEATHER_CACHE_STORAGE_KEY, '{broken json')
+		localStorage.setItem('cachedLat', identity.lat)
+		localStorage.setItem('cachedLon', identity.lon)
+		localStorage.setItem('cachedTimeZone', identity.timeZone)
+		localStorage.setItem('cachedUseAirQualityUv', 'false')
+		localStorage.setItem('lastUpdated', weather.lastUpdatedDate.toString())
+		localStorage.setItem('alerts', JSON.stringify(weather.alertData))
+		localStorage.setItem('data', JSON.stringify(weather.weatherData))
+		const first = readCachedWeatherSnapshot()
+		expect(first?.weatherData[0]?.max).toBe(25)
+		expect(localStorage.getItem(WEATHER_CACHE_STORAGE_KEY)).toBe('{broken json')
+		localStorage.setItem(
+			'data',
+			JSON.stringify(weather.weatherData.map((day) => ({ ...day, max: 40 }))),
+		)
+		const next = readCachedWeatherSnapshot()
+		expect(next).not.toBe(first)
+		expect(next?.weatherData[0]?.max).toBe(40)
+		expect(localStorage.getItem(WEATHER_CACHE_STORAGE_KEY)).toBe('{broken json')
+	})
+
+	it('returns the same validated snapshot until persisted data changes', () => {
+		writeCachedWeather(forecast())
+		const first = readCachedWeatherSnapshot()
+		expect(first).not.toBeNull()
+		expect(readCachedWeatherSnapshot()).toBe(first)
+		writeCachedWeather({ ...forecast(), lat: '50' })
+		const second = readCachedWeatherSnapshot()
+		expect(second).not.toBe(first)
+		expect(second?.lat).toBe('50')
+		localStorage.clear()
+		expect(readCachedWeatherSnapshot()).toBeNull()
+	})
+
 	it.each([0.5, 8_640_000_000_001])(
 		'discards a cached forecast with invalid day timestamp %s',
 		(day) => {

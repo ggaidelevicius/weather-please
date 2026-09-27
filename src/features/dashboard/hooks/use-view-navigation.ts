@@ -1,6 +1,6 @@
 import type { TouchEvent } from 'react'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useEffectEvent, useRef, useState } from 'react'
 
 import type {
 	ForecastViewId,
@@ -58,7 +58,6 @@ export const useViewNavigation = ({
 	const lastWheelDeltaAbsRef = useRef(0)
 	const touchStartYRef = useRef<null | number>(null)
 	const viewFrameRef = useRef<HTMLElement | null>(null)
-	const handleViewWheelRef = useRef<(event: WheelEvent) => void>(() => {})
 
 	const activeAvailableViewId = canShowNext24HoursView
 		? activeViewId
@@ -153,7 +152,7 @@ export const useViewNavigation = ({
 			getCurrentTimestamp() + VIEW_SWITCH_COOLDOWN_MS
 	}
 
-	const handleViewWheel = (event: WheelEvent) => {
+	const handleViewWheel = useEffectEvent((event: WheelEvent) => {
 		if (
 			!canShowNext24HoursView ||
 			Math.abs(event.deltaY) < VIEW_SWITCH_SCROLL_DELTA_MIN ||
@@ -194,10 +193,6 @@ export const useViewNavigation = ({
 
 		hasConsumedWheelGestureRef.current = true
 		switchActiveViewByStep(direction)
-	}
-
-	useEffect(() => {
-		handleViewWheelRef.current = handleViewWheel
 	})
 
 	useEffect(() => {
@@ -207,7 +202,7 @@ export const useViewNavigation = ({
 		}
 
 		const handleWheel = (event: WheelEvent) => {
-			handleViewWheelRef.current(event)
+			handleViewWheel(event)
 		}
 
 		viewFrame.addEventListener('wheel', handleWheel, { passive: false })

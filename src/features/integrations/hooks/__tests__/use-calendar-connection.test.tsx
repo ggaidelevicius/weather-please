@@ -583,6 +583,127 @@ describe('shared calendar fetching', () => {
 		expect(fetchEvents).toHaveBeenCalledTimes(2)
 	})
 
+	it('keeps cached events and errors stable across duplicate shared notifications', async () => {
+		vi.spyOn(console, 'error').mockImplementation(() => {})
+		fetchEvents.mockResolvedValueOnce([event('cached')])
+		let renderCount = 0
+		const { result } = renderHook(() => {
+			renderCount += 1
+			return useCalendarConnection()
+		})
+		await waitFor(() =>
+			expect(result.current.eventsStatus).toBe(AsyncStatus.Success),
+		)
+		fetchEvents.mockRejectedValueOnce(new Error('Temporary calendar outage'))
+		act(() => result.current.retryEvents())
+		await waitFor(() =>
+			expect(result.current.eventsStatus).toBe(AsyncStatus.Error),
+		)
+		const cached = result.current.events
+		const previousRenderCount = renderCount
+		const account = readStoredCalendarAccounts()[0]
+		const key = `weather-please:shared-resource:v1:calendar-events:${account.provider}:${account.accountId}:${getSystemTimeZone()}`
+		act(() => {
+			notifyStorageChange(key)
+			notifyStorageChange(key)
+			window.dispatchEvent(new Event('pageshow'))
+		})
+		expect(result.current.events).toBe(cached)
+		expect(result.current.events[0]?.id).toBe('cached')
+		expect(result.current.eventsStatus).toBe(AsyncStatus.Error)
+		expect(result.current.error).toBe(CalendarConnectionError.EventsFailed)
+		expect(renderCount).toBe(previousRenderCount)
+	})
+
+	it('clears a failed refresh when another consumer publishes a new successful result', async () => {
+		vi.spyOn(console, 'error').mockImplementation(() => {})
+		fetchEvents.mockResolvedValueOnce([event('initial')])
+		const first = renderHook(() => useCalendarConnection())
+		const second = renderHook(() => useCalendarConnection())
+		await waitFor(() =>
+			expect(first.result.current.eventsStatus).toBe(AsyncStatus.Success),
+		)
+		await waitFor(() =>
+			expect(second.result.current.eventsStatus).toBe(AsyncStatus.Success),
+		)
+		fetchEvents.mockRejectedValueOnce(new Error('Temporary calendar outage'))
+		act(() => first.result.current.retryEvents())
+		await waitFor(() =>
+			expect(first.result.current.eventsStatus).toBe(AsyncStatus.Error),
+		)
+		fetchEvents.mockResolvedValueOnce([event('recovered')])
+		act(() => second.result.current.retryEvents())
+		await waitFor(() =>
+			expect(first.result.current.events[0]?.id).toBe('recovered'),
+		)
+		expect(first.result.current.eventsStatus).toBe(AsyncStatus.Success)
+		expect(first.result.current.error).toBeNull()
+	})
+
+	it('retains the last successful events through token rotation and a temporary fetch failure', async () => {
+		vi.spyOn(console, 'error').mockImplementation(() => {})
+		seedAccount({ sessionId: 'same-login' })
+		fetchEvents.mockResolvedValueOnce([event('cached')])
+		const { result } = renderHook(() => useCalendarConnection())
+		await waitFor(() =>
+			expect(result.current.eventsStatus).toBe(AsyncStatus.Success),
+		)
+		const pending = createDeferred()
+		fetchEvents.mockReturnValueOnce(pending.promise)
+		writeStoredCalendarAccounts([
+			{
+				...readStoredCalendarAccounts()[0],
+				accessToken: 'rotated-token',
+				expiresAt: getCurrentTimestamp() + 7_200_000,
+			},
+		])
+		act(() => notifyStorageChange())
+		await waitFor(() => expect(fetchEvents).toHaveBeenCalledTimes(2))
+		expect(result.current.events[0]?.id).toBe('cached')
+		await act(async () =>
+			pending.reject(new Error('Temporary calendar outage')),
+		)
+		expect(result.current.events[0]?.id).toBe('cached')
+		expect(result.current.eventsStatus).toBe(AsyncStatus.Error)
+		expect(result.current.accounts[0].isSessionExpired).toBe(false)
+	})
+
+	it('removes cached events as soon as their session is replaced while the new request is pending', async () => {
+		seedAccount({ sessionId: 'old-login' })
+		fetchEvents.mockResolvedValueOnce([event('old')])
+		const { result } = renderHook(() => useCalendarConnection())
+		await waitFor(() => expect(result.current.events[0]?.id).toBe('old'))
+		const pending = createDeferred()
+		fetchEvents.mockReturnValueOnce(pending.promise)
+		writeStoredCalendarAccounts([
+			{
+				...readStoredCalendarAccounts()[0],
+				sessionId: 'new-login',
+			},
+		])
+		act(() => notifyStorageChange())
+		expect(result.current.events).toEqual([])
+		await waitFor(() => expect(fetchEvents).toHaveBeenCalledTimes(2))
+		await act(async () => pending.resolve([event('new')]))
+		expect(result.current.events[0]?.id).toBe('new')
+	})
+
+	it('clears previously cached events when reconnection is required', async () => {
+		fetchEvents.mockResolvedValueOnce([event('cached')])
+		const { result } = renderHook(() => useCalendarConnection())
+		await waitFor(() =>
+			expect(result.current.eventsStatus).toBe(AsyncStatus.Success),
+		)
+		fetchEvents.mockRejectedValueOnce(new CalendarReauthRequiredError())
+		refreshTokens.mockRejectedValueOnce(new CalendarReauthRequiredError())
+		act(() => result.current.retryEvents())
+		await waitFor(() =>
+			expect(result.current.accounts[0].isSessionExpired).toBe(true),
+		)
+		expect(result.current.events).toEqual([])
+		expect(result.current.eventsStatus).toBe(AsyncStatus.Idle)
+	})
+
 	it('takes over an abandoned fetch without publishing its late result', async () => {
 		const abandoned = createDeferred()
 		const replacement = createDeferred()
@@ -749,6 +870,21 @@ describe('shared calendar fetching', () => {
 			expect(result.current.error).toBeNull()
 		},
 	)
+
+	it('rejects events belonging to another account before publishing them', async () => {
+		vi.spyOn(console, 'error').mockImplementation(() => {})
+		fetchEvents.mockResolvedValueOnce([
+			{ ...event('foreign-account'), accountId: 'account-b' },
+		])
+		const { result } = renderHook(() => useCalendarConnection())
+		await waitFor(() =>
+			expect(result.current.eventsStatus).toBe(AsyncStatus.Error),
+		)
+		expect(result.current.events).toEqual([])
+		const account = readStoredCalendarAccounts()[0]
+		const cacheKey = `weather-please:shared-resource:v1:calendar-events:${account.provider}:${account.accountId}:${getSystemTimeZone()}`
+		expect(localStorage.getItem(cacheKey)).not.toContain('foreign-account')
+	})
 
 	it('does not retain credentials in the shared event cache', async () => {
 		fetchEvents.mockResolvedValueOnce([event('cached')])

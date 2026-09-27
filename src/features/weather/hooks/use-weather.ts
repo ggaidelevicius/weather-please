@@ -1,204 +1,284 @@
-import { useEffect, useReducer, useRef } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 
-import {
-	AsyncStatus,
-	isLoadingStatus,
-} from '../../../shared/hooks/async-status'
+import { AsyncStatus } from '../../../shared/hooks/async-status'
 import { isLocationInAustralia } from '../../../shared/lib/location'
-import { getCurrentDateTime } from '../../../shared/lib/time'
+import {
+	getCurrentDateTime,
+	getCurrentTimestamp,
+} from '../../../shared/lib/time'
 import { getUserTimeZone } from '../api/weather-api'
 import {
 	createEmptyAlerts,
 	deriveAlertsFromNext24HoursData,
 } from '../model/alerts'
-import { type CachedWeather, writeCachedWeatherDegraded } from '../model/cache'
+import {
+	type CachedWeather,
+	type CacheIdentity,
+	writeCachedWeatherDegraded,
+} from '../model/cache'
 import { isAbortError } from '../model/error-names'
 import {
-	type Alerts,
 	CACHE_REFRESH_INTERVAL_MS,
 	CACHE_VALIDITY_MS,
 	type Data,
-	type Next24HoursData,
 	NEXT_24_HOURS_FORECAST_HOURS,
-	type WeatherMapData,
 } from '../model/types'
 import {
+	createSharedWeatherStore,
 	isWeatherCacheFresh,
-	readSharedWeatherCache,
 	requestSharedWeather,
 	requestSharedWeatherMap,
-	subscribeSharedWeather,
 } from '../services/shared-weather'
-
-type WeatherAction =
-	| {
-			alertData: Alerts
-			degradedForecast: null | {
-				error: Error
-				lastUpdatedDate: Temporal.Instant
-			}
-			next24HoursData: Next24HoursData
-			shouldRefresh: boolean
-			type: 'hydrate-cache'
-			weatherData: [] | Data
-			weatherMapData: null | WeatherMapData
-	  }
-	| {
-			alertData: Alerts
-			error: Error
-			lastUpdatedDate: Temporal.Instant
-			next24HoursData: Next24HoursData
-			type: 'fetch-degraded-cache'
-			weatherData: [] | Data
-			weatherMapData: null | WeatherMapData
-	  }
-	| {
-			alertData: Alerts
-			next24HoursData: Next24HoursData
-			type: 'fetch-success'
-			weatherData: [] | Data
-			weatherMapData: null | WeatherMapData
-	  }
-	| {
-			error: Error
-			type: 'fetch-error'
-	  }
-	| {
-			shouldForceRefresh?: boolean
-			status?: AsyncStatus
-			type: 'request-refresh'
-	  }
-	| {
-			type: 'fetch-map-success'
-			weatherMapData: WeatherMapData
-	  }
-	| {
-			type: 'reset-no-location'
-	  }
-	| {
-			type: 'start-fetch'
-	  }
-	| {
-			type: 'use-network'
-	  }
-
-type WeatherState = {
-	alertData: Alerts
-	degradedForecast: null | {
-		error: Error
-		lastUpdatedDate: Temporal.Instant
-	}
-	error: Error | null
-	next24HoursData: [] | Next24HoursData
-	refreshToken: number
-	shouldForceRefresh: boolean
-	status: AsyncStatus
-	usingCachedData: boolean
-	weatherData: [] | Data
-	weatherMapData: null | WeatherMapData
-}
 
 export type { Alerts } from '../model/types'
 
-const createInitialWeatherState = (): WeatherState => ({
-	alertData: createEmptyAlerts(),
-	degradedForecast: null,
-	error: null,
-	next24HoursData: [],
-	refreshToken: 0,
-	shouldForceRefresh: false,
-	status: AsyncStatus.Idle,
-	usingCachedData: true,
-	weatherData: [],
-	weatherMapData: null,
-})
+type WeatherSession = {
+	error: Error | null
+	failedWeatherData: Data | null
+	identity: CacheIdentity
+	key: string
+	refreshToken: number
+	shouldForceRefresh: boolean
+	startedAt: number
+	status: AsyncStatus
+	store: ReturnType<typeof createSharedWeatherStore>
+}
 
-const weatherReducer = (
-	state: WeatherState,
-	action: WeatherAction,
-): WeatherState => {
-	switch (action.type) {
-		case 'fetch-degraded-cache':
-			return {
-				...state,
-				alertData: action.alertData,
-				degradedForecast: {
-					error: action.error,
-					lastUpdatedDate: action.lastUpdatedDate,
-				},
-				error: null,
-				next24HoursData: action.next24HoursData,
-				status: AsyncStatus.Success,
-				usingCachedData: true,
-				weatherData: action.weatherData,
-				weatherMapData: action.weatherMapData,
-			}
-		case 'fetch-error':
-			return {
-				...state,
-				degradedForecast: null,
-				error: action.error,
-				status: AsyncStatus.Error,
-			}
-		case 'fetch-map-success':
-			return {
-				...state,
-				weatherMapData: action.weatherMapData,
-			}
-		case 'fetch-success':
-			return {
-				...state,
-				alertData: action.alertData,
-				degradedForecast: null,
-				error: null,
-				next24HoursData: action.next24HoursData,
-				status: AsyncStatus.Success,
-				weatherData: action.weatherData,
-				weatherMapData: action.weatherMapData,
-			}
-		case 'hydrate-cache':
-			return {
-				...state,
-				alertData: action.alertData,
-				degradedForecast: action.degradedForecast,
-				error: null,
-				next24HoursData: action.next24HoursData,
-				refreshToken: state.refreshToken + (action.shouldRefresh ? 1 : 0),
-				status: AsyncStatus.Success,
-				usingCachedData: !action.shouldRefresh,
-				weatherData: action.weatherData,
-				weatherMapData: action.weatherMapData,
-			}
-		case 'request-refresh':
-			return {
-				...state,
-				refreshToken: state.refreshToken + 1,
-				shouldForceRefresh: action.shouldForceRefresh ?? false,
-				status: action.status ?? state.status,
-				usingCachedData: false,
-			}
-		case 'reset-no-location':
-			return {
-				...state,
-				degradedForecast: null,
-				error: null,
-				status: AsyncStatus.Idle,
-			}
-		case 'start-fetch':
-			return {
-				...state,
-				error: null,
+export const useWeather = (
+	lat: string,
+	lon: string,
+	locationChangeToken: number,
+	useAirQualityUvOverride: boolean,
+) => {
+	const timeZone = getUserTimeZone()
+	const shouldUseAirQualityUv =
+		useAirQualityUvOverride || isLocationInAustralia(lat, lon)
+	const key = JSON.stringify([
+		lat,
+		lon,
+		timeZone,
+		shouldUseAirQualityUv,
+		locationChangeToken,
+	])
+	const [session, setSession] = useState(() =>
+		createWeatherSession({
+			identity: { lat, lon, shouldUseAirQualityUv, timeZone },
+			key,
+		}),
+	)
+	if (session.key !== key) {
+		setSession(
+			createWeatherSession({
+				identity: { lat, lon, shouldUseAirQualityUv, timeZone },
+				key,
+			}),
+		)
+	}
+	const { identity, refreshToken, shouldForceRefresh, store } = session
+	const cached = useSyncExternalStore(
+		store.subscribe,
+		store.getSnapshot,
+		store.getServerSnapshot,
+	)
+
+	useEffect(() => {
+		if (!identity.lat || !identity.lon) return
+		const controller = new AbortController()
+		const fetchMap = () =>
+			requestSharedWeatherMap({
+				...identity,
+				force: shouldForceRefresh,
+				signal: controller.signal,
+			}).catch((error: unknown) => {
+				if (controller.signal.aborted || isAbortError(error)) return
+				console.error('Weather map fetch error:', error)
+			})
+		const current = store.getSnapshot()
+		if (
+			refreshToken === 0 &&
+			locationChangeToken === 0 &&
+			current &&
+			isWeatherCacheFresh({ cached: current })
+		) {
+			if (current.weatherData.length > 0 && !current.weatherMapData)
+				void fetchMap()
+			return () => controller.abort()
+		}
+		void requestSharedWeather({
+			...identity,
+			force: shouldForceRefresh,
+			signal: controller.signal,
+		})
+			.then(() => {
+				if (controller.signal.aborted) return
+				setSession((previous) =>
+					previous.store === store && previous.refreshToken === refreshToken
+						? {
+								...previous,
+								error: null,
+								failedWeatherData: null,
+								status: AsyncStatus.Success,
+							}
+						: previous,
+				)
+				void fetchMap()
+			})
+			.catch((fetchError: unknown) => {
+				if (controller.signal.aborted || isAbortError(fetchError)) return
+				const error =
+					fetchError instanceof Error
+						? fetchError
+						: new Error('Weather fetch failed')
+				console.error('Weather fetch error:', error)
+				if (store.getSnapshot()) writeCachedWeatherDegraded(identity)
+				const failedWeatherData = store.getSnapshot()?.weatherData ?? null
+				setSession((previous) =>
+					previous.store === store && previous.refreshToken === refreshToken
+						? {
+								...previous,
+								error,
+								failedWeatherData,
+								status: AsyncStatus.Error,
+							}
+						: previous,
+				)
+			})
+		return () => controller.abort()
+	}, [identity, locationChangeToken, refreshToken, shouldForceRefresh, store])
+
+	useEffect(() => {
+		if (!identity.lat || !identity.lon) return
+		const requestRefresh = () =>
+			setSession((previous) =>
+				previous.store === store
+					? {
+							...previous,
+							refreshToken: previous.refreshToken + 1,
+							shouldForceRefresh: false,
+							status: AsyncStatus.Loading,
+						}
+					: previous,
+			)
+		const handleRefresh = () => {
+			if (document.visibilityState === 'hidden') return
+			const current = store.getSnapshot()
+			if (!current || !isWeatherCacheFresh({ cached: current }))
+				requestRefresh()
+		}
+		const handleVisibilityChange = () => {
+			if (document.visibilityState !== 'hidden') requestRefresh()
+		}
+		const interval = setInterval(handleRefresh, CACHE_REFRESH_INTERVAL_MS)
+		document.addEventListener('visibilitychange', handleVisibilityChange)
+		document.addEventListener('resume', handleVisibilityChange)
+		window.addEventListener('pageshow', handleVisibilityChange)
+		return () => {
+			clearInterval(interval)
+			document.removeEventListener('visibilitychange', handleVisibilityChange)
+			document.removeEventListener('resume', handleVisibilityChange)
+			window.removeEventListener('pageshow', handleVisibilityChange)
+		}
+	}, [identity, store])
+
+	const now = getCurrentDateTime()
+	const hasCurrentError = Boolean(
+		session.error &&
+		(!cached || cached.weatherData === session.failedWeatherData),
+	)
+	const shouldUseDegraded = Boolean(
+		cached && (cached.isDegraded || hasCurrentError),
+	)
+	const reduced =
+		cached && shouldUseDegraded
+			? getReducedCachedWeather({ cached, now })
+			: null
+	const canUseCache = Boolean(
+		cached &&
+		cached.lastUpdatedDate.epochMilliseconds <= now.epochMilliseconds &&
+		cached.lastUpdatedDate.epochMilliseconds >=
+			session.startedAt - CACHE_VALIDITY_MS,
+	)
+	const visible = shouldUseDegraded ? reduced : canUseCache ? cached : null
+	const degradedForecast =
+		cached && reduced
+			? {
+					error:
+						hasCurrentError && session.error
+							? session.error
+							: new Error('Weather refresh previously failed'),
+					lastUpdatedDate: cached.lastUpdatedDate,
+				}
+			: null
+	const error =
+		hasCurrentError && !visible && session.status !== AsyncStatus.Loading
+			? session.error
+			: null
+	const status = getWeatherStatus({
+		error,
+		hasLocation: Boolean(lat && lon),
+		hasVisibleData: visible !== null,
+		isRequestLoading: session.status === AsyncStatus.Loading,
+	})
+
+	return {
+		alertData: visible?.alertData ?? EMPTY_ALERTS,
+		degradedForecast,
+		error,
+		hasData: Boolean(visible?.weatherData.length),
+		isLoading:
+			!lat ||
+			!lon ||
+			(!visible?.weatherData.length && status === AsyncStatus.Loading),
+		next24HoursData: visible?.next24HoursData ?? [],
+		retry: () =>
+			setSession((previous) => ({
+				...previous,
+				refreshToken: previous.refreshToken + 1,
+				shouldForceRefresh: true,
 				status: AsyncStatus.Loading,
-			}
-		case 'use-network':
-			return {
-				...state,
-				degradedForecast: null,
-				status: AsyncStatus.Loading,
-				usingCachedData: false,
-			}
+			})),
+		status,
+		weatherData: visible?.weatherData ?? [],
+		weatherMapData: visible?.weatherMapData ?? null,
 	}
 }
+
+const getWeatherStatus = ({
+	error,
+	hasLocation,
+	hasVisibleData,
+	isRequestLoading,
+}: {
+	error: Error | null
+	hasLocation: boolean
+	hasVisibleData: boolean
+	isRequestLoading: boolean
+}): AsyncStatus => {
+	if (!hasLocation) return AsyncStatus.Idle
+	if (error) return AsyncStatus.Error
+	if (isRequestLoading) return AsyncStatus.Loading
+	return hasVisibleData ? AsyncStatus.Success : AsyncStatus.Loading
+}
+
+const createWeatherSession = ({
+	identity,
+	key,
+}: {
+	identity: CacheIdentity
+	key: string
+}): WeatherSession => ({
+	error: null,
+	failedWeatherData: null,
+	identity,
+	key,
+	refreshToken: 0,
+	shouldForceRefresh: false,
+	startedAt: getCurrentTimestamp(),
+	status: AsyncStatus.Idle,
+	store: createSharedWeatherStore(identity),
+})
+
+const EMPTY_ALERTS = createEmptyAlerts()
 
 const getReducedCachedWeather = ({
 	cached,
@@ -234,301 +314,5 @@ const getReducedCachedWeather = ({
 		next24HoursData,
 		weatherData,
 		weatherMapData,
-	}
-}
-
-export const useWeather = (
-	lat: string,
-	lon: string,
-	locationChangeToken: number,
-	useAirQualityUvOverride: boolean,
-) => {
-	const userTimeZone = getUserTimeZone()
-	const shouldUseAirQualityUv =
-		useAirQualityUvOverride || isLocationInAustralia(lat, lon)
-	const [state, dispatch] = useReducer(
-		weatherReducer,
-		undefined,
-		createInitialWeatherState,
-	)
-	const latestRequestRef = useRef(0)
-	const lastAppliedAtRef = useRef(0)
-	const missingMapRequestKeyRef = useRef<null | string>(null)
-
-	useEffect(() => {
-		if (!lat || !lon || state.usingCachedData) {
-			if (!lat || !lon) {
-				dispatch({ type: 'reset-no-location' })
-			}
-			return
-		}
-
-		const requestId = latestRequestRef.current + 1
-		latestRequestRef.current = requestId
-		dispatch({ type: 'start-fetch' })
-		const controller = new AbortController()
-		const identity = {
-			lat,
-			lon,
-			shouldUseAirQualityUv,
-			timeZone: userTimeZone,
-		}
-
-		void requestSharedWeather({
-			...identity,
-			force: state.shouldForceRefresh,
-			signal: controller.signal,
-		})
-			.then((weather) => {
-				if (controller.signal.aborted || latestRequestRef.current !== requestId)
-					return
-
-				lastAppliedAtRef.current = weather.lastUpdatedAt
-				dispatch({
-					...weather,
-					type: 'fetch-success',
-					weatherMapData:
-						readSharedWeatherCache(identity)?.weatherMapData ?? null,
-				})
-
-				void requestSharedWeatherMap({
-					...identity,
-					force: state.shouldForceRefresh,
-					signal: controller.signal,
-				})
-					.then((weatherMapData) => {
-						if (
-							controller.signal.aborted ||
-							latestRequestRef.current !== requestId
-						)
-							return
-						dispatch({ type: 'fetch-map-success', weatherMapData })
-					})
-					.catch((weatherMapError) => {
-						if (isAbortError(weatherMapError)) return
-						console.error('Weather map fetch error:', weatherMapError)
-					})
-			})
-			.catch((fetchError) => {
-				if (
-					controller.signal.aborted ||
-					latestRequestRef.current !== requestId ||
-					isAbortError(fetchError)
-				)
-					return
-				const error =
-					fetchError instanceof Error
-						? fetchError
-						: new Error('Weather fetch failed')
-				console.error('Weather fetch error:', error)
-
-				const cached = readSharedWeatherCache(identity)
-				const reducedCached = cached
-					? getReducedCachedWeather({ cached, now: getCurrentDateTime() })
-					: null
-
-				if (cached && reducedCached) {
-					writeCachedWeatherDegraded(identity)
-					dispatch({
-						...reducedCached,
-						error,
-						lastUpdatedDate: cached.lastUpdatedDate,
-						type: 'fetch-degraded-cache',
-					})
-					return
-				}
-
-				dispatch({ error, type: 'fetch-error' })
-			})
-
-		return () => controller.abort()
-	}, [
-		lat,
-		lon,
-		userTimeZone,
-		shouldUseAirQualityUv,
-		state.refreshToken,
-		state.shouldForceRefresh,
-		state.usingCachedData,
-	])
-
-	useEffect(() => {
-		if (!lat || !lon) return
-		const identity = {
-			lat,
-			lon,
-			shouldUseAirQualityUv,
-			timeZone: userTimeZone,
-		}
-		const handleRefresh = () => {
-			if (document.visibilityState === 'hidden') return
-			const cached = readSharedWeatherCache(identity)
-			if (!cached || !isWeatherCacheFresh({ cached })) {
-				dispatch({ type: 'request-refresh' })
-			}
-		}
-		const handleVisibilityChange = () => {
-			if (document.visibilityState !== 'hidden') {
-				dispatch({ type: 'request-refresh' })
-			}
-		}
-		const interval = setInterval(handleRefresh, CACHE_REFRESH_INTERVAL_MS)
-		document.addEventListener('visibilitychange', handleVisibilityChange)
-		document.addEventListener('resume', handleVisibilityChange)
-		window.addEventListener('pageshow', handleVisibilityChange)
-		return () => {
-			clearInterval(interval)
-			document.removeEventListener('visibilitychange', handleVisibilityChange)
-			document.removeEventListener('resume', handleVisibilityChange)
-			window.removeEventListener('pageshow', handleVisibilityChange)
-		}
-	}, [lat, lon, shouldUseAirQualityUv, userTimeZone])
-
-	useEffect(() => {
-		if (!lat || !lon) return
-		const identity = {
-			lat,
-			lon,
-			shouldUseAirQualityUv,
-			timeZone: userTimeZone,
-		}
-		return subscribeSharedWeather({
-			identity,
-			onChange: () => {
-				const cached = readSharedWeatherCache(identity)
-				if (!cached || cached.isDegraded) return
-				const updatedAt = cached.lastUpdatedDate.epochMilliseconds
-				if (updatedAt < lastAppliedAtRef.current) return
-				lastAppliedAtRef.current = updatedAt
-				dispatch({ ...cached, type: 'fetch-success' })
-			},
-		})
-	}, [lat, lon, shouldUseAirQualityUv, userTimeZone])
-
-	useEffect(() => {
-		if (
-			!lat ||
-			!lon ||
-			!state.usingCachedData ||
-			state.weatherData.length === 0 ||
-			state.weatherMapData
-		)
-			return
-
-		const requestKey = JSON.stringify([lat, lon, userTimeZone])
-		if (missingMapRequestKeyRef.current === requestKey) return
-		missingMapRequestKeyRef.current = requestKey
-		const controller = new AbortController()
-
-		void requestSharedWeatherMap({
-			lat,
-			lon,
-			shouldUseAirQualityUv,
-			signal: controller.signal,
-			timeZone: userTimeZone,
-		})
-			.then((weatherMapData) => {
-				if (controller.signal.aborted) return
-				dispatch({ type: 'fetch-map-success', weatherMapData })
-			})
-			.catch((weatherMapError) => {
-				if (isAbortError(weatherMapError)) return
-				console.error('Weather map fetch error:', weatherMapError)
-				missingMapRequestKeyRef.current = null
-			})
-
-		return () => {
-			controller.abort()
-			if (missingMapRequestKeyRef.current === requestKey) {
-				missingMapRequestKeyRef.current = null
-			}
-		}
-	}, [
-		lat,
-		lon,
-		shouldUseAirQualityUv,
-		state.usingCachedData,
-		state.weatherData.length,
-		state.weatherMapData,
-		userTimeZone,
-	])
-
-	useEffect(() => {
-		lastAppliedAtRef.current = 0
-		if (!lat || !lon) return
-
-		if (locationChangeToken > 0) {
-			dispatch({ status: AsyncStatus.Loading, type: 'request-refresh' })
-			return
-		}
-
-		const cached = readSharedWeatherCache({
-			lat,
-			lon,
-			shouldUseAirQualityUv,
-			timeZone: userTimeZone,
-		})
-		const now = getCurrentDateTime()
-		if (
-			!cached ||
-			now.epochMilliseconds - cached.lastUpdatedDate.epochMilliseconds >
-				CACHE_VALIDITY_MS ||
-			cached.lastUpdatedDate.epochMilliseconds > now.epochMilliseconds
-		) {
-			dispatch({ type: 'use-network' })
-			return
-		}
-
-		lastAppliedAtRef.current = cached.lastUpdatedDate.epochMilliseconds
-		const reducedCached = cached.isDegraded
-			? getReducedCachedWeather({ cached, now })
-			: null
-		if (cached.isDegraded && !reducedCached) {
-			dispatch({ type: 'use-network' })
-			return
-		}
-
-		dispatch({
-			alertData: reducedCached?.alertData ?? cached.alertData,
-			degradedForecast: cached.isDegraded
-				? {
-						error: new Error('Weather refresh previously failed'),
-						lastUpdatedDate: cached.lastUpdatedDate,
-					}
-				: null,
-			next24HoursData: reducedCached?.next24HoursData ?? cached.next24HoursData,
-			shouldRefresh: !isWeatherCacheFresh({
-				cached,
-				now: now.epochMilliseconds,
-			}),
-			type: 'hydrate-cache',
-			weatherData: reducedCached?.weatherData ?? cached.weatherData,
-			weatherMapData: reducedCached?.weatherMapData ?? cached.weatherMapData,
-		})
-	}, [lat, lon, locationChangeToken, userTimeZone, shouldUseAirQualityUv])
-
-	const retry = () => {
-		dispatch({
-			shouldForceRefresh: true,
-			status: AsyncStatus.Loading,
-			type: 'request-refresh',
-		})
-	}
-	const hasData = state.weatherData.length > 0
-
-	return {
-		alertData: state.alertData,
-		degradedForecast: state.degradedForecast,
-		error: state.error,
-		hasData,
-		isLoading:
-			!Boolean(lat) ||
-			!Boolean(lon) ||
-			(isLoadingStatus(state.status) && state.weatherData.length === 0),
-		next24HoursData: state.next24HoursData,
-		retry,
-		status: state.status,
-		weatherData: state.weatherData,
-		weatherMapData: state.weatherMapData,
 	}
 }
