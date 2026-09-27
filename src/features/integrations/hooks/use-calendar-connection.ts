@@ -13,6 +13,7 @@ import {
 } from '../lib/auth-environment'
 import { CalendarReauthRequiredError } from '../lib/calendar-reauth-error'
 import {
+	CALENDAR_CONNECTION_STORAGE_KEY,
 	clearPendingWebAuth,
 	readPendingWebAuth,
 	readStoredCalendarAccounts,
@@ -81,6 +82,7 @@ export const useCalendarConnection = (): CalendarConnection => {
 	const [events, setEvents] = useState<CalendarEvent[]>([])
 	const [eventsStatus, setEventsStatus] = useState(AsyncStatus.Idle)
 	const accountsRef = useRef(accounts)
+	const storedAccountsRef = useRef(accounts)
 	const lastEventsFetchAtRef = useRef(0)
 	const hasHydratedRef = useRef(false)
 	const requestsRef = useRef({
@@ -93,6 +95,7 @@ export const useCalendarConnection = (): CalendarConnection => {
 		requestsRef.current.isMounted = true
 		const connectionState = {
 			accountsRef,
+			storedAccountsRef,
 			lastEventsFetchAtRef,
 			requestsRef,
 			setAccounts,
@@ -101,6 +104,21 @@ export const useCalendarConnection = (): CalendarConnection => {
 			setEventsStatus,
 			setIsConnecting,
 		}
+		const handleStorage = (event: StorageEvent) => {
+			if (
+				event.storageArea !== localStorage ||
+				(event.key !== null && event.key !== CALENDAR_CONNECTION_STORAGE_KEY)
+			) {
+				return
+			}
+
+			const previousAccounts = accountsRef.current
+			const currentAccounts = synchronizeAccounts(connectionState)
+			if (!hasSameAccountSessions(previousAccounts, currentAccounts)) {
+				void loadEvents(connectionState)
+			}
+		}
+		window.addEventListener('storage', handleStorage)
 		if (accountsRef.current.length > 0) {
 			void loadEvents(connectionState)
 		}
@@ -110,6 +128,7 @@ export const useCalendarConnection = (): CalendarConnection => {
 			void completePendingWebAuth(connectionState)
 		}
 		return () => {
+			window.removeEventListener('storage', handleStorage)
 			requestsRef.current.isMounted = false
 			requestsRef.current.generation += 1
 			requestsRef.current.controller?.abort()
@@ -122,6 +141,7 @@ export const useCalendarConnection = (): CalendarConnection => {
 	useEffect(() => {
 		const connectionState = {
 			accountsRef,
+			storedAccountsRef,
 			lastEventsFetchAtRef,
 			requestsRef,
 			setAccounts,
@@ -156,6 +176,7 @@ export const useCalendarConnection = (): CalendarConnection => {
 
 	const connectionState: ConnectionState = {
 		accountsRef,
+		storedAccountsRef,
 		lastEventsFetchAtRef,
 		requestsRef,
 		setAccounts,
@@ -174,9 +195,8 @@ export const useCalendarConnection = (): CalendarConnection => {
 	}
 
 	const disconnect = (accountId: string) => {
-		applyAccounts(
-			connectionState,
-			accountsRef.current.filter((account) => account.accountId !== accountId),
+		applyAccounts(connectionState, (currentAccounts) =>
+			currentAccounts.filter((account) => account.accountId !== accountId),
 		)
 		setEvents((currentEvents) =>
 			currentEvents.filter((event) => event.accountId !== accountId),
@@ -191,9 +211,8 @@ export const useCalendarConnection = (): CalendarConnection => {
 		accountId: string,
 		category: CalendarAccountCategory,
 	) => {
-		applyAccounts(
-			connectionState,
-			accountsRef.current.map((account) =>
+		applyAccounts(connectionState, (currentAccounts) =>
+			currentAccounts.map((account) =>
 				account.accountId === accountId ? { ...account, category } : account,
 			),
 		)
@@ -282,6 +301,7 @@ const CALENDAR_PROVIDER_ADAPTERS: Record<
 
 type ConnectionState = {
 	accountsRef: RefObject<StoredCalendarAccount[]>
+	storedAccountsRef: RefObject<StoredCalendarAccount[]>
 	lastEventsFetchAtRef: RefObject<number>
 	requestsRef: RefObject<{
 		isMounted: boolean
@@ -297,12 +317,76 @@ type ConnectionState = {
 
 const applyAccounts = (
 	connectionState: ConnectionState,
-	nextAccounts: StoredCalendarAccount[],
+	updateAccounts: (
+		accounts: StoredCalendarAccount[],
+	) => StoredCalendarAccount[],
 ) => {
+	const nextAccounts = updateAccounts(synchronizeAccounts(connectionState))
 	connectionState.accountsRef.current = nextAccounts
 	connectionState.setAccounts(nextAccounts)
-	writeStoredCalendarAccounts(nextAccounts)
+	if (
+		!hasSameAccounts(nextAccounts, connectionState.storedAccountsRef.current) &&
+		writeStoredCalendarAccounts(nextAccounts)
+	) {
+		connectionState.storedAccountsRef.current = nextAccounts
+	}
+	return nextAccounts
 }
+
+const synchronizeAccounts = (connectionState: ConnectionState) => {
+	const storedAccounts = readStoredCalendarAccounts({
+		fallbackAccounts: connectionState.storedAccountsRef.current,
+	})
+	// Unchanged storage must not discard an in-memory connection when saving
+	// is unavailable, while changes from another tab remain authoritative.
+	if (
+		!hasSameAccounts(storedAccounts, connectionState.storedAccountsRef.current)
+	) {
+		connectionState.storedAccountsRef.current = storedAccounts
+		connectionState.accountsRef.current = storedAccounts
+		connectionState.setAccounts(storedAccounts)
+		connectionState.setEvents((currentEvents) =>
+			currentEvents.filter((event) =>
+				storedAccounts.some(
+					(account) =>
+						account.accountId === event.accountId && !account.isSessionExpired,
+				),
+			),
+		)
+	}
+	return connectionState.accountsRef.current
+}
+
+const hasSameAccountCredentials = (
+	account: StoredCalendarAccount,
+	other: StoredCalendarAccount,
+) =>
+	account.accountId === other.accountId &&
+	account.provider === other.provider &&
+	account.accessToken === other.accessToken &&
+	account.refreshToken === other.refreshToken &&
+	account.expiresAt === other.expiresAt &&
+	account.isSessionExpired === other.isSessionExpired
+
+const hasSameAccountSessions = (
+	accounts: StoredCalendarAccount[],
+	otherAccounts: StoredCalendarAccount[],
+) =>
+	accounts.length === otherAccounts.length &&
+	accounts.every((account, index) =>
+		hasSameAccountCredentials(account, otherAccounts[index]),
+	)
+
+const hasSameAccounts = (
+	accounts: StoredCalendarAccount[],
+	otherAccounts: StoredCalendarAccount[],
+) =>
+	hasSameAccountSessions(accounts, otherAccounts) &&
+	accounts.every(
+		(account, index) =>
+			account.accountLabel === otherAccounts[index].accountLabel &&
+			account.category === otherAccounts[index].category,
+	)
 
 const loadEvents = async (connectionState: ConnectionState) => {
 	const requests = connectionState.requestsRef.current
@@ -311,7 +395,7 @@ const loadEvents = async (connectionState: ConnectionState) => {
 	requests.controller?.abort()
 	const controller = new AbortController()
 	requests.controller = controller
-	const activeAccounts = connectionState.accountsRef.current.filter(
+	const activeAccounts = synchronizeAccounts(connectionState).filter(
 		(account) => !account.isSessionExpired,
 	)
 	if (activeAccounts.length === 0) {
@@ -334,31 +418,34 @@ const loadEvents = async (connectionState: ConnectionState) => {
 	const activeById = new Map(
 		activeAccounts.map((account) => [account.accountId, account]),
 	)
-	const currentAccounts = connectionState.accountsRef.current
-	const acceptedResults = results.filter((result) => {
-		const current = currentAccounts.find(
-			(account) => account.accountId === result.account.accountId,
-		)
-		const original = activeById.get(result.account.accountId)
-		return (
-			current &&
-			original &&
-			current.accessToken === original.accessToken &&
-			current.expiresAt === original.expiresAt
-		)
-	})
-	const resultsByAccountId = new Map(
-		acceptedResults.map((result) => [result.account.accountId, result]),
-	)
-	applyAccounts(
-		connectionState,
-		currentAccounts.map((account) => {
+	let acceptedResults: AccountLoadResult[] = []
+	let shouldReloadAccounts = false
+	const resultsByAccountId = new Map<string, AccountLoadResult>()
+	const currentAccounts = applyAccounts(connectionState, (latestAccounts) => {
+		acceptedResults = results.filter((result) => {
+			const current = latestAccounts.find(
+				(account) => account.accountId === result.account.accountId,
+			)
+			const original = activeById.get(result.account.accountId)
+			return current && original && hasSameAccountCredentials(current, original)
+		})
+		for (const result of acceptedResults) {
+			resultsByAccountId.set(result.account.accountId, result)
+		}
+		shouldReloadAccounts = latestAccounts.some((account) => {
+			const original = activeById.get(account.accountId)
+			return (
+				!account.isSessionExpired &&
+				(!original || !hasSameAccountCredentials(account, original))
+			)
+		})
+		return latestAccounts.map((account) => {
 			const result = resultsByAccountId.get(account.accountId)
 			return result
 				? { ...result.account, category: account.category }
 				: account
-		}),
-	)
+		})
+	})
 	connectionState.setEvents((currentEvents) =>
 		mergeCalendarEvents([
 			currentEvents.filter(
@@ -388,6 +475,9 @@ const loadEvents = async (connectionState: ConnectionState) => {
 		// session-expired state covers the messaging.
 		connectionState.setEventsStatus(AsyncStatus.Idle)
 	}
+	if (shouldReloadAccounts) {
+		void loadEvents(connectionState)
+	}
 }
 
 const loadAccountEvents = async ({
@@ -400,22 +490,44 @@ const loadAccountEvents = async ({
 	signal: AbortSignal
 }>): Promise<AccountLoadResult> => {
 	const adapter = CALENDAR_PROVIDER_ADAPTERS[account.provider]
+	let freshAccount = account
 
 	try {
-		const freshAccount = await ensureFreshAccount(account)
+		freshAccount = await ensureFreshAccount({ account })
 		signal.throwIfAborted()
-		const events = await adapter.fetchUpcomingEvents({
-			signal,
-			accessToken: freshAccount.accessToken,
-			accountId: freshAccount.accountId,
-			timeZone,
-		})
+		let events: CalendarEvent[]
+		try {
+			events = await adapter.fetchUpcomingEvents({
+				signal,
+				accessToken: freshAccount.accessToken,
+				accountId: freshAccount.accountId,
+				timeZone,
+			})
+		} catch (caughtError) {
+			if (
+				!(caughtError instanceof CalendarReauthRequiredError) ||
+				signal.aborted
+			) {
+				throw caughtError
+			}
+			freshAccount = await ensureFreshAccount({
+				account: freshAccount,
+				shouldForceRefresh: true,
+			})
+			signal.throwIfAborted()
+			events = await adapter.fetchUpcomingEvents({
+				signal,
+				accessToken: freshAccount.accessToken,
+				accountId: freshAccount.accountId,
+				timeZone,
+			})
+		}
 
 		return { account: freshAccount, events, status: 'success' }
 	} catch (caughtError) {
 		if (caughtError instanceof CalendarReauthRequiredError) {
 			return {
-				account: { ...account, isSessionExpired: true },
+				account: { ...freshAccount, isSessionExpired: true },
 				events: [],
 				status: 'reauth',
 			}
@@ -423,7 +535,7 @@ const loadAccountEvents = async ({
 
 		if (!signal.aborted)
 			console.error('Calendar events fetch error:', caughtError)
-		return { account, events: [], status: 'error' }
+		return { account: freshAccount, events: [], status: 'error' }
 	}
 }
 
@@ -533,38 +645,45 @@ const addConnectedAccount = (
 	}: Readonly<{ newTokens: ProviderTokens; provider: CalendarProvider }>,
 ) => {
 	if (!connectionState.requestsRef.current.isMounted) return
-	const accounts = connectionState.accountsRef.current
 	const accountId = newTokens.accountId ?? `account:${createRandomState()}`
-	const existingAccount = accounts.find(
-		(account) =>
-			account.accountId === accountId ||
-			(account.provider === provider &&
-				account.accountLabel !== null &&
-				account.accountLabel === newTokens.accountLabel),
-	)
-	const connectedAccount: StoredCalendarAccount = {
-		accessToken: newTokens.accessToken,
-		accountId,
-		accountLabel: newTokens.accountLabel,
-		category: existingAccount?.category ?? CalendarAccountCategory.Personal,
-		expiresAt: newTokens.expiresAt,
-		isSessionExpired: false,
-		provider,
-		refreshToken: newTokens.refreshToken,
-	}
+	applyAccounts(connectionState, (accounts) => {
+		const existingAccount = accounts.find(
+			(account) =>
+				account.accountId === accountId ||
+				(account.provider === provider &&
+					account.accountLabel !== null &&
+					account.accountLabel === newTokens.accountLabel),
+		)
+		const connectedAccount: StoredCalendarAccount = {
+			accessToken: newTokens.accessToken,
+			accountId,
+			accountLabel: newTokens.accountLabel,
+			category: existingAccount?.category ?? CalendarAccountCategory.Personal,
+			expiresAt: newTokens.expiresAt,
+			isSessionExpired: false,
+			provider,
+			refreshToken: newTokens.refreshToken,
+		}
 
-	applyAccounts(
-		connectionState,
-		existingAccount
+		return existingAccount
 			? accounts.map((account) =>
 					account === existingAccount ? connectedAccount : account,
 				)
-			: [...accounts, connectedAccount],
-	)
+			: [...accounts, connectedAccount]
+	})
 }
 
-const ensureFreshAccount = async (account: StoredCalendarAccount) => {
-	if (account.expiresAt - TOKEN_EXPIRY_SKEW_MS > Date.now()) {
+const ensureFreshAccount = async ({
+	account,
+	shouldForceRefresh = false,
+}: Readonly<{
+	account: StoredCalendarAccount
+	shouldForceRefresh?: boolean
+}>) => {
+	if (
+		!shouldForceRefresh &&
+		account.expiresAt - TOKEN_EXPIRY_SKEW_MS > Date.now()
+	) {
 		return account
 	}
 

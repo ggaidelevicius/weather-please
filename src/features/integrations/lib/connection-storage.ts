@@ -7,49 +7,65 @@ export type PendingWebAuth = z.infer<typeof pendingWebAuthSchema>
 
 export type StoredCalendarAccount = z.infer<typeof storedAccountSchema>
 
-export const readStoredCalendarAccounts = (): StoredCalendarAccount[] => {
+export const CALENDAR_CONNECTION_STORAGE_KEY =
+	'weather-please:microsoft-calendar-connection'
+
+export const readStoredCalendarAccounts = ({
+	fallbackAccounts = [],
+}: Readonly<{
+	fallbackAccounts?: readonly StoredCalendarAccount[]
+}> = {}): StoredCalendarAccount[] => {
 	if (typeof window === 'undefined') {
-		return []
+		return [...fallbackAccounts]
 	}
 
-	const storedConnections = readStoredValue(
-		localStorage,
-		CONNECTION_STORAGE_KEY,
-		storedConnectionsSchema,
-	)
-	if (storedConnections) {
-		return storedConnections.accounts
+	try {
+		const storedValue = localStorage.getItem(CALENDAR_CONNECTION_STORAGE_KEY)
+		if (storedValue === null) {
+			return []
+		}
+
+		const value: unknown = JSON.parse(storedValue)
+		const storedConnections = storedConnectionsSchema.safeParse(value)
+		if (storedConnections.success) {
+			return storedConnections.data.accounts
+		}
+
+		const legacyTokens = legacyStoredTokensSchema.safeParse(value)
+		if (legacyTokens.success) {
+			return [
+				{
+					...legacyTokens.data,
+					accountId: `legacy:${legacyTokens.data.accountLabel ?? 'account'}`,
+					category: CalendarAccountCategory.Personal,
+					isSessionExpired: false,
+					provider: CalendarProvider.Microsoft,
+				},
+			]
+		}
+	} catch {
+		// Keep a live connection usable when storage is blocked or malformed.
 	}
 
-	const legacyTokens = readStoredValue(
-		localStorage,
-		CONNECTION_STORAGE_KEY,
-		legacyStoredTokensSchema,
-	)
-	if (legacyTokens) {
-		return [
-			{
-				...legacyTokens,
-				accountId: `legacy:${legacyTokens.accountLabel ?? 'account'}`,
-				category: CalendarAccountCategory.Personal,
-				isSessionExpired: false,
-				provider: CalendarProvider.Microsoft,
-			},
-		]
-	}
-
-	return []
+	return [...fallbackAccounts]
 }
 
 export const writeStoredCalendarAccounts = (
 	accounts: readonly StoredCalendarAccount[],
-) => {
-	if (accounts.length === 0) {
-		removeStoredValue(localStorage, CONNECTION_STORAGE_KEY)
-		return
+): boolean => {
+	if (typeof window === 'undefined') {
+		return false
 	}
 
-	writeStoredValue(localStorage, CONNECTION_STORAGE_KEY, { accounts })
+	try {
+		return accounts.length === 0
+			? removeStoredValue(localStorage, CALENDAR_CONNECTION_STORAGE_KEY)
+			: writeStoredValue(localStorage, CALENDAR_CONNECTION_STORAGE_KEY, {
+					accounts,
+				})
+	} catch {
+		return false
+	}
 }
 
 // The pending web auth state lives in sessionStorage because it only needs to
@@ -71,7 +87,6 @@ export const clearPendingWebAuth = () => {
 	removeStoredValue(sessionStorage, PENDING_AUTH_STORAGE_KEY)
 }
 
-const CONNECTION_STORAGE_KEY = 'weather-please:microsoft-calendar-connection'
 const PENDING_AUTH_STORAGE_KEY = 'weather-please:microsoft-auth-pending'
 
 const storedAccountSchema = z.object({
@@ -126,25 +141,29 @@ const readStoredValue = <T>(
 
 const writeStoredValue = (storage: Storage, key: string, value: unknown) => {
 	if (typeof window === 'undefined') {
-		return
+		return false
 	}
 
 	try {
 		storage.setItem(key, JSON.stringify(value))
+		return true
 	} catch {
 		// Storage can be unavailable (private browsing, quota); the connection
 		// then simply does not persist across new tabs.
+		return false
 	}
 }
 
 const removeStoredValue = (storage: Storage, key: string) => {
 	if (typeof window === 'undefined') {
-		return
+		return false
 	}
 
 	try {
 		storage.removeItem(key)
+		return true
 	} catch {
 		// Ignore unavailable storage; nothing to remove in that case.
+		return false
 	}
 }

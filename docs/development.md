@@ -35,6 +35,13 @@ browser identity API. The extension requires its `identity` permission. A
 website OAuth client's confidential secret must never be put into a
 `NEXT_PUBLIC_*` variable.
 
+Both calendar providers refresh access tokens automatically. Microsoft refresh
+tokens issued to redirect URIs registered as `spa` have a fixed 24-hour lifetime;
+rotating a refresh token does not extend that original deadline. Once it expires,
+the account needs a new authorization flow. Microsoft account and organization
+policies can also require sign-in sooner. See
+[Microsoft's refresh-token lifetime documentation](https://learn.microsoft.com/en-us/entra/identity-platform/refresh-tokens#token-lifetime).
+
 ## Verification
 
 ```bash
