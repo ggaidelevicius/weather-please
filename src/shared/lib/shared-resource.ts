@@ -85,70 +85,80 @@ export const requestSharedResource = async <T>({
 	const request = { controller, key, revision: initialRevision }
 	activeRequests.add(request)
 	try {
-		await waitUntilVisible(controller.signal)
-		return await withResourceLock({
-			key: lockKey,
-			signal: controller.signal,
-			work: async () => {
-				controller.signal.throwIfAborted()
-				const latest = readMatchingCache()
-				if (latest) return latest.value
-				const timeout = setTimeout(
-					() =>
-						controller.abort(
-							new DOMException('Data refresh timed out', 'TimeoutError'),
-						),
-					Math.min(Math.max(timeoutMs, 1), 120_000),
-				)
-				try {
-					// Racing cancellation releases ownership even if a provider ignores
-					// AbortSignal (geolocation, for example). Its late result is discarded.
-					const value = await raceWithSignal(
-						Promise.resolve().then(() => {
-							controller.signal.throwIfAborted()
-							return fetcher({ signal: controller.signal })
-						}),
-						controller.signal,
-					)
+		while (true) {
+			await waitUntilVisible(controller.signal)
+			const result = await withResourceLock({
+				key: lockKey,
+				signal: controller.signal,
+				work: async () => {
 					controller.signal.throwIfAborted()
-					if ((readRecord(key)?.revision ?? '') !== initialRevision) {
-						throw createAbortError()
-					}
-					const validated = schema.parse(value)
-					validate?.(validated)
-					writeRecord(key, {
-						data: validated,
-						hasValue: true,
-						id: crypto.randomUUID(),
-						revision: initialRevision,
-						updatedAt: getCurrentTimestamp(),
-						version: 1,
-					})
-					return validated
-				} catch (error) {
+					const latest = readMatchingCache()
+					if (latest) return latest.value
+					// Visibility can change while this tab waits for another owner.
+					// Release the lock before waiting again, without issuing a request.
 					if (
-						!controller.signal.aborted &&
-						!(error instanceof Error && error.name === 'AbortError') &&
-						(readRecord(key)?.revision ?? '') === initialRevision
-					) {
-						const previous = readRecord(key)
+						typeof document !== 'undefined' &&
+						document.visibilityState === 'hidden'
+					)
+						return WAIT_FOR_VISIBILITY
+					const timeout = setTimeout(
+						() =>
+							controller.abort(
+								new DOMException('Data refresh timed out', 'TimeoutError'),
+							),
+						Math.min(Math.max(timeoutMs, 1), 120_000),
+					)
+					try {
+						// Racing cancellation releases ownership even if a provider ignores
+						// AbortSignal (geolocation, for example). Its late result is discarded.
+						const value = await raceWithSignal(
+							Promise.resolve().then(() => {
+								controller.signal.throwIfAborted()
+								return fetcher({ signal: controller.signal })
+							}),
+							controller.signal,
+						)
+						controller.signal.throwIfAborted()
+						if ((readRecord(key)?.revision ?? '') !== initialRevision) {
+							throw createAbortError()
+						}
+						const validated = schema.parse(value)
+						validate?.(validated)
 						writeRecord(key, {
-							data: previous?.data,
-							failureAt: getCurrentTimestamp(),
-							failureId: crypto.randomUUID(),
-							hasValue: previous?.hasValue ?? false,
-							id: previous?.id ?? crypto.randomUUID(),
+							data: validated,
+							hasValue: true,
+							id: crypto.randomUUID(),
 							revision: initialRevision,
-							updatedAt: previous?.updatedAt ?? getCurrentTimestamp(),
+							updatedAt: getCurrentTimestamp(),
 							version: 1,
 						})
+						return validated
+					} catch (error) {
+						if (
+							!controller.signal.aborted &&
+							!(error instanceof Error && error.name === 'AbortError') &&
+							(readRecord(key)?.revision ?? '') === initialRevision
+						) {
+							const previous = readRecord(key)
+							writeRecord(key, {
+								data: previous?.data,
+								failureAt: getCurrentTimestamp(),
+								failureId: crypto.randomUUID(),
+								hasValue: previous?.hasValue ?? false,
+								id: previous?.id ?? crypto.randomUUID(),
+								revision: initialRevision,
+								updatedAt: previous?.updatedAt ?? getCurrentTimestamp(),
+								version: 1,
+							})
+						}
+						throw error
+					} finally {
+						clearTimeout(timeout)
 					}
-					throw error
-				} finally {
-					clearTimeout(timeout)
-				}
-			},
-		})
+				},
+			})
+			if (result !== WAIT_FOR_VISIBILITY) return result
+		}
 	} finally {
 		signal?.removeEventListener('abort', handleAbort)
 		activeRequests.delete(request)
@@ -216,6 +226,7 @@ const STORAGE_PREFIX = 'weather-please:shared-resource:v1:'
 const CHANNEL_NAME = 'weather-please:shared-resources:v1'
 const MAX_RECORDS = 64
 const MAX_STORED_BYTES = 2_000_000
+const WAIT_FOR_VISIBILITY = Symbol('wait-for-visibility')
 const recordSchema = z.object({
 	data: z.unknown().optional(),
 	failureAt: z.number().optional(),
@@ -472,15 +483,12 @@ const ensureTransport = () => {
 		document.addEventListener('resume', handleActive)
 		window.addEventListener('pageshow', handleActive)
 		document.addEventListener('visibilitychange', () => {
-			if (document.visibilityState === 'hidden') handleInactive()
-			else handleActive()
+			// A tab switch must not discard partially completed work. The owner
+			// finishes and broadcasts; pagehide/freeze still release its lock.
+			if (document.visibilityState !== 'hidden') handleActive()
 		})
 	}
-	if (
-		!channel &&
-		document.visibilityState !== 'hidden' &&
-		typeof window.BroadcastChannel === 'function'
-	) {
+	if (!channel && typeof window.BroadcastChannel === 'function') {
 		try {
 			channel = new BroadcastChannel(CHANNEL_NAME)
 			channel.addEventListener('message', (event: MessageEvent<unknown>) => {

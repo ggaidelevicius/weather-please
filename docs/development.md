@@ -68,13 +68,17 @@ updates. Weather keys include the location and relevant settings; calendar
 requests use account-specific locks, with a separate short lock for updating the
 stored account list.
 
-Closing a tab releases its browser locks. Hiding or freezing a page cancels its
-requests, and stalled requests time out. Waiting visible tabs can then take
-ownership; resumed tabs check the cache again. Shared cache generations reject
-late results after invalidation, and concurrent manual refreshes share the same
-request. Website tabs and extension tabs coordinate within their own origins.
-Unavailable browser storage falls back to memory and broadcast results; without
-Web Locks, request deduplication is limited to the current tab.
+Switching tabs lets the current owner finish its in-flight requests and share
+the result. Waiting tabs recheck the cache and visibility after acquiring a
+lock, so hidden tabs release it without starting network requests. Closing or
+freezing a page cancels its requests and releases ownership; stalled requests
+time out. Waiting visible tabs can then take over, and resumed tabs reuse any
+ongoing refresh or check the cache before starting another. Shared cache
+generations reject late results after invalidation, and concurrent manual
+refreshes share the same request. Website tabs and extension tabs coordinate
+within their own origins. Unavailable browser storage falls back to memory and
+broadcast results; without Web Locks, request deduplication is limited to the
+current tab.
 
 ## Verification
 

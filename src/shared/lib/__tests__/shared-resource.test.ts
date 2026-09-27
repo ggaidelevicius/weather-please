@@ -348,21 +348,99 @@ describe('shared resource ownership', () => {
 		expect(await request).toEqual({ value: 'visible' })
 	})
 
-	it('cancels work on hiding and rejects late responses', async () => {
+	it('finishes owned work when hidden and shares it without another fetch', async () => {
 		const visibility = vi
 			.spyOn(document, 'visibilityState', 'get')
 			.mockReturnValue('visible')
 		const response = deferred<{ value: string }>()
 		const fetcher = vi.fn(() => response.promise)
 		const request = requestSharedResource({ fetcher, key, maxAgeMs, schema })
-		const error = expect(request).rejects.toMatchObject({ name: 'AbortError' })
+		const followerFetcher = vi.fn(async () => ({ value: 'duplicate' }))
+		const follower = requestSharedResource({
+			fetcher: followerFetcher,
+			key,
+			maxAgeMs,
+			schema,
+		})
+		const results = Promise.all([request, follower])
 		await vi.waitFor(() => expect(fetcher).toHaveBeenCalledOnce())
 		visibility.mockReturnValue('hidden')
 		document.dispatchEvent(new Event('visibilitychange'))
-		await error
-		response.resolve({ value: 'late' })
-		await response.promise
-		expect(readSharedResource({ key, schema })).toBeNull()
+		response.resolve({ value: 'completed' })
+		expect(await results).toEqual([
+			{ value: 'completed' },
+			{ value: 'completed' },
+		])
+		expect(followerFetcher).not.toHaveBeenCalled()
+		expect(readSharedResource({ key, schema })?.value).toEqual({
+			value: 'completed',
+		})
+	})
+
+	it('releases a queued lock without fetching if the waiting tab became hidden', async () => {
+		const locks = createLocks()
+		vi.stubGlobal('navigator', { locks })
+		const visibility = vi
+			.spyOn(document, 'visibilityState', 'get')
+			.mockReturnValue('visible')
+		const blocker = deferred<void>()
+		const blocking = locks.request(
+			storagePrefix + key,
+			{ signal: new AbortController().signal },
+			() => blocker.promise,
+		)
+		const fetcher = vi.fn(async () => ({ value: 'visible owner' }))
+		const request = requestSharedResource({ fetcher, key, maxAgeMs, schema })
+		await vi.waitFor(() => expect(locks.request).toHaveBeenCalledTimes(2))
+		visibility.mockReturnValue('hidden')
+		document.dispatchEvent(new Event('visibilitychange'))
+		blocker.resolve(undefined)
+		await blocking
+		await locks.request.mock.results[1].value
+		expect(fetcher).not.toHaveBeenCalled()
+		await expect(
+			locks.request(
+				storagePrefix + key,
+				{ signal: new AbortController().signal },
+				async () => 'lock is available',
+			),
+		).resolves.toBe('lock is available')
+		visibility.mockReturnValue('visible')
+		document.dispatchEvent(new Event('visibilitychange'))
+		expect(await request).toEqual({ value: 'visible owner' })
+		expect(fetcher).toHaveBeenCalledOnce()
+	})
+
+	it('keeps the hidden owner’s broadcast channel available when storage writes fail', async () => {
+		const close = vi.fn()
+		const postMessage = vi.fn()
+		vi.stubGlobal(
+			'BroadcastChannel',
+			vi.fn(function () {
+				return { addEventListener: vi.fn(), close, postMessage }
+			}),
+		)
+		vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+			throw new DOMException('Full', 'QuotaExceededError')
+		})
+		const visibility = vi
+			.spyOn(document, 'visibilityState', 'get')
+			.mockReturnValue('visible')
+		const response = deferred<{ value: string }>()
+		const fetcher = vi.fn(() => response.promise)
+		const request = requestSharedResource({ fetcher, key, maxAgeMs, schema })
+		await vi.waitFor(() => expect(fetcher).toHaveBeenCalledOnce())
+		visibility.mockReturnValue('hidden')
+		document.dispatchEvent(new Event('visibilitychange'))
+		response.resolve({ value: 'broadcast while hidden' })
+		await request
+		expect(close).not.toHaveBeenCalled()
+		expect(postMessage).toHaveBeenCalledWith({
+			key,
+			record: expect.objectContaining({
+				data: { value: 'broadcast while hidden' },
+			}),
+		})
 	})
 
 	it('invalidates pending responses and lets a new request use the new generation', async () => {

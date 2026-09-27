@@ -568,6 +568,127 @@ describe('shared weather fetching', () => {
 		},
 	)
 
+	it('keeps one forecast and air-quality request across tab switches and repeated resume events', async () => {
+		const identity = createIdentity()
+		const visibility = vi.spyOn(document, 'visibilityState', 'get')
+		visibility.mockReturnValue('visible')
+		let completeAirQuality: ((response: Response) => void) | undefined
+		let airQualitySignal: AbortSignal | null | undefined
+		let forecastSignal: AbortSignal | null | undefined
+		const fetchSpy = vi
+			.spyOn(globalThis, 'fetch')
+			.mockImplementation(async (input, init) => {
+				const url = String(input)
+				if (url.includes('air-quality')) {
+					airQualitySignal = init?.signal
+					return new Promise<Response>((resolve) => {
+						completeAirQuality = resolve
+					})
+				}
+				if (url.includes('forecast_hours')) return Response.json(mapResponse)
+				forecastSignal = init?.signal
+				return Response.json(createWeatherResponse())
+			})
+		const first = renderHook(() =>
+			useWeather(identity.lat, identity.lon, 0, false),
+		)
+		const second = renderHook(() =>
+			useWeather(identity.lat, identity.lon, 0, false),
+		)
+		await waitFor(() => expect(fetchSpy).toHaveBeenCalledTimes(2))
+		act(() => {
+			visibility.mockReturnValue('hidden')
+			document.dispatchEvent(new Event('visibilitychange'))
+		})
+		expect(forecastSignal?.aborted).toBe(false)
+		expect(airQualitySignal?.aborted).toBe(false)
+		visibility.mockReturnValue('visible')
+		await act(async () => {
+			window.dispatchEvent(new Event('pageshow'))
+			document.dispatchEvent(new Event('resume'))
+			document.dispatchEvent(new Event('visibilitychange'))
+		})
+		expect(forecastSignal?.aborted).toBe(false)
+		expect(airQualitySignal?.aborted).toBe(false)
+		expect(fetchSpy).toHaveBeenCalledTimes(2)
+		await act(async () => {
+			completeAirQuality?.(
+				Response.json({ hourly: { time: [], uv_index: [] } }),
+			)
+		})
+		await waitFor(() => {
+			expect(first.result.current.weatherMapData).not.toBeNull()
+			expect(second.result.current.weatherMapData).not.toBeNull()
+		})
+		expect(fetchSpy).toHaveBeenCalledTimes(3)
+	})
+
+	it('keeps the existing map request when a tab becomes visible again', async () => {
+		const identity = createIdentity()
+		let completeMap: ((response: Response) => void) | undefined
+		let mapSignal: AbortSignal | null | undefined
+		const fetchSpy = vi
+			.spyOn(globalThis, 'fetch')
+			.mockImplementation(async (input, init) => {
+				const url = String(input)
+				if (url.includes('air-quality'))
+					return Response.json({ hourly: { time: [], uv_index: [] } })
+				if (url.includes('forecast_hours')) {
+					mapSignal = init?.signal
+					return new Promise<Response>((resolve) => {
+						completeMap = resolve
+					})
+				}
+				return Response.json(createWeatherResponse())
+			})
+		const { result } = renderHook(() =>
+			useWeather(identity.lat, identity.lon, 0, false),
+		)
+		await waitFor(() => expect(completeMap).toBeDefined())
+		await act(async () => {
+			window.dispatchEvent(new Event('pageshow'))
+			document.dispatchEvent(new Event('visibilitychange'))
+		})
+		expect(mapSignal?.aborted).toBe(false)
+		expect(fetchSpy).toHaveBeenCalledTimes(3)
+		await act(async () => {
+			completeMap?.(Response.json(mapResponse))
+		})
+		await waitFor(() => expect(result.current.weatherMapData).not.toBeNull())
+		expect(fetchSpy).toHaveBeenCalledTimes(3)
+	})
+
+	it('retries a frozen request even when resume arrives before cancellation settles', async () => {
+		const identity = createIdentity()
+		let forecastRequests = 0
+		let airQualityRequests = 0
+		let interruptedSignal: AbortSignal | null | undefined
+		vi.spyOn(globalThis, 'fetch').mockImplementation(async (input, init) => {
+			const url = String(input)
+			if (url.includes('air-quality')) {
+				airQualityRequests += 1
+				if (airQualityRequests === 1) return new Promise<Response>(() => {})
+				return Response.json({ hourly: { time: [], uv_index: [] } })
+			}
+			if (url.includes('forecast_hours')) return Response.json(mapResponse)
+			forecastRequests += 1
+			if (forecastRequests === 1) interruptedSignal = init?.signal
+			return Response.json(createWeatherResponse())
+		})
+		const { result } = renderHook(() =>
+			useWeather(identity.lat, identity.lon, 0, false),
+		)
+		await waitFor(() => expect(airQualityRequests).toBe(1))
+		await act(async () => {
+			document.dispatchEvent(new Event('freeze'))
+			document.dispatchEvent(new Event('resume'))
+		})
+		expect(interruptedSignal?.aborted).toBe(true)
+		await waitFor(() => expect(result.current.weatherMapData).not.toBeNull())
+		expect(forecastRequests).toBe(2)
+		expect(airQualityRequests).toBe(2)
+	})
+
 	it('pauses routine refreshes while hidden and refreshes on return', async () => {
 		vi.useFakeTimers()
 		vi.setSystemTime(getTimestamp('2026-09-27T10:30'))

@@ -10,6 +10,7 @@ export default defineConfig({
 		'react-dashboard.spec.ts',
 		'shared-resource.spec.ts',
 		'temporal.spec.ts',
+		'weather-sharing.spec.ts',
 	],
 	timeout: 20_000,
 	workers: 1,

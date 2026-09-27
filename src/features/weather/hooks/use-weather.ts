@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 
 import { AsyncStatus } from '../../../shared/hooks/async-status'
 import { isLocationInAustralia } from '../../../shared/lib/location'
@@ -31,6 +31,12 @@ import {
 } from '../services/shared-weather'
 
 export type { Alerts } from '../model/types'
+
+type PendingWeatherRequest = {
+	controller: AbortController
+	refreshAfterInterruption: (() => void) | null
+	store: WeatherSession['store']
+}
 
 type WeatherSession = {
 	error: Error | null
@@ -74,6 +80,7 @@ export const useWeather = (
 			}),
 		)
 	}
+	const pendingRequestRef = useRef<null | PendingWeatherRequest>(null)
 	const { identity, refreshToken, shouldForceRefresh, store } = session
 	const cached = useSyncExternalStore(
 		store.subscribe,
@@ -84,32 +91,44 @@ export const useWeather = (
 	useEffect(() => {
 		if (!identity.lat || !identity.lon) return
 		const controller = new AbortController()
-		const fetchMap = () =>
-			requestSharedWeatherMap({
-				...identity,
-				force: shouldForceRefresh,
-				signal: controller.signal,
-			}).catch((error: unknown) => {
-				if (controller.signal.aborted || isAbortError(error)) return
-				console.error('Weather map fetch error:', error)
-			})
-		const current = store.getSnapshot()
-		if (
-			refreshToken === 0 &&
-			locationChangeToken === 0 &&
-			current &&
-			isWeatherCacheFresh({ cached: current })
-		) {
-			if (current.weatherData.length > 0 && !current.weatherMapData)
-				void fetchMap()
-			return () => controller.abort()
+		const pending: PendingWeatherRequest = {
+			controller,
+			refreshAfterInterruption: null,
+			store,
 		}
-		void requestSharedWeather({
-			...identity,
-			force: shouldForceRefresh,
-			signal: controller.signal,
-		})
-			.then(() => {
+		pendingRequestRef.current = pending
+		let hasInterrupted = false
+		const fetchMap = async () => {
+			try {
+				await requestSharedWeatherMap({
+					...identity,
+					force: shouldForceRefresh,
+					signal: controller.signal,
+				})
+			} catch (error) {
+				if (isAbortError(error)) hasInterrupted = true
+				else if (!controller.signal.aborted)
+					console.error('Weather map fetch error:', error)
+			}
+		}
+		const fetchWeather = async () => {
+			const current = store.getSnapshot()
+			if (
+				refreshToken === 0 &&
+				locationChangeToken === 0 &&
+				current &&
+				isWeatherCacheFresh({ cached: current })
+			) {
+				if (current.weatherData.length > 0 && !current.weatherMapData)
+					await fetchMap()
+				return
+			}
+			try {
+				await requestSharedWeather({
+					...identity,
+					force: shouldForceRefresh,
+					signal: controller.signal,
+				})
 				if (controller.signal.aborted) return
 				setSession((previous) =>
 					previous.store === store && previous.refreshToken === refreshToken
@@ -121,10 +140,13 @@ export const useWeather = (
 							}
 						: previous,
 				)
-				void fetchMap()
-			})
-			.catch((fetchError: unknown) => {
-				if (controller.signal.aborted || isAbortError(fetchError)) return
+				await fetchMap()
+			} catch (fetchError) {
+				if (isAbortError(fetchError)) {
+					hasInterrupted = true
+					return
+				}
+				if (controller.signal.aborted) return
 				const error =
 					fetchError instanceof Error
 						? fetchError
@@ -142,8 +164,20 @@ export const useWeather = (
 							}
 						: previous,
 				)
-			})
-		return () => controller.abort()
+			}
+		}
+		void fetchWeather().finally(() => {
+			if (pendingRequestRef.current !== pending) return
+			pendingRequestRef.current = null
+			if (hasInterrupted && !controller.signal.aborted) {
+				pending.refreshAfterInterruption?.()
+			}
+		})
+		return () => {
+			controller.abort()
+			if (pendingRequestRef.current === pending)
+				pendingRequestRef.current = null
+		}
 	}, [identity, locationChangeToken, refreshToken, shouldForceRefresh, store])
 
 	useEffect(() => {
@@ -161,22 +195,34 @@ export const useWeather = (
 			)
 		const handleRefresh = () => {
 			if (document.visibilityState === 'hidden') return
+			const pending = pendingRequestRef.current
+			if (pending?.store === store && !pending.controller.signal.aborted) {
+				// A focus event must not cancel the owner or restart a queued follower.
+				pending.refreshAfterInterruption = handleRefresh
+				return
+			}
 			const current = store.getSnapshot()
-			if (!current || !isWeatherCacheFresh({ cached: current }))
+			if (
+				!current ||
+				!isWeatherCacheFresh({ cached: current }) ||
+				!current.weatherMapData
+			)
 				requestRefresh()
 		}
-		const handleVisibilityChange = () => {
-			if (document.visibilityState !== 'hidden') requestRefresh()
-		}
 		const interval = setInterval(handleRefresh, CACHE_REFRESH_INTERVAL_MS)
-		document.addEventListener('visibilitychange', handleVisibilityChange)
-		document.addEventListener('resume', handleVisibilityChange)
-		window.addEventListener('pageshow', handleVisibilityChange)
+		document.addEventListener('visibilitychange', handleRefresh)
+		document.addEventListener('resume', handleRefresh)
+		window.addEventListener('pageshow', handleRefresh)
 		return () => {
+			if (
+				pendingRequestRef.current?.refreshAfterInterruption === handleRefresh
+			) {
+				pendingRequestRef.current.refreshAfterInterruption = null
+			}
 			clearInterval(interval)
-			document.removeEventListener('visibilitychange', handleVisibilityChange)
-			document.removeEventListener('resume', handleVisibilityChange)
-			window.removeEventListener('pageshow', handleVisibilityChange)
+			document.removeEventListener('visibilitychange', handleRefresh)
+			document.removeEventListener('resume', handleRefresh)
+			window.removeEventListener('pageshow', handleRefresh)
 		}
 	}, [identity, store])
 

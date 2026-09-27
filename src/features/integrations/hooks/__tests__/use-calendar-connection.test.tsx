@@ -723,26 +723,50 @@ describe('shared calendar fetching', () => {
 		expect(second.result.current.events[0]?.id).toBe('replacement')
 	})
 
-	it('releases a hidden tab request and refreshes immediately when visible again', async () => {
-		const abandoned = createDeferred()
-		const resumed = createDeferred()
-		fetchEvents
-			.mockReturnValueOnce(abandoned.promise)
-			.mockReturnValueOnce(resumed.promise)
+	it('lets a hidden tab finish its request without starting over on return', async () => {
+		const pending = createDeferred()
+		fetchEvents.mockReturnValueOnce(pending.promise)
 		const { result } = renderHook(() => useCalendarConnection())
 		await waitFor(() => expect(fetchEvents).toHaveBeenCalledOnce())
 		const visibility = vi.spyOn(document, 'visibilityState', 'get')
 		visibility.mockReturnValue('hidden')
 		await act(async () => document.dispatchEvent(new Event('visibilitychange')))
-		expect(result.current.eventsStatus).not.toBe(AsyncStatus.Error)
+		expect(fetchEvents.mock.calls[0][0].signal.aborted).toBe(false)
+		await act(async () => pending.resolve([event('completed-while-hidden')]))
+		expect(result.current.events[0]?.id).toBe('completed-while-hidden')
+		expect(result.current.eventsStatus).toBe(AsyncStatus.Success)
 		visibility.mockReturnValue('visible')
-		act(() => document.dispatchEvent(new Event('visibilitychange')))
-		await waitFor(() => expect(fetchEvents).toHaveBeenCalledTimes(2))
-		await act(async () => resumed.resolve([event('visible')]))
-		await waitFor(() => expect(result.current.events[0]?.id).toBe('visible'))
-		await act(async () => abandoned.resolve([event('hidden')]))
-		expect(result.current.events[0]?.id).toBe('visible')
+		await act(async () => document.dispatchEvent(new Event('visibilitychange')))
+		expect(result.current.events[0]?.id).toBe('completed-while-hidden')
+		expect(fetchEvents).toHaveBeenCalledOnce()
 	})
+
+	it.each(['freeze', 'pagehide'] as const)(
+		'abandons a request on %s and retries when the page resumes',
+		async (inactiveEvent) => {
+			const abandoned = createDeferred()
+			const resumed = createDeferred()
+			fetchEvents
+				.mockReturnValueOnce(abandoned.promise)
+				.mockReturnValueOnce(resumed.promise)
+			const { result } = renderHook(() => useCalendarConnection())
+			await waitFor(() => expect(fetchEvents).toHaveBeenCalledOnce())
+			const target = inactiveEvent === 'freeze' ? document : window
+			await act(async () => target.dispatchEvent(new Event(inactiveEvent)))
+			expect(fetchEvents.mock.calls[0][0].signal.aborted).toBe(true)
+			expect(result.current.eventsStatus).not.toBe(AsyncStatus.Error)
+			act(() =>
+				target.dispatchEvent(
+					new Event(inactiveEvent === 'freeze' ? 'resume' : 'pageshow'),
+				),
+			)
+			await waitFor(() => expect(fetchEvents).toHaveBeenCalledTimes(2))
+			await act(async () => resumed.resolve([event('resumed')]))
+			await waitFor(() => expect(result.current.events[0]?.id).toBe('resumed'))
+			await act(async () => abandoned.resolve([event('abandoned')]))
+			expect(result.current.events[0]?.id).toBe('resumed')
+		},
+	)
 
 	it('merges concurrent account rotations, category edits, and external additions under the mutation lock', async () => {
 		const firstAccount = createAccount({

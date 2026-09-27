@@ -183,7 +183,7 @@ describe('shared periodic location checks', () => {
 		expect(getCurrentPosition).toHaveBeenCalledTimes(1)
 	})
 
-	it('discards a late location callback after hiding and starts a fresh check when visible', async () => {
+	it('finishes a pending location check while hidden and reuses it on return', async () => {
 		const onLocationChange = vi.fn()
 		const visibility = vi.spyOn(document, 'visibilityState', 'get')
 		renderLocation(onLocationChange)
@@ -195,11 +195,37 @@ describe('shared periodic location checks', () => {
 		await act(async () =>
 			getCurrentPosition.mock.calls[0][0](createPosition(40, -74)),
 		)
+		expect(onLocationChange).toHaveBeenCalledExactlyOnceWith({
+			lat: '40',
+			lon: '-74',
+		})
+		act(() => {
+			visibility.mockReturnValue('visible')
+			document.dispatchEvent(new Event('visibilitychange'))
+		})
+		await flushWork()
+		expect(getCurrentPosition).toHaveBeenCalledTimes(1)
+		expect(onLocationChange).toHaveBeenCalledTimes(1)
+	})
+
+	it('discards a late location callback after freezing and starts a fresh check on resume', async () => {
+		const onLocationChange = vi.fn()
+		const visibility = vi.spyOn(document, 'visibilityState', 'get')
+		renderLocation(onLocationChange)
+		await flushWork()
+		act(() => {
+			visibility.mockReturnValue('hidden')
+			document.dispatchEvent(new Event('visibilitychange'))
+			document.dispatchEvent(new Event('freeze'))
+		})
+		await act(async () =>
+			getCurrentPosition.mock.calls[0][0](createPosition(40, -74)),
+		)
 		expect(onLocationChange).not.toHaveBeenCalled()
 
 		act(() => {
 			visibility.mockReturnValue('visible')
-			document.dispatchEvent(new Event('visibilitychange'))
+			document.dispatchEvent(new Event('resume'))
 		})
 		await flushWork()
 		expect(getCurrentPosition).toHaveBeenCalledTimes(2)
