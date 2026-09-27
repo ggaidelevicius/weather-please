@@ -73,9 +73,11 @@ pnpm start             # Serves the website build
 ```
 
 `pnpm build` remains an alias for the extension build. Extension builds run in a
-temporary staging directory and do not rename source directories or rewrite
-analytics imports. Website builds include analytics; extension builds exclude
-it. Vercel uses `pnpm build:web` through `vercel.json`.
+temporary staging directory containing only the `/demo` route and its shared
+page setup, so website pages and their bundles are excluded. The build does not
+rename source directories or rewrite analytics imports. Website builds include
+analytics; extension builds exclude it. Vercel uses `pnpm build:web` through
+`vercel.json`.
 
 Standalone type checks use native TypeScript 7. TypeScript 6 supplies the
 compiler API used by ESLint and other integrations. `pnpm lint` remains a
