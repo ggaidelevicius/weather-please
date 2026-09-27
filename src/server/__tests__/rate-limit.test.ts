@@ -3,10 +3,21 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { prisma } from '../prisma'
 import { enforceRateLimit } from '../rate-limit'
 
+const transactionClient = vi.hoisted(() => ({
+	rateLimitEntry: {
+		count: vi.fn(),
+		create: vi.fn(),
+		findFirst: vi.fn(),
+	},
+}))
+
 // Mock Prisma
 vi.mock('../prisma', () => ({
 	prisma: {
-		$transaction: vi.fn(),
+		$transaction: vi.fn(
+			(work: (client: typeof transactionClient) => Promise<unknown>) =>
+				work(transactionClient),
+		),
 		rateLimitEntry: {
 			deleteMany: vi.fn(),
 		},
@@ -23,6 +34,7 @@ describe('enforceRateLimit', () => {
 
 	afterEach(() => {
 		vi.clearAllMocks()
+		vi.useRealTimers()
 	})
 
 	// Helper to create mock headers with IP
@@ -151,5 +163,45 @@ describe('enforceRateLimit', () => {
 
 		// The key should be based on the first IP in x-forwarded-for
 		expect(prisma.$transaction).toHaveBeenCalled()
+	})
+
+	it('passes an absolute one-hour window to the database across a DST transition', async () => {
+		vi.useFakeTimers()
+		vi.setSystemTime(
+			Temporal.Instant.from('2026-11-01T06:30:00Z').epochMilliseconds,
+		)
+		transactionClient.rateLimitEntry.count.mockResolvedValueOnce(0)
+		transactionClient.rateLimitEntry.create.mockResolvedValueOnce({})
+
+		expect(
+			await enforceRateLimit({
+				headers: createHeaders('192.168.8.1'),
+				scope: 'server-action',
+			}),
+		).toEqual({ ok: true })
+		expect(transactionClient.rateLimitEntry.count).toHaveBeenCalledWith({
+			where: {
+				createdAt: { gte: '2026-11-01T05:30:00Z' },
+				key: 'server-action:ip:192.168.8.1',
+			},
+		})
+	})
+
+	it('calculates retry seconds from the database timestamp and current instant', async () => {
+		vi.useFakeTimers()
+		vi.setSystemTime(
+			Temporal.Instant.from('2026-11-01T06:30:00Z').epochMilliseconds,
+		)
+		transactionClient.rateLimitEntry.count.mockResolvedValueOnce(5)
+		transactionClient.rateLimitEntry.findFirst.mockResolvedValueOnce({
+			createdAt: new Date('2026-11-01T05:31:30Z'),
+		})
+
+		expect(
+			await enforceRateLimit({
+				headers: createHeaders('192.168.8.2'),
+				scope: 'server-action',
+			}),
+		).toEqual({ ok: false, retryAfter: 90 })
 	})
 })

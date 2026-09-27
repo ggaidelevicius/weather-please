@@ -5,6 +5,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { CalendarEvent } from '../../model/calendar-event'
 
+import {
+	getCurrentTimestamp,
+	getSystemTimeZone,
+} from '../../../../shared/lib/time'
 import { UpcomingEvents } from '../upcoming-events'
 
 class ResizeObserverMock implements ResizeObserver {
@@ -55,7 +59,7 @@ describe('UpcomingEvents', () => {
 					createEvent({
 						description: null,
 						id: 'event-without-description',
-						startTimestamp: Date.now() + 7_200_000,
+						startTimestamp: getCurrentTimestamp() + 7_200_000,
 						subject: 'Coffee with Alex',
 					}),
 				]}
@@ -94,9 +98,38 @@ describe('UpcomingEvents', () => {
 		).toBeInTheDocument()
 	})
 
+	it('groups tomorrow by the viewer calendar date across a daylight-saving change', () => {
+		const timeZone = 'America/New_York'
+		const now = Temporal.ZonedDateTime.from(`2026-03-07T23:30[${timeZone}]`)
+		vi.spyOn(Temporal.Now, 'instant').mockReturnValue(now.toInstant())
+		vi.spyOn(Temporal.Now, 'timeZoneId').mockReturnValue(timeZone)
+		const appointment = Temporal.ZonedDateTime.from(
+			`2026-03-08T09:30[${timeZone}]`,
+		)
+		render(
+			<UpcomingEvents
+				accounts={[]}
+				events={[
+					createEvent({
+						endTimestamp: appointment.add({ hours: 1 }).epochMilliseconds,
+						startTimestamp: appointment.epochMilliseconds,
+					}),
+				]}
+				locale="en-US"
+			/>,
+		)
+
+		expect(screen.getByText('Tomorrow • March 8')).toBeInTheDocument()
+		expect(screen.getByText('9:30 AM')).toBeInTheDocument()
+		expect(screen.getByText('1h')).toBeInTheDocument()
+	})
+
 	it('keeps the overflow fade in sync when events are replaced and regrouped without changing their count', () => {
-		const now = new Date(2026, 8, 20, 8).getTime()
-		vi.spyOn(Date, 'now').mockReturnValue(now)
+		const instant = Temporal.PlainDateTime.from('2026-09-20T08:00')
+			.toZonedDateTime(getSystemTimeZone())
+			.toInstant()
+		const now = instant.epochMilliseconds
+		vi.spyOn(Temporal.Now, 'instant').mockReturnValue(instant)
 		const { rerender, unmount } = render(
 			<UpcomingEvents
 				accounts={[]}
@@ -161,12 +194,12 @@ const createEvent = (
 ): CalendarEvent => ({
 	accountId: 'account-1',
 	description: null,
-	endTimestamp: Date.now() + 3_600_000,
+	endTimestamp: getCurrentTimestamp() + 3_600_000,
 	icalUid: null,
 	id: 'event-1',
 	isAllDay: false,
 	location: null,
-	startTimestamp: Date.now() + 1_800_000,
+	startTimestamp: getCurrentTimestamp() + 1_800_000,
 	subject: 'Calendar event',
 	webLink: null,
 	...overrides,

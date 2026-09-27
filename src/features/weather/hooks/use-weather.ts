@@ -5,6 +5,7 @@ import {
 	isLoadingStatus,
 } from '../../../shared/hooks/async-status'
 import { isLocationInAustralia } from '../../../shared/lib/location'
+import { getCurrentDateTime } from '../../../shared/lib/time'
 import { getUserTimeZone } from '../api/weather-api'
 import {
 	createEmptyAlerts,
@@ -34,7 +35,7 @@ type WeatherAction =
 			alertData: Alerts
 			degradedForecast: null | {
 				error: Error
-				lastUpdatedDate: Date
+				lastUpdatedDate: Temporal.Instant
 			}
 			next24HoursData: Next24HoursData
 			shouldRefresh: boolean
@@ -45,7 +46,7 @@ type WeatherAction =
 	| {
 			alertData: Alerts
 			error: Error
-			lastUpdatedDate: Date
+			lastUpdatedDate: Temporal.Instant
 			next24HoursData: Next24HoursData
 			type: 'fetch-degraded-cache'
 			weatherData: [] | Data
@@ -85,7 +86,7 @@ type WeatherState = {
 	alertData: Alerts
 	degradedForecast: null | {
 		error: Error
-		lastUpdatedDate: Date
+		lastUpdatedDate: Temporal.Instant
 	}
 	error: Error | null
 	next24HoursData: [] | Next24HoursData
@@ -204,12 +205,11 @@ const getReducedCachedWeather = ({
 	now,
 }: {
 	cached: CachedWeather
-	now: Date
+	now: Temporal.ZonedDateTime
 }) => {
-	const nowSeconds = Math.floor(now.getTime() / 1000)
-	const todayStart = new Date(now)
-	todayStart.setHours(0, 0, 0, 0)
-	const todayStartSeconds = Math.floor(todayStart.getTime() / 1000)
+	const nowSeconds = Math.floor(now.epochMilliseconds / 1000)
+	const todayStart = now.startOfDay()
+	const todayStartSeconds = Math.floor(todayStart.epochMilliseconds / 1000)
 	const next24HoursData = cached.next24HoursData
 		.filter(({ time }) => time >= nowSeconds)
 		.slice(0, NEXT_24_HOURS_FORECAST_HOURS)
@@ -324,7 +324,7 @@ export const useWeather = (
 
 				const cached = readSharedWeatherCache(identity)
 				const reducedCached = cached
-					? getReducedCachedWeather({ cached, now: new Date() })
+					? getReducedCachedWeather({ cached, now: getCurrentDateTime() })
 					: null
 
 				if (cached && reducedCached) {
@@ -397,7 +397,7 @@ export const useWeather = (
 			onChange: () => {
 				const cached = readSharedWeatherCache(identity)
 				if (!cached || cached.isDegraded) return
-				const updatedAt = cached.lastUpdatedDate.getTime()
+				const updatedAt = cached.lastUpdatedDate.epochMilliseconds
 				if (updatedAt < lastAppliedAtRef.current) return
 				lastAppliedAtRef.current = updatedAt
 				dispatch({ ...cached, type: 'fetch-success' })
@@ -468,17 +468,18 @@ export const useWeather = (
 			shouldUseAirQualityUv,
 			timeZone: userTimeZone,
 		})
-		const now = new Date()
+		const now = getCurrentDateTime()
 		if (
 			!cached ||
-			now.getTime() - cached.lastUpdatedDate.getTime() > CACHE_VALIDITY_MS ||
-			cached.lastUpdatedDate.getTime() > now.getTime()
+			now.epochMilliseconds - cached.lastUpdatedDate.epochMilliseconds >
+				CACHE_VALIDITY_MS ||
+			cached.lastUpdatedDate.epochMilliseconds > now.epochMilliseconds
 		) {
 			dispatch({ type: 'use-network' })
 			return
 		}
 
-		lastAppliedAtRef.current = cached.lastUpdatedDate.getTime()
+		lastAppliedAtRef.current = cached.lastUpdatedDate.epochMilliseconds
 		const reducedCached = cached.isDegraded
 			? getReducedCachedWeather({ cached, now })
 			: null
@@ -496,7 +497,10 @@ export const useWeather = (
 					}
 				: null,
 			next24HoursData: reducedCached?.next24HoursData ?? cached.next24HoursData,
-			shouldRefresh: !isWeatherCacheFresh({ cached, now: now.getTime() }),
+			shouldRefresh: !isWeatherCacheFresh({
+				cached,
+				now: now.epochMilliseconds,
+			}),
 			type: 'hydrate-cache',
 			weatherData: reducedCached?.weatherData ?? cached.weatherData,
 			weatherMapData: reducedCached?.weatherMapData ?? cached.weatherMapData,

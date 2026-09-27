@@ -8,6 +8,7 @@ import type {
 	RelativeHourLabelProps,
 } from '../../model/detail-types'
 
+import { getDateTime } from '../../../../shared/lib/time'
 import {
 	formatHour,
 	formatWeekdayHour,
@@ -206,10 +207,11 @@ export const RelativeHourLabel = ({
 		return formatHour(time)
 	}
 
-	const date = new Date(time * 1000)
-	const referenceDate = new Date(referenceTime * 1000)
-	const tomorrowDate = new Date(referenceDate)
-	tomorrowDate.setDate(referenceDate.getDate() + 1)
+	const date = getDateTime({ timestamp: time * 1000 }).toPlainDate()
+	const referenceDate = getDateTime({
+		timestamp: referenceTime * 1000,
+	}).toPlainDate()
+	const tomorrowDate = referenceDate.add({ days: 1 })
 
 	if (isSameLocalDate(date, referenceDate)) {
 		return <Trans>{formatHour(time)} today</Trans>
@@ -224,7 +226,7 @@ export const RelativeHourLabel = ({
 
 export const WeekdayHourLabel = ({ time }: Readonly<{ time: number }>) => {
 	const weekday = new Intl.DateTimeFormat('en', { weekday: 'short' }).format(
-		new Date(time * 1000),
+		time * 1000,
 	)
 	const hour = formatHour(time)
 
@@ -267,8 +269,8 @@ export const HourIntervalLabel = ({
 		return null
 	}
 
-	const startDate = new Date(startTime * 1000)
-	const endDate = new Date(endTime * 1000)
+	const startDate = getDateTime({ timestamp: startTime * 1000 }).toPlainDate()
+	const endDate = getDateTime({ timestamp: endTime * 1000 }).toPlainDate()
 	if (typeof referenceTime !== 'number') {
 		return (
 			<Trans>
@@ -277,9 +279,10 @@ export const HourIntervalLabel = ({
 		)
 	}
 
-	const referenceDate = new Date(referenceTime * 1000)
-	const tomorrowDate = new Date(referenceDate)
-	tomorrowDate.setDate(referenceDate.getDate() + 1)
+	const referenceDate = getDateTime({
+		timestamp: referenceTime * 1000,
+	}).toPlainDate()
+	const tomorrowDate = referenceDate.add({ days: 1 })
 
 	if (isSameLocalDate(startDate, endDate)) {
 		if (isSameLocalDate(endDate, referenceDate)) {

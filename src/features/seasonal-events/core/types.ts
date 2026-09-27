@@ -51,7 +51,7 @@ export type SeasonalEvent = {
 import type { ReactElement } from 'react'
 
 export type SeasonalEventContext = {
-	date: Date
+	date: Temporal.PlainDate
 	hemisphere: Hemisphere
 }
 

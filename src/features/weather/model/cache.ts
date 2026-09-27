@@ -8,6 +8,10 @@ import {
 	writeLocalStorage,
 } from '../../../shared/lib/local-storage'
 import {
+	getCurrentTimestamp,
+	getSystemTimeZone,
+} from '../../../shared/lib/time'
+import {
 	alertSchema,
 	CACHE_VALIDITY_MS,
 	dataSchema,
@@ -18,16 +22,24 @@ import {
 const LEGACY_LAST_UPDATED_PATTERN = /^\d{4}-\d{1,2}-\d{1,2}-\d{1,2}$/
 const WEATHER_CACHE_DEGRADED_KEY = 'weatherCacheDegraded'
 
-const lastUpdatedSchema = z.union([
-	z.iso.datetime().transform((value) => new Date(value)),
-	z
-		.string()
-		.regex(LEGACY_LAST_UPDATED_PATTERN)
-		.transform((value) => {
+const lastUpdatedSchema = z
+	.union([z.iso.datetime(), z.string().regex(LEGACY_LAST_UPDATED_PATTERN)])
+	.transform((value, context) => {
+		try {
+			if (value.includes('T')) return Temporal.Instant.from(value)
 			const [year, month, day, hour] = value.split('-').map(Number)
-			return new Date(year, month, day, hour)
-		}),
-])
+			return Temporal.ZonedDateTime.from(
+				{ day, hour, month: month + 1, timeZone: getSystemTimeZone(), year },
+				{ overflow: 'reject' },
+			).toInstant()
+		} catch {
+			context.addIssue({
+				code: 'custom',
+				message: 'Invalid weather cache timestamp',
+			})
+			return z.NEVER
+		}
+	})
 
 const readStorageItem = <T>({
 	key,
@@ -74,7 +86,7 @@ const readStorageItem = <T>({
 export type CachedWeather = {
 	alertData: Alerts
 	isDegraded: boolean
-	lastUpdatedDate: Date
+	lastUpdatedDate: Temporal.Instant
 	next24HoursData: Next24HoursData
 	weatherData: Data
 	weatherMapData: null | WeatherMapData
@@ -108,7 +120,7 @@ const readLegacyCachedWeather = () => {
 	})
 	const lastUpdatedDate = readStorageItem({
 		key: 'lastUpdated',
-		normalize: (value) => value.toISOString(),
+		normalize: (value) => value.toString({ fractionalSecondDigits: 3 }),
 		schema: lastUpdatedSchema,
 	})
 	const storedAlerts = readStorageItem({
@@ -191,7 +203,7 @@ export const getCachedWeather = ({
 }: CacheIdentity & { allowStale?: boolean }): CachedWeather | null => {
 	const cached = readCache()
 	if (!cached || !isSameIdentity(cached, identity)) return null
-	const age = Date.now() - cached.lastUpdatedDate.getTime()
+	const age = getCurrentTimestamp() - cached.lastUpdatedDate.epochMilliseconds
 	if (!allowStale && (age < 0 || age > CACHE_VALIDITY_MS)) return null
 	return cached
 }
@@ -234,7 +246,12 @@ const isSameIdentity = (left: CacheIdentity, right: CacheIdentity): boolean =>
 const persistCache = (cache: z.infer<typeof cacheSchema>): boolean =>
 	writeLocalStorage({
 		key: WEATHER_CACHE_STORAGE_KEY,
-		value: JSON.stringify(cache),
+		value: JSON.stringify({
+			...cache,
+			lastUpdatedDate: cache.lastUpdatedDate.toString({
+				fractionalSecondDigits: 3,
+			}),
+		}),
 	})
 
 const readCache = (): null | z.infer<typeof cacheSchema> => {

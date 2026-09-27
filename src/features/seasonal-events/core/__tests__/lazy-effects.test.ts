@@ -20,7 +20,9 @@ vi.mock('../../events/christmas', () => {
 describe('seasonal effect loading', () => {
 	it('loads an animation only when it runs and preserves cleanup', async () => {
 		effect.launch.mockResolvedValue(effect.cleanup)
-		const event = getSeasonalEventForDate({ date: new Date(2026, 11, 25) })
+		const event = getSeasonalEventForDate({
+			date: Temporal.PlainDate.from('2026-12-25'),
+		})
 		expect(event?.id).toBe(SeasonalEventId.ChristmasDay)
 		expect(effect.isLoaded).toBe(false)
 		const cleanup = await runSeasonalEvent({

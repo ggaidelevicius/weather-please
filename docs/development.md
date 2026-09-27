@@ -2,9 +2,17 @@
 
 ## Setup
 
-Use Node.js 24+ and the pnpm version in `package.json`. Run
-`pnpm install --frozen-lockfile`. The `/demo` dashboard works without
-environment configuration. `pnpm dev` starts the hosted development server.
+Use the pnpm version in `package.json` and run `pnpm install --frozen-lockfile`.
+The `devEngines.runtime` entry pins Node.js 26.8.1, which pnpm installs and uses
+for project commands and Git hooks, even when a terminal or editor inherits an
+older Node version. Check the project runtime with `pnpm exec node --version`.
+The `/demo` dashboard works without environment configuration. `pnpm dev` starts
+the hosted development server.
+
+Chrome 144+ and Firefox 139+ are the supported browsers. The application uses
+native Temporal throughout its date and time logic, without a polyfill. Direct
+Node commands outside pnpm also require Node 26+. Extension manifests enforce
+the corresponding browser minimums.
 
 TypeScript runs side by side using Microsoft's
 [recommended package aliases](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6-0):
@@ -86,10 +94,13 @@ onboarding, persistent settings, navigation, and CSP-compatible startup. The
 port must be free. `PLAYWRIGHT_BROWSERS_PATH` can point to a writable browser
 cache.
 
-The shared-fetch browser tests run in isolated routed pages without starting an
-application server:
+The shared-fetch and native Temporal browser tests run in isolated routed pages
+without starting an application server. Temporal checks exercise Chrome's
+Chromium engine and Firefox, including daylight-saving transitions and cache
+compatibility:
 
 ```bash
+pnpm exec playwright install chromium firefox
 pnpm exec playwright test --config=playwright.shared.config.ts
 ```
 

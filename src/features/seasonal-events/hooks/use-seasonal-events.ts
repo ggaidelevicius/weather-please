@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import type { SeasonalBackground, SeasonalEventOverride } from '../core/types'
 
+import { getCurrentDate, getCurrentDateTime } from '../../../shared/lib/time'
 import { applySeasonalEventEffectBlur } from '../core/effect-blur'
 import {
 	Hemisphere,
@@ -46,7 +47,7 @@ export const useSeasonalEvents = ({
 	shouldBlurEffects = false,
 	shouldPreferSeasonalBackgrounds = false,
 }: Readonly<UseSeasonalEventsOptions>) => {
-	const [dateKey, setDateKey] = useState(() => getDateKey(new Date()))
+	const [dateKey, setDateKey] = useState(() => getCurrentDate().toString())
 	const [activeEvent, setActiveEvent] = useState<null | SeasonalEventId>()
 	const shouldResolveActiveEvent = isHydrated && isEnabled && isOnboarded
 	if (!shouldResolveActiveEvent && activeEvent !== undefined) {
@@ -83,7 +84,7 @@ export const useSeasonalEvents = ({
 					return
 				}
 				const nextActiveEvent = seasonalEvents.getActiveSeasonalEvent({
-					date: new Date(),
+					date: getCurrentDate(),
 					enabledEvents,
 					hemisphere,
 					seasonalEventOverride,
@@ -119,13 +120,15 @@ export const useSeasonalEvents = ({
 		let timeoutId: null | ReturnType<typeof setTimeout> = null
 
 		const scheduleNextTick = () => {
-			const now = new Date()
-			const nextMidnight = new Date(now)
-			nextMidnight.setHours(24, 0, 0, 0)
-			const delay = Math.max(nextMidnight.getTime() - now.getTime(), 0)
+			const now = getCurrentDateTime()
+			const nextMidnight = now.add({ days: 1 }).startOfDay()
+			const delay = Math.max(
+				nextMidnight.epochMilliseconds - now.epochMilliseconds,
+				0,
+			)
 
 			timeoutId = setTimeout(() => {
-				setDateKey(getDateKey(new Date()))
+				setDateKey(getCurrentDate().toString())
 				scheduleNextTick()
 			}, delay)
 		}
@@ -200,6 +203,3 @@ export const useSeasonalEvents = ({
 
 	return effectiveActiveEvent
 }
-
-const getDateKey = (date: Date) =>
-	`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`

@@ -8,7 +8,7 @@ let cleanupEffect = () => {}
 
 beforeEach(() => {
 	vi.useFakeTimers({ toFake: ['Date'] })
-	vi.setSystemTime(new Date(2026, 8, 20))
+	vi.setSystemTime(atLocalTime('2026-09-20T00:00:00'))
 	vi.spyOn(performance, 'now').mockReturnValue(0)
 	vi.spyOn(document, 'hidden', 'get').mockReturnValue(false)
 	vi.stubGlobal('innerWidth', 1024)
@@ -30,8 +30,29 @@ afterEach(() => {
 
 describe('New Year celebration', () => {
 	it.each([
-		['an upcoming celebration preview', new Date(2026, 8, 20)],
-		['New Year’s Day itself', new Date(2027, 0, 1)],
+		['Pacific/Honolulu', '2027'],
+		['Pacific/Kiritimati', '2028'],
+	])(
+		'selects the celebration year from the local date in %s',
+		async (timeZone, year) => {
+			vi.spyOn(Temporal.Now, 'timeZoneId').mockReturnValue(timeZone)
+			vi.setSystemTime(
+				Temporal.Instant.from('2027-01-02T00:30:00Z').epochMilliseconds,
+			)
+			mockMotionPreference(true)
+			mockAnimationFrames()
+			mockCanvasContext()
+			cleanupEffect = await launchNewYearsCelebration()
+			expect(document.querySelector('canvas[data-new-years]')).toHaveAttribute(
+				'data-new-years',
+				year,
+			)
+		},
+	)
+
+	it.each([
+		['an upcoming celebration preview', atLocalTime('2026-09-20T00:00:00')],
+		['New Year’s Day itself', atLocalTime('2027-01-01T00:00:00')],
 	])('commemorates 2027 for %s', async (_, date) => {
 		vi.setSystemTime(date)
 		mockMotionPreference(true)
@@ -444,3 +465,8 @@ const mockMotionPreference = (isReducedMotion: boolean) => {
 		},
 	}
 }
+
+const atLocalTime = (dateTime: string) =>
+	Temporal.PlainDateTime.from(dateTime).toZonedDateTime(
+		Temporal.Now.timeZoneId(),
+	).epochMilliseconds

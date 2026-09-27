@@ -7,6 +7,7 @@ import type {
 	ViewStepDirection,
 } from '../model/view-navigation'
 
+import { getCurrentTimestamp } from '../../../shared/lib/time'
 import {
 	getHasDismissedScrollHint,
 	persistScrollHintDismissed,
@@ -125,7 +126,8 @@ export const useViewNavigation = ({
 
 	const handleViewIndicatorSelect = (viewId: ForecastViewId) => {
 		setActiveView(viewId)
-		viewSwitchCooldownUntilRef.current = Date.now() + VIEW_SWITCH_COOLDOWN_MS
+		viewSwitchCooldownUntilRef.current =
+			getCurrentTimestamp() + VIEW_SWITCH_COOLDOWN_MS
 	}
 
 	const dismissScrollHint = () => {
@@ -134,7 +136,7 @@ export const useViewNavigation = ({
 	}
 
 	const switchActiveViewByStep = (direction: ViewStepDirection) => {
-		if (Date.now() < viewSwitchCooldownUntilRef.current) {
+		if (getCurrentTimestamp() < viewSwitchCooldownUntilRef.current) {
 			return
 		}
 
@@ -147,7 +149,8 @@ export const useViewNavigation = ({
 		if (nextViewId !== activeAvailableViewId) {
 			dismissScrollHint()
 		}
-		viewSwitchCooldownUntilRef.current = Date.now() + VIEW_SWITCH_COOLDOWN_MS
+		viewSwitchCooldownUntilRef.current =
+			getCurrentTimestamp() + VIEW_SWITCH_COOLDOWN_MS
 	}
 
 	const handleViewWheel = (event: WheelEvent) => {
@@ -172,7 +175,7 @@ export const useViewNavigation = ({
 		const direction = event.deltaY > 0 ? 'next' : 'previous'
 		const deltaAbs = Math.abs(event.deltaY)
 		const hasNewImpulse =
-			Date.now() >= viewSwitchCooldownUntilRef.current &&
+			getCurrentTimestamp() >= viewSwitchCooldownUntilRef.current &&
 			(direction !== lastWheelDirectionRef.current ||
 				deltaAbs >=
 					Math.max(

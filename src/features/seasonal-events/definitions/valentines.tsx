@@ -4,7 +4,7 @@ import type { SeasonalEvent, SeasonalEventContext } from '../core/types'
 
 import { SeasonalEventId } from '../core/types'
 
-const VALENTINES_MONTH = 1
+const VALENTINES_MONTH = 2
 
 const VALENTINES_DAY = 14
 
@@ -91,7 +91,5 @@ export const valentinesEvent: SeasonalEvent = {
 }
 
 function isValentinesDay({ date }: SeasonalEventContext) {
-	return (
-		date.getMonth() === VALENTINES_MONTH && date.getDate() === VALENTINES_DAY
-	)
+	return date.month === VALENTINES_MONTH && date.day === VALENTINES_DAY
 }

@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import type { ProviderTokens } from './provider-tokens'
 
+import { getCurrentTimestamp } from '../../../shared/lib/time'
 import { CalendarReauthRequiredError } from './calendar-reauth-error'
 import { decodeJwtPayload } from './jwt'
 
@@ -145,7 +146,7 @@ const requestMicrosoftTokens = async (
 		accessToken: parsed.data.access_token,
 		accountId: accountInfo.accountId,
 		accountLabel: accountInfo.accountLabel,
-		expiresAt: Date.now() + parsed.data.expires_in * 1000,
+		expiresAt: getCurrentTimestamp() + parsed.data.expires_in * 1000,
 		refreshToken: parsed.data.refresh_token ?? null,
 	}
 }

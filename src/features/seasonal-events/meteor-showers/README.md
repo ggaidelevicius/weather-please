@@ -38,10 +38,10 @@ badges appear; the display allowance above does not extend those event dates.
 
 The tile's calendar date identifies the observing night, from local noon to the
 following local noon. `@photostructure/tz-lookup` estimates the selected weather
-location's IANA time zone offline, and `Intl` supplies civil-time/DST rules. The
-interface names the time zone explicitly. The compact lookup can be inaccurate
-near time-zone boundaries; future civil times also depend on governments
-retaining the currently known rules.
+location's IANA time zone offline, and `Temporal` supplies civil-time/DST rules.
+The interface names the time zone explicitly. The compact lookup can be
+inaccurate near time-zone boundaries; future civil times also depend on
+governments retaining the currently known rules.
 
 [Astronomy Engine](https://github.com/cosinekitty/astronomy) transforms the
 J2000 radiant into the observer's horizontal frame and calculates the Sun and
@@ -53,6 +53,10 @@ the Sun is less than 18 degrees below the horizon during the suggested window.
 Terrain, buildings, light pollution and clouds are not modeled. Radiant
 direction and Moon illumination refer to the displayed midpoint time, while Moon
 horizon visibility describes the sampled window.
+
+The observing date is a `Temporal.PlainDate`, and calculated times are
+`Temporal.Instant` values. Only the Astronomy Engine adapter converts instants
+to `Date` objects.
 
 The calculation has no runtime network dependency and validates inputs. Tests
 cover northern and southern observers, polar daylight, local dates across the

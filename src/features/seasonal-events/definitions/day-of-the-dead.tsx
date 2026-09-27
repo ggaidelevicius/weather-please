@@ -4,7 +4,7 @@ import type { SeasonalEvent, SeasonalEventContext } from '../core/types'
 
 import { SeasonalEventId } from '../core/types'
 
-const DAY_OF_THE_DEAD_MONTH = 10
+const DAY_OF_THE_DEAD_MONTH = 11
 
 const DAY_OF_THE_DEAD_DAYS = new Set([1, 2])
 
@@ -94,7 +94,6 @@ export const dayOfTheDeadEvent: SeasonalEvent = {
 
 function isDayOfTheDead({ date }: SeasonalEventContext) {
 	return (
-		date.getMonth() === DAY_OF_THE_DEAD_MONTH &&
-		DAY_OF_THE_DEAD_DAYS.has(date.getDate())
+		date.month === DAY_OF_THE_DEAD_MONTH && DAY_OF_THE_DEAD_DAYS.has(date.day)
 	)
 }

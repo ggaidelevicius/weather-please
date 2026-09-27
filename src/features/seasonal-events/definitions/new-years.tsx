@@ -4,7 +4,7 @@ import type { SeasonalEvent, SeasonalEventContext } from '../core/types'
 
 import { SeasonalEventId } from '../core/types'
 
-const NEW_YEARS_MONTH = 0
+const NEW_YEARS_MONTH = 1
 
 const NEW_YEARS_DAY = 1
 
@@ -76,5 +76,5 @@ export const newYearsEvent: SeasonalEvent = {
 }
 
 function isNewYearsDay({ date }: SeasonalEventContext) {
-	return date.getMonth() === NEW_YEARS_MONTH && date.getDate() === NEW_YEARS_DAY
+	return date.month === NEW_YEARS_MONTH && date.day === NEW_YEARS_DAY
 }

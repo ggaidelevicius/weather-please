@@ -85,10 +85,10 @@ function getWesternEasterDate(
 	const k = c % 4
 	const l = (32 + 2 * e + 2 * i - h - k) % 7
 	const m = Math.floor((a + 11 * h + 22 * l) / 451)
-	const month = Math.floor((h + l - 7 * m + 114) / 31) - 1
+	const month = Math.floor((h + l - 7 * m + 114) / 31)
 	const day = ((h + l - 7 * m + 114) % 31) + 1
 
-	if (month < 0 || month > 11) {
+	if (month < 1 || month > 12) {
 		return null
 	}
 
@@ -96,13 +96,11 @@ function getWesternEasterDate(
 }
 
 function isEaster({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
+	const year = date.year
 	const easterDate = getWesternEasterDate(year)
 	if (!easterDate) {
 		return false
 	}
 
-	return (
-		date.getMonth() === easterDate.month && date.getDate() === easterDate.day
-	)
+	return date.month === easterDate.month && date.day === easterDate.day
 }

@@ -2,27 +2,32 @@ import { z } from 'zod'
 
 import type { CalendarEvent } from '../model/calendar-event'
 
+import { getCurrentInstant, getSystemTimeZone } from '../../../shared/lib/time'
 import { CalendarReauthRequiredError } from './calendar-reauth-error'
 import { getUpcomingEventsWindowEnd } from './calendar-window'
 
 export const fetchUpcomingGoogleCalendarEvents = async ({
 	accessToken,
 	accountId,
-	now = new Date(),
+	now = getCurrentInstant(),
 	signal,
+	timeZone = getSystemTimeZone(),
 }: Readonly<{
 	accessToken: string
 	accountId: string
-	now?: Date
+	now?: Temporal.Instant
 	signal?: AbortSignal
+	timeZone?: string
 }>): Promise<CalendarEvent[]> => {
-	const windowEnd = getUpcomingEventsWindowEnd({ now })
+	const windowEnd = getUpcomingEventsWindowEnd({
+		now: now.toZonedDateTimeISO(timeZone),
+	})
 	const params = new URLSearchParams({
 		maxResults: MAX_EVENTS.toString(),
 		orderBy: 'startTime',
 		singleEvents: 'true',
-		timeMax: windowEnd.toISOString(),
-		timeMin: now.toISOString(),
+		timeMax: windowEnd.toInstant().toString({ fractionalSecondDigits: 3 }),
+		timeMin: now.toString({ fractionalSecondDigits: 3 }),
 	})
 
 	const response = await fetch(`${EVENTS_ENDPOINT}?${params.toString()}`, {
@@ -51,7 +56,7 @@ export const fetchUpcomingGoogleCalendarEvents = async ({
 				event.status !== 'cancelled' &&
 				Boolean(event.start.date ?? event.start.dateTime),
 		)
-		.map((event) => mapGoogleEvent({ accountId, event }))
+		.map((event) => mapGoogleEvent({ accountId, event, timeZone }))
 		.sort((a, b) => a.startTimestamp - b.startTimestamp)
 }
 
@@ -83,35 +88,34 @@ const eventsResponseSchema = z.object({
 const mapGoogleEvent = ({
 	accountId,
 	event,
+	timeZone,
 }: Readonly<{
 	accountId: string
 	event: z.infer<typeof googleEventSchema>
+	timeZone: string
 }>): CalendarEvent => ({
 	accountId,
 	description: event.description?.trim() || null,
-	endTimestamp: parseGoogleEventTime(event.end),
+	endTimestamp: parseGoogleEventTime({ time: event.end, timeZone }),
 	icalUid: event.iCalUID ?? null,
 	id: event.id,
 	isAllDay: Boolean(event.start.date),
 	location: event.location?.trim() || null,
-	startTimestamp: parseGoogleEventTime(event.start),
+	startTimestamp: parseGoogleEventTime({ time: event.start, timeZone }),
 	subject: event.summary?.trim() ?? '',
 	webLink: event.htmlLink ?? null,
 })
 
-// Timed events carry an RFC 3339 datetime with an offset; all-day events
-// carry a plain date, which must be parsed as local midnight (the Date
-// constructor would treat the bare string as UTC).
-const parseGoogleEventTime = (
-	time: z.infer<typeof googleEventTimeSchema>,
-): number => {
-	if (time.dateTime) {
-		return new Date(time.dateTime).getTime()
-	}
-
-	const [year = 0, month = 1, day = 1] = (time.date ?? '')
-		.split('-')
-		.map(Number)
-
-	return new Date(year, month - 1, day).getTime()
-}
+// All-day events retain their calendar date in the viewer's zone; their end
+// date stays exclusive, even when a local day has fewer or more than 24 hours.
+const parseGoogleEventTime = ({
+	time,
+	timeZone,
+}: Readonly<{
+	time: z.infer<typeof googleEventTimeSchema>
+	timeZone: string
+}>): number =>
+	time.dateTime
+		? Temporal.Instant.from(time.dateTime).epochMilliseconds
+		: Temporal.PlainDate.from(time.date ?? '').toZonedDateTime(timeZone)
+				.epochMilliseconds

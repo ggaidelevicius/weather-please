@@ -7,6 +7,7 @@ import {
 	requestSharedResource,
 	subscribeSharedResource,
 } from '../shared-resource'
+import { getCurrentTimestamp } from '../time'
 
 const schema = z.object({ value: z.string() })
 const maxAgeMs = 60_000
@@ -345,7 +346,10 @@ describe('shared resource ownership', () => {
 			maxAgeMs,
 			schema,
 		})
-		broadcast({ key, record: { ...oldRecord, updatedAt: Date.now() + 1 } })
+		broadcast({
+			key,
+			record: { ...oldRecord, updatedAt: getCurrentTimestamp() + 1 },
+		})
 		expect(readSharedResource({ key, schema })?.value).toEqual({
 			value: 'current',
 		})
@@ -455,7 +459,7 @@ describe('shared resource ownership', () => {
 					hasValue: true,
 					id: `older-${index}`,
 					revision: '',
-					updatedAt: Date.now() - 1000 + index,
+					updatedAt: getCurrentTimestamp() - 1000 + index,
 					version: 1,
 				}),
 			)
@@ -484,7 +488,7 @@ describe('shared resource ownership', () => {
 					hasValue: true,
 					id: `large-${index}`,
 					revision: '',
-					updatedAt: Date.now() - 1000 + index,
+					updatedAt: getCurrentTimestamp() - 1000 + index,
 					version: 1,
 				}),
 			)

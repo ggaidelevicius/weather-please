@@ -76,16 +76,14 @@ export const formatHour = (time?: number) => {
 		return ''
 	}
 
-	return new Intl.DateTimeFormat('en', { hour: 'numeric' }).format(
-		new Date(time * 1000),
-	)
+	return new Intl.DateTimeFormat('en', { hour: 'numeric' }).format(time * 1000)
 }
 
 export const formatHourMinute = (time: number) =>
 	new Intl.DateTimeFormat('en', {
 		hour: 'numeric',
 		minute: '2-digit',
-	}).format(new Date(time * 1000))
+	}).format(time * 1000)
 
 export const formatPollutantValue = (value: null | number) =>
 	typeof value === 'number' ? `${formatDecimal(value)} µg/m³` : '—'
@@ -94,7 +92,7 @@ export const formatWeekdayHour = (time: number) =>
 	new Intl.DateTimeFormat('en', {
 		hour: 'numeric',
 		weekday: 'short',
-	}).format(new Date(time * 1000))
+	}).format(time * 1000)
 
 export const getNextSunEvent = ({
 	data,
@@ -121,10 +119,10 @@ export const getNextSunEvent = ({
 	)
 }
 
-export const isSameLocalDate = (date: Date, comparisonDate: Date) =>
-	date.getFullYear() === comparisonDate.getFullYear() &&
-	date.getMonth() === comparisonDate.getMonth() &&
-	date.getDate() === comparisonDate.getDate()
+export const isSameLocalDate = (
+	date: Temporal.PlainDate,
+	comparisonDate: Temporal.PlainDate,
+): boolean => date.equals(comparisonDate)
 
 export const average = (points: number[]) =>
 	points.length > 0 ? sum(points) / points.length : 0

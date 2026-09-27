@@ -1,14 +1,16 @@
 import { z } from 'zod'
 
+import { epochMillisecondsSchema } from '../../../shared/lib/time-schema'
+
 export const calendarEventSchema = z.object({
 	accountId: z.string().min(1),
 	description: z.string().nullable(),
-	endTimestamp: z.number(),
+	endTimestamp: epochMillisecondsSchema,
 	icalUid: z.string().nullable(),
 	id: z.string().min(1),
 	isAllDay: z.boolean(),
 	location: z.string().nullable(),
-	startTimestamp: z.number(),
+	startTimestamp: epochMillisecondsSchema,
 	subject: z.string(),
 	webLink: z.string().nullable(),
 })

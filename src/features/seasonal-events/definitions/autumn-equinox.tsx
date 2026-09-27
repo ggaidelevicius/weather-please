@@ -118,12 +118,9 @@ export const autumnEquinoxEvent: SeasonalEvent = {
 }
 
 function isAutumnEquinox({ date, hemisphere }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
 	const equinoxDates =
 		hemisphere === Hemisphere.Southern
 			? AUTUMN_EQUINOX_DATES_SOUTHERN
 			: AUTUMN_EQUINOX_DATES_NORTHERN
-	return equinoxDates.has(`${year}-${month}-${day}`)
+	return equinoxDates.has(date.toString())
 }

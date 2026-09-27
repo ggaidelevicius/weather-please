@@ -34,20 +34,68 @@ vi.mock('../../core/utils', () => ({
 
 beforeEach(() => {
 	vi.useFakeTimers({ toFake: ['Date'] })
-	vi.setSystemTime(new Date(2026, 11, 25, 12))
+	vi.setSystemTime(atLocalTime('2026-12-25T12:00:00'))
 	effects.isSoftwareRenderer.mockReset().mockReturnValue(false)
 	effects.run.mockReset().mockResolvedValue(vi.fn())
 })
 
 afterEach(() => {
+	vi.restoreAllMocks()
 	vi.useRealTimers()
+})
+
+describe('seasonal calendar midnight', () => {
+	it.each([
+		['2026-03-08T05:00:00Z', 23],
+		['2026-11-01T04:00:00Z', 25],
+	] as const)(
+		'schedules the next local midnight from %s after %i hours',
+		async (instant, hours) => {
+			vi.useFakeTimers({ toFake: ['Date', 'setTimeout', 'clearTimeout'] })
+			vi.spyOn(Temporal.Now, 'timeZoneId').mockReturnValue('America/New_York')
+			vi.setSystemTime(Temporal.Instant.from(instant).epochMilliseconds)
+			const schedule = vi.spyOn(globalThis, 'setTimeout')
+			const { unmount } = renderHook(() =>
+				useSeasonalEvents({ isEnabled: true }),
+			)
+			await act(async () => {})
+			expect(schedule).toHaveBeenCalledWith(
+				expect.any(Function),
+				hours * 60 * 60 * 1000,
+			)
+			unmount()
+			expect(vi.getTimerCount()).toBe(0)
+		},
+	)
+
+	it('changes the calendar at local midnight even when the next day contains a clock change', async () => {
+		await import('../../core/seasonal-events-module')
+		vi.useFakeTimers({ toFake: ['Date', 'setTimeout', 'clearTimeout'] })
+		vi.spyOn(Temporal.Now, 'timeZoneId').mockReturnValue('America/New_York')
+		vi.setSystemTime(
+			Temporal.Instant.from('2026-11-01T03:59:59Z').epochMilliseconds,
+		)
+		const enabledEvents = new Set([
+			SeasonalEventId.DayOfTheDead,
+			SeasonalEventId.Halloween,
+		])
+		const { result, unmount } = renderHook(() =>
+			useSeasonalEvents({ enabledEvents, isEnabled: true }),
+		)
+		await act(async () => {})
+		expect(result.current).toBe(SeasonalEventId.Halloween)
+		await act(async () => vi.advanceTimersByTimeAsync(1_000))
+		expect(result.current).toBe(SeasonalEventId.DayOfTheDead)
+		unmount()
+		expect(vi.getTimerCount()).toBe(0)
+	})
 })
 
 describe('seasonal event hemisphere changes', () => {
 	it.each([false, true])(
 		'replaces Christmas in either direction with preview enabled: %s',
 		async (hasOverride) => {
-			if (hasOverride) vi.setSystemTime(new Date(2026, 5, 15, 12))
+			if (hasOverride) vi.setSystemTime(atLocalTime('2026-06-15T12:00:00'))
 			const cleanupNorth = vi.fn()
 			const cleanupSouth = vi.fn()
 			const cleanupNorthAgain = vi.fn()
@@ -118,7 +166,7 @@ describe('seasonal event hemisphere changes', () => {
 	it.each([false, true])(
 		'keeps unrelated effects running with preview enabled: %s',
 		async (hasOverride) => {
-			vi.setSystemTime(new Date(2026, 0, 1, 12))
+			vi.setSystemTime(atLocalTime('2026-01-01T12:00:00'))
 			const cleanup = vi.fn()
 			effects.run.mockResolvedValue(cleanup)
 			const { rerender, unmount } = renderHook(
@@ -181,7 +229,7 @@ describe('permanent seasonal backgrounds', () => {
 	it.each([false, true])(
 		'runs outside its season with every event disabled and seasonal events enabled: %s',
 		async (isEnabled) => {
-			vi.setSystemTime(new Date(2026, 5, 15, 12))
+			vi.setSystemTime(atLocalTime('2026-06-15T12:00:00'))
 			const { result, unmount } = renderHook(() =>
 				useSeasonalEvents({
 					enabledEvents: new Set(),
@@ -463,7 +511,7 @@ describe('permanent seasonal backgrounds', () => {
 
 	it('keeps the selected background through midnight and restores the current calendar on automatic', async () => {
 		vi.useFakeTimers({ toFake: ['Date', 'setTimeout', 'clearTimeout'] })
-		vi.setSystemTime(new Date(2026, 11, 31, 23, 59, 59))
+		vi.setSystemTime(atLocalTime('2026-12-31T23:59:59'))
 		const cleanupHalloween = vi.fn()
 		const cleanupNewYears = vi.fn()
 		effects.run
@@ -519,7 +567,7 @@ describe('permanent seasonal backgrounds', () => {
 		)
 
 		await waitFor(() => expect(effects.run).toHaveBeenCalledOnce())
-		vi.setSystemTime(new Date(2027, 0, 1, 12))
+		vi.setSystemTime(atLocalTime('2027-01-01T12:00:00'))
 		rerender({
 			isEnabled: true,
 			seasonalBackground: SEASONAL_BACKGROUND_AUTOMATIC,
@@ -559,7 +607,7 @@ describe('permanent backgrounds with seasonal priority', () => {
 		expect(result.current).toBe(SeasonalEventId.Halloween)
 		expect(cleanupChristmas).toHaveBeenCalledOnce()
 
-		vi.setSystemTime(new Date(2026, 11, 26, 12))
+		vi.setSystemTime(atLocalTime('2026-12-26T12:00:00'))
 		await act(async () => rerender({ isEnabled: true }))
 		expect(result.current).toBe(SeasonalEventId.Halloween)
 		expect(
@@ -596,7 +644,7 @@ describe('permanent backgrounds with seasonal priority', () => {
 			expect(result.current).toBeNull()
 			expect(cleanupChristmas).toHaveBeenCalledOnce()
 
-			vi.setSystemTime(new Date(2026, 11, 28, 12))
+			vi.setSystemTime(atLocalTime('2026-12-28T12:00:00'))
 			rerender({ isReady: true })
 			expect(result.current).toBeNull()
 			await waitFor(() => expect(effects.run).toHaveBeenCalledTimes(2))
@@ -632,7 +680,7 @@ describe('permanent backgrounds with seasonal priority', () => {
 
 	it('yields at midnight and restores the latest manual selection after the holiday', async () => {
 		vi.useFakeTimers({ toFake: ['Date', 'setTimeout', 'clearTimeout'] })
-		vi.setSystemTime(new Date(2026, 11, 31, 23, 59, 59))
+		vi.setSystemTime(atLocalTime('2026-12-31T23:59:59'))
 		const cleanupHalloween = vi.fn()
 		const cleanupNewYears = vi.fn()
 		const cleanupEarthDay = vi.fn()
@@ -800,3 +848,8 @@ describe('permanent backgrounds with seasonal priority', () => {
 		},
 	)
 })
+
+const atLocalTime = (dateTime: string) =>
+	Temporal.PlainDateTime.from(dateTime).toZonedDateTime(
+		Temporal.Now.timeZoneId(),
+	).epochMilliseconds

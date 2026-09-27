@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import { getCurrentTimestamp } from '../../../../shared/lib/time'
 import { CalendarReauthRequiredError } from '../calendar-reauth-error'
 import {
 	buildGoogleAuthorizeUrl,
@@ -102,7 +103,7 @@ describe('exchangeGoogleAuthorizationCode', () => {
 		expect(tokens.accountId).toBe('google-subject')
 		expect(tokens.accountLabel).toBe('gus@gmail.com')
 		expect(tokens.refreshToken).toBe('refresh-token')
-		expect(tokens.expiresAt).toBeGreaterThan(Date.now())
+		expect(tokens.expiresAt).toBeGreaterThan(getCurrentTimestamp())
 
 		const [requestUrl, requestInit] = fetchMock.mock.calls[0] as unknown as [
 			string,

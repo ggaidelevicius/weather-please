@@ -3,27 +3,35 @@ import { describe, expect, it } from 'vitest'
 import { getUpcomingEventsWindowEnd } from '../calendar-window'
 
 describe('getUpcomingEventsWindowEnd', () => {
-	it('uses three days from now when that extends beyond this week', () => {
-		const now = new Date(2026, 5, 19, 9, 30)
+	it.each([
+		['2026-06-19T09:30', '2026-06-22T09:30'],
+		['2026-06-15T09:30', '2026-06-20T23:59:59.999'],
+		['2026-06-14T09:30', '2026-06-20T23:59:59.999'],
+	])(
+		'extends %s to three calendar days or the end of the Sunday-started week',
+		(start, end) => {
+			const now = Temporal.ZonedDateTime.from(`${start}[Australia/Perth]`)
+			const expected = Temporal.ZonedDateTime.from(`${end}[Australia/Perth]`)
 
-		expect(getUpcomingEventsWindowEnd({ now })).toEqual(
-			new Date(2026, 5, 22, 9, 30),
-		)
-	})
+			expect(getUpcomingEventsWindowEnd({ now }).equals(expected)).toBe(true)
+		},
+	)
 
-	it('uses Saturday night as the end of a Sunday-started week', () => {
-		const now = new Date(2026, 5, 15, 9, 30)
+	it.each([
+		['2026-03-06T12:00', '2026-03-09T12:00', 71],
+		['2026-10-30T12:00', '2026-11-02T12:00', 73],
+	])(
+		'preserves the local time three days after %s across daylight saving',
+		(start, end, hours) => {
+			const now = Temporal.ZonedDateTime.from(`${start}[America/New_York]`)
+			const windowEnd = getUpcomingEventsWindowEnd({ now })
 
-		expect(getUpcomingEventsWindowEnd({ now })).toEqual(
-			new Date(2026, 5, 20, 23, 59, 59, 999),
-		)
-	})
-
-	it('treats Sunday as the start of a new week', () => {
-		const now = new Date(2026, 5, 14, 9, 30)
-
-		expect(getUpcomingEventsWindowEnd({ now })).toEqual(
-			new Date(2026, 5, 20, 23, 59, 59, 999),
-		)
-	})
+			expect(
+				windowEnd.equals(
+					Temporal.ZonedDateTime.from(`${end}[America/New_York]`),
+				),
+			).toBe(true)
+			expect(now.until(windowEnd, { largestUnit: 'hours' }).hours).toBe(hours)
+		},
+	)
 })

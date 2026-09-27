@@ -21,7 +21,7 @@ type AvailableGuide = Extract<MeteorViewingGuide, { status: 'available' }>
 describe('meteor shower viewing guidance', () => {
 	it('finds a dark pre-dawn Eta Aquariids window in Perth', () => {
 		const guide = getMeteorViewingGuide({
-			date: new Date(2026, 4, 6),
+			date: Temporal.PlainDate.from('2026-05-06'),
 			eventId: SeasonalEventId.EtaAquariids,
 			latitude: -31.95,
 			longitude: 115.86,
@@ -44,7 +44,7 @@ describe('meteor shower viewing guidance', () => {
 
 	it('offers the Perseids in London but rejects the low radiant in Perth', () => {
 		const request = {
-			date: new Date(2026, 7, 13),
+			date: Temporal.PlainDate.from('2026-08-13'),
 			eventId: SeasonalEventId.Perseids,
 		}
 		const london = getMeteorViewingGuide({
@@ -72,7 +72,7 @@ describe('meteor shower viewing guidance', () => {
 	it('does not suggest a window during polar daylight', () => {
 		expect(
 			getMeteorViewingGuide({
-				date: new Date(2026, 7, 13),
+				date: Temporal.PlainDate.from('2026-08-13'),
 				eventId: SeasonalEventId.Perseids,
 				latitude: 80,
 				longitude: 20,
@@ -100,17 +100,19 @@ describe('meteor shower viewing guidance', () => {
 		},
 	])('uses the selected civil night in $name across the date line', (place) => {
 		const guide = getMeteorViewingGuide({
-			date: new Date(2026, 11, 14, 0, 0),
+			date: Temporal.PlainDate.from('2026-12-14'),
 			eventId: SeasonalEventId.Geminids,
 			latitude: place.latitude,
 			longitude: place.longitude,
 		})
 		expectAvailable(guide)
 		expect(guide.timeZone).toBe(place.timeZone)
-		expect(guide.start.getTime()).toBeGreaterThanOrEqual(
-			Date.parse(place.firstNoon),
+		expect(guide.start.epochMilliseconds).toBeGreaterThanOrEqual(
+			Temporal.Instant.from(place.firstNoon).epochMilliseconds,
 		)
-		expect(guide.end.getTime()).toBeLessThanOrEqual(Date.parse(place.nextNoon))
+		expect(guide.end.epochMilliseconds).toBeLessThanOrEqual(
+			Temporal.Instant.from(place.nextNoon).epochMilliseconds,
+		)
 		assertPhysicallyUsable({
 			eventId: SeasonalEventId.Geminids,
 			guide,
@@ -121,7 +123,7 @@ describe('meteor shower viewing guidance', () => {
 
 	it('handles a night whose clocks move forward', () => {
 		const guide = getMeteorViewingGuide({
-			date: new Date(1982, 3, 24),
+			date: Temporal.PlainDate.from('1982-04-24'),
 			eventId: SeasonalEventId.Lyrids,
 			latitude: 40.71,
 			longitude: -74.01,
@@ -129,11 +131,11 @@ describe('meteor shower viewing guidance', () => {
 		})
 		expectAvailable(guide)
 		// US DST started on 25 April in 1982; the next noon is only 23 hours later.
-		expect(guide.start.getTime()).toBeGreaterThanOrEqual(
-			Date.parse('1982-04-24T17:00:00Z'),
+		expect(guide.start.epochMilliseconds).toBeGreaterThanOrEqual(
+			Temporal.Instant.from('1982-04-24T17:00:00Z').epochMilliseconds,
 		)
-		expect(guide.end.getTime()).toBeLessThanOrEqual(
-			Date.parse('1982-04-25T16:00:00Z'),
+		expect(guide.end.epochMilliseconds).toBeLessThanOrEqual(
+			Temporal.Instant.from('1982-04-25T16:00:00Z').epochMilliseconds,
 		)
 		expect(localParts(guide.referenceTime, guide.timeZone).day).toBe(25)
 		assertPhysicallyUsable({
@@ -146,18 +148,18 @@ describe('meteor shower viewing guidance', () => {
 
 	it('handles a night whose clocks move backward', () => {
 		const guide = getMeteorViewingGuide({
-			date: new Date(1981, 9, 24),
+			date: Temporal.PlainDate.from('1981-10-24'),
 			eventId: SeasonalEventId.Orionids,
 			latitude: 51.51,
 			longitude: -0.13,
 			timeZone: 'Europe/London',
 		})
 		expectAvailable(guide)
-		expect(guide.start.getTime()).toBeGreaterThanOrEqual(
-			Date.parse('1981-10-24T11:00:00Z'),
+		expect(guide.start.epochMilliseconds).toBeGreaterThanOrEqual(
+			Temporal.Instant.from('1981-10-24T11:00:00Z').epochMilliseconds,
 		)
-		expect(guide.end.getTime()).toBeLessThanOrEqual(
-			Date.parse('1981-10-25T12:00:00Z'),
+		expect(guide.end.epochMilliseconds).toBeLessThanOrEqual(
+			Temporal.Instant.from('1981-10-25T12:00:00Z').epochMilliseconds,
 		)
 		expect(localParts(guide.referenceTime, guide.timeZone).day).toBe(25)
 		assertPhysicallyUsable({
@@ -170,7 +172,7 @@ describe('meteor shower viewing guidance', () => {
 
 	it('continues calculating precessed radiant positions in 2043', () => {
 		const guide = getMeteorViewingGuide({
-			date: new Date(2043, 11, 14),
+			date: Temporal.PlainDate.from('2043-12-14'),
 			eventId: SeasonalEventId.Geminids,
 			latitude: 51.51,
 			longitude: -0.13,
@@ -183,7 +185,12 @@ describe('meteor shower viewing guidance', () => {
 			longitude: -0.13,
 		})
 		const observer = new Observer(51.51, -0.13, 0)
-		const unprecessed = Horizon(guide.referenceTime, observer, 112 / 15, 33)
+		const unprecessed = Horizon(
+			toAstronomyDate(guide.referenceTime),
+			observer,
+			112 / 15,
+			33,
+		)
 		expect(
 			Math.abs(unprecessed.altitude - guide.radiantAltitude),
 		).toBeGreaterThan(0.01)
@@ -197,20 +204,25 @@ describe('meteor shower viewing guidance', () => {
 		}
 		for (const day of [11, 14, 17]) {
 			expectAvailable(
-				getMeteorViewingGuide({ ...request, date: new Date(2043, 11, day) }),
+				getMeteorViewingGuide({
+					...request,
+					date: Temporal.PlainDate.from({ day: day, month: 12, year: 2043 }),
+				}),
 			)
 		}
 		for (const day of [10, 18]) {
 			expect(
-				getMeteorViewingGuide({ ...request, date: new Date(2043, 11, day) })
-					.status,
+				getMeteorViewingGuide({
+					...request,
+					date: Temporal.PlainDate.from({ day: day, month: 12, year: 2043 }),
+				}).status,
 			).toBe('out-of-season')
 		}
 	})
 
 	it('handles a peak window that crosses New Year', () => {
 		const guide = getMeteorViewingGuide({
-			date: new Date(2026, 11, 31),
+			date: Temporal.PlainDate.from('2026-12-31'),
 			eventId: SeasonalEventId.Quadrantids,
 			latitude: 51.51,
 			longitude: -0.13,
@@ -224,8 +236,8 @@ describe('meteor shower viewing guidance', () => {
 		{ longitude: Infinity },
 		{ latitude: 90.01 },
 		{ longitude: -180.01 },
-		{ date: new Date('invalid') },
-		{ date: new Date(2101, 11, 14) },
+		{ date: Temporal.PlainDate.from('1899-12-14') },
+		{ date: Temporal.PlainDate.from('2101-12-14') },
 		{ timeZone: 'not/a-zone' },
 		{ timeZone: '' },
 		{ eventId: SeasonalEventId.ChristmasDay },
@@ -234,7 +246,7 @@ describe('meteor shower viewing guidance', () => {
 		(override) => {
 			expect(
 				getMeteorViewingGuide({
-					date: new Date(2026, 11, 14),
+					date: Temporal.PlainDate.from('2026-12-14'),
 					eventId: SeasonalEventId.Geminids,
 					latitude: 51.51,
 					longitude: -0.13,
@@ -259,21 +271,21 @@ function assertPhysicallyUsable({
 	const shower = getMeteorShower(eventId)
 	if (!shower) throw new Error('Expected a meteor shower in the test')
 	const observer = new Observer(latitude, longitude, 0)
-	const durationMinutes = (guide.end.getTime() - guide.start.getTime()) / 60_000
+	const durationMinutes = guide.start.until(guide.end).total('minutes')
 	expect(durationMinutes).toBeGreaterThanOrEqual(30)
 	expect(durationMinutes).toBeLessThanOrEqual(120)
-	expect(guide.referenceTime.getTime()).toBe(
-		(guide.start.getTime() + guide.end.getTime()) / 2,
+	expect(guide.referenceTime.epochMilliseconds).toBe(
+		(guide.start.epochMilliseconds + guide.end.epochMilliseconds) / 2,
 	)
 
 	const moonAltitudes: number[] = []
 	const sunAltitudes: number[] = []
 	for (
-		let instant = guide.start.getTime();
-		instant <= guide.end.getTime();
-		instant += 60_000
+		let instant = guide.start;
+		Temporal.Instant.compare(instant, guide.end) <= 0;
+		instant = instant.add({ minutes: 1 })
 	) {
-		const date = new Date(instant)
+		const date = toAstronomyDate(instant)
 		const sun = Equator(Body.Sun, date, observer, true, true)
 		const moon = Equator(Body.Moon, date, observer, true, true)
 		const sunAltitude = Horizon(date, observer, sun.ra, sun.dec).altitude
@@ -304,7 +316,7 @@ function assertPhysicallyUsable({
 		const horizon = Horizon(date, observer, radiant.ra, radiant.dec)
 		expect(sunAltitude).toBeLessThanOrEqual(-12)
 		expect(horizon.altitude).toBeGreaterThanOrEqual(10)
-		if (instant === guide.referenceTime.getTime()) {
+		if (instant.equals(guide.referenceTime)) {
 			expect(guide.radiantAltitude).toBeCloseTo(horizon.altitude, 6)
 			expect(guide.radiantAzimuth).toBeCloseTo(horizon.azimuth, 6)
 		}
@@ -312,7 +324,8 @@ function assertPhysicallyUsable({
 	expect(guide.moonIllumination).toBeGreaterThanOrEqual(0)
 	expect(guide.moonIllumination).toBeLessThanOrEqual(1)
 	expect(guide.moonIllumination).toBeCloseTo(
-		Illumination(Body.Moon, guide.referenceTime).phase_fraction,
+		Illumination(Body.Moon, toAstronomyDate(guide.referenceTime))
+			.phase_fraction,
 		8,
 	)
 	expect(guide.hasTwilight).toBe(
@@ -334,21 +347,12 @@ function expectAvailable(
 	expect(guide.status).toBe('available')
 }
 
-function localParts(date: Date, timeZone: string) {
-	const parts = new Intl.DateTimeFormat('en-GB', {
-		day: '2-digit',
-		hour: '2-digit',
-		hourCycle: 'h23',
-		month: '2-digit',
-		timeZone,
-		year: 'numeric',
-	}).formatToParts(date)
-	const read = (type: Intl.DateTimeFormatPartTypes) =>
-		Number(parts.find((part) => part.type === type)?.value)
-	return {
-		day: read('day'),
-		hour: read('hour'),
-		month: read('month'),
-		year: read('year'),
-	}
+function localParts(instant: Temporal.Instant, timeZone: string) {
+	const { day, hour, month, year } = instant.toZonedDateTimeISO(timeZone)
+	return { day, hour, month, year }
+}
+
+function toAstronomyDate(instant: Temporal.Instant): Date {
+	// Astronomy Engine's test oracle requires Date at its API boundary.
+	return new Date(instant.epochMilliseconds)
 }

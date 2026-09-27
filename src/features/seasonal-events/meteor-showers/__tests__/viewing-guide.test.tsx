@@ -26,20 +26,20 @@ vi.mock('../viewing', () => ({
 }))
 
 const availableGuide = {
-	end: new Date('2026-12-14T17:00:00Z'),
+	end: Temporal.Instant.from('2026-12-14T17:00:00Z'),
 	hasTwilight: false,
 	moonIllumination: 0.42,
 	moonVisibility: 'below',
 	radiantAltitude: 42.3,
 	radiantAzimuth: 72,
-	referenceTime: new Date('2026-12-14T16:00:00Z'),
-	start: new Date('2026-12-14T15:00:00Z'),
+	referenceTime: Temporal.Instant.from('2026-12-14T16:00:00Z'),
+	start: Temporal.Instant.from('2026-12-14T15:00:00Z'),
 	status: 'available',
 	timeZone: 'Australia/Perth',
 } satisfies ReturnType<typeof getMeteorViewingGuide>
 
 const props = {
-	date: new Date(2026, 11, 14),
+	date: Temporal.PlainDate.from('2026-12-14'),
 	eventId: SeasonalEventId.Geminids,
 	latitude: -31.95,
 	longitude: 115.86,
@@ -60,7 +60,7 @@ describe('MeteorViewingGuide', () => {
 		).toBeInTheDocument()
 		expect(calculation.getGuide).toHaveBeenCalledWith(props)
 		expect(
-			screen.getByText('Night of Monday, 14 December 2026'),
+			screen.getByText(/Night of Monday,? 14 December 2026/),
 		).toBeInTheDocument()
 		expect(
 			screen.getByText('Times in Australian Western Standard Time'),
@@ -68,14 +68,14 @@ describe('MeteorViewingGuide', () => {
 		expect(container.querySelectorAll('time')).toHaveLength(2)
 		expect(container.querySelector('time:first-of-type')).toHaveAttribute(
 			'datetime',
-			'2026-12-14T15:00:00.000Z',
+			'2026-12-14T15:00:00Z',
 		)
 		expect(container.querySelector('time:first-of-type')).toHaveTextContent(
 			'14 Dec 2026, 11:00 pm',
 		)
 		expect(container.querySelector('time:last-of-type')).toHaveAttribute(
 			'datetime',
-			'2026-12-14T17:00:00.000Z',
+			'2026-12-14T17:00:00Z',
 		)
 		expect(container.querySelector('time:last-of-type')).toHaveTextContent(
 			'15 Dec 2026, 1:00 am',
@@ -130,7 +130,12 @@ describe('MeteorViewingGuide', () => {
 
 	it('keeps out-of-season previews honest without inventing a viewing night', () => {
 		calculation.getGuide.mockReturnValue({ status: 'out-of-season' })
-		render(<MeteorViewingGuide {...props} date={new Date(2026, 8, 21)} />)
+		render(
+			<MeteorViewingGuide
+				{...props}
+				date={Temporal.PlainDate.from('2026-09-21')}
+			/>,
+		)
 
 		expect(
 			screen.getByText(

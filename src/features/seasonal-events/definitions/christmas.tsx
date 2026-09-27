@@ -4,7 +4,7 @@ import type { SeasonalEvent, SeasonalEventContext } from '../core/types'
 
 import { SeasonalEventId } from '../core/types'
 
-const CHRISTMAS_MONTH = 11
+const CHRISTMAS_MONTH = 12
 
 const CHRISTMAS_DAY = 25
 
@@ -97,5 +97,5 @@ export const christmasEvent: SeasonalEvent = {
 }
 
 function isChristmasDay({ date }: SeasonalEventContext) {
-	return date.getMonth() === CHRISTMAS_MONTH && date.getDate() === CHRISTMAS_DAY
+	return date.month === CHRISTMAS_MONTH && date.day === CHRISTMAS_DAY
 }

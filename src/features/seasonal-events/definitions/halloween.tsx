@@ -4,7 +4,7 @@ import type { SeasonalEvent, SeasonalEventContext } from '../core/types'
 
 import { SeasonalEventId } from '../core/types'
 
-const HALLOWEEN_MONTH = 9
+const HALLOWEEN_MONTH = 10
 
 const HALLOWEEN_DAY = 31
 
@@ -92,5 +92,5 @@ export const halloweenEvent: SeasonalEvent = {
 }
 
 function isHalloween({ date }: SeasonalEventContext) {
-	return date.getMonth() === HALLOWEEN_MONTH && date.getDate() === HALLOWEEN_DAY
+	return date.month === HALLOWEEN_MONTH && date.day === HALLOWEEN_DAY
 }

@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { epochSecondsSchema } from '../../../shared/lib/time-schema'
+
 export const ALERT_HOURS_UV = 13 // 12 hours + current hour
 export const ALERT_HOURS_GENERAL = 25 // 24 hours + current hour
 export const NEXT_24_HOURS_FORECAST_HOURS = 25 // 24 hours + current hour
@@ -14,7 +16,7 @@ export const CACHE_VALIDITY_MS = 60 * 60 * 1000
 export const dataSchema = z
 	.array(
 		z.object({
-			day: z.number(),
+			day: epochSecondsSchema,
 			description: z.number(),
 			max: z.number(),
 			min: z.number(),
@@ -43,11 +45,11 @@ export const next24HoursDataSchema = z
 			precipitation: z.number(),
 			precipitationProbability: z.number(),
 			shortwaveRadiation: z.number().catch(0),
-			sunrise: z.number().nullable().catch(null),
-			sunset: z.number().nullable().catch(null),
+			sunrise: epochSecondsSchema.nullable().catch(null),
+			sunset: epochSecondsSchema.nullable().catch(null),
 			sunshineDuration: z.number().catch(0),
 			temperature: z.number(),
-			time: z.number(),
+			time: epochSecondsSchema,
 			uv: z.number(),
 			visibility: z.number(),
 			weatherCode: z.number(),
@@ -79,7 +81,7 @@ export const weatherMapDataSchema = z.object({
 						}),
 					)
 					.max(WEATHER_MAP_GRID_SIZE * WEATHER_MAP_GRID_SIZE),
-				time: z.number(),
+				time: epochSecondsSchema,
 			}),
 		)
 		.max(WEATHER_MAP_FORECAST_HOURS),

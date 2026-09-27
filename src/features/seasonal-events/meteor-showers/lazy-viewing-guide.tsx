@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import type { SeasonalEventId } from '../core/types'
 
 type ViewingGuideProps = Readonly<{
-	date: Date
+	date: Temporal.PlainDate
 	eventId: SeasonalEventId
 	latitude: number
 	longitude: number

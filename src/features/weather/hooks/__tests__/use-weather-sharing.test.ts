@@ -1,6 +1,11 @@
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import {
+	getCurrentInstant,
+	getCurrentTimestamp,
+	getSystemTimeZone,
+} from '../../../../shared/lib/time'
 import { getUserTimeZone } from '../../api/weather-api'
 import { createEmptyAlerts } from '../../model/alerts'
 import {
@@ -15,6 +20,10 @@ import {
 } from '../../services/shared-weather'
 import { createWeatherResponse } from '../../testing/weather-response'
 import { useWeather } from '../use-weather'
+
+const getTimestamp = (dateTime: string) =>
+	Temporal.PlainDateTime.from(dateTime).toZonedDateTime(getSystemTimeZone())
+		.epochMilliseconds
 
 let nextIdentity = 0
 const createIdentity = () => ({
@@ -41,7 +50,7 @@ const nextHour = () =>
 			precipitation: 0,
 			precipitationProbability: 0,
 			temperature: 20,
-			time: Math.floor(Date.now() / 1000) + 3600,
+			time: Math.floor(getCurrentTimestamp() / 1000) + 3600,
 			uv: 1,
 			visibility: 10_000,
 			weatherCode: 1,
@@ -53,11 +62,11 @@ const seedWeather = (identity: ReturnType<typeof createIdentity>) =>
 	writeCachedWeather({
 		...identity,
 		alertData: createEmptyAlerts(),
-		lastUpdatedDate: new Date(),
+		lastUpdatedDate: getCurrentInstant(),
 		next24HoursData: nextHour(),
 		weatherData: [
 			{
-				day: Math.floor(Date.now() / 1000),
+				day: Math.floor(getCurrentTimestamp() / 1000),
 				description: 1,
 				max: 20,
 				min: 10,
@@ -86,6 +95,73 @@ afterEach(() => {
 })
 
 describe('shared weather fetching', () => {
+	it.each([
+		['lastUpdatedAt', 0.5],
+		['lastUpdatedAt', 8_640_000_000_000_001],
+		['day', 0.5],
+		['day', 8_640_000_000_001],
+		['time', 0.5],
+		['time', 8_640_000_000_001],
+	] as const)(
+		'recovers from invalid shared %s timestamp %s',
+		async (field, timestamp) => {
+			const identity = createIdentity()
+			const cacheKey = `weather-please:shared-resource:v1:weather:${JSON.stringify(
+				[
+					identity.lat,
+					identity.lon,
+					identity.timeZone,
+					identity.shouldUseAirQualityUv,
+				],
+			)}`
+			localStorage.setItem(
+				cacheKey,
+				JSON.stringify({
+					data: {
+						alertData: createEmptyAlerts(),
+						lastUpdatedAt:
+							field === 'lastUpdatedAt' ? timestamp : getCurrentTimestamp(),
+						next24HoursData: nextHour().map((hour) => ({
+							...hour,
+							time: field === 'time' ? timestamp : hour.time,
+						})),
+						weatherData: [
+							{
+								day:
+									field === 'day'
+										? timestamp
+										: Math.floor(getCurrentTimestamp() / 1000),
+								description: 1,
+								max: 20,
+								min: 10,
+								rain: 0,
+								uv: 1,
+								wind: 5,
+							},
+						],
+					},
+					hasValue: true,
+					id: 'corrupt-weather',
+					revision: '',
+					updatedAt: getCurrentTimestamp(),
+					version: 1,
+				}),
+			)
+			expect(() => readSharedWeatherCache(identity)).not.toThrow()
+			expect(readSharedWeatherCache(identity)).toBeNull()
+			mockForecasts()
+			const { result } = renderHook(() =>
+				useWeather(identity.lat, identity.lon, 0, false),
+			)
+			await waitFor(() => expect(result.current.weatherData[0]?.max).toBe(30))
+			expect(result.current.error).toBeNull()
+			expect(readSharedWeatherCache(identity)?.lastUpdatedDate).toBeInstanceOf(
+				Temporal.Instant,
+			)
+			expect(localStorage.getItem(cacheKey)).not.toContain('corrupt-weather')
+		},
+	)
+
 	it('shares forecast, air quality, and map requests between consumers', async () => {
 		const identity = createIdentity()
 		const fetchSpy = mockForecasts()
@@ -225,7 +301,7 @@ describe('shared weather fetching', () => {
 		'shares degraded-weather failures and coalesces the next %s recovery',
 		async (recovery) => {
 			vi.useFakeTimers()
-			vi.setSystemTime(new Date(2026, 8, 27, 10, 30))
+			vi.setSystemTime(getTimestamp('2026-09-27T10:30'))
 			const identity = createIdentity()
 			let shouldFail = false
 			const fetchSpy = vi
@@ -268,7 +344,7 @@ describe('shared weather fetching', () => {
 
 	it('refreshes after the hour’s grace minute and after resuming on a later day', () => {
 		vi.useFakeTimers()
-		const updated = new Date(2026, 8, 27, 10, 45)
+		const updated = getTimestamp('2026-09-27T10:45')
 		vi.setSystemTime(updated)
 		const identity = createIdentity()
 		seedWeather(identity)
@@ -279,26 +355,64 @@ describe('shared weather fetching', () => {
 		expect(
 			isWeatherCacheFresh({
 				cached,
-				now: new Date(2026, 8, 27, 11, 0).getTime(),
+				now: getTimestamp('2026-09-27T11:00'),
 			}),
 		).toBe(true)
 		expect(
 			isWeatherCacheFresh({
 				cached,
-				now: new Date(2026, 8, 27, 11, 1).getTime(),
+				now: getTimestamp('2026-09-27T11:01'),
 			}),
 		).toBe(false)
 		expect(
 			isWeatherCacheFresh({
 				cached,
-				now: new Date(2026, 8, 28, 10, 45).getTime(),
+				now: getTimestamp('2026-09-28T10:45'),
 			}),
 		).toBe(false)
 	})
 
+	it.each([
+		{
+			cachedAt: '2026-03-08T01:45:00-05:00',
+			graceAt: '2026-03-08T03:00:30-04:00',
+			name: 'spring-forward gap',
+			refreshAt: '2026-03-08T03:01:00-04:00',
+		},
+		{
+			cachedAt: '2026-11-01T01:45:00-04:00',
+			graceAt: '2026-11-01T01:00:30-05:00',
+			name: 'repeated fall-back hour',
+			refreshAt: '2026-11-01T01:01:00-05:00',
+		},
+	])(
+		'respects the refresh grace minute across a $name',
+		({ cachedAt, graceAt, refreshAt }) => {
+			vi.spyOn(Temporal.Now, 'timeZoneId').mockReturnValue('America/New_York')
+			vi.useFakeTimers()
+			vi.setSystemTime(Temporal.Instant.from(cachedAt).epochMilliseconds)
+			const identity = createIdentity()
+			seedWeather(identity)
+			const cached = readSharedWeatherCache(identity)
+			if (!cached) throw new Error('Expected seeded weather')
+			expect(
+				isWeatherCacheFresh({
+					cached,
+					now: Temporal.Instant.from(graceAt).epochMilliseconds,
+				}),
+			).toBe(true)
+			expect(
+				isWeatherCacheFresh({
+					cached,
+					now: Temporal.Instant.from(refreshAt).epochMilliseconds,
+				}),
+			).toBe(false)
+		},
+	)
+
 	it('pauses routine refreshes while hidden and refreshes on return', async () => {
 		vi.useFakeTimers()
-		vi.setSystemTime(new Date(2026, 8, 27, 10, 30))
+		vi.setSystemTime(getTimestamp('2026-09-27T10:30'))
 		const identity = createIdentity()
 		seedWeather(identity)
 		const fetchSpy = mockForecasts()

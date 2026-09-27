@@ -1,4 +1,5 @@
 import { isLocationInAustralia } from '../../../shared/lib/location'
+import { getCurrentInstant } from '../../../shared/lib/time'
 import { SEASONAL_EVENT_BACKGROUND_BOOLEAN_SETTINGS } from '../model/boolean-settings'
 import { SEASONAL_EVENT_TOGGLE_KEY_BY_ID } from '../model/seasonal-event-toggle-map'
 import { TemperatureUnit, UnitSystem } from '../model/unit-system'
@@ -188,7 +189,9 @@ export const migrateConfig = ({
 					completedMigrationIds,
 					currentVersion,
 					failedMigrationIds,
-					lastRunAt: new Date().toISOString(),
+					lastRunAt: getCurrentInstant().toString({
+						smallestUnit: 'millisecond',
+					}),
 					skippedMigrationIds,
 				},
 				success: false,
@@ -216,7 +219,9 @@ export const migrateConfig = ({
 					completedMigrationIds,
 					currentVersion,
 					failedMigrationIds,
-					lastRunAt: new Date().toISOString(),
+					lastRunAt: getCurrentInstant().toString({
+						smallestUnit: 'millisecond',
+					}),
 					skippedMigrationIds,
 				},
 				success: false,
@@ -234,7 +239,7 @@ export const migrateConfig = ({
 			completedMigrationIds,
 			currentVersion,
 			failedMigrationIds,
-			lastRunAt: new Date().toISOString(),
+			lastRunAt: getCurrentInstant().toString({ smallestUnit: 'millisecond' }),
 			skippedMigrationIds,
 		},
 		success: true,

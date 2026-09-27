@@ -107,12 +107,17 @@
 		"*.{json,css,md}": "prettier --write"
 	},
 	"engines": {
-		"node": ">=24"
+		"node": ">=26"
+	},
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": "26.8.1",
+			"onFail": "download"
+		}
 	},
 	"browserslist": [
-		"chrome >= 111",
-		"edge >= 111",
-		"firefox >= 111",
-		"safari >= 16.4"
+		"chrome >= 144",
+		"firefox >= 139"
 	]
 }

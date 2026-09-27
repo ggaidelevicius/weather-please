@@ -92,7 +92,7 @@ const getOverriddenSeasonalEvent = (
 }
 
 export const getSeasonalEventForDate = (params: {
-	date: Date
+	date: Temporal.PlainDate
 	enabledEvents?: Set<SeasonalEventId>
 	hemisphere?: Hemisphere
 	seasonalEventOverride?: SeasonalEventOverride
@@ -121,7 +121,7 @@ export const getSeasonalEventForDate = (params: {
 }
 
 export const getActiveSeasonalEvent = (params: {
-	date: Date
+	date: Temporal.PlainDate
 	enabledEvents?: Set<SeasonalEventId>
 	hemisphere?: Hemisphere
 	seasonalEventOverride?: SeasonalEventOverride
@@ -147,7 +147,7 @@ export const runSeasonalEvent = ({
 }
 
 export const getSeasonalTileAccent = (params: {
-	date: Date
+	date: Temporal.PlainDate
 	enabledEvents?: Set<SeasonalEventId>
 	hemisphere?: Hemisphere
 	seasonalEventOverride?: SeasonalEventOverride

@@ -141,10 +141,11 @@ const processFirefoxRelease = ({ baseExtensionManifest, newVersion }) => {
 				browser_specific_settings: {
 					gecko: {
 						id: '{9282bc49-b1b4-4f46-b135-1dfe00f182c9}',
+						strict_min_version: '139.0',
 					},
 				},
 			},
-			attributesToRemove: ['background'],
+			attributesToRemove: ['background', 'minimum_chrome_version'],
 			baseManifest: baseExtensionManifest,
 		})
 		processZipCreation(EXTENSION_DIR, newVersion, '-firefox')

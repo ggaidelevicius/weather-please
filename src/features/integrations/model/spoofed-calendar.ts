@@ -1,12 +1,10 @@
 import type { CalendarAccountSummary } from '../hooks/use-calendar-connection'
 import type { CalendarEvent } from './calendar-event'
 
+import { getCurrentDateTime } from '../../../shared/lib/time'
 import { CalendarAccountCategory } from './account-category'
 import { mergeCalendarEvents } from './calendar-event'
 import { CalendarProvider } from './calendar-provider'
-
-const MINUTE_MS = 60 * 1000
-const HOUR_MS = 60 * MINUTE_MS
 
 // Deterministic fixture data for the developer "spoof upcoming events"
 // toggle, covering every time-label variant: in progress, later today,
@@ -15,9 +13,8 @@ export const createSpoofedCalendarData = (): {
 	accounts: CalendarAccountSummary[]
 	events: CalendarEvent[]
 } => {
-	const now = Date.now()
-	const startOfTomorrow = new Date(now + 24 * HOUR_MS)
-	startOfTomorrow.setHours(0, 0, 0, 0)
+	const now = getCurrentDateTime()
+	const startOfTomorrow = now.add({ days: 1 }).startOfDay()
 
 	return {
 		accounts: [
@@ -42,12 +39,12 @@ export const createSpoofedCalendarData = (): {
 					accountId: 'spoof-work',
 					description:
 						'Share yesterday’s progress, today’s plan, and anything blocking the team.',
-					endTimestamp: now + 20 * MINUTE_MS,
+					endTimestamp: now.add({ minutes: 20 }).epochMilliseconds,
 					icalUid: null,
 					id: 'spoof-standup',
 					isAllDay: false,
 					location: 'Microsoft Teams Meeting',
-					startTimestamp: now - 10 * MINUTE_MS,
+					startTimestamp: now.subtract({ minutes: 10 }).epochMilliseconds,
 					subject: 'Team standup',
 					webLink: 'https://outlook.live.com/calendar/',
 				},
@@ -55,12 +52,12 @@ export const createSpoofedCalendarData = (): {
 					accountId: 'spoof-personal',
 					description:
 						'Routine clean and check-up. Remember to bring the new insurance card.',
-					endTimestamp: now + 3 * HOUR_MS,
+					endTimestamp: now.add({ hours: 3 }).epochMilliseconds,
 					icalUid: null,
 					id: 'spoof-dentist',
 					isAllDay: false,
 					location: '128 Collins St, Melbourne',
-					startTimestamp: now + 2 * HOUR_MS,
+					startTimestamp: now.add({ hours: 2 }).epochMilliseconds,
 					subject: 'Dentist appointment',
 					webLink: null,
 				},
@@ -68,60 +65,68 @@ export const createSpoofedCalendarData = (): {
 					accountId: 'spoof-work',
 					description:
 						'Align on next quarter’s priorities, owners, and delivery milestones.\n\nBring any open questions for the roadmap workshop.',
-					endTimestamp: startOfTomorrow.getTime() + 24 * HOUR_MS,
+					endTimestamp: startOfTomorrow.add({ days: 1 }).epochMilliseconds,
 					icalUid: null,
 					id: 'spoof-conference',
 					isAllDay: true,
 					location: 'Sydney HQ',
-					startTimestamp: startOfTomorrow.getTime(),
+					startTimestamp: startOfTomorrow.epochMilliseconds,
 					subject: 'Quarterly planning offsite with a deliberately long title',
 					webLink: null,
 				},
 				{
 					accountId: 'spoof-personal',
 					description: null,
-					endTimestamp: startOfTomorrow.getTime() + 10.5 * HOUR_MS,
+					endTimestamp: startOfTomorrow.with({ hour: 10, minute: 30 })
+						.epochMilliseconds,
 					icalUid: null,
 					id: 'spoof-coffee',
 					isAllDay: false,
 					location: 'Patricia Coffee Brewers',
-					startTimestamp: startOfTomorrow.getTime() + 9.5 * HOUR_MS,
+					startTimestamp: startOfTomorrow.with({ hour: 9, minute: 30 })
+						.epochMilliseconds,
 					subject: 'Coffee with Alex',
 					webLink: null,
 				},
 				{
 					accountId: 'spoof-personal',
 					description: 'Booking reference: WP1234',
-					endTimestamp: startOfTomorrow.getTime() + 26 * HOUR_MS,
+					endTimestamp: startOfTomorrow.add({ days: 1 }).with({ hour: 2 })
+						.epochMilliseconds,
 					icalUid: null,
 					id: 'spoof-flight',
 					isAllDay: false,
 					location: 'MEL T2',
-					startTimestamp: startOfTomorrow.getTime() + 25 * HOUR_MS,
+					startTimestamp: startOfTomorrow.add({ days: 1 }).with({ hour: 1 })
+						.epochMilliseconds,
 					subject: 'Flight to Sydney',
 					webLink: null,
 				},
 				{
 					accountId: 'spoof-work',
 					description: null,
-					endTimestamp: startOfTomorrow.getTime() + 12 * HOUR_MS,
+					endTimestamp: startOfTomorrow.with({ hour: 12, minute: 0 })
+						.epochMilliseconds,
 					icalUid: null,
 					id: 'spoof-one-on-one',
 					isAllDay: false,
 					location: 'Microsoft Teams Meeting',
-					startTimestamp: startOfTomorrow.getTime() + 11.5 * HOUR_MS,
+					startTimestamp: startOfTomorrow.with({ hour: 11, minute: 30 })
+						.epochMilliseconds,
 					subject: 'One-on-one with Sam',
 					webLink: null,
 				},
 				{
 					accountId: 'spoof-personal',
 					description: null,
-					endTimestamp: startOfTomorrow.getTime() + 14 * HOUR_MS,
+					endTimestamp: startOfTomorrow.with({ hour: 14, minute: 0 })
+						.epochMilliseconds,
 					icalUid: null,
 					id: 'spoof-gym',
 					isAllDay: false,
 					location: null,
-					startTimestamp: startOfTomorrow.getTime() + 13 * HOUR_MS,
+					startTimestamp: startOfTomorrow.with({ hour: 13, minute: 0 })
+						.epochMilliseconds,
 					subject: 'Gym session',
 					webLink: null,
 				},
@@ -129,25 +134,29 @@ export const createSpoofedCalendarData = (): {
 					accountId: 'spoof-work',
 					description:
 						'Review the latest interaction flows and agree on what is ready for engineering.',
-					endTimestamp: startOfTomorrow.getTime() + 16 * HOUR_MS,
+					endTimestamp: startOfTomorrow.with({ hour: 16, minute: 0 })
+						.epochMilliseconds,
 					icalUid: null,
 					id: 'spoof-design-review',
 					isAllDay: false,
 					location:
 						'E701/Chaney Room with an unreasonably verbose location name',
-					startTimestamp: startOfTomorrow.getTime() + 15 * HOUR_MS,
+					startTimestamp: startOfTomorrow.with({ hour: 15, minute: 0 })
+						.epochMilliseconds,
 					subject: 'Design review',
 					webLink: null,
 				},
 				{
 					accountId: 'spoof-personal',
 					description: null,
-					endTimestamp: startOfTomorrow.getTime() + 21 * HOUR_MS,
+					endTimestamp: startOfTomorrow.with({ hour: 21, minute: 0 })
+						.epochMilliseconds,
 					icalUid: null,
 					id: 'spoof-dinner',
 					isAllDay: false,
 					location: 'Tipo 00',
-					startTimestamp: startOfTomorrow.getTime() + 19 * HOUR_MS,
+					startTimestamp: startOfTomorrow.with({ hour: 19, minute: 0 })
+						.epochMilliseconds,
 					subject: 'Dinner with the team after a quarter of shipping things',
 					webLink: null,
 				},

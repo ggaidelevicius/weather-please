@@ -15,6 +15,10 @@ import {
 	subscribeSharedResource,
 } from '../../../shared/lib/shared-resource'
 import {
+	getCurrentTimestamp,
+	getSystemTimeZone,
+} from '../../../shared/lib/time'
+import {
 	getAuthRedirectUri,
 	hasExtensionAuthSupport,
 	launchExtensionAuthFlow,
@@ -159,7 +163,7 @@ export const useCalendarConnection = (): CalendarConnection => {
 			setIsConnecting,
 			storedAccountsRef,
 		}
-		const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+		const timeZone = getSystemTimeZone()
 		const unsubscribe = accounts.map((account) =>
 			subscribeSharedResource({
 				key: getAccountEventsKey({ account, timeZone }),
@@ -213,7 +217,8 @@ export const useCalendarConnection = (): CalendarConnection => {
 		}
 		const refreshEventsIfStale = () => {
 			const isStale =
-				Date.now() - lastEventsFetchAtRef.current > EVENTS_REFRESH_INTERVAL_MS
+				getCurrentTimestamp() - lastEventsFetchAtRef.current >
+				EVENTS_REFRESH_INTERVAL_MS
 			if (
 				document.visibilityState === 'visible' &&
 				isStale &&
@@ -267,7 +272,7 @@ export const useCalendarConnection = (): CalendarConnection => {
 			invalidateSharedResource({
 				key: getAccountEventsKey({
 					account,
-					timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+					timeZone: getSystemTimeZone(),
 				}),
 			})
 		}
@@ -456,7 +461,7 @@ const synchronizeAccounts = (connectionState: ConnectionState) => {
 				invalidateSharedResource({
 					key: getAccountEventsKey({
 						account: previous,
-						timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+						timeZone: getSystemTimeZone(),
 					}),
 				})
 			}
@@ -526,9 +531,9 @@ const loadEvents = async (
 		return
 	}
 
-	connectionState.lastEventsFetchAtRef.current = Date.now()
+	connectionState.lastEventsFetchAtRef.current = getCurrentTimestamp()
 	connectionState.setEventsStatus(AsyncStatus.Loading)
-	const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+	const timeZone = getSystemTimeZone()
 	const results = await Promise.all(
 		activeAccounts.map((account) =>
 			loadAccountEvents({
@@ -1019,7 +1024,7 @@ const ensureFreshAccount = async ({
 	requireCurrentAccount({ account, connectionState })
 	if (
 		!shouldForceRefresh &&
-		account.expiresAt - TOKEN_EXPIRY_SKEW_MS > Date.now()
+		account.expiresAt - TOKEN_EXPIRY_SKEW_MS > getCurrentTimestamp()
 	)
 		return account
 

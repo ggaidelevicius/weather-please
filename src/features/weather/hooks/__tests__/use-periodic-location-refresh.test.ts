@@ -2,6 +2,7 @@ import { act, cleanup, renderHook } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { invalidateSharedResource } from '../../../../shared/lib/shared-resource'
+import { getCurrentTimestamp } from '../../../../shared/lib/time'
 import { usePeriodicLocationRefresh } from '../use-periodic-location-refresh'
 
 const getCurrentPosition = vi.fn<Geolocation['getCurrentPosition']>()
@@ -116,7 +117,7 @@ describe('shared periodic location checks', () => {
 			hasValue: true,
 			id: 'other-tab-location',
 			revision: '',
-			updatedAt: Date.now(),
+			updatedAt: getCurrentTimestamp(),
 			version: 1,
 		})
 		act(() => {
@@ -239,6 +240,6 @@ const createPosition = (
 		speed: null,
 		toJSON: () => ({}),
 	},
-	timestamp: Date.now(),
+	timestamp: getCurrentTimestamp(),
 	toJSON: () => ({}),
 })

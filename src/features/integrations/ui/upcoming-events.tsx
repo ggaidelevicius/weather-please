@@ -13,6 +13,7 @@ import { Fragment, useEffect, useId, useRef, useState } from 'react'
 import type { CalendarAccountSummary } from '../hooks/use-calendar-connection'
 import type { CalendarEvent } from '../model/calendar-event'
 
+import { getCurrentTimestamp, getDateTime } from '../../../shared/lib/time'
 import {
 	CALENDAR_ACCOUNT_CATEGORY_STYLES,
 	CalendarAccountCategory,
@@ -37,7 +38,7 @@ export const UpcomingEvents = ({
 }>) => {
 	// Tabs can stay open well past an event's start, so the reference time
 	// ticks every minute to keep labels honest and drop events that ended.
-	const [now, setNow] = useState(() => Date.now())
+	const [now, setNow] = useState(() => getCurrentTimestamp())
 	const [hasMoreBelow, setHasMoreBelow] = useState(false)
 	const sectionHeadingId = useId()
 	const sectionRef = useRef<HTMLElement | null>(null)
@@ -48,7 +49,7 @@ export const UpcomingEvents = ({
 
 	useEffect(() => {
 		const tickInterval = setInterval(() => {
-			setNow(Date.now())
+			setNow(getCurrentTimestamp())
 		}, NOW_TICK_INTERVAL_MS)
 
 		return () => {
@@ -125,10 +126,10 @@ export const UpcomingEvents = ({
 					<Trans>Upcoming calendar events</Trans>
 				</h2>
 				{dayGroups.map((dayGroup) => (
-					<Fragment key={dayGroup.dayStartTimestamp}>
+					<Fragment key={dayGroup.date.toString()}>
 						<p className="px-1 pt-1 text-xs font-semibold tracking-wide text-dark-100">
 							{getDayHeadingLabel({
-								dayStartTimestamp: dayGroup.dayStartTimestamp,
+								date: dayGroup.date,
 								locale,
 								now,
 							})}
@@ -294,7 +295,7 @@ const EventCard = ({
 }
 
 type DayGroup = {
-	dayStartTimestamp: number
+	date: Temporal.PlainDate
 	events: CalendarEvent[]
 }
 
@@ -311,15 +312,13 @@ const groupEventsByDay = ({
 
 	for (const event of events) {
 		const effectiveStart = Math.max(event.startTimestamp, now)
-		const dayStart = new Date(effectiveStart)
-		dayStart.setHours(0, 0, 0, 0)
-		const dayStartTimestamp = dayStart.getTime()
+		const date = getDateTime({ timestamp: effectiveStart }).toPlainDate()
 		const currentGroup = dayGroups[dayGroups.length - 1]
 
-		if (currentGroup?.dayStartTimestamp === dayStartTimestamp) {
+		if (currentGroup?.date.equals(date)) {
 			currentGroup.events.push(event)
 		} else {
-			dayGroups.push({ dayStartTimestamp, events: [event] })
+			dayGroups.push({ date, events: [event] })
 		}
 	}
 
@@ -327,29 +326,29 @@ const groupEventsByDay = ({
 }
 
 const getDayHeadingLabel = ({
-	dayStartTimestamp,
+	date,
 	locale,
 	now,
 }: Readonly<{
-	dayStartTimestamp: number
+	date: Temporal.PlainDate
 	locale: string
 	now: number
 }>): ReactNode => {
-	const day = new Date(dayStartTimestamp)
-	const dateLabel = new Intl.DateTimeFormat(locale, {
+	const today = getDateTime({ timestamp: now }).toPlainDate()
+	const dateLabel = date.toLocaleString(locale, {
 		day: 'numeric',
 		month: 'long',
-	}).format(day)
+	})
 
-	if (isSameDay(day, new Date(now))) {
+	if (date.equals(today)) {
 		return <Trans>Today • {dateLabel}</Trans>
 	}
 
-	if (isSameDay(day, addDays(new Date(now), 1))) {
+	if (date.equals(today.add({ days: 1 }))) {
 		return <Trans>Tomorrow • {dateLabel}</Trans>
 	}
 
-	return `${new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(day)} • ${dateLabel}`
+	return `${date.toLocaleString(locale, { weekday: 'long' })} • ${dateLabel}`
 }
 
 const getEventTimeLabel = ({
@@ -369,7 +368,13 @@ const getEventTimeLabel = ({
 		return <Trans>Now</Trans>
 	}
 
-	return formatEventTime(new Date(event.startTimestamp), locale)
+	return getDateTime({ timestamp: event.startTimestamp }).toLocaleString(
+		locale,
+		{
+			hour: 'numeric',
+			minute: '2-digit',
+		},
+	)
 }
 
 const formatDurationLabel = (
@@ -393,22 +398,4 @@ const formatDurationLabel = (
 			{hours}h {minutes}m
 		</Trans>
 	)
-}
-
-const formatEventTime = (date: Date, locale: string) =>
-	new Intl.DateTimeFormat(locale, {
-		hour: 'numeric',
-		minute: '2-digit',
-	}).format(date)
-
-const isSameDay = (a: Date, b: Date) =>
-	a.getFullYear() === b.getFullYear() &&
-	a.getMonth() === b.getMonth() &&
-	a.getDate() === b.getDate()
-
-const addDays = (date: Date, days: number) => {
-	const nextDate = new Date(date)
-	nextDate.setDate(nextDate.getDate() + days)
-
-	return nextDate
 }

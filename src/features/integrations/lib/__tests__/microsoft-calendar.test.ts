@@ -36,7 +36,7 @@ describe('fetchUpcomingCalendarEvents', () => {
 		await fetchUpcomingCalendarEvents({
 			accessToken: 'access-token',
 			accountId: 'account-1',
-			now: new Date('2026-06-12T12:00:00Z'),
+			now: Temporal.Instant.from('2026-06-12T12:00:00Z'),
 			timeZone: 'Australia/Melbourne',
 		})
 
@@ -96,8 +96,63 @@ describe('fetchUpcomingCalendarEvents', () => {
 		expect(events[1]?.description).toBe('Discuss progress and blockers')
 		expect(events[1]?.location).toBe('Meeting room 3')
 		expect(events[1]?.startTimestamp).toBe(
-			new Date('2026-06-12T15:00:00').getTime(),
+			Temporal.Instant.from('2026-06-12T05:00:00Z').epochMilliseconds,
 		)
+	})
+
+	it('accepts provider fractional seconds while preserving explicit offsets', async () => {
+		stubGraphResponse({
+			value: [
+				createGraphEvent({
+					end: { dateTime: '2026-11-01T07:00:00.7654321Z' },
+					start: { dateTime: '2026-11-01T01:30:00.1234567-05:00' },
+				}),
+			],
+		})
+		const [event] = await fetchUpcomingCalendarEvents({
+			accessToken: 'access-token',
+			accountId: 'account-1',
+			timeZone: 'America/New_York',
+		})
+		expect(event.startTimestamp).toBe(
+			Temporal.Instant.from('2026-11-01T06:30:00.1234567Z').epochMilliseconds,
+		)
+		expect(event.endTimestamp).toBe(
+			Temporal.Instant.from('2026-11-01T07:00:00.7654321Z').epochMilliseconds,
+		)
+	})
+
+	it('interprets offset-free timestamps in the requested zone across daylight saving', async () => {
+		stubGraphResponse({
+			value: [
+				createGraphEvent({
+					end: { dateTime: '2026-03-08T03:30:00.0000000' },
+					start: { dateTime: '2026-03-08T01:30:00.0000000' },
+				}),
+			],
+		})
+		const [event] = await fetchUpcomingCalendarEvents({
+			accessToken: 'access-token',
+			accountId: 'account-1',
+			timeZone: 'America/New_York',
+		})
+		expect(event.startTimestamp).toBe(
+			Temporal.Instant.from('2026-03-08T06:30:00Z').epochMilliseconds,
+		)
+		expect(event.endTimestamp - event.startTimestamp).toBe(60 * 60_000)
+	})
+
+	it('rejects invalid calendar dates instead of normalizing them to another day', async () => {
+		stubGraphResponse({
+			value: [createGraphEvent({ start: { dateTime: '2026-02-30T10:00:00' } })],
+		})
+		await expect(
+			fetchUpcomingCalendarEvents({
+				accessToken: 'access-token',
+				accountId: 'account-1',
+				timeZone: 'Australia/Melbourne',
+			}),
+		).rejects.toThrow()
 	})
 
 	it('requires reauthorisation when the access token is rejected', async () => {

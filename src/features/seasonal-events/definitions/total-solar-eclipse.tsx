@@ -105,8 +105,5 @@ export const totalSolarEclipseEvent: SeasonalEvent = {
 }
 
 function isTotalSolarEclipse({ date }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	return TOTAL_SOLAR_ECLIPSE_DATES.has(`${year}-${month}-${day}`)
+	return TOTAL_SOLAR_ECLIPSE_DATES.has(date.toString())
 }

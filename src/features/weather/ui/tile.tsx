@@ -24,6 +24,7 @@ import type {
 	SeasonalEventOverride,
 } from '../../seasonal-events/core/types'
 
+import { getDateTime } from '../../../shared/lib/time'
 import { SeasonalEventModal } from '../../../shared/ui/seasonal-event-modal'
 import { Hemisphere, SeasonalEventId } from '../../seasonal-events/core/types'
 import { getMeteorShower } from '../../seasonal-events/meteor-showers/catalog'
@@ -303,11 +304,11 @@ export const Tile = ({
 }: Readonly<TileProps>) => {
 	const usesMetricTemperature = temperatureUnit === TemperatureUnit.Celsius
 	const usesMetricUnits = unitSystem === UnitSystem.Metric
-	const tileDate = new Date(day * 1000)
-	const dayDescriptor = days[tileDate.getDay()]
+	const tileDate = getDateTime({ timestamp: day * 1000 }).toPlainDate()
+	const dayDescriptor = days[tileDate.dayOfWeek % 7]
 	const dateDescriptor = (
 		<>
-			{tileDate.getDate()} {months[tileDate.getMonth()]}
+			{tileDate.day} {months[tileDate.month - 1]}
 		</>
 	)
 
@@ -334,7 +335,7 @@ export const Tile = ({
 					return
 				}
 				const nextSeasonalEvent = seasonalEvents.getSeasonalEventForDate({
-					date: new Date(day * 1000),
+					date: getDateTime({ timestamp: day * 1000 }).toPlainDate(),
 					enabledEvents: enabledSeasonalEvents,
 					hemisphere,
 					seasonalEventOverride,

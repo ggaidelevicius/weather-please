@@ -20,16 +20,15 @@ export const prepareWeather = async (context: BrowserContext) => {
 							speed: null,
 							toJSON: () => ({}),
 						},
-						timestamp: Date.now(),
+						timestamp: Temporal.Now.instant().epochMilliseconds,
 						toJSON: () => ({}),
 					}),
 			},
 		})
 	})
 	const weather = createWeatherResponse()
-	const today = new Date()
-	today.setHours(0, 0, 0, 0)
-	const midnight = today.getTime() / 1000
+	const today = Temporal.Now.zonedDateTimeISO().startOfDay()
+	const midnight = today.epochMilliseconds / 1000
 	weather.daily.time = [midnight]
 	weather.daily.sunrise = [midnight + 21600]
 	weather.daily.sunset = [midnight + 64800]

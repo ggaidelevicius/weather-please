@@ -12,6 +12,24 @@ schemas, defaults, and types belong to `features/settings/model`, independent of
 hooks. Keep domain calculations out of UI modules where possible and colocate
 tests with the behavior they cover.
 
+## Dates and time
+
+Native Temporal is required in Node 26+, Chrome 144+, and Firefox 139+.
+`shared/lib/time.ts` centralizes the current clock and system timezone. Domain
+code uses `Temporal.PlainDate` for calendar dates, `Temporal.Instant` for exact
+times, and `Temporal.ZonedDateTime` for local calendar arithmetic and
+formatting. Calendar days advance with `add({ days: 1 })`, independently of
+whether a daylight-saving day contains 23, 24, or 25 hours.
+
+Persisted timestamps and API payloads remain numbers or ISO strings, and
+existing weather cache records migrate on read. Temporal values are
+reconstructed and validated at boundaries. The test setup connects Temporal's
+clock to Vitest's fake clock. Date conversion remains only where an external API
+requires it, such as `astronomy-engine`; Prisma returns Date values from stored
+timestamps. Temporal handles named timezones, while `@photostructure/tz-lookup`
+still maps coordinates to a timezone and `astronomy-engine` still calculates sky
+positions.
+
 ## Weather and persistence
 
 Weather API responses are validated before mapping into domain data. Forecast

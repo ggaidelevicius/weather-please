@@ -6,6 +6,12 @@ import {
 	subscribeSharedResource,
 } from '../../../shared/lib/shared-resource'
 import {
+	getCurrentDateTime,
+	getCurrentTimestamp,
+	getDateTime,
+} from '../../../shared/lib/time'
+import { epochMillisecondsSchema } from '../../../shared/lib/time-schema'
+import {
 	fetchWeatherMapData,
 	fetchWeatherResponse,
 	mapWeatherResponseToForecastData,
@@ -31,7 +37,7 @@ import {
 
 const sharedWeatherSchema = z.object({
 	alertData: alertSchema,
-	lastUpdatedAt: z.number(),
+	lastUpdatedAt: epochMillisecondsSchema,
 	next24HoursData: next24HoursDataSchema,
 	weatherData: dataSchema,
 })
@@ -53,7 +59,7 @@ export const requestSharedWeather = async ({
 	if (!force && cached && isWeatherCacheFresh({ cached })) {
 		return {
 			alertData: cached.alertData,
-			lastUpdatedAt: cached.lastUpdatedDate.getTime(),
+			lastUpdatedAt: cached.lastUpdatedDate.epochMilliseconds,
 			next24HoursData: cached.next24HoursData,
 			weatherData: cached.weatherData,
 		}
@@ -65,22 +71,22 @@ export const requestSharedWeather = async ({
 				signal: requestSignal,
 			})
 			requestSignal.throwIfAborted()
-			const now = new Date()
-			const currentHour = now.getHours()
+			const now = getCurrentDateTime()
+			const currentHour = now.hour
 			const next24HoursData = mapWeatherResponseToNext24HoursData({
 				currentHour,
 				data: response,
 			})
 			const weather = {
 				alertData: deriveAlertsFromNext24HoursData(next24HoursData),
-				lastUpdatedAt: now.getTime(),
+				lastUpdatedAt: now.epochMilliseconds,
 				next24HoursData,
 				weatherData: mapWeatherResponseToForecastData(response),
 			}
 			writeCachedWeather({
 				...identity,
 				...weather,
-				lastUpdatedDate: now,
+				lastUpdatedDate: now.toInstant(),
 				weatherMapData: null,
 			})
 			return weather
@@ -136,11 +142,14 @@ export const readSharedWeatherCache = (
 	})
 	const cached =
 		shared &&
-		(!stored || shared.value.lastUpdatedAt > stored.lastUpdatedDate.getTime())
+		(!stored ||
+			shared.value.lastUpdatedAt > stored.lastUpdatedDate.epochMilliseconds)
 			? {
 					...shared.value,
 					isDegraded: false,
-					lastUpdatedDate: new Date(shared.value.lastUpdatedAt),
+					lastUpdatedDate: Temporal.Instant.fromEpochMilliseconds(
+						shared.value.lastUpdatedAt,
+					),
 					weatherMapData: null,
 				}
 			: stored
@@ -148,7 +157,7 @@ export const readSharedWeatherCache = (
 	return {
 		...cached,
 		weatherMapData:
-			map && map.updatedAt >= cached.lastUpdatedDate.getTime()
+			map && map.updatedAt >= cached.lastUpdatedDate.epochMilliseconds
 				? map.value
 				: cached.weatherMapData,
 	}
@@ -177,12 +186,12 @@ export const subscribeSharedWeather = ({
 
 export const isWeatherCacheFresh = ({
 	cached,
-	now = Date.now(),
+	now = getCurrentTimestamp(),
 }: {
 	cached: CachedWeather
 	now?: number
 }): boolean => {
-	const age = now - cached.lastUpdatedDate.getTime()
+	const age = now - cached.lastUpdatedDate.epochMilliseconds
 	return (
 		!cached.isDegraded &&
 		cached.next24HoursData.length > 0 &&
@@ -204,21 +213,24 @@ const isSharedWeatherFresh = ({
 			...weather,
 			isDegraded: Boolean(
 				persisted?.isDegraded &&
-				persisted.lastUpdatedDate.getTime() >= weather.lastUpdatedAt,
+				persisted.lastUpdatedDate.epochMilliseconds >= weather.lastUpdatedAt,
 			),
-			lastUpdatedDate: new Date(weather.lastUpdatedAt),
+			lastUpdatedDate: Temporal.Instant.fromEpochMilliseconds(
+				weather.lastUpdatedAt,
+			),
 			weatherMapData: null,
 		},
 	})
 }
 
-const getWeatherMaxAge = (now = Date.now()): number => {
-	const refreshHour = new Date(now)
-	if (refreshHour.getMinutes() < CACHE_REFRESH_DELAY_MINUTE) {
-		refreshHour.setHours(refreshHour.getHours() - 1)
-	}
-	refreshHour.setMinutes(0, 0, 0)
-	return Math.min(CACHE_VALIDITY_MS, now - refreshHour.getTime())
+const getWeatherMaxAge = (now = getCurrentTimestamp()): number => {
+	const current = getDateTime({ timestamp: now })
+	const refreshHour = (
+		current.minute < CACHE_REFRESH_DELAY_MINUTE
+			? current.subtract({ hours: 1 })
+			: current
+	).round({ roundingMode: 'floor', smallestUnit: 'hour' })
+	return Math.min(CACHE_VALIDITY_MS, now - refreshHour.epochMilliseconds)
 }
 
 const getWeatherResourceKey = (identity: CacheIdentity): string =>

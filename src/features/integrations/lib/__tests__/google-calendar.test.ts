@@ -38,7 +38,7 @@ describe('fetchUpcomingGoogleCalendarEvents', () => {
 		await fetchUpcomingGoogleCalendarEvents({
 			accessToken: 'access-token',
 			accountId: 'google-account',
-			now: new Date('2026-06-12T12:00:00Z'),
+			now: Temporal.Instant.from('2026-06-12T12:00:00Z'),
 		})
 
 		const [requestUrl, requestInit] = fetchMock.mock.calls[0] as unknown as [
@@ -81,6 +81,7 @@ describe('fetchUpcomingGoogleCalendarEvents', () => {
 		const events = await fetchUpcomingGoogleCalendarEvents({
 			accessToken: 'access-token',
 			accountId: 'google-account',
+			timeZone: 'Australia/Melbourne',
 		})
 
 		expect(events.map((event) => event.id)).toEqual(['timed', 'all-day'])
@@ -92,7 +93,7 @@ describe('fetchUpcomingGoogleCalendarEvents', () => {
 		expect(timedEvent?.isAllDay).toBe(false)
 		expect(timedEvent?.location).toBe('Patricia Coffee Brewers')
 		expect(timedEvent?.startTimestamp).toBe(
-			new Date('2026-06-12T10:00:00+10:00').getTime(),
+			Temporal.Instant.from('2026-06-12T10:00:00+10:00').epochMilliseconds,
 		)
 		expect(timedEvent?.subject).toBe('Coffee with Alex')
 
@@ -100,10 +101,70 @@ describe('fetchUpcomingGoogleCalendarEvents', () => {
 		expect(allDayEvent?.description).toBeNull()
 		expect(allDayEvent?.isAllDay).toBe(true)
 		expect(allDayEvent?.location).toBeNull()
-		expect(allDayEvent?.startTimestamp).toBe(new Date(2026, 5, 13).getTime())
-		expect(allDayEvent?.endTimestamp).toBe(new Date(2026, 5, 14).getTime())
+		expect(allDayEvent?.startTimestamp).toBe(
+			Temporal.PlainDate.from('2026-06-13').toZonedDateTime(
+				'Australia/Melbourne',
+			).epochMilliseconds,
+		)
+		expect(allDayEvent?.endTimestamp).toBe(
+			Temporal.PlainDate.from('2026-06-14').toZonedDateTime(
+				'Australia/Melbourne',
+			).epochMilliseconds,
+		)
 		expect(allDayEvent?.subject).toBe('')
 		expect(allDayEvent?.webLink).toBeNull()
+	})
+
+	it.each([
+		['2026-03-08', '2026-03-09', 23],
+		['2026-11-01', '2026-11-02', 25],
+	])(
+		'preserves the all-day date and exclusive end across %s daylight saving',
+		async (start, end, hours) => {
+			stubEventsResponse({
+				items: [
+					createGoogleEvent({ end: { date: end }, start: { date: start } }),
+				],
+			})
+			const [event] = await fetchUpcomingGoogleCalendarEvents({
+				accessToken: 'access-token',
+				accountId: 'google-account',
+				timeZone: 'America/New_York',
+			})
+			expect(event.isAllDay).toBe(true)
+			expect(
+				Temporal.Instant.fromEpochMilliseconds(event.startTimestamp)
+					.toZonedDateTimeISO('America/New_York')
+					.toPlainDate()
+					.toString(),
+			).toBe(start)
+			expect(
+				Temporal.Instant.fromEpochMilliseconds(event.endTimestamp)
+					.toZonedDateTimeISO('America/New_York')
+					.toPlainDate()
+					.toString(),
+			).toBe(end)
+			expect(event.endTimestamp - event.startTimestamp).toBe(
+				hours * 60 * 60_000,
+			)
+		},
+	)
+
+	it('rejects invalid all-day calendar dates', async () => {
+		stubEventsResponse({
+			items: [
+				createGoogleEvent({
+					end: { date: '2026-03-01' },
+					start: { date: '2026-02-30' },
+				}),
+			],
+		})
+		await expect(
+			fetchUpcomingGoogleCalendarEvents({
+				accessToken: 'access-token',
+				accountId: 'google-account',
+			}),
+		).rejects.toThrow()
 	})
 
 	it('requires reauthorisation when the access token is rejected', async () => {

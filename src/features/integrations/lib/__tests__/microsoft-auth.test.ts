@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import { getCurrentTimestamp } from '../../../../shared/lib/time'
 import { CalendarReauthRequiredError } from '../calendar-reauth-error'
 import {
 	buildMicrosoftAuthorizeUrl,
@@ -121,7 +122,7 @@ describe('exchangeMicrosoftAuthorizationCode', () => {
 		expect(tokens.accountId).toBe('tenant-id.object-id')
 		expect(tokens.accountLabel).toBe('gus@example.com')
 		expect(tokens.refreshToken).toBe('refresh-token')
-		expect(tokens.expiresAt).toBeGreaterThan(Date.now())
+		expect(tokens.expiresAt).toBeGreaterThan(getCurrentTimestamp())
 	})
 
 	it('falls back to the sub claim when oid or tid is missing', async () => {

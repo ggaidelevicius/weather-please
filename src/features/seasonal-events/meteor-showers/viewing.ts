@@ -18,14 +18,14 @@ import { getMeteorShower, type MeteorShower } from './catalog'
 
 export type MeteorViewingGuide =
 	| {
-			end: Date
+			end: Temporal.Instant
 			hasTwilight: boolean
 			moonIllumination: number
 			moonVisibility: 'above' | 'below' | 'mixed'
 			radiantAltitude: number
 			radiantAzimuth: number
-			referenceTime: Date
-			start: Date
+			referenceTime: Temporal.Instant
+			start: Temporal.Instant
 			status: 'available'
 			timeZone: string
 	  }
@@ -46,7 +46,7 @@ export function getMeteorViewingGuide({
 	longitude,
 	timeZone,
 }: {
-	date: Date
+	date: Temporal.PlainDate
 	eventId: SeasonalEventId
 	latitude: number
 	longitude: number
@@ -65,42 +65,25 @@ export function getMeteorViewingGuide({
 
 	try {
 		const selectedTimeZone = timeZone ?? tzLookup(latitude, longitude)
-		const formatter = new Intl.DateTimeFormat('en-GB', {
-			calendar: 'gregory',
-			day: '2-digit',
-			hour: '2-digit',
-			hourCycle: 'h23',
-			minute: '2-digit',
-			month: '2-digit',
-			numberingSystem: 'latn',
-			second: '2-digit',
+		const localNoon = date.toZonedDateTime({
+			plainTime: '12:00',
 			timeZone: selectedTimeZone,
-			year: 'numeric',
 		})
 		if (!isNearPeak({ date, shower })) {
 			return { status: 'out-of-season', timeZone: selectedTimeZone }
 		}
 
-		// Forecast dates are civil calendar labels, not instants in the browser's zone.
-		const civilNoon = Date.UTC(
-			date.getFullYear(),
-			date.getMonth(),
-			date.getDate(),
-			12,
-		)
-		const start = getZonedInstant({ civilTime: civilNoon, formatter })
-		const end = getZonedInstant({
-			civilTime: civilNoon + DAY_MS,
-			formatter,
-		})
-		if (start === null || end === null) {
-			return { status: 'unavailable', timeZone: selectedTimeZone }
-		}
+		const start = localNoon.toInstant()
+		const end = localNoon.add({ days: 1 }).toInstant()
 
 		const observer = new Observer(latitude, longitude, 0)
 		const samples: SkySample[] = []
-		for (let time = start; time <= end; time += SAMPLE_MS) {
-			samples.push(getSkySample({ observer, shower, time }))
+		for (
+			let instant = start;
+			Temporal.Instant.compare(instant, end) <= 0;
+			instant = instant.add({ minutes: SAMPLE_MINUTES })
+		) {
+			samples.push(getSkySample({ instant, observer, shower }))
 		}
 		if (!samples.some((sample) => sample.sunAltitude <= -12)) {
 			return { status: 'no-darkness', timeZone: selectedTimeZone }
@@ -116,15 +99,17 @@ export function getMeteorViewingGuide({
 		const first = window[0]
 		const last = window[window.length - 1]
 		const reference = getSkySample({
+			instant: first.time.add({
+				milliseconds: first.time.until(last.time).total('milliseconds') / 2,
+			}),
 			observer,
 			shower,
-			time: (first.time + last.time) / 2,
 		})
 		const hasMoonAbove = window.some((sample) => sample.moonAltitude >= 0)
 		const hasMoonBelow = window.some((sample) => sample.moonAltitude < 0)
 
 		return {
-			end: new Date(last.time),
+			end: last.time,
 			hasTwilight: window.some((sample) => sample.sunAltitude > -18),
 			moonIllumination: reference.moonIllumination,
 			moonVisibility: hasMoonAbove
@@ -134,8 +119,8 @@ export function getMeteorViewingGuide({
 				: 'below',
 			radiantAltitude: reference.radiantAltitude,
 			radiantAzimuth: reference.radiantAzimuth,
-			referenceTime: new Date(reference.time),
-			start: new Date(first.time),
+			referenceTime: reference.time,
+			start: first.time,
 			status: 'available',
 			timeZone: selectedTimeZone,
 		}
@@ -144,17 +129,19 @@ export function getMeteorViewingGuide({
 	}
 }
 
-const DAY_MS = 24 * 60 * 60 * 1000
-const SAMPLE_MS = 10 * 60 * 1000
+const SAMPLE_MINUTES = 10
 const MIN_WINDOW_INTERVALS = 3
 const MAX_WINDOW_INTERVALS = 12
 const DEG_TO_RAD = Math.PI / 180
 
 const viewingRequestSchema = z.object({
 	date: z
-		.date()
+		.instanceof(Temporal.PlainDate)
 		.refine(
-			(value) => value.getFullYear() >= 1900 && value.getFullYear() <= 2100,
+			(value) =>
+				value.year >= 1900 &&
+				value.year <= 2100 &&
+				value.calendarId === 'iso8601',
 		),
 	eventId: z.enum(SeasonalEventId),
 	latitude: z.number().min(-90).max(90),
@@ -168,7 +155,7 @@ type SkySample = {
 	radiantAltitude: number
 	radiantAzimuth: number
 	sunAltitude: number
-	time: number
+	time: Temporal.Instant
 }
 
 function findBestWindow(samples: SkySample[]): null | SkySample[] {
@@ -205,15 +192,16 @@ function findBestWindow(samples: SkySample[]): null | SkySample[] {
 }
 
 function getSkySample({
+	instant,
 	observer,
 	shower,
-	time,
 }: {
+	instant: Temporal.Instant
 	observer: Observer
 	shower: MeteorShower
-	time: number
 }): SkySample {
-	const date = new Date(time)
+	// Astronomy Engine accepts Date rather than Temporal values.
+	const date = new Date(instant.epochMilliseconds)
 	const radiant = HorizonFromVector(
 		RotateVector(
 			Rotation_EQJ_HOR(date, observer),
@@ -237,35 +225,8 @@ function getSkySample({
 		radiantAltitude: radiant.lat,
 		radiantAzimuth: radiant.lon,
 		sunAltitude: Horizon(date, observer, sun.ra, sun.dec).altitude,
-		time,
+		time: instant,
 	}
-}
-
-function getZonedInstant({
-	civilTime,
-	formatter,
-}: {
-	civilTime: number
-	formatter: Intl.DateTimeFormat
-}): null | number {
-	let instant = civilTime
-	for (let attempt = 0; attempt < 4; attempt += 1) {
-		const parts = formatter.formatToParts(new Date(instant))
-		const read = (type: Intl.DateTimeFormatPartTypes) =>
-			Number(parts.find((part) => part.type === type)?.value)
-		const displayedTime = Date.UTC(
-			read('year'),
-			read('month') - 1,
-			read('day'),
-			read('hour'),
-			read('minute'),
-			read('second'),
-		)
-		const difference = civilTime - displayedTime
-		if (difference === 0) return instant
-		instant += difference
-	}
-	return null
 }
 
 function isEligible(sample: SkySample): boolean {
@@ -276,17 +237,21 @@ function isNearPeak({
 	date,
 	shower,
 }: {
-	date: Date
+	date: Temporal.PlainDate
 	shower: MeteorShower
 }): boolean {
-	const year = date.getFullYear()
-	const civilDay = Date.UTC(year, date.getMonth(), date.getDate())
+	const year = date.year
 	return [year - 1, year, year + 1].some(
 		(peakYear) =>
 			Math.abs(
-				civilDay - Date.UTC(peakYear, shower.peakMonth - 1, shower.peakDay),
-			) <=
-			shower.peakWindowDays * DAY_MS,
+				date.until(
+					Temporal.PlainDate.from({
+						day: shower.peakDay,
+						month: shower.peakMonth,
+						year: peakYear,
+					}),
+				).days,
+			) <= shower.peakWindowDays,
 	)
 }
 

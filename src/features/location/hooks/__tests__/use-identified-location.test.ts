@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { AsyncStatus } from '../../../../shared/hooks/async-status'
 import { invalidateSharedResource } from '../../../../shared/lib/shared-resource'
+import { getCurrentTimestamp } from '../../../../shared/lib/time'
 import { useIdentifiedLocation } from '../use-identified-location'
 
 const IDENTIFIED_LOCATION_CACHE_STORAGE_KEY = 'identifiedLocationCache'
@@ -62,7 +63,7 @@ describe('useIdentifiedLocation', () => {
 			JSON.stringify({
 				'en:40.713:-74.006': {
 					label: 'New York, United States',
-					storedAt: Date.now(),
+					storedAt: getCurrentTimestamp(),
 				},
 			}),
 		)

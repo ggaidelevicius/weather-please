@@ -4,6 +4,7 @@ import { Trans } from '@lingui/react/macro'
 
 import type { Config } from '../model/config'
 
+import { getCurrentTimestamp } from '../../../shared/lib/time'
 import { Button } from '../../../shared/ui/button'
 
 interface ReviewPromptProps {
@@ -25,7 +26,7 @@ export const ReviewPrompt = ({
 
 	if (
 		!config.displayedReviewPrompt &&
-		new Date().getTime() - config.installed >= REVIEW_PROMPT_DELAY_MS
+		getCurrentTimestamp() - config.installed >= REVIEW_PROMPT_DELAY_MS
 	) {
 		return (
 			<div className="fixed top-5 right-5 z-30 flex flex-col rounded-lg bg-dark-700 p-5 text-white shadow-md">

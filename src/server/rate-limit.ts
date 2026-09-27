@@ -1,5 +1,6 @@
 import type { Prisma } from '../generated/prisma/client'
 
+import { getCurrentInstant } from '../shared/lib/time'
 import { prisma } from './prisma'
 
 export type RateLimitResult = { ok: false; retryAfter: number } | { ok: true }
@@ -58,8 +59,8 @@ export const enforceRateLimit = async (
 	}
 
 	const rule = RATE_LIMIT_RULES[options.scope]
-	const now = new Date()
-	const windowStart = new Date(now.getTime() - rule.windowMs)
+	const now = getCurrentInstant()
+	const windowStart = now.subtract({ milliseconds: rule.windowMs }).toString()
 
 	try {
 		// Serializable isolation prevents concurrent requests from both passing
@@ -90,7 +91,7 @@ export const enforceRateLimit = async (
 								Math.ceil(
 									(oldestEntry.createdAt.getTime() +
 										rule.windowMs -
-										now.getTime()) /
+										now.epochMilliseconds) /
 										1000,
 								),
 							)
@@ -134,7 +135,9 @@ const cleanupExpiredEntries = async (): Promise<void> => {
 	const maxWindowMs = Math.max(
 		...Object.values(RATE_LIMIT_RULES).map((r) => r.windowMs),
 	)
-	const cutoff = new Date(Date.now() - maxWindowMs)
+	const cutoff = getCurrentInstant()
+		.subtract({ milliseconds: maxWindowMs })
+		.toString()
 
 	await prisma.rateLimitEntry.deleteMany({
 		where: {

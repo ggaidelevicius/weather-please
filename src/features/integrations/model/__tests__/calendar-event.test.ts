@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import type { CalendarEvent } from '../calendar-event'
 
-import { mergeCalendarEvents } from '../calendar-event'
+import { calendarEventSchema, mergeCalendarEvents } from '../calendar-event'
 
 const createEvent = (
 	overrides: Partial<CalendarEvent> = {},
@@ -18,6 +18,20 @@ const createEvent = (
 	subject: 'Standup',
 	webLink: null,
 	...overrides,
+})
+
+describe('calendar event timestamp validation', () => {
+	it.each(['startTimestamp', 'endTimestamp'] as const)(
+		'rejects invalid %s values before display',
+		(field) => {
+			for (const timestamp of [0.5, 8_640_000_000_000_001]) {
+				expect(
+					calendarEventSchema.safeParse(createEvent({ [field]: timestamp }))
+						.success,
+				).toBe(false)
+			}
+		},
+	)
 })
 
 describe('mergeCalendarEvents', () => {

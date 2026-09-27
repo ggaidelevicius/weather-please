@@ -16,7 +16,7 @@ vi.mock('@lingui/react/macro', () => ({
 }))
 
 const props = {
-	date: new Date(2026, 11, 14),
+	date: Temporal.PlainDate.from('2026-12-14'),
 	eventId: SeasonalEventId.Geminids,
 	latitude: -31.95,
 	longitude: 115.86,
@@ -45,7 +45,7 @@ describe('LazyMeteorViewingGuide', () => {
 		).toBeInTheDocument()
 		const nextProps = {
 			...props,
-			date: new Date(2026, 11, 15),
+			date: Temporal.PlainDate.from('2026-12-15'),
 			latitude: 51.5,
 			longitude: -0.12,
 		}
@@ -57,7 +57,7 @@ describe('LazyMeteorViewingGuide', () => {
 		)
 		expect(screen.getByTestId('loaded-guide')).toHaveAttribute(
 			'data-night',
-			nextProps.date.toISOString(),
+			nextProps.date.toString(),
 		)
 		expect(importGuide).toHaveBeenCalledOnce()
 		expect(screen.queryByText('Calculating local viewing times…')).toBeNull()
@@ -120,7 +120,7 @@ describe('LazyMeteorViewingGuide', () => {
 
 function LoadedGuide({ date, latitude, longitude }: GuideProps) {
 	return (
-		<div data-night={date.toISOString()} data-testid="loaded-guide">
+		<div data-night={date.toString()} data-testid="loaded-guide">
 			{latitude}, {longitude}
 		</div>
 	)

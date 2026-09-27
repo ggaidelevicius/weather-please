@@ -8,6 +8,61 @@ import {
 } from '../weather-api'
 
 describe('fetchWeatherResponse', () => {
+	it.each([
+		['daily', 0.5],
+		['daily', 8_640_000_000_001],
+		['hourly', 0.5],
+		['hourly', 8_640_000_000_001],
+	] as const)(
+		'rejects invalid %s timestamp %s at the API boundary',
+		async (period, timestamp) => {
+			const weather = createWeatherResponse()
+			weather[period].time[0] = timestamp
+			const fetchMock = vi
+				.spyOn(global, 'fetch')
+				.mockResolvedValueOnce(Response.json(weather))
+				.mockResolvedValueOnce(Response.json({ hourly: { time: [] } }))
+			try {
+				await expect(
+					fetchWeatherResponse({
+						lat: '40',
+						lon: '-74',
+						shouldUseAirQualityUv: false,
+						timeZone: 'UTC',
+					}),
+				).rejects.toThrow('Invalid weather response')
+			} finally {
+				fetchMock.mockRestore()
+			}
+		},
+	)
+
+	it('drops invalid optional sun timestamps while retaining the forecast', async () => {
+		const weather = createWeatherResponse()
+		weather.daily.sunrise = [0.5]
+		weather.daily.sunset = [8_640_000_000_001]
+		const fetchMock = vi
+			.spyOn(global, 'fetch')
+			.mockResolvedValueOnce(Response.json(weather))
+			.mockResolvedValueOnce(Response.json({ hourly: { time: [] } }))
+		try {
+			const response = await fetchWeatherResponse({
+				lat: '40',
+				lon: '-74',
+				shouldUseAirQualityUv: false,
+				timeZone: 'UTC',
+			})
+			expect(
+				mapWeatherResponseToNext24HoursData({
+					currentHour: 0,
+					data: response,
+				})[0],
+			).toMatchObject({ sunrise: null, sunset: null, temperature: 20 })
+		} finally {
+			fetchMock.mockRestore()
+		}
+	})
+
 	it('includes the upstream HTTP status code in weather fetch errors', async () => {
 		const fetchMock = vi
 			.spyOn(global, 'fetch')

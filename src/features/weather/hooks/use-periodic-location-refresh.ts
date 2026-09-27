@@ -5,6 +5,7 @@ import {
 	requestSharedResource,
 	subscribeSharedResource,
 } from '../../../shared/lib/shared-resource'
+import { getCurrentTimestamp } from '../../../shared/lib/time'
 import {
 	type DeviceLocationResult,
 	deviceLocationResultSchema,
@@ -87,13 +88,13 @@ export const usePeriodicLocationRefresh = ({
 		const controller = new AbortController()
 		let timeoutId: ReturnType<typeof setTimeout> | undefined
 		let lastAppliedAt: null | number = null
-		const scheduleNextCheck = (updatedAt = Date.now()) => {
+		const scheduleNextCheck = (updatedAt = getCurrentTimestamp()) => {
 			clearTimeout(timeoutId)
 			if (controller.signal.aborted || document.visibilityState !== 'visible')
 				return
 			timeoutId = setTimeout(
 				checkLocation,
-				Math.max(1, updatedAt + intervalMs + 1 - Date.now()),
+				Math.max(1, updatedAt + intervalMs + 1 - getCurrentTimestamp()),
 			)
 		}
 		const adoptSharedLocation = () => {

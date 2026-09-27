@@ -5,6 +5,7 @@ import {
 	removeLocalStorage,
 	writeLocalStorage,
 } from '../../../shared/lib/local-storage'
+import { getCurrentTimestamp } from '../../../shared/lib/time'
 
 const IDENTIFIED_LOCATION_CACHE_STORAGE_KEY = 'identifiedLocationCache'
 const IDENTIFIED_LOCATION_CACHE_ENTRY_LIMIT = 24
@@ -51,7 +52,7 @@ export const writeCachedIdentifiedLocationLabel = ({
 		...existingCache,
 		[cacheKey]: {
 			label,
-			storedAt: Date.now(),
+			storedAt: getCurrentTimestamp(),
 		},
 	}
 

@@ -9,6 +9,7 @@ Repository-specific guidance for agents working in this codebase.
 - React 19 with React Compiler enabled
 - TypeScript 7
 - Vitest
+- Node.js 26+; Chrome 144+ and Firefox 139+ with native Temporal
 
 ## Working Style
 
@@ -54,6 +55,15 @@ Repository-specific guidance for agents working in this codebase.
   and controlled.
 - Handle async failures explicitly. Do not leave promises to fail silently.
 - Prefer user-facing errors that are actionable and non-technical.
+
+## Dates And Time
+
+- Use native Temporal for date and time logic. Use `shared/lib/time.ts` for the
+  current clock and system timezone.
+- Use `PlainDate` for calendar dates, `Instant` for exact times, and
+  `ZonedDateTime` for calendar arithmetic in a timezone.
+- Keep persisted timestamps as numbers or ISO strings. Limit legacy Date values
+  to external-library boundaries and fake-clock test setup.
 
 ## Imports And Paths
 

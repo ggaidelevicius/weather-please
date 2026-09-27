@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { getCurrentTimestamp } from '../../../../shared/lib/time'
 import { fetchDeviceLocation } from '../device-location'
 
 const getCurrentPosition = vi.fn<Geolocation['getCurrentPosition']>()
@@ -90,6 +91,6 @@ const createPosition = (
 		speed: null,
 		toJSON: () => ({}),
 	},
-	timestamp: Date.now(),
+	timestamp: getCurrentTimestamp(),
 	toJSON: () => ({}),
 })

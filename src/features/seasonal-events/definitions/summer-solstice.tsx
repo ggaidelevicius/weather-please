@@ -108,12 +108,9 @@ export const summerSolsticeEvent: SeasonalEvent = {
 }
 
 function isSummerSolstice({ date, hemisphere }: SeasonalEventContext) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
 	const solsticeDates =
 		hemisphere === Hemisphere.Southern
 			? SUMMER_SOLSTICE_DATES_SOUTHERN
 			: SUMMER_SOLSTICE_DATES_NORTHERN
-	return solsticeDates.has(`${year}-${month}-${day}`)
+	return solsticeDates.has(date.toString())
 }

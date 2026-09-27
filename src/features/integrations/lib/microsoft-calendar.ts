@@ -2,30 +2,33 @@ import { z } from 'zod'
 
 import type { CalendarEvent } from '../model/calendar-event'
 
+import { getCurrentInstant } from '../../../shared/lib/time'
 import { CalendarReauthRequiredError } from './calendar-reauth-error'
 import { getUpcomingEventsWindowEnd } from './calendar-window'
 
 export const fetchUpcomingCalendarEvents = async ({
 	accessToken,
 	accountId,
-	now = new Date(),
+	now = getCurrentInstant(),
 	signal,
 	timeZone,
 }: Readonly<{
 	accessToken: string
 	accountId: string
-	now?: Date
+	now?: Temporal.Instant
 	signal?: AbortSignal
 	timeZone: string
 }>): Promise<CalendarEvent[]> => {
-	const windowEnd = getUpcomingEventsWindowEnd({ now })
+	const windowEnd = getUpcomingEventsWindowEnd({
+		now: now.toZonedDateTimeISO(timeZone),
+	})
 	const params = new URLSearchParams({
 		$orderby: 'start/dateTime',
 		$select:
 			'id,iCalUId,subject,bodyPreview,start,end,isAllDay,location,webLink',
 		$top: MAX_EVENTS.toString(),
-		endDateTime: windowEnd.toISOString(),
-		startDateTime: now.toISOString(),
+		endDateTime: windowEnd.toInstant().toString({ fractionalSecondDigits: 3 }),
+		startDateTime: now.toString({ fractionalSecondDigits: 3 }),
 	})
 
 	const response = await fetch(
@@ -53,7 +56,7 @@ export const fetchUpcomingCalendarEvents = async ({
 	}
 
 	return parsed.data.value
-		.map((event) => mapGraphEvent({ accountId, event }))
+		.map((event) => mapGraphEvent({ accountId, event, timeZone }))
 		.sort((a, b) => a.startTimestamp - b.startTimestamp)
 }
 
@@ -87,25 +90,38 @@ const calendarViewSchema = z.object({
 const mapGraphEvent = ({
 	accountId,
 	event,
+	timeZone,
 }: Readonly<{
 	accountId: string
 	event: z.infer<typeof graphEventSchema>
+	timeZone: string
 }>): CalendarEvent => ({
 	accountId,
 	description: event.bodyPreview?.trim() || null,
-	endTimestamp: parseGraphDateTime(event.end.dateTime),
+	endTimestamp: parseGraphDateTime({ dateTime: event.end.dateTime, timeZone }),
 	icalUid: event.iCalUId ?? null,
 	id: event.id,
 	isAllDay: event.isAllDay,
 	location: event.location?.displayName?.trim() || null,
-	startTimestamp: parseGraphDateTime(event.start.dateTime),
+	startTimestamp: parseGraphDateTime({
+		dateTime: event.start.dateTime,
+		timeZone,
+	}),
 	subject: event.subject?.trim() ?? '',
 	webLink: event.webLink ?? null,
 })
 
-// Graph returns wall-clock datetimes (with up to seven fractional digits and
-// no offset) in the timezone requested via the `Prefer` header. That timezone
-// matches the browser's, so parsing as a local datetime yields the correct
-// instant. The fraction is trimmed to three digits for cross-engine parsing.
-const parseGraphDateTime = (value: string) =>
-	new Date(value.replace(/(\.\d{3})\d+$/, '$1')).getTime()
+// Offset-free Graph timestamps belong to the requested zone, regardless of
+// the runtime's zone. Preserve an explicit offset when the provider supplies one.
+const parseGraphDateTime = ({
+	dateTime,
+	timeZone,
+}: Readonly<{
+	dateTime: string
+	timeZone: string
+}>): number =>
+	/(?:[zZ]|[+-]\d{2}:?\d{2})$/.test(dateTime)
+		? Temporal.Instant.from(dateTime).epochMilliseconds
+		: Temporal.PlainDateTime.from(dateTime).toZonedDateTime(timeZone, {
+				disambiguation: 'compatible',
+			}).epochMilliseconds

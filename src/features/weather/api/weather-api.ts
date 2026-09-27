@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { getSystemTimeZone } from '../../../shared/lib/time'
+import { epochSecondsSchema } from '../../../shared/lib/time-schema'
 import { isAbortError } from '../model/error-names'
 import {
 	AIR_QUALITY_FORECAST_DAYS,
@@ -21,18 +23,23 @@ const optionalNullableNumberArraySchema = z
 	.optional()
 	.catch([])
 	.transform((value) => value ?? [])
+const optionalNullableTimestampArraySchema = z
+	.array(epochSecondsSchema.nullable())
+	.optional()
+	.catch([])
+	.transform((value) => value ?? [])
 
 const weatherResponseSchema = z
 	.object({
 		daily: z.object({
 			daylight_duration: optionalNullableNumberArraySchema,
 			precipitation_probability_max: nullableNumberArraySchema,
-			sunrise: optionalNullableNumberArraySchema,
-			sunset: optionalNullableNumberArraySchema,
+			sunrise: optionalNullableTimestampArraySchema,
+			sunset: optionalNullableTimestampArraySchema,
 			sunshine_duration: optionalNullableNumberArraySchema,
 			temperature_2m_max: nullableNumberArraySchema,
 			temperature_2m_min: nullableNumberArraySchema,
-			time: z.array(z.number()).min(1),
+			time: z.array(epochSecondsSchema).min(1),
 			uv_index_max: nullableNumberArraySchema,
 			weathercode: nullableNumberArraySchema,
 			windspeed_10m_max: nullableNumberArraySchema,
@@ -45,7 +52,7 @@ const weatherResponseSchema = z
 			relative_humidity_2m: nullableNumberArraySchema,
 			shortwave_radiation_instant: nullableNumberArraySchema,
 			temperature_2m: nullableNumberArraySchema,
-			time: z.array(z.number()).min(1),
+			time: z.array(epochSecondsSchema).min(1),
 			uv_index: nullableNumberArraySchema,
 			visibility: nullableNumberArraySchema,
 			weathercode: nullableNumberArraySchema,
@@ -62,7 +69,7 @@ const airQualityResponseSchema = z
 			ozone: optionalNullableNumberArraySchema,
 			pm2_5: optionalNullableNumberArraySchema,
 			pm10: optionalNullableNumberArraySchema,
-			time: z.array(z.number()),
+			time: z.array(epochSecondsSchema),
 			us_aqi: optionalNullableNumberArraySchema,
 			uv_index: optionalNullableNumberArraySchema,
 		}),
@@ -80,7 +87,7 @@ const weatherMapLocationResponseSchema = z
 		hourly: z.object({
 			precipitation: z.array(z.number()).min(1),
 			precipitation_probability: z.array(z.number()).min(1),
-			time: z.array(z.number()).min(1),
+			time: z.array(epochSecondsSchema).min(1),
 			winddirection_10m: z.array(z.number()).min(1),
 			windspeed_10m: z.array(z.number()).min(1),
 		}),
@@ -98,14 +105,7 @@ type WeatherMapLocationResponse = z.infer<
 	typeof weatherMapLocationResponseSchema
 >
 
-export const getUserTimeZone = (): string => {
-	try {
-		const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-		return timeZone || 'UTC'
-	} catch {
-		return 'UTC'
-	}
-}
+export const getUserTimeZone = (): string => getSystemTimeZone()
 
 const buildAirQualityUvByDay = ({
 	dailyTimes,

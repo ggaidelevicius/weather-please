@@ -1,6 +1,7 @@
 import type { NewYearsFirework } from './new-years-fireworks'
 
 import { createSettingsModalAnimationController } from '../../../shared/lib/settings-modal-animation-controller'
+import { getCurrentDate } from '../../../shared/lib/time'
 import { getCanvasDpr, randomInRange } from '../core/utils'
 import {
 	createNewYearsFirework,
@@ -35,11 +36,9 @@ export async function launchNewYearsCelebration(): Promise<() => void> {
 		throw new Error('Unable to create 2D context for New Year celebration')
 	}
 
-	const now = new Date()
+	const now = getCurrentDate()
 	// Overrides preview the next celebration; January 1 celebrates the current year.
-	const year = String(
-		now.getFullYear() + (now.getMonth() === 0 && now.getDate() === 1 ? 0 : 1),
-	)
+	const year = String(now.year + (now.month === 1 && now.day === 1 ? 0 : 1))
 	const { lettering, points, textWidth } = createYearArtwork(year)
 	const sparkSprite = createSparkSprite()
 	const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')

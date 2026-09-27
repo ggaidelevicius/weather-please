@@ -3,6 +3,7 @@ import { z } from 'zod'
 import type { LocaleKey } from '../../../shared/lib/i18n'
 
 import { locales } from '../../../shared/lib/i18n'
+import { getCurrentTimestamp } from '../../../shared/lib/time'
 import {
 	SEASONAL_BACKGROUND_AUTOMATIC,
 	SEASONAL_EVENT_OVERRIDE_NONE,
@@ -59,7 +60,7 @@ export const createDefaultConfig = (): Config => ({
 	...BOOLEAN_CONFIG_DEFAULTS,
 	daysToRetrieve: '3',
 	identifier: TileIdentifier.Day,
-	installed: Date.now(),
+	installed: getCurrentTimestamp(),
 	temperatureUnit: TemperatureUnit.Celsius,
 	unitSystem: UnitSystem.Metric,
 })

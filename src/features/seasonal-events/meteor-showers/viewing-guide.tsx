@@ -11,7 +11,7 @@ import { getMeteorShower } from './catalog'
 import { getMeteorViewingGuide } from './viewing'
 
 type MeteorViewingGuideProps = {
-	date: Date
+	date: Temporal.PlainDate
 	eventId: SeasonalEventId
 	latitude: number
 	longitude: number
@@ -70,13 +70,14 @@ function getGuideContent({
 	if (guide.status === 'out-of-season') {
 		const shower = getMeteorShower(eventId)
 		const peakLabel = shower
-			? new Intl.DateTimeFormat(locale, {
+			? Temporal.PlainDate.from({
+					day: shower.peakDay,
+					month: shower.peakMonth,
+					year: 2000,
+				}).toLocaleString(locale, {
 					day: 'numeric',
 					month: 'long',
-					timeZone: 'UTC',
-				}).format(
-					new Date(Date.UTC(2000, shower.peakMonth - 1, shower.peakDay)),
-				)
+				})
 			: null
 		return (
 			<>
@@ -97,13 +98,9 @@ function getGuideContent({
 		return getUnavailableMessage(guide.status)
 	}
 
-	// The tile supplies a calendar date, not an instant to convert between zones.
-	const nightLabel = new Intl.DateTimeFormat(locale, {
+	const nightLabel = date.toLocaleString(locale, {
 		dateStyle: 'full',
-		timeZone: 'UTC',
-	}).format(
-		new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())),
-	)
+	})
 	const windowFormatter = new Intl.DateTimeFormat(locale, {
 		dateStyle: 'medium',
 		timeStyle: 'short',
@@ -117,11 +114,13 @@ function getGuideContent({
 	})
 	const timeZoneLabel =
 		referenceFormatter
-			.formatToParts(guide.referenceTime)
+			.formatToParts(guide.referenceTime.epochMilliseconds)
 			.find((part) => part.type === 'timeZoneName')?.value ?? guide.timeZone
-	const referenceLabel = windowFormatter.format(guide.referenceTime)
-	const startLabel = windowFormatter.format(guide.start)
-	const endLabel = windowFormatter.format(guide.end)
+	const referenceLabel = windowFormatter.format(
+		guide.referenceTime.epochMilliseconds,
+	)
+	const startLabel = windowFormatter.format(guide.start.epochMilliseconds)
+	const endLabel = windowFormatter.format(guide.end.epochMilliseconds)
 	const altitude = new Intl.NumberFormat(locale, {
 		maximumFractionDigits: 0,
 	}).format(guide.radiantAltitude)
@@ -146,11 +145,11 @@ function getGuideContent({
 						<Trans>Suggested viewing window</Trans>
 					</dt>
 					<dd className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1 font-medium text-white tabular-nums">
-						<time dateTime={guide.start.toISOString()}>{startLabel}</time>
+						<time dateTime={guide.start.toString()}>{startLabel}</time>
 						<span className="font-normal text-dark-200">
 							<Trans>to</Trans>
 						</span>
-						<time dateTime={guide.end.toISOString()}>{endLabel}</time>
+						<time dateTime={guide.end.toString()}>{endLabel}</time>
 					</dd>
 				</div>
 				<div>

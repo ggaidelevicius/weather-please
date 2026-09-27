@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { getCurrentTimestamp } from './time'
+
 export type SharedResourceSnapshot<T> = {
 	updatedAt: number
 	value: T
@@ -46,7 +48,7 @@ export const requestSharedResource = async <T>({
 	signal?.throwIfAborted()
 	const initialRecord = readRecord(key)
 	const initialRevision = initialRecord?.revision ?? ''
-	const requestedAt = Date.now()
+	const requestedAt = getCurrentTimestamp()
 	const readMatchingCache = () => {
 		const record = readRecord(key)
 		if ((record?.revision ?? '') !== initialRevision) {
@@ -116,7 +118,7 @@ export const requestSharedResource = async <T>({
 						hasValue: true,
 						id: crypto.randomUUID(),
 						revision: initialRevision,
-						updatedAt: Date.now(),
+						updatedAt: getCurrentTimestamp(),
 						version: 1,
 					})
 					return validated
@@ -129,12 +131,12 @@ export const requestSharedResource = async <T>({
 						const previous = readRecord(key)
 						writeRecord(key, {
 							data: previous?.data,
-							failureAt: Date.now(),
+							failureAt: getCurrentTimestamp(),
 							failureId: crypto.randomUUID(),
 							hasValue: previous?.hasValue ?? false,
 							id: previous?.id ?? crypto.randomUUID(),
 							revision: initialRevision,
-							updatedAt: previous?.updatedAt ?? Date.now(),
+							updatedAt: previous?.updatedAt ?? getCurrentTimestamp(),
 							version: 1,
 						})
 					}
@@ -192,7 +194,7 @@ export const invalidateSharedResource = ({
 		hasValue: false,
 		id: crypto.randomUUID(),
 		revision: crypto.randomUUID(),
-		updatedAt: Date.now(),
+		updatedAt: getCurrentTimestamp(),
 		version: 1,
 	})
 }
@@ -229,7 +231,7 @@ let channel: BroadcastChannel | null = null
 let hasListeners = false
 
 const isRecent = (updatedAt: number, maxAgeMs: number) => {
-	const age = Date.now() - updatedAt
+	const age = getCurrentTimestamp() - updatedAt
 	return age >= 0 && age <= maxAgeMs
 }
 
@@ -315,7 +317,8 @@ const pruneRecords = ({
 		}
 		candidates.push({
 			bytes: raw.length * 2,
-			isProtected: !record.hasValue && Date.now() - record.updatedAt < 120_000,
+			isProtected:
+				!record.hasValue && getCurrentTimestamp() - record.updatedAt < 120_000,
 			key,
 			updatedAt: record.updatedAt,
 		})
@@ -354,7 +357,7 @@ const pruneMemory = () => {
 			([key, record]) =>
 				!subscriptions.has(key) &&
 				![...activeRequests].some((request) => request.key === key) &&
-				(record.hasValue || Date.now() - record.updatedAt > 120_000),
+				(record.hasValue || getCurrentTimestamp() - record.updatedAt > 120_000),
 		)
 		.sort((left, right) => left[1].updatedAt - right[1].updatedAt)
 	for (const [key] of candidates.slice(

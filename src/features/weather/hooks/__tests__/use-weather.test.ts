@@ -1,6 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { getCurrentDateTime } from '../../../../shared/lib/time'
 import { getCachedWeather } from '../../model/cache'
 import { useWeather } from '../use-weather'
 
@@ -90,10 +91,10 @@ describe('useWeather - Core Functionality', () => {
 	})
 
 	it('uses cached data when available and valid', () => {
-		const now = new Date()
+		const now = getCurrentDateTime()
 		const cachedData = [
 			{
-				day: now.getTime(),
+				day: now.epochMilliseconds,
 				description: 1,
 				max: 30,
 				min: 20,
@@ -122,7 +123,7 @@ describe('useWeather - Core Functionality', () => {
 				precipitationProbability: 10,
 				shortwaveRadiation: 120,
 				temperature: 22,
-				time: Math.floor(now.getTime() / 1000),
+				time: Math.floor(now.epochMilliseconds / 1000),
 				uv: 4,
 				visibility: 10_000,
 				weatherCode: 1,
@@ -144,12 +145,12 @@ describe('useWeather - Core Functionality', () => {
 							windSpeed: 15,
 						},
 					],
-					time: Math.floor(now.getTime() / 1000),
+					time: Math.floor(now.epochMilliseconds / 1000),
 				},
 			],
 		}
 
-		const lastUpdated = now.toISOString()
+		const lastUpdated = now.toInstant().toString({ fractionalSecondDigits: 3 })
 
 		localStorageMock.setItem('data', JSON.stringify(cachedData))
 		localStorageMock.setItem(
@@ -180,10 +181,10 @@ describe('useWeather - Core Functionality', () => {
 	})
 
 	it('retries fresh weather when cached data is marked degraded', async () => {
-		const now = new Date()
+		const now = getCurrentDateTime()
 		const cachedData = [
 			{
-				day: now.getTime(),
+				day: now.epochMilliseconds,
 				description: 1,
 				max: 30,
 				min: 20,
@@ -211,7 +212,7 @@ describe('useWeather - Core Functionality', () => {
 				precipitationProbability: 10,
 				shortwaveRadiation: 120,
 				temperature: 22,
-				time: Math.floor(now.getTime() / 1000),
+				time: Math.floor(now.epochMilliseconds / 1000),
 				uv: 4,
 				visibility: 10_000,
 				weatherCode: 1,
@@ -238,7 +239,10 @@ describe('useWeather - Core Functionality', () => {
 		)
 		localStorageMock.setItem('alerts', JSON.stringify(cachedAlerts))
 		localStorageMock.setItem('weatherMapData', JSON.stringify(null))
-		localStorageMock.setItem('lastUpdated', now.toISOString())
+		localStorageMock.setItem(
+			'lastUpdated',
+			now.toInstant().toString({ fractionalSecondDigits: 3 }),
+		)
 		localStorageMock.setItem('cachedLat', '40.7128')
 		localStorageMock.setItem('cachedLon', '-74.0060')
 		localStorageMock.setItem('cachedTimeZone', userTimeZone)
@@ -261,11 +265,11 @@ describe('useWeather - Core Functionality', () => {
 	})
 
 	it('fetches missing weather map data when weather cache is fresh', async () => {
-		const now = new Date()
-		const timestamp = Math.floor(now.getTime() / 1000)
+		const now = getCurrentDateTime()
+		const timestamp = Math.floor(now.epochMilliseconds / 1000)
 		const cachedData = [
 			{
-				day: now.getTime(),
+				day: now.epochMilliseconds,
 				description: 1,
 				max: 30,
 				min: 20,
@@ -323,7 +327,10 @@ describe('useWeather - Core Functionality', () => {
 			JSON.stringify(cachedNext24HoursData),
 		)
 		localStorageMock.setItem('alerts', JSON.stringify(cachedAlerts))
-		localStorageMock.setItem('lastUpdated', now.toISOString())
+		localStorageMock.setItem(
+			'lastUpdated',
+			now.toInstant().toString({ fractionalSecondDigits: 3 }),
+		)
 		localStorageMock.setItem('cachedLat', '40.7128')
 		localStorageMock.setItem('cachedLon', '-74.0060')
 		localStorageMock.setItem('cachedTimeZone', userTimeZone)
@@ -393,9 +400,9 @@ describe('useWeather - Core Functionality', () => {
 	})
 
 	it('shows reduced stale cached data when weather refresh fails', async () => {
-		const now = new Date()
-		const nowSeconds = Math.floor(now.getTime() / 1000)
-		const staleUpdatedAt = new Date(now.getTime() - 2 * 60 * 60 * 1000)
+		const now = getCurrentDateTime()
+		const nowSeconds = Math.floor(now.epochMilliseconds / 1000)
+		const staleUpdatedAt = now.subtract({ hours: 2 })
 		const cachedData = [
 			{
 				day: nowSeconds,
@@ -475,7 +482,10 @@ describe('useWeather - Core Functionality', () => {
 			'weatherMapData',
 			JSON.stringify(cachedWeatherMapData),
 		)
-		localStorageMock.setItem('lastUpdated', staleUpdatedAt.toISOString())
+		localStorageMock.setItem(
+			'lastUpdated',
+			staleUpdatedAt.toInstant().toString({ fractionalSecondDigits: 3 }),
+		)
 		localStorageMock.setItem('cachedLat', '40.7128')
 		localStorageMock.setItem('cachedLon', '-74.0060')
 		localStorageMock.setItem('cachedTimeZone', userTimeZone)
@@ -512,10 +522,10 @@ describe('useWeather - Core Functionality', () => {
 	})
 
 	it('refreshes cached data when next 24 hours data is missing', async () => {
-		const now = new Date()
+		const now = getCurrentDateTime()
 		const cachedData = [
 			{
-				day: now.getTime(),
+				day: now.epochMilliseconds,
 				description: 1,
 				max: 30,
 				min: 20,
@@ -537,7 +547,10 @@ describe('useWeather - Core Functionality', () => {
 
 		localStorageMock.setItem('data', JSON.stringify(cachedData))
 		localStorageMock.setItem('alerts', JSON.stringify(cachedAlerts))
-		localStorageMock.setItem('lastUpdated', now.toISOString())
+		localStorageMock.setItem(
+			'lastUpdated',
+			now.toInstant().toString({ fractionalSecondDigits: 3 }),
+		)
 		localStorageMock.setItem('cachedLat', '40.7128')
 		localStorageMock.setItem('cachedLon', '-74.0060')
 		localStorageMock.setItem('cachedTimeZone', userTimeZone)
@@ -551,10 +564,10 @@ describe('useWeather - Core Functionality', () => {
 	})
 
 	it('accepts legacy lastUpdated format', () => {
-		const now = new Date()
+		const now = getCurrentDateTime()
 		const cachedData = [
 			{
-				day: now.getTime(),
+				day: now.epochMilliseconds,
 				description: 1,
 				max: 30,
 				min: 20,
@@ -575,7 +588,7 @@ describe('useWeather - Core Functionality', () => {
 			},
 		}
 
-		const lastUpdated = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`
+		const lastUpdated = `${now.year}-${now.month - 1}-${now.day}-${now.hour}`
 
 		localStorageMock.setItem('data', JSON.stringify(cachedData))
 		localStorageMock.setItem('alerts', JSON.stringify(cachedAlerts))

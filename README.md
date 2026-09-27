@@ -1,7 +1,7 @@
 # <img src="https://raw.githubusercontent.com/ggaidelevicius/weather-please/main/public/favicon.png" alt="Weather Please logo" width="50"> Weather Please
 
-Weather Please is a new tab replacement extension that is suitable for any
-browser that supports extensions (such as chromium).
+Weather Please is a new tab replacement extension for Chrome 144+ and Firefox
+139+. The extension and website use the browsers' native Temporal API.
 
 It displays maximum and minimum temperatures, a general prognosis, maximum UV
 index, maximum wind speed, and chance of precipitation for the current day, as
@@ -16,7 +16,7 @@ Both metric and imperial number formats are supported.
 Weather Please uses [Open Meteo](https://open-meteo.com/) as the source for all
 weather data.
 
-[Get Weather Please for Google Chrome and other Chromium browsers (such as Edge)](https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn)
+[Get Weather Please for Google Chrome](https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn)
 
 [Get Weather Please for Firefox](https://addons.mozilla.org/en-US/firefox/addon/weather-please/)
 
@@ -50,7 +50,8 @@ Weather Please is built using [Next.js](https://nextjs.org/). It uses
 [Framer Motion](https://www.framer.com/motion/). [Lingui](https://lingui.dev/)
 is used for translations.
 
-Use Node.js 24 or newer and the pnpm version pinned in `package.json`.
+Use the pnpm version pinned in `package.json`. Installation also sets up the
+project's pinned Node.js 26 runtime for pnpm commands and Git hooks.
 
 ```bash
 pnpm install --frozen-lockfile

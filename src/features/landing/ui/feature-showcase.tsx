@@ -561,5 +561,13 @@ type UnixTimestampParams = {
 }
 
 function getUnixTimestamp({ day, monthIndex, year }: UnixTimestampParams) {
-	return Math.round(Date.UTC(year, monthIndex, day, 12) / 1000)
+	return Math.round(
+		Temporal.ZonedDateTime.from({
+			day,
+			hour: 12,
+			month: monthIndex + 1,
+			timeZone: 'UTC',
+			year,
+		}).epochMilliseconds / 1000,
+	)
 }

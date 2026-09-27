@@ -7,6 +7,10 @@ import type { ProviderTokens } from '../../lib/provider-tokens'
 import type { CalendarEvent } from '../../model/calendar-event'
 
 import { AsyncStatus } from '../../../../shared/hooks/async-status'
+import {
+	getCurrentTimestamp,
+	getSystemTimeZone,
+} from '../../../../shared/lib/time'
 import { CalendarReauthRequiredError } from '../../lib/calendar-reauth-error'
 import {
 	CALENDAR_CONNECTION_STORAGE_KEY,
@@ -61,12 +65,12 @@ const createDeferred = () => {
 const event = (id: string): CalendarEvent => ({
 	accountId: 'account-a',
 	description: null,
-	endTimestamp: Date.now() + 3600000,
+	endTimestamp: getCurrentTimestamp() + 3600000,
 	icalUid: null,
 	id,
 	isAllDay: false,
 	location: null,
-	startTimestamp: Date.now(),
+	startTimestamp: getCurrentTimestamp(),
 	subject: id,
 	webLink: null,
 })
@@ -77,7 +81,7 @@ const createAccount = (
 	accountId: 'account-a',
 	accountLabel: 'Example',
 	category: CalendarAccountCategory.Personal,
-	expiresAt: Date.now() + 3600000,
+	expiresAt: getCurrentTimestamp() + 3600000,
 	isSessionExpired: false,
 	provider: CalendarProvider.Google,
 	refreshToken: 'refresh-token',
@@ -89,7 +93,7 @@ const refreshedTokens = (): ProviderTokens => ({
 	accessToken: 'fresh-access-token',
 	accountId: 'account-a',
 	accountLabel: 'Example',
-	expiresAt: Date.now() + 3600000,
+	expiresAt: getCurrentTimestamp() + 3600000,
 	refreshToken: 'rotated-refresh-token',
 })
 const notifyStorageChange = (
@@ -308,7 +312,7 @@ describe.each([CalendarProvider.Google, CalendarProvider.Microsoft])(
 		})
 
 		it('keeps rotated credentials when event loading fails after an expiry refresh', async () => {
-			seedAccount({ expiresAt: Date.now() - 1000, provider })
+			seedAccount({ expiresAt: getCurrentTimestamp() - 1000, provider })
 			vi.spyOn(console, 'error').mockImplementation(() => {})
 			const tokens = refreshedTokens()
 			refreshTokens.mockResolvedValue(tokens)
@@ -332,7 +336,7 @@ describe.each([CalendarProvider.Google, CalendarProvider.Microsoft])(
 		})
 
 		it('does not retry an expiry refresh when its refresh token is rejected', async () => {
-			seedAccount({ expiresAt: Date.now() - 1000, provider })
+			seedAccount({ expiresAt: getCurrentTimestamp() - 1000, provider })
 			refreshTokens.mockRejectedValue(new CalendarReauthRequiredError())
 			const { result } = renderHook(() => useCalendarConnection())
 
@@ -470,7 +474,7 @@ describe('calendar connections across tabs', () => {
 	})
 
 	it('keeps refreshed credentials in memory when saving to storage fails', async () => {
-		seedAccount({ expiresAt: Date.now() - 1000 })
+		seedAccount({ expiresAt: getCurrentTimestamp() - 1000 })
 		vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
 			throw new DOMException('Storage is full', 'QuotaExceededError')
 		})
@@ -490,6 +494,41 @@ describe('calendar connections across tabs', () => {
 })
 
 describe('shared calendar fetching', () => {
+	it.each([0.5, 8_640_000_000_000_001])(
+		'replaces a cached event with invalid timestamp %s without exposing it',
+		async (startTimestamp) => {
+			const account = readStoredCalendarAccounts()[0]
+			const cacheKey = `weather-please:shared-resource:v1:calendar-events:${account.provider}:${account.accountId}:${getSystemTimeZone()}`
+			localStorage.setItem(
+				cacheKey,
+				JSON.stringify({
+					data: {
+						events: [{ ...event('corrupt'), startTimestamp }],
+						expiresAt: account.expiresAt,
+						sessionId: account.sessionId ?? null,
+					},
+					hasValue: true,
+					id: 'corrupt-calendar',
+					revision: '',
+					updatedAt: getCurrentTimestamp(),
+					version: 1,
+				}),
+			)
+			const pending = createDeferred()
+			fetchEvents.mockReturnValueOnce(pending.promise)
+			const { result } = renderHook(() => useCalendarConnection())
+			await waitFor(() => expect(fetchEvents).toHaveBeenCalledOnce())
+			expect(result.current.events).toEqual([])
+			await act(async () => pending.resolve([event('replacement')]))
+			await waitFor(() =>
+				expect(result.current.events[0]?.id).toBe('replacement'),
+			)
+			expect(result.current.error).toBeNull()
+			expect(localStorage.getItem(cacheKey)).toContain('replacement')
+			expect(localStorage.getItem(cacheKey)).not.toContain('corrupt')
+		},
+	)
+
 	it('shares one event request between mounted consumers and newly opened consumers', async () => {
 		const pending = createDeferred()
 		fetchEvents.mockReturnValueOnce(pending.promise)
@@ -509,7 +548,7 @@ describe('shared calendar fetching', () => {
 	})
 
 	it('saves rotated credentials before event loading and refreshes them only once', async () => {
-		seedAccount({ expiresAt: Date.now() - 1000 })
+		seedAccount({ expiresAt: getCurrentTimestamp() - 1000 })
 		const tokens = refreshedTokens()
 		refreshTokens.mockResolvedValue(tokens)
 		const pending = createDeferred()
@@ -585,10 +624,12 @@ describe('shared calendar fetching', () => {
 	})
 
 	it('merges concurrent account rotations, category edits, and external additions under the mutation lock', async () => {
-		const firstAccount = createAccount({ expiresAt: Date.now() - 1000 })
+		const firstAccount = createAccount({
+			expiresAt: getCurrentTimestamp() - 1000,
+		})
 		const secondAccount = createAccount({
 			accountId: 'account-b',
-			expiresAt: Date.now() - 1000,
+			expiresAt: getCurrentTimestamp() - 1000,
 		})
 		writeStoredCalendarAccounts([firstAccount, secondAccount])
 		const mutations = deferAccountMutations()
@@ -596,7 +637,7 @@ describe('shared calendar fetching', () => {
 			async ({ previousTokens }: { previousTokens: ProviderTokens }) => ({
 				...previousTokens,
 				accessToken: `renewed-${previousTokens.accountId}`,
-				expiresAt: Date.now() + 3600000,
+				expiresAt: getCurrentTimestamp() + 3600000,
 				refreshToken: `rotated-${previousTokens.accountId}`,
 			}),
 		)
@@ -633,7 +674,7 @@ describe('shared calendar fetching', () => {
 	})
 
 	it('cancels queued credential persistence when the account is disconnected', async () => {
-		seedAccount({ expiresAt: Date.now() - 1000 })
+		seedAccount({ expiresAt: getCurrentTimestamp() - 1000 })
 		const mutations = deferAccountMutations()
 		refreshTokens.mockResolvedValue(refreshedTokens())
 		const { result } = renderHook(() => useCalendarConnection())
