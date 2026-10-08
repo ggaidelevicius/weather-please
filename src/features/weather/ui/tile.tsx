@@ -319,10 +319,12 @@ export const Tile = ({
 		identifier === TileIdentifier.Day ? dateDescriptor : dayDescriptor
 
 	const [seasonalEvent, setSeasonalEvent] = useState<null | SeasonalEvent>(null)
+	if (!showSeasonalEvents && seasonalEvent) {
+		setSeasonalEvent(null)
+	}
 
 	useEffect(() => {
 		if (!showSeasonalEvents) {
-			setSeasonalEvent(null)
 			return
 		}
 
@@ -342,6 +344,9 @@ export const Tile = ({
 				})
 				setSeasonalEvent(nextSeasonalEvent)
 			} catch (error) {
+				if (hasCanceled) {
+					return
+				}
 				console.error('Failed to resolve seasonal event details', error)
 				setSeasonalEvent(null)
 			}
@@ -373,6 +378,9 @@ export const Tile = ({
 		: false
 	const EventDetails = seasonalEvent?.details ?? DefaultSeasonalEventDetails
 	const [isEventOpen, setIsEventOpen] = useState(false)
+	if (!seasonalBadgeId && isEventOpen) {
+		setIsEventOpen(false)
+	}
 	const borderAngle = useMotionValue(0)
 	const borderStops = seasonalAccent?.colors.join(', ') ?? 'transparent'
 	const borderGradient = useMotionTemplate`conic-gradient(from ${borderAngle}deg, ${borderStops})`
@@ -389,12 +397,6 @@ export const Tile = ({
 			controls.stop()
 		}
 	}, [borderAngle, seasonalAccent])
-
-	useEffect(() => {
-		if (!seasonalBadgeId && isEventOpen) {
-			setIsEventOpen(false)
-		}
-	}, [isEventOpen, seasonalBadgeId])
 
 	return (
 		<motion.div

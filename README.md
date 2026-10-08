@@ -67,7 +67,8 @@ variables, database setup, and OAuth redirect configuration.
 pnpm db:generate       # Requires DATABASE_URL; generating does not connect to it
 pnpm typecheck
 pnpm test
-pnpm format:check
+pnpm exec oxlint .
+pnpm exec oxfmt . --check
 pnpm build:extension   # Writes the unpacked extension to extension/
 pnpm build:web         # Builds the hosted website; requires DATABASE_URL
 pnpm start             # Serves the website build
@@ -77,12 +78,18 @@ pnpm start             # Serves the website build
 temporary staging directory containing only the `/demo` route and its shared
 page setup, so website pages and their bundles are excluded. The build does not
 rename source directories or rewrite analytics imports. Website builds include
-analytics; extension builds exclude it. Vercel uses `pnpm build:web` through
-`vercel.json`.
+analytics; extension builds exclude it. Website builds use Turbopack, while
+extension builds retain webpack for the existing Manifest V3 packaging. Vercel
+uses `pnpm build:web` through `vercel.json`.
 
-Standalone type checks use native TypeScript 7. TypeScript 6 supplies the
-compiler API used by ESLint and other integrations. `pnpm lint` remains a
-mutating local command; use `pnpm exec eslint .` for a read-only lint check.
+Standalone type checks and Next.js builds use native TypeScript 7. `pnpm lint`
+applies Oxlint fixes, and `pnpm format` applies Oxfmt formatting, including
+Tailwind class sorting. Use the direct `pnpm exec` commands above for read-only
+checks.
+
+The pre-commit hook runs Oxlint and Oxfmt on staged files, then checks types,
+lints the full project, and runs tests. Staged fixes are included in the commit,
+while unstaged portions of partially staged files are preserved.
 
 See [architecture](docs/architecture.md) for module boundaries and
 [development and release instructions](docs/development.md) for browser smoke

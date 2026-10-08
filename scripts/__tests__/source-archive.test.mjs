@@ -14,6 +14,8 @@ it('packages build inputs without local secrets, generated files, or symlinks', 
 	try {
 		for (const file of [
 			'package.json',
+			'.oxfmtrc.json',
+			'oxlint.config.mts',
 			'scripts/build-extension.mjs',
 			'prisma/schema.prisma',
 			'_locales/en/messages.json',
@@ -44,7 +46,9 @@ it('packages build inputs without local secrets, generated files, or symlinks', 
 				.sort(),
 		).toEqual([
 			'.env.example',
+			'.oxfmtrc.json',
 			'_locales/en/messages.json',
+			'oxlint.config.mts',
 			'package.json',
 			'prisma/schema.prisma',
 			'scripts/build-extension.mjs',

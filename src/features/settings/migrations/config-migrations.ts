@@ -22,7 +22,9 @@ export type ConfigMigrationState = {
 export type ConfigMigrationStatus = 'completed' | 'failed' | 'skipped'
 
 export type ConfigVersion =
-	'legacy' | CurrentConfigVersion | PreviousConfigVersion
+	| 'legacy'
+	| CurrentConfigVersion
+	| PreviousConfigVersion
 
 type ConfigMigration = {
 	fromVersion: ConfigVersion

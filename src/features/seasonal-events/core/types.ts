@@ -38,7 +38,8 @@ export const SEASONAL_EVENT_OVERRIDE_NONE = 'none' as const
 export const SEASONAL_BACKGROUND_AUTOMATIC = 'automatic' as const
 
 export type SeasonalBackground =
-	SeasonalEventId | typeof SEASONAL_BACKGROUND_AUTOMATIC
+	| SeasonalEventId
+	| typeof SEASONAL_BACKGROUND_AUTOMATIC
 
 export type SeasonalEvent = {
 	details?: SeasonalEventDetails
@@ -58,7 +59,8 @@ export type SeasonalEventContext = {
 export type SeasonalEventDetails = () => ReactElement
 
 export type SeasonalEventOverride =
-	SeasonalEventId | typeof SEASONAL_EVENT_OVERRIDE_NONE
+	| SeasonalEventId
+	| typeof SEASONAL_EVENT_OVERRIDE_NONE
 
 export type SeasonalEventTileAccent = {
 	colors: readonly string[]

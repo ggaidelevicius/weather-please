@@ -42,8 +42,7 @@ export const createSourceArchive = ({
 const SOURCE_ENTRIES = [
 	'.env.example',
 	'.gitignore',
-	'.prettierrc',
-	'.prettierignore',
+	'.oxfmtrc.json',
 	'.ncurc.json',
 	'.github',
 	'.husky',
@@ -61,7 +60,7 @@ const SOURCE_ENTRIES = [
 	'babel.config.js',
 	'postcss.config.mjs',
 	'lingui.config.ts',
-	'eslint.config.mjs',
+	'oxlint.config.mts',
 	'tsconfig.json',
 	'vercel.json',
 	'.node-version',

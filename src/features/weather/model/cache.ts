@@ -223,7 +223,8 @@ export const getCachedWeather = ({
 export const hasCachedWeather = (): boolean => Boolean(readCache())
 
 export const readCachedWeatherSnapshot = ():
-	(CachedWeather & CacheIdentity) | null => {
+	| (CachedWeather & CacheIdentity)
+	| null => {
 	if (typeof window === 'undefined') return null
 	let key: string
 	try {

@@ -1,0 +1,43 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"arrowParens": "always",
+	"bracketSameLine": false,
+	"bracketSpacing": true,
+	"semi": false,
+	"singleQuote": true,
+	"jsxSingleQuote": false,
+	"quoteProps": "as-needed",
+	"trailingComma": "all",
+	"singleAttributePerLine": false,
+	"htmlWhitespaceSensitivity": "css",
+	"vueIndentScriptAndStyle": false,
+	"proseWrap": "always",
+	"printWidth": 80,
+	"tabWidth": 2,
+	"useTabs": true,
+	"embeddedLanguageFormatting": "auto",
+	"sortPackageJson": false,
+	"sortTailwindcss": {
+		"stylesheet": "./src/styles/tailwind.css"
+	},
+	"ignorePatterns": [
+		"**/node_modules/**",
+		"**/.next/**",
+		"**/.vercel/**",
+		"**/build/**",
+		"**/dist/**",
+		"**/out/**",
+		"**/coverage/**",
+		"**/generated/**",
+		"**/messages.js",
+		"extension/**",
+		"playwright-report/**",
+		"test-results/**",
+		".claude/**",
+		".codex/**",
+		".agents/**",
+		"next-env.d.ts",
+		"pnpm-lock.yaml"
+	],
+	"sortImports": false
+}

@@ -44,7 +44,12 @@ export type SettingsSectionDefinition = {
 }
 
 export type SettingsSectionId =
-	'about' | 'developer' | 'general' | 'integrations' | 'seasonal' | 'weather'
+	| 'about'
+	| 'developer'
+	| 'general'
+	| 'integrations'
+	| 'seasonal'
+	| 'weather'
 
 export type SwitchDefinition<K extends BooleanConfigKey = BooleanConfigKey> = {
 	key: K

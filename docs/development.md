@@ -14,15 +14,9 @@ native Temporal throughout its date and time logic, without a polyfill. Direct
 Node commands outside pnpm also require Node 26+. Extension manifests enforce
 the corresponding browser minimums.
 
-TypeScript runs side by side using Microsoft's
-[recommended package aliases](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6-0):
-`@typescript/native` points to TypeScript 7 and provides `tsc`, while
-`typescript` points to `@typescript/typescript6` and supplies the compiler API
-and `tsc6`. Existing standalone checks, including `pnpm typecheck`, use the
-native compiler. ESLint uses the compatible TypeScript 6 API, and Next's build
-checker resolves `typescript` and uses TypeScript 6. Revisit this compatibility
-setup when the tools support TypeScript's new API; installing TypeScript 7.1
-alone will not make consumers of the old API compatible.
+TypeScript 7 provides the native `tsc` compiler used by `pnpm typecheck` and
+`pnpm tsc --noEmit`. Next.js builds use the same compiler through
+`experimental.useTypeScriptCli`; no TypeScript 6 compatibility alias is needed.
 
 Copy `.env.example` to `.env.local` when enabling optional services. Never
 commit actual environment files. Public variables are embedded during builds, so
@@ -85,7 +79,8 @@ current tab.
 ```bash
 pnpm typecheck
 pnpm test
-pnpm format:check
+pnpm exec oxlint .
+pnpm exec oxfmt . --check
 pnpm build:web
 pnpm build:extension
 pnpm exec playwright install chromium
@@ -108,8 +103,15 @@ pnpm exec playwright install chromium firefox
 pnpm exec playwright test --config=playwright.shared.config.ts
 ```
 
-`pnpm format:fix` applies formatting. `pnpm exec eslint .` checks lint rules
-without changing files; `pnpm lint` also applies formatting and lint fixes.
+`pnpm lint` applies Oxlint fixes, and `pnpm format` applies Oxfmt formatting,
+including Tailwind class sorting. The direct `pnpm exec` commands above check
+lint rules and formatting without changing files.
+
+The pre-commit hook runs lint-staged serially so Oxlint fixes run before Oxfmt.
+These mutations are limited to staged files and are automatically staged for the
+commit. Unstaged portions of partially staged files are preserved, and a failed
+task rolls back its changes. The hook then runs type-checking, a full read-only
+Oxlint check, and tests.
 
 ## Packaging
 

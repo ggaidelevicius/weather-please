@@ -33,7 +33,7 @@ Repository-specific guidance for agents working in this codebase.
   functions, complex objects, and tricky boundaries.
 - Avoid double assertions like `as unknown as T`.
 - Use `_` or an underscore-prefixed name for intentionally discarded variables
-  and parameters. ESLint ignores these names throughout the project.
+  and parameters. Oxlint ignores these names throughout the project.
 
 ## React
 
@@ -83,18 +83,23 @@ Repository-specific guidance for agents working in this codebase.
 
 ```bash
 pnpm tsc --noEmit  # Required verification before handoff
-pnpm test          # Run Vitest once
-pnpm test -- --watch
+pnpm test         # Run Vitest once
+pnpm exec oxlint .
+pnpm exec oxfmt . --check
 ```
 
-`pnpm lint` is a mutating command in this repo. It runs type-checking, Prettier
-with `--write`, and ESLint with `--fix`, so do not use it as a neutral
-verification step when you want to avoid unrelated file changes.
+`pnpm lint` runs Oxlint with `--fix`, and `pnpm format` runs Oxfmt with
+`--write`. Both commands mutate files; use the direct `pnpm exec` commands above
+for read-only verification.
+
+The pre-commit hook runs lint-staged serially before type-checking, a full
+read-only Oxlint check, and tests. Keep mutations scoped to staged files, and
+preserve lint-staged's default handling of partially staged files and failures.
 
 ## Formatting
 
-- Prettier uses tabs and `printWidth: 80`.
-- Tailwind classes are sorted by Prettier plugin.
+- Oxfmt uses tabs and `printWidth: 80`.
+- Tailwind classes are sorted by Oxfmt.
 
 ## Security
 

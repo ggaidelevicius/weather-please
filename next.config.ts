@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
 				: 'web',
 	},
 	experimental: {
+		turbopackGc: process.env.NODE_ENV === 'development',
+		turbopackLazyDynamicImports: true,
 		useTypeScriptCli: true,
 	},
 	images: { qualities: [100] },
