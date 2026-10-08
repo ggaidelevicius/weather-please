@@ -92,16 +92,6 @@
 		"*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}": "oxlint --fix --no-error-on-unmatched-pattern",
 		"*": "oxfmt --write --no-error-on-unmatched-pattern"
 	},
-	"engines": {
-		"node": ">=26"
-	},
-	"devEngines": {
-		"runtime": {
-			"name": "node",
-			"version": "26.8.1",
-			"onFail": "download"
-		}
-	},
 	"browserslist": [
 		"chrome >= 144",
 		"firefox >= 139"
