@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react'
 
 import Head from 'next/head'
-import Link from 'next/link'
+
+import { SiteHeader } from '../features/landing/ui/site-header'
 
 const SectionHeading = ({ children }: Readonly<{ children: ReactNode }>) => (
 	<h2 className="mt-10 text-xl font-semibold text-white">{children}</h2>
@@ -49,22 +50,10 @@ const PrivacyPage = () => (
 				name="description"
 			/>
 		</Head>
+		<SiteHeader pathname="/privacy" />
 		<div className="mx-auto w-full max-w-2xl px-4 py-8 sm:px-6">
-			<header>
-				<Link aria-label="Home" className="flex items-center" href="/">
-					{/* eslint-disable-next-line @next/next/no-img-element */}
-					<img
-						alt=""
-						className="size-10 flex-none rounded-xl"
-						src="/favicon.png"
-					/>
-					<p className="ml-4 text-base font-semibold text-white">
-						Weather Please
-					</p>
-				</Link>
-			</header>
 			<main className="pb-10">
-				<h1 className="mt-14 text-3xl font-medium tracking-tight text-pretty text-white">
+				<h1 className="text-3xl font-medium tracking-tight text-pretty text-white">
 					Privacy Policy for the &quot;Weather Please&quot; Browser Extension
 				</h1>
 				<p className="mt-4 text-sm text-dark-200">

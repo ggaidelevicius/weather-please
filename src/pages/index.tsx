@@ -3,13 +3,11 @@ import Link from 'next/link'
 
 import { FeatureShowcase } from '../features/landing/ui/feature-showcase'
 import { HeroAtmosphere } from '../features/landing/ui/hero-atmosphere'
+import { SiteHeader } from '../features/landing/ui/site-header'
 
 const CHROME_STORE_URL =
 	'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn'
 const GITHUB_URL = 'https://github.com/ggaidelevicius/weather-please'
-
-const NAV_LINK_CLASS_NAME =
-	'relative -mx-3 -my-2 rounded-lg px-3 py-2 text-sm text-dark-100 transition-colors hover:text-white'
 
 const LandingPage = () => (
 	<div className="min-h-screen w-full bg-dark-800">
@@ -21,45 +19,7 @@ const LandingPage = () => (
 			/>
 			<style>{'body { overflow-x: clip; }'}</style>
 		</Head>
-		<header className="relative z-20">
-			<nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-8 sm:px-6 lg:px-8">
-				<div className="flex items-center gap-16">
-					<Link aria-label="Home" className="flex items-center" href="/">
-						{/* eslint-disable-next-line @next/next/no-img-element */}
-						<img
-							alt=""
-							className="size-10 flex-none rounded-xl"
-							src="/favicon.png"
-						/>
-						<p className="ml-4 text-base font-semibold text-white">
-							Weather Please
-						</p>
-					</Link>
-					<div className="hidden gap-10 sm:flex">
-						<a className={NAV_LINK_CLASS_NAME} href="#features">
-							Features
-						</a>
-						<Link className={NAV_LINK_CLASS_NAME} href="/privacy">
-							Privacy
-						</Link>
-						<a
-							className={NAV_LINK_CLASS_NAME}
-							href={GITHUB_URL}
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							GitHub
-						</a>
-					</div>
-				</div>
-				<Link
-					className="hidden rounded-lg border border-white/15 px-3 py-2 text-sm text-dark-100 transition-colors hover:border-white/30 hover:text-white sm:block"
-					href="/demo"
-				>
-					Live demo
-				</Link>
-			</nav>
-		</header>
+		<SiteHeader pathname="/" />
 		<main>
 			<section className="relative isolate pt-16 pb-20 sm:pt-24 sm:pb-28">
 				<HeroAtmosphere />
@@ -93,7 +53,7 @@ const LandingPage = () => (
 					</div>
 				</div>
 			</section>
-			<section className="border-t border-white/10" id="features">
+			<section className="scroll-mt-24 border-t border-white/10" id="features">
 				<div className="mx-auto max-w-7xl px-4 pt-16 sm:px-6 sm:pt-24 lg:px-8">
 					<h2 className="mx-auto flex flex-col gap-2 text-center text-3xl font-medium tracking-tight">
 						<span className="text-white">
