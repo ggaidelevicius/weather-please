@@ -7,6 +7,7 @@ const primaryPaths = [
 	['Features', '/#features'],
 	['Privacy', '/privacy'],
 	['GitHub', 'https://github.com/ggaidelevicius/weather-please'],
+	['Live demo', 'https://weather-please.app/demo'],
 ]
 
 const pillClassName =
@@ -69,11 +70,11 @@ export const SiteHeader = ({ pathname }: Readonly<{ pathname: string }>) => {
 									</Link>
 								))}
 								<Link
-									aria-label="Try the Weather Please live demo"
 									className={clsx(demoClassName, 'ml-1')}
-									href="/demo"
+									href="https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn"
+									target="_blank"
 								>
-									Live demo
+									Add to Chrome
 								</Link>
 							</div>
 							<div className="flex items-center sm:hidden">
@@ -134,12 +135,12 @@ export const SiteHeader = ({ pathname }: Readonly<{ pathname: string }>) => {
 								</PopoverButton>
 							))}
 							<PopoverButton
-								aria-label="Try the Weather Please live demo"
 								as={Link}
 								className={clsx(demoClassName, 'mt-2 w-full rounded-2xl')}
-								href="/demo"
+								href="https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn"
+								target="_blank"
 							>
-								Live demo
+								Add to Chrome
 							</PopoverButton>
 						</PopoverPanel>
 					</>
