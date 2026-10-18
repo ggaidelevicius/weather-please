@@ -5,8 +5,6 @@ import Link from 'next/link'
 
 const primaryPaths = [
 	['Features', '/#features'],
-	['Privacy', '/privacy'],
-	['GitHub', 'https://github.com/ggaidelevicius/weather-please'],
 	['Live demo', 'https://weather-please.app/demo'],
 ]
 

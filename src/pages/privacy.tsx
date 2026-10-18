@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 
 import Head from 'next/head'
 
+import { SiteFooter } from '../features/landing/ui/site-footer'
 import { SiteHeader } from '../features/landing/ui/site-header'
 
 const SectionHeading = ({ children }: Readonly<{ children: ReactNode }>) => (
@@ -295,6 +296,7 @@ const PrivacyPage = () => (
 				</Paragraph>
 			</main>
 		</div>
+		<SiteFooter />
 	</div>
 )
 

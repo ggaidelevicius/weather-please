@@ -3,11 +3,11 @@ import Link from 'next/link'
 
 import { FeatureShowcase } from '../features/landing/ui/feature-showcase'
 import { HeroAtmosphere } from '../features/landing/ui/hero-atmosphere'
+import { SiteFooter } from '../features/landing/ui/site-footer'
 import { SiteHeader } from '../features/landing/ui/site-header'
 
 const CHROME_STORE_URL =
 	'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn'
-const GITHUB_URL = 'https://github.com/ggaidelevicius/weather-please'
 
 const LandingPage = () => (
 	<div className="min-h-screen w-full bg-dark-800">
@@ -88,41 +88,7 @@ const LandingPage = () => (
 				</div>
 			</section>
 		</main>
-		<footer className="border-t border-white/10">
-			<div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-8 text-sm text-dark-200 sm:px-6 lg:px-8">
-				<div className="flex flex-wrap items-center gap-x-2">
-					<p>© Gus Gaidelevicius</p>
-					<span aria-hidden>·</span>
-					<a
-						className="transition-colors hover:text-white"
-						href="https://ggaidelevicius.com"
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						ggaidelevicius.com
-					</a>
-				</div>
-				<nav className="flex flex-wrap gap-x-6 gap-y-2">
-					<Link className="transition-colors hover:text-white" href="/privacy">
-						Privacy policy
-					</Link>
-					<a
-						className="transition-colors hover:text-white"
-						href={GITHUB_URL}
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						GitHub
-					</a>
-					<a
-						className="transition-colors hover:text-white"
-						href="mailto:contact@weather-please.app"
-					>
-						Contact
-					</a>
-				</nav>
-			</div>
-		</footer>
+		<SiteFooter />
 	</div>
 )
 
