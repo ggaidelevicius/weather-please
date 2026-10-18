@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { getCurrentDate } from '../../../shared/lib/time'
+import { SiteLogo } from './site-logo'
 
 const linkClassName =
 	'inline-flex min-h-8 items-center rounded-full px-3 text-[13px] font-medium whitespace-nowrap text-dark-100 transition-colors duration-100 hover:bg-white/8 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
@@ -14,13 +14,7 @@ export const SiteFooter = () => (
 				className="rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
 				href="/"
 			>
-				<Image
-					alt=""
-					className="size-10 rounded-full bg-white"
-					height={40}
-					src="/favicon.png"
-					width={40}
-				/>
+				<SiteLogo className="rounded-full bg-white" size={40} />
 			</Link>
 			<nav
 				aria-label="Footer"

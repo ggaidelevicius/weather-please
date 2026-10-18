@@ -1,7 +1,8 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { clsx } from 'clsx'
-import Image from 'next/image'
 import Link from 'next/link'
+
+import { SiteLogo } from './site-logo'
 
 const primaryPaths = [
 	['Features', '/#features'],
@@ -38,14 +39,7 @@ export const SiteHeader = ({ pathname }: Readonly<{ pathname: string }>) => {
 								href="/"
 								onClick={(event) => close(event.currentTarget)}
 							>
-								<Image
-									alt=""
-									className="size-5 rounded-full bg-white"
-									height={20}
-									loading="eager"
-									src="/favicon.png"
-									width={20}
-								/>
+								<SiteLogo className="rounded-full bg-white" size={20} />
 							</Link>
 							<div className="hidden items-center gap-1 sm:flex">
 								{primaryPaths.map(([label, href]) => (
