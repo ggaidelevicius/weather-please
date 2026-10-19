@@ -52,40 +52,39 @@ beforeEach(() => {
 })
 
 describe('MeteorViewingGuide', () => {
-	it('shows the selected night and both local calendar dates across midnight', () => {
+	it('shows the window as local times under the selected night', () => {
 		const { container } = render(<MeteorViewingGuide {...props} />)
 
 		expect(
 			screen.getByRole('region', { name: 'Viewing from your location' }),
 		).toBeInTheDocument()
 		expect(calculation.getGuide).toHaveBeenCalledWith(props)
+		expect(screen.getByText(/Night of Mon,? 14 Dec/)).toBeInTheDocument()
 		expect(
-			screen.getByText(/Night of Monday,? 14 December 2026/),
-		).toBeInTheDocument()
-		expect(
-			screen.getByText('Times in Australian Western Standard Time'),
-		).toBeInTheDocument()
+			screen.getByTitle('Australian Western Standard Time'),
+		).toHaveTextContent('AWST')
 		expect(container.querySelectorAll('time')).toHaveLength(2)
 		expect(container.querySelector('time:first-of-type')).toHaveAttribute(
 			'datetime',
 			'2026-12-14T15:00:00Z',
 		)
 		expect(container.querySelector('time:first-of-type')).toHaveTextContent(
-			'14 Dec 2026, 11:00 pm',
+			'11:00 pm',
 		)
 		expect(container.querySelector('time:last-of-type')).toHaveAttribute(
 			'datetime',
 			'2026-12-14T17:00:00Z',
 		)
 		expect(container.querySelector('time:last-of-type')).toHaveTextContent(
-			'15 Dec 2026, 1:00 am',
+			'1:00 am',
 		)
-		expect(screen.getByText('East')).toBeInTheDocument()
+		expect(screen.getByText('Suggested viewing window')).toBeInTheDocument()
+		expect(screen.getByText('Face east')).toBeInTheDocument()
 		expect(screen.getByText('42° above the horizon')).toBeInTheDocument()
 		expect(screen.getByText('42% illuminated')).toBeInTheDocument()
 		expect(
 			screen.getByText(
-				'Sky position and Moon illumination shown for 15 Dec 2026, 12:00 am.',
+				/Sky position and Moon illumination shown for 12:00 am\./,
 			),
 		).toBeInTheDocument()
 		expect(
@@ -192,11 +191,9 @@ describe('MeteorViewingGuide', () => {
 		calculation.locale = 'de-DE'
 		const { container } = render(<MeteorViewingGuide {...props} />)
 
-		expect(
-			screen.getByText('Night of Montag, 14. Dezember 2026'),
-		).toBeInTheDocument()
+		expect(screen.getByText(/Night of Mo\.?,? 14\. Dez/)).toBeInTheDocument()
 		expect(container.querySelector('time:first-of-type')).toHaveTextContent(
-			'14.12.2026, 23:00',
+			'23:00',
 		)
 		expect(screen.getByText(/42\s% illuminated/)).toBeInTheDocument()
 	})

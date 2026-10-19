@@ -2,13 +2,27 @@ import type { ReactNode } from 'react'
 
 import { useLingui } from '@lingui/react'
 import { Trans } from '@lingui/react/macro'
-import { IconSparkles } from '@tabler/icons-react'
+import {
+	IconClock,
+	IconCompass,
+	IconMoon,
+	IconSparkles,
+	IconSunLow,
+} from '@tabler/icons-react'
 import { useId } from 'react'
 
 import type { SeasonalEventId } from '../core/types'
 
 import { getMeteorShower } from './catalog'
 import { getMeteorViewingGuide } from './viewing'
+
+type GuideRowProps = {
+	children: ReactNode
+	detail?: ReactNode
+	icon: ReactNode
+	label: ReactNode
+	shouldWarn?: boolean
+}
 
 type MeteorViewingGuideProps = {
 	date: Temporal.PlainDate
@@ -99,28 +113,23 @@ function getGuideContent({
 	}
 
 	const nightLabel = date.toLocaleString(locale, {
-		dateStyle: 'full',
+		day: 'numeric',
+		month: 'short',
+		weekday: 'short',
 	})
-	const windowFormatter = new Intl.DateTimeFormat(locale, {
-		dateStyle: 'medium',
+	const timeFormatter = new Intl.DateTimeFormat(locale, {
 		timeStyle: 'short',
 		timeZone: guide.timeZone,
 	})
-	const referenceFormatter = new Intl.DateTimeFormat(locale, {
-		hour: 'numeric',
-		minute: '2-digit',
-		timeZone: guide.timeZone,
-		timeZoneName: 'long',
-	})
-	const timeZoneLabel =
-		referenceFormatter
+	const getTimeZoneName = (timeZoneName: 'long' | 'short') =>
+		new Intl.DateTimeFormat(locale, { timeZone: guide.timeZone, timeZoneName })
 			.formatToParts(guide.referenceTime.epochMilliseconds)
 			.find((part) => part.type === 'timeZoneName')?.value ?? guide.timeZone
-	const referenceLabel = windowFormatter.format(
+	const referenceLabel = timeFormatter.format(
 		guide.referenceTime.epochMilliseconds,
 	)
-	const startLabel = windowFormatter.format(guide.start.epochMilliseconds)
-	const endLabel = windowFormatter.format(guide.end.epochMilliseconds)
+	const startLabel = timeFormatter.format(guide.start.epochMilliseconds)
+	const endLabel = timeFormatter.format(guide.end.epochMilliseconds)
 	const altitude = new Intl.NumberFormat(locale, {
 		maximumFractionDigits: 0,
 	}).format(guide.radiantAltitude)
@@ -131,58 +140,54 @@ function getGuideContent({
 
 	return (
 		<>
-			<div className="mt-2 text-xs leading-relaxed text-dark-200">
-				<div>
-					<Trans>Night of {nightLabel}</Trans>
-				</div>
-				<div>
-					<Trans>Times in {timeZoneLabel}</Trans>
-				</div>
-			</div>
-			<dl className="mt-4 grid gap-4 sm:grid-cols-2">
-				<div className="rounded-lg bg-white/5 px-3 py-2.5 sm:col-span-2">
-					<dt className="text-xs text-sky-200">
-						<Trans>Suggested viewing window</Trans>
-					</dt>
-					<dd className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1 font-medium text-white tabular-nums">
+			<dl className="mt-3 divide-y divide-white/10 border-t border-white/10">
+				<GuideRow
+					detail={
+						<>
+							<Trans>Night of {nightLabel}</Trans>
+							{' · '}
+							<abbr className="no-underline" title={getTimeZoneName('long')}>
+								{getTimeZoneName('short')}
+							</abbr>
+						</>
+					}
+					icon={<IconClock size={18} stroke={1.5} />}
+					label={<Trans>Suggested viewing window</Trans>}
+				>
+					<span className="font-medium tabular-nums">
 						<time dateTime={guide.start.toString()}>{startLabel}</time>
-						<span className="font-normal text-dark-200">
-							<Trans>to</Trans>
-						</span>
+						{' – '}
 						<time dateTime={guide.end.toString()}>{endLabel}</time>
-					</dd>
-				</div>
-				<div>
-					<dt className="text-xs text-dark-200">
-						<Trans>Radiant position</Trans>
-					</dt>
-					<dd className="mt-1 text-white">
-						<div>{getRadiantDirection(guide.radiantAzimuth)}</div>
-						<div className="text-dark-100">
-							<Trans>{altitude}° above the horizon</Trans>
-						</div>
-					</dd>
-				</div>
-				<div>
-					<dt className="text-xs text-dark-200">
-						<Trans>Moonlight</Trans>
-					</dt>
-					<dd className="mt-1 text-white">
-						<div>
-							<Trans>{moonBrightness} illuminated</Trans>
-						</div>
-						<div className="text-dark-100">
-							{getMoonVisibility(guide.moonVisibility)}
-						</div>
-					</dd>
-				</div>
+					</span>
+				</GuideRow>
+				<GuideRow
+					detail={<Trans>{altitude}° above the horizon</Trans>}
+					icon={<IconCompass size={18} stroke={1.5} />}
+					label={<Trans>Radiant position</Trans>}
+				>
+					{getRadiantDirection(guide.radiantAzimuth)}
+				</GuideRow>
+				<GuideRow
+					detail={getMoonVisibility(guide.moonVisibility)}
+					icon={<IconMoon size={18} stroke={1.5} />}
+					label={<Trans>Moonlight</Trans>}
+				>
+					<Trans>{moonBrightness} illuminated</Trans>
+				</GuideRow>
+				{guide.hasTwilight ? (
+					<GuideRow
+						icon={<IconSunLow size={18} stroke={1.5} />}
+						label={<Trans>Twilight</Trans>}
+						shouldWarn
+					>
+						<Trans>
+							Twilight overlaps this window, so fainter meteors may be harder to
+							see.
+						</Trans>
+					</GuideRow>
+				) : null}
 			</dl>
-			<p className="text-xs text-dark-200">
-				<Trans>
-					Sky position and Moon illumination shown for {referenceLabel}.
-				</Trans>
-			</p>
-			<div className="mt-4 border-t border-white/10 pt-2">
+			<div className="border-t border-white/10 pt-1 text-xs text-dark-200">
 				<p>
 					<Trans>
 						The radiant is where the trails appear to come from. Meteors can
@@ -190,19 +195,14 @@ function getGuideContent({
 						Moon, with a wide, unobstructed view.
 					</Trans>
 				</p>
-				{guide.hasTwilight ? (
-					<p className="text-amber-200">
-						<Trans>
-							Twilight overlaps this window, so fainter meteors may be harder to
-							see.
-						</Trans>
-					</p>
-				) : null}
-				<p className="text-xs text-dark-200">
+				<p>
 					<Trans>
 						Estimates near the usual peak, not a prediction of meteor activity
 						or cloud cover. Check the local forecast and choose a dark spot away
 						from lights.
+					</Trans>{' '}
+					<Trans>
+						Sky position and Moon illumination shown for {referenceLabel}.
 					</Trans>
 				</p>
 			</div>
@@ -227,21 +227,21 @@ function getRadiantDirection(azimuth: number): ReactNode {
 	const sector = Math.round((((azimuth % 360) + 360) % 360) / 45) % 8
 	switch (sector) {
 		case 0:
-			return <Trans>North</Trans>
+			return <Trans>Face north</Trans>
 		case 1:
-			return <Trans>North-east</Trans>
+			return <Trans>Face north-east</Trans>
 		case 2:
-			return <Trans>East</Trans>
+			return <Trans>Face east</Trans>
 		case 3:
-			return <Trans>South-east</Trans>
+			return <Trans>Face south-east</Trans>
 		case 4:
-			return <Trans>South</Trans>
+			return <Trans>Face south</Trans>
 		case 5:
-			return <Trans>South-west</Trans>
+			return <Trans>Face south-west</Trans>
 		case 6:
-			return <Trans>West</Trans>
+			return <Trans>Face west</Trans>
 		default:
-			return <Trans>North-west</Trans>
+			return <Trans>Face north-west</Trans>
 	}
 }
 
@@ -285,4 +285,29 @@ function getUnavailableMessage(
 				</p>
 			)
 	}
+}
+
+function GuideRow({
+	children,
+	detail,
+	icon,
+	label,
+	shouldWarn = false,
+}: Readonly<GuideRowProps>) {
+	return (
+		<div className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 py-3">
+			<dt
+				className={`row-span-2 mt-0.5 ${shouldWarn ? 'text-amber-200' : 'text-sky-300'}`}
+			>
+				<span aria-hidden>{icon}</span>
+				<span className="sr-only">{label}</span>
+			</dt>
+			<dd className={shouldWarn ? 'text-amber-200' : 'text-white'}>
+				{children}
+			</dd>
+			{detail ? (
+				<dd className="mt-0.5 text-xs text-dark-200">{detail}</dd>
+			) : null}
+		</div>
+	)
 }

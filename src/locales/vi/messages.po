@@ -43,19 +43,19 @@ msgstr "{0} {windUnitLabel} lúc <0/>"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/details/detail-shell.tsx:274
+#: src/features/weather/ui/details/detail-shell.tsx:276
 msgid "{0} and {1}"
 msgstr "{0} và {1}"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/details/detail-shell.tsx:287
+#: src/features/weather/ui/details/detail-shell.tsx:290
 msgid "{0} and {1} today"
 msgstr "{0} và {1} hôm nay"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/details/detail-shell.tsx:295
+#: src/features/weather/ui/details/detail-shell.tsx:298
 msgid "{0} and {1} tomorrow"
 msgstr "{0} và {1} ngày mai"
 
@@ -72,22 +72,22 @@ msgid "{0} between <0/>"
 msgstr "{0} trong khoảng <0/>"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:540
+#: src/features/weather/ui/tile.tsx:543
 msgid "{0} km/h"
 msgstr "{0} km/h"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:542
+#: src/features/weather/ui/tile.tsx:545
 msgid "{0} mph"
 msgstr "{0} mph"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/details/detail-shell.tsx:215
+#: src/features/weather/ui/details/detail-shell.tsx:217
 msgid "{0} today"
 msgstr "{0} hôm nay"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/details/detail-shell.tsx:219
+#: src/features/weather/ui/details/detail-shell.tsx:221
 msgid "{0} tomorrow"
 msgstr "{0} ngày mai"
 
@@ -96,23 +96,23 @@ msgstr "{0} ngày mai"
 msgid "{0}% at <0/>"
 msgstr "{0}% lúc <0/>"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:163
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:164
 msgid "{altitude}° above the horizon"
 msgstr "Cao {altitude}° so với đường chân trời"
 
-#: src/features/integrations/ui/upcoming-events.tsx:388
+#: src/features/integrations/ui/upcoming-events.tsx:393
 msgid "{hours}h"
 msgstr "{hours} giờ"
 
-#: src/features/integrations/ui/upcoming-events.tsx:392
+#: src/features/integrations/ui/upcoming-events.tsx:397
 msgid "{hours}h {minutes}m"
 msgstr "{hours} giờ {minutes} phút"
 
-#: src/features/integrations/ui/upcoming-events.tsx:384
+#: src/features/integrations/ui/upcoming-events.tsx:389
 msgid "{minutes}m"
 msgstr "{minutes} phút"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:173
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:175
 msgid "{moonBrightness} illuminated"
 msgstr "{moonBrightness} được chiếu sáng"
 
@@ -150,15 +150,11 @@ msgstr "<0>Đã từ chối quyền truy cập vị trí.</0> Kiểm tra cài đ
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>Đã từ chối quyền truy cập vị trí.</0> Nhấp vào biểu tượng vị trí trên thanh địa chỉ và chọn \"luôn cho phép truy cập vị trí của bạn\". Sau đó nhấp nút bên dưới để thử lại."
 
-#: src/features/settings/ui/settings.tsx:1054
-#~ msgid "☕ Gift a coffee"
-#~ msgstr "☕ Tặng một cốc cà phê"
-
-#: src/pages/demo.tsx:447
+#: src/pages/demo.tsx:448
 msgid "✨ NEW: Connect your Google or Microsoft calendar"
 msgstr "✨ MỚI: Kết nối lịch Google hoặc Microsoft"
 
-#: src/pages/demo.tsx:412
+#: src/pages/demo.tsx:413
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ MỚI: Hãy thử cuộn xuống"
 
@@ -198,11 +194,11 @@ msgstr "Giới thiệu"
 msgid "Above the Arctic Circle, the sun doesn't set at all — it traces a low circle along the horizon and starts climbing again. This is the midnight sun, and it lasts for weeks."
 msgstr "Phía trên Vòng Bắc Cực, mặt trời hoàn toàn không lặn — nó vẽ một vòng tròn thấp dọc theo đường chân trời rồi lại bắt đầu leo lên. Đây là mặt trời lúc nửa đêm, và nó kéo dài hàng tuần."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:223
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:222
 msgid "Above the horizon for part of this window."
 msgstr "Ở trên đường chân trời trong một phần khoảng thời gian này."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:219
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:218
 msgid "Above the horizon throughout this window."
 msgstr "Ở trên đường chân trời trong suốt khoảng thời gian này."
 
@@ -251,7 +247,7 @@ msgstr "Chất lượng không khí"
 msgid "Air quality unavailable"
 msgstr "Chất lượng không khí không khả dụng"
 
-#: src/features/integrations/ui/upcoming-events.tsx:365
+#: src/features/integrations/ui/upcoming-events.tsx:364
 msgid "All day"
 msgstr "Cả ngày"
 
@@ -275,7 +271,7 @@ msgstr "Những công trình cổ như Stonehenge được căn chỉnh theo hư
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "Các đài quan sát cổ đại đã theo dõi cẩn thận bước ngoặt này của năm để định hướng chu kỳ gieo trồng, lịch và các lễ hội theo mùa."
 
-#: src/features/weather/ui/details/detail-shell.tsx:305
+#: src/features/weather/ui/details/detail-shell.tsx:308
 msgid "and"
 msgstr "và"
 
@@ -287,7 +283,7 @@ msgstr "Động vật có thể trở nên yên lặng, trong khi đường châ
 msgid "Another widely told story celebrates Krishna, whose playful exchanges of colour are said to have inspired the festival’s most famous custom."
 msgstr "Một câu chuyện được kể rộng rãi khác tôn vinh Krishna, và những trò đùa trao đổi màu sắc của ngài được cho là đã truyền cảm hứng cho phong tục nổi tiếng nhất của lễ hội."
 
-#: src/features/weather/ui/tile.tsx:137
+#: src/features/weather/ui/tile.tsx:138
 msgid "April"
 msgstr "Tháng 4"
 
@@ -319,7 +315,7 @@ msgstr "Tại mỗi múi giờ, pháo hoa bắn lên, chuông reo vang, và nh�
 msgid "Attributions"
 msgstr "Ghi công"
 
-#: src/features/weather/ui/tile.tsx:141
+#: src/features/weather/ui/tile.tsx:142
 msgid "August"
 msgstr "Tháng 8"
 
@@ -328,7 +324,7 @@ msgid "Automatic (seasonal)"
 msgstr "Tự động (theo mùa)"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:26
-#: src/features/weather/ui/tile.tsx:179
+#: src/features/weather/ui/tile.tsx:180
 msgid "Autumn Equinox"
 msgstr "Thu phân"
 
@@ -338,7 +334,7 @@ msgstr "Gió trung bình"
 
 #: src/features/settings/ui/sections/general-settings.tsx:68
 #: src/features/settings/ui/sections/seasonal-settings.tsx:169
-#: src/features/weather/ui/tile.tsx:589
+#: src/features/weather/ui/tile.tsx:592
 msgid "Background"
 msgstr "Nền"
 
@@ -354,7 +350,7 @@ msgstr "Vì lực hấp dẫn uốn cong đường đi của ánh sáng, các ph
 msgid "Because it behaves like both an asteroid and a comet, it is sometimes described as a “rock comet”."
 msgstr "Vì vừa giống tiểu hành tinh vừa giống sao chổi, đôi khi nó được gọi là “sao chổi đá”."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:221
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:220
 msgid "Below the horizon throughout this window."
 msgstr "Ở dưới đường chân trời trong suốt khoảng thời gian này."
 
@@ -407,12 +403,8 @@ msgstr "Xác suất"
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
 msgstr "Các ghi chép của Trung Quốc từ năm 687 trước Công nguyên mô tả \"những ngôi sao rơi như mưa\" — đây là ghi chép sớm nhất được biết đến về mưa sao băng Lyrid, và là một trong những quan sát sao băng được ghi chép lại sớm nhất."
 
-#: src/features/settings/ui/sections/general-settings.tsx:
-#~ msgid "Choose your default background. Automatic follows your seasonal event settings."
-#~ msgstr "Chọn nền mặc định của bạn. Chế độ tự động tuân theo cài đặt sự kiện theo mùa của bạn."
-
 #: src/features/settings/ui/sections/seasonal-settings.tsx:27
-#: src/features/weather/ui/tile.tsx:180
+#: src/features/weather/ui/tile.tsx:181
 msgid "Christmas Day"
 msgstr "Giáng sinh"
 
@@ -420,7 +412,7 @@ msgstr "Giáng sinh"
 msgid "Christmas Day marks the celebration of the birth of Jesus, and for many people it has also become a broader season of generosity, reflection, and togetherness."
 msgstr "Ngày Giáng sinh đánh dấu lễ kỷ niệm sự ra đời của Chúa Giê-su, và với nhiều người, nó cũng trở thành cả một mùa của sự rộng lượng, chiêm nghiệm và sum vầy."
 
-#: src/features/weather/ui/tile.tsx:93
+#: src/features/weather/ui/tile.tsx:94
 msgid "clear sky"
 msgstr "bầu trời quang đãng"
 
@@ -481,7 +473,7 @@ msgid "Day"
 msgstr "Ngày (e.g. Thứ Hai)"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:28
-#: src/features/weather/ui/tile.tsx:181
+#: src/features/weather/ui/tile.tsx:182
 msgid "Day of the Dead"
 msgstr "Ngày của Người Chết"
 
@@ -489,7 +481,7 @@ msgstr "Ngày của Người Chết"
 msgid "Day of the Dead is a celebration of life, memory, and the enduring bond between the living and those who have passed."
 msgstr "Ngày của Người Chết là lễ kỷ niệm sự sống, ký ức và mối liên kết bền lâu giữa người đang sống và những người đã khuất."
 
-#: src/features/weather/ui/tile.tsx:145
+#: src/features/weather/ui/tile.tsx:146
 msgid "December"
 msgstr "Tháng 12"
 
@@ -497,15 +489,15 @@ msgstr "Tháng 12"
 msgid "Decorated trees, stockings, gift-giving, and shared meals now connect people across many climates and continents in a sense of home and continuity."
 msgstr "Cây thông trang trí, tất treo, tặng quà và những bữa ăn chung nay kết nối mọi người qua nhiều khí hậu và châu lục trong cảm giác về mái nhà và sự tiếp nối."
 
-#: src/features/weather/ui/tile.tsx:101
+#: src/features/weather/ui/tile.tsx:102
 msgid "dense drizzle"
 msgstr "mưa phùn dày đặc"
 
-#: src/features/weather/ui/tile.tsx:103
+#: src/features/weather/ui/tile.tsx:104
 msgid "dense freezing drizzle"
 msgstr "mưa phùn đóng băng dày đặc"
 
-#: src/features/weather/ui/tile.tsx:98
+#: src/features/weather/ui/tile.tsx:99
 msgid "depositing rime fog"
 msgstr "sương muối đọng lại"
 
@@ -517,7 +509,7 @@ msgstr "Độ sâu"
 msgid "Developer"
 msgstr "Nhà phát triển"
 
-#: src/features/weather/ui/details/detail-shell.tsx:120
+#: src/features/weather/ui/details/detail-shell.tsx:121
 msgid "Direct sunlight is making it feel warmer than the measured temperature right now."
 msgstr "Ánh nắng trực tiếp đang khiến trời cảm thấy nóng hơn nhiệt độ đo được hiện tại."
 
@@ -525,7 +517,7 @@ msgstr "Ánh nắng trực tiếp đang khiến trời cảm thấy nóng hơn n
 msgid "Disconnect"
 msgstr "Ngắt kết nối"
 
-#: src/pages/demo.tsx:455
+#: src/pages/demo.tsx:456
 msgid "Dismiss"
 msgstr "Đóng"
 
@@ -534,7 +526,7 @@ msgid "Display"
 msgstr "Hiển thị"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:29
-#: src/features/weather/ui/tile.tsx:182
+#: src/features/weather/ui/tile.tsx:183
 msgid "Diwali"
 msgstr "Diwali"
 
@@ -571,7 +563,7 @@ msgid "Each Orionid meteor is a tiny grain of dust shed by Halley's Comet — th
 msgstr "Mỗi sao băng Orionid là một hạt bụi nhỏ bé được phóng ra bởi sao chổi Halley — cùng một thiên thể mà con người đã quan sát và ghi lại ít nhất từ năm 240 trước Công nguyên."
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:30
-#: src/features/weather/ui/tile.tsx:183
+#: src/features/weather/ui/tile.tsx:184
 msgid "Earth Day"
 msgstr "Ngày Trái Đất"
 
@@ -579,12 +571,8 @@ msgstr "Ngày Trái Đất"
 msgid "Earth Day invites a pause to notice the planet that sustains us, and to consider how we care for it."
 msgstr "Ngày Trái Đất mời gọi ta dừng lại để nhận ra hành tinh đang nuôi dưỡng mình, và suy ngẫm cách ta chăm sóc nó."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:235
-msgid "East"
-msgstr "Đông"
-
 #: src/features/settings/ui/sections/seasonal-settings.tsx:31
-#: src/features/weather/ui/tile.tsx:184
+#: src/features/weather/ui/tile.tsx:185
 msgid "Easter"
 msgstr "Lễ Phục Sinh"
 
@@ -597,7 +585,7 @@ msgid "Eclipse glasses are essential during all partial phases. Only during the 
 msgstr "Kính nhật thực là bắt buộc trong suốt các giai đoạn nhật thực một phần. Chỉ trong những giây ngắn ngủi của nhật thực toàn phần mới an toàn để nhìn bằng mắt thường."
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:32
-#: src/features/weather/ui/tile.tsx:185
+#: src/features/weather/ui/tile.tsx:186
 msgid "Eid al-Adha"
 msgstr "Lễ Eid al-Adha"
 
@@ -606,7 +594,7 @@ msgid "Eid al-Adha is one of the most important festivals in Islam, closely link
 msgstr "Eid al-Adha là một trong những lễ hội quan trọng nhất của Hồi giáo, gắn chặt với mùa hành hương Hajj."
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:33
-#: src/features/weather/ui/tile.tsx:186
+#: src/features/weather/ui/tile.tsx:187
 msgid "Eid al-Fitr"
 msgstr "Lễ Eid al-Fitr"
 
@@ -614,7 +602,7 @@ msgstr "Lễ Eid al-Fitr"
 msgid "Eid al-Fitr marks the end of Ramadan, celebrating renewal, gratitude, and the strength of shared community."
 msgstr "Eid al-Fitr đánh dấu sự kết thúc của Ramadan, tôn vinh sự làm mới, lòng biết ơn và sức mạnh của cộng đồng."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:203
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:199
 msgid "Estimates near the usual peak, not a prediction of meteor activity or cloud cover. Check the local forecast and choose a dark spot away from lights."
 msgstr "Đây là ước tính cho thời gian gần cực đại thường lệ, không phải dự báo hoạt động sao băng hay mây che phủ. Hãy xem dự báo thời tiết địa phương và chọn nơi tối, cách xa ánh đèn."
 
@@ -622,7 +610,7 @@ msgstr "Đây là ước tính cho thời gian gần cực đại thường lệ
 msgid "Eta Aquariids meteor shower"
 msgstr "Mưa sao băng Eta Aquariid"
 
-#: src/features/weather/ui/tile.tsx:187
+#: src/features/weather/ui/tile.tsx:188
 msgid "Eta Aquariids Meteor Shower"
 msgstr "Mưa sao băng Eta Aquariid"
 
@@ -630,12 +618,12 @@ msgstr "Mưa sao băng Eta Aquariid"
 msgid "Even small choices — repairing, reusing, conserving, or simply walking a familiar trail — reflect its underlying spirit."
 msgstr "Ngay cả những lựa chọn nhỏ — sửa chữa, tái sử dụng, tiết kiệm, hoặc đơn giản là đi bộ trên một lối mòn quen — cũng phản chiếu tinh thần cốt lõi của ngày này."
 
-#: src/features/integrations/ui/upcoming-events.tsx:267
+#: src/features/integrations/ui/upcoming-events.tsx:268
 msgid "Event description"
 msgstr "Mô tả sự kiện"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:35
-#: src/features/weather/ui/tile.tsx:188
+#: src/features/weather/ui/tile.tsx:189
 msgid "Event Horizon Day"
 msgstr "Ngày Chân Trời Sự Kiện"
 
@@ -663,6 +651,38 @@ msgstr "UV cực mạnh bắt đầu trong {timeUntilExtremeUv} giờ"
 msgid "Extreme UV starting in 1 hour"
 msgstr "UV cực mạnh bắt đầu trong 1 giờ"
 
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:234
+msgid "Face east"
+msgstr "Nhìn về hướng đông"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:230
+msgid "Face north"
+msgstr "Nhìn về hướng bắc"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:232
+msgid "Face north-east"
+msgstr "Nhìn về hướng đông bắc"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:244
+msgid "Face north-west"
+msgstr "Nhìn về hướng tây bắc"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:238
+msgid "Face south"
+msgstr "Nhìn về hướng nam"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:236
+msgid "Face south-east"
+msgstr "Nhìn về hướng đông nam"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:240
+msgid "Face south-west"
+msgstr "Nhìn về hướng tây nam"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:242
+msgid "Face west"
+msgstr "Nhìn về hướng tây"
+
 #: src/features/settings/ui/initialisation.tsx:52
 #: src/features/settings/ui/sections/general-settings.tsx:29
 msgid "Fahrenheit (°F)"
@@ -688,7 +708,7 @@ msgstr "Các gia đình qua đêm trong nghĩa trang, dọn dẹp mộ phần, r
 msgid "Family"
 msgstr "Gia đình"
 
-#: src/features/weather/ui/tile.tsx:135
+#: src/features/weather/ui/tile.tsx:136
 msgid "February"
 msgstr "Tháng 2"
 
@@ -728,11 +748,11 @@ msgstr "Dự báo"
 msgid "Freelance"
 msgstr "Làm tự do"
 
-#: src/features/weather/ui/details/detail-shell.tsx:248
+#: src/features/weather/ui/details/detail-shell.tsx:250
 msgid "Fri {hour}"
 msgstr "T6 {hour}"
 
-#: src/features/weather/ui/tile.tsx:129
+#: src/features/weather/ui/tile.tsx:130
 msgid "Friday"
 msgstr "Thứ Sáu"
 
@@ -752,7 +772,7 @@ msgstr "Sao băng Geminid di chuyển chậm hơn hầu hết các trận mưa s
 msgid "Geminids meteor shower"
 msgstr "Mưa sao băng Geminid"
 
-#: src/features/weather/ui/tile.tsx:189
+#: src/features/weather/ui/tile.tsx:190
 msgid "Geminids Meteor Shower"
 msgstr "Mưa sao băng Geminid"
 
@@ -823,7 +843,7 @@ msgid "Halley’s Comet itself returns roughly every seventy-six years, but the 
 msgstr "Sao chổi Halley tự nó quay lại khoảng mỗi bảy mươi sáu năm, nhưng dòng bụi nó để lại cắt qua quỹ đạo Trái Đất hằng năm."
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:37
-#: src/features/weather/ui/tile.tsx:190
+#: src/features/weather/ui/tile.tsx:191
 msgid "Halloween"
 msgstr "Halloween"
 
@@ -832,7 +852,7 @@ msgid "Halloween is a night shaped by costumes, stories, and a playful sense of 
 msgstr "Halloween là một đêm được định hình bởi trang phục, câu chuyện và cảm giác rờn rợn đầy vui vẻ."
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:38
-#: src/features/weather/ui/tile.tsx:191
+#: src/features/weather/ui/tile.tsx:192
 msgid "Hanukkah"
 msgstr "Hanukkah"
 
@@ -852,19 +872,19 @@ msgstr "Trái tim, hoa hồng và ruy băng đỏ trở thành những biểu t�
 msgid "Heaviest hour"
 msgstr "Giờ mưa nặng nhất"
 
-#: src/features/weather/ui/tile.tsx:108
+#: src/features/weather/ui/tile.tsx:109
 msgid "heavy freezing rain"
 msgstr "mưa đóng băng nặng hạt"
 
-#: src/features/weather/ui/tile.tsx:106
+#: src/features/weather/ui/tile.tsx:107
 msgid "heavy rain"
 msgstr "mưa lớn"
 
-#: src/features/weather/ui/tile.tsx:117
+#: src/features/weather/ui/tile.tsx:118
 msgid "heavy snow showers"
 msgstr "cơn tuyết rơi nặng hạt"
 
-#: src/features/weather/ui/tile.tsx:111
+#: src/features/weather/ui/tile.tsx:112
 msgid "heavy snowfall"
 msgstr "tuyết rơi nặng hạt"
 
@@ -905,7 +925,7 @@ msgid "History and meaning"
 msgstr "Lịch sử và ý nghĩa"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:39
-#: src/features/weather/ui/tile.tsx:192
+#: src/features/weather/ui/tile.tsx:193
 msgid "Holi"
 msgstr "Holi"
 
@@ -917,11 +937,11 @@ msgstr "Holi là một lễ hội sắc màu vui tươi, được mừng bằng 
 msgid "Homes are carefully cleaned and decorated to clear away old luck and welcome prosperity for the year ahead."
 msgstr "Nhà cửa được dọn dẹp và trang trí kỹ lưỡng để gạt bỏ vận may cũ và đón thịnh vượng cho năm mới."
 
-#: src/features/weather/ui/details/detail-shell.tsx:102
+#: src/features/weather/ui/details/detail-shell.tsx:103
 msgid "Humid air and direct sunlight are making it feel warmer than the measured temperature right now."
 msgstr "Không khí ẩm và ánh nắng trực tiếp đang khiến trời cảm thấy nóng hơn nhiệt độ đo được hiện tại."
 
-#: src/features/weather/ui/details/detail-shell.tsx:111
+#: src/features/weather/ui/details/detail-shell.tsx:112
 msgid "Humid air is making it feel warmer than the measured temperature right now."
 msgstr "Không khí ẩm đang khiến trời cảm thấy nóng hơn nhiệt độ đo được hiện tại."
 
@@ -1027,15 +1047,15 @@ msgstr "Thường thì điều quan trọng không phải là những cử chỉ
 msgid "Jack-o'-lanterns were originally carved from turnips in Ireland and Scotland — the pumpkin version is a North American adaptation, chosen because pumpkins were bigger and easier to hollow out."
 msgstr "Đèn lồng jack-o'-lantern ban đầu được khắc từ củ cải ở Ireland và Scotland — phiên bản bí ngô là sự điều chỉnh của Bắc Mỹ, được chọn vì bí ngô to hơn và dễ khoét rỗng hơn."
 
-#: src/features/weather/ui/tile.tsx:134
+#: src/features/weather/ui/tile.tsx:135
 msgid "January"
 msgstr "Tháng 1"
 
-#: src/features/weather/ui/tile.tsx:140
+#: src/features/weather/ui/tile.tsx:141
 msgid "July"
 msgstr "Tháng 7"
 
-#: src/features/weather/ui/tile.tsx:139
+#: src/features/weather/ui/tile.tsx:140
 msgid "June"
 msgstr "Tháng 6"
 
@@ -1048,7 +1068,7 @@ msgstr "Ngôn ngữ"
 msgid "Latitude"
 msgstr "Vĩ độ"
 
-#: src/features/settings/ui/review-prompt.tsx:48
+#: src/features/settings/ui/review-prompt.tsx:49
 msgid "Leave a review"
 msgstr "Để lại đánh giá"
 
@@ -1064,19 +1084,19 @@ msgstr "Truyền thuyết và phong tục"
 msgid "Leonids meteor shower"
 msgstr "Mưa sao băng Leonid"
 
-#: src/features/weather/ui/tile.tsx:193
+#: src/features/weather/ui/tile.tsx:194
 msgid "Leonids Meteor Shower"
 msgstr "Mưa sao băng Leonid"
 
-#: src/features/weather/ui/tile.tsx:99
+#: src/features/weather/ui/tile.tsx:100
 msgid "light drizzle"
 msgstr "mưa phùn nhẹ"
 
-#: src/features/weather/ui/tile.tsx:102
+#: src/features/weather/ui/tile.tsx:103
 msgid "light freezing drizzle"
 msgstr "mưa phùn đóng băng nhẹ"
 
-#: src/features/weather/ui/tile.tsx:107
+#: src/features/weather/ui/tile.tsx:108
 msgid "light freezing rain"
 msgstr "mưa đóng băng nhẹ"
 
@@ -1092,11 +1112,11 @@ msgstr "Dữ liệu trực tiếp tạm thời không khả dụng. Đang hiển
 msgid "Local map"
 msgstr "Bản đồ địa phương"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:84
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:99
 msgid "Local viewing guidance appears near this shower’s usual peak."
 msgstr "Hướng dẫn quan sát tại vị trí của bạn sẽ xuất hiện gần thời điểm cực đại thường lệ của trận mưa sao băng này."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:282
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:281
 msgid "Local viewing guidance isn’t available for this location. Check that your selected weather location is correct."
 msgstr "Chưa có hướng dẫn quan sát cho vị trí này. Hãy kiểm tra xem vị trí đã chọn để xem thời tiết có đúng không."
 
@@ -1141,7 +1161,7 @@ msgid "Lowest visibility"
 msgstr "Tầm nhìn thấp nhất"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:41
-#: src/features/weather/ui/tile.tsx:194
+#: src/features/weather/ui/tile.tsx:195
 msgid "Lunar New Year"
 msgstr "Tết Nguyên đán"
 
@@ -1153,12 +1173,12 @@ msgstr "Tết Nguyên Đán bắt đầu với kỳ trăng non đầu tiên củ
 msgid "Lyrids meteor shower"
 msgstr "Mưa sao băng Lyrid"
 
-#: src/features/weather/ui/tile.tsx:195
+#: src/features/weather/ui/tile.tsx:196
 msgid "Lyrids Meteor Shower"
 msgstr "Mưa sao băng Lyrid"
 
-#: src/features/weather/ui/tile.tsx:94
-#: src/features/weather/ui/tile.tsx:97
+#: src/features/weather/ui/tile.tsx:95
+#: src/features/weather/ui/tile.tsx:98
 msgid "mainly clear"
 msgstr "chủ yếu quang đãng"
 
@@ -1174,7 +1194,7 @@ msgstr "Bản đồ"
 msgid "Map data unavailable"
 msgstr "Dữ liệu bản đồ không khả dụng"
 
-#: src/features/weather/ui/tile.tsx:136
+#: src/features/weather/ui/tile.tsx:137
 msgid "March"
 msgstr "Tháng 3"
 
@@ -1182,7 +1202,7 @@ msgstr "Tháng 3"
 msgid "Marigolds, papel picado, sugar skulls, candles, and favourite foods form a visual language of welcome and connection."
 msgstr "Hoa cúc vạn thọ, papel picado, đầu lâu đường, nến và những món ăn ưa thích tạo thành một ngôn ngữ thị giác của sự chào đón và kết nối."
 
-#: src/features/weather/ui/tile.tsx:138
+#: src/features/weather/ui/tile.tsx:139
 msgid "May"
 msgstr "Tháng 5"
 
@@ -1199,27 +1219,27 @@ msgstr "Hệ mét (km/h, mm)"
 msgid "Moderate"
 msgstr "Trung bình"
 
-#: src/features/weather/ui/tile.tsx:100
+#: src/features/weather/ui/tile.tsx:101
 msgid "moderate drizzle"
 msgstr "mưa phùn vừa"
 
-#: src/features/weather/ui/tile.tsx:105
+#: src/features/weather/ui/tile.tsx:106
 msgid "moderate rain"
 msgstr "mưa vừa"
 
-#: src/features/weather/ui/tile.tsx:114
+#: src/features/weather/ui/tile.tsx:115
 msgid "moderate rain showers"
 msgstr "cơn mưa vừa"
 
-#: src/features/weather/ui/tile.tsx:110
+#: src/features/weather/ui/tile.tsx:111
 msgid "moderate snowfall"
 msgstr "tuyết rơi vừa"
 
-#: src/features/weather/ui/details/detail-shell.tsx:232
+#: src/features/weather/ui/details/detail-shell.tsx:234
 msgid "Mon {hour}"
 msgstr "T2 {hour}"
 
-#: src/features/weather/ui/tile.tsx:125
+#: src/features/weather/ui/tile.tsx:126
 msgid "Monday"
 msgstr "Thứ Hai"
 
@@ -1227,7 +1247,7 @@ msgstr "Thứ Hai"
 msgid "Monuments and ancient sites around the world are aligned to mark the solstice and the return of the Sun’s path."
 msgstr "Các công trình và địa điểm cổ trên khắp thế giới được căn chỉnh để đánh dấu ngày chí và sự trở lại của quỹ đạo Mặt Trời."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:169
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:173
 msgid "Moonlight"
 msgstr "Ánh trăng"
 
@@ -1239,12 +1259,12 @@ msgstr "Hầu hết các thành tựu môi trường đều bắt đầu từ nh
 msgid "Most years the display is modest, but the shower is famous for its capacity to produce rare and spectacular surprises."
 msgstr "Hầu hết các năm màn trình diễn khá khiêm tốn, nhưng trận mưa sao băng này nổi tiếng vì có thể tạo ra những bất ngờ hiếm hoi và ngoạn mục."
 
-#: src/features/settings/ui/review-prompt.tsx:59
+#: src/features/settings/ui/review-prompt.tsx:60
 msgid "Never show this again"
 msgstr "Không hiển thị lại lần nữa"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:43
-#: src/features/weather/ui/tile.tsx:196
+#: src/features/weather/ui/tile.tsx:197
 msgid "New Year's Day"
 msgstr "Tết Dương lịch"
 
@@ -1277,7 +1297,7 @@ msgstr "Bình minh tiếp theo"
 msgid "Next sunset"
 msgstr "Hoàng hôn tiếp theo"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:137
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:147
 msgid "Night of {nightLabel}"
 msgstr "Đêm {nightLabel}"
 
@@ -1289,7 +1309,7 @@ msgstr "Không có lượng mưa đáng kể"
 msgid "No precipitation expected"
 msgstr "Không có mưa dự kiến"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:265
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:264
 msgid "No useful local viewing window was found for this night."
 msgstr "Không tìm thấy khoảng thời gian quan sát phù hợp tại vị trí này trong đêm đó."
 
@@ -1297,23 +1317,11 @@ msgstr "Không tìm thấy khoảng thời gian quan sát phù hợp tại vị 
 msgid "None"
 msgstr "Không có"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:231
-msgid "North"
-msgstr "Bắc"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:233
-msgid "North-east"
-msgstr "Đông Bắc"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:245
-msgid "North-west"
-msgstr "Tây Bắc"
-
-#: src/features/weather/ui/tile.tsx:144
+#: src/features/weather/ui/tile.tsx:145
 msgid "November"
 msgstr "Tháng Mười Một"
 
-#: src/features/integrations/ui/upcoming-events.tsx:369
+#: src/features/integrations/ui/upcoming-events.tsx:368
 msgid "Now"
 msgstr "Bây giờ"
 
@@ -1321,17 +1329,13 @@ msgstr "Bây giờ"
 msgid "Number of days to forecast"
 msgstr "Số ngày dự báo"
 
-#: src/features/weather/ui/tile.tsx:143
+#: src/features/weather/ui/tile.tsx:144
 msgid "October"
 msgstr "Tháng Mười"
 
 #: src/features/seasonal-events/definitions/day-of-the-dead.tsx:56
 msgid "Ofrendas commonly include water, salt, and cherished photographs, creating a space where memory feels both intimate and shared."
 msgstr "Ofrendas thường gồm nước, muối và những tấm ảnh quý, tạo nên một không gian nơi ký ức vừa thân mật vừa được sẻ chia."
-
-#: src/features/seasonal-events/events/perseids.tsx:139
-#~ msgid "On a good night near peak, you can expect a meteor every minute or two. The best rates come after midnight, when your side of the Earth faces into the debris stream."
-#~ msgstr "Vào một đêm đẹp gần đỉnh điểm, bạn có thể mong đợi một sao băng mỗi một đến hai phút. Tần suất tốt nhất xuất hiện sau nửa đêm, khi phía của bạn trên Trái Đất quay về phía luồng mảnh vỡ."
 
 #: src/features/seasonal-events/definitions/holi.tsx:65
 msgid "On the following day, coloured powders fill the air as people cross social boundaries in a shared expression of joy."
@@ -1345,7 +1349,7 @@ msgstr "Vào ngày dài nhất, hoàng hôn kéo dài hàng giờ và bóng tố
 msgid "Orionids meteor shower"
 msgstr "Mưa sao băng Orionid"
 
-#: src/features/weather/ui/tile.tsx:197
+#: src/features/weather/ui/tile.tsx:198
 msgid "Orionids Meteor Shower"
 msgstr "Mưa sao băng Orionid"
 
@@ -1370,7 +1374,7 @@ msgstr "Qua nhiều thế kỷ cải cách lịch, ngày 1 tháng 1 dần đư�
 msgid "Over time it evolved into a community tradition of visiting, disguises, and shared treats."
 msgstr "Theo thời gian, nó phát triển thành một truyền thống cộng đồng của việc thăm hỏi, hoá trang và chia sẻ đồ ngọt."
 
-#: src/features/weather/ui/tile.tsx:96
+#: src/features/weather/ui/tile.tsx:97
 msgid "overcast"
 msgstr "trời âm u"
 
@@ -1408,7 +1412,7 @@ msgstr "Ghi đè"
 msgid "Overview"
 msgstr "Tổng quan"
 
-#: src/features/weather/ui/tile.tsx:95
+#: src/features/weather/ui/tile.tsx:96
 msgid "partly cloudy"
 msgstr "trời có mây"
 
@@ -1449,7 +1453,7 @@ msgstr "Sao băng Perseid đi vào khí quyển với vận tốc khoảng 60 km
 msgid "Perseids meteor shower"
 msgstr "Mưa sao băng Perseid"
 
-#: src/features/weather/ui/tile.tsx:198
+#: src/features/weather/ui/tile.tsx:199
 msgid "Perseids Meteor Shower"
 msgstr "Mưa sao băng Perseid"
 
@@ -1488,11 +1492,11 @@ msgstr "Lượng mưa bao gồm cả mưa và tuyết."
 msgid "Quadrantids meteor shower"
 msgstr "Mưa sao băng Quadrantid"
 
-#: src/features/weather/ui/tile.tsx:199
+#: src/features/weather/ui/tile.tsx:200
 msgid "Quadrantids Meteor Shower"
 msgstr "Mưa sao băng Quadrantid"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:158
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:166
 msgid "Radiant position"
 msgstr "Vị trí tâm điểm"
 
@@ -1525,11 +1529,11 @@ msgstr "Thử lại"
 msgid "Reverse geocoding by OpenStreetMap contributors"
 msgstr "Mã hóa địa lý ngược bởi các đóng góp viên OpenStreetMap"
 
-#: src/features/weather/ui/details/detail-shell.tsx:252
+#: src/features/weather/ui/details/detail-shell.tsx:254
 msgid "Sat {hour}"
 msgstr "T7 {hour}"
 
-#: src/features/weather/ui/tile.tsx:130
+#: src/features/weather/ui/tile.tsx:131
 msgid "Saturday"
 msgstr "Thứ Bảy"
 
@@ -1563,15 +1567,11 @@ msgstr "Được lưu trữ an toàn"
 msgid "See upcoming calendar events alongside your forecast. Weather Please connects directly to your calendar provider, and your events never pass through our servers."
 msgstr "Xem các sự kiện sắp tới bên cạnh dự báo. Weather Please kết nối trực tiếp với nhà cung cấp lịch và sự kiện không bao giờ đi qua máy chủ của chúng tôi."
 
-#: src/features/settings/ui/settings.tsx:739
-#~ msgid "See upcoming calendar events alongside your forecast. Weather Please connects to Microsoft directly, and your events never pass through our servers."
-#~ msgstr ""
-
 #: src/features/seasonal-events/definitions/diwali.tsx:83
 msgid "Seen from above, cities during Diwali are transformed — rooftops, balconies, and streets are outlined in light, and the effect is visible from space in satellite imagery."
 msgstr "Nhìn từ trên cao, các thành phố trong dịp Diwali hoàn toàn thay đổi — mái nhà, ban công và đường phố được viền bằng ánh sáng, và hiệu ứng này có thể nhìn thấy từ không gian qua hình ảnh vệ tinh."
 
-#: src/features/weather/ui/tile.tsx:142
+#: src/features/weather/ui/tile.tsx:143
 msgid "September"
 msgstr "Tháng Chín"
 
@@ -1588,105 +1588,21 @@ msgstr "Cài đặt"
 msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and personal."
 msgstr "Kẹo ngọt, hoa và những món quà nhỏ được sẻ chia khiến lễ kỷ niệm trở nên thân mật và riêng tư."
 
-#: src/features/settings/ui/settings.tsx:133
-#~ msgid "Show Autumn Equinox event"
-#~ msgstr "Hiển thị Thu phân"
-
 #: src/features/settings/ui/sections/integrations-settings.tsx:255
 msgid "Show calendar events"
 msgstr "Hiển thị sự kiện lịch"
-
-#: src/features/settings/ui/settings.tsx:134
-#~ msgid "Show Christmas Day event"
-#~ msgstr "Hiển thị Giáng sinh"
-
-#: src/features/settings/ui/settings.tsx:135
-#~ msgid "Show Day of the Dead event"
-#~ msgstr "Hiển thị Ngày của Người Chết"
-
-#: src/features/settings/ui/settings.tsx:136
-#~ msgid "Show Diwali event"
-#~ msgstr "Hiển thị Diwali"
-
-#: src/features/settings/ui/settings.tsx:137
-#~ msgid "Show Earth Day event"
-#~ msgstr "Hiển thị Ngày Trái Đất"
-
-#: src/features/settings/ui/settings.tsx:138
-#~ msgid "Show Easter event"
-#~ msgstr "Hiển thị Lễ Phục Sinh"
-
-#: src/features/settings/ui/settings.tsx:139
-#~ msgid "Show Eid al-Adha event"
-#~ msgstr "Hiển thị Lễ Eid al-Adha"
-
-#: src/features/settings/ui/settings.tsx:140
-#~ msgid "Show Eid al-Fitr event"
-#~ msgstr "Hiển thị Lễ Eid al-Fitr"
-
-#: src/features/settings/ui/settings.tsx:142
-#~ msgid "Show Eta Aquariids meteor shower event"
-#~ msgstr "Hiển thị mưa sao băng Eta Aquariid"
-
-#: src/features/settings/ui/settings.tsx:145
-#~ msgid "Show Event Horizon Day event"
-#~ msgstr "Hiển thị sự kiện Ngày Chân Trời Sự Kiện"
 
 #: src/features/settings/ui/sections/weather-settings.tsx:17
 msgid "Show extreme UV alerts"
 msgstr "Hiển thị cảnh báo UV cực độ"
 
-#: src/features/settings/ui/settings.tsx:147
-#~ msgid "Show Geminids meteor shower event"
-#~ msgstr "Hiển thị mưa sao băng Geminid"
-
-#: src/features/settings/ui/settings.tsx:148
-#~ msgid "Show Halloween event"
-#~ msgstr "Hiển thị Halloween"
-
-#: src/features/settings/ui/settings.tsx:149
-#~ msgid "Show Hanukkah event"
-#~ msgstr "Hiển thị Hanukkah"
-
 #: src/features/settings/ui/sections/weather-settings.tsx:20
 msgid "Show high precipitation alerts"
 msgstr "Hiển thị cảnh báo lượng mưa lớn"
 
-#: src/features/settings/ui/settings.tsx:150
-#~ msgid "Show Holi event"
-#~ msgstr "Hiển thị Holi"
-
-#: src/features/settings/ui/settings.tsx:151
-#~ msgid "Show Leonids meteor shower event"
-#~ msgstr "Hiển thị mưa sao băng Leonid"
-
 #: src/features/settings/ui/sections/weather-settings.tsx:25
 msgid "Show low visibility alerts"
 msgstr "Hiển thị cảnh báo tầm nhìn thấp"
-
-#: src/features/settings/ui/settings.tsx:152
-#~ msgid "Show Lunar New Year event"
-#~ msgstr "Hiển thị Tết Nguyên đán"
-
-#: src/features/settings/ui/settings.tsx:153
-#~ msgid "Show Lyrids meteor shower event"
-#~ msgstr "Hiển thị mưa sao băng Lyrid"
-
-#: src/features/settings/ui/settings.tsx:154
-#~ msgid "Show New Year's Day event"
-#~ msgstr "Hiển thị Tết Dương lịch"
-
-#: src/features/settings/ui/settings.tsx:155
-#~ msgid "Show Orionids meteor shower event"
-#~ msgstr "Hiển thị mưa sao băng Orionid"
-
-#: src/features/settings/ui/settings.tsx:156
-#~ msgid "Show Perseids meteor shower event"
-#~ msgstr "Hiển thị mưa sao băng Perseid"
-
-#: src/features/settings/ui/settings.tsx:158
-#~ msgid "Show Quadrantids meteor shower event"
-#~ msgstr "Hiển thị mưa sao băng Quadrantid"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:128
 msgid "Show seasonal events"
@@ -1696,48 +1612,24 @@ msgstr "Hiển thị sự kiện theo mùa"
 msgid "Show seasonal tile glow"
 msgstr "Hiển thị ánh sáng ô theo mùa"
 
-#: src/features/settings/ui/settings.tsx:160
-#~ msgid "Show Spring Equinox event"
-#~ msgstr "Hiển thị Xuân phân"
-
 #: src/features/settings/ui/sections/weather-settings.tsx:22
 msgid "Show strong wind alerts"
 msgstr "Hiển thị cảnh báo gió mạnh"
 
-#: src/features/settings/ui/settings.tsx:161
-#~ msgid "Show Summer Solstice event"
-#~ msgstr "Hiển thị Hạ chí"
-
 #: src/features/settings/ui/sections/seasonal-settings.tsx:180
-#: src/features/weather/ui/tile.tsx:581
+#: src/features/weather/ui/tile.tsx:584
 msgid "Show this event"
 msgstr "Hiển thị sự kiện này"
-
-#: src/features/settings/ui/settings.tsx:163
-#~ msgid "Show total lunar eclipse event"
-#~ msgstr "Hiển thị nguyệt thực toàn phần"
-
-#: src/features/settings/ui/settings.tsx:166
-#~ msgid "Show total solar eclipse event"
-#~ msgstr "Hiển thị nhật thực toàn phần"
-
-#: src/features/settings/ui/settings.tsx:169
-#~ msgid "Show Valentine's Day event"
-#~ msgstr "Hiển thị Ngày Valentine"
 
 #: src/features/settings/ui/sections/weather-settings.tsx:126
 msgid "Show weather alerts"
 msgstr "Hiển thị cảnh báo thời tiết"
 
-#: src/features/settings/ui/settings.tsx:171
-#~ msgid "Show Winter Solstice event"
-#~ msgstr "Hiển thị Đông chí"
-
 #: src/features/dashboard/ui/weather-errors.tsx:21
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "Đang hiển thị dữ liệu thời tiết đã lưu trong bộ nhớ đệm. Thử lại để làm mới dự báo mới nhất."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:182
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:204
 msgid "Sky position and Moon illumination shown for {referenceLabel}."
 msgstr "Vị trí trên bầu trời và phần Mặt Trăng được chiếu sáng được tính tại {referenceLabel}."
 
@@ -1746,23 +1638,23 @@ msgstr "Vị trí trên bầu trời và phần Mặt Trăng được chiếu s�
 msgid "Skywatching tips"
 msgstr "Mẹo quan sát bầu trời"
 
-#: src/features/weather/ui/tile.tsx:104
+#: src/features/weather/ui/tile.tsx:105
 msgid "slight rain"
 msgstr "mưa nhỏ"
 
-#: src/features/weather/ui/tile.tsx:113
+#: src/features/weather/ui/tile.tsx:114
 msgid "slight rain showers"
 msgstr "cơn mưa nhỏ"
 
-#: src/features/weather/ui/tile.tsx:116
+#: src/features/weather/ui/tile.tsx:117
 msgid "slight snow showers"
 msgstr "cơn tuyết nhỏ"
 
-#: src/features/weather/ui/tile.tsx:109
+#: src/features/weather/ui/tile.tsx:110
 msgid "slight snowfall"
 msgstr "tuyết rơi nhỏ"
 
-#: src/features/weather/ui/tile.tsx:112
+#: src/features/weather/ui/tile.tsx:113
 msgid "snow grains"
 msgstr "hạt tuyết"
 
@@ -1778,24 +1670,12 @@ msgstr "Một số có màu trắng, một số khác vàng hoặc xanh lam-xanh
 msgid "Some calendar events couldn't be loaded. Please try again in a moment."
 msgstr "Không thể tải một số sự kiện lịch. Vui lòng thử lại sau giây lát."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:239
-msgid "South"
-msgstr "Nam"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:237
-msgid "South-east"
-msgstr "Đông Nam"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:241
-msgid "South-west"
-msgstr "Tây Nam"
-
 #: src/features/settings/ui/sections/developer-settings.tsx:52
 msgid "Spoof upcoming calendar events"
 msgstr "Mô phỏng sự kiện lịch sắp tới"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:47
-#: src/features/weather/ui/tile.tsx:200
+#: src/features/weather/ui/tile.tsx:201
 msgid "Spring Equinox"
 msgstr "Xuân phân"
 
@@ -1827,12 +1707,12 @@ msgstr "Cơn gió mạnh bắt đầu sau 1 giờ"
 msgid "Submit"
 msgstr "Gửi"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:146
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:155
 msgid "Suggested viewing window"
 msgstr "Khoảng thời gian quan sát gợi ý"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:48
-#: src/features/weather/ui/tile.tsx:201
+#: src/features/weather/ui/tile.tsx:202
 msgid "Summer Solstice"
 msgstr "Hạ chí"
 
@@ -1844,11 +1724,11 @@ msgstr "mặt trời"
 msgid "Sun"
 msgstr "Mặt trời"
 
-#: src/features/weather/ui/details/detail-shell.tsx:255
+#: src/features/weather/ui/details/detail-shell.tsx:257
 msgid "Sun {hour}"
 msgstr "CN {hour}"
 
-#: src/features/weather/ui/tile.tsx:124
+#: src/features/weather/ui/tile.tsx:125
 msgid "Sunday"
 msgstr "Chủ Nhật"
 
@@ -1928,7 +1808,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "Sắc đỏ chính xác phụ thuộc vào những gì có trong khí quyển Trái Đất vào thời điểm đó. Sau những vụ phun trào núi lửa lớn, Mặt Trăng có thể chuyển sang màu đỏ đặc biệt tối, gần như nâu đỏ."
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:508
+#: src/features/weather/ui/tile.tsx:511
 msgid "The expected type of weather is {0}."
 msgstr "Loại thời tiết dự kiến là {0}."
 
@@ -1997,27 +1877,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "Con số đó thật đáng khích lệ một cách kỳ lạ — những cây được trồng trong Ngày Trái Đất từ năm 1970 đến nay đã lên tới hàng tỷ."
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:470
+#: src/features/weather/ui/tile.tsx:473
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "Nhiệt độ tối đa sẽ là {0} độ C."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:476
+#: src/features/weather/ui/tile.tsx:479
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "Nhiệt độ tối đa sẽ là {0} độ F."
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:534
+#: src/features/weather/ui/tile.tsx:537
 msgid "The maximum UV index will be {0}."
 msgstr "Chỉ số UV tối đa sẽ là {0}."
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:547
+#: src/features/weather/ui/tile.tsx:550
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "Tốc độ gió tối đa sẽ là {0} km một giờ."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:553
+#: src/features/weather/ui/tile.tsx:556
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "Tốc độ gió tối đa sẽ là {0} dặm một giờ."
 
@@ -2034,12 +1914,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "Các sao băng đi vào khí quyển với vận tốc khoảng 66 km/s, thuộc hàng nhanh nhất trong bất kỳ trận mưa sao băng thường niên nào, đó là lý do chúng thường để lại những vệt sáng kéo dài."
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:489
+#: src/features/weather/ui/tile.tsx:492
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "Nhiệt độ tối thiểu sẽ là {0} độ C."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:495
+#: src/features/weather/ui/tile.tsx:498
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "Nhiệt độ tối thiểu sẽ là {0} độ F."
 
@@ -2103,7 +1983,7 @@ msgstr "Đỉnh điểm của mưa sao băng Quadrantid là một trong những 
 msgid "The Quadrantids are a meteor shower that peaks in early January and is known for being brief yet often intense."
 msgstr "Quadrantids là trận mưa sao băng đạt đỉnh vào đầu tháng 1, nổi tiếng vì ngắn nhưng thường rất mạnh."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:188
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:192
 msgid "The radiant is where the trails appear to come from. Meteors can cross any part of the sky: look roughly halfway up, away from the Moon, with a wide, unobstructed view."
 msgstr "Tâm điểm là vị trí mà các vệt sao băng dường như xuất phát. Sao băng có thể băng qua bất kỳ phần nào của bầu trời: hãy nhìn khoảng nửa đường từ chân trời lên đỉnh đầu, tránh hướng Mặt Trăng, ở nơi có tầm nhìn rộng và không bị che khuất."
 
@@ -2123,7 +2003,7 @@ msgstr "Trận mưa sao băng lấy tên từ Quadrans Muralis, một chòm sao 
 msgid "The shower’s radiant lies near the constellation Aquarius, rising before dawn when viewing conditions are at their best."
 msgstr "Điểm toả của trận mưa nằm gần chòm sao Bảo Bình (Aquarius), mọc lên trước bình minh khi điều kiện quan sát tốt nhất."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:256
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:255
 msgid "The sky stays too bright for a useful viewing window at this location on this night."
 msgstr "Bầu trời tại vị trí này trong đêm đó vẫn quá sáng nên không có khoảng thời gian quan sát phù hợp."
 
@@ -2175,16 +2055,12 @@ msgstr "Sao băng dường như toả ra từ vùng gần chòm sao Orion, một
 msgid "Their peak often coincides with long, dark viewing hours, when observing conditions are especially favourable."
 msgstr "Đỉnh điểm của chúng thường trùng với những giờ quan sát dài và tối, khi điều kiện đặc biệt thuận lợi."
 
-#: src/features/seasonal-events/events/perseids.tsx:88
-#~ msgid "Their radiant lies in the constellation Perseus, and the shower is especially prominent in the northern hemisphere, though visible worldwide."
-#~ msgstr "Điểm toả nằm trong chòm sao Perseus, và trận mưa đặc biệt nổi bật ở bán cầu bắc, dù có thể thấy trên toàn thế giới."
-
 #: src/features/seasonal-events/definitions/perseids.tsx:57
 msgid "Their radiant lies in the constellation Perseus. The shower is best placed in the northern hemisphere, with visibility decreasing farther south."
 msgstr "Tâm điểm của trận mưa sao băng này nằm trong chòm sao Anh Tiên (Perseus). Bắc bán cầu có điều kiện quan sát thuận lợi nhất; càng về phía nam, khả năng quan sát càng giảm."
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:567
+#: src/features/weather/ui/tile.tsx:570
 msgid "There is a {0}% chance of precipitation."
 msgstr "Có {0}% khả năng có mưa."
 
@@ -2224,7 +2100,7 @@ msgstr "Quan sát này đã cung cấp bằng chứng trực quan trực tiếp 
 msgid "This same atmospheric filtering that produces red sunsets gives the Moon its copper and crimson tones during totality."
 msgstr "Chính sự lọc khí quyển tạo nên hoàng hôn đỏ cũng mang lại cho Mặt Trăng những sắc đồng và đỏ thắm trong pha toàn phần."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:273
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:272
 msgid "This shower’s radiant stays too low while your sky is dark for a useful viewing window on this night."
 msgstr "Tâm điểm của trận mưa sao băng này ở quá thấp khi bầu trời tại vị trí của bạn tối, nên đêm đó không có khoảng thời gian quan sát phù hợp."
 
@@ -2232,39 +2108,31 @@ msgstr "Tâm điểm của trận mưa sao băng này ở quá thấp khi bầu 
 msgid "This three-way split is central to the holiday's meaning — the act of giving is built directly into the ritual itself."
 msgstr "Sự phân chia ba phần này là cốt lõi của ý nghĩa ngày lễ — hành động cho đi được tích hợp trực tiếp vào bản thân nghi lễ."
 
-#: src/features/weather/ui/details/detail-shell.tsx:244
+#: src/features/weather/ui/details/detail-shell.tsx:246
 msgid "Thu {hour}"
 msgstr "T5 {hour}"
 
-#: src/features/weather/ui/tile.tsx:118
+#: src/features/weather/ui/tile.tsx:119
 msgid "thunderstorm"
 msgstr "bão"
 
-#: src/features/weather/ui/tile.tsx:120
+#: src/features/weather/ui/tile.tsx:121
 msgid "thunderstorm with heavy hail"
 msgstr "bão kèm mưa đá lớn"
 
-#: src/features/weather/ui/tile.tsx:119
+#: src/features/weather/ui/tile.tsx:120
 msgid "thunderstorm with slight hail"
 msgstr "bão kèm mưa đá nhỏ"
 
-#: src/features/weather/ui/tile.tsx:128
+#: src/features/weather/ui/tile.tsx:129
 msgid "Thursday"
 msgstr "Thứ Năm"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:140
-msgid "Times in {timeZoneLabel}"
-msgstr "Múi giờ: {timeZoneLabel}"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:151
-msgid "to"
-msgstr "đến"
 
 #: src/features/settings/ui/initialisation.tsx:223
 msgid "To get started, let's set your language, units, and location."
 msgstr "Để bắt đầu, hãy đặt ngôn ngữ, đơn vị và vị trí của bạn."
 
-#: src/features/integrations/ui/upcoming-events.tsx:345
+#: src/features/integrations/ui/upcoming-events.tsx:344
 msgid "Today • {dateLabel}"
 msgstr "Hôm nay • {dateLabel}"
 
@@ -2276,7 +2144,7 @@ msgstr "Ngày nay, chỉ riêng ở châu Âu đã có ước tính 350 triệu 
 msgid "Today, many people travel great distances to stand within the path of totality."
 msgstr "Ngày nay, nhiều người đi rất xa để đứng trong dải đường toàn phần."
 
-#: src/features/integrations/ui/upcoming-events.tsx:349
+#: src/features/integrations/ui/upcoming-events.tsx:348
 msgid "Tomorrow • {dateLabel}"
 msgstr "Ngày mai • {dateLabel}"
 
@@ -2284,7 +2152,7 @@ msgstr "Ngày mai • {dateLabel}"
 msgid "Total lunar eclipse"
 msgstr "Nguyệt thực toàn phần"
 
-#: src/features/weather/ui/tile.tsx:202
+#: src/features/weather/ui/tile.tsx:203
 msgid "Total Lunar Eclipse"
 msgstr "Nguyệt thực toàn phần"
 
@@ -2297,7 +2165,7 @@ msgstr "Tổng lượng mưa"
 msgid "Total solar eclipse"
 msgstr "Nhật thực toàn phần"
 
-#: src/features/weather/ui/tile.tsx:203
+#: src/features/weather/ui/tile.tsx:204
 msgid "Total Solar Eclipse"
 msgstr "Nhật thực toàn phần"
 
@@ -2318,11 +2186,11 @@ msgstr "Các truyền thống như Nowruz tiếp tục tôn vinh chủ đề tá
 msgid "Try again"
 msgstr "Thử lại"
 
-#: src/features/weather/ui/details/detail-shell.tsx:236
+#: src/features/weather/ui/details/detail-shell.tsx:238
 msgid "Tue {hour}"
 msgstr "T3 {hour}"
 
-#: src/features/weather/ui/tile.tsx:126
+#: src/features/weather/ui/tile.tsx:127
 msgid "Tuesday"
 msgstr "Thứ Ba"
 
@@ -2330,7 +2198,11 @@ msgstr "Thứ Ba"
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Bật tùy chọn này nếu chỉ số UV do Weather Please cung cấp thường xuyên thấp hơn so với các nguồn địa phương."
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:196
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:180
+msgid "Twilight"
+msgstr "Chạng vạng"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:183
 msgid "Twilight overlaps this window, so fainter meteors may be harder to see."
 msgstr "Một phần khoảng thời gian này trùng với ánh sáng chạng vạng hoặc hừng đông, nên các sao băng mờ có thể khó nhìn thấy hơn."
 
@@ -2346,8 +2218,8 @@ msgstr "Không tốt"
 msgid "Unhealthy for sensitive groups"
 msgstr "Không tốt cho nhóm nhạy cảm"
 
-#: src/features/weather/ui/tile.tsx:504
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:507
+#: src/features/weather/ui/tile.tsx:514
 msgid "unknown conditions"
 msgstr "điều kiện không xác định"
 
@@ -2359,11 +2231,11 @@ msgstr "Khác với nhật thực, nguyệt thực không cần thiết bị đ�
 msgid "Unlike most meteor showers, the Geminids originate from the asteroid 3200 Phaethon rather than a comet."
 msgstr "Khác với hầu hết các mưa sao băng, Geminids bắt nguồn từ tiểu hành tinh 3200 Phaethon chứ không phải từ sao chổi."
 
-#: src/features/integrations/ui/upcoming-events.tsx:190
+#: src/features/integrations/ui/upcoming-events.tsx:191
 msgid "Untitled event"
 msgstr "Sự kiện không có tiêu đề"
 
-#: src/features/integrations/ui/upcoming-events.tsx:125
+#: src/features/integrations/ui/upcoming-events.tsx:126
 msgid "Upcoming calendar events"
 msgstr "Sự kiện lịch sắp tới"
 
@@ -2375,7 +2247,7 @@ msgstr "Sử dụng các nền theo mùa đã bật vào những ngày tương �
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "Sử dụng mô hình hoá học toàn cầu (CAMS)"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:90
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:105
 msgid "Usual peak: around {peakLabel}."
 msgstr "Thường đạt cực đại vào khoảng {peakLabel}."
 
@@ -2384,7 +2256,7 @@ msgid "UV"
 msgstr "UV"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:51
-#: src/features/weather/ui/tile.tsx:204
+#: src/features/weather/ui/tile.tsx:205
 msgid "Valentine's Day"
 msgstr "Ngày Valentine"
 
@@ -2396,11 +2268,11 @@ msgstr "Ngày Valentine tôn vinh tình cảm dưới nhiều dạng, từ tình
 msgid "Very unhealthy"
 msgstr "Rất không tốt"
 
-#: src/features/integrations/ui/upcoming-events.tsx:234
+#: src/features/integrations/ui/upcoming-events.tsx:235
 msgid "View source event"
 msgstr "Xem sự kiện gốc"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:55
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:69
 msgid "Viewing from your location"
 msgstr "Quan sát từ vị trí của bạn"
 
@@ -2408,7 +2280,7 @@ msgstr "Quan sát từ vị trí của bạn"
 msgid "Viewing guidance could not be loaded."
 msgstr "Không thể tải hướng dẫn quan sát."
 
-#: src/features/weather/ui/tile.tsx:115
+#: src/features/weather/ui/tile.tsx:116
 msgid "violent rain showers"
 msgstr "cơn mưa lớn"
 
@@ -2468,17 +2340,13 @@ msgstr "Không thể tải dữ liệu thời tiết cho vị trí này. Vui lò
 msgid "Weather Please uses the following third-party data sources and location services."
 msgstr "Weather Please sử dụng các nguồn dữ liệu của bên thứ ba và dịch vụ vị trí sau."
 
-#: src/features/weather/ui/details/detail-shell.tsx:240
+#: src/features/weather/ui/details/detail-shell.tsx:242
 msgid "Wed {hour}"
 msgstr "T4 {hour}"
 
-#: src/features/weather/ui/tile.tsx:127
+#: src/features/weather/ui/tile.tsx:128
 msgid "Wednesday"
 msgstr "Thứ Tư"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:243
-msgid "West"
-msgstr "Tây"
 
 #: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:60
 msgid "What it feels like"
@@ -2530,12 +2398,12 @@ msgstr "gió"
 msgid "Wind"
 msgstr "Gió"
 
-#: src/features/weather/ui/details/detail-shell.tsx:129
+#: src/features/weather/ui/details/detail-shell.tsx:130
 msgid "Wind is making it feel cooler than the measured temperature right now."
 msgstr "Gió đang khiến trời cảm thấy mát hơn nhiệt độ đo được hiện tại."
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:52
-#: src/features/weather/ui/tile.tsx:205
+#: src/features/weather/ui/tile.tsx:206
 msgid "Winter Solstice"
 msgstr "Đông chí"
 
@@ -2547,11 +2415,11 @@ msgstr "Chỉ vài phút sau khi bước ra ngoài, mọi người đều trông
 msgid "Work"
 msgstr "Công việc"
 
-#: src/features/settings/ui/review-prompt.tsx:36
+#: src/features/settings/ui/review-prompt.tsx:37
 msgid "Would you like to leave a review?"
 msgstr "Bạn có muốn để lại đánh giá?"
 
-#: src/features/settings/ui/review-prompt.tsx:33
+#: src/features/settings/ui/review-prompt.tsx:34
 msgid "You've been using Weather Please for a while"
 msgstr "Bạn đã sử dụng Weather Please trong một thời gian"
 

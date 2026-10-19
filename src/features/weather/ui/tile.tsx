@@ -600,7 +600,7 @@ export const Tile = ({
 					onClose={() => setIsEventOpen(false)}
 					title={renderSeasonalLabel(seasonalBadgeId)}
 				>
-					{isEventOpen && getMeteorShower(seasonalBadgeId) && (
+					{getMeteorShower(seasonalBadgeId) && (
 						<LazyMeteorViewingGuide
 							date={tileDate}
 							eventId={seasonalBadgeId}

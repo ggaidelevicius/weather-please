@@ -43,19 +43,19 @@ msgstr "{0} {windUnitLabel}（<0/>）"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/details/detail-shell.tsx:274
+#: src/features/weather/ui/details/detail-shell.tsx:276
 msgid "{0} and {1}"
 msgstr "{0}と{1}"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/details/detail-shell.tsx:287
+#: src/features/weather/ui/details/detail-shell.tsx:290
 msgid "{0} and {1} today"
 msgstr "本日 {0}と{1}"
 
 #. placeholder {0}: formatHour(startTime)
 #. placeholder {1}: formatHour(endTime)
-#: src/features/weather/ui/details/detail-shell.tsx:295
+#: src/features/weather/ui/details/detail-shell.tsx:298
 msgid "{0} and {1} tomorrow"
 msgstr "明日 {0}と{1}"
 
@@ -72,22 +72,22 @@ msgid "{0} between <0/>"
 msgstr "{0}（<0/>の間）"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:540
+#: src/features/weather/ui/tile.tsx:543
 msgid "{0} km/h"
 msgstr "{0} キロメートル/時"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:542
+#: src/features/weather/ui/tile.tsx:545
 msgid "{0} mph"
 msgstr "{0} マイル/時"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/details/detail-shell.tsx:215
+#: src/features/weather/ui/details/detail-shell.tsx:217
 msgid "{0} today"
 msgstr "本日 {0}"
 
 #. placeholder {0}: formatHour(time)
-#: src/features/weather/ui/details/detail-shell.tsx:219
+#: src/features/weather/ui/details/detail-shell.tsx:221
 msgid "{0} tomorrow"
 msgstr "明日 {0}"
 
@@ -96,23 +96,23 @@ msgstr "明日 {0}"
 msgid "{0}% at <0/>"
 msgstr "{0}%（<0/>）"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:163
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:164
 msgid "{altitude}° above the horizon"
 msgstr "地平線から{altitude}°上"
 
-#: src/features/integrations/ui/upcoming-events.tsx:388
+#: src/features/integrations/ui/upcoming-events.tsx:393
 msgid "{hours}h"
 msgstr "{hours}時間"
 
-#: src/features/integrations/ui/upcoming-events.tsx:392
+#: src/features/integrations/ui/upcoming-events.tsx:397
 msgid "{hours}h {minutes}m"
 msgstr "{hours}時間{minutes}分"
 
-#: src/features/integrations/ui/upcoming-events.tsx:384
+#: src/features/integrations/ui/upcoming-events.tsx:389
 msgid "{minutes}m"
 msgstr "{minutes}分"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:173
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:175
 msgid "{moonBrightness} illuminated"
 msgstr "照らされている割合：{moonBrightness}"
 
@@ -150,15 +150,11 @@ msgstr "<0>位置情報へのアクセスが拒否されました。</0> ブラ�
 msgid "<0>Location access denied.</0> Click the location icon in the address bar, and select \"always allow this to access your location\". Then click the button below to try again."
 msgstr "<0>位置情報へのアクセスが拒否されました。</0> アドレスバーの位置情報アイコンをクリックし、\"このサイトが位置情報に常にアクセスすることを許可\"を選択してください。その後、下のボタンをクリックして再度お試しください。"
 
-#: src/features/settings/ui/settings.tsx:1054
-#~ msgid "☕ Gift a coffee"
-#~ msgstr "☕ コーヒーを贈る"
-
-#: src/pages/demo.tsx:447
+#: src/pages/demo.tsx:448
 msgid "✨ NEW: Connect your Google or Microsoft calendar"
 msgstr "✨ 新機能：Google または Microsoft カレンダーを接続"
 
-#: src/pages/demo.tsx:412
+#: src/pages/demo.tsx:413
 msgid "✨ NEW: Try scrolling down"
 msgstr "✨ 新機能：下にスクロールしてみてください"
 
@@ -198,11 +194,11 @@ msgstr "このアプリについて"
 msgid "Above the Arctic Circle, the sun doesn't set at all — it traces a low circle along the horizon and starts climbing again. This is the midnight sun, and it lasts for weeks."
 msgstr "北極圏の向こうでは、太陽は全く沈みません — 地平線に沿って低い円を描き、また昇り始めます。これが白夜で、何週間も続きます。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:223
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:222
 msgid "Above the horizon for part of this window."
 msgstr "この時間帯の一部で地平線より上にあります。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:219
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:218
 msgid "Above the horizon throughout this window."
 msgstr "この時間帯を通して地平線より上にあります。"
 
@@ -251,7 +247,7 @@ msgstr "大気質"
 msgid "Air quality unavailable"
 msgstr "大気質データを取得できません"
 
-#: src/features/integrations/ui/upcoming-events.tsx:365
+#: src/features/integrations/ui/upcoming-events.tsx:364
 msgid "All day"
 msgstr "終日"
 
@@ -275,7 +271,7 @@ msgstr "ストーンヘンジのような古代遺跡は夏至の日の出に合
 msgid "Ancient observatories carefully tracked this turning point of the year to guide planting cycles, calendars, and seasonal festivals."
 msgstr "古代の天文台は、この一年の転換点を注意深く追跡し、農耕の周期や暦、季節の祭りの指標としていました。"
 
-#: src/features/weather/ui/details/detail-shell.tsx:305
+#: src/features/weather/ui/details/detail-shell.tsx:308
 msgid "and"
 msgstr "と"
 
@@ -287,7 +283,7 @@ msgstr "動物たちが静まり、地平線が夕焼けの輪のように一周
 msgid "Another widely told story celebrates Krishna, whose playful exchanges of colour are said to have inspired the festival’s most famous custom."
 msgstr "別のよく語られる物語では、色を使ったクリシュナの戯れが、この祭りの最も有名な習慣の起源だとされています。"
 
-#: src/features/weather/ui/tile.tsx:137
+#: src/features/weather/ui/tile.tsx:138
 msgid "April"
 msgstr "4月"
 
@@ -319,7 +315,7 @@ msgstr "各境界で花火が上がり、鐘が鳴り、見知らぬ人々が一
 msgid "Attributions"
 msgstr "クレジット"
 
-#: src/features/weather/ui/tile.tsx:141
+#: src/features/weather/ui/tile.tsx:142
 msgid "August"
 msgstr "8月"
 
@@ -328,7 +324,7 @@ msgid "Automatic (seasonal)"
 msgstr "自動（季節に合わせる）"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:26
-#: src/features/weather/ui/tile.tsx:179
+#: src/features/weather/ui/tile.tsx:180
 msgid "Autumn Equinox"
 msgstr "秋分"
 
@@ -338,7 +334,7 @@ msgstr "平均風速"
 
 #: src/features/settings/ui/sections/general-settings.tsx:68
 #: src/features/settings/ui/sections/seasonal-settings.tsx:169
-#: src/features/weather/ui/tile.tsx:589
+#: src/features/weather/ui/tile.tsx:592
 msgid "Background"
 msgstr "背景"
 
@@ -354,7 +350,7 @@ msgstr "重力が光の経路を曲げるため、降着円盤の一部はブラ
 msgid "Because it behaves like both an asteroid and a comet, it is sometimes described as a “rock comet”."
 msgstr "小惑星と彗星の両方のように振る舞うため、「ロック・コメット（岩の彗星）」と呼ばれることもあります。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:221
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:220
 msgid "Below the horizon throughout this window."
 msgstr "この時間帯を通して地平線より下にあります。"
 
@@ -407,12 +403,8 @@ msgstr "確率"
 msgid "Chinese records from 687 BC describe \"stars falling like rain\" — the oldest known account of the Lyrids, and one of the oldest documented meteor observations of any kind."
 msgstr "紀元前687年の中国の記録には「星が雨のように降った」と描写されています — これはこと座流星群の最古の記録であり、あらゆる種類の流星観測の中でも最古の記録の一つです。"
 
-#: src/features/settings/ui/sections/general-settings.tsx:
-#~ msgid "Choose your default background. Automatic follows your seasonal event settings."
-#~ msgstr "デフォルトの背景を選択します。自動モードでは、季節のイベントの設定に従って背景が変わります。"
-
 #: src/features/settings/ui/sections/seasonal-settings.tsx:27
-#: src/features/weather/ui/tile.tsx:180
+#: src/features/weather/ui/tile.tsx:181
 msgid "Christmas Day"
 msgstr "クリスマス"
 
@@ -420,7 +412,7 @@ msgstr "クリスマス"
 msgid "Christmas Day marks the celebration of the birth of Jesus, and for many people it has also become a broader season of generosity, reflection, and togetherness."
 msgstr "クリスマスはイエスの誕生を祝う日として始まりましたが、やがて寛大さや内省、団らんの季節へと広がりました。"
 
-#: src/features/weather/ui/tile.tsx:93
+#: src/features/weather/ui/tile.tsx:94
 msgid "clear sky"
 msgstr "晴れ"
 
@@ -481,7 +473,7 @@ msgid "Day"
 msgstr "日"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:28
-#: src/features/weather/ui/tile.tsx:181
+#: src/features/weather/ui/tile.tsx:182
 msgid "Day of the Dead"
 msgstr "死者の日"
 
@@ -489,7 +481,7 @@ msgstr "死者の日"
 msgid "Day of the Dead is a celebration of life, memory, and the enduring bond between the living and those who have passed."
 msgstr "死者の日は、生命と記憶、そして生者と亡き人々の間にある変わらぬ絆を祝う日です。"
 
-#: src/features/weather/ui/tile.tsx:145
+#: src/features/weather/ui/tile.tsx:146
 msgid "December"
 msgstr "12月"
 
@@ -497,15 +489,15 @@ msgstr "12月"
 msgid "Decorated trees, stockings, gift-giving, and shared meals now connect people across many climates and continents in a sense of home and continuity."
 msgstr "飾り付けたツリーや靴下、贈り物、共に食卓を囲むことは、さまざまな気候や大陸にまたがって「家」と連続性の感覚を呼び起こします。"
 
-#: src/features/weather/ui/tile.tsx:101
+#: src/features/weather/ui/tile.tsx:102
 msgid "dense drizzle"
 msgstr "濃い霧雨"
 
-#: src/features/weather/ui/tile.tsx:103
+#: src/features/weather/ui/tile.tsx:104
 msgid "dense freezing drizzle"
 msgstr "濃い凍結霧雨"
 
-#: src/features/weather/ui/tile.tsx:98
+#: src/features/weather/ui/tile.tsx:99
 msgid "depositing rime fog"
 msgstr "着氷霧"
 
@@ -517,7 +509,7 @@ msgstr "降水深"
 msgid "Developer"
 msgstr "開発者"
 
-#: src/features/weather/ui/details/detail-shell.tsx:120
+#: src/features/weather/ui/details/detail-shell.tsx:121
 msgid "Direct sunlight is making it feel warmer than the measured temperature right now."
 msgstr "直射日光により、現在の実測気温よりも暑く感じられます。"
 
@@ -525,7 +517,7 @@ msgstr "直射日光により、現在の実測気温よりも暑く感じられ
 msgid "Disconnect"
 msgstr "接続解除"
 
-#: src/pages/demo.tsx:455
+#: src/pages/demo.tsx:456
 msgid "Dismiss"
 msgstr "閉じる"
 
@@ -534,7 +526,7 @@ msgid "Display"
 msgstr "表示"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:29
-#: src/features/weather/ui/tile.tsx:182
+#: src/features/weather/ui/tile.tsx:183
 msgid "Diwali"
 msgstr "ディワリ"
 
@@ -571,7 +563,7 @@ msgid "Each Orionid meteor is a tiny grain of dust shed by Halley's Comet — th
 msgstr "オリオン座流星群の各流星は、ハレー彗星が放出したごく小さな塵の粒です — 少なくとも紀元前240年から人々が観察し記録してきた同じ天体です。"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:30
-#: src/features/weather/ui/tile.tsx:183
+#: src/features/weather/ui/tile.tsx:184
 msgid "Earth Day"
 msgstr "アースデイ"
 
@@ -579,12 +571,8 @@ msgstr "アースデイ"
 msgid "Earth Day invites a pause to notice the planet that sustains us, and to consider how we care for it."
 msgstr "アースデイは、私たちを支える地球という惑星に目を向け、どう大切にしていくかを考えるための立ち止まる機会を与えてくれます。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:235
-msgid "East"
-msgstr "東"
-
 #: src/features/settings/ui/sections/seasonal-settings.tsx:31
-#: src/features/weather/ui/tile.tsx:184
+#: src/features/weather/ui/tile.tsx:185
 msgid "Easter"
 msgstr "イースター"
 
@@ -597,7 +585,7 @@ msgid "Eclipse glasses are essential during all partial phases. Only during the 
 msgstr "皆既食以外のすべての部分食の段階では日食グラスが必須です。完全に覆われる短い瞬間だけが、肉眼で見ても安全です。"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:32
-#: src/features/weather/ui/tile.tsx:185
+#: src/features/weather/ui/tile.tsx:186
 msgid "Eid al-Adha"
 msgstr "イード・アル＝アドハー"
 
@@ -606,7 +594,7 @@ msgid "Eid al-Adha is one of the most important festivals in Islam, closely link
 msgstr "イード・アル＝アドハーはイスラム教で最も重要な祝祭の一つで、ハッジ（巡礼）の季節と密接に結び付いています。"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:33
-#: src/features/weather/ui/tile.tsx:186
+#: src/features/weather/ui/tile.tsx:187
 msgid "Eid al-Fitr"
 msgstr "イード・アル＝フィトル"
 
@@ -614,7 +602,7 @@ msgstr "イード・アル＝フィトル"
 msgid "Eid al-Fitr marks the end of Ramadan, celebrating renewal, gratitude, and the strength of shared community."
 msgstr "イード・アル＝フィトルはラマダンの終わりを告げる祝祭で、刷新と感謝、そして共同体の結びつきの強さを祝います。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:203
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:199
 msgid "Estimates near the usual peak, not a prediction of meteor activity or cloud cover. Check the local forecast and choose a dark spot away from lights."
 msgstr "例年の極大期付近の目安であり、流星の活動や雲の予報ではありません。現地の天気予報を確認し、明かりから離れた暗い場所を選んでください。"
 
@@ -622,7 +610,7 @@ msgstr "例年の極大期付近の目安であり、流星の活動や雲の予
 msgid "Eta Aquariids meteor shower"
 msgstr "みずがめ座η流星群"
 
-#: src/features/weather/ui/tile.tsx:187
+#: src/features/weather/ui/tile.tsx:188
 msgid "Eta Aquariids Meteor Shower"
 msgstr "みずがめ座η流星群"
 
@@ -630,12 +618,12 @@ msgstr "みずがめ座η流星群"
 msgid "Even small choices — repairing, reusing, conserving, or simply walking a familiar trail — reflect its underlying spirit."
 msgstr "修理する、再利用する、節約する、あるいは慣れた道を歩くだけでも――その根底にある精神を映し出します。"
 
-#: src/features/integrations/ui/upcoming-events.tsx:267
+#: src/features/integrations/ui/upcoming-events.tsx:268
 msgid "Event description"
 msgstr "予定の説明"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:35
-#: src/features/weather/ui/tile.tsx:188
+#: src/features/weather/ui/tile.tsx:189
 msgid "Event Horizon Day"
 msgstr "イベント・ホライズン・デー"
 
@@ -663,6 +651,38 @@ msgstr "{timeUntilExtremeUv}時間後から極端なUVが始まります"
 msgid "Extreme UV starting in 1 hour"
 msgstr "1時間後から極端なUVが始まります"
 
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:234
+msgid "Face east"
+msgstr "東を向く"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:230
+msgid "Face north"
+msgstr "北を向く"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:232
+msgid "Face north-east"
+msgstr "北東を向く"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:244
+msgid "Face north-west"
+msgstr "北西を向く"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:238
+msgid "Face south"
+msgstr "南を向く"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:236
+msgid "Face south-east"
+msgstr "南東を向く"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:240
+msgid "Face south-west"
+msgstr "南西を向く"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:242
+msgid "Face west"
+msgstr "西を向く"
+
 #: src/features/settings/ui/initialisation.tsx:52
 #: src/features/settings/ui/sections/general-settings.tsx:29
 msgid "Fahrenheit (°F)"
@@ -688,7 +708,7 @@ msgstr "家族は墓地で夜を過ごし、墓を清め、マリーゴールド
 msgid "Family"
 msgstr "家族"
 
-#: src/features/weather/ui/tile.tsx:135
+#: src/features/weather/ui/tile.tsx:136
 msgid "February"
 msgstr "2月"
 
@@ -728,11 +748,11 @@ msgstr "予報"
 msgid "Freelance"
 msgstr "フリーランス"
 
-#: src/features/weather/ui/details/detail-shell.tsx:248
+#: src/features/weather/ui/details/detail-shell.tsx:250
 msgid "Fri {hour}"
 msgstr "金 {hour}"
 
-#: src/features/weather/ui/tile.tsx:129
+#: src/features/weather/ui/tile.tsx:130
 msgid "Friday"
 msgstr "金曜日"
 
@@ -752,7 +772,7 @@ msgstr "ふたご座流星群の流星は大多数のシャワーより遅く動
 msgid "Geminids meteor shower"
 msgstr "ふたご座流星群"
 
-#: src/features/weather/ui/tile.tsx:189
+#: src/features/weather/ui/tile.tsx:190
 msgid "Geminids Meteor Shower"
 msgstr "ふたご座流星群"
 
@@ -823,7 +843,7 @@ msgid "Halley’s Comet itself returns roughly every seventy-six years, but the 
 msgstr "ハレー彗星そのものは約76年ごとに戻ってきますが、残した塵の流れは毎年地球の軌道と交差します。"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:37
-#: src/features/weather/ui/tile.tsx:190
+#: src/features/weather/ui/tile.tsx:191
 msgid "Halloween"
 msgstr "ハロウィン"
 
@@ -832,7 +852,7 @@ msgid "Halloween is a night shaped by costumes, stories, and a playful sense of 
 msgstr "ハロウィンの夜は、衣装と物語、そして遊び心のある不穏さに形づくられています。"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:38
-#: src/features/weather/ui/tile.tsx:191
+#: src/features/weather/ui/tile.tsx:192
 msgid "Hanukkah"
 msgstr "ハヌカー"
 
@@ -852,19 +872,19 @@ msgstr "ハートやバラ、赤いリボンは、献身、温もり、つなが
 msgid "Heaviest hour"
 msgstr "最も雨が強い時間帯"
 
-#: src/features/weather/ui/tile.tsx:108
+#: src/features/weather/ui/tile.tsx:109
 msgid "heavy freezing rain"
 msgstr "激しい凍雨"
 
-#: src/features/weather/ui/tile.tsx:106
+#: src/features/weather/ui/tile.tsx:107
 msgid "heavy rain"
 msgstr "大雨"
 
-#: src/features/weather/ui/tile.tsx:117
+#: src/features/weather/ui/tile.tsx:118
 msgid "heavy snow showers"
 msgstr "激しい雪降り"
 
-#: src/features/weather/ui/tile.tsx:111
+#: src/features/weather/ui/tile.tsx:112
 msgid "heavy snowfall"
 msgstr "大雪"
 
@@ -905,7 +925,7 @@ msgid "History and meaning"
 msgstr "歴史と意味"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:39
-#: src/features/weather/ui/tile.tsx:192
+#: src/features/weather/ui/tile.tsx:193
 msgid "Holi"
 msgstr "ホーリー"
 
@@ -917,11 +937,11 @@ msgstr "ホーリーは、笑いと音楽、そして共同体の分かち合い
 msgid "Homes are carefully cleaned and decorated to clear away old luck and welcome prosperity for the year ahead."
 msgstr "家々は念入りに掃除され、飾り付けられて、古い運を払い、来る年の繁栄を迎え入れます。"
 
-#: src/features/weather/ui/details/detail-shell.tsx:102
+#: src/features/weather/ui/details/detail-shell.tsx:103
 msgid "Humid air and direct sunlight are making it feel warmer than the measured temperature right now."
 msgstr "湿気と直射日光により、現在の実測気温よりも暑く感じられます。"
 
-#: src/features/weather/ui/details/detail-shell.tsx:111
+#: src/features/weather/ui/details/detail-shell.tsx:112
 msgid "Humid air is making it feel warmer than the measured temperature right now."
 msgstr "湿気により、現在の実測気温よりも暑く感じられます。"
 
@@ -1027,15 +1047,15 @@ msgstr "多くの場合、大きなジェスチャーよりも、誰かが気に
 msgid "Jack-o'-lanterns were originally carved from turnips in Ireland and Scotland — the pumpkin version is a North American adaptation, chosen because pumpkins were bigger and easier to hollow out."
 msgstr "ジャック・オー・ランタンは元々アイルランドとスコットランドでカブから作られていました — カボチャのバージョンは北米流のアレンジで、カボチャの方が大きくくり抜きやすかったため選ばれました。"
 
-#: src/features/weather/ui/tile.tsx:134
+#: src/features/weather/ui/tile.tsx:135
 msgid "January"
 msgstr "1月"
 
-#: src/features/weather/ui/tile.tsx:140
+#: src/features/weather/ui/tile.tsx:141
 msgid "July"
 msgstr "7月"
 
-#: src/features/weather/ui/tile.tsx:139
+#: src/features/weather/ui/tile.tsx:140
 msgid "June"
 msgstr "6月"
 
@@ -1048,7 +1068,7 @@ msgstr "言語"
 msgid "Latitude"
 msgstr "緯度"
 
-#: src/features/settings/ui/review-prompt.tsx:48
+#: src/features/settings/ui/review-prompt.tsx:49
 msgid "Leave a review"
 msgstr "レビューを残す"
 
@@ -1064,19 +1084,19 @@ msgstr "伝説と風習"
 msgid "Leonids meteor shower"
 msgstr "しし座流星群"
 
-#: src/features/weather/ui/tile.tsx:193
+#: src/features/weather/ui/tile.tsx:194
 msgid "Leonids Meteor Shower"
 msgstr "しし座流星群"
 
-#: src/features/weather/ui/tile.tsx:99
+#: src/features/weather/ui/tile.tsx:100
 msgid "light drizzle"
 msgstr "小雨"
 
-#: src/features/weather/ui/tile.tsx:102
+#: src/features/weather/ui/tile.tsx:103
 msgid "light freezing drizzle"
 msgstr "軽い氷雨"
 
-#: src/features/weather/ui/tile.tsx:107
+#: src/features/weather/ui/tile.tsx:108
 msgid "light freezing rain"
 msgstr "軽い凍雨"
 
@@ -1092,11 +1112,11 @@ msgstr "リアルタイムデータは一時的に取得できません。最後
 msgid "Local map"
 msgstr "周辺地図"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:84
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:99
 msgid "Local viewing guidance appears near this shower’s usual peak."
 msgstr "この流星群の例年の極大期が近づくと、現地の観測ガイドが表示されます。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:282
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:281
 msgid "Local viewing guidance isn’t available for this location. Check that your selected weather location is correct."
 msgstr "この場所の観測ガイドは利用できません。天気の表示地点が正しく選択されているか確認してください。"
 
@@ -1141,7 +1161,7 @@ msgid "Lowest visibility"
 msgstr "最低視程"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:41
-#: src/features/weather/ui/tile.tsx:194
+#: src/features/weather/ui/tile.tsx:195
 msgid "Lunar New Year"
 msgstr "旧正月"
 
@@ -1153,12 +1173,12 @@ msgstr "旧暦の最初の新月から始まり、最大15日間にわたる祝�
 msgid "Lyrids meteor shower"
 msgstr "こと座流星群"
 
-#: src/features/weather/ui/tile.tsx:195
+#: src/features/weather/ui/tile.tsx:196
 msgid "Lyrids Meteor Shower"
 msgstr "こと座流星群"
 
-#: src/features/weather/ui/tile.tsx:94
-#: src/features/weather/ui/tile.tsx:97
+#: src/features/weather/ui/tile.tsx:95
+#: src/features/weather/ui/tile.tsx:98
 msgid "mainly clear"
 msgstr "主に晴れ"
 
@@ -1174,7 +1194,7 @@ msgstr "地図"
 msgid "Map data unavailable"
 msgstr "地図データを取得できません"
 
-#: src/features/weather/ui/tile.tsx:136
+#: src/features/weather/ui/tile.tsx:137
 msgid "March"
 msgstr "3月"
 
@@ -1182,7 +1202,7 @@ msgstr "3月"
 msgid "Marigolds, papel picado, sugar skulls, candles, and favourite foods form a visual language of welcome and connection."
 msgstr "マリーゴールド、パペルピカド、シュガースカル、ろうそく、好物の料理が、歓迎とつながりを示す視覚の言語を形づくります。"
 
-#: src/features/weather/ui/tile.tsx:138
+#: src/features/weather/ui/tile.tsx:139
 msgid "May"
 msgstr "5月"
 
@@ -1199,27 +1219,27 @@ msgstr "メートル法 (km/h, mm)"
 msgid "Moderate"
 msgstr "普通"
 
-#: src/features/weather/ui/tile.tsx:100
+#: src/features/weather/ui/tile.tsx:101
 msgid "moderate drizzle"
 msgstr "適度な小雨"
 
-#: src/features/weather/ui/tile.tsx:105
+#: src/features/weather/ui/tile.tsx:106
 msgid "moderate rain"
 msgstr "適度な雨"
 
-#: src/features/weather/ui/tile.tsx:114
+#: src/features/weather/ui/tile.tsx:115
 msgid "moderate rain showers"
 msgstr "適度なにわか雨"
 
-#: src/features/weather/ui/tile.tsx:110
+#: src/features/weather/ui/tile.tsx:111
 msgid "moderate snowfall"
 msgstr "適度な降雪"
 
-#: src/features/weather/ui/details/detail-shell.tsx:232
+#: src/features/weather/ui/details/detail-shell.tsx:234
 msgid "Mon {hour}"
 msgstr "月 {hour}"
 
-#: src/features/weather/ui/tile.tsx:125
+#: src/features/weather/ui/tile.tsx:126
 msgid "Monday"
 msgstr "月曜日"
 
@@ -1227,7 +1247,7 @@ msgstr "月曜日"
 msgid "Monuments and ancient sites around the world are aligned to mark the solstice and the return of the Sun’s path."
 msgstr "世界各地の記念碑や古代遺跡は、至点と太陽の道筋の戻りを示すように配置されています。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:169
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:173
 msgid "Moonlight"
 msgstr "月明かり"
 
@@ -1239,12 +1259,12 @@ msgstr "ほとんどの環境上の成果は小さく、地域的なところか
 msgid "Most years the display is modest, but the shower is famous for its capacity to produce rare and spectacular surprises."
 msgstr "多くの年は控えめですが、稀に壮観なサプライズを生むことで有名です。"
 
-#: src/features/settings/ui/review-prompt.tsx:59
+#: src/features/settings/ui/review-prompt.tsx:60
 msgid "Never show this again"
 msgstr "再度表示しない"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:43
-#: src/features/weather/ui/tile.tsx:196
+#: src/features/weather/ui/tile.tsx:197
 msgid "New Year's Day"
 msgstr "元日"
 
@@ -1277,7 +1297,7 @@ msgstr "次の日の出"
 msgid "Next sunset"
 msgstr "次の日の入り"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:137
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:147
 msgid "Night of {nightLabel}"
 msgstr "{nightLabel}の夜"
 
@@ -1289,7 +1309,7 @@ msgstr "有意な降水は見込まれません"
 msgid "No precipitation expected"
 msgstr "降水は見込まれません"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:265
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:264
 msgid "No useful local viewing window was found for this night."
 msgstr "この夜は、現地での観測に適した時間帯が見つかりませんでした。"
 
@@ -1297,23 +1317,11 @@ msgstr "この夜は、現地での観測に適した時間帯が見つかりま
 msgid "None"
 msgstr "なし"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:231
-msgid "North"
-msgstr "北"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:233
-msgid "North-east"
-msgstr "北東"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:245
-msgid "North-west"
-msgstr "北西"
-
-#: src/features/weather/ui/tile.tsx:144
+#: src/features/weather/ui/tile.tsx:145
 msgid "November"
 msgstr "11月"
 
-#: src/features/integrations/ui/upcoming-events.tsx:369
+#: src/features/integrations/ui/upcoming-events.tsx:368
 msgid "Now"
 msgstr "現在"
 
@@ -1321,17 +1329,13 @@ msgstr "現在"
 msgid "Number of days to forecast"
 msgstr "予報する日数"
 
-#: src/features/weather/ui/tile.tsx:143
+#: src/features/weather/ui/tile.tsx:144
 msgid "October"
 msgstr "10月"
 
 #: src/features/seasonal-events/definitions/day-of-the-dead.tsx:56
 msgid "Ofrendas commonly include water, salt, and cherished photographs, creating a space where memory feels both intimate and shared."
 msgstr "オフレンダ（供えの祭壇）には、水、塩、思い出の写真、好物の食べ物などがよく置かれ、記憶が親密で共有されたものとして感じられる場をつくります。"
-
-#: src/features/seasonal-events/events/perseids.tsx:139
-#~ msgid "On a good night near peak, you can expect a meteor every minute or two. The best rates come after midnight, when your side of the Earth faces into the debris stream."
-#~ msgstr "ピーク近くの良い夜には、1〜2分ごとに流星が期待できます。最高の割合は深夜以降で、地球の自分がいる側がデブリの流れに向かうときです。"
 
 #: src/features/seasonal-events/definitions/holi.tsx:65
 msgid "On the following day, coloured powders fill the air as people cross social boundaries in a shared expression of joy."
@@ -1345,7 +1349,7 @@ msgstr "最も長い日には、薄暮が何時間も続き、完全な暗闇が
 msgid "Orionids meteor shower"
 msgstr "オリオン座流星群"
 
-#: src/features/weather/ui/tile.tsx:197
+#: src/features/weather/ui/tile.tsx:198
 msgid "Orionids Meteor Shower"
 msgstr "オリオン座流星群"
 
@@ -1370,7 +1374,7 @@ msgstr "暦の改革を経る中で、1月1日は次第に世界の多くの地�
 msgid "Over time it evolved into a community tradition of visiting, disguises, and shared treats."
 msgstr "時とともに、それは訪問や変装、分かち合うお菓子といった共同体の伝統へと発展しました。"
 
-#: src/features/weather/ui/tile.tsx:96
+#: src/features/weather/ui/tile.tsx:97
 msgid "overcast"
 msgstr "曇り"
 
@@ -1408,7 +1412,7 @@ msgstr "上書き設定"
 msgid "Overview"
 msgstr "概要"
 
-#: src/features/weather/ui/tile.tsx:95
+#: src/features/weather/ui/tile.tsx:96
 msgid "partly cloudy"
 msgstr "一部曇り"
 
@@ -1449,7 +1453,7 @@ msgstr "ペルセウス座流星群の流星は毎秒約60kmで大気圏に入�
 msgid "Perseids meteor shower"
 msgstr "ペルセウス座流星群"
 
-#: src/features/weather/ui/tile.tsx:198
+#: src/features/weather/ui/tile.tsx:199
 msgid "Perseids Meteor Shower"
 msgstr "ペルセウス座流星群"
 
@@ -1488,11 +1492,11 @@ msgstr "降水量には雨と雪が含まれます。"
 msgid "Quadrantids meteor shower"
 msgstr "しぶんぎ座流星群"
 
-#: src/features/weather/ui/tile.tsx:199
+#: src/features/weather/ui/tile.tsx:200
 msgid "Quadrantids Meteor Shower"
 msgstr "しぶんぎ座流星群"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:158
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:166
 msgid "Radiant position"
 msgstr "放射点の位置"
 
@@ -1525,11 +1529,11 @@ msgstr "再試行"
 msgid "Reverse geocoding by OpenStreetMap contributors"
 msgstr "OpenStreetMapの貢献者によるリバースジオコーディング"
 
-#: src/features/weather/ui/details/detail-shell.tsx:252
+#: src/features/weather/ui/details/detail-shell.tsx:254
 msgid "Sat {hour}"
 msgstr "土 {hour}"
 
-#: src/features/weather/ui/tile.tsx:130
+#: src/features/weather/ui/tile.tsx:131
 msgid "Saturday"
 msgstr "土曜日"
 
@@ -1563,15 +1567,11 @@ msgstr "安全に保存済み"
 msgid "See upcoming calendar events alongside your forecast. Weather Please connects directly to your calendar provider, and your events never pass through our servers."
 msgstr "天気予報と一緒に今後の予定を確認できます。Weather Please はカレンダープロバイダーへ直接接続し、予定が当社サーバーを経由することはありません。"
 
-#: src/features/settings/ui/settings.tsx:739
-#~ msgid "See upcoming calendar events alongside your forecast. Weather Please connects to Microsoft directly, and your events never pass through our servers."
-#~ msgstr ""
-
 #: src/features/seasonal-events/definitions/diwali.tsx:83
 msgid "Seen from above, cities during Diwali are transformed — rooftops, balconies, and streets are outlined in light, and the effect is visible from space in satellite imagery."
 msgstr "上から見ると、ディワリ期間中の都市は一変します — 屋上、バルコニー、街路が光で縁取られ、その効果は衛星写真で宇宙からも見えます。"
 
-#: src/features/weather/ui/tile.tsx:142
+#: src/features/weather/ui/tile.tsx:143
 msgid "September"
 msgstr "9月"
 
@@ -1588,105 +1588,21 @@ msgstr "設定"
 msgid "Shared sweets, flowers, and small gifts keep the celebration intimate and personal."
 msgstr "お菓子や花、小さな贈り物の分かち合いが、祝祭を親密で個人的なものに保ちます。"
 
-#: src/features/settings/ui/settings.tsx:133
-#~ msgid "Show Autumn Equinox event"
-#~ msgstr "秋分を表示"
-
 #: src/features/settings/ui/sections/integrations-settings.tsx:255
 msgid "Show calendar events"
 msgstr "カレンダーの予定を表示"
-
-#: src/features/settings/ui/settings.tsx:134
-#~ msgid "Show Christmas Day event"
-#~ msgstr "クリスマスを表示"
-
-#: src/features/settings/ui/settings.tsx:135
-#~ msgid "Show Day of the Dead event"
-#~ msgstr "死者の日を表示"
-
-#: src/features/settings/ui/settings.tsx:136
-#~ msgid "Show Diwali event"
-#~ msgstr "ディワリを表示"
-
-#: src/features/settings/ui/settings.tsx:137
-#~ msgid "Show Earth Day event"
-#~ msgstr "アースデイを表示"
-
-#: src/features/settings/ui/settings.tsx:138
-#~ msgid "Show Easter event"
-#~ msgstr "イースターを表示"
-
-#: src/features/settings/ui/settings.tsx:139
-#~ msgid "Show Eid al-Adha event"
-#~ msgstr "イード・アル＝アドハーを表示"
-
-#: src/features/settings/ui/settings.tsx:140
-#~ msgid "Show Eid al-Fitr event"
-#~ msgstr "イード・アル＝フィトルを表示"
-
-#: src/features/settings/ui/settings.tsx:142
-#~ msgid "Show Eta Aquariids meteor shower event"
-#~ msgstr "みずがめ座η流星群を表示"
-
-#: src/features/settings/ui/settings.tsx:145
-#~ msgid "Show Event Horizon Day event"
-#~ msgstr "イベント・ホライズン・デーのイベントを表示"
 
 #: src/features/settings/ui/sections/weather-settings.tsx:17
 msgid "Show extreme UV alerts"
 msgstr "極端なUVアラートを表示"
 
-#: src/features/settings/ui/settings.tsx:147
-#~ msgid "Show Geminids meteor shower event"
-#~ msgstr "ふたご座流星群を表示"
-
-#: src/features/settings/ui/settings.tsx:148
-#~ msgid "Show Halloween event"
-#~ msgstr "ハロウィンを表示"
-
-#: src/features/settings/ui/settings.tsx:149
-#~ msgid "Show Hanukkah event"
-#~ msgstr "ハヌカーを表示"
-
 #: src/features/settings/ui/sections/weather-settings.tsx:20
 msgid "Show high precipitation alerts"
 msgstr "高降水量アラートを表示"
 
-#: src/features/settings/ui/settings.tsx:150
-#~ msgid "Show Holi event"
-#~ msgstr "ホーリーを表示"
-
-#: src/features/settings/ui/settings.tsx:151
-#~ msgid "Show Leonids meteor shower event"
-#~ msgstr "しし座流星群を表示"
-
 #: src/features/settings/ui/sections/weather-settings.tsx:25
 msgid "Show low visibility alerts"
 msgstr "低視認性アラートを表示"
-
-#: src/features/settings/ui/settings.tsx:152
-#~ msgid "Show Lunar New Year event"
-#~ msgstr "旧正月を表示"
-
-#: src/features/settings/ui/settings.tsx:153
-#~ msgid "Show Lyrids meteor shower event"
-#~ msgstr "こと座流星群を表示"
-
-#: src/features/settings/ui/settings.tsx:154
-#~ msgid "Show New Year's Day event"
-#~ msgstr "元日を表示"
-
-#: src/features/settings/ui/settings.tsx:155
-#~ msgid "Show Orionids meteor shower event"
-#~ msgstr "オリオン座流星群を表示"
-
-#: src/features/settings/ui/settings.tsx:156
-#~ msgid "Show Perseids meteor shower event"
-#~ msgstr "ペルセウス座流星群を表示"
-
-#: src/features/settings/ui/settings.tsx:158
-#~ msgid "Show Quadrantids meteor shower event"
-#~ msgstr "しぶんぎ座流星群を表示"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:128
 msgid "Show seasonal events"
@@ -1696,48 +1612,24 @@ msgstr "季節のイベントを表示"
 msgid "Show seasonal tile glow"
 msgstr "季節のタイルの光を表示"
 
-#: src/features/settings/ui/settings.tsx:160
-#~ msgid "Show Spring Equinox event"
-#~ msgstr "春分を表示"
-
 #: src/features/settings/ui/sections/weather-settings.tsx:22
 msgid "Show strong wind alerts"
 msgstr "強風警報を表示する"
 
-#: src/features/settings/ui/settings.tsx:161
-#~ msgid "Show Summer Solstice event"
-#~ msgstr "夏至を表示"
-
 #: src/features/settings/ui/sections/seasonal-settings.tsx:180
-#: src/features/weather/ui/tile.tsx:581
+#: src/features/weather/ui/tile.tsx:584
 msgid "Show this event"
 msgstr "このイベントを表示"
-
-#: src/features/settings/ui/settings.tsx:163
-#~ msgid "Show total lunar eclipse event"
-#~ msgstr "皆既月食を表示"
-
-#: src/features/settings/ui/settings.tsx:166
-#~ msgid "Show total solar eclipse event"
-#~ msgstr "皆既日食を表示"
-
-#: src/features/settings/ui/settings.tsx:169
-#~ msgid "Show Valentine's Day event"
-#~ msgstr "バレンタインデーを表示"
 
 #: src/features/settings/ui/sections/weather-settings.tsx:126
 msgid "Show weather alerts"
 msgstr "天気警報を表示"
 
-#: src/features/settings/ui/settings.tsx:171
-#~ msgid "Show Winter Solstice event"
-#~ msgstr "冬至を表示"
-
 #: src/features/dashboard/ui/weather-errors.tsx:21
 msgid "Showing cached weather data. Retry to refresh the latest forecast."
 msgstr "キャッシュされた天気データを表示しています。最新の予報を更新するには再試行してください。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:182
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:204
 msgid "Sky position and Moon illumination shown for {referenceLabel}."
 msgstr "空での位置と月の照らされる割合は、{referenceLabel}時点のものです。"
 
@@ -1746,23 +1638,23 @@ msgstr "空での位置と月の照らされる割合は、{referenceLabel}時�
 msgid "Skywatching tips"
 msgstr "星空観察のコツ"
 
-#: src/features/weather/ui/tile.tsx:104
+#: src/features/weather/ui/tile.tsx:105
 msgid "slight rain"
 msgstr "小雨"
 
-#: src/features/weather/ui/tile.tsx:113
+#: src/features/weather/ui/tile.tsx:114
 msgid "slight rain showers"
 msgstr "小雨のにわか雨"
 
-#: src/features/weather/ui/tile.tsx:116
+#: src/features/weather/ui/tile.tsx:117
 msgid "slight snow showers"
 msgstr "小雪のにわか雪"
 
-#: src/features/weather/ui/tile.tsx:109
+#: src/features/weather/ui/tile.tsx:110
 msgid "slight snowfall"
 msgstr "小雪"
 
-#: src/features/weather/ui/tile.tsx:112
+#: src/features/weather/ui/tile.tsx:113
 msgid "snow grains"
 msgstr "粉雪"
 
@@ -1778,24 +1670,12 @@ msgstr "あるものは白く、他は黄色や青緑に見えます。色は各
 msgid "Some calendar events couldn't be loaded. Please try again in a moment."
 msgstr "一部の予定を読み込めませんでした。しばらくしてからもう一度お試しください。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:239
-msgid "South"
-msgstr "南"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:237
-msgid "South-east"
-msgstr "南東"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:241
-msgid "South-west"
-msgstr "南西"
-
 #: src/features/settings/ui/sections/developer-settings.tsx:52
 msgid "Spoof upcoming calendar events"
 msgstr "今後の予定を模擬表示"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:47
-#: src/features/weather/ui/tile.tsx:200
+#: src/features/weather/ui/tile.tsx:201
 msgid "Spring Equinox"
 msgstr "春分"
 
@@ -1827,12 +1707,12 @@ msgstr "1時間後に強い風の突風が始まります"
 msgid "Submit"
 msgstr "提出"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:146
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:155
 msgid "Suggested viewing window"
 msgstr "おすすめの観測時間帯"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:48
-#: src/features/weather/ui/tile.tsx:201
+#: src/features/weather/ui/tile.tsx:202
 msgid "Summer Solstice"
 msgstr "夏至"
 
@@ -1844,11 +1724,11 @@ msgstr "太陽"
 msgid "Sun"
 msgstr "太陽"
 
-#: src/features/weather/ui/details/detail-shell.tsx:255
+#: src/features/weather/ui/details/detail-shell.tsx:257
 msgid "Sun {hour}"
 msgstr "日 {hour}"
 
-#: src/features/weather/ui/tile.tsx:124
+#: src/features/weather/ui/tile.tsx:125
 msgid "Sunday"
 msgstr "日曜日"
 
@@ -1928,7 +1808,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "正確な赤の色合いは、その時の地球の大気に何があるかによって異なります。大きな火山噴火の後は、月が特に暗く、ほとんど茶褐色の赤になることがあります。"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:508
+#: src/features/weather/ui/tile.tsx:511
 msgid "The expected type of weather is {0}."
 msgstr "予想される天気は{0}です。"
 
@@ -1997,27 +1877,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "数字は意外にも希望が持てます — 1970年以来のアースデイに植えられた木は今や数十億本に上ります。"
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:470
+#: src/features/weather/ui/tile.tsx:473
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "最高気温は{0}度Cになります。"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:476
+#: src/features/weather/ui/tile.tsx:479
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "最高気温は{0}度ファーレンハイトになります。"
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:534
+#: src/features/weather/ui/tile.tsx:537
 msgid "The maximum UV index will be {0}."
 msgstr "最大UV指数は{0}になります。"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:547
+#: src/features/weather/ui/tile.tsx:550
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "最大風速は時速{0}キロメートルになります。"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:553
+#: src/features/weather/ui/tile.tsx:556
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "最大風速は時速{0}マイルになります。"
 
@@ -2034,12 +1914,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "流星は毎秒約66kmで大気圏に入ります — 年間流星群の中でも最速の部類で、そのため長く残る光のトレイルを残すことが多いです。"
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:489
+#: src/features/weather/ui/tile.tsx:492
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "最低気温は{0}度セルシウスになります。"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:495
+#: src/features/weather/ui/tile.tsx:498
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "最低気温は{0}度ファーレンハイトになります。"
 
@@ -2103,7 +1983,7 @@ msgstr "しぶんぎ座流星群のピークは主要な流星群の中で最も
 msgid "The Quadrantids are a meteor shower that peaks in early January and is known for being brief yet often intense."
 msgstr "しぶんぎ座流星群は1月初旬に極大を迎える流星群で、短いながらもしばしば強烈なことで知られています。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:188
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:192
 msgid "The radiant is where the trails appear to come from. Meteors can cross any part of the sky: look roughly halfway up, away from the Moon, with a wide, unobstructed view."
 msgstr "放射点は、流星の軌跡が放射状に伸びてくるように見える点です。流星は空のどこにでも現れます。月を避け、地平線と天頂の中間あたりを中心に、視界を遮るもののない広い範囲を眺めてください。"
 
@@ -2123,7 +2003,7 @@ msgstr "この流星群の名は、現在の星図には載らない旧星座「
 msgid "The shower’s radiant lies near the constellation Aquarius, rising before dawn when viewing conditions are at their best."
 msgstr "放射点はみずがめ座付近にあり、明け方前に昇ってくるため、その時間帯が最も好条件になりやすいです。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:256
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:255
 msgid "The sky stays too bright for a useful viewing window at this location on this night."
 msgstr "この夜、この場所の空は明るすぎるため、観測に適した時間帯がありません。"
 
@@ -2175,16 +2055,12 @@ msgstr "流星はオリオン座付近から放射するように見え、古く
 msgid "Their peak often coincides with long, dark viewing hours, when observing conditions are especially favourable."
 msgstr "極大は長く暗い観測時間帯と重なることが多く、条件が特に良くなりやすいです。"
 
-#: src/features/seasonal-events/events/perseids.tsx:88
-#~ msgid "Their radiant lies in the constellation Perseus, and the shower is especially prominent in the northern hemisphere, though visible worldwide."
-#~ msgstr "放射点はペルセウス座にあり、この流星群は北半球で特に目立ちますが、世界中で観察できます。"
-
 #: src/features/seasonal-events/definitions/perseids.tsx:57
 msgid "Their radiant lies in the constellation Perseus. The shower is best placed in the northern hemisphere, with visibility decreasing farther south."
 msgstr "放射点はペルセウス座にあります。この流星群は北半球で最も観測しやすく、南へ行くほど見えにくくなります。"
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:567
+#: src/features/weather/ui/tile.tsx:570
 msgid "There is a {0}% chance of precipitation."
 msgstr "降水確率は{0}%です。"
 
@@ -2224,7 +2100,7 @@ msgstr "この観測は、超大質量ブラックホール近傍における極
 msgid "This same atmospheric filtering that produces red sunsets gives the Moon its copper and crimson tones during totality."
 msgstr "赤い夕焼けを生むのと同じ大気のフィルター効果が、皆既の間に月を銅色や深紅に染めます。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:273
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:272
 msgid "This shower’s radiant stays too low while your sky is dark for a useful viewing window on this night."
 msgstr "この夜、空が暗い間はこの流星群の放射点が低すぎるため、観測に適した時間帯がありません。"
 
@@ -2232,39 +2108,31 @@ msgstr "この夜、空が暗い間はこの流星群の放射点が低すぎる
 msgid "This three-way split is central to the holiday's meaning — the act of giving is built directly into the ritual itself."
 msgstr "この三等分はこの祝日の意味の中核をなしており、贈る行為が儀式そのものに直接組み込まれています。"
 
-#: src/features/weather/ui/details/detail-shell.tsx:244
+#: src/features/weather/ui/details/detail-shell.tsx:246
 msgid "Thu {hour}"
 msgstr "木 {hour}"
 
-#: src/features/weather/ui/tile.tsx:118
+#: src/features/weather/ui/tile.tsx:119
 msgid "thunderstorm"
 msgstr "雷雨"
 
-#: src/features/weather/ui/tile.tsx:120
+#: src/features/weather/ui/tile.tsx:121
 msgid "thunderstorm with heavy hail"
 msgstr "ひどいひょうを伴う雷雨"
 
-#: src/features/weather/ui/tile.tsx:119
+#: src/features/weather/ui/tile.tsx:120
 msgid "thunderstorm with slight hail"
 msgstr "小規模なひょうを伴う雷雨"
 
-#: src/features/weather/ui/tile.tsx:128
+#: src/features/weather/ui/tile.tsx:129
 msgid "Thursday"
 msgstr "木曜日"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:140
-msgid "Times in {timeZoneLabel}"
-msgstr "時刻は{timeZoneLabel}"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:151
-msgid "to"
-msgstr "～"
 
 #: src/features/settings/ui/initialisation.tsx:223
 msgid "To get started, let's set your language, units, and location."
 msgstr "始めるには、言語、単位、場所を設定しましょう。"
 
-#: src/features/integrations/ui/upcoming-events.tsx:345
+#: src/features/integrations/ui/upcoming-events.tsx:344
 msgid "Today • {dateLabel}"
 msgstr "今日 • {dateLabel}"
 
@@ -2276,7 +2144,7 @@ msgstr "今日、ヨーロッパだけで推定3億5千万本の本物のクリ�
 msgid "Today, many people travel great distances to stand within the path of totality."
 msgstr "今日では、多くの人が皆既帯の中に立つために遠くまで旅をします。"
 
-#: src/features/integrations/ui/upcoming-events.tsx:349
+#: src/features/integrations/ui/upcoming-events.tsx:348
 msgid "Tomorrow • {dateLabel}"
 msgstr "明日 • {dateLabel}"
 
@@ -2284,7 +2152,7 @@ msgstr "明日 • {dateLabel}"
 msgid "Total lunar eclipse"
 msgstr "皆既月食"
 
-#: src/features/weather/ui/tile.tsx:202
+#: src/features/weather/ui/tile.tsx:203
 msgid "Total Lunar Eclipse"
 msgstr "皆既月食"
 
@@ -2297,7 +2165,7 @@ msgstr "総降水量"
 msgid "Total solar eclipse"
 msgstr "皆既日食"
 
-#: src/features/weather/ui/tile.tsx:203
+#: src/features/weather/ui/tile.tsx:204
 msgid "Total Solar Eclipse"
 msgstr "皆既日食"
 
@@ -2318,11 +2186,11 @@ msgstr "ノウルーズのような伝統は、春分の前後に再生のテー
 msgid "Try again"
 msgstr "もう一度試す"
 
-#: src/features/weather/ui/details/detail-shell.tsx:236
+#: src/features/weather/ui/details/detail-shell.tsx:238
 msgid "Tue {hour}"
 msgstr "火 {hour}"
 
-#: src/features/weather/ui/tile.tsx:126
+#: src/features/weather/ui/tile.tsx:127
 msgid "Tuesday"
 msgstr "火曜日"
 
@@ -2330,7 +2198,11 @@ msgstr "火曜日"
 msgid "Turn this on if Weather Please's reported UV index is consistently lower than local sources."
 msgstr "Weather Please が表示する UV 指数が、地域の情報源よりも一貫して低い場合は、これを有効にしてください。"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:196
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:180
+msgid "Twilight"
+msgstr "薄明"
+
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:183
 msgid "Twilight overlaps this window, so fainter meteors may be harder to see."
 msgstr "この時間帯は薄明と重なるため、暗い流星は見つけにくい可能性があります。"
 
@@ -2346,8 +2218,8 @@ msgstr "有害"
 msgid "Unhealthy for sensitive groups"
 msgstr "敏感な人に有害"
 
-#: src/features/weather/ui/tile.tsx:504
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:507
+#: src/features/weather/ui/tile.tsx:514
 msgid "unknown conditions"
 msgstr "不明な状態"
 
@@ -2359,11 +2231,11 @@ msgstr "日食とは異なり、月食には特別な機器が必要ありませ
 msgid "Unlike most meteor showers, the Geminids originate from the asteroid 3200 Phaethon rather than a comet."
 msgstr "ふたご座流星群は多くの流星群と異なり、彗星ではなく小惑星3200パエトンに由来します。"
 
-#: src/features/integrations/ui/upcoming-events.tsx:190
+#: src/features/integrations/ui/upcoming-events.tsx:191
 msgid "Untitled event"
 msgstr "無題の予定"
 
-#: src/features/integrations/ui/upcoming-events.tsx:125
+#: src/features/integrations/ui/upcoming-events.tsx:126
 msgid "Upcoming calendar events"
 msgstr "今後のカレンダー予定"
 
@@ -2375,7 +2247,7 @@ msgstr "有効にした季節の背景を該当する日に表示し、その後
 msgid "Use Global Chemistry Models (CAMS)"
 msgstr "グローバル化学モデル（CAMS）を使用"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:90
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:105
 msgid "Usual peak: around {peakLabel}."
 msgstr "例年の極大：{peakLabel}ごろ。"
 
@@ -2384,7 +2256,7 @@ msgid "UV"
 msgstr "UV"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:51
-#: src/features/weather/ui/tile.tsx:204
+#: src/features/weather/ui/tile.tsx:205
 msgid "Valentine's Day"
 msgstr "バレンタインデー"
 
@@ -2396,11 +2268,11 @@ msgstr "バレンタインデーは、恋愛だけでなく友情やささやか
 msgid "Very unhealthy"
 msgstr "非常に有害"
 
-#: src/features/integrations/ui/upcoming-events.tsx:234
+#: src/features/integrations/ui/upcoming-events.tsx:235
 msgid "View source event"
 msgstr "元の予定を表示"
 
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:55
+#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:69
 msgid "Viewing from your location"
 msgstr "この場所からの観測ガイド"
 
@@ -2408,7 +2280,7 @@ msgstr "この場所からの観測ガイド"
 msgid "Viewing guidance could not be loaded."
 msgstr "観測ガイドを読み込めませんでした。"
 
-#: src/features/weather/ui/tile.tsx:115
+#: src/features/weather/ui/tile.tsx:116
 msgid "violent rain showers"
 msgstr "激しいにわか雨"
 
@@ -2468,17 +2340,13 @@ msgstr "この地点の天気データを読み込めませんでした。位置
 msgid "Weather Please uses the following third-party data sources and location services."
 msgstr "Weather Pleaseは以下のサードパーティデータソースと位置情報サービスを使用しています。"
 
-#: src/features/weather/ui/details/detail-shell.tsx:240
+#: src/features/weather/ui/details/detail-shell.tsx:242
 msgid "Wed {hour}"
 msgstr "水 {hour}"
 
-#: src/features/weather/ui/tile.tsx:127
+#: src/features/weather/ui/tile.tsx:128
 msgid "Wednesday"
 msgstr "水曜日"
-
-#: src/features/seasonal-events/meteor-showers/viewing-guide.tsx:243
-msgid "West"
-msgstr "西"
 
 #: src/features/seasonal-events/definitions/total-solar-eclipse.tsx:60
 msgid "What it feels like"
@@ -2530,12 +2398,12 @@ msgstr "風"
 msgid "Wind"
 msgstr "風"
 
-#: src/features/weather/ui/details/detail-shell.tsx:129
+#: src/features/weather/ui/details/detail-shell.tsx:130
 msgid "Wind is making it feel cooler than the measured temperature right now."
 msgstr "風により、現在の実測気温よりも涼しく感じられます。"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:52
-#: src/features/weather/ui/tile.tsx:205
+#: src/features/weather/ui/tile.tsx:206
 msgid "Winter Solstice"
 msgstr "冬至"
 
@@ -2547,11 +2415,11 @@ msgstr "外に出て数分で、全員が同じように見えます — 頭か�
 msgid "Work"
 msgstr "仕事"
 
-#: src/features/settings/ui/review-prompt.tsx:36
+#: src/features/settings/ui/review-prompt.tsx:37
 msgid "Would you like to leave a review?"
 msgstr "レビューを残してもよろしいですか？"
 
-#: src/features/settings/ui/review-prompt.tsx:33
+#: src/features/settings/ui/review-prompt.tsx:34
 msgid "You've been using Weather Please for a while"
 msgstr "あなたはしばらく「Weather Please」を使用してきました"
 
