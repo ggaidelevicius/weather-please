@@ -112,15 +112,46 @@ html[data-weather-please-app] body {
 }
 
 @theme {
-	--animate-landing-seasonal-marquee: landing-seasonal-marquee 50s linear
-		infinite;
+	--animate-hero-cursor: hero-cursor 3s ease-in-out both;
+	--animate-hero-new-tab-hover: hero-new-tab-hover 3s ease-in-out both;
 
-	@keyframes landing-seasonal-marquee {
-		from {
-			transform: translateY(0);
+	@keyframes hero-cursor {
+		0% {
+			opacity: 0;
+			transform: translate3d(-200px, 180px, 0);
 		}
-		to {
-			transform: translateY(-50%);
+		12%,
+		18% {
+			opacity: 1;
+			transform: translate3d(-200px, 180px, 0);
+		}
+		55%,
+		60%,
+		68% {
+			opacity: 1;
+			transform: translate3d(0, 0, 0) scale(1);
+		}
+		64% {
+			opacity: 1;
+			transform: translate3d(0, 0, 0) scale(0.88);
+		}
+		100% {
+			opacity: 0;
+			transform: translate3d(0, 0, 0) scale(1);
+		}
+	}
+	@keyframes hero-new-tab-hover {
+		0%,
+		52% {
+			opacity: 0;
+		}
+		58%,
+		68% {
+			opacity: 1;
+		}
+		76%,
+		100% {
+			opacity: 0;
 		}
 	}
 

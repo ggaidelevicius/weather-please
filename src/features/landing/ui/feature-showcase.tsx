@@ -1,66 +1,95 @@
 import type { ReactNode } from 'react'
 
 import {
+	IconAlertTriangle,
+	IconBell,
 	IconCalendarEvent,
-	IconCloudRain,
+	IconClock,
+	IconInfoCircle,
 	IconLock,
 	IconSparkles,
+	IconTemperature,
 } from '@tabler/icons-react'
+import { clsx } from 'clsx'
 import { motion, useReducedMotion } from 'framer-motion'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
-import { createSpoofedCalendarData } from '../../integrations/model/spoofed-calendar'
-import { UpcomingEvents } from '../../integrations/ui/upcoming-events'
+import {
+	CALENDAR_ACCOUNT_CATEGORY_STYLES,
+	CalendarAccountCategory,
+} from '../../integrations/model/account-category'
 import { Hemisphere } from '../../seasonal-events/core/types'
 import { TileIdentifier } from '../../settings/model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../settings/model/unit-system'
+import {
+	getChartScale,
+	getScaleLabels,
+} from '../../weather/model/chart-geometry'
+import { getTemperatureAccentColor } from '../../weather/model/temperature-colour'
+import { ChartFrame, LineChart } from '../../weather/ui/charts/chart'
+import { Metric } from '../../weather/ui/details/detail-shell'
 import { Tile } from '../../weather/ui/tile'
+import { PrivacyVisual } from './privacy-visual'
 
-type SceneId = 'calendar' | 'forecast' | 'privacy' | 'seasonal'
+type SceneId = 'alerts' | 'calendar' | 'detail' | 'privacy' | 'seasonal'
 
 export const FeatureShowcase = () => (
 	<div className="py-4 sm:py-8">
-		{SCENES.map((scene) => (
-			<ShowcaseScene key={scene.id} scene={scene} />
+		{SCENES.map((scene, index) => (
+			<ShowcaseScene isFlipped={index % 2 === 1} key={scene.id} scene={scene} />
 		))}
 	</div>
 )
 
 type Scene = {
 	description: string
-	eyebrow: string
+	footnote?: ReactNode
 	icon: typeof IconLock
 	id: SceneId
+	label: string
 	title: string
 	visual: ReactNode
 }
 
 const ShowcaseScene = ({
+	isFlipped,
 	scene,
 }: Readonly<{
+	isFlipped: boolean
 	scene: Scene
 }>) => {
 	const shouldReduceMotion = useReducedMotion()
 
 	return (
 		<motion.section
-			className="mx-auto grid max-w-7xl items-center gap-7 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:gap-14 lg:px-8 lg:py-16"
+			className={clsx(
+				'mx-auto grid max-w-7xl items-center gap-7 px-4 py-12 sm:px-6 lg:gap-14 lg:px-8 lg:py-16',
+				isFlipped
+					? 'lg:grid-cols-[minmax(0,1.18fr)_minmax(0,0.82fr)]'
+					: 'lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]',
+			)}
 			initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
 			transition={{ duration: 0.6, ease: 'easeOut' }}
 			viewport={{ amount: 0.25, once: true }}
 			whileInView={{ opacity: 1, y: 0 }}
 		>
-			<div className="relative z-10">
+			<div className={clsx('relative z-10', isFlipped && 'lg:order-2')}>
+				<p className="mb-3.5 flex items-center gap-1.5 text-[13px] font-medium text-sky-300">
+					<scene.icon aria-hidden className="shrink-0" size={15} />
+					{scene.label}
+				</p>
 				<h3 className="text-2xl font-medium tracking-tight text-pretty text-white sm:text-3xl">
 					{scene.title}
 				</h3>
 				<p className="mt-4 max-w-md text-pretty text-dark-100">
 					{scene.description}
 				</p>
-				<div className="mt-10 inline-flex items-center gap-1.5 rounded-full border border-sky-400/20 bg-sky-400/10 px-3 py-1.5 text-xs font-medium text-sky-300">
-					<scene.icon className="shrink-0" size={14} />
-					{scene.eyebrow}
-				</div>
+				{scene.footnote ? (
+					<p className="mt-6 max-w-md text-xs/5 text-pretty text-dark-300">
+						{scene.footnote}
+					</p>
+				) : null}
 			</div>
 			<div className="flex min-h-0 items-center justify-center overflow-hidden">
 				{scene.visual}
@@ -79,27 +108,6 @@ type LandingWeatherTileData = {
 	wind: number
 }
 
-const FORECAST_TILES = [
-	{
-		day: getUnixTimestamp({ day: 19, monthIndex: 5, year: 2026 }),
-		description: 2,
-		max: 17,
-		min: 9,
-		rain: 18,
-		uv: 2,
-		wind: 12,
-	},
-	{
-		day: getUnixTimestamp({ day: 20, monthIndex: 5, year: 2026 }),
-		description: 61,
-		max: 15,
-		min: 8,
-		rain: 52,
-		uv: 1,
-		wind: 18,
-	},
-] as const
-
 const WINTER_SOLSTICE_TILE = {
 	day: getUnixTimestamp({ day: 21, monthIndex: 5, year: 2026 }),
 	description: 2,
@@ -109,17 +117,6 @@ const WINTER_SOLSTICE_TILE = {
 	uv: 1,
 	wind: 9,
 } as const satisfies LandingWeatherTileData
-
-const ForecastVisual = () => (
-	<div className="w-full py-6 sm:py-10">
-		<div className="flex items-start justify-center gap-4">
-			<LandingWeatherTile index={0} tile={FORECAST_TILES[0]} />
-			<div className="hidden translate-y-6 sm:block">
-				<LandingWeatherTile index={1} tile={FORECAST_TILES[1]} />
-			</div>
-		</div>
-	</div>
-)
 
 const LandingWeatherTile = ({
 	index,
@@ -149,38 +146,6 @@ const LandingWeatherTile = ({
 
 const isSeasonalEventDisabled = () => false
 const ignoreSeasonalEventToggle = () => undefined
-
-// Mirrors every seasonal event the app ships, in the same order as the
-// seasonal-events module.
-const SEASONAL_EVENT_BADGES = [
-	{ emoji: '🎆', label: "New Year's Day" },
-	{ emoji: '❤', label: "Valentine's Day" },
-	{ emoji: '🧧', label: 'Lunar New Year' },
-	{ emoji: '🐣', label: 'Easter' },
-	{ emoji: '🌸', label: 'Spring Equinox' },
-	{ emoji: '🍂', label: 'Autumn Equinox' },
-	{ emoji: '🪔', label: 'Diwali' },
-	{ emoji: '🌙', label: 'Eid al-Fitr' },
-	{ emoji: '🕋', label: 'Eid al-Adha' },
-	{ emoji: '🕎', label: 'Hanukkah' },
-	{ emoji: '🎄', label: 'Christmas Day' },
-	{ emoji: '🎨', label: 'Holi' },
-	{ emoji: '🌞', label: 'Summer Solstice' },
-	{ emoji: '❄️', label: 'Winter Solstice' },
-	{ emoji: '🌍', label: 'Earth Day' },
-	{ emoji: '🎃', label: 'Halloween' },
-	{ emoji: '💀', label: 'Day of the Dead' },
-	{ emoji: '✨', label: 'Lyrids Meteor Shower' },
-	{ emoji: '💧', label: 'Eta Aquariids Meteor Shower' },
-	{ emoji: '🔥', label: 'Orionids Meteor Shower' },
-	{ emoji: '🦁', label: 'Leonids Meteor Shower' },
-	{ emoji: '🌑', label: 'Total Solar Eclipse' },
-	{ emoji: '🌕', label: 'Total Lunar Eclipse' },
-	{ emoji: '☄️', label: 'Perseids Meteor Shower' },
-	{ emoji: '💫', label: 'Quadrantids Meteor Shower' },
-	{ emoji: '🌠', label: 'Geminids Meteor Shower' },
-	{ emoji: '🕳️', label: 'Event Horizon Day' },
-] as const
 
 const SEASONAL_BACKGROUNDS = [
 	{
@@ -305,7 +270,7 @@ const SeasonalVisual = () => {
 						: null}
 				</div>
 			))}
-			<div className="relative flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
+			<div className="relative flex justify-center">
 				<div className="relative w-64 shrink-0">
 					{SEASONAL_BACKGROUNDS.map((seasonalBackground, index) => (
 						<div
@@ -339,168 +304,170 @@ const SeasonalVisual = () => {
 					))}
 					<LandingWeatherTile index={0} tile={WINTER_SOLSTICE_TILE} />
 				</div>
-				<div
-					aria-hidden
-					className="h-56 overflow-hidden mask-[linear-gradient(to_bottom,transparent,black_18%,black_82%,transparent)]"
-				>
-					<div
-						className={
-							shouldReduceMotion
-								? undefined
-								: 'animate-landing-seasonal-marquee'
-						}
-					>
-						{(shouldReduceMotion ? [0] : [0, 1]).map((copyIndex) => (
-							<ul className="flex flex-col gap-2.5 pb-2.5" key={copyIndex}>
-								{SEASONAL_EVENT_BADGES.map((badge) => (
-									<li
-										className="flex items-center gap-2 rounded-full border border-white/10 bg-dark-900/80 px-3 py-1.5 text-xs text-dark-100 shadow-md"
-										key={badge.label}
-									>
-										<span>{badge.emoji}</span>
-										{badge.label}
-									</li>
-								))}
-							</ul>
-						))}
-					</div>
-				</div>
 			</div>
 		</div>
 	)
 }
 
-const CalendarVisual = () => {
-	const [spoofedCalendarData] = useState(createSpoofedCalendarData)
+const SAMPLE_CALENDAR_ACCOUNTS = [
+	{
+		category: CalendarAccountCategory.Personal,
+		email: 'sam@example.com',
+		label: 'Personal',
+		provider: 'Google',
+	},
+	{
+		category: CalendarAccountCategory.Work,
+		email: 'sam@company.example',
+		label: 'Work',
+		provider: 'Microsoft',
+	},
+	{
+		category: CalendarAccountCategory.School,
+		email: 'sam@university.example',
+		label: 'School',
+		provider: 'Google',
+	},
+] as const
+
+const CalendarVisual = () => (
+	<div
+		aria-hidden
+		className="w-full max-w-md rounded-2xl bg-dark-900 p-1.5 shadow-md ring-1 ring-white/8"
+	>
+		{SAMPLE_CALENDAR_ACCOUNTS.map((account) => (
+			<div
+				className="grid grid-cols-[2.25rem_minmax(0,1fr)_auto] items-center gap-3 border-t border-white/5 p-2.5 first:border-t-0"
+				key={account.email}
+			>
+				<span className="flex size-9 items-center justify-center rounded-lg bg-dark-700 text-sm font-bold text-dark-100">
+					{account.provider[0]}
+				</span>
+				<span className="min-w-0">
+					<span className="block text-sm font-medium text-white">
+						{account.provider}
+					</span>
+					<span className="block truncate text-xs text-dark-300">
+						{account.email}
+					</span>
+				</span>
+				<span className="inline-flex items-center gap-1.5 rounded-full bg-white/6 px-2.5 py-1 text-xs text-dark-100">
+					<span
+						className={clsx(
+							'size-1.5 rounded-full',
+							CALENDAR_ACCOUNT_CATEGORY_STYLES[account.category].dotClassName,
+						)}
+					/>
+					{account.label}
+				</span>
+			</div>
+		))}
+	</div>
+)
+
+// Matches the app's alert pills, which sit in the top corner of the new tab.
+const SAMPLE_ALERTS = [
+	{
+		icon: IconAlertTriangle,
+		isWarning: true,
+		text: 'Extreme UV starting in 2 hours',
+	},
+	{
+		icon: IconInfoCircle,
+		isWarning: false,
+		text: '8mm of precipitation expected over the next hour',
+	},
+	{
+		icon: IconInfoCircle,
+		isWarning: false,
+		text: 'Strong wind gusts for the next 3 hours',
+	},
+] as const
+
+const AlertsVisual = () => (
+	<div
+		aria-hidden
+		className="flex w-fit max-w-full flex-col items-start gap-2 rounded-3xl bg-dark-900 p-6 ring-1 ring-white/6 sm:p-7"
+	>
+		{SAMPLE_ALERTS.map((alert) => (
+			<div
+				className={clsx(
+					'flex h-11 max-w-full items-center overflow-hidden rounded-md pr-4 text-sm font-medium text-white shadow-sm',
+					alert.isWarning ? 'bg-red-500/95' : 'bg-blue-500/95',
+				)}
+				key={alert.text}
+			>
+				<span className="flex size-11 shrink-0 items-center justify-center">
+					<alert.icon size={24} strokeWidth={1.5} />
+				</span>
+				<span className="truncate">{alert.text}</span>
+			</div>
+		))}
+	</div>
+)
+
+// A mild spring day: warm afternoon, cool night, warming again by morning.
+const SAMPLE_TEMPERATURES = [
+	20, 20.3, 20.1, 19.6, 19, 18.4, 17.6, 16.8, 15.9, 15.1, 14.3, 13.6, 13, 12.4,
+	11.9, 11.6, 11.5, 11.9, 12.8, 14.1, 15.6, 17.1, 18.5, 19.6,
+]
+const SAMPLE_TEMPERATURE_TIMES = SAMPLE_TEMPERATURES.map(
+	(_, hour) => 1_792_368_000 + hour * 3600,
+)
+const SAMPLE_FEELS_LIKE_TEMPERATURE = 19
+
+const HourlyDetailVisual = () => {
+	const scale = getChartScale(SAMPLE_TEMPERATURES)
+	const accentColor = getTemperatureAccentColor(SAMPLE_TEMPERATURES[0])
 
 	return (
 		<div
 			aria-hidden
-			className="pointer-events-none max-h-[40vh] overflow-hidden mask-[linear-gradient(to_bottom,black_70%,transparent)] lg:max-h-104"
+			className="pointer-events-none w-full max-w-2xl rounded-3xl bg-dark-900 p-6 ring-1 ring-white/6 sm:p-8"
 		>
-			<UpcomingEvents
-				accounts={spoofedCalendarData.accounts}
-				events={spoofedCalendarData.events}
-				locale="en"
-			/>
-		</div>
-	)
-}
-
-const PRIVACY_PROVIDERS = [
-	{ detail: 'Weather', name: 'Open-Meteo' },
-	{ detail: 'Calendar', name: 'Google' },
-	{ detail: 'Outlook', name: 'Microsoft' },
-] as const
-
-// Endpoints line up with the vertical centers of the three provider nodes.
-const PRIVACY_LINK_PATHS = [
-	'M 0 88 C 40 88, 40 24, 80 24',
-	'M 0 88 L 80 88',
-	'M 0 88 C 40 88, 40 152, 80 152',
-] as const
-
-const PRIVACY_BEAM_CYCLE_SECONDS = 5.4
-
-// Each path is normalised to length 100 with a "25 125" dash pattern. The
-// streak parks past the provider end at offset -105 and before the browser
-// end at 30 (5 units of clearance so the round line cap never peeks onto the
-// path), and slides provider-to-browser during its slot of the shared
-// timeline, so exactly one beam travels at a time.
-const getPrivacyBeamTiming = (index: number) => {
-	const total = PRIVACY_LINK_PATHS.length
-	const slotStart = Math.max(index / total, 0.001)
-	const slotEnd = Math.min((index + 1) / total, 0.999)
-
-	return {
-		keyTimes: `0;${slotStart};${slotEnd};1`,
-		values: '-105;-105;30;30',
-	}
-}
-
-const PRIVACY_BEAM_LAYERS = [
-	{ opacity: 0.3, width: 4 },
-	{ opacity: 0.9, width: 1.75 },
-] as const
-
-const PrivacyVisual = () => {
-	const shouldReduceMotion = useReducedMotion()
-
-	return (
-		<div aria-hidden className="w-full max-w-md">
-			<div className="flex items-center justify-center">
-				<span className="shrink-0 rounded-xl bg-dark-700 px-3 py-3 text-xs font-medium text-white shadow-md ring-1 ring-white/10 sm:px-4 sm:text-sm">
-					Your browser
+			<div className="flex items-center gap-3">
+				<span style={{ color: accentColor }}>
+					<IconTemperature size={22} />
 				</span>
-				<svg
-					className="h-44 w-14 shrink-0 text-white/15 sm:w-24"
-					fill="none"
-					preserveAspectRatio="none"
-					viewBox="0 0 80 176"
-				>
-					{PRIVACY_LINK_PATHS.map((path) => (
-						<path
-							d={path}
-							key={path}
-							stroke="currentColor"
-							strokeWidth="1"
-							vectorEffect="non-scaling-stroke"
-						/>
-					))}
-					{!shouldReduceMotion
-						? PRIVACY_LINK_PATHS.map((path, index) => {
-								const { keyTimes, values } = getPrivacyBeamTiming(index)
-
-								return (
-									<g className="text-sky-400" key={path}>
-										{PRIVACY_BEAM_LAYERS.map((layer) => (
-											<path
-												d={path}
-												key={layer.width}
-												pathLength={100}
-												stroke="currentColor"
-												strokeDasharray="25 125"
-												strokeDashoffset={-105}
-												strokeLinecap="round"
-												strokeOpacity={layer.opacity}
-												strokeWidth={layer.width}
-											>
-												<animate
-													attributeName="stroke-dashoffset"
-													calcMode="linear"
-													dur={`${PRIVACY_BEAM_CYCLE_SECONDS}s`}
-													keyTimes={keyTimes}
-													repeatCount="indefinite"
-													values={values}
-												/>
-											</path>
-										))}
-									</g>
-								)
-							})
-						: null}
-				</svg>
-				<div className="flex shrink-0 flex-col gap-2.5">
-					{PRIVACY_PROVIDERS.map((provider) => (
-						<div
-							className="rounded-xl bg-dark-700 px-3 py-2 shadow-md ring-1 ring-white/10 sm:px-4"
-							key={provider.name}
-						>
-							<p className="text-xs font-medium text-white sm:text-sm">
-								{provider.name}
-							</p>
-							<p className="text-[10px] text-dark-300 sm:text-xs">
-								{provider.detail}
-							</p>
-						</div>
-					))}
+				<div>
+					<p className="text-xs font-semibold tracking-[0.18em] text-dark-300 uppercase">
+						Next 24 hours
+					</p>
+					<p className="text-3xl font-bold text-white">Temperature</p>
 				</div>
 			</div>
-			<p className="mx-auto mt-6 flex max-w-sm items-start justify-center gap-2 text-sm text-pretty text-dark-300">
-				<IconLock className="mt-0.5 shrink-0" size={15} />
-				Your weather and calendar data arrive straight from each provider —
-				nothing passes through our servers.
-			</p>
+			<div className="mt-6 grid items-center gap-6 sm:grid-cols-[minmax(0,1fr)_10rem]">
+				<ChartFrame
+					endLabel="11 AM"
+					leftLabels={getScaleLabels({ scale, unitLabel: '°C' })}
+					middleLabel="11 PM"
+					startLabel="11 AM"
+				>
+					<LineChart
+						accentClassName=""
+						accentStyle={{ stroke: accentColor }}
+						points={SAMPLE_TEMPERATURES}
+						primarySeriesId="temperature"
+						primarySeriesLabel="Temperature"
+						primaryValueFormatter={(value) => `${Math.round(value)}°C`}
+						scale={scale}
+						times={SAMPLE_TEMPERATURE_TIMES}
+					/>
+				</ChartFrame>
+				<div className="grid">
+					<Metric
+						accentStyle={{ color: accentColor }}
+						icon={<IconTemperature size={18} />}
+						label="Temperature now"
+						value={`${Math.round(SAMPLE_TEMPERATURES[0])}°C`}
+					/>
+					<Metric
+						icon={<IconTemperature size={18} />}
+						label="Feels like now"
+						value={`${SAMPLE_FEELS_LIKE_TEMPERATURE}°C`}
+					/>
+				</div>
+			</div>
 		</div>
 	)
 }
@@ -515,40 +482,74 @@ const SOLSTICE_PARTICLES = Array.from({ length: 18 }, (_, index) => ({
 	topPercent: 8 + ((index * 37) % 78),
 }))
 
+const FOOTNOTE_LINK_CLASS_NAME =
+	'font-medium text-dark-200 underline decoration-white/25 underline-offset-2 transition-colors hover:text-white'
+
+// Google requires this Limited Use disclosure on the homepage.
+const GoogleApiDisclosure = () => (
+	<>
+		Calendar connections are optional and read-only. Weather Please&apos;s use
+		of information received from Google APIs adheres to the{' '}
+		<a
+			className={FOOTNOTE_LINK_CLASS_NAME}
+			href="https://developers.google.com/terms/api-services-user-data-policy"
+			rel="noopener noreferrer"
+			target="_blank"
+		>
+			Google API Services User Data Policy
+		</a>
+		, including the Limited Use requirements. See our{' '}
+		<Link className={FOOTNOTE_LINK_CLASS_NAME} href="/privacy">
+			privacy policy
+		</Link>{' '}
+		for details.
+	</>
+)
+
 const SCENES = [
 	{
 		description:
-			'A multi-day local forecast with hourly detail views and severe weather alerts, powered by Open-Meteo.',
-		eyebrow: 'Temperature, rain, wind, and more.',
-		icon: IconCloudRain,
-		id: 'forecast',
-		title: 'Your local forecast',
-		visual: <ForecastVisual />,
+			'Scroll down on any new tab for the next 24 hours of temperature, rain, wind, sun, and air quality.',
+		icon: IconClock,
+		id: 'detail',
+		label: 'Hourly detail',
+		title: 'Every hour, one scroll away',
+		visual: <HourlyDetailVisual />,
 	},
 	{
 		description:
-			'Optionally connect Google Calendar or Microsoft Outlook to see your upcoming events beside the forecast.',
-		eyebrow: 'Personal, work, and everything in between.',
+			'When extreme UV, heavy rain, or strong wind is on the way, an alert appears in the corner of your new tab.',
+		icon: IconBell,
+		id: 'alerts',
+		label: 'Alerts',
+		title: 'A heads-up before it hits',
+		visual: <AlertsVisual />,
+	},
+	{
+		description:
+			'Connect personal and work accounts from Google or Microsoft, and see what’s coming up next to the forecast.',
+		footnote: <GoogleApiDisclosure />,
 		icon: IconCalendarEvent,
 		id: 'calendar',
-		title: 'Your day at a glance',
+		label: 'Calendar',
+		title: 'All your calendars in one place',
 		visual: <CalendarVisual />,
 	},
 	{
 		description:
-			'Your location and calendar data travel directly from your browser to the weather and calendar providers.',
-		eyebrow: 'Open source, no accounts, no ads, no tracking.',
+			'Your location and calendar data go straight from your browser to the weather and calendar providers.',
 		icon: IconLock,
 		id: 'privacy',
+		label: 'Privacy',
 		title: 'Private by design',
 		visual: <PrivacyVisual />,
 	},
 	{
 		description:
-			'Subtle seasonal effects for solstices, meteor showers, holidays, and more - all of which can be turned off.',
-		eyebrow: 'Backgrounds that mark special occasions.',
+			'Subtle effects mark solstices, meteor shower peaks, holidays, and more. Each one can be turned off.',
 		icon: IconSparkles,
 		id: 'seasonal',
+		label: 'Special occasions',
 		title: 'Seasonal touches',
 		visual: <SeasonalVisual />,
 	},
