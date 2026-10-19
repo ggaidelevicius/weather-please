@@ -10,8 +10,13 @@ import { getHeroForecast } from '../features/landing/model/hero-forecast'
 import { HERO_COPY } from '../features/landing/model/landing-copy'
 import { CHROME_STORE_URL } from '../features/landing/model/site'
 import { AgentDiscoveryLinks } from '../features/landing/ui/agent-discovery-links'
+import { ClosingCallToAction } from '../features/landing/ui/closing-call-to-action'
 import { FeatureShowcase } from '../features/landing/ui/feature-showcase'
 import { HeroNewTab } from '../features/landing/ui/hero-new-tab'
+import {
+	PRIMARY_PILL_LINK_CLASS_NAME,
+	SECONDARY_PILL_LINK_CLASS_NAME,
+} from '../features/landing/ui/pill-link'
 import { SiteFooter } from '../features/landing/ui/site-footer'
 import { SiteHeader } from '../features/landing/ui/site-header'
 
@@ -52,17 +57,14 @@ const LandingPage = ({ forecast, hourly }: Readonly<LandingPageProps>) => (
 					</p>
 					<div className="mt-6 flex flex-wrap items-center justify-center gap-2">
 						<a
-							className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 text-sm font-medium text-dark-800 transition-colors hover:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:min-h-9 sm:text-[13px]"
+							className={PRIMARY_PILL_LINK_CLASS_NAME}
 							href={CHROME_STORE_URL}
 							rel="noopener noreferrer"
 							target="_blank"
 						>
 							Add to Chrome
 						</a>
-						<Link
-							className="inline-flex min-h-11 items-center justify-center rounded-full bg-white/8 px-4 text-sm font-medium text-dark-100 transition-colors hover:bg-white/12 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:min-h-9 sm:text-[13px]"
-							href="/demo"
-						>
+						<Link className={SECONDARY_PILL_LINK_CLASS_NAME} href="/demo">
 							Try the live demo
 						</Link>
 					</div>
@@ -72,6 +74,7 @@ const LandingPage = ({ forecast, hourly }: Readonly<LandingPageProps>) => (
 			<section className="scroll-mt-24 border-t border-white/10" id="features">
 				<FeatureShowcase hourly={hourly} />
 			</section>
+			<ClosingCallToAction />
 		</main>
 		<SiteFooter />
 	</div>

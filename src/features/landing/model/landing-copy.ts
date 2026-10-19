@@ -5,6 +5,12 @@ export const HERO_COPY = {
 	headline: ['Everything you need from a new tab.', 'Nothing you don’t.'],
 } as const
 
+export const CLOSING_COPY = {
+	description:
+		'Free on Chrome and Firefox. Your forecast and calendar, every time you open a new tab.',
+	title: 'Get Weather Please',
+} as const
+
 export type FeatureSceneId =
 	| 'alerts'
 	| 'calendar'

@@ -1,7 +1,11 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest'
 
-import { FEATURE_SCENE_COPY, HERO_COPY } from '../../model/landing-copy'
+import {
+	CLOSING_COPY,
+	FEATURE_SCENE_COPY,
+	HERO_COPY,
+} from '../../model/landing-copy'
 import { markdownResponse } from '../markdown-response'
 import { getHomeMarkdown, getPrivacyMarkdown } from '../public-markdown'
 
@@ -23,6 +27,11 @@ describe('public Markdown', () => {
 		)
 		expect(markdown).toContain(
 			'[privacy policy](https://weather-please.app/privacy)',
+		)
+		expect(markdown).toContain(`## ${CLOSING_COPY.title}`)
+		expect(markdown).toContain(CLOSING_COPY.description)
+		expect(markdown).toContain(
+			'[Add to Firefox](https://addons.mozilla.org/en-US/firefox/addon/weather-please/)',
 		)
 		expect(markdown).not.toMatch(/<[a-z]/i)
 	})

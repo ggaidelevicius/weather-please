@@ -1,7 +1,11 @@
 import type { DisclosureLinkProps } from './google-api-disclosure'
 
-import { FEATURE_SCENE_COPY, HERO_COPY } from '../model/landing-copy'
-import { CHROME_STORE_URL } from '../model/site'
+import {
+	CLOSING_COPY,
+	FEATURE_SCENE_COPY,
+	HERO_COPY,
+} from '../model/landing-copy'
+import { CHROME_STORE_URL, FIREFOX_ADDON_URL } from '../model/site'
 import { GoogleApiDisclosure } from './google-api-disclosure'
 
 // The landing page's text, without its decorative visuals, for /index.md.
@@ -29,6 +33,16 @@ export const HomeMarkdownContent = () => (
 				) : null}
 			</section>
 		))}
+		<h2>{CLOSING_COPY.title}</h2>
+		<p>{CLOSING_COPY.description}</p>
+		<ul>
+			<li>
+				<a href={CHROME_STORE_URL}>Add to Chrome</a>
+			</li>
+			<li>
+				<a href={FIREFOX_ADDON_URL}>Add to Firefox</a>
+			</li>
+		</ul>
 	</>
 )
 
