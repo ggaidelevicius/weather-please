@@ -1,6 +1,9 @@
+'use client'
+
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { clsx } from 'clsx'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { CHROME_STORE_URL } from '../model/site'
 import { SiteLogo } from './site-logo'
@@ -17,7 +20,8 @@ const linkClassName =
 const demoClassName =
 	'inline-flex min-h-11 items-center justify-center rounded-full bg-white px-3 text-sm font-medium whitespace-nowrap text-dark-800 transition-colors hover:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:min-h-8 sm:text-[13px]'
 
-export const SiteHeader = ({ pathname }: Readonly<{ pathname: string }>) => {
+export const SiteHeader = () => {
+	const pathname = usePathname()
 	return (
 		<header className="relative z-50 h-24">
 			<Popover

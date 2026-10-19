@@ -28,6 +28,8 @@ it('selects only the demo page and its wrappers, without the website proxy or ch
 		'src/app/actions.ts',
 		'src/app/bug/page.tsx',
 		'src/app/layout.tsx',
+		'src/app/page.tsx',
+		'src/app/privacy/page.tsx',
 		'src/pages/about.tsx',
 		'src/pages/api/example.ts',
 		'src/pages/demo/details.tsx',

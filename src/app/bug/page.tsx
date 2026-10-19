@@ -46,13 +46,10 @@ const ContactForm = () => {
 
 	return (
 		<I18nProvider i18n={i18n}>
-			<Form
-				action={formAction}
-				className="flex w-full max-w-lg flex-col space-y-4 p-12"
-			>
+			<Form action={formAction} className="flex w-full flex-col space-y-4">
 				{state.message === '' ? (
 					<>
-						<h1 className="mb-8 text-4xl font-bold text-white">
+						<h1 className="mb-8 text-3xl font-medium tracking-tight text-pretty text-white">
 							<Trans>Report a bug</Trans>
 						</h1>
 						<Input

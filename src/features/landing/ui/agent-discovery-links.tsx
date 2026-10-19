@@ -1,22 +1,9 @@
-import Head from 'next/head'
+import { SITE_URL } from '../model/site'
 
-import type { MarkdownPagePath } from '../model/site'
-
-import { MARKDOWN_PATHS, SITE_URL } from '../model/site'
-
-// Points crawlers and agents at the page's Markdown version and the site's
-// agent guides. The proxy sends the same links as HTTP headers.
-export const AgentDiscoveryLinks = ({
-	pathname,
-}: Readonly<{ pathname: MarkdownPagePath }>) => (
-	<Head>
-		<link href={`${SITE_URL}${pathname}`} key="canonical" rel="canonical" />
-		<link
-			href={`${SITE_URL}${MARKDOWN_PATHS[pathname]}`}
-			key="markdown"
-			rel="alternate"
-			type="text/markdown"
-		/>
+// React hoists these links into the head. Canonical and Markdown alternates
+// belong to each page's metadata; the proxy also advertises all discovery links.
+export const AgentDiscoveryLinks = () => (
+	<>
 		<link
 			href={`${SITE_URL}/llms.txt`}
 			key="llms"
@@ -35,5 +22,5 @@ export const AgentDiscoveryLinks = ({
 			rel="help"
 			type="text/markdown"
 		/>
-	</Head>
+	</>
 )

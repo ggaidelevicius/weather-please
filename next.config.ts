@@ -3,6 +3,7 @@ import type { NextConfig } from 'next'
 import { CONTENT_SIGNAL } from './src/features/landing/model/site'
 
 const nextConfig: NextConfig = {
+	cacheComponents: true,
 	env: {
 		NEXT_PUBLIC_WEATHER_PLEASE_BUILD_TARGET:
 			process.env.WEATHER_PLEASE_BUILD_TARGET === 'extension'
@@ -35,12 +36,14 @@ const nextConfig: NextConfig = {
 		]
 	},
 	images: { qualities: [100] },
+	partialPrefetching: true,
 	reactCompiler: true,
 }
 
 if (process.env.WEATHER_PLEASE_BUILD_TARGET === 'extension') {
 	Object.assign(nextConfig, {
 		assetPrefix: '.',
+		cacheComponents: false,
 		// Static export can't send headers, and the extension has no pages to
 		// describe to crawlers.
 		headers: undefined,
@@ -49,6 +52,7 @@ if (process.env.WEATHER_PLEASE_BUILD_TARGET === 'extension') {
 			unoptimized: true,
 		},
 		output: 'export',
+		partialPrefetching: false,
 	} as NextConfig)
 }
 

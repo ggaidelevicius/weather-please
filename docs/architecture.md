@@ -1,16 +1,32 @@
 # Architecture
 
 The repository shares one React/TypeScript codebase between a browser extension
-and a hosted website. The Pages Router owns the landing page, privacy page, and
-weather dashboard. `src/pages/demo.tsx` composes the dashboard directly;
-reusable navigation hooks and UI pieces live in `features/dashboard`.
+and a hosted website. The Pages Router owns the weather dashboard.
+`src/pages/demo.tsx` composes the dashboard directly; reusable navigation hooks
+and UI pieces live in `features/dashboard`.
 
-The App Router owns `/bug` and its server action. Infrastructure used only by
-the server lives in `src/server`; shared browser utilities and UI live in
-`src/shared`. Feature folders contain APIs, models, hooks, and UI. Configuration
-schemas, defaults, and types belong to `features/settings/model`, independent of
-hooks. Keep domain calculations out of UI modules where possible and colocate
-tests with the behavior they cover.
+The App Router owns the landing and privacy pages, their Markdown routes, the
+sitemap, and `/bug` with its server action. The root layout shares navigation,
+the footer, global styles, and analytics across the website, including the bug
+form. Marketing copy renders on the server, with client boundaries around
+interactive demonstrations and their English translation providers.
+
+The website uses Cache Components to retain the hero forecast's conditional
+refresh policy: one hour for live weather and five minutes for sample data.
+Cache Components and partial prefetching are disabled for extension exports.
+
+Public pages negotiate HTML and Markdown through the proxy. Responses use
+`Cache-Control: private, no-store` and CDN-specific `no-store` headers to
+prevent representation mixups. Next.js owns the HTML/RSC `Vary` header and can
+replace the proxy's `Accept` variation; Markdown responses retain
+`Vary: Accept`. The public Markdown browser tests check final response types,
+cache prevention, and the framework's RSC variations without modifying Next.js.
+
+Infrastructure used only by the server lives in `src/server`; shared browser
+utilities and UI live in `src/shared`. Feature folders contain APIs, models,
+hooks, and UI. Configuration schemas, defaults, and types belong to
+`features/settings/model`, independent of hooks. Keep domain calculations out of
+UI modules where possible and colocate tests with the behavior they cover.
 
 ## Dates and time
 

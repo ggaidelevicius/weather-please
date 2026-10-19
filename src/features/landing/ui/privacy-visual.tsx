@@ -1,3 +1,5 @@
+'use client'
+
 import type { Icon } from '@tabler/icons-react'
 import type { Ref } from 'react'
 
@@ -160,32 +162,31 @@ export const PrivacyVisual = () => {
 						strokeDasharray="3 5"
 						strokeWidth={1.2}
 					/>
-					{shouldReduceMotion ? null : (
-						<>
-							<g className="fill-sky-300" filter={`url(#${filterId})`}>
-								{COMET_DOT_KEYS.map((key, index) => (
-									<circle
-										key={key}
-										r={0}
-										ref={(dot) => {
-											dotRefs.current[index] = dot
-										}}
-									/>
-								))}
-							</g>
-							<g className="fill-sky-300">
-								{COMET_DOT_KEYS.map((key, index) => (
-									<circle
-										key={key}
-										r={0}
-										ref={(dot) => {
-											dotRefs.current[COMET_DOT_COUNT + index] = dot
-										}}
-									/>
-								))}
-							</g>
-						</>
-					)}
+					<g
+						className="fill-sky-300 motion-reduce:hidden"
+						filter={`url(#${filterId})`}
+					>
+						{COMET_DOT_KEYS.map((key, index) => (
+							<circle
+								key={key}
+								r={0}
+								ref={(dot) => {
+									dotRefs.current[index] = dot
+								}}
+							/>
+						))}
+					</g>
+					<g className="fill-sky-300 motion-reduce:hidden">
+						{COMET_DOT_KEYS.map((key, index) => (
+							<circle
+								key={key}
+								r={0}
+								ref={(dot) => {
+									dotRefs.current[COMET_DOT_COUNT + index] = dot
+								}}
+							/>
+						))}
+					</g>
 				</svg>
 				<PrivacyNode
 					detail="Chrome or Firefox"

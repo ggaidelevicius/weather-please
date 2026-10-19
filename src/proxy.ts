@@ -39,8 +39,8 @@ export const proxy = (request: NextRequest) => {
 			`<${SITE_URL}/auth.md>; rel="help"; type="text/markdown"`,
 		].join(', '),
 	)
-	// Not every CDN keys on Accept, so keep negotiated URLs out of shared
-	// caches. Next.js still caches the rendered page itself.
+	// App Router can replace Vary, and not every CDN keys on Accept. Prevent
+	// response caching regardless; Next.js still caches the rendered page itself.
 	response.headers.set('Cache-Control', 'private, no-store')
 	response.headers.set('CDN-Cache-Control', 'no-store')
 	response.headers.set('Cloudflare-CDN-Cache-Control', 'no-store')

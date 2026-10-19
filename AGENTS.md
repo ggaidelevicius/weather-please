@@ -4,8 +4,8 @@ Repository-specific guidance for agents working in this codebase.
 
 ## Stack
 
-- Next.js 16: Pages Router for the dashboard and website; App Router for the
-  hosted bug form
+- Next.js 16: Pages Router for the dashboard/extension; App Router for the
+  marketing website and hosted bug form
 - React 19 with React Compiler enabled
 - TypeScript 7
 - Vitest
