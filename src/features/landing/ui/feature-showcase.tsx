@@ -15,6 +15,8 @@ import { motion, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
+import type { HeroHourlyForecast } from '../model/hero-forecast'
+
 import {
 	CALENDAR_ACCOUNT_CATEGORY_STYLES,
 	CalendarAccountCategory,
@@ -34,10 +36,17 @@ import { PrivacyVisual } from './privacy-visual'
 
 type SceneId = 'alerts' | 'calendar' | 'detail' | 'privacy' | 'seasonal'
 
-export const FeatureShowcase = () => (
+export const FeatureShowcase = ({
+	hourly,
+}: Readonly<{ hourly: HeroHourlyForecast }>) => (
 	<div className="py-4 sm:py-8">
 		{SCENES.map((scene, index) => (
-			<ShowcaseScene isFlipped={index % 2 === 1} key={scene.id} scene={scene} />
+			<ShowcaseScene
+				isFlipped={index % 2 === 1}
+				key={scene.id}
+				scene={scene}
+				visual={scene.renderVisual({ hourly })}
+			/>
 		))}
 	</div>
 )
@@ -48,16 +57,18 @@ type Scene = {
 	icon: typeof IconLock
 	id: SceneId
 	label: string
+	renderVisual: (props: Readonly<{ hourly: HeroHourlyForecast }>) => ReactNode
 	title: string
-	visual: ReactNode
 }
 
 const ShowcaseScene = ({
 	isFlipped,
 	scene,
+	visual,
 }: Readonly<{
 	isFlipped: boolean
 	scene: Scene
+	visual: ReactNode
 }>) => {
 	const shouldReduceMotion = useReducedMotion()
 
@@ -92,7 +103,7 @@ const ShowcaseScene = ({
 				) : null}
 			</div>
 			<div className="flex min-h-0 items-center justify-center overflow-hidden">
-				{scene.visual}
+				{visual}
 			</div>
 		</motion.section>
 	)
@@ -406,19 +417,12 @@ const AlertsVisual = () => (
 	</div>
 )
 
-// A mild spring day: warm afternoon, cool night, warming again by morning.
-const SAMPLE_TEMPERATURES = [
-	20, 20.3, 20.1, 19.6, 19, 18.4, 17.6, 16.8, 15.9, 15.1, 14.3, 13.6, 13, 12.4,
-	11.9, 11.6, 11.5, 11.9, 12.8, 14.1, 15.6, 17.1, 18.5, 19.6,
-]
-const SAMPLE_TEMPERATURE_TIMES = SAMPLE_TEMPERATURES.map(
-	(_, hour) => 1_792_368_000 + hour * 3600,
-)
-const SAMPLE_FEELS_LIKE_TEMPERATURE = 19
-
-const HourlyDetailVisual = () => {
-	const scale = getChartScale(SAMPLE_TEMPERATURES)
-	const accentColor = getTemperatureAccentColor(SAMPLE_TEMPERATURES[0])
+// Perth's next 24 hours, fetched with the hero forecast.
+const HourlyDetailVisual = ({
+	hourly: { apparentTemperatures, labels, temperatures, times },
+}: Readonly<{ hourly: HeroHourlyForecast }>) => {
+	const scale = getChartScale(temperatures)
+	const accentColor = getTemperatureAccentColor(temperatures[0] ?? 0)
 
 	return (
 		<div
@@ -438,20 +442,20 @@ const HourlyDetailVisual = () => {
 			</div>
 			<div className="mt-6 grid items-center gap-6 sm:grid-cols-[minmax(0,1fr)_10rem]">
 				<ChartFrame
-					endLabel="11 AM"
+					endLabel={labels.end}
 					leftLabels={getScaleLabels({ scale, unitLabel: '°C' })}
-					middleLabel="11 PM"
-					startLabel="11 AM"
+					middleLabel={labels.middle}
+					startLabel={labels.start}
 				>
 					<LineChart
 						accentClassName=""
 						accentStyle={{ stroke: accentColor }}
-						points={SAMPLE_TEMPERATURES}
+						points={temperatures}
 						primarySeriesId="temperature"
 						primarySeriesLabel="Temperature"
 						primaryValueFormatter={(value) => `${Math.round(value)}°C`}
 						scale={scale}
-						times={SAMPLE_TEMPERATURE_TIMES}
+						times={times}
 					/>
 				</ChartFrame>
 				<div className="grid">
@@ -459,12 +463,12 @@ const HourlyDetailVisual = () => {
 						accentStyle={{ color: accentColor }}
 						icon={<IconTemperature size={18} />}
 						label="Temperature now"
-						value={`${Math.round(SAMPLE_TEMPERATURES[0])}°C`}
+						value={`${Math.round(temperatures[0] ?? 0)}°C`}
 					/>
 					<Metric
 						icon={<IconTemperature size={18} />}
 						label="Feels like now"
-						value={`${SAMPLE_FEELS_LIKE_TEMPERATURE}°C`}
+						value={`${Math.round(apparentTemperatures[0] ?? 0)}°C`}
 					/>
 				</div>
 			</div>
@@ -513,8 +517,8 @@ const SCENES = [
 		icon: IconClock,
 		id: 'detail',
 		label: 'Hourly detail',
+		renderVisual: ({ hourly }) => <HourlyDetailVisual hourly={hourly} />,
 		title: 'Every hour, one scroll away',
-		visual: <HourlyDetailVisual />,
 	},
 	{
 		description:
@@ -522,8 +526,8 @@ const SCENES = [
 		icon: IconBell,
 		id: 'alerts',
 		label: 'Alerts',
+		renderVisual: () => <AlertsVisual />,
 		title: 'A heads-up before it hits',
-		visual: <AlertsVisual />,
 	},
 	{
 		description:
@@ -532,8 +536,8 @@ const SCENES = [
 		icon: IconCalendarEvent,
 		id: 'calendar',
 		label: 'Calendar',
+		renderVisual: () => <CalendarVisual />,
 		title: 'All your calendars in one place',
-		visual: <CalendarVisual />,
 	},
 	{
 		description:
@@ -541,8 +545,8 @@ const SCENES = [
 		icon: IconLock,
 		id: 'privacy',
 		label: 'Privacy',
+		renderVisual: () => <PrivacyVisual />,
 		title: 'Private by design',
-		visual: <PrivacyVisual />,
 	},
 	{
 		description:
@@ -550,8 +554,8 @@ const SCENES = [
 		icon: IconSparkles,
 		id: 'seasonal',
 		label: 'Special occasions',
+		renderVisual: () => <SeasonalVisual />,
 		title: 'Seasonal touches',
-		visual: <SeasonalVisual />,
 	},
 ] as const satisfies ReadonlyArray<Scene>
 

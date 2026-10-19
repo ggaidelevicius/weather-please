@@ -3,6 +3,7 @@ import type { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 
+import type { HeroHourlyForecast } from '../features/landing/model/hero-forecast'
 import type { Data } from '../features/weather/model/types'
 
 import { getHeroForecast } from '../features/landing/model/hero-forecast'
@@ -16,15 +17,16 @@ const CHROME_STORE_URL =
 
 type LandingPageProps = {
 	forecast: Data
+	hourly: HeroHourlyForecast
 }
 
 export const getStaticProps = (async () => {
-	const { forecast, revalidateSeconds } = await getHeroForecast()
+	const { forecast, hourly, revalidateSeconds } = await getHeroForecast()
 
-	return { props: { forecast }, revalidate: revalidateSeconds }
+	return { props: { forecast, hourly }, revalidate: revalidateSeconds }
 }) satisfies GetStaticProps<LandingPageProps>
 
-const LandingPage = ({ forecast }: Readonly<LandingPageProps>) => (
+const LandingPage = ({ forecast, hourly }: Readonly<LandingPageProps>) => (
 	<div className="min-h-screen w-full bg-dark-800">
 		<Head>
 			<title>Weather Please — weather and calendar in every new tab</title>
@@ -70,7 +72,7 @@ const LandingPage = ({ forecast }: Readonly<LandingPageProps>) => (
 				<HeroNewTab forecast={forecast} />
 			</section>
 			<section className="scroll-mt-24 border-t border-white/10" id="features">
-				<FeatureShowcase />
+				<FeatureShowcase hourly={hourly} />
 			</section>
 		</main>
 		<SiteFooter />
