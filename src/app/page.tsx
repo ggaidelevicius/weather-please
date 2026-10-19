@@ -28,6 +28,7 @@ const LandingPage = async () => {
 				<div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
 					<h1 className="flex flex-col gap-1 text-3xl font-medium tracking-tight text-balance">
 						<span className="text-white">{HERO_COPY.headline[0]}</span>
+						<span className="sr-only"> </span>
 						<span className="text-white/75">{HERO_COPY.headline[1]}</span>
 					</h1>
 					<p className="mx-auto mt-5 max-w-110 text-[15px]/6.5 text-pretty text-dark-100">
