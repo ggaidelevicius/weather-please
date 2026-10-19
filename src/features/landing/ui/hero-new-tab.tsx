@@ -34,10 +34,7 @@ export const HeroNewTab = ({ forecast }: Readonly<{ forecast: Data }>) => {
 	const isOpen = scene === 'open'
 
 	useEffect(() => {
-		// Below lg the browser toolbar is cropped away, so there's no cursor to
-		// wait for.
-		const isCursorVisible = window.matchMedia(BROWSER_CHROME_QUERY).matches
-		if (shouldReduceMotion || !isCursorVisible) {
+		if (shouldReduceMotion) {
 			const frameId = window.requestAnimationFrame(() => setScene('open'))
 			return () => window.cancelAnimationFrame(frameId)
 		}
@@ -58,18 +55,17 @@ export const HeroNewTab = ({ forecast }: Readonly<{ forecast: Data }>) => {
 		<LandingI18nProvider>
 			<div
 				aria-label="Weather Please open in a new browser tab, showing a three-day forecast and upcoming calendar events"
-				className="@container relative mx-auto mt-10 h-(--hero-frame-height) w-[calc(100%-2rem)] max-w-248 overflow-hidden rounded-t-2xl border border-b-0 border-white/8 bg-dark-800 shadow-[0_30px_80px_-20px_rgb(0_0_0/0.6)] [--hero-frame-height:20rem] [--hero-scale:0.6] sm:mt-14 sm:w-[calc(100%-3rem)] sm:[--hero-frame-height:24rem] sm:[--hero-scale:0.7] lg:w-[calc(100%-6rem)] lg:[--hero-frame-height:35rem] lg:[--hero-scale:tan(atan2(100cqw,1600px))]"
+				className="@container relative mx-auto mt-14 hidden h-(--hero-frame-height) w-[calc(100%-6rem)] max-w-248 overflow-hidden rounded-t-2xl border border-b-0 border-white/8 bg-dark-800 shadow-[0_30px_80px_-20px_rgb(0_0_0/0.6)] [--hero-frame-height:35rem] [--hero-scale:tan(atan2(100cqw,1600px))] lg:block"
 				data-hero-new-tab={scene}
 				role="img"
 			>
 				{/* Laid out at a 1600px desktop size and scaled to fit, so the tiles stay
-			    centred exactly as in the app. Below lg, the window is cropped to the
-			    tiles instead. */}
+			    centred exactly as in the app. */}
 				<div
 					className="pointer-events-none absolute top-0 left-1/2 flex h-[calc(var(--hero-frame-height)/var(--hero-scale))] w-400 origin-top -translate-x-1/2 scale-(--hero-scale) flex-col select-none"
 					inert
 				>
-					<div className="flex h-10.5 shrink-0 items-end gap-0.5 bg-[#18191b] px-2.5 max-lg:hidden">
+					<div className="flex h-10.5 shrink-0 items-end gap-0.5 bg-[#18191b] px-2.5">
 						<BrowserTab
 							icon={<span className="size-4 rounded bg-[#5f6368]" />}
 							isActive={!isOpen}
@@ -94,7 +90,7 @@ export const HeroNewTab = ({ forecast }: Readonly<{ forecast: Data }>) => {
 							<IconPlus className="relative" size={18} />
 						</div>
 					</div>
-					<div className="flex h-11 shrink-0 items-center gap-4 bg-[#35363a] px-3.5 text-[#9aa0a6] max-lg:hidden">
+					<div className="flex h-11 shrink-0 items-center gap-4 bg-[#35363a] px-3.5 text-[#9aa0a6]">
 						<IconArrowLeft size={16} />
 						<IconArrowRight size={16} />
 						<IconReload size={16} />
@@ -139,7 +135,7 @@ export const HeroNewTab = ({ forecast }: Readonly<{ forecast: Data }>) => {
 										</div>
 									))}
 								</div>
-								<div className="absolute top-6 right-5.5 max-lg:hidden">
+								<div className="absolute top-6 right-5.5">
 									<UpcomingEvents
 										accounts={calendarData.accounts}
 										events={calendarData.events.slice(0, HERO_EVENT_COUNT)}
@@ -156,9 +152,6 @@ export const HeroNewTab = ({ forecast }: Readonly<{ forecast: Data }>) => {
 		</LandingI18nProvider>
 	)
 }
-
-// Matches Tailwind's lg breakpoint, where the browser toolbar appears.
-const BROWSER_CHROME_QUERY = '(min-width: 64rem)'
 
 // Tiles start their entrance just after the tab opens, on the cursor's press.
 const TILE_DELAY_SECONDS = 0.1
@@ -206,7 +199,7 @@ const HeroCursor = () => (
 )
 
 const PreviousPage = () => (
-	<div className="absolute inset-0 flex flex-col gap-3.5 bg-[#1f1f1f] px-12 py-9 max-lg:hidden">
+	<div className="absolute inset-0 flex flex-col gap-3.5 bg-[#1f1f1f] px-12 py-9">
 		{PREVIOUS_PAGE_LINE_WIDTHS.map((width, index) => (
 			<span
 				className="h-3.5 rounded-md bg-[#2c2c2c] first:h-5.5"

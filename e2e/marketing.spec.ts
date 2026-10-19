@@ -75,6 +75,47 @@ test('marketing pages hydrate and update metadata without reloading the document
 	expect(errors).toEqual([])
 })
 
+test('the hero demo only appears at desktop widths without leaving a mobile gap', async ({
+	page,
+}) => {
+	const errors = collectBrowserErrors(page)
+	await page.setViewportSize({ height: 844, width: 390 })
+	await page.goto('/')
+	const demo = page.locator('[data-hero-new-tab]')
+	const demoLink = page.getByRole('link', {
+		exact: true,
+		name: 'Try the live demo',
+	})
+	const features = page.locator('#features')
+
+	for (const width of [390, 768, 1023, 1024, 390]) {
+		await page.setViewportSize({ height: 844, width })
+		if (width >= 1024) {
+			await expect(demo).toBeVisible()
+			await expect(demo).toHaveAttribute('data-hero-new-tab', 'open')
+		} else {
+			await expect(demo).toBeHidden()
+			await expect(demoLink).toBeVisible()
+			const demoLinkBounds = await demoLink.boundingBox()
+			const featureBounds = await features.boundingBox()
+			if (!demoLinkBounds || !featureBounds) {
+				throw new Error(
+					'The homepage hero and features must have layout bounds',
+				)
+			}
+			const gap = featureBounds.y - (demoLinkBounds.y + demoLinkBounds.height)
+			expect(gap).toBeGreaterThanOrEqual(24)
+			expect(gap).toBeLessThan(100)
+		}
+		expect(
+			await page.evaluate(
+				() => document.documentElement.scrollWidth <= window.innerWidth,
+			),
+		).toBe(true)
+	}
+	expect(errors).toEqual([])
+})
+
 test('mobile navigation closes after in-page and cross-page feature links', async ({
 	page,
 }) => {

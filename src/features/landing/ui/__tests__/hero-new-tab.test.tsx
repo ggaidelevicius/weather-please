@@ -38,22 +38,14 @@ const forecast = [
 	{ day: 3, description: 51, max: 17, min: 10, rain: 70, uv: 3, wind: 22 },
 ]
 
-const stubScreenWidth = ({ isLarge }: { isLarge: boolean }) =>
-	vi.stubGlobal(
-		'matchMedia',
-		vi.fn(() => ({ matches: isLarge })),
-	)
-
 beforeEach(() => {
 	vi.useFakeTimers()
 	vi.mocked(useReducedMotion).mockReturnValue(false)
-	stubScreenWidth({ isLarge: true })
 })
 
 afterEach(() => {
 	cleanup()
 	vi.useRealTimers()
-	vi.unstubAllGlobals()
 })
 
 describe('HeroNewTab', () => {
@@ -90,16 +82,5 @@ describe('HeroNewTab', () => {
 
 		expect(screen.getByRole('img')).toHaveAttribute('data-hero-new-tab', 'open')
 		expect(screen.getAllByTestId('tile')[0]).toHaveAttribute('data-delay', '0')
-	})
-
-	it('opens straight away below lg, where the cursor is cropped out', () => {
-		stubScreenWidth({ isLarge: false })
-		render(<HeroNewTab forecast={forecast} />)
-
-		act(() => {
-			vi.advanceTimersToNextFrame()
-		})
-
-		expect(screen.getByRole('img')).toHaveAttribute('data-hero-new-tab', 'open')
 	})
 })
