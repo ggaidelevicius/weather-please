@@ -7,7 +7,7 @@ import { SiteLogo } from './site-logo'
 
 const primaryPaths = [
 	['Features', '/#features'],
-	['Live demo', 'https://weather-please.app/demo'],
+	['Live demo', '/demo'],
 ]
 
 const pillClassName =
