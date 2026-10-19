@@ -26,7 +26,7 @@ const LandingPage = async () => {
 		<main>
 			<section className="overflow-hidden pt-10 max-lg:pb-14">
 				<div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-					<h1 className="flex flex-col gap-2 text-3xl font-medium tracking-tight text-balance">
+					<h1 className="flex flex-col gap-1 text-3xl font-medium tracking-tight text-balance">
 						<span className="text-white">{HERO_COPY.headline[0]}</span>
 						<span className="text-white/75">{HERO_COPY.headline[1]}</span>
 					</h1>
