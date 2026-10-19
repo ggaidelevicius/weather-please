@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next'
 
+import { CONTENT_SIGNAL } from './src/features/landing/model/site'
+
 const nextConfig: NextConfig = {
 	env: {
 		NEXT_PUBLIC_WEATHER_PLEASE_BUILD_TARGET:
@@ -12,6 +14,26 @@ const nextConfig: NextConfig = {
 		turbopackLazyDynamicImports: true,
 		useTypeScriptCli: true,
 	},
+	async headers() {
+		return [
+			{
+				headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+				source: '/bug',
+			},
+			...[
+				{ contentType: 'text/markdown', source: '/auth.md' },
+				{ contentType: 'text/plain', source: '/llms.txt' },
+				{ contentType: 'text/plain', source: '/robots.txt' },
+			].map(({ contentType, source }) => ({
+				headers: [
+					{ key: 'Content-Type', value: `${contentType}; charset=utf-8` },
+					{ key: 'X-Content-Type-Options', value: 'nosniff' },
+					{ key: 'Content-Signal', value: CONTENT_SIGNAL },
+				],
+				source,
+			})),
+		]
+	},
 	images: { qualities: [100] },
 	reactCompiler: true,
 }
@@ -19,6 +41,9 @@ const nextConfig: NextConfig = {
 if (process.env.WEATHER_PLEASE_BUILD_TARGET === 'extension') {
 	Object.assign(nextConfig, {
 		assetPrefix: '.',
+		// Static export can't send headers, and the extension has no pages to
+		// describe to crawlers.
+		headers: undefined,
 		images: {
 			qualities: [100],
 			unoptimized: true,

@@ -7,13 +7,13 @@ import type { HeroHourlyForecast } from '../features/landing/model/hero-forecast
 import type { Data } from '../features/weather/model/types'
 
 import { getHeroForecast } from '../features/landing/model/hero-forecast'
+import { HERO_COPY } from '../features/landing/model/landing-copy'
+import { CHROME_STORE_URL } from '../features/landing/model/site'
+import { AgentDiscoveryLinks } from '../features/landing/ui/agent-discovery-links'
 import { FeatureShowcase } from '../features/landing/ui/feature-showcase'
 import { HeroNewTab } from '../features/landing/ui/hero-new-tab'
 import { SiteFooter } from '../features/landing/ui/site-footer'
 import { SiteHeader } from '../features/landing/ui/site-header'
-
-const CHROME_STORE_URL =
-	'https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn'
 
 type LandingPageProps = {
 	forecast: Data
@@ -38,19 +38,17 @@ const LandingPage = ({ forecast, hourly }: Readonly<LandingPageProps>) => (
 				{'body { overflow-x: clip; } #__next { align-self: stretch; }'}
 			</style>
 		</Head>
+		<AgentDiscoveryLinks pathname="/" />
 		<SiteHeader pathname="/" />
 		<main>
 			<section className="overflow-hidden pt-10">
 				<div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
 					<h1 className="flex flex-col gap-2 text-3xl font-medium tracking-tight text-balance">
-						<span className="text-white">
-							Everything you need from a new tab.
-						</span>
-						<span className="text-white/75">Nothing you don&apos;t.</span>
+						<span className="text-white">{HERO_COPY.headline[0]}</span>
+						<span className="text-white/75">{HERO_COPY.headline[1]}</span>
 					</h1>
 					<p className="mx-auto mt-5 max-w-110 text-[15px]/6.5 text-pretty text-dark-100">
-						Your local forecast and calendar on every new tab. Free and open
-						source, with no accounts, ads, or tracking.
+						{HERO_COPY.description}
 					</p>
 					<div className="mt-6 flex flex-wrap items-center justify-center gap-2">
 						<a

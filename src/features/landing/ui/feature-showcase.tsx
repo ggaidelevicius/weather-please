@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import type { HeroHourlyForecast } from '../model/hero-forecast'
+import type { FeatureSceneId } from '../model/landing-copy'
 
 import {
 	CALENDAR_ACCOUNT_CATEGORY_STYLES,
@@ -32,9 +33,9 @@ import { getTemperatureAccentColor } from '../../weather/model/temperature-colou
 import { ChartFrame, LineChart } from '../../weather/ui/charts/chart'
 import { Metric } from '../../weather/ui/details/detail-shell'
 import { Tile } from '../../weather/ui/tile'
+import { FEATURE_SCENE_COPY } from '../model/landing-copy'
+import { GoogleApiDisclosure } from './google-api-disclosure'
 import { PrivacyVisual } from './privacy-visual'
-
-type SceneId = 'alerts' | 'calendar' | 'detail' | 'privacy' | 'seasonal'
 
 export const FeatureShowcase = ({
 	hourly,
@@ -55,7 +56,7 @@ type Scene = {
 	description: string
 	footnote?: ReactNode
 	icon: typeof IconLock
-	id: SceneId
+	id: FeatureSceneId
 	label: string
 	renderVisual: (props: Readonly<{ hourly: HeroHourlyForecast }>) => ReactNode
 	title: string
@@ -486,78 +487,28 @@ const SOLSTICE_PARTICLES = Array.from({ length: 18 }, (_, index) => ({
 	topPercent: 8 + ((index * 37) % 78),
 }))
 
-const FOOTNOTE_LINK_CLASS_NAME =
-	'font-medium text-dark-200 underline decoration-white/25 underline-offset-2 transition-colors hover:text-white'
-
-// Google requires this Limited Use disclosure on the homepage.
-const GoogleApiDisclosure = () => (
-	<>
-		Calendar connections are optional and read-only. Weather Please&apos;s use
-		of information received from Google APIs adheres to the{' '}
-		<a
-			className={FOOTNOTE_LINK_CLASS_NAME}
-			href="https://developers.google.com/terms/api-services-user-data-policy"
-			rel="noopener noreferrer"
-			target="_blank"
-		>
-			Google API Services User Data Policy
-		</a>
-		, including the Limited Use requirements. See our{' '}
-		<Link className={FOOTNOTE_LINK_CLASS_NAME} href="/privacy">
-			privacy policy
-		</Link>{' '}
-		for details.
-	</>
-)
-
-const SCENES = [
-	{
-		description:
-			'Scroll down on any new tab for the next 24 hours of temperature, rain, wind, sun, and air quality.',
+const SCENE_PRESENTATION = {
+	alerts: { icon: IconBell, renderVisual: () => <AlertsVisual /> },
+	calendar: { icon: IconCalendarEvent, renderVisual: () => <CalendarVisual /> },
+	detail: {
 		icon: IconClock,
-		id: 'detail',
-		label: 'Hourly detail',
 		renderVisual: ({ hourly }) => <HourlyDetailVisual hourly={hourly} />,
-		title: 'Every hour, one scroll away',
 	},
-	{
-		description:
-			'When extreme UV, heavy rain, or strong wind is on the way, an alert appears in the corner of your new tab.',
-		icon: IconBell,
-		id: 'alerts',
-		label: 'Alerts',
-		renderVisual: () => <AlertsVisual />,
-		title: 'A heads-up before it hits',
-	},
-	{
-		description:
-			'Connect personal and work accounts from Google or Microsoft, and see what’s coming up next to the forecast.',
-		footnote: <GoogleApiDisclosure />,
-		icon: IconCalendarEvent,
-		id: 'calendar',
-		label: 'Calendar',
-		renderVisual: () => <CalendarVisual />,
-		title: 'All your calendars in one place',
-	},
-	{
-		description:
-			'Your location and calendar data go straight from your browser to the weather and calendar providers.',
-		icon: IconLock,
-		id: 'privacy',
-		label: 'Privacy',
-		renderVisual: () => <PrivacyVisual />,
-		title: 'Private by design',
-	},
-	{
-		description:
-			'Subtle effects mark solstices, meteor shower peaks, holidays, and more. Each one can be turned off.',
-		icon: IconSparkles,
-		id: 'seasonal',
-		label: 'Special occasions',
-		renderVisual: () => <SeasonalVisual />,
-		title: 'Seasonal touches',
-	},
-] as const satisfies ReadonlyArray<Scene>
+	privacy: { icon: IconLock, renderVisual: () => <PrivacyVisual /> },
+	seasonal: { icon: IconSparkles, renderVisual: () => <SeasonalVisual /> },
+} as const satisfies Record<
+	FeatureSceneId,
+	Pick<Scene, 'icon' | 'renderVisual'>
+>
+
+const SCENES: readonly Scene[] = FEATURE_SCENE_COPY.map((copy) => ({
+	...copy,
+	...SCENE_PRESENTATION[copy.id],
+	footnote:
+		'hasGoogleApiDisclosure' in copy ? (
+			<GoogleApiDisclosure internalLink={Link} />
+		) : undefined,
+}))
 
 type UnixTimestampParams = {
 	day: number

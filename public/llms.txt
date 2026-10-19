@@ -1,0 +1,26 @@
+# Weather Please
+
+> A free, open-source new tab extension for Chrome and Firefox that shows your local weather forecast, hourly detail, weather alerts, and optional Google or Microsoft calendar events.
+
+The website provides public product information, a live demo, and the privacy policy. These pages require no account or API key. The site does not offer a public weather or calendar API or an agent service.
+
+## Public documentation
+
+- [Product overview](https://weather-please.app/index.md): Markdown version of the homepage, generated from the same content as the website.
+- [Privacy policy](https://weather-please.app/privacy.md): How the extension handles location and calendar data.
+- [Authentication guide](https://weather-please.app/auth.md): Public access, calendar sign-in, and bug report boundaries.
+
+## Get the extension
+
+- [Chrome Web Store](https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn)
+- [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/weather-please/)
+- [Source code on GitHub](https://github.com/ggaidelevicius/weather-please)
+
+## Discovery
+
+- [Website](https://weather-please.app/)
+- [Live demo](https://weather-please.app/demo): The extension's new tab page, running in the browser. It asks for location access.
+- [Sitemap](https://weather-please.app/sitemap.xml)
+- [Crawler policy](https://weather-please.app/robots.txt)
+
+The homepage and /privacy also support the Accept: text/markdown request header. Cite their canonical HTML URLs. Public content may be used for search, AI answers, and model training, subject to the crawl paths in robots.txt. Calendar accounts are connected inside the extension, directly with Google or Microsoft; do not request calendar credentials through this website.

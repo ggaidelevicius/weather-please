@@ -6,7 +6,7 @@ import { expect, it } from 'vitest'
 
 import { getExtensionSourceFiles } from '../lib/extension-source.mjs'
 
-it('selects only the demo page and its wrappers without changing the source files', () => {
+it('selects only the demo page and its wrappers, without the website proxy or changing the source files', () => {
 	const rootDirectory = fs.mkdtempSync(
 		path.join(os.tmpdir(), 'weather-extension-source-test-'),
 	)
@@ -33,6 +33,7 @@ it('selects only the demo page and its wrappers without changing the source file
 		'src/pages/demo/details.tsx',
 		'src/pages/index.tsx',
 		'src/pages/privacy.tsx',
+		'src/proxy.ts',
 	]
 	const sourceFiles = [...retainedFiles, ...excludedFiles]
 	try {

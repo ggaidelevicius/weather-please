@@ -2,6 +2,7 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { clsx } from 'clsx'
 import Link from 'next/link'
 
+import { CHROME_STORE_URL } from '../model/site'
 import { SiteLogo } from './site-logo'
 
 const primaryPaths = [
@@ -63,7 +64,7 @@ export const SiteHeader = ({ pathname }: Readonly<{ pathname: string }>) => {
 								))}
 								<Link
 									className={clsx(demoClassName, 'ml-1')}
-									href="https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn"
+									href={CHROME_STORE_URL}
 									target="_blank"
 								>
 									Add to Chrome
@@ -129,7 +130,7 @@ export const SiteHeader = ({ pathname }: Readonly<{ pathname: string }>) => {
 							<PopoverButton
 								as={Link}
 								className={clsx(demoClassName, 'mt-2 w-full rounded-2xl')}
-								href="https://chromewebstore.google.com/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn"
+								href={CHROME_STORE_URL}
 								target="_blank"
 							>
 								Add to Chrome
