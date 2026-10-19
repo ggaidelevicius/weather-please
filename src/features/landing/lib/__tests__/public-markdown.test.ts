@@ -67,6 +67,8 @@ describe('public Markdown', () => {
 		expect(response.headers.get('content-signal')).toBe(
 			'search=yes, ai-input=yes, ai-train=yes',
 		)
+		expect(response.headers.get('cache-control')).toBe('private, no-store')
+		expect(response.headers.get('vary')).toBe('Accept')
 		expect(response.headers.get('x-content-type-options')).toBe('nosniff')
 		expect(await response.text()).toBe('# Privacy\n')
 	})

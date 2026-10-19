@@ -9,8 +9,20 @@ vi.mock('framer-motion', () => ({
 }))
 
 vi.mock('../../../weather/ui/tile', () => ({
-	Tile: ({ delayBaseline, max }: { delayBaseline: number; max: number }) => (
-		<div data-delay={delayBaseline} data-testid="tile">
+	Tile: ({
+		delayBaseline,
+		max,
+		timeZone,
+	}: {
+		delayBaseline: number
+		max: number
+		timeZone?: string
+	}) => (
+		<div
+			data-delay={delayBaseline}
+			data-testid="tile"
+			data-time-zone={timeZone}
+		>
 			{max}
 		</div>
 	),
@@ -62,6 +74,9 @@ describe('HeroNewTab', () => {
 		expect(
 			screen.getAllByTestId('tile').map((tile) => tile.textContent),
 		).toEqual(['21', '24', '17'])
+		expect(
+			screen.getAllByTestId('tile').map((tile) => tile.dataset.timeZone),
+		).toEqual(['Australia/Perth', 'Australia/Perth', 'Australia/Perth'])
 		expect(screen.getByTestId('upcoming-events')).toBeInTheDocument()
 	})
 

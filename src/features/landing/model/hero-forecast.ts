@@ -6,12 +6,8 @@ import {
 	mapWeatherResponseToForecastData,
 	mapWeatherResponseToNext24HoursData,
 } from '../../weather/api/weather-api'
+import { HERO_FORECAST_LOCATION } from './hero-location'
 
-export const HERO_FORECAST_LOCATION = {
-	lat: '-31.9523',
-	lon: '115.8613',
-	timeZone: 'Australia/Perth',
-} as const
 export const HERO_FORECAST_DAY_COUNT = 3
 
 export type HeroForecast = Readonly<{
@@ -55,14 +51,7 @@ export const getHeroForecast = async (): Promise<HeroForecast> => {
 		}
 
 		return {
-			forecast: forecast.map((day) => ({
-				...day,
-				day: toMiddayUtc(
-					Temporal.Instant.fromEpochMilliseconds(day.day * 1000)
-						.toZonedDateTimeISO(HERO_FORECAST_LOCATION.timeZone)
-						.toPlainDate(),
-				),
-			})),
+			forecast,
 			hourly: toHourlyForecast({
 				apparentTemperatures: next24Hours.map(
 					(hour) => hour.apparentTemperature,
@@ -111,7 +100,7 @@ const createSampleHeroForecast = (): Omit<
 	return {
 		forecast: SAMPLE_DAYS.map((sample, index) => ({
 			...sample,
-			day: toMiddayUtc(now.toPlainDate().add({ days: index })),
+			day: now.add({ days: index }).startOfDay().epochMilliseconds / 1000,
 		})),
 		hourly: toHourlyForecast({
 			apparentTemperatures: SAMPLE_HOURLY_TEMPERATURES.map(
@@ -150,9 +139,3 @@ const formatPerthHour = (time: number | undefined) =>
 				timeZone: HERO_FORECAST_LOCATION.timeZone,
 			}).format(time * 1000)
 		: ''
-
-// Tiles name the day in the visitor's timezone. Midday UTC keeps the Perth
-// calendar date for visitors almost anywhere.
-const toMiddayUtc = (date: Temporal.PlainDate): number =>
-	date.toZonedDateTime({ plainTime: '12:00', timeZone: 'UTC' })
-		.epochMilliseconds / 1000

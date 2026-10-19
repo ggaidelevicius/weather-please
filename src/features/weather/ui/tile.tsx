@@ -246,6 +246,7 @@ interface TileProps {
 	showSeasonalEvents: boolean
 	showSeasonalTileGlow: boolean
 	temperatureUnit: TemperatureUnit
+	timeZone?: string
 	unitSystem: UnitSystem
 	uv: number
 	wind: number
@@ -298,13 +299,17 @@ export const Tile = ({
 	showSeasonalEvents,
 	showSeasonalTileGlow,
 	temperatureUnit,
+	timeZone,
 	unitSystem,
 	uv,
 	wind,
 }: Readonly<TileProps>) => {
 	const usesMetricTemperature = temperatureUnit === TemperatureUnit.Celsius
 	const usesMetricUnits = unitSystem === UnitSystem.Metric
-	const tileDate = getDateTime({ timestamp: day * 1000 }).toPlainDate()
+	const tileDate = getDateTime({
+		timestamp: day * 1000,
+		timeZone,
+	}).toPlainDate()
 	const dayDescriptor = days[tileDate.dayOfWeek % 7]
 	const dateDescriptor = (
 		<>
@@ -337,7 +342,7 @@ export const Tile = ({
 					return
 				}
 				const nextSeasonalEvent = seasonalEvents.getSeasonalEventForDate({
-					date: getDateTime({ timestamp: day * 1000 }).toPlainDate(),
+					date: getDateTime({ timestamp: day * 1000, timeZone }).toPlainDate(),
 					enabledEvents: enabledSeasonalEvents,
 					hemisphere,
 					seasonalEventOverride,
@@ -363,6 +368,7 @@ export const Tile = ({
 		hemisphere,
 		seasonalEventOverride,
 		showSeasonalEvents,
+		timeZone,
 	])
 
 	const seasonalAccent =

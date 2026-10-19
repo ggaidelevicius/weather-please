@@ -17,7 +17,8 @@ import {
 import { Tile } from '../tile'
 
 const seasonalModule = vi.hoisted(() => ({
-	getSeasonalEventForDate: vi.fn<() => null | SeasonalEvent>(),
+	getSeasonalEventForDate:
+		vi.fn<(options: { date: Temporal.PlainDate }) => null | SeasonalEvent>(),
 	ready: Promise.withResolvers<void>(),
 }))
 
@@ -51,7 +52,10 @@ vi.mock('../../../../shared/ui/seasonal-event-modal', () => ({
 	}) => (isOpen ? <dialog open>{children}</dialog> : null),
 }))
 
-afterEach(cleanup)
+afterEach(() => {
+	cleanup()
+	vi.restoreAllMocks()
+})
 
 it('discards pending seasonal details while disabled and keeps the dialog closed when enabled again', async () => {
 	seasonalModule.getSeasonalEventForDate.mockReturnValue({
@@ -83,6 +87,73 @@ it('discards pending seasonal details while disabled and keeps the dialog closed
 	).toHaveAttribute('aria-expanded', 'false')
 	expect(screen.queryByRole('dialog')).toBeNull()
 })
+
+it.each(['Pacific/Auckland', 'Pacific/Fiji', 'America/Los_Angeles'])(
+	'keeps Perth forecast dates when the visitor is in %s',
+	(visitorTimeZone) => {
+		vi.spyOn(Temporal.Now, 'timeZoneId').mockReturnValue(visitorTimeZone)
+
+		render(
+			<Tile
+				{...createTileProps()}
+				day={PERTH_MONDAY_MIDNIGHT}
+				showSeasonalEvents={false}
+				timeZone="Australia/Perth"
+			/>,
+		)
+
+		expect(screen.getByText('Monday')).toBeInTheDocument()
+		expect(screen.getByText('19 October')).toBeInTheDocument()
+	},
+)
+
+it('keeps using the visitor timezone when no timezone is provided', () => {
+	vi.spyOn(Temporal.Now, 'timeZoneId').mockReturnValue('America/Los_Angeles')
+
+	render(
+		<Tile
+			{...createTileProps()}
+			day={PERTH_MONDAY_MIDNIGHT}
+			showSeasonalEvents={false}
+		/>,
+	)
+
+	expect(screen.getByText('Sunday')).toBeInTheDocument()
+	expect(screen.getByText('18 October')).toBeInTheDocument()
+})
+
+it('uses the displayed date for seasonal events when the timezone changes', async () => {
+	vi.spyOn(Temporal.Now, 'timeZoneId').mockReturnValue('America/Los_Angeles')
+	seasonalModule.getSeasonalEventForDate.mockReturnValue(null)
+	const props = { ...createTileProps(), day: PERTH_MONDAY_MIDNIGHT }
+	const { rerender } = render(<Tile {...props} timeZone="Australia/Perth" />)
+
+	await act(async () => {
+		seasonalModule.ready.resolve()
+		await vi.dynamicImportSettled()
+	})
+	expect(
+		seasonalModule.getSeasonalEventForDate.mock.calls
+			.at(-1)?.[0]
+			.date.toString(),
+	).toBe('2026-10-19')
+
+	await act(async () => {
+		rerender(<Tile {...props} timeZone="America/Los_Angeles" />)
+	})
+
+	expect(screen.getByText('Sunday')).toBeInTheDocument()
+	expect(
+		seasonalModule.getSeasonalEventForDate.mock.calls
+			.at(-1)?.[0]
+			.date.toString(),
+	).toBe('2026-10-18')
+})
+
+const PERTH_MONDAY_MIDNIGHT =
+	Temporal.PlainDate.from('2026-10-19').toZonedDateTime({
+		timeZone: 'Australia/Perth',
+	}).epochMilliseconds / 1000
 
 const createTileProps = (): ComponentProps<typeof Tile> => ({
 	day: Temporal.Instant.from('2026-12-25T12:00:00Z').epochMilliseconds / 1_000,

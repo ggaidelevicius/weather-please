@@ -8,7 +8,8 @@ import {
 	mapWeatherResponseToForecastData,
 	mapWeatherResponseToNext24HoursData,
 } from '../../../weather/api/weather-api'
-import { getHeroForecast, HERO_FORECAST_LOCATION } from '../hero-forecast'
+import { getHeroForecast } from '../hero-forecast'
+import { HERO_FORECAST_LOCATION } from '../hero-location'
 
 vi.mock('../../../weather/api/weather-api', () => ({
 	fetchWeatherResponse: vi.fn(),
@@ -23,12 +24,6 @@ const NOW_SECONDS = Date.parse(NOW) / 1000
 const perthMidnight = (date: string) =>
 	Temporal.PlainDate.from(date).toZonedDateTime({
 		timeZone: 'Australia/Perth',
-	}).epochMilliseconds / 1000
-
-const middayUtc = (date: string) =>
-	Temporal.PlainDate.from(date).toZonedDateTime({
-		plainTime: '12:00',
-		timeZone: 'UTC',
 	}).epochMilliseconds / 1000
 
 const forecastDay = (date: string) => ({
@@ -73,7 +68,7 @@ afterEach(() => {
 })
 
 describe('getHeroForecast', () => {
-	it('returns the first three Perth days, dated at midday UTC, for an hour', async () => {
+	it('preserves the first three Perth midnight timestamps for an hour', async () => {
 		mockLiveForecast({ hourCount: 24 })
 
 		const { forecast, revalidateSeconds } = await getHeroForecast()
@@ -85,9 +80,9 @@ describe('getHeroForecast', () => {
 			}),
 		)
 		expect(forecast.map(({ day }) => day)).toEqual([
-			middayUtc('2026-10-19'),
-			middayUtc('2026-10-20'),
-			middayUtc('2026-10-21'),
+			perthMidnight('2026-10-19'),
+			perthMidnight('2026-10-20'),
+			perthMidnight('2026-10-21'),
 		])
 		expect(forecast[0]).toMatchObject({ max: 20, min: 10, rain: 30 })
 		expect(revalidateSeconds).toBe(60 * 60)
@@ -112,15 +107,15 @@ describe('getHeroForecast', () => {
 		})
 	})
 
-	it('falls back to a sample forecast starting now in Perth, retrying sooner', async () => {
+	it('falls back to Perth midnight dates and hourly data starting now, retrying sooner', async () => {
 		vi.mocked(fetchWeatherResponse).mockRejectedValue(new Error('offline'))
 
 		const { forecast, hourly, revalidateSeconds } = await getHeroForecast()
 
 		expect(forecast.map(({ day }) => day)).toEqual([
-			middayUtc('2026-10-19'),
-			middayUtc('2026-10-20'),
-			middayUtc('2026-10-21'),
+			perthMidnight('2026-10-19'),
+			perthMidnight('2026-10-20'),
+			perthMidnight('2026-10-21'),
 		])
 		expect(hourly.times[0]).toBe(NOW_SECONDS)
 		expect(hourly.labels.start).toBe('9 AM')

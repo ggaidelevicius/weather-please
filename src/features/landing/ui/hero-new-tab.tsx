@@ -19,6 +19,7 @@ import { Hemisphere } from '../../seasonal-events/core/types'
 import { TileIdentifier } from '../../settings/model/tile-identifier'
 import { TemperatureUnit, UnitSystem } from '../../settings/model/unit-system'
 import { Tile } from '../../weather/ui/tile'
+import { HERO_FORECAST_LOCATION } from '../model/hero-location'
 import { SiteLogo } from './site-logo'
 
 export const HERO_TAB_OPEN_DELAY_MS = 1850
@@ -126,6 +127,7 @@ export const HeroNewTab = ({ forecast }: Readonly<{ forecast: Data }>) => {
 											showSeasonalEvents={false}
 											showSeasonalTileGlow={false}
 											temperatureUnit={TemperatureUnit.Celsius}
+											timeZone={HERO_FORECAST_LOCATION.timeZone}
 											unitSystem={UnitSystem.Metric}
 										/>
 									</div>
