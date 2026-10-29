@@ -72,12 +72,12 @@ msgid "{0} between <0/>"
 msgstr "{0} (<0/> 사이)"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:543
+#: src/features/weather/ui/tile.tsx:549
 msgid "{0} km/h"
 msgstr "{0} km/h"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:545
+#: src/features/weather/ui/tile.tsx:551
 msgid "{0} mph"
 msgstr "{0} mph"
 
@@ -334,7 +334,7 @@ msgstr "평균 풍속"
 
 #: src/features/settings/ui/sections/general-settings.tsx:68
 #: src/features/settings/ui/sections/seasonal-settings.tsx:169
-#: src/features/weather/ui/tile.tsx:592
+#: src/features/weather/ui/tile.tsx:598
 msgid "Background"
 msgstr "배경"
 
@@ -538,7 +538,7 @@ msgstr "디왈리는 빛의 축제로, 새로움과 희망, 어둠을 이기는 
 msgid "Diyas and candles glow along doorways and windows, while rangoli patterns bloom across thresholds in colour and light."
 msgstr "디야와 촛불이 문과 창가를 밝히고, 랑골리 무늬가 문턱 위에 색과 빛으로 피어납니다."
 
-#: src/app/bug/page.tsx:70
+#: src/app/bug/page.tsx:67
 msgid "Do not fill this field if you are human"
 msgstr "사람이면 이 필드를 작성하지 마세요"
 
@@ -1124,11 +1124,12 @@ msgstr "이 위치의 관측 안내를 제공할 수 없습니다. 날씨를 확
 msgid "Locale"
 msgstr "로케일"
 
+#: src/features/location/ui/identified-location-indicator.tsx:87
 #: src/features/settings/ui/sections/weather-settings.tsx:42
 msgid "Location"
 msgstr "위치"
 
-#: src/features/location/ui/identified-location-indicator.tsx:52
+#: src/features/location/ui/identified-location-indicator.tsx:38
 msgid "Location name unavailable"
 msgstr "위치 이름을 사용할 수 없습니다"
 
@@ -1516,7 +1517,7 @@ msgstr "붉은 봉투, 귤, 서예 대련은 풍요와 행복, 새로운 시작�
 msgid "Religious & cultural"
 msgstr "종교 및 문화"
 
-#: src/app/bug/page.tsx:56
+#: src/app/bug/page.tsx:53
 msgid "Report a bug"
 msgstr "버그 신고하기"
 
@@ -1533,6 +1534,7 @@ msgstr "OpenStreetMap 기여자들의 역지오코딩"
 msgid "Sat {hour}"
 msgstr "토 {hour}"
 
+#: src/features/landing/ui/__tests__/landing-i18n-provider.test.tsx:92
 #: src/features/weather/ui/tile.tsx:131
 msgid "Saturday"
 msgstr "토요일"
@@ -1617,7 +1619,7 @@ msgid "Show strong wind alerts"
 msgstr "강풍 경보 보이기"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:180
-#: src/features/weather/ui/tile.tsx:584
+#: src/features/weather/ui/tile.tsx:590
 msgid "Show this event"
 msgstr "이 이벤트 표시"
 
@@ -1703,7 +1705,7 @@ msgstr "{timeUntilStrongWind} 시간 후 강한 바람이 시작됩니다"
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "1시간 후 강한 바람이 시작됩니다"
 
-#: src/app/bug/page.tsx:83
+#: src/app/bug/page.tsx:80
 msgid "Submit"
 msgstr "제출"
 
@@ -1808,7 +1810,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "정확한 빨간색 음영은 그 시점에 지구 대기에 무엇이 있느냐에 달려 있습니다. 대형 화산 폭발 후에는 달이 특히 짙고 거의 갈색빛 빨간색으로 변할 수 있습니다."
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:517
 msgid "The expected type of weather is {0}."
 msgstr "예상되는 날씨 유형은 {0}입니다."
 
@@ -1877,27 +1879,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "수치는 뜻밖에 희망적입니다 — 1970년부터 지구의 날에 심어진 나무는 이제 수십억 그루에 달합니다."
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:473
+#: src/features/weather/ui/tile.tsx:479
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "최고 기온은 {0}도 섭씨가 될 것입니다."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:479
+#: src/features/weather/ui/tile.tsx:485
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "최고 기온은 {0}도 화씨가 될 것입니다."
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:537
+#: src/features/weather/ui/tile.tsx:543
 msgid "The maximum UV index will be {0}."
 msgstr "최대 UV 지수는 {0}이 될 것입니다."
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:550
+#: src/features/weather/ui/tile.tsx:556
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "최대 풍속은 {0}킬로미터/시간이 될 것입니다."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:556
+#: src/features/weather/ui/tile.tsx:562
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "최대 풍속은 {0}마일/시간이 될 것입니다."
 
@@ -1914,12 +1916,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "유성들은 초속 약 66km로 대기권에 진입합니다 — 연간 유성우 중 가장 빠른 편에 속하며, 이 때문에 종종 오래 지속되는 빛나는 흔적을 남깁니다."
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:492
+#: src/features/weather/ui/tile.tsx:498
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "최저 기온은 {0}도 섭씨가 될 것입니다."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:498
+#: src/features/weather/ui/tile.tsx:504
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "최저 기온은 {0}도 화씨가 될 것입니다."
 
@@ -2060,7 +2062,7 @@ msgid "Their radiant lies in the constellation Perseus. The shower is best place
 msgstr "복사점은 페르세우스자리에 있습니다. 이 유성우는 북반구에서 관측하기 가장 좋으며, 남쪽으로 갈수록 관측하기 어려워집니다."
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:570
+#: src/features/weather/ui/tile.tsx:576
 msgid "There is a {0}% chance of precipitation."
 msgstr "강수 확률은 {0}%입니다."
 
@@ -2218,8 +2220,8 @@ msgstr "나쁨"
 msgid "Unhealthy for sensitive groups"
 msgstr "민감군에 나쁨"
 
-#: src/features/weather/ui/tile.tsx:507
-#: src/features/weather/ui/tile.tsx:514
+#: src/features/weather/ui/tile.tsx:513
+#: src/features/weather/ui/tile.tsx:520
 msgid "unknown conditions"
 msgstr "알 수 없는 상태"
 
@@ -2423,7 +2425,7 @@ msgstr "리뷰를 남기시겠습니까?"
 msgid "You've been using Weather Please for a while"
 msgstr "당신은 Weather Please를 잠시동안 사용해왔습니다"
 
-#: src/app/bug/page.tsx:59
+#: src/app/bug/page.tsx:56
 msgid "Your email (optional)"
 msgstr "이메일 주소 (선택 사항)"
 
@@ -2435,7 +2437,7 @@ msgstr "귀하의 위치 데이터는 귀하의 개인 장치에만 안전하게
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "현재 위치를 사용할 수 없습니다. 기기에서 위치 서비스가 활성화되어 있는지 확인하고 다시 시도하세요."
 
-#: src/app/bug/page.tsx:64
+#: src/app/bug/page.tsx:61
 msgid "Your message"
 msgstr "메시지 내용"
 

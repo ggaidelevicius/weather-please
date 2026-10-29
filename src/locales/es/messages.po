@@ -72,12 +72,12 @@ msgid "{0} between <0/>"
 msgstr "{0} entre <0/>"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:543
+#: src/features/weather/ui/tile.tsx:549
 msgid "{0} km/h"
 msgstr "{0} km/h"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:545
+#: src/features/weather/ui/tile.tsx:551
 msgid "{0} mph"
 msgstr "{0} mph"
 
@@ -334,7 +334,7 @@ msgstr "Viento medio"
 
 #: src/features/settings/ui/sections/general-settings.tsx:68
 #: src/features/settings/ui/sections/seasonal-settings.tsx:169
-#: src/features/weather/ui/tile.tsx:592
+#: src/features/weather/ui/tile.tsx:598
 msgid "Background"
 msgstr "Fondo"
 
@@ -538,7 +538,7 @@ msgstr "Diwali es el festival de las luces, que celebra la renovación, la esper
 msgid "Diyas and candles glow along doorways and windows, while rangoli patterns bloom across thresholds in colour and light."
 msgstr "Las diyas y las velas brillan en puertas y ventanas, mientras los patrones de rangoli florecen en los umbrales con color y luz."
 
-#: src/app/bug/page.tsx:70
+#: src/app/bug/page.tsx:67
 msgid "Do not fill this field if you are human"
 msgstr "No rellenes este campo si eres humano"
 
@@ -1124,11 +1124,12 @@ msgstr "No hay recomendaciones de observación locales para esta ubicación. Com
 msgid "Locale"
 msgstr "Configuración regional"
 
+#: src/features/location/ui/identified-location-indicator.tsx:87
 #: src/features/settings/ui/sections/weather-settings.tsx:42
 msgid "Location"
 msgstr "Ubicación"
 
-#: src/features/location/ui/identified-location-indicator.tsx:52
+#: src/features/location/ui/identified-location-indicator.tsx:38
 msgid "Location name unavailable"
 msgstr "Nombre de ubicación no disponible"
 
@@ -1516,7 +1517,7 @@ msgstr "Los sobres rojos, las mandarinas y los pareados caligráficos expresan d
 msgid "Religious & cultural"
 msgstr "Religioso y cultural"
 
-#: src/app/bug/page.tsx:56
+#: src/app/bug/page.tsx:53
 msgid "Report a bug"
 msgstr "Informar de un error"
 
@@ -1533,6 +1534,7 @@ msgstr "Geocodificación inversa por colaboradores de OpenStreetMap"
 msgid "Sat {hour}"
 msgstr "Sáb {hour}"
 
+#: src/features/landing/ui/__tests__/landing-i18n-provider.test.tsx:92
 #: src/features/weather/ui/tile.tsx:131
 msgid "Saturday"
 msgstr "Sábado"
@@ -1617,7 +1619,7 @@ msgid "Show strong wind alerts"
 msgstr "Mostrar alertas de viento fuerte"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:180
-#: src/features/weather/ui/tile.tsx:584
+#: src/features/weather/ui/tile.tsx:590
 msgid "Show this event"
 msgstr "Mostrar este evento"
 
@@ -1703,7 +1705,7 @@ msgstr "Ráfagas de viento fuerte empezando en {timeUntilStrongWind} horas"
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "Ráfagas de viento fuerte empezando en 1 hora"
 
-#: src/app/bug/page.tsx:83
+#: src/app/bug/page.tsx:80
 msgid "Submit"
 msgstr "Enviar"
 
@@ -1808,7 +1810,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "El tono exacto de rojo depende de lo que haya en la atmósfera terrestre en ese momento. Después de grandes erupciones volcánicas, la Luna puede volverse de un rojo especialmente oscuro, casi pardusco."
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:517
 msgid "The expected type of weather is {0}."
 msgstr "El tipo de clima esperado es {0}."
 
@@ -1877,27 +1879,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "Los números son sorprendentemente alentadores: los árboles plantados desde el Día de la Tierra en 1970 ya se cuentan por miles de millones."
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:473
+#: src/features/weather/ui/tile.tsx:479
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "La temperatura máxima será de {0} grados Celsius."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:479
+#: src/features/weather/ui/tile.tsx:485
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "La temperatura máxima será de {0} grados Fahrenheit."
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:537
+#: src/features/weather/ui/tile.tsx:543
 msgid "The maximum UV index will be {0}."
 msgstr "El índice UV máximo será {0}."
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:550
+#: src/features/weather/ui/tile.tsx:556
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "La velocidad máxima del viento será de {0} kilómetros por hora."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:556
+#: src/features/weather/ui/tile.tsx:562
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "La velocidad máxima del viento será de {0} millas por hora."
 
@@ -1914,12 +1916,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "Los meteoros entran en la atmósfera a unos 66 km/s, entre los más rápidos de cualquier lluvia anual, por lo que a menudo dejan estelas luminosas persistentes."
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:492
+#: src/features/weather/ui/tile.tsx:498
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "La temperatura mínima será de {0} grados Celsius."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:498
+#: src/features/weather/ui/tile.tsx:504
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "La temperatura mínima será de {0} grados Fahrenheit."
 
@@ -2060,7 +2062,7 @@ msgid "Their radiant lies in the constellation Perseus. The shower is best place
 msgstr "Su radiante se encuentra en la constelación de Perseo. La lluvia se observa mejor en el hemisferio norte y su visibilidad disminuye cuanto más al sur te encuentres."
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:570
+#: src/features/weather/ui/tile.tsx:576
 msgid "There is a {0}% chance of precipitation."
 msgstr "Hay un {0}% de probabilidad de precipitación."
 
@@ -2218,8 +2220,8 @@ msgstr "Dañina a la salud"
 msgid "Unhealthy for sensitive groups"
 msgstr "Dañina para los grupos sensibles"
 
-#: src/features/weather/ui/tile.tsx:507
-#: src/features/weather/ui/tile.tsx:514
+#: src/features/weather/ui/tile.tsx:513
+#: src/features/weather/ui/tile.tsx:520
 msgid "unknown conditions"
 msgstr "condiciones desconocidas"
 
@@ -2423,7 +2425,7 @@ msgstr "¿Te gustaría dejar una opinión?"
 msgid "You've been using Weather Please for a while"
 msgstr "Has estado usando Weather Please durante un tiempo"
 
-#: src/app/bug/page.tsx:59
+#: src/app/bug/page.tsx:56
 msgid "Your email (optional)"
 msgstr "Tu correo electrónico (opcional)"
 
@@ -2435,7 +2437,7 @@ msgstr "Sus datos de ubicación se almacenan de forma segura y exclusivamente en
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "Tu ubicación no está disponible actualmente. Comprueba que los servicios de ubicación estén habilitados en tu dispositivo y vuelve a intentarlo."
 
-#: src/app/bug/page.tsx:64
+#: src/app/bug/page.tsx:61
 msgid "Your message"
 msgstr "Tu mensaje"
 

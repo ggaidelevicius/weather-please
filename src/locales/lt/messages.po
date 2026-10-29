@@ -72,12 +72,12 @@ msgid "{0} between <0/>"
 msgstr "{0} tarp <0/>"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:543
+#: src/features/weather/ui/tile.tsx:549
 msgid "{0} km/h"
 msgstr "{0} km/val"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:545
+#: src/features/weather/ui/tile.tsx:551
 msgid "{0} mph"
 msgstr "{0} mpv"
 
@@ -334,7 +334,7 @@ msgstr "Vidutinis vėjas"
 
 #: src/features/settings/ui/sections/general-settings.tsx:68
 #: src/features/settings/ui/sections/seasonal-settings.tsx:169
-#: src/features/weather/ui/tile.tsx:592
+#: src/features/weather/ui/tile.tsx:598
 msgid "Background"
 msgstr "Fonas"
 
@@ -538,7 +538,7 @@ msgstr "Diwali — šviesų festivalis, švenčiantis atsinaujinimą, viltį ir 
 msgid "Diyas and candles glow along doorways and windows, while rangoli patterns bloom across thresholds in colour and light."
 msgstr "Dijos ir žvakės švyti prie durų ir langų, o rangoli raštai pražysta slenksčiuose spalva ir šviesa."
 
-#: src/app/bug/page.tsx:70
+#: src/app/bug/page.tsx:67
 msgid "Do not fill this field if you are human"
 msgstr "Jei esate žmogus, neįveskite duomenų į šį laukel"
 
@@ -1124,11 +1124,12 @@ msgstr "Šiai vietovei stebėjimo rekomendacijų nėra. Patikrinkite, ar pasirin
 msgid "Locale"
 msgstr "Lokalė"
 
+#: src/features/location/ui/identified-location-indicator.tsx:87
 #: src/features/settings/ui/sections/weather-settings.tsx:42
 msgid "Location"
 msgstr "Vieta"
 
-#: src/features/location/ui/identified-location-indicator.tsx:52
+#: src/features/location/ui/identified-location-indicator.tsx:38
 msgid "Location name unavailable"
 msgstr "Vietos pavadinimas nepasiekiamas"
 
@@ -1516,7 +1517,7 @@ msgstr "Raudoni vokai, mandarinai ir kaligrafijos poros išreiškia linkėjimus 
 msgid "Religious & cultural"
 msgstr "Religiniai ir kultūriniai"
 
-#: src/app/bug/page.tsx:56
+#: src/app/bug/page.tsx:53
 msgid "Report a bug"
 msgstr "Pranešti apie klaidą"
 
@@ -1533,6 +1534,7 @@ msgstr "Atvirkštinis geokodavimas, atliktas OpenStreetMap bendraautorių"
 msgid "Sat {hour}"
 msgstr "Št {hour}"
 
+#: src/features/landing/ui/__tests__/landing-i18n-provider.test.tsx:92
 #: src/features/weather/ui/tile.tsx:131
 msgid "Saturday"
 msgstr "Šeštadienis"
@@ -1617,7 +1619,7 @@ msgid "Show strong wind alerts"
 msgstr "Rodyti stipraus vėjo įspėjimus"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:180
-#: src/features/weather/ui/tile.tsx:584
+#: src/features/weather/ui/tile.tsx:590
 msgid "Show this event"
 msgstr "Rodyti šį renginį"
 
@@ -1703,7 +1705,7 @@ msgstr "Stiprūs vėjo gūsiai prasidės už {timeUntilStrongWind} valandų"
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "Stiprūs vėjo gūsiai prasidės po 1 valandos"
 
-#: src/app/bug/page.tsx:83
+#: src/app/bug/page.tsx:80
 msgid "Submit"
 msgstr "Pateikti"
 
@@ -1808,7 +1810,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "Tikslus raudonos spalvos atspalvis priklauso nuo to, kas tuo metu yra Žemės atmosferoje. Po didelių ugnikalnių išsiveržimų Mėnulis gali tapti ypač tamsiai, beveik rudai raudonas."
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:517
 msgid "The expected type of weather is {0}."
 msgstr "Numatomas orų tipas yra"
 
@@ -1877,27 +1879,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "Skaičiai keistai drąsina – nuo 1970 m. per Žemės dieną pasodinti medžiai dabar skaičiuojami milijardais."
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:473
+#: src/features/weather/ui/tile.tsx:479
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "Aukščiausia temperatūra bus {0} laipsniai Celsijaus."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:479
+#: src/features/weather/ui/tile.tsx:485
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "Aukščiausia temperatūra bus {0} laipsniai pagal Farenheitą."
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:537
+#: src/features/weather/ui/tile.tsx:543
 msgid "The maximum UV index will be {0}."
 msgstr "Didžiausias UV indeksas bus {0}."
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:550
+#: src/features/weather/ui/tile.tsx:556
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "Didžiausias vėjo greitis bus {0} kilometrai per valandą."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:556
+#: src/features/weather/ui/tile.tsx:562
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "Didžiausias vėjo greitis bus {0} mylios per valandą"
 
@@ -1914,12 +1916,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "Meteorai į atmosferą įsiveržia maždaug 66 km/s greičiu – tai viena greičiausių iš visų metinių liūčių, todėl jie dažnai palieka ilgai trunkančius švytinčius pėdsakus."
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:492
+#: src/features/weather/ui/tile.tsx:498
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "Minimali temperatūra bus {0} laipsniai Celsijaus."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:498
+#: src/features/weather/ui/tile.tsx:504
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "Minimali temperatūra bus {0} laipsniai pagal Farenheitą."
 
@@ -2060,7 +2062,7 @@ msgid "Their radiant lies in the constellation Perseus. The shower is best place
 msgstr "Jų radiantas yra Persėjo žvaigždyne. Šį srautą palankiausia stebėti šiaurės pusrutulyje, o kuo toliau į pietus, tuo matomumas prastesnis."
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:570
+#: src/features/weather/ui/tile.tsx:576
 msgid "There is a {0}% chance of precipitation."
 msgstr "Yra {0}% kritulių tikimybė."
 
@@ -2218,8 +2220,8 @@ msgstr "Kenksminga"
 msgid "Unhealthy for sensitive groups"
 msgstr "Kenksminga jautrioms grupėms"
 
-#: src/features/weather/ui/tile.tsx:507
-#: src/features/weather/ui/tile.tsx:514
+#: src/features/weather/ui/tile.tsx:513
+#: src/features/weather/ui/tile.tsx:520
 msgid "unknown conditions"
 msgstr "nežinomos sąlygos"
 
@@ -2423,7 +2425,7 @@ msgstr "Norėtumėte palikti atsiliepimą?"
 msgid "You've been using Weather Please for a while"
 msgstr "Jūs naudojatės „Weather Please“ jau kurį laiką"
 
-#: src/app/bug/page.tsx:59
+#: src/app/bug/page.tsx:56
 msgid "Your email (optional)"
 msgstr "Jūsų el. paštas (pasirinktinai)"
 
@@ -2435,7 +2437,7 @@ msgstr "Jūsų vietos duomenys saugiai ir išskirtinai saugomi jūsų asmeniniam
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "Jūsų vieta šiuo metu nepasiekiama. Patikrinkite, ar įrenginyje įjungtos vietos paslaugos, ir bandykite dar kartą."
 
-#: src/app/bug/page.tsx:64
+#: src/app/bug/page.tsx:61
 msgid "Your message"
 msgstr "Jūsų žinutė"
 

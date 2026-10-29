@@ -154,7 +154,7 @@ describe('Settings modal navigation', () => {
 		expect(handleChange).toHaveBeenCalledWith('showChristmasEvent', false)
 	})
 
-	it('offers automatic and every seasonal effect as a background style in General', () => {
+	it('offers automatic and every seasonal effect alphabetically as background styles in General', () => {
 		const handleChange = vi.fn()
 		renderSettings({ handleChange })
 
@@ -173,6 +173,10 @@ describe('Settings modal navigation', () => {
 			}),
 		).toHaveValue(SEASONAL_BACKGROUND_AUTOMATIC)
 		expect(options).toHaveLength(expectedValues.length)
+		const labels = options.map((option) => option.textContent)
+		expect(labels).toEqual(
+			labels.toSorted((left, right) => (left ?? '').localeCompare(right ?? '')),
+		)
 		expect(
 			new Set(options.map((option) => option.getAttribute('value'))),
 		).toEqual(new Set(expectedValues))

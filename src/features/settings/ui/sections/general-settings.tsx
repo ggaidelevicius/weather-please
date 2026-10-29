@@ -47,7 +47,7 @@ export const getSeasonalBackgroundOptions = () => [
 		label: <Trans>Automatic (seasonal)</Trans>,
 		value: SEASONAL_BACKGROUND_AUTOMATIC,
 	},
-	...SEASONAL_EVENT_OPTIONS.map((eventId) => ({
+	...SEASONAL_EVENT_OPTIONS.toSorted().map((eventId) => ({
 		label: SEASONAL_EVENT_OPTION_LABELS[eventId],
 		value: eventId,
 	})),

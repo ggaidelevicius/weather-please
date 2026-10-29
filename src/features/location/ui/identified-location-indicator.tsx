@@ -1,9 +1,18 @@
 import { Trans } from '@lingui/react/macro'
 import { IconMapPin } from '@tabler/icons-react'
 import { motion } from 'framer-motion'
+import { useId, useState } from 'react'
+import { z } from 'zod'
 
 import { AsyncStatus } from '../../../shared/hooks/async-status'
+import {
+	readLocalStorage,
+	writeLocalStorage,
+} from '../../../shared/lib/local-storage'
 import { useIdentifiedLocation } from '../hooks/use-identified-location'
+
+const LOCATION_EXPANDED_STORAGE_KEY = 'weather-please:location-expanded'
+const locationExpandedSchema = z.boolean()
 
 interface IdentifiedLocationIndicatorProps {
 	lat: string
@@ -21,6 +30,24 @@ export const IdentifiedLocationIndicator = ({
 		locale,
 		lon,
 	})
+	const [isExpanded, setIsExpanded] = useState(getInitialIsExpanded)
+	const buttonLabelId = useId()
+	const contentId = useId()
+	const locationContent =
+		status === AsyncStatus.Error || !label ? (
+			<Trans>Location name unavailable</Trans>
+		) : (
+			label
+		)
+
+	const handleToggle = () => {
+		const nextIsExpanded = !isExpanded
+		setIsExpanded(nextIsExpanded)
+		writeLocalStorage({
+			key: LOCATION_EXPANDED_STORAGE_KEY,
+			value: JSON.stringify(nextIsExpanded),
+		})
+	}
 
 	if (!lat || !lon || !hasResolved) {
 		return null
@@ -37,23 +64,60 @@ export const IdentifiedLocationIndicator = ({
 					type: 'spring',
 				},
 			}}
-			className="flex w-fit items-center gap-2 rounded-full border border-white/10 bg-dark-950/78 px-3 py-1.5 text-xs font-medium text-white shadow-sm backdrop-blur-md"
+			className="w-fit"
 			initial={{ opacity: 0, scale: 0.98 }}
-			title={`${lat}, ${lon}`}
 		>
-			<IconMapPin
-				aria-hidden
-				className="shrink-0 text-blue-300"
-				size={12}
-				strokeWidth={2}
-			/>
-			{status === AsyncStatus.Error || !label ? (
-				<span className="truncate">
-					<Trans>Location name unavailable</Trans>
+			<motion.button
+				aria-controls={contentId}
+				aria-describedby={isExpanded ? contentId : undefined}
+				aria-expanded={isExpanded}
+				aria-labelledby={buttonLabelId}
+				className="flex w-fit max-w-[calc(100vw-6rem)] cursor-pointer items-center rounded-full border border-white/10 bg-dark-950/78 px-3 py-1.5 text-left text-xs font-medium text-white shadow-sm backdrop-blur-md transition-colors hover:bg-dark-950/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+				onClick={handleToggle}
+				title={`${lat}, ${lon}`}
+				type="button"
+			>
+				<IconMapPin
+					aria-hidden
+					className="shrink-0 text-blue-300"
+					size={12}
+					strokeWidth={2}
+				/>
+				<span className="sr-only" id={buttonLabelId}>
+					<Trans>Location</Trans>
 				</span>
-			) : (
-				<span className="truncate">{label}</span>
-			)}
+				<motion.span
+					animate={{
+						marginLeft: isExpanded ? 8 : 0,
+						opacity: isExpanded ? 1 : 0,
+						width: isExpanded ? 'auto' : 0,
+					}}
+					aria-hidden={!isExpanded}
+					className="min-w-0 overflow-hidden whitespace-nowrap"
+					id={contentId}
+					initial={false}
+					transition={{
+						damping: 32,
+						opacity: { duration: 0.2 },
+						stiffness: 360,
+						type: 'spring',
+					}}
+				>
+					<span className="block truncate">{locationContent}</span>
+				</motion.span>
+			</motion.button>
 		</motion.div>
 	)
+}
+
+const getInitialIsExpanded = (): boolean => {
+	const storedValue = readLocalStorage(LOCATION_EXPANDED_STORAGE_KEY)
+	if (!storedValue) return true
+
+	try {
+		const parsed = locationExpandedSchema.safeParse(JSON.parse(storedValue))
+		return parsed.success ? parsed.data : true
+	} catch {
+		return true
+	}
 }

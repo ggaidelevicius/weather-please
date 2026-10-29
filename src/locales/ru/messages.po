@@ -72,12 +72,12 @@ msgid "{0} between <0/>"
 msgstr "{0} в период <0/>"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:543
+#: src/features/weather/ui/tile.tsx:549
 msgid "{0} km/h"
 msgstr "{0} км/ч"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:545
+#: src/features/weather/ui/tile.tsx:551
 msgid "{0} mph"
 msgstr "{0} миль/ч"
 
@@ -334,7 +334,7 @@ msgstr "Средний ветер"
 
 #: src/features/settings/ui/sections/general-settings.tsx:68
 #: src/features/settings/ui/sections/seasonal-settings.tsx:169
-#: src/features/weather/ui/tile.tsx:592
+#: src/features/weather/ui/tile.tsx:598
 msgid "Background"
 msgstr "Фон"
 
@@ -538,7 +538,7 @@ msgstr "Дивали — фестиваль огней, праздник обн�
 msgid "Diyas and candles glow along doorways and windows, while rangoli patterns bloom across thresholds in colour and light."
 msgstr "Дии и свечи светятся у дверей и окон, а узоры ранго́ли распускаются на порогах в цвете и свете."
 
-#: src/app/bug/page.tsx:70
+#: src/app/bug/page.tsx:67
 msgid "Do not fill this field if you are human"
 msgstr "Не заполняйте это поле, если вы человек"
 
@@ -1124,11 +1124,12 @@ msgstr "Рекомендации по наблюдению для этого м�
 msgid "Locale"
 msgstr "Локаль"
 
+#: src/features/location/ui/identified-location-indicator.tsx:87
 #: src/features/settings/ui/sections/weather-settings.tsx:42
 msgid "Location"
 msgstr "Местоположение"
 
-#: src/features/location/ui/identified-location-indicator.tsx:52
+#: src/features/location/ui/identified-location-indicator.tsx:38
 msgid "Location name unavailable"
 msgstr "Название местоположения недоступно"
 
@@ -1516,7 +1517,7 @@ msgstr "Красные конверты, мандарины и каллигра�
 msgid "Religious & cultural"
 msgstr "Религиозные и культурные"
 
-#: src/app/bug/page.tsx:56
+#: src/app/bug/page.tsx:53
 msgid "Report a bug"
 msgstr "Сообщить об ошибке"
 
@@ -1533,6 +1534,7 @@ msgstr "Обратное геокодирование от участников 
 msgid "Sat {hour}"
 msgstr "Сб {hour}"
 
+#: src/features/landing/ui/__tests__/landing-i18n-provider.test.tsx:92
 #: src/features/weather/ui/tile.tsx:131
 msgid "Saturday"
 msgstr "Суббота"
@@ -1617,7 +1619,7 @@ msgid "Show strong wind alerts"
 msgstr "Показать предупреждения о сильном ветре"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:180
-#: src/features/weather/ui/tile.tsx:584
+#: src/features/weather/ui/tile.tsx:590
 msgid "Show this event"
 msgstr "Показать это событие"
 
@@ -1703,7 +1705,7 @@ msgstr "Сильные порывы ветра начнутся через {time
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "Сильные порывы ветра начнутся через 1 час"
 
-#: src/app/bug/page.tsx:83
+#: src/app/bug/page.tsx:80
 msgid "Submit"
 msgstr "Отправить"
 
@@ -1808,7 +1810,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "Точный оттенок красного зависит от того, что в данный момент находится в атмосфере Земли. После крупных вулканических извержений Луна может приобрести особенно тёмный, почти коричневато-красный цвет."
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:517
 msgid "The expected type of weather is {0}."
 msgstr "Ожидаемый тип погоды — {0}."
 
@@ -1877,27 +1879,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "Цифры неожиданно обнадёживают: деревья, посаженные в День Земли с 1970 года, теперь насчитываются миллиардами."
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:473
+#: src/features/weather/ui/tile.tsx:479
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "Максимальная температура составит {0} градусов по Цельсию."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:479
+#: src/features/weather/ui/tile.tsx:485
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "Максимальная температура составит {0} градусов по Фаренгейту."
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:537
+#: src/features/weather/ui/tile.tsx:543
 msgid "The maximum UV index will be {0}."
 msgstr "Максимальный индекс УФ будет {0}."
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:550
+#: src/features/weather/ui/tile.tsx:556
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "Максимальная скорость ветра составит {0} километров в час."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:556
+#: src/features/weather/ui/tile.tsx:562
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "Максимальная скорость ветра составит {0} миль в час."
 
@@ -1914,12 +1916,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "Метеоры входят в атмосферу примерно на скорости 66 км/с — это одни из самых быстрых среди всех ежегодных потоков, поэтому они нередко оставляют стойкие светящиеся следы."
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:492
+#: src/features/weather/ui/tile.tsx:498
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "Минимальная температура будет {0} градусов по Цельсию."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:498
+#: src/features/weather/ui/tile.tsx:504
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "Минимальная температура будет {0} градусов по Фаренгейту."
 
@@ -2060,7 +2062,7 @@ msgid "Their radiant lies in the constellation Perseus. The shower is best place
 msgstr "Их радиант находится в созвездии Персея. Поток лучше всего виден в северном полушарии; чем дальше на юг, тем хуже условия наблюдения."
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:570
+#: src/features/weather/ui/tile.tsx:576
 msgid "There is a {0}% chance of precipitation."
 msgstr "Вероятность осадков составляет {0}%."
 
@@ -2218,8 +2220,8 @@ msgstr "Вредное"
 msgid "Unhealthy for sensitive groups"
 msgstr "Вредное для чувствительных групп"
 
-#: src/features/weather/ui/tile.tsx:507
-#: src/features/weather/ui/tile.tsx:514
+#: src/features/weather/ui/tile.tsx:513
+#: src/features/weather/ui/tile.tsx:520
 msgid "unknown conditions"
 msgstr "неизвестные условия"
 
@@ -2423,7 +2425,7 @@ msgstr "Хотели бы вы оставить отзыв?"
 msgid "You've been using Weather Please for a while"
 msgstr "Вы используете Weather Please уже довольно долго"
 
-#: src/app/bug/page.tsx:59
+#: src/app/bug/page.tsx:56
 msgid "Your email (optional)"
 msgstr "Ваш email (необязательно)"
 
@@ -2435,7 +2437,7 @@ msgstr "Ваши данные о местоположении надежно х�
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "Ваше местоположение сейчас недоступно. Убедитесь, что службы геолокации включены на вашем устройстве, и попробуйте снова."
 
-#: src/app/bug/page.tsx:64
+#: src/app/bug/page.tsx:61
 msgid "Your message"
 msgstr "Ваше сообщение"
 

@@ -72,12 +72,12 @@ msgid "{0} between <0/>"
 msgstr "{0}（<0/>期间）"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:543
+#: src/features/weather/ui/tile.tsx:549
 msgid "{0} km/h"
 msgstr "{0} 公里/小时"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:545
+#: src/features/weather/ui/tile.tsx:551
 msgid "{0} mph"
 msgstr "{0} 英里/小时"
 
@@ -334,7 +334,7 @@ msgstr "平均风速"
 
 #: src/features/settings/ui/sections/general-settings.tsx:68
 #: src/features/settings/ui/sections/seasonal-settings.tsx:169
-#: src/features/weather/ui/tile.tsx:592
+#: src/features/weather/ui/tile.tsx:598
 msgid "Background"
 msgstr "背景"
 
@@ -538,7 +538,7 @@ msgstr "排灯节（Diwali）是“灯之节”，庆祝更新、希望，以及
 msgid "Diyas and candles glow along doorways and windows, while rangoli patterns bloom across thresholds in colour and light."
 msgstr "油灯与蜡烛沿着门口与窗沿发光，彩砂图案（rangoli）在门槛处以色彩与光绽放。"
 
-#: src/app/bug/page.tsx:70
+#: src/app/bug/page.tsx:67
 msgid "Do not fill this field if you are human"
 msgstr "如果您是人类，请不要填写此字段"
 
@@ -1124,11 +1124,12 @@ msgstr "此地点暂无观测建议。请检查所选的天气地点是否正确
 msgid "Locale"
 msgstr "语言区域"
 
+#: src/features/location/ui/identified-location-indicator.tsx:87
 #: src/features/settings/ui/sections/weather-settings.tsx:42
 msgid "Location"
 msgstr "位置"
 
-#: src/features/location/ui/identified-location-indicator.tsx:52
+#: src/features/location/ui/identified-location-indicator.tsx:38
 msgid "Location name unavailable"
 msgstr "位置名称不可用"
 
@@ -1516,7 +1517,7 @@ msgstr "红包、橘子与春联书法，寄托着对丰盛、幸福与新开始
 msgid "Religious & cultural"
 msgstr "宗教与文化"
 
-#: src/app/bug/page.tsx:56
+#: src/app/bug/page.tsx:53
 msgid "Report a bug"
 msgstr "报告错误"
 
@@ -1533,6 +1534,7 @@ msgstr "由OpenStreetMap贡献者提供的反向地理编码"
 msgid "Sat {hour}"
 msgstr "周六 {hour}"
 
+#: src/features/landing/ui/__tests__/landing-i18n-provider.test.tsx:92
 #: src/features/weather/ui/tile.tsx:131
 msgid "Saturday"
 msgstr "星期六"
@@ -1617,7 +1619,7 @@ msgid "Show strong wind alerts"
 msgstr "显示强风警报"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:180
-#: src/features/weather/ui/tile.tsx:584
+#: src/features/weather/ui/tile.tsx:590
 msgid "Show this event"
 msgstr "显示此活动"
 
@@ -1703,7 +1705,7 @@ msgstr "{timeUntilStrongWind}小时后开始有强风暴"
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "1小时后开始有强风暴"
 
-#: src/app/bug/page.tsx:83
+#: src/app/bug/page.tsx:80
 msgid "Submit"
 msgstr "提交"
 
@@ -1808,7 +1810,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "确切的红色深浅取决于当时地球大气中有什么。在重大火山喷发之后，月亮可能变成特别深的、几乎是棕红色的颜色。"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:517
 msgid "The expected type of weather is {0}."
 msgstr "预期的天气类型是{0}。"
 
@@ -1877,27 +1879,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "这些数字出乎意料地令人鼓舞——自1970年地球日以来种植的树木现已多达数十亿棵。"
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:473
+#: src/features/weather/ui/tile.tsx:479
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "最高温度将为{0}摄氏度。"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:479
+#: src/features/weather/ui/tile.tsx:485
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "最高温度将为{0}华氏度。"
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:537
+#: src/features/weather/ui/tile.tsx:543
 msgid "The maximum UV index will be {0}."
 msgstr "最大紫外线指数将为{0}。"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:550
+#: src/features/weather/ui/tile.tsx:556
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "最大风速将为每小时{0}公里。"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:556
+#: src/features/weather/ui/tile.tsx:562
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "最大风速将为每小时{0}英里。"
 
@@ -1914,12 +1916,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "这些流星以大约每秒66公里的速度进入大气层，是所有年度流星雨中速度最快的之一，这也是它们常常留下持久发光痕迹的原因。"
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:492
+#: src/features/weather/ui/tile.tsx:498
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "最低温度将为{0}摄氏度。"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:498
+#: src/features/weather/ui/tile.tsx:504
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "最低温度将为{0}华氏度。"
 
@@ -2060,7 +2062,7 @@ msgid "Their radiant lies in the constellation Perseus. The shower is best place
 msgstr "其辐射点位于英仙座。这场流星雨在北半球最适宜观测，越往南，可见度越低。"
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:570
+#: src/features/weather/ui/tile.tsx:576
 msgid "There is a {0}% chance of precipitation."
 msgstr "有{0}%的降水概率。"
 
@@ -2218,8 +2220,8 @@ msgstr "不健康"
 msgid "Unhealthy for sensitive groups"
 msgstr "对敏感人群不健康"
 
-#: src/features/weather/ui/tile.tsx:507
-#: src/features/weather/ui/tile.tsx:514
+#: src/features/weather/ui/tile.tsx:513
+#: src/features/weather/ui/tile.tsx:520
 msgid "unknown conditions"
 msgstr "未知状况"
 
@@ -2423,7 +2425,7 @@ msgstr "你想留下评论吗？"
 msgid "You've been using Weather Please for a while"
 msgstr "您已经使用Weather Please有一段时间了"
 
-#: src/app/bug/page.tsx:59
+#: src/app/bug/page.tsx:56
 msgid "Your email (optional)"
 msgstr "您的电子邮件（可选）"
 
@@ -2435,7 +2437,7 @@ msgstr "您的位置数据安全地且仅在您的个人设备上存储。"
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "您的位置当前不可用。请确认设备上的位置服务已启用，然后再试一次。"
 
-#: src/app/bug/page.tsx:64
+#: src/app/bug/page.tsx:61
 msgid "Your message"
 msgstr "您的信息"
 

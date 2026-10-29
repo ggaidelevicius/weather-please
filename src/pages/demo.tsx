@@ -417,7 +417,7 @@ const WeatherDashboard = () => {
 				</motion.main>
 			</AnimatePresence>
 
-			<div className="fixed bottom-4 left-4 z-2">
+			<div className="fixed bottom-4 left-4 z-31">
 				<IdentifiedLocationIndicator
 					lat={config.lat}
 					locale={config.lang}

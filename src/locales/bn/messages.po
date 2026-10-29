@@ -72,12 +72,12 @@ msgid "{0} between <0/>"
 msgstr "{0}, <0/>-এর মধ্যে"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:543
+#: src/features/weather/ui/tile.tsx:549
 msgid "{0} km/h"
 msgstr "{0} কিমি/ঘণ্টা"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:545
+#: src/features/weather/ui/tile.tsx:551
 msgid "{0} mph"
 msgstr "{0} মাইল/ঘণ্টা"
 
@@ -334,7 +334,7 @@ msgstr "গড় বায়ু"
 
 #: src/features/settings/ui/sections/general-settings.tsx:68
 #: src/features/settings/ui/sections/seasonal-settings.tsx:169
-#: src/features/weather/ui/tile.tsx:592
+#: src/features/weather/ui/tile.tsx:598
 msgid "Background"
 msgstr "পটভূমি"
 
@@ -538,7 +538,7 @@ msgstr "দিওয়ালি আলোয় উৎসব, যা পুন�
 msgid "Diyas and candles glow along doorways and windows, while rangoli patterns bloom across thresholds in colour and light."
 msgstr "দরজা ও জানালার ধার ধরে দীপ ও মোমবাতি জ্বলে, আর রং ও আলোর রাঙ্গোলি নকশা দোরের চৌকাঠে ফুটে ওঠে।"
 
-#: src/app/bug/page.tsx:70
+#: src/app/bug/page.tsx:67
 msgid "Do not fill this field if you are human"
 msgstr "আপনি যদি মানুষ হন, তাহলে এই ক্ষেত্রটি পূরণ করবেন না"
 
@@ -1124,11 +1124,12 @@ msgstr "এই অবস্থানের জন্য দেখার নি�
 msgid "Locale"
 msgstr "লোকেল"
 
+#: src/features/location/ui/identified-location-indicator.tsx:87
 #: src/features/settings/ui/sections/weather-settings.tsx:42
 msgid "Location"
 msgstr "অবস্থান"
 
-#: src/features/location/ui/identified-location-indicator.tsx:52
+#: src/features/location/ui/identified-location-indicator.tsx:38
 msgid "Location name unavailable"
 msgstr "অবস্থানের নাম পাওয়া যাচ্ছে না"
 
@@ -1516,7 +1517,7 @@ msgstr "লাল খাম, কমলা/ম্যান্ডারিন, এ
 msgid "Religious & cultural"
 msgstr "ধর্মীয় ও সাংস্কৃতিক"
 
-#: src/app/bug/page.tsx:56
+#: src/app/bug/page.tsx:53
 msgid "Report a bug"
 msgstr "একটি বাগ রিপোর্ট করুন"
 
@@ -1533,6 +1534,7 @@ msgstr "OpenStreetMap অবদানকারীদের দ্বারা �
 msgid "Sat {hour}"
 msgstr "শনি {hour}"
 
+#: src/features/landing/ui/__tests__/landing-i18n-provider.test.tsx:92
 #: src/features/weather/ui/tile.tsx:131
 msgid "Saturday"
 msgstr "শনিবার"
@@ -1617,7 +1619,7 @@ msgid "Show strong wind alerts"
 msgstr "শক্তিশালী বায়ু সতর্কবার্তা দেখান"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:180
-#: src/features/weather/ui/tile.tsx:584
+#: src/features/weather/ui/tile.tsx:590
 msgid "Show this event"
 msgstr "এই ইভেন্টটি দেখান"
 
@@ -1703,7 +1705,7 @@ msgstr "{timeUntilStrongWind} ঘণ্টা পর শক্তিশালী
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "এক ঘণ্টা পর শক্তিশালী বাতাসের ঝড় শুরু হবে"
 
-#: src/app/bug/page.tsx:83
+#: src/app/bug/page.tsx:80
 msgid "Submit"
 msgstr "জমা দিন"
 
@@ -1808,7 +1810,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "লালের ঠিক কোন ছায়া হবে তা নির্ভর করে সেই সময় পৃথিবীর বায়ুমণ্ডলে কী আছে তার উপর। বড় আগ্নেয়গিরির অগ্ন্যুৎপাতের পরে চাঁদ বিশেষভাবে গাঢ়, প্রায় বাদামী লাল রঙ ধারণ করতে পারে।"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:517
 msgid "The expected type of weather is {0}."
 msgstr "প্রত্যাশিত আবহাওয়ার ধরণ হলো {0}।"
 
@@ -1877,27 +1879,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "হিসাবটা অদ্ভুতভাবে উৎসাহজনক — ১৯৭০ সাল থেকে আর্থ ডেতে লাগানো গাছের সংখ্যা এখন কোটির ঘরে।"
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:473
+#: src/features/weather/ui/tile.tsx:479
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "সর্বাধিক তাপমাত্রা হবে {0} ডিগ্রি সেলসিয়াস।"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:479
+#: src/features/weather/ui/tile.tsx:485
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "সর্বাধিক তাপমাত্রা হবে {0} ডিগ্রি ফারেনহাইট।"
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:537
+#: src/features/weather/ui/tile.tsx:543
 msgid "The maximum UV index will be {0}."
 msgstr "সর্বাধিক ইউভি সূচক হবে {0}।"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:550
+#: src/features/weather/ui/tile.tsx:556
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "সর্বাধিক বায়ুর গতি হবে {0} কিলোমিটার প্রতি ঘণ্টা।"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:556
+#: src/features/weather/ui/tile.tsx:562
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "সর্বাধিক বায়ুর গতি হবে {0} মাইল প্রতি ঘণ্টা।"
 
@@ -1914,12 +1916,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "উল্কাগুলো প্রায় ৬৬ কিমি/সেকেন্ড গতিতে বায়ুমণ্ডলে প্রবেশ করে, যেকোনো বার্ষিক উল্কাবৃষ্টির দ্রুততমগুলির মধ্যে, তাই এগুলো প্রায়ই দীর্ঘস্থায়ী উজ্জ্বল রেখা রেখে যায়।"
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:492
+#: src/features/weather/ui/tile.tsx:498
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "ন্যূনতম তাপমাত্রা হবে {0} ডিগ্রি সেলসিয়াস।"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:498
+#: src/features/weather/ui/tile.tsx:504
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "ন্যূনতম তাপমাত্রা হবে {0} ডিগ্রি ফারেনহাইট।"
 
@@ -2060,7 +2062,7 @@ msgid "Their radiant lies in the constellation Perseus. The shower is best place
 msgstr "এদের আপাত উৎসবিন্দু পার্সিয়াস নক্ষত্রমণ্ডলে অবস্থিত। এই উল্কাবৃষ্টি উত্তর গোলার্ধ থেকে সবচেয়ে ভালো দেখা যায়; আরও দক্ষিণে গেলে দৃশ্যমানতা কমে।"
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:570
+#: src/features/weather/ui/tile.tsx:576
 msgid "There is a {0}% chance of precipitation."
 msgstr "বৃষ্টির সম্ভাবনা {0}%।"
 
@@ -2218,8 +2220,8 @@ msgstr "অস্বাস্থ্যকর"
 msgid "Unhealthy for sensitive groups"
 msgstr "সংবেদনশীল গোষ্ঠীর জন্য অস্বাস্থ্যকর"
 
-#: src/features/weather/ui/tile.tsx:507
-#: src/features/weather/ui/tile.tsx:514
+#: src/features/weather/ui/tile.tsx:513
+#: src/features/weather/ui/tile.tsx:520
 msgid "unknown conditions"
 msgstr "অজানা অবস্থা"
 
@@ -2423,7 +2425,7 @@ msgstr "আপনি কি একটি পর্যালোচনা ছে�
 msgid "You've been using Weather Please for a while"
 msgstr "আপনি একটি সময়ের জন্য Weather Please ব্যবহার করেছেন"
 
-#: src/app/bug/page.tsx:59
+#: src/app/bug/page.tsx:56
 msgid "Your email (optional)"
 msgstr "আপনার ইমেল (ঐচ্ছিক)"
 
@@ -2435,7 +2437,7 @@ msgstr "আপনার অবস্থানের তথ্য আপনার
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "আপনার অবস্থান বর্তমানে উপলব্ধ নয়. অনুগ্রহ করে নিশ্চিত করুন যে আপনার ডিভাইসে অবস্থান পরিষেবা চালু আছে এবং আবার চেষ্টা করুন."
 
-#: src/app/bug/page.tsx:64
+#: src/app/bug/page.tsx:61
 msgid "Your message"
 msgstr "আপনার বার্তা"
 

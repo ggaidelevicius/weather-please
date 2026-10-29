@@ -72,12 +72,12 @@ msgid "{0} between <0/>"
 msgstr "{0} antara <0/>"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:543
+#: src/features/weather/ui/tile.tsx:549
 msgid "{0} km/h"
 msgstr "{0} km/j"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:545
+#: src/features/weather/ui/tile.tsx:551
 msgid "{0} mph"
 msgstr "{0} mph"
 
@@ -334,7 +334,7 @@ msgstr "Angin rata-rata"
 
 #: src/features/settings/ui/sections/general-settings.tsx:68
 #: src/features/settings/ui/sections/seasonal-settings.tsx:169
-#: src/features/weather/ui/tile.tsx:592
+#: src/features/weather/ui/tile.tsx:598
 msgid "Background"
 msgstr "Latar belakang"
 
@@ -538,7 +538,7 @@ msgstr "Diwali adalah festival cahaya, merayakan pembaruan, harapan, dan kemenan
 msgid "Diyas and candles glow along doorways and windows, while rangoli patterns bloom across thresholds in colour and light."
 msgstr "Diyas dan lilin bersinar di sepanjang pintu dan jendela, sementara pola rangoli bermekaran di ambang rumah dalam warna dan cahaya."
 
-#: src/app/bug/page.tsx:70
+#: src/app/bug/page.tsx:67
 msgid "Do not fill this field if you are human"
 msgstr "Jangan isi kolom ini jika Anda manusia"
 
@@ -1124,11 +1124,12 @@ msgstr "Panduan pengamatan belum tersedia untuk lokasi ini. Pastikan lokasi cuac
 msgid "Locale"
 msgstr "Lokal"
 
+#: src/features/location/ui/identified-location-indicator.tsx:87
 #: src/features/settings/ui/sections/weather-settings.tsx:42
 msgid "Location"
 msgstr "Lokasi"
 
-#: src/features/location/ui/identified-location-indicator.tsx:52
+#: src/features/location/ui/identified-location-indicator.tsx:38
 msgid "Location name unavailable"
 msgstr "Nama lokasi tidak tersedia"
 
@@ -1516,7 +1517,7 @@ msgstr "Angpao merah, jeruk mandarin, dan kuplet kaligrafi menyampaikan harapan 
 msgid "Religious & cultural"
 msgstr "Keagamaan & budaya"
 
-#: src/app/bug/page.tsx:56
+#: src/app/bug/page.tsx:53
 msgid "Report a bug"
 msgstr "Laporkan bug"
 
@@ -1533,6 +1534,7 @@ msgstr "Geocoding terbalik oleh kontributor OpenStreetMap"
 msgid "Sat {hour}"
 msgstr "Sab {hour}"
 
+#: src/features/landing/ui/__tests__/landing-i18n-provider.test.tsx:92
 #: src/features/weather/ui/tile.tsx:131
 msgid "Saturday"
 msgstr "Sabtu"
@@ -1617,7 +1619,7 @@ msgid "Show strong wind alerts"
 msgstr "Tampilkan peringatan angin kencang"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:180
-#: src/features/weather/ui/tile.tsx:584
+#: src/features/weather/ui/tile.tsx:590
 msgid "Show this event"
 msgstr "Tampilkan acara ini"
 
@@ -1703,7 +1705,7 @@ msgstr "Hembusan angin kencang dimulai dalam {timeUntilStrongWind} jam"
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "Hembusan angin kencang dimulai dalam 1 jam"
 
-#: src/app/bug/page.tsx:83
+#: src/app/bug/page.tsx:80
 msgid "Submit"
 msgstr "Kirim"
 
@@ -1808,7 +1810,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "Nuansa merah yang tepat bergantung pada apa yang ada di atmosfer Bumi saat itu. Setelah letusan gunung berapi besar, Bulan bisa berubah menjadi merah yang sangat gelap, hampir kecokelatan."
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:517
 msgid "The expected type of weather is {0}."
 msgstr "Tipe cuaca yang diharapkan adalah {0}."
 
@@ -1877,27 +1879,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "Angkanya ternyata sangat menggembirakan — pohon-pohon yang ditanam sejak Hari Bumi 1970 kini berjumlah miliaran."
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:473
+#: src/features/weather/ui/tile.tsx:479
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "Suhu maksimum akan mencapai {0} derajat celsius."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:479
+#: src/features/weather/ui/tile.tsx:485
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "Suhu maksimum akan mencapai {0} derajat fahrenheit."
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:537
+#: src/features/weather/ui/tile.tsx:543
 msgid "The maximum UV index will be {0}."
 msgstr "Indeks UV maksimum akan mencapai {0}."
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:550
+#: src/features/weather/ui/tile.tsx:556
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "Kecepatan angin maksimum akan mencapai {0} kilometer per jam."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:556
+#: src/features/weather/ui/tile.tsx:562
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "Kecepatan angin maksimum akan mencapai {0} mil per jam."
 
@@ -1914,12 +1916,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "Meteor-meteor memasuki atmosfer dengan kecepatan sekitar 66 km/s, termasuk yang tercepat dari hujan meteor tahunan mana pun, itulah mengapa mereka sering meninggalkan jejak cahaya yang bertahan lama."
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:492
+#: src/features/weather/ui/tile.tsx:498
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "Suhu minimum akan mencapai {0} derajat celsius."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:498
+#: src/features/weather/ui/tile.tsx:504
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "Suhu minimum akan mencapai {0} derajat fahrenheit."
 
@@ -2060,7 +2062,7 @@ msgid "Their radiant lies in the constellation Perseus. The shower is best place
 msgstr "Radiannya berada di rasi Perseus. Hujan meteor ini paling baik diamati dari belahan Bumi utara, dan semakin sulit terlihat ke arah selatan."
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:570
+#: src/features/weather/ui/tile.tsx:576
 msgid "There is a {0}% chance of precipitation."
 msgstr "Ada kemungkinan {0}% akan terjadi presipitasi."
 
@@ -2218,8 +2220,8 @@ msgstr "Tidak sehat"
 msgid "Unhealthy for sensitive groups"
 msgstr "Tidak sehat untuk kelompok sensitif"
 
-#: src/features/weather/ui/tile.tsx:507
-#: src/features/weather/ui/tile.tsx:514
+#: src/features/weather/ui/tile.tsx:513
+#: src/features/weather/ui/tile.tsx:520
 msgid "unknown conditions"
 msgstr "kondisi tidak diketahui"
 
@@ -2423,7 +2425,7 @@ msgstr "Apakah Anda ingin meninggalkan ulasan?"
 msgid "You've been using Weather Please for a while"
 msgstr "Anda telah menggunakan Weather Please untuk beberapa waktu"
 
-#: src/app/bug/page.tsx:59
+#: src/app/bug/page.tsx:56
 msgid "Your email (optional)"
 msgstr "Email Anda (opsional)"
 
@@ -2435,7 +2437,7 @@ msgstr "Data lokasi Anda disimpan dengan aman secara eksklusif di perangkat prib
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "Lokasi Anda saat ini tidak tersedia. Pastikan layanan lokasi di perangkat Anda aktif dan coba lagi."
 
-#: src/app/bug/page.tsx:64
+#: src/app/bug/page.tsx:61
 msgid "Your message"
 msgstr "Pesan Anda"
 

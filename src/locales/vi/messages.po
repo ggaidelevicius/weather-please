@@ -72,12 +72,12 @@ msgid "{0} between <0/>"
 msgstr "{0} trong khoảng <0/>"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:543
+#: src/features/weather/ui/tile.tsx:549
 msgid "{0} km/h"
 msgstr "{0} km/h"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:545
+#: src/features/weather/ui/tile.tsx:551
 msgid "{0} mph"
 msgstr "{0} mph"
 
@@ -334,7 +334,7 @@ msgstr "Gió trung bình"
 
 #: src/features/settings/ui/sections/general-settings.tsx:68
 #: src/features/settings/ui/sections/seasonal-settings.tsx:169
-#: src/features/weather/ui/tile.tsx:592
+#: src/features/weather/ui/tile.tsx:598
 msgid "Background"
 msgstr "Nền"
 
@@ -538,7 +538,7 @@ msgstr "Diwali là lễ hội ánh sáng, tôn vinh sự tái sinh, hy vọng v�
 msgid "Diyas and candles glow along doorways and windows, while rangoli patterns bloom across thresholds in colour and light."
 msgstr "Đèn dầu và nến toả sáng dọc lối cửa và khung cửa sổ, trong khi các hoạ tiết rangoli nở rộ trên ngưỡng cửa bằng sắc màu và ánh sáng."
 
-#: src/app/bug/page.tsx:70
+#: src/app/bug/page.tsx:67
 msgid "Do not fill this field if you are human"
 msgstr "Không điền vào trường này nếu bạn là con người"
 
@@ -1124,11 +1124,12 @@ msgstr "Chưa có hướng dẫn quan sát cho vị trí này. Hãy kiểm tra x
 msgid "Locale"
 msgstr "Cài đặt vùng"
 
+#: src/features/location/ui/identified-location-indicator.tsx:87
 #: src/features/settings/ui/sections/weather-settings.tsx:42
 msgid "Location"
 msgstr "Vị trí"
 
-#: src/features/location/ui/identified-location-indicator.tsx:52
+#: src/features/location/ui/identified-location-indicator.tsx:38
 msgid "Location name unavailable"
 msgstr "Tên địa điểm không có sẵn"
 
@@ -1516,7 +1517,7 @@ msgstr "Phong bao đỏ, quýt và câu đối thư pháp gửi gắm lời chú
 msgid "Religious & cultural"
 msgstr "Tôn giáo & văn hóa"
 
-#: src/app/bug/page.tsx:56
+#: src/app/bug/page.tsx:53
 msgid "Report a bug"
 msgstr "Báo cáo lỗi"
 
@@ -1533,6 +1534,7 @@ msgstr "Mã hóa địa lý ngược bởi các đóng góp viên OpenStreetMap"
 msgid "Sat {hour}"
 msgstr "T7 {hour}"
 
+#: src/features/landing/ui/__tests__/landing-i18n-provider.test.tsx:92
 #: src/features/weather/ui/tile.tsx:131
 msgid "Saturday"
 msgstr "Thứ Bảy"
@@ -1617,7 +1619,7 @@ msgid "Show strong wind alerts"
 msgstr "Hiển thị cảnh báo gió mạnh"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:180
-#: src/features/weather/ui/tile.tsx:584
+#: src/features/weather/ui/tile.tsx:590
 msgid "Show this event"
 msgstr "Hiển thị sự kiện này"
 
@@ -1703,7 +1705,7 @@ msgstr "Cơn gió mạnh bắt đầu sau {timeUntilStrongWind} giờ"
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "Cơn gió mạnh bắt đầu sau 1 giờ"
 
-#: src/app/bug/page.tsx:83
+#: src/app/bug/page.tsx:80
 msgid "Submit"
 msgstr "Gửi"
 
@@ -1808,7 +1810,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "Sắc đỏ chính xác phụ thuộc vào những gì có trong khí quyển Trái Đất vào thời điểm đó. Sau những vụ phun trào núi lửa lớn, Mặt Trăng có thể chuyển sang màu đỏ đặc biệt tối, gần như nâu đỏ."
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:517
 msgid "The expected type of weather is {0}."
 msgstr "Loại thời tiết dự kiến là {0}."
 
@@ -1877,27 +1879,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "Con số đó thật đáng khích lệ một cách kỳ lạ — những cây được trồng trong Ngày Trái Đất từ năm 1970 đến nay đã lên tới hàng tỷ."
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:473
+#: src/features/weather/ui/tile.tsx:479
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "Nhiệt độ tối đa sẽ là {0} độ C."
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:479
+#: src/features/weather/ui/tile.tsx:485
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "Nhiệt độ tối đa sẽ là {0} độ F."
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:537
+#: src/features/weather/ui/tile.tsx:543
 msgid "The maximum UV index will be {0}."
 msgstr "Chỉ số UV tối đa sẽ là {0}."
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:550
+#: src/features/weather/ui/tile.tsx:556
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "Tốc độ gió tối đa sẽ là {0} km một giờ."
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:556
+#: src/features/weather/ui/tile.tsx:562
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "Tốc độ gió tối đa sẽ là {0} dặm một giờ."
 
@@ -1914,12 +1916,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "Các sao băng đi vào khí quyển với vận tốc khoảng 66 km/s, thuộc hàng nhanh nhất trong bất kỳ trận mưa sao băng thường niên nào, đó là lý do chúng thường để lại những vệt sáng kéo dài."
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:492
+#: src/features/weather/ui/tile.tsx:498
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "Nhiệt độ tối thiểu sẽ là {0} độ C."
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:498
+#: src/features/weather/ui/tile.tsx:504
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "Nhiệt độ tối thiểu sẽ là {0} độ F."
 
@@ -2060,7 +2062,7 @@ msgid "Their radiant lies in the constellation Perseus. The shower is best place
 msgstr "Tâm điểm của trận mưa sao băng này nằm trong chòm sao Anh Tiên (Perseus). Bắc bán cầu có điều kiện quan sát thuận lợi nhất; càng về phía nam, khả năng quan sát càng giảm."
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:570
+#: src/features/weather/ui/tile.tsx:576
 msgid "There is a {0}% chance of precipitation."
 msgstr "Có {0}% khả năng có mưa."
 
@@ -2218,8 +2220,8 @@ msgstr "Không tốt"
 msgid "Unhealthy for sensitive groups"
 msgstr "Không tốt cho nhóm nhạy cảm"
 
-#: src/features/weather/ui/tile.tsx:507
-#: src/features/weather/ui/tile.tsx:514
+#: src/features/weather/ui/tile.tsx:513
+#: src/features/weather/ui/tile.tsx:520
 msgid "unknown conditions"
 msgstr "điều kiện không xác định"
 
@@ -2423,7 +2425,7 @@ msgstr "Bạn có muốn để lại đánh giá?"
 msgid "You've been using Weather Please for a while"
 msgstr "Bạn đã sử dụng Weather Please trong một thời gian"
 
-#: src/app/bug/page.tsx:59
+#: src/app/bug/page.tsx:56
 msgid "Your email (optional)"
 msgstr "Email của bạn (tùy chọn)"
 
@@ -2435,7 +2437,7 @@ msgstr "Dữ liệu vị trí của bạn được lưu trữ an toàn và độ
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "Vị trí của bạn hiện không khả dụng. Vui lòng kiểm tra rằng dịch vụ vị trí đã được bật trên thiết bị của bạn và thử lại."
 
-#: src/app/bug/page.tsx:64
+#: src/app/bug/page.tsx:61
 msgid "Your message"
 msgstr "Tin nhắn của bạn"
 

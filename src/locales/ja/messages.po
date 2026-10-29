@@ -72,12 +72,12 @@ msgid "{0} between <0/>"
 msgstr "{0}（<0/>の間）"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:543
+#: src/features/weather/ui/tile.tsx:549
 msgid "{0} km/h"
 msgstr "{0} キロメートル/時"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:545
+#: src/features/weather/ui/tile.tsx:551
 msgid "{0} mph"
 msgstr "{0} マイル/時"
 
@@ -334,7 +334,7 @@ msgstr "平均風速"
 
 #: src/features/settings/ui/sections/general-settings.tsx:68
 #: src/features/settings/ui/sections/seasonal-settings.tsx:169
-#: src/features/weather/ui/tile.tsx:592
+#: src/features/weather/ui/tile.tsx:598
 msgid "Background"
 msgstr "背景"
 
@@ -538,7 +538,7 @@ msgstr "ディワリは光の祭りで、再生と希望、そして闇に対す
 msgid "Diyas and candles glow along doorways and windows, while rangoli patterns bloom across thresholds in colour and light."
 msgstr "ディヤ（灯明）やろうそくが玄関や窓辺を照らし、ランゴリの模様が色と光で敷居を彩ります。"
 
-#: src/app/bug/page.tsx:70
+#: src/app/bug/page.tsx:67
 msgid "Do not fill this field if you are human"
 msgstr "あなたが人間の場合、このフィールドを入力しないでください"
 
@@ -1124,11 +1124,12 @@ msgstr "この場所の観測ガイドは利用できません。天気の表示
 msgid "Locale"
 msgstr "ロケール"
 
+#: src/features/location/ui/identified-location-indicator.tsx:87
 #: src/features/settings/ui/sections/weather-settings.tsx:42
 msgid "Location"
 msgstr "位置"
 
-#: src/features/location/ui/identified-location-indicator.tsx:52
+#: src/features/location/ui/identified-location-indicator.tsx:38
 msgid "Location name unavailable"
 msgstr "場所名が利用できません"
 
@@ -1516,7 +1517,7 @@ msgstr "紅包（赤い封筒）、みかん、対句の書は、豊かさや幸
 msgid "Religious & cultural"
 msgstr "宗教・文化"
 
-#: src/app/bug/page.tsx:56
+#: src/app/bug/page.tsx:53
 msgid "Report a bug"
 msgstr "バグを報告する"
 
@@ -1533,6 +1534,7 @@ msgstr "OpenStreetMapの貢献者によるリバースジオコーディング"
 msgid "Sat {hour}"
 msgstr "土 {hour}"
 
+#: src/features/landing/ui/__tests__/landing-i18n-provider.test.tsx:92
 #: src/features/weather/ui/tile.tsx:131
 msgid "Saturday"
 msgstr "土曜日"
@@ -1617,7 +1619,7 @@ msgid "Show strong wind alerts"
 msgstr "強風警報を表示する"
 
 #: src/features/settings/ui/sections/seasonal-settings.tsx:180
-#: src/features/weather/ui/tile.tsx:584
+#: src/features/weather/ui/tile.tsx:590
 msgid "Show this event"
 msgstr "このイベントを表示"
 
@@ -1703,7 +1705,7 @@ msgstr "{timeUntilStrongWind}時間後に強い風の突風が始まります"
 msgid "Strong wind gusts starting in 1 hour"
 msgstr "1時間後に強い風の突風が始まります"
 
-#: src/app/bug/page.tsx:83
+#: src/app/bug/page.tsx:80
 msgid "Submit"
 msgstr "提出"
 
@@ -1808,7 +1810,7 @@ msgid "The exact shade of red depends on what's in Earth's atmosphere at the tim
 msgstr "正確な赤の色合いは、その時の地球の大気に何があるかによって異なります。大きな火山噴火の後は、月が特に暗く、ほとんど茶褐色の赤になることがあります。"
 
 #. placeholder {0}: descriptionMap[description as keyof typeof descriptionMap] ?? ( <Trans>unknown conditions</Trans> )
-#: src/features/weather/ui/tile.tsx:511
+#: src/features/weather/ui/tile.tsx:517
 msgid "The expected type of weather is {0}."
 msgstr "予想される天気は{0}です。"
 
@@ -1877,27 +1879,27 @@ msgid "The math is oddly encouraging — the trees planted on Earth Day since 19
 msgstr "数字は意外にも希望が持てます — 1970年以来のアースデイに植えられた木は今や数十億本に上ります。"
 
 #. placeholder {0}: Math.round(max)
-#: src/features/weather/ui/tile.tsx:473
+#: src/features/weather/ui/tile.tsx:479
 msgid "The maximum temperature will be {0} degrees celsius."
 msgstr "最高気温は{0}度Cになります。"
 
 #. placeholder {0}: Math.round((max * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:479
+#: src/features/weather/ui/tile.tsx:485
 msgid "The maximum temperature will be {0} degrees fahrenheit."
 msgstr "最高気温は{0}度ファーレンハイトになります。"
 
 #. placeholder {0}: Math.round(uv)
-#: src/features/weather/ui/tile.tsx:537
+#: src/features/weather/ui/tile.tsx:543
 msgid "The maximum UV index will be {0}."
 msgstr "最大UV指数は{0}になります。"
 
 #. placeholder {0}: Math.round(wind)
-#: src/features/weather/ui/tile.tsx:550
+#: src/features/weather/ui/tile.tsx:556
 msgid "The maximum wind speed will be {0} kilometers per hour."
 msgstr "最大風速は時速{0}キロメートルになります。"
 
 #. placeholder {0}: Math.round(wind / 1.609344)
-#: src/features/weather/ui/tile.tsx:556
+#: src/features/weather/ui/tile.tsx:562
 msgid "The maximum wind speed will be {0} miles per hour."
 msgstr "最大風速は時速{0}マイルになります。"
 
@@ -1914,12 +1916,12 @@ msgid "The meteors enter the atmosphere at about 66 km/s, among the fastest of a
 msgstr "流星は毎秒約66kmで大気圏に入ります — 年間流星群の中でも最速の部類で、そのため長く残る光のトレイルを残すことが多いです。"
 
 #. placeholder {0}: Math.round(min)
-#: src/features/weather/ui/tile.tsx:492
+#: src/features/weather/ui/tile.tsx:498
 msgid "The minimum temperature will be {0} degrees celsius."
 msgstr "最低気温は{0}度セルシウスになります。"
 
 #. placeholder {0}: Math.round((min * 9) / 5 + 32)
-#: src/features/weather/ui/tile.tsx:498
+#: src/features/weather/ui/tile.tsx:504
 msgid "The minimum temperature will be {0} degrees fahrenheit."
 msgstr "最低気温は{0}度ファーレンハイトになります。"
 
@@ -2060,7 +2062,7 @@ msgid "Their radiant lies in the constellation Perseus. The shower is best place
 msgstr "放射点はペルセウス座にあります。この流星群は北半球で最も観測しやすく、南へ行くほど見えにくくなります。"
 
 #. placeholder {0}: Math.round(rain)
-#: src/features/weather/ui/tile.tsx:570
+#: src/features/weather/ui/tile.tsx:576
 msgid "There is a {0}% chance of precipitation."
 msgstr "降水確率は{0}%です。"
 
@@ -2218,8 +2220,8 @@ msgstr "有害"
 msgid "Unhealthy for sensitive groups"
 msgstr "敏感な人に有害"
 
-#: src/features/weather/ui/tile.tsx:507
-#: src/features/weather/ui/tile.tsx:514
+#: src/features/weather/ui/tile.tsx:513
+#: src/features/weather/ui/tile.tsx:520
 msgid "unknown conditions"
 msgstr "不明な状態"
 
@@ -2423,7 +2425,7 @@ msgstr "レビューを残してもよろしいですか？"
 msgid "You've been using Weather Please for a while"
 msgstr "あなたはしばらく「Weather Please」を使用してきました"
 
-#: src/app/bug/page.tsx:59
+#: src/app/bug/page.tsx:56
 msgid "Your email (optional)"
 msgstr "あなたのメール（任意）"
 
@@ -2435,7 +2437,7 @@ msgstr "あなたの位置データは、あなたの個人的なデバイス上
 msgid "Your location is currently unavailable. Please check that location services are enabled on your device and try again."
 msgstr "現在、位置情報を利用できません。デバイスの位置情報サービスが有効になっていることを確認して再度お試しください。"
 
-#: src/app/bug/page.tsx:64
+#: src/app/bug/page.tsx:61
 msgid "Your message"
 msgstr "あなたのメッセージ"
 
