@@ -68,13 +68,19 @@ export const IdentifiedLocationIndicator = ({
 			initial={{ opacity: 0, scale: 0.98 }}
 		>
 			<motion.button
+				animate={{
+					paddingLeft: isExpanded ? 12 : 8,
+					paddingRight: isExpanded ? 12 : 8,
+				}}
 				aria-controls={contentId}
 				aria-describedby={isExpanded ? contentId : undefined}
 				aria-expanded={isExpanded}
 				aria-labelledby={buttonLabelId}
-				className="flex w-fit max-w-[calc(100vw-6rem)] cursor-pointer items-center rounded-full border border-white/10 bg-dark-950/78 px-3 py-1.5 text-left text-xs font-medium text-white shadow-sm backdrop-blur-md transition-colors hover:bg-dark-950/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+				className="flex h-7.5 w-fit max-w-[calc(100vw-6rem)] cursor-pointer items-center rounded-full border border-white/10 bg-dark-950/78 py-1.5 text-left text-xs font-medium text-white shadow-sm backdrop-blur-md transition-colors hover:bg-dark-950/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+				initial={false}
 				onClick={handleToggle}
 				title={`${lat}, ${lon}`}
+				transition={{ damping: 32, stiffness: 360, type: 'spring' }}
 				type="button"
 			>
 				<IconMapPin
@@ -103,7 +109,7 @@ export const IdentifiedLocationIndicator = ({
 						type: 'spring',
 					}}
 				>
-					<span className="block truncate">{locationContent}</span>
+					<span className="block w-max">{locationContent}</span>
 				</motion.span>
 			</motion.button>
 		</motion.div>
