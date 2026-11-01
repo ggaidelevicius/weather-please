@@ -23,7 +23,6 @@ import { FEATURE_SCENE_COPY } from '../model/landing-copy'
 import { HourlyDetailVisual, SeasonalVisual } from './feature-demos'
 import { GoogleApiDisclosure } from './google-api-disclosure'
 import { PrivacyVisual } from './privacy-visual'
-import { ShowcaseReveal } from './showcase-reveal'
 
 export const FeatureShowcase = ({
 	hourly,
@@ -59,7 +58,7 @@ const ShowcaseScene = ({
 	scene: Scene
 	visual: ReactNode
 }>) => (
-	<ShowcaseReveal
+	<section
 		className={clsx(
 			'mx-auto grid max-w-7xl items-center gap-7 px-4 py-12 sm:px-6 lg:gap-14 lg:px-8 lg:py-16',
 			isFlipped
@@ -87,7 +86,7 @@ const ShowcaseScene = ({
 		<div className="flex min-h-0 items-center justify-center overflow-hidden">
 			{visual}
 		</div>
-	</ShowcaseReveal>
+	</section>
 )
 
 const SAMPLE_CALENDAR_ACCOUNTS = [
