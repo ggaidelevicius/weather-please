@@ -53,6 +53,10 @@ is used for translations.
 Use the pnpm version pinned in `package.json`. Installation also sets up the
 project's pinned Node.js 26 runtime for pnpm commands and Git hooks.
 
+The website checks for native Temporal during Node.js server startup and loads
+`@js-temporal/polyfill` only when the hosted runtime omits it. Browser and
+extension code continue to use native Temporal.
+
 ```bash
 pnpm install --frozen-lockfile
 pnpm dev
