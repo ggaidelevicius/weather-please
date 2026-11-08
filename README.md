@@ -1,105 +1,75 @@
-# <img src="https://raw.githubusercontent.com/ggaidelevicius/weather-please/main/public/favicon.png" alt="Weather Please logo" width="50"> Weather Please
+# <img src="https://raw.githubusercontent.com/ggaidelevicius/weather-please/main/public/favicon.png" alt="" width="40"> Weather Please
 
-Weather Please is a new tab replacement extension for Chrome 144+ and Firefox
-139+. The extension and website use the browsers' native Temporal API.
+A new tab extension that shows today's weather and the next 8 days, with alerts
+for extreme conditions. Weather data comes from
+[Open-Meteo](https://open-meteo.com/).
 
-It displays maximum and minimum temperatures, a general prognosis, maximum UV
-index, maximum wind speed, and chance of precipitation for the current day, as
-well as up to 8 days into the future.
+[Chrome](https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn)
+· [Firefox](https://addons.mozilla.org/en-US/firefox/addon/weather-please/) ·
+[Live demo](https://weather-please.app/)
 
-It also displays weather alerts in the case of extreme UV, high precipitation,
-strong wind, and low visibility. All alerts are fully toggleable on a per
-alert-type basis.
-
-Both metric and imperial number formats are supported.
-
-Weather Please uses [Open Meteo](https://open-meteo.com/) as the source for all
-weather data.
-
-[Get Weather Please for Google Chrome](https://chrome.google.com/webstore/detail/weather-please/pgpheojdhgdjjahjpacijmgenmegnchn)
-
-[Get Weather Please for Firefox](https://addons.mozilla.org/en-US/firefox/addon/weather-please/)
-
-[Try a live demo](https://weather-please.app/)
-
-## Translations
-
-Weather Please is available in the following languages:
-
-- Bengali
-- German
-- English
-- Spanish
-- French
-- Hindi
-- Indonesian
-- Italian
-- Japanese
-- Korean
-- Lithuanian
-- Portuguese (Brazil)
-- Russian
-- Vietnamese
-- Chinese
-
-## Development
-
-Weather Please is built using [Next.js](https://nextjs.org/). It uses
-[Tailwind CSS](https://tailwindcss.com/),
-[Tabler Icons](https://tablericons.com/), and
-[Framer Motion](https://www.framer.com/motion/). [Lingui](https://lingui.dev/)
-is used for translations.
-
-Use the pnpm version pinned in `package.json`. Installation also sets up the
-project's pinned Node.js 26 runtime for pnpm commands and Git hooks.
-
-The website checks for native Temporal during Node.js server startup and loads
-`@js-temporal/polyfill` only when the hosted runtime omits it. Browser and
-extension code continue to use native Temporal.
+## Quick start
 
 ```bash
-pnpm install --frozen-lockfile
+pnpm install --frozen-lockfile   # also installs the pinned Node.js 26 runtime
 pnpm dev
 ```
 
-Open `/demo` for the weather dashboard. The weather dashboard needs no account
-or API key. The optional hosted bug form and calendar integrations are described
-in [the development guide](docs/development.md), including environment
-variables, database setup, and OAuth redirect configuration.
+Open `http://localhost:3000/demo`. The dashboard works without any environment
+variables. You only need a `.env.local` for the bug form and calendar sign-in.
+See [development](docs/development.md#setup).
 
-```bash
-pnpm db:generate       # Requires DATABASE_URL; generating does not connect to it
-pnpm typecheck
-pnpm test
-pnpm exec oxlint .
-pnpm exec oxfmt . --check
-pnpm build:extension   # Writes the unpacked extension to extension/
-pnpm build:web         # Builds the hosted website; requires DATABASE_URL
-pnpm start             # Serves the website build
+## Commands
+
+| Command                     | What it does                                             |
+| --------------------------- | -------------------------------------------------------- |
+| `pnpm dev`                  | Dev server for the website and dashboard                 |
+| `pnpm typecheck`            | Generates Next.js types, then runs `tsc --noEmit`        |
+| `pnpm test`                 | Vitest unit tests                                        |
+| `pnpm test:browser`         | Playwright tests against the website and the extension   |
+| `pnpm exec oxlint .`        | Lint (read-only; `pnpm lint` applies fixes)              |
+| `pnpm exec oxfmt . --check` | Format check (read-only; `pnpm format` writes)           |
+| `pnpm build:extension`      | Unpacked extension in `extension/` (alias: `pnpm build`) |
+| `pnpm build:web`            | Website build for Vercel; needs `DATABASE_URL`           |
+| `pnpm release patch`        | Bumps versions and packages browser ZIPs                 |
+
+The pre-commit hook lints and formats staged files, then runs the type check, a
+full lint, and the tests.
+
+## Stack
+
+Next.js 16 (Pages Router for the dashboard, App Router for the website), React
+19 with React Compiler, TypeScript 7, Tailwind CSS, Lingui, Prisma, Vitest, and
+Playwright. The code uses native Temporal, so it needs Chrome 144+ or Firefox
+139+.
+
+## Layout
+
+```
+src/pages/demo.tsx   dashboard entry (also the extension's only page)
+src/app/             website: landing, privacy, /bug
+src/features/        feature modules (api, model, hooks, ui)
+src/shared/          browser utilities and shared UI
+src/server/          server-only code
+src/locales/         Lingui catalogs
+_locales/            browser-store extension name and description
+scripts/             extension build, release, and source archive
 ```
 
-`pnpm build` remains an alias for the extension build. Extension builds run in a
-temporary staging directory containing only the `/demo` route and its shared
-page setup, so website pages and their bundles are excluded. The build does not
-rename source directories or rewrite analytics imports. Website builds include
-analytics; extension builds exclude it. Website builds use Turbopack, while
-extension builds retain webpack for the existing Manifest V3 packaging. Vercel
-uses `pnpm build:web` through `vercel.json`.
+## Docs
 
-Standalone type checks and Next.js builds use native TypeScript 7. `pnpm lint`
-applies Oxlint fixes, and `pnpm format` applies Oxfmt formatting, including
-Tailwind class sorting. Use the direct `pnpm exec` commands above for read-only
-checks.
+- [Architecture](docs/architecture.md): module boundaries, routing, and caching
+- [Development](docs/development.md): environment, database, OAuth, browser
+  tests, and releases
+- [Privacy policy](PRIVACY.md)
 
-The pre-commit hook runs Oxlint and Oxfmt on staged files, then checks types,
-lints the full project, and runs tests. Staged fixes are included in the commit,
-while unstaged portions of partially staged files are preserved.
+## Translations
 
-See [architecture](docs/architecture.md) for module boundaries and
-[development and release instructions](docs/development.md) for browser smoke
-tests and packaging.
+Available in 15 languages: Bengali, Chinese, English, French, German, Hindi,
+Indonesian, Italian, Japanese, Korean, Lithuanian, Portuguese (Brazil), Russian,
+Spanish, and Vietnamese.
 
 ## Feedback
 
-If you encounter any issues, or have any suggestions, please
-[open a GitHub issue](https://github.com/ggaidelevicius/weather-please/issues).
+Found a bug or have an idea?
+[Open an issue](https://github.com/ggaidelevicius/weather-please/issues).

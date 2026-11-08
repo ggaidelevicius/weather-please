@@ -10,9 +10,11 @@ The `/demo` dashboard works without environment configuration. `pnpm dev` starts
 the hosted development server.
 
 Chrome 144+ and Firefox 139+ are the supported browsers. The application uses
-native Temporal throughout its date and time logic, without a polyfill. Direct
-Node commands outside pnpm also require Node 26+. Extension manifests enforce
-the corresponding browser minimums.
+native Temporal throughout its date and time logic. Browser and extension code
+never load a polyfill. The website's Node.js server checks for native Temporal
+at startup and loads `@js-temporal/polyfill` only when the hosted runtime omits
+it. Direct Node commands outside pnpm also require Node 26+. Extension manifests
+enforce the corresponding browser minimums.
 
 TypeScript 7 provides the native `tsc` compiler used by `pnpm typecheck` and
 `pnpm tsc --noEmit`. Next.js builds use the same compiler through
@@ -117,7 +119,15 @@ Oxlint check, and tests.
 
 `pnpm build` and `pnpm build:extension` produce `extension/`. Load that
 directory as an unpacked extension to try the build locally. `pnpm build:web`
-produces the website build used by `pnpm start` and Vercel.
+produces the website build used by `pnpm start` and Vercel (through
+`vercel.json`).
+
+Extension builds run in a temporary staging directory that contains only the
+`/demo` route and its shared page setup, so website pages and their bundles are
+excluded. The build does not rename source directories or rewrite analytics
+imports. Website builds include analytics; extension builds exclude it. Website
+builds use Turbopack, while extension builds keep webpack for the Manifest V3
+packaging.
 
 ```bash
 pnpm source:archive   # Produces extension/src.zip without changing versions

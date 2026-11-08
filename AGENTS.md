@@ -101,6 +101,37 @@ preserve lint-staged's default handling of partially staged files and failures.
 - Oxfmt uses tabs and `printWidth: 80`.
 - Tailwind classes are sorted by Oxfmt.
 
+## README And Docs
+
+The README is the front page for developers who are new to the repo. It should
+get them oriented in under a minute. Explanations belong in `docs/`.
+
+- Keep these README sections, in this order: title and one-line description with
+  store/demo links, Quick start, Commands, Stack, Layout, Docs, Translations,
+  Feedback. Do not add new top-level sections.
+- Keep it under about 80 lines. Use tables, lists, and code blocks instead of
+  prose paragraphs.
+- Commands: one table row per user-facing `package.json` script, with a short
+  description. Add or update a row when you add, rename, or remove a script.
+- Layout: one line per top-level directory. Update it only when a directory is
+  added, moved, or removed.
+- Stack: list major dependencies only. Update it only for a major-version bump
+  or when a framework or library is added or removed.
+- Translations: update the language list when a locale is added or removed.
+- Do not put any of these in the README:
+  - how the build pipeline or tooling works internally
+  - runtime caveats or browser quirks
+  - environment variables, OAuth, or database setup
+  - caching and coordination behaviour
+  - release mechanics
+  - changelog entries Put setup, tooling, testing, and release details in
+    `docs/development.md`. Put module boundaries, routing, and data flow in
+    `docs/architecture.md`.
+- Most changes need no README edit. Only touch it when a change affects one of
+  the sections above.
+- In `docs/`, update the paragraph that covers the behaviour you changed rather
+  than appending a new one. Remove statements that are no longer true.
+
 ## Security
 
 - Never commit secrets or credentials.
