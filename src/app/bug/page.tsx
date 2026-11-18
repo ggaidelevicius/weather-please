@@ -13,11 +13,9 @@ import type { LocaleKey } from '../../shared/lib/i18n'
 import { changeLocalisation, locales } from '../../shared/lib/i18n'
 import { Button } from '../../shared/ui/button'
 import { Input, Textarea } from '../../shared/ui/input'
-import { submitForm } from '../actions'
+import { type BugReportState, submitForm } from '../actions'
 
-const initialState = {
-	message: '',
-}
+const initialState: BugReportState = { status: 'idle' }
 
 const isLocaleKey = (value: string): value is LocaleKey =>
 	Object.hasOwn(locales, value)
@@ -32,61 +30,67 @@ const Page = () => {
 
 const ContactForm = () => {
 	const params = useSearchParams()
-	const locale = params?.get('locale') ?? 'en'
+	const requestedLocale = params?.get('locale') ?? 'en'
+	const locale = isLocaleKey(requestedLocale) ? requestedLocale : 'en'
 	const [state, formAction, pending] = useActionState(submitForm, initialState)
 	const id = useId()
 
 	useEffect(() => {
-		if (isLocaleKey(locale)) {
-			changeLocalisation(locale)
-		} else {
-			changeLocalisation('en')
-		}
+		void changeLocalisation(locale)
 	}, [locale])
 
 	return (
 		<I18nProvider i18n={i18n}>
-			<Form action={formAction} className="flex w-full flex-col space-y-4">
-				{state.message === '' ? (
-					<>
-						<h1 className="mb-8 text-3xl font-medium tracking-tight text-pretty text-white">
-							<Trans>Report a bug</Trans>
-						</h1>
-						<Input
-							label={<Trans>Your email (optional)</Trans>}
-							name="email"
-							type="email"
-						/>
-						<Textarea
-							label={<Trans>Your message</Trans>}
-							name="message"
-							required
-						/>
-						<div className="absolute top-auto -left-2500 h-px w-px overflow-hidden">
-							<label className="sr-only" htmlFor={id}>
-								<Trans>Do not fill this field if you are human</Trans>
-							</label>
-							<input
-								autoComplete="off"
-								id={id}
-								name={id}
-								tabIndex={-1}
-								type="text"
-							/>
-						</div>
-						<input name="locale" type="hidden" value={locale} />
-						<input name="validation" type="hidden" value={id} />
-						<Button disabled={pending} type="submit">
-							<Trans>Submit</Trans>
-						</Button>
-					</>
-				) : (
-					<h1 className="flex items-end justify-center text-center text-4xl font-bold text-white">
-						<IconCircleCheckFilled aria-hidden className="mr-2" size={36} />
-						{state.message}
+			{state.status === 'success' ? (
+				<h1 className="flex items-end justify-center text-center text-4xl font-bold text-white">
+					<IconCircleCheckFilled aria-hidden className="mr-2" size={36} />
+					{state.message}
+				</h1>
+			) : (
+				<Form
+					action={formAction}
+					className="flex w-full flex-col space-y-4"
+					// React resets uncontrolled fields whenever an action resolves,
+					// including a validation or storage failure.
+					onReset={(event) => event.preventDefault()}
+				>
+					<h1 className="mb-8 text-3xl font-medium tracking-tight text-pretty text-white">
+						<Trans>Report a bug</Trans>
 					</h1>
-				)}
-			</Form>
+					<Input
+						label={<Trans>Your email (optional)</Trans>}
+						name="email"
+						type="email"
+					/>
+					<Textarea
+						label={<Trans>Your message</Trans>}
+						name="message"
+						required
+					/>
+					<div className="absolute top-auto -left-2500 h-px w-px overflow-hidden">
+						<label className="sr-only" htmlFor={id}>
+							<Trans>Do not fill this field if you are human</Trans>
+						</label>
+						<input
+							autoComplete="off"
+							id={id}
+							name={id}
+							tabIndex={-1}
+							type="text"
+						/>
+					</div>
+					<input name="locale" type="hidden" value={locale} />
+					<input name="validation" type="hidden" value={id} />
+					{state.status === 'error' && (
+						<p className="text-sm text-red-400" role="alert">
+							{state.message}
+						</p>
+					)}
+					<Button disabled={pending} type="submit">
+						<Trans>Submit</Trans>
+					</Button>
+				</Form>
+			)}
 		</I18nProvider>
 	)
 }

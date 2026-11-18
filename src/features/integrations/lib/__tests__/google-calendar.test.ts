@@ -38,7 +38,8 @@ describe('fetchUpcomingGoogleCalendarEvents', () => {
 		await fetchUpcomingGoogleCalendarEvents({
 			accessToken: 'access-token',
 			accountId: 'google-account',
-			now: Temporal.Instant.from('2026-06-12T12:00:00Z'),
+			now: Temporal.Instant.from('2026-06-14T12:00:00Z'),
+			timeZone: 'UTC',
 		})
 
 		const [requestUrl, requestInit] = fetchMock.mock.calls[0] as unknown as [
@@ -50,8 +51,9 @@ describe('fetchUpcomingGoogleCalendarEvents', () => {
 		expect(url.origin).toBe('https://www.googleapis.com')
 		expect(url.pathname).toBe('/calendar/v3/calendars/primary/events')
 		expect(url.searchParams.get('singleEvents')).toBe('true')
-		expect(url.searchParams.get('timeMin')).toBe('2026-06-12T12:00:00.000Z')
-		expect(url.searchParams.get('timeMax')).toBe('2026-06-15T12:00:00.000Z')
+		expect(url.searchParams.get('timeMin')).toBe('2026-06-14T12:00:00.000Z')
+		expect(url.searchParams.get('timeMax')).toBe('2026-06-17T12:00:00.000Z')
+		expect(requestInit.cache).toBe('no-store')
 		expect(requestInit.headers).toMatchObject({
 			Authorization: 'Bearer access-token',
 		})

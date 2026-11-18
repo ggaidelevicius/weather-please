@@ -51,7 +51,7 @@ export const next24HoursDataSchema = z
 			temperature: z.number(),
 			time: epochSecondsSchema,
 			uv: z.number(),
-			visibility: z.number(),
+			visibility: z.number().nullable(),
 			weatherCode: z.number(),
 			wind: z.number(),
 			windGust: z.number(),

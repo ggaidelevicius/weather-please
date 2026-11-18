@@ -12,9 +12,10 @@ import {
 import {
 	convertVisibility,
 	formatDecimal,
+	isNumber,
 	max,
 } from '../../model/detail-formatting'
-import { ChartFrame, LineChart } from '../charts/chart'
+import { ChartFrame, EmptyChartState, LineChart } from '../charts/chart'
 import {
 	DetailViewShell,
 	Metric,
@@ -40,8 +41,9 @@ export const ConditionsDetail = (props: Readonly<DetailViewProps>) => {
 		usesMetricUnits,
 		visibility: VISIBILITY_CHART_DEFAULT_MAX_METERS,
 	})
-	const visibilityScale = getChartScale(visibility, {
-		maxValue: Math.max(visibilityDefaultMax, max(visibility)),
+	const values = visibility.filter(isNumber)
+	const visibilityScale = getChartScale(values, {
+		maxValue: Math.max(visibilityDefaultMax, max(values)),
 		minValue: 0,
 	})
 	const lowestVisibility = getLowPoint(visibility)
@@ -60,13 +62,18 @@ export const ConditionsDetail = (props: Readonly<DetailViewProps>) => {
 						icon={<IconEye aria-hidden size={18} />}
 						label={<Trans>Lowest visibility</Trans>}
 						value={
-							<Trans>
-								{formatDecimal(lowestVisibility.value)} {visibilityUnitLabel} at{' '}
-								<RelativeHourLabel
-									referenceTime={referenceTime}
-									time={data[lowestVisibility.index]?.time}
-								/>
-							</Trans>
+							values.length === 0 ? (
+								<Trans>Unavailable</Trans>
+							) : (
+								<Trans>
+									{formatDecimal(lowestVisibility.value)} {visibilityUnitLabel}{' '}
+									at{' '}
+									<RelativeHourLabel
+										referenceTime={referenceTime}
+										time={data[lowestVisibility.index]?.time}
+									/>
+								</Trans>
+							)
 						}
 					/>
 					<Metric
@@ -74,13 +81,17 @@ export const ConditionsDetail = (props: Readonly<DetailViewProps>) => {
 						icon={<IconEye aria-hidden size={18} />}
 						label={<Trans>Clearest hour</Trans>}
 						value={
-							<Trans>
-								{formatDecimal(bestVisibility.value)} {visibilityUnitLabel} at{' '}
-								<RelativeHourLabel
-									referenceTime={referenceTime}
-									time={data[bestVisibility.index]?.time}
-								/>
-							</Trans>
+							values.length === 0 ? (
+								<Trans>Unavailable</Trans>
+							) : (
+								<Trans>
+									{formatDecimal(bestVisibility.value)} {visibilityUnitLabel} at{' '}
+									<RelativeHourLabel
+										referenceTime={referenceTime}
+										time={data[bestVisibility.index]?.time}
+									/>
+								</Trans>
+							)
 						}
 					/>
 				</>
@@ -96,17 +107,21 @@ export const ConditionsDetail = (props: Readonly<DetailViewProps>) => {
 				middleLabel={middleLabel}
 				startLabel={startLabel}
 			>
-				<LineChart
-					accentClassName="stroke-emerald-300"
-					points={visibility}
-					primarySeriesId="visibility"
-					primarySeriesLabel={<Trans>Visibility</Trans>}
-					primaryValueFormatter={(value) =>
-						`${formatDecimal(value)} ${visibilityUnitLabel}`
-					}
-					scale={visibilityScale}
-					times={times}
-				/>
+				{values.length === 0 ? (
+					<EmptyChartState label={<Trans>Unavailable</Trans>} />
+				) : (
+					<LineChart
+						accentClassName="stroke-emerald-300"
+						points={visibility}
+						primarySeriesId="visibility"
+						primarySeriesLabel={<Trans>Visibility</Trans>}
+						primaryValueFormatter={(value) =>
+							`${formatDecimal(value)} ${visibilityUnitLabel}`
+						}
+						scale={visibilityScale}
+						times={times}
+					/>
+				)}
 			</ChartFrame>
 		</DetailViewShell>
 	)

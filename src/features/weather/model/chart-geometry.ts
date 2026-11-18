@@ -1,6 +1,6 @@
 import type { ChartScale, PointSummary } from './detail-types'
 
-import { formatAxisValue, max, min } from './detail-formatting'
+import { formatAxisValue, isNumber, max, min } from './detail-formatting'
 export const CHART_HEIGHT = 150
 
 export const CHART_WIDTH = 360
@@ -58,39 +58,43 @@ export const getScaleLabels = ({
 	)
 }
 
-export const getLinePath = (points: number[], scale: Required<ChartScale>) => {
-	if (points.length === 0) {
-		return ''
-	}
+export const getLinePath = (
+	points: Array<null | number>,
+	scale: Required<ChartScale>,
+) => {
+	const chartPoints = points.map((point, index) =>
+		point === null
+			? null
+			: { x: getChartX(index, points.length), y: getChartY(point, scale) },
+	)
 
-	const chartPoints = points.map((point, index) => ({
-		x: getChartX(index, points.length),
-		y: getChartY(point, scale),
-	}))
+	return chartPoints
+		.map((point, index) => {
+			if (!point) return ''
+			const previousPoint = chartPoints[index - 1]
+			const nextPoint = chartPoints[index + 1] ?? point
+			if (!previousPoint) {
+				// A zero-length segment with round stroke caps shows an isolated reading.
+				return `M ${point.x} ${point.y}${nextPoint === point ? ' l 0 0' : ''}`
+			}
+			const pointBeforePrevious = chartPoints[index - 2] ?? previousPoint
+			const firstControlPoint = {
+				x:
+					previousPoint.x +
+					(point.x - pointBeforePrevious.x) * CHART_SPLINE_TENSION,
+				y:
+					previousPoint.y +
+					(point.y - pointBeforePrevious.y) * CHART_SPLINE_TENSION,
+			}
+			const secondControlPoint = {
+				x: point.x - (nextPoint.x - previousPoint.x) * CHART_SPLINE_TENSION,
+				y: point.y - (nextPoint.y - previousPoint.y) * CHART_SPLINE_TENSION,
+			}
 
-	if (chartPoints.length === 1) {
-		return `M ${chartPoints[0].x} ${chartPoints[0].y}`
-	}
-
-	return chartPoints.slice(1).reduce((path, point, index) => {
-		const previousPoint = chartPoints[index]
-		const pointBeforePrevious = chartPoints[index - 1] ?? previousPoint
-		const nextPoint = chartPoints[index + 2] ?? point
-		const firstControlPoint = {
-			x:
-				previousPoint.x +
-				(point.x - pointBeforePrevious.x) * CHART_SPLINE_TENSION,
-			y:
-				previousPoint.y +
-				(point.y - pointBeforePrevious.y) * CHART_SPLINE_TENSION,
-		}
-		const secondControlPoint = {
-			x: point.x - (nextPoint.x - previousPoint.x) * CHART_SPLINE_TENSION,
-			y: point.y - (nextPoint.y - previousPoint.y) * CHART_SPLINE_TENSION,
-		}
-
-		return `${path} C ${firstControlPoint.x} ${firstControlPoint.y}, ${secondControlPoint.x} ${secondControlPoint.y}, ${point.x} ${point.y}`
-	}, `M ${chartPoints[0].x} ${chartPoints[0].y}`)
+			return `C ${firstControlPoint.x} ${firstControlPoint.y}, ${secondControlPoint.x} ${secondControlPoint.y}, ${point.x} ${point.y}`
+		})
+		.filter(Boolean)
+		.join(' ')
 }
 
 export const getChartX = (index: number, pointCount: number) => {
@@ -132,12 +136,12 @@ export const getChartY = (
 	)
 }
 
-export const getPeakPoint = (points: number[]): PointSummary => {
-	const value = max(points)
+export const getPeakPoint = (points: Array<null | number>): PointSummary => {
+	const value = max(points.filter(isNumber))
 	return { index: points.indexOf(value), value }
 }
 
-export const getLowPoint = (points: number[]): PointSummary => {
-	const value = min(points)
+export const getLowPoint = (points: Array<null | number>): PointSummary => {
+	const value = min(points.filter(isNumber))
 	return { index: points.indexOf(value), value }
 }

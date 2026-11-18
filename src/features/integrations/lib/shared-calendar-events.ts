@@ -4,6 +4,7 @@ import type { SharedResourceSnapshot } from '../../../shared/lib/shared-resource
 import type { StoredCalendarAccount } from './connection-storage'
 
 import {
+	CALENDAR_EVENTS_RESOURCE_PREFIX,
 	readSharedResource,
 	subscribeSharedResource,
 } from '../../../shared/lib/shared-resource'
@@ -25,13 +26,19 @@ export type CalendarEventsUpdate = {
 
 export type SharedAccountEvents = z.infer<typeof sharedAccountEventsSchema>
 
+export const getAccountEventsPrefix = (account: StoredCalendarAccount) =>
+	`${CALENDAR_EVENTS_RESOURCE_PREFIX}${account.provider}:${encodeURIComponent(account.accountId)}:`
+
+export const getSessionEventsPrefix = (account: StoredCalendarAccount) =>
+	`${getAccountEventsPrefix(account)}${encodeURIComponent(account.sessionId ?? '')}:`
+
 export const getAccountEventsKey = ({
 	account,
 	timeZone,
 }: Readonly<{
 	account: StoredCalendarAccount
 	timeZone: string
-}>) => `calendar-events:${account.provider}:${account.accountId}:${timeZone}`
+}>) => `${getSessionEventsPrefix(account)}${timeZone}`
 
 export const isAccountEventsCurrent = ({
 	account,

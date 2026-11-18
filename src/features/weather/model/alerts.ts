@@ -39,9 +39,10 @@ export const deriveAlertsFromWeather = (
 		ALERT_CONDITIONS.extremeUv,
 	),
 	hoursOfLowVisibility: processSimpleAlert(
-		data.hourly.visibility
-			.slice(currentHour, currentHour + ALERT_HOURS_GENERAL)
-			.map(normalizeNumber),
+		data.hourly.visibility.slice(
+			currentHour,
+			currentHour + ALERT_HOURS_GENERAL,
+		),
 		ALERT_CONDITIONS.lowVisibility,
 	),
 	hoursOfStrongWind: processSimpleAlert(

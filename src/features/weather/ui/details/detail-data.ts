@@ -53,7 +53,9 @@ export const getDetailViewData = ({
 	)
 	const uv = data.map(({ uv }) => uv)
 	const visibility = data.map(({ visibility }) =>
-		convertVisibility({ usesMetricUnits, visibility }),
+		visibility === null
+			? null
+			: convertVisibility({ usesMetricUnits, visibility }),
 	)
 	const times = data.map(({ time }) => time)
 	const airQualityAqi = data.map(({ airQualityAqi }) => airQualityAqi)

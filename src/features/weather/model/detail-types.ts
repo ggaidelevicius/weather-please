@@ -36,7 +36,7 @@ export type ChartLineProps = {
 	className?: string
 	onSeriesFocus?: (seriesId: null | WeatherDetailSeriesId) => void
 	onTooltipChange: (tooltip: ChartTooltipState | null) => void
-	points: number[]
+	points: Array<null | number>
 	scale: Required<ChartScale>
 	seriesId?: WeatherDetailSeriesId
 	seriesLabel: ReactNode
@@ -91,7 +91,7 @@ export type LineChartProps = {
 	accentStyle?: CSSProperties
 	activeSeriesId?: null | WeatherDetailSeriesId
 	onSeriesFocus?: (seriesId: null | WeatherDetailSeriesId) => void
-	points: number[]
+	points: Array<null | number>
 	primarySeriesId?: WeatherDetailSeriesId
 	primarySeriesLabel: ReactNode
 	primaryValueFormatter: (value: number) => ReactNode

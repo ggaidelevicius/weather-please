@@ -8,6 +8,10 @@ import type { CalendarEvent } from '../../model/calendar-event'
 
 import { AsyncStatus } from '../../../../shared/hooks/async-status'
 import {
+	readSharedResource,
+	requestSharedResource,
+} from '../../../../shared/lib/shared-resource'
+import {
 	getCurrentTimestamp,
 	getSystemTimeZone,
 } from '../../../../shared/lib/time'
@@ -17,6 +21,10 @@ import {
 	readStoredCalendarAccounts,
 	writeStoredCalendarAccounts,
 } from '../../lib/connection-storage'
+import {
+	getAccountEventsKey,
+	sharedAccountEventsSchema,
+} from '../../lib/shared-calendar-events'
 import { CalendarAccountCategory } from '../../model/account-category'
 import { CalendarProvider } from '../../model/calendar-provider'
 import {
@@ -156,7 +164,10 @@ const deferAccountMutations = () => {
 }
 
 beforeEach(() => {
+	// Independent jsdom profiles do not share their browser storage.
+	vi.stubGlobal('BroadcastChannel', undefined)
 	localStorage.clear()
+	notifyStorageChange(null)
 	sessionStorage.clear()
 	vi.resetAllMocks()
 	seedAccount()
@@ -524,10 +535,22 @@ describe('shared calendar fetching', () => {
 				expect(result.current.events[0]?.id).toBe('replacement'),
 			)
 			expect(result.current.error).toBeNull()
-			expect(localStorage.getItem(cacheKey)).toContain('replacement')
-			expect(localStorage.getItem(cacheKey)).not.toContain('corrupt')
+			expect(localStorage.getItem(cacheKey)).toBeNull()
 		},
 	)
+
+	it('purges previous calendar caches for every zone even with no accounts connected', () => {
+		writeStoredCalendarAccounts([])
+		const prefix = 'weather-please:shared-resource:v1:'
+		const oldKeys = ['google:a:UTC', 'microsoft:b:Europe/London'].map(
+			(suffix) => prefix + 'calendar-events:' + suffix,
+		)
+		for (const key of oldKeys) localStorage.setItem(key, 'old event details')
+		localStorage.setItem(prefix + 'forecast', 'weather')
+		renderHook(() => useCalendarConnection())
+		for (const key of oldKeys) expect(localStorage.getItem(key)).toBeNull()
+		expect(localStorage.getItem(prefix + 'forecast')).toBe('weather')
+	})
 
 	it('shares one event request between mounted consumers and newly opened consumers', async () => {
 		const pending = createDeferred()
@@ -673,15 +696,36 @@ describe('shared calendar fetching', () => {
 		fetchEvents.mockResolvedValueOnce([event('old')])
 		const { result } = renderHook(() => useCalendarConnection())
 		await waitFor(() => expect(result.current.events[0]?.id).toBe('old'))
+		const previous = readStoredCalendarAccounts()[0]
+		const key = getAccountEventsKey({
+			account: previous,
+			timeZone: 'Europe/Paris',
+		})
+		await requestSharedResource({
+			fetcher: async () => ({
+				events: [event('old timezone')],
+				expiresAt: previous.expiresAt,
+				sessionId: 'old-login',
+			}),
+			key,
+			maxAgeMs: 60_000,
+			schema: sharedAccountEventsSchema,
+		})
+		expect(
+			readSharedResource({ key, schema: sharedAccountEventsSchema }),
+		).not.toBeNull()
 		const pending = createDeferred()
 		fetchEvents.mockReturnValueOnce(pending.promise)
 		writeStoredCalendarAccounts([
 			{
-				...readStoredCalendarAccounts()[0],
+				...previous,
 				sessionId: 'new-login',
 			},
 		])
 		act(() => notifyStorageChange())
+		expect(
+			readSharedResource({ key, schema: sharedAccountEventsSchema }),
+		).toBeNull()
 		expect(result.current.events).toEqual([])
 		await waitFor(() => expect(fetchEvents).toHaveBeenCalledTimes(2))
 		await act(async () => pending.resolve([event('new')]))
@@ -907,10 +951,10 @@ describe('shared calendar fetching', () => {
 		expect(result.current.events).toEqual([])
 		const account = readStoredCalendarAccounts()[0]
 		const cacheKey = `weather-please:shared-resource:v1:calendar-events:${account.provider}:${account.accountId}:${getSystemTimeZone()}`
-		expect(localStorage.getItem(cacheKey)).not.toContain('foreign-account')
+		expect(localStorage.getItem(cacheKey)).toBeNull()
 	})
 
-	it('does not retain credentials in the shared event cache', async () => {
+	it('keeps fetched events and their credentials out of the persisted cache', async () => {
 		fetchEvents.mockResolvedValueOnce([event('cached')])
 		const { result } = renderHook(() => useCalendarConnection())
 		await waitFor(() => expect(result.current.events[0]?.id).toBe('cached'))
@@ -920,7 +964,7 @@ describe('shared calendar fetching', () => {
 		)
 			.filter((key) => key !== null && key !== CALENDAR_CONNECTION_STORAGE_KEY)
 			.map((key) => (key === null ? null : localStorage.getItem(key)))
-		expect(cacheValues.join('')).toContain('cached')
+		expect(cacheValues.join('')).not.toContain('cached')
 		expect(cacheValues.join('')).not.toContain('test-token')
 		expect(cacheValues.join('')).not.toContain('refresh-token')
 	})

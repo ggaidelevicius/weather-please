@@ -53,6 +53,7 @@ describe('fetchUpcomingCalendarEvents', () => {
 			'2026-06-12T12:00:00.000Z',
 		)
 		expect(url.searchParams.get('endDateTime')).toBe('2026-06-15T12:00:00.000Z')
+		expect(requestInit.cache).toBe('no-store')
 		expect(requestInit.headers).toMatchObject({
 			Authorization: 'Bearer access-token',
 			Prefer: 'outlook.timezone="Australia/Melbourne"',

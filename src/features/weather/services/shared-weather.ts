@@ -74,9 +74,8 @@ export const requestSharedWeather = async ({
 			})
 			requestSignal.throwIfAborted()
 			const now = getCurrentDateTime()
-			const currentHour = now.hour
 			const next24HoursData = mapWeatherResponseToNext24HoursData({
-				currentHour,
+				currentTime: now.epochMilliseconds / 1000,
 				data: response,
 			})
 			const weather = {
@@ -187,7 +186,9 @@ export const createSharedWeatherStore = (identity: CacheIdentity) => {
 				? {
 						...cached,
 						weatherMapData:
-							map && map.updatedAt >= cached.lastUpdatedDate.epochMilliseconds
+							map &&
+							map.updatedAt >=
+								getWeatherFreshSince(cached.lastUpdatedDate.epochMilliseconds)
 								? map.value
 								: cached.weatherMapData,
 					}
@@ -277,14 +278,17 @@ const isSharedWeatherFresh = ({
 	})
 }
 
-const getWeatherMaxAge = (now = getCurrentTimestamp()): number => {
+const getWeatherMaxAge = (now = getCurrentTimestamp()): number =>
+	now - getWeatherFreshSince(now)
+
+const getWeatherFreshSince = (now: number): number => {
 	const current = getDateTime({ timestamp: now })
 	const refreshHour = (
 		current.minute < CACHE_REFRESH_DELAY_MINUTE
 			? current.subtract({ hours: 1 })
 			: current
 	).round({ roundingMode: 'floor', smallestUnit: 'hour' })
-	return Math.min(CACHE_VALIDITY_MS, now - refreshHour.epochMilliseconds)
+	return Math.max(now - CACHE_VALIDITY_MS, refreshHour.epochMilliseconds)
 }
 
 const getWeatherResourceKey = (identity: CacheIdentity): string =>

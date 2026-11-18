@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { getCurrentDateTime } from '../../../../shared/lib/time'
 import { getCachedWeather } from '../../model/cache'
+import { createWeatherResponse } from '../../testing/weather-response'
 import { useWeather } from '../use-weather'
 
 // Mock localStorage
@@ -402,6 +403,9 @@ describe('useWeather - Core Functionality', () => {
 	it('shows reduced stale cached data when weather refresh fails', async () => {
 		const now = getCurrentDateTime()
 		const nowSeconds = Math.floor(now.epochMilliseconds / 1000)
+		const hourStart =
+			now.round({ roundingMode: 'floor', smallestUnit: 'hour' })
+				.epochMilliseconds / 1000
 		const staleUpdatedAt = now.subtract({ hours: 2 })
 		const cachedData = [
 			{
@@ -448,7 +452,7 @@ describe('useWeather - Core Functionality', () => {
 				precipitationProbability: 10,
 				shortwaveRadiation: 140,
 				temperature: 23,
-				time: nowSeconds + 60 * 60,
+				time: hourStart,
 				uv: 4,
 				visibility: 10_000,
 				weatherCode: 1,
@@ -465,7 +469,7 @@ describe('useWeather - Core Functionality', () => {
 				},
 				{
 					points: [],
-					time: nowSeconds + 60 * 60,
+					time: hourStart,
 				},
 			],
 		}
@@ -646,40 +650,13 @@ describe('useWeather - Core Functionality', () => {
 	})
 })
 
-const createWeatherResponse = () => ({
-	daily: {
-		precipitation_probability_max: [10],
-		temperature_2m_max: [30],
-		temperature_2m_min: [20],
-		time: [0],
-		uv_index_max: [8],
-		weathercode: [1],
-		windspeed_10m_max: [15],
-	},
-	hourly: {
-		apparent_temperature: Array.from({ length: 60 }, (_, index) => index + 10),
-		dew_point_2m: Array.from({ length: 60 }, () => 12),
-		precipitation: Array.from({ length: 60 }, () => 0),
-		precipitation_probability: Array.from({ length: 60 }, () => 0),
-		relative_humidity_2m: Array.from({ length: 60 }, () => 55),
-		shortwave_radiation_instant: Array.from({ length: 60 }, () => 120),
-		temperature_2m: Array.from({ length: 60 }, (_, index) => index + 20),
-		time: Array.from({ length: 60 }, (_, index) => index),
-		uv_index: Array.from({ length: 60 }, (_, index) => index % 8),
-		visibility: Array.from({ length: 60 }, () => 10_000),
-		weathercode: Array.from({ length: 60 }, () => 1),
-		windgusts_10m: Array.from({ length: 60 }, () => 20),
-		windspeed_10m: Array.from({ length: 60 }, () => 10),
-	},
-})
-
 const createAirQualityResponse = () => ({
 	hourly: {
 		nitrogen_dioxide: Array.from({ length: 60 }, () => 4),
 		ozone: Array.from({ length: 60 }, () => 30),
 		pm2_5: Array.from({ length: 60 }, () => 6),
 		pm10: Array.from({ length: 60 }, () => 12),
-		time: Array.from({ length: 60 }, (_, index) => index),
+		time: createWeatherResponse().hourly.time,
 		us_aqi: Array.from({ length: 60 }, () => 28),
 		uv_index: Array.from({ length: 60 }, (_, index) => index % 8),
 	},

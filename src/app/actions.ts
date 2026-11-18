@@ -18,19 +18,26 @@ const formSchema = z.object({
 	message: z.string().nonempty(),
 })
 
+export type BugReportState =
+	| { message: string; status: 'error' | 'success' }
+	| { status: 'idle' }
+
+const unavailable: BugReportState = {
+	message:
+		'Unable to submit your message at this time. Please try again later.',
+	status: 'error',
+}
+
 export const submitForm = async (
-	_prevState: { message: string },
+	_prevState: BugReportState,
 	formData: FormData,
-) => {
+): Promise<BugReportState> => {
 	let requestHeaders: Headers
 	try {
 		requestHeaders = await headers()
 	} catch (error) {
 		console.error('Unable to read request headers:', error)
-		return {
-			message:
-				'Unable to submit your message at this time. Please try again later.',
-		}
+		return unavailable
 	}
 	const userAgent = requestHeaders.get('user-agent') ?? 'unknown'
 	const referrerUrl = requestHeaders.get('referer') ?? 'unknown'
@@ -44,15 +51,13 @@ export const submitForm = async (
 		})
 	} catch (error) {
 		console.error('Rate limit check failed:', error)
-		return {
-			message:
-				'Unable to submit your message at this time. Please try again later.',
-		}
+		return unavailable
 	}
 
 	if (!rateLimitResult.ok) {
 		return {
 			message: `You're doing that too quickly. Please try again in ${rateLimitResult.retryAfter} seconds.`,
+			status: 'error',
 		}
 	}
 
@@ -62,14 +67,14 @@ export const submitForm = async (
 	// Retrieve the honeypot field name from the hidden field
 	const honeypotValidation = formData.get('validation')
 	if (typeof honeypotValidation !== 'string') {
-		return { message: 'Form error' }
+		return { message: 'Form error', status: 'error' }
 	}
 
 	// Check the honeypot field (which should be empty if submitted by a human)
 	const honeypotValue = formData.get(honeypotValidation)
 	if (honeypotValue) {
 		// A value here suggests the form was filled by a bot
-		return { message: 'Message received' }
+		return { message: 'Message received', status: 'success' }
 	}
 
 	const rawFormData = {
@@ -94,7 +99,7 @@ export const submitForm = async (
 			.filter(Boolean) // Remove null values
 			.join('; ')
 
-		return { message: errors || 'Validation failed' }
+		return { message: errors || 'Validation failed', status: 'error' }
 	}
 
 	try {
@@ -109,12 +114,9 @@ export const submitForm = async (
 			},
 		})
 
-		return { message: 'Message received' }
+		return { message: 'Message received', status: 'success' }
 	} catch (error) {
 		console.error('Form submission failed:', error)
-		return {
-			message:
-				'Unable to submit your message at this time. Please try again later.',
-		}
+		return unavailable
 	}
 }

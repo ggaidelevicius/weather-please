@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { z } from 'zod'
 
 import {
+	invalidateCalendarResources,
 	invalidateSharedResource,
 	readSharedResource,
 	requestSharedResource,
@@ -585,6 +586,45 @@ describe('shared resource ownership', () => {
 		expect(readSharedResource({ key, schema })?.value).toEqual({
 			value: 'current',
 		})
+	})
+
+	it('drops late calendar replies for a disconnected session in every timezone', () => {
+		const broadcast = stubChannel()
+		const prefix = 'calendar-events:google:test-session-account:'
+		const record = {
+			data: { value: 'event title' },
+			hasValue: true,
+			id: 'event',
+			revision: '',
+			updatedAt: getCurrentTimestamp(),
+			version: 1,
+		}
+		const keys = ['UTC', 'Europe/Paris', 'Australia/Perth'].map(
+			(zone) => prefix + 'old:' + zone,
+		)
+		const unsubscribe = keys.map((key) =>
+			subscribeSharedResource({ key, onChange: () => {} }),
+		)
+		try {
+			// The last zone has subscribed but has not yet received its first reply.
+			for (const key of keys.slice(0, -1)) {
+				broadcast({ memoryKey: key, record })
+				expect(readSharedResource({ key, schema })?.value.value).toBe(
+					'event title',
+				)
+			}
+			invalidateCalendarResources(prefix)
+			for (const key of keys) {
+				broadcast({
+					memoryKey: key,
+					record: { ...record, updatedAt: getCurrentTimestamp() + 1 },
+				})
+				expect(readSharedResource({ key, schema })).toBeNull()
+				expect(localStorage.getItem(storagePrefix + key)).toBeNull()
+			}
+		} finally {
+			unsubscribe.forEach((unsubscribe) => unsubscribe())
+		}
 	})
 
 	it('ignores duplicate invalidation notices for requests in the new revision', async () => {

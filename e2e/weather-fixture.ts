@@ -138,4 +138,30 @@ export const exerciseDashboard = async (page: Page) => {
 			).toBeVisible()
 		}
 	}
+
+	await page.getByRole('main').hover()
+	await page.reload()
+	const navigation = page.getByRole('navigation', {
+		name: 'Weather view navigation',
+	})
+	const forecast = navigation.getByRole('button', {
+		name: 'Show forecast view',
+	})
+	await expect(forecast).toBeAttached()
+	await expect(navigation).toHaveCSS('opacity', '0')
+	for (let step = 0; step < 30; step++) {
+		await page.keyboard.press('Tab')
+		if (await forecast.evaluate((button) => button === document.activeElement))
+			break
+	}
+	await expect(forecast).toBeFocused()
+	await expect(navigation).toHaveCSS('opacity', '1')
+	await page.keyboard.press('Tab')
+	await page.keyboard.press('Enter')
+	await expect(
+		page.getByRole('heading', { exact: true, name: 'Temperature' }),
+	).toBeVisible()
+	await page.keyboard.press('Shift+Tab')
+	await page.keyboard.press('Enter')
+	await expect(forecast).toHaveAttribute('aria-current', 'page')
 }

@@ -41,8 +41,8 @@ export const AirQualityDetail = (props: Readonly<DetailViewProps>) => {
 		times,
 	} = getDetailViewData(props)
 
-	const hasAirQualityData = airQualityAqi.some(isNumber)
-	const airQualityAqiValues = airQualityAqi.map((value) => value ?? 0)
+	const airQualityAqiValues = airQualityAqi.filter(isNumber)
+	const hasAirQualityData = airQualityAqiValues.length > 0
 	const airQualityScale = getChartScale(airQualityAqiValues, {
 		maxValue: Math.max(AIR_QUALITY_AQI_DEFAULT_MAX, max(airQualityAqiValues)),
 		minValue: 0,
@@ -52,7 +52,7 @@ export const AirQualityDetail = (props: Readonly<DetailViewProps>) => {
 	const currentPm10 = airQualityPm10[0] ?? null
 	const currentOzone = airQualityOzone[0] ?? null
 	const currentNitrogenDioxide = airQualityNitrogenDioxide[0] ?? null
-	const peakAqi = getPeakPoint(airQualityAqiValues)
+	const peakAqi = getPeakPoint(airQualityAqi)
 
 	return (
 		<DetailViewShell
@@ -76,10 +76,13 @@ export const AirQualityDetail = (props: Readonly<DetailViewProps>) => {
 							onSeriesFocus={setActiveSeriesId}
 							seriesId="airQualityAqi"
 							value={
-								<Trans>
-									{Math.round(currentAqi ?? 0)} ·{' '}
-									{getAqiCategory(currentAqi ?? 0)}
-								</Trans>
+								currentAqi === null ? (
+									<Trans>Unavailable</Trans>
+								) : (
+									<Trans>
+										{Math.round(currentAqi)} · {getAqiCategory(currentAqi)}
+									</Trans>
+								)
 							}
 						/>
 						<Metric
@@ -116,7 +119,7 @@ export const AirQualityDetail = (props: Readonly<DetailViewProps>) => {
 					<Metric
 						icon={<IconLungs aria-hidden size={18} />}
 						label={<Trans>Air quality</Trans>}
-						value={<Trans>Waiting for air quality data</Trans>}
+						value={<Trans>Unavailable</Trans>}
 					/>
 				)
 			}
@@ -136,7 +139,7 @@ export const AirQualityDetail = (props: Readonly<DetailViewProps>) => {
 						accentClassName="stroke-teal-200"
 						activeSeriesId={activeSeriesId}
 						onSeriesFocus={setActiveSeriesId}
-						points={airQualityAqiValues}
+						points={airQualityAqi}
 						primarySeriesId="airQualityAqi"
 						primarySeriesLabel={<Trans>AQI</Trans>}
 						primaryValueFormatter={(value) => (

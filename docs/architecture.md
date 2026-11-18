@@ -8,7 +8,8 @@ and UI pieces live in `features/dashboard`.
 The App Router owns the landing and privacy pages, their Markdown routes, the
 sitemap, and `/bug` with its server action. The root layout shares navigation,
 the footer, global styles, and analytics across the website, including the bug
-form. Marketing copy renders on the server, with client boundaries around
+form. The form keeps a failed submission editable and confirms a successful
+submission. Marketing copy renders on the server, with client boundaries around
 interactive demonstrations and their English translation providers.
 
 The website uses Cache Components to retain the hero forecast's conditional
@@ -49,20 +50,26 @@ positions.
 ## Weather and persistence
 
 Weather API responses are validated before mapping into domain data. Forecast
-and air-quality requests start together; optional air-quality enrichment has a
-bounded wait. Weather rendering does not depend on successful localStorage
-writes. The cache stores identity, timestamps, and data in one versioned record.
-Existing multi-key caches migrate on read. Map updates must match the cached
-identity.
+and air-quality requests start together, with a bounded wait for enrichment.
+Live and offline views select the hourly reading whose timestamp covers the
+current instant. Missing visibility and AQI readings stay unknown in alerts and
+charts. Weather rendering works when localStorage writes fail. The versioned
+cache stores identity, timestamps, and data together and migrates older records
+on read. Map frames can be reused for the same location, timezone, and refresh
+window when the UV source changes.
 
 The settings migration pipeline upgrades old configuration shapes, repairs
-invalid fields individually, and validates the completed configuration. Draft
-coordinate input can remain incomplete while the last valid configuration
-remains active.
+invalid fields individually, and validates the completed configuration. Tabs
+merge edited fields under a Web Lock and adopt saved changes from storage
+events. An unfinished coordinate edit stays in its tab while the dashboard uses
+the last valid configuration.
 
 Calendar loads use a request generation and cancellation signal. Completed loads
 must belong to the current lifecycle and preserve account edits made during the
-request. Removed accounts cannot contribute events to a completed load.
+request. Event details stay in memory and open tabs can share them through
+BroadcastChannel. Google requests cover the next three calendar days.
+Deduplication uses the iCalendar UID and start time to retain individual
+occurrences of recurring events.
 
 ## Presentation and effects
 

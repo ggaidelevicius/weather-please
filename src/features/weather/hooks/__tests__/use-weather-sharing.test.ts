@@ -19,6 +19,7 @@ import {
 	isWeatherCacheFresh,
 	readSharedWeatherCache,
 	requestSharedWeather,
+	requestSharedWeatherMap,
 } from '../../services/shared-weather'
 import { createWeatherResponse } from '../../testing/weather-response'
 import { useWeather } from '../use-weather'
@@ -441,6 +442,32 @@ describe('shared weather fetching', () => {
 		})
 		expect(second.result.current.weatherData[0]?.max).toBe(30)
 		expect(readSharedWeatherCache(identity)?.weatherData[0]?.max).toBe(30)
+	})
+
+	it('reuses a fresh map and respects an explicit UV opt-out in Australia', async () => {
+		vi.useFakeTimers()
+		vi.setSystemTime(getTimestamp('2026-11-18T10:30'))
+		const identity = {
+			...createIdentity(),
+			lat: '-31.95',
+			lon: '115.86',
+			shouldUseAirQualityUv: true,
+		}
+		const fetchSpy = mockForecasts()
+		await requestSharedWeather(identity)
+		const map = await requestSharedWeatherMap(identity)
+		await vi.advanceTimersByTimeAsync(1000)
+
+		const { result } = renderHook(() =>
+			useWeather(identity.lat, identity.lon, 0, false),
+		)
+		await act(async () => {})
+		expect(fetchSpy).toHaveBeenCalledTimes(5)
+		expect(result.current.weatherMapData).toEqual(map)
+		expect(
+			readSharedWeatherCache({ ...identity, shouldUseAirQualityUv: false })
+				?.weatherMapData,
+		).toEqual(map)
 	})
 
 	it('keeps UV preferences and time zones in the forecast identity', async () => {

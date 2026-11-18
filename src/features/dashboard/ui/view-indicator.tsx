@@ -2,6 +2,7 @@ import type { MotionValue } from 'framer-motion'
 import type { MouseEvent as ReactMouseEvent, ReactNode, RefObject } from 'react'
 
 import { Trans } from '@lingui/react/macro'
+import { clsx } from 'clsx'
 import {
 	AnimatePresence,
 	motion,
@@ -76,32 +77,29 @@ export const ViewIndicator = ({
 	}
 
 	return (
-		<motion.div
-			animate={{ opacity: isVisible ? 1 : 0 }}
-			aria-hidden={!isVisible}
+		<nav
 			aria-label="Weather view navigation"
-			className="absolute inset-y-0 left-0 z-30 flex w-8 flex-col items-center justify-center"
-			initial={false}
+			className={clsx(
+				'absolute inset-y-0 left-0 z-30 flex w-8 flex-col items-center justify-center transition-opacity duration-250 focus-within:opacity-100',
+				isVisible ? 'opacity-100' : 'opacity-0',
+			)}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={handleMouseLeave}
 			onMouseMove={handleMouseMove}
 			ref={indicatorRef}
-			role="navigation"
-			transition={{ duration: 0.25 }}
 		>
 			{viewIds.map((viewId, index) => (
 				<ViewIndicatorDot
 					index={index}
 					indicatorRef={indicatorRef}
 					isActive={activeViewId === viewId}
-					isVisible={isVisible}
 					key={viewId}
 					onSelect={() => onSelectView(viewId)}
 					pointerY={pointerY}
 					viewId={viewId}
 				/>
 			))}
-		</motion.div>
+		</nav>
 	)
 }
 
@@ -109,7 +107,6 @@ const ViewIndicatorDot = ({
 	index,
 	indicatorRef,
 	isActive,
-	isVisible,
 	onSelect,
 	pointerY,
 	viewId,
@@ -117,7 +114,6 @@ const ViewIndicatorDot = ({
 	index: number
 	indicatorRef: RefObject<HTMLDivElement | null>
 	isActive: boolean
-	isVisible: boolean
 	onSelect: () => void
 	pointerY: MotionValue<number>
 	viewId: ForecastViewId
@@ -168,7 +164,6 @@ const ViewIndicatorDot = ({
 			onFocus={handleMouseEnter}
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
-			tabIndex={isVisible ? 0 : -1}
 			type="button"
 		>
 			<motion.span

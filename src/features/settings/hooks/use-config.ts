@@ -8,6 +8,7 @@ import {
 	writeLocalStorage,
 } from '../../../shared/lib/local-storage'
 import { isLocationInAustralia } from '../../../shared/lib/location'
+import { runWithSharedLock } from '../../../shared/lib/shared-resource'
 import {
 	CONFIG_MIGRATION_STATE_STORAGE_KEY,
 	CURRENT_CONFIG_VERSION,
@@ -44,23 +45,21 @@ const persistMigrationState = (state: unknown) => {
 	})
 }
 
-const getInitialConfig = (): {
+const readConfig = (
+	storedData: null | string,
+	shouldRecordMigration = false,
+): {
 	config: Config
 	nextStoredConfig: null | PersistedConfig
 } => {
-	if (typeof window === 'undefined') {
+	if (!storedData) {
 		return { config: initialState, nextStoredConfig: null }
 	}
 
 	try {
-		const storedData = readLocalStorage('config')
-		if (!storedData) {
-			return { config: initialState, nextStoredConfig: null }
-		}
-
 		const parsed = JSON.parse(storedData)
 		const migrated = migrateConfig({ input: parsed })
-		persistMigrationState(migrated.state)
+		if (shouldRecordMigration) persistMigrationState(migrated.state)
 
 		if (!migrated.success || !migrated.config) {
 			console.warn('Failed to migrate config in localStorage, using defaults')
@@ -88,29 +87,21 @@ const getInitialConfig = (): {
 	}
 }
 
-const persistConfigInput = (input: Config) => {
-	if (!configSchema.safeParse(input).success || !hasValidCoordinates(input)) {
-		return { nextConfig: null, nextInput: input }
+const getChangedFields = (previous: Config, next: Config): Partial<Config> =>
+	Object.fromEntries(
+		Object.entries(next).filter(
+			([key, value]) => previous[key as keyof Config] !== value,
+		),
+	)
+
+const withConfigLock = (work: () => void) => {
+	if (!navigator.locks) {
+		work()
+		return
 	}
-
-	const hasStoredConfig = Boolean(readLocalStorage('config'))
-	const shouldEnableAirQualityUv =
-		!hasStoredConfig &&
-		!input.useAirQualityUvOverride &&
-		isLocationInAustralia(input.lat, input.lon)
-	const nextConfig = shouldEnableAirQualityUv
-		? { ...input, useAirQualityUvOverride: true }
-		: input
-
-	writeLocalStorage({
-		key: 'config',
-		value: JSON.stringify(toPersistedConfig(nextConfig)),
+	void runWithSharedLock({ key: 'config', work }).catch((error: unknown) => {
+		console.error('Could not save settings:', error)
 	})
-
-	return {
-		nextConfig,
-		nextInput: shouldEnableAirQualityUv ? nextConfig : input,
-	}
 }
 
 export const useConfig = () => {
@@ -118,29 +109,90 @@ export const useConfig = () => {
 	const [inputState, setInputState] = useState<Config>(initialState)
 	const [isHydrated, setIsHydrated] = useState(false)
 	const inputRef = useRef(initialState)
+	const configRef = useRef(initialState)
+	const pendingChanges = useRef<Partial<Config>>({})
+
+	const adoptConfig = (nextConfig: Config) => {
+		const draft = getChangedFields(configRef.current, inputRef.current)
+		configRef.current = nextConfig
+		inputRef.current = { ...nextConfig, ...draft }
+		setConfig(nextConfig)
+		setInputState(inputRef.current)
+	}
 
 	useIsomorphicLayoutEffect(() => {
-		const { config: storedConfig, nextStoredConfig } = getInitialConfig()
+		const raw = readLocalStorage('config')
+		const { config: storedConfig, nextStoredConfig } = readConfig(raw, true)
 		if (nextStoredConfig) {
-			writeLocalStorage({
-				key: 'config',
-				value: JSON.stringify(nextStoredConfig),
+			withConfigLock(() => {
+				if (readLocalStorage('config') === raw)
+					writeLocalStorage({
+						key: 'config',
+						value: JSON.stringify(nextStoredConfig),
+					})
 			})
 		}
+		configRef.current = storedConfig
 		inputRef.current = storedConfig
 		setConfig(storedConfig)
 		setInputState(storedConfig)
 		setIsHydrated(true)
+		const handleStorage = (event: StorageEvent) => {
+			if (
+				(event.key === null || event.key === 'config') &&
+				(!event.storageArea || event.storageArea === window.localStorage)
+			) {
+				const { config: latest } = readConfig(readLocalStorage('config'))
+				adoptConfig({ ...latest, ...pendingChanges.current })
+			}
+		}
+		window.addEventListener('storage', handleStorage)
+		return () => window.removeEventListener('storage', handleStorage)
 	}, [])
 
 	const applyInputUpdate = (nextInput: Config) => {
-		const { nextConfig, nextInput: persistedInput } =
-			persistConfigInput(nextInput)
-		inputRef.current = persistedInput
-		setInputState(persistedInput)
-		if (nextConfig) {
-			setConfig(nextConfig)
+		if (
+			!hasValidCoordinates(nextInput) ||
+			!configSchema.safeParse(nextInput).success
+		) {
+			inputRef.current = nextInput
+			setInputState(nextInput)
+			return
 		}
+
+		const shouldDefaultToCams =
+			!hasValidCoordinates(configRef.current) &&
+			!readLocalStorage('config') &&
+			isLocationInAustralia(nextInput.lat, nextInput.lon)
+		const nextConfig = shouldDefaultToCams
+			? { ...nextInput, useAirQualityUvOverride: true }
+			: nextInput
+		pendingChanges.current = {
+			...pendingChanges.current,
+			...getChangedFields(configRef.current, nextConfig),
+		}
+		configRef.current = nextConfig
+		inputRef.current = nextConfig
+		setConfig(nextConfig)
+		setInputState(nextConfig)
+
+		// Other tabs may have saved since this input was rendered. Apply just this
+		// tab's edits to the latest document while holding its write lock.
+		withConfigLock(() => {
+			if (Object.keys(pendingChanges.current).length === 0) return
+			const raw = readLocalStorage('config')
+			const storedConfig = raw ? readConfig(raw).config : configRef.current
+			const merged = { ...storedConfig, ...pendingChanges.current }
+			if (
+				writeLocalStorage({
+					key: 'config',
+					value: JSON.stringify(toPersistedConfig(merged)),
+				})
+			) {
+				pendingChanges.current = {}
+				adoptConfig(merged)
+			}
+		})
 	}
 
 	const setInput: Dispatch<SetStateAction<Config>> = (value) => {

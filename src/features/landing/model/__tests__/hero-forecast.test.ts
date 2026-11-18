@@ -94,7 +94,7 @@ describe('getHeroForecast', () => {
 		const { hourly } = await getHeroForecast()
 
 		expect(mapWeatherResponseToNext24HoursData).toHaveBeenCalledWith(
-			expect.objectContaining({ currentHour: 9 }),
+			expect.objectContaining({ currentTime: NOW_SECONDS }),
 		)
 		expect(hourly.temperatures).toHaveLength(24)
 		expect(hourly.temperatures[0]).toBe(20)

@@ -4,7 +4,6 @@ import type { CalendarEvent } from '../model/calendar-event'
 
 import { getCurrentInstant, getSystemTimeZone } from '../../../shared/lib/time'
 import { CalendarReauthRequiredError } from './calendar-reauth-error'
-import { getUpcomingEventsWindowEnd } from './calendar-window'
 
 export const fetchUpcomingGoogleCalendarEvents = async ({
 	accessToken,
@@ -19,9 +18,7 @@ export const fetchUpcomingGoogleCalendarEvents = async ({
 	signal?: AbortSignal
 	timeZone?: string
 }>): Promise<CalendarEvent[]> => {
-	const windowEnd = getUpcomingEventsWindowEnd({
-		now: now.toZonedDateTimeISO(timeZone),
-	})
+	const windowEnd = now.toZonedDateTimeISO(timeZone).add({ days: 3 })
 	const params = new URLSearchParams({
 		maxResults: MAX_EVENTS.toString(),
 		orderBy: 'startTime',
@@ -31,6 +28,7 @@ export const fetchUpcomingGoogleCalendarEvents = async ({
 	})
 
 	const response = await fetch(`${EVENTS_ENDPOINT}?${params.toString()}`, {
+		cache: 'no-store',
 		headers: {
 			Authorization: `Bearer ${accessToken}`,
 		},

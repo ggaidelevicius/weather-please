@@ -14,7 +14,8 @@ import type { CalendarEvent } from '../model/calendar-event'
 
 import { AsyncStatus } from '../../../shared/hooks/async-status'
 import {
-	invalidateSharedResource,
+	clearLegacyCalendarCache,
+	invalidateCalendarResources,
 	readSharedResource,
 	requestSharedResource,
 	runWithSharedLock,
@@ -57,7 +58,9 @@ import { createPkcePair, createRandomState } from '../lib/pkce'
 import {
 	createCalendarEventsStore,
 	getAccountEventsKey,
+	getAccountEventsPrefix,
 	getCalendarEventsIdentity,
+	getSessionEventsPrefix,
 	isAccountEventsCurrent,
 	sharedAccountEventsSchema,
 } from '../lib/shared-calendar-events'
@@ -114,6 +117,7 @@ export const useCalendarConnection = (): CalendarConnection => {
 	})
 
 	useEffect(() => {
+		clearLegacyCalendarCache()
 		const requests = requestsRef.current
 		requests.isMounted = true
 		const connectionState = {
@@ -272,12 +276,7 @@ export const useCalendarConnection = (): CalendarConnection => {
 			(account) => account.accountId === accountId,
 		)
 		for (const account of removedAccounts) {
-			invalidateSharedResource({
-				key: getAccountEventsKey({
-					account,
-					timeZone: getSystemTimeZone(),
-				}),
-			})
+			invalidateCalendarResources(getAccountEventsPrefix(account))
 		}
 		setError(null)
 		void applyAccounts(connectionState, (currentAccounts) =>
@@ -416,7 +415,8 @@ const applyAccounts = (
 		signal,
 		work: () => {
 			signal?.throwIfAborted()
-			const nextAccounts = updateAccounts(synchronizeAccounts(connectionState))
+			const previousAccounts = synchronizeAccounts(connectionState)
+			const nextAccounts = updateAccounts(previousAccounts)
 			connectionState.accountsRef.current = nextAccounts
 			connectionState.setAccounts(nextAccounts)
 			if (
@@ -428,6 +428,7 @@ const applyAccounts = (
 			) {
 				connectionState.storedAccountsRef.current = nextAccounts
 			}
+			forgetObsoleteEvents(previousAccounts, nextAccounts)
 			return nextAccounts
 		},
 	})
@@ -448,24 +449,30 @@ const synchronizeAccounts = (connectionState: ConnectionState) => {
 		if (storedAccounts.every((account) => account.isSessionExpired)) {
 			connectionState.setEventsStatus(AsyncStatus.Idle)
 		}
-		for (const previous of previousAccounts) {
-			if (
-				!storedAccounts.some(
-					(account) =>
-						account.accountId === previous.accountId &&
-						account.provider === previous.provider,
-				)
-			) {
-				invalidateSharedResource({
-					key: getAccountEventsKey({
-						account: previous,
-						timeZone: getSystemTimeZone(),
-					}),
-				})
-			}
-		}
+		forgetObsoleteEvents(previousAccounts, storedAccounts)
 	}
 	return connectionState.accountsRef.current
+}
+
+const forgetObsoleteEvents = (
+	previousAccounts: StoredCalendarAccount[],
+	nextAccounts: StoredCalendarAccount[],
+) => {
+	for (const previous of previousAccounts) {
+		const current = nextAccounts.find(
+			(account) =>
+				account.accountId === previous.accountId &&
+				account.provider === previous.provider,
+		)
+		if (!current) {
+			invalidateCalendarResources(getAccountEventsPrefix(previous))
+		} else if (
+			current.sessionId !== previous.sessionId ||
+			(current.isSessionExpired && !previous.isSessionExpired)
+		) {
+			invalidateCalendarResources(getSessionEventsPrefix(previous))
+		}
+	}
 }
 
 const hasSameAccountCredentials = (

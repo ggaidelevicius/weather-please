@@ -1,6 +1,9 @@
 import type { Data } from '../../weather/model/types'
 
-import { getCurrentDateTime } from '../../../shared/lib/time'
+import {
+	getCurrentDateTime,
+	getCurrentTimestamp,
+} from '../../../shared/lib/time'
 import {
 	fetchWeatherResponse,
 	mapWeatherResponseToForecastData,
@@ -40,10 +43,8 @@ export const getHeroForecast = async (): Promise<HeroForecast> => {
 			throw new Error('Incomplete hero forecast')
 		}
 
-		// Match the app: the hourly series starts at midnight in the forecast's
-		// timezone, so the current local hour is the index of "now".
 		const next24Hours = mapWeatherResponseToNext24HoursData({
-			currentHour: getCurrentDateTime(HERO_FORECAST_LOCATION.timeZone).hour,
+			currentTime: getCurrentTimestamp() / 1000,
 			data: response,
 		})
 		if (next24Hours.length < MIN_HOURLY_POINTS) {

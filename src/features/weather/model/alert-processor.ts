@@ -11,12 +11,13 @@ export interface PrecipitationData {
 }
 
 export const processSimpleAlert = (
-	data: number[],
+	data: Array<null | number>,
 	condition: AlertCondition,
 ): boolean[] => {
 	const { comparison, hours, threshold } = condition
 
 	return data.slice(0, hours).map((value) => {
+		if (value === null) return false
 		switch (comparison) {
 			case 'eq':
 				return value === threshold

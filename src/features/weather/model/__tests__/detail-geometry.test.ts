@@ -4,7 +4,9 @@ import {
 	getChartScale,
 	getChartY,
 	getLinePath,
+	getLowPoint,
 	getNearestPointIndex,
+	getPeakPoint,
 } from '../chart-geometry'
 import {
 	coordinateToWeatherMapWorld,
@@ -27,6 +29,17 @@ describe('detail charts', () => {
 			maxValue: 1,
 			minValue: 0,
 		})
+	})
+
+	it('separates missing readings and preserves original indices for extrema', () => {
+		const points = [null, 4, null, 0, 2]
+		const scale = { maxValue: 4, minValue: 0 }
+		const path = getLinePath(points, scale)
+		expect(path.match(/M /g)).toHaveLength(2)
+		expect(path.match(/C /g)).toHaveLength(1)
+		expect(path).toContain('l 0 0')
+		expect(getPeakPoint(points)).toEqual({ index: 1, value: 4 })
+		expect(getLowPoint(points)).toEqual({ index: 3, value: 0 })
 	})
 
 	it('clamps pointer selection to available data', () => {

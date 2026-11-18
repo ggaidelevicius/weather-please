@@ -668,6 +668,108 @@ describe('useConfig - Core Functionality', () => {
 		expect(result.current.input.daysToRetrieve).toBe('7')
 	})
 
+	it('merges edits from two open tabs even before a storage event arrives', () => {
+		localStorageMock.config = JSON.stringify(mockValidConfig)
+		const first = renderHook(useConfig)
+		const second = renderHook(useConfig)
+		act(() =>
+			first.result.current.handleChange(
+				'temperatureUnit',
+				TemperatureUnit.Fahrenheit,
+			),
+		)
+		act(() => second.result.current.handleChange('lang', 'de'))
+		const expected = { lang: 'de', temperatureUnit: TemperatureUnit.Fahrenheit }
+		expect(JSON.parse(localStorageMock.config)).toMatchObject(expected)
+		expect(second.result.current.config).toMatchObject(expected)
+
+		act(() =>
+			window.dispatchEvent(new StorageEvent('storage', { key: 'config' })),
+		)
+		expect(first.result.current.input).toMatchObject(expected)
+	})
+
+	it('syncs saved fields while preserving an unfinished coordinate edit', () => {
+		localStorageMock.config = JSON.stringify(mockValidConfig)
+		const first = renderHook(useConfig)
+		const second = renderHook(useConfig)
+		act(() => first.result.current.handleChange('lat', '-'))
+		act(() => second.result.current.handleChange('daysToRetrieve', '5'))
+		act(() =>
+			window.dispatchEvent(new StorageEvent('storage', { key: 'config' })),
+		)
+		expect(first.result.current.input).toMatchObject({
+			daysToRetrieve: '5',
+			lat: '-',
+		})
+		expect(first.result.current.config).toMatchObject({
+			daysToRetrieve: '5',
+			lat: mockValidConfig.lat,
+		})
+		act(() => first.result.current.handleChange('lat', '-32'))
+		expect(JSON.parse(localStorageMock.config)).toMatchObject({
+			daysToRetrieve: '5',
+			lat: '-32',
+		})
+	})
+
+	it('keeps the latest valid edit while waiting for the settings lock', async () => {
+		localStorageMock.config = JSON.stringify({
+			...mockValidConfig,
+			configVersion: CURRENT_CONFIG_VERSION,
+		})
+		const waiting: (() => void)[] = []
+		const locks = {
+			request: vi.fn(
+				(_key: string, _options: unknown, callback: () => void) =>
+					new Promise<void>((resolve) =>
+						waiting.push(() => {
+							callback()
+							resolve()
+						}),
+					),
+			),
+		}
+		const original = Object.getOwnPropertyDescriptor(navigator, 'locks')
+		Object.defineProperty(navigator, 'locks', {
+			configurable: true,
+			value: locks,
+		})
+		try {
+			const first = renderHook(useConfig)
+			const second = renderHook(useConfig)
+			act(() => {
+				first.result.current.handleChange(
+					'temperatureUnit',
+					TemperatureUnit.Fahrenheit,
+				)
+				second.result.current.handleChange('lang', 'de')
+				first.result.current.handleChange('daysToRetrieve', '6')
+				first.result.current.handleChange('lat', '-')
+			})
+			expect(locks.request).toHaveBeenCalled()
+			await act(async () => {
+				for (const grant of waiting) grant()
+			})
+			const expected = {
+				daysToRetrieve: '6',
+				lang: 'de',
+				temperatureUnit: TemperatureUnit.Fahrenheit,
+			}
+			expect(JSON.parse(localStorageMock.config)).toMatchObject(expected)
+			act(() =>
+				window.dispatchEvent(new StorageEvent('storage', { key: 'config' })),
+			)
+			expect(first.result.current.input).toMatchObject({
+				...expected,
+				lat: '-',
+			})
+		} finally {
+			if (original) Object.defineProperty(navigator, 'locks', original)
+			else Reflect.deleteProperty(navigator, 'locks')
+		}
+	})
+
 	it('handles edge case coordinates', () => {
 		const { result } = renderHook(() => useConfig())
 

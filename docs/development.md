@@ -59,10 +59,12 @@ organization policies can also require sign-in sooner. See
 Dashboard tabs coordinate forecast, air-quality, map forecast, calendar, device
 location, and location-label requests through `shared-resource.ts`. A Web Lock
 gives one tab ownership of each resource while other tabs wait and then reuse
-its validated cache entry. BroadcastChannel and storage events propagate
-updates. Weather keys include the location and relevant settings; calendar
-requests use account-specific locks, with a separate short lock for updating the
-stored account list.
+its validated cache entry. Weather keys include the location and relevant
+settings. Calendar requests use account-specific locks and share event details
+in memory through BroadcastChannel. New tabs can request a snapshot from an open
+tab. Dashboard startup removes entries written by older releases that cached
+calendar events in localStorage. Account credentials and preferences use a
+separate short lock when updating the stored account list.
 
 Switching tabs lets the current owner finish its in-flight requests and share
 the result. Waiting tabs recheck the cache and visibility after acquiring a

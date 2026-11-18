@@ -64,7 +64,7 @@ test.beforeAll(async () => {
 	fixtureBundle = result.outputFiles[0].text
 })
 
-test('deduplicates requests across pages and broadcasts refreshed results', async () => {
+const verifySharedRequests = (key: string) => async () => {
 	const browser = await chromium.launch()
 	try {
 		const context = await browser.newContext()
@@ -74,7 +74,6 @@ test('deduplicates requests across pages and broadcasts refreshed results', asyn
 			context,
 			'https://shared-fetch.test/follower',
 		)
-		const key = 'browser-deduplication'
 		await follower.evaluate((key) => window.sharedFixture.subscribe(key), key)
 
 		const firstOwnerRequest = await owner.evaluate(
@@ -167,6 +166,64 @@ test('deduplicates requests across pages and broadcasts refreshed results', asyn
 		expect(await getFetchCount(follower, key)).toBe(0)
 	} finally {
 		await browser.close()
+	}
+}
+
+test(
+	'deduplicates requests across pages and broadcasts refreshed results',
+	verifySharedRequests('browser-deduplication'),
+)
+test(
+	'deduplicates calendar fetches and concurrent refreshes across tabs',
+	verifySharedRequests('calendar-events:google:account:session:UTC'),
+)
+
+test('shares calendar data with a newly opened tab entirely in memory', async ({
+	browser,
+}) => {
+	const context = await browser.newContext()
+	try {
+		await routeFixture(context)
+		const url = 'https://shared-fetch.test/calendar'
+		const key = 'calendar-events:google:account:session:UTC'
+		const request = (page: Page, source: string) =>
+			page.evaluate(
+				({ key, source }) =>
+					window.sharedFixture.startRequest({
+						key,
+						value: { source, version: 1 },
+					}),
+				{ key, source },
+			)
+
+		const owner = await openFixture(context, url)
+		const first = await request(owner, 'first tab')
+		await expect
+			.poll(() => getRequest(owner, first))
+			.toMatchObject({ status: 'success' })
+
+		const follower = await openFixture(context, url)
+		const shared = await request(follower, 'second tab')
+		await expect
+			.poll(() => getRequest(follower, shared))
+			.toMatchObject({
+				value: { source: 'first tab' },
+			})
+		expect(await getFetchCount(follower, key)).toBe(0)
+		expect(await follower.evaluate(() => localStorage.length)).toBe(0)
+
+		await owner.close()
+		await follower.close()
+		const reopened = await openFixture(context, url)
+		const afterClose = await request(reopened, 'reopened tab')
+		await expect
+			.poll(() => getRequest(reopened, afterClose))
+			.toMatchObject({
+				value: { source: 'reopened tab' },
+			})
+		expect(await getFetchCount(reopened, key)).toBe(1)
+	} finally {
+		await context.close()
 	}
 })
 
@@ -404,8 +461,9 @@ const subscriptions = new Map()
 const channelMessages = new Map()
 const observer = new BroadcastChannel('weather-please:shared-resources:v1')
 observer.addEventListener('message', ({ data }) => {
-	if (typeof data?.key === 'string') {
-		channelMessages.set(data.key, (channelMessages.get(data.key) ?? 0) + 1)
+	const key = data?.key ?? data?.memoryKey
+	if (typeof key === 'string') {
+		channelMessages.set(key, (channelMessages.get(key) ?? 0) + 1)
 	}
 })
 

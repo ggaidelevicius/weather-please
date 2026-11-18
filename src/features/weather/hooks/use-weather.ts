@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 
 import { AsyncStatus } from '../../../shared/hooks/async-status'
-import { isLocationInAustralia } from '../../../shared/lib/location'
 import {
 	getCurrentDateTime,
 	getCurrentTimestamp,
 } from '../../../shared/lib/time'
-import { getUserTimeZone } from '../api/weather-api'
+import {
+	getCurrentForecastHourIndex,
+	getUserTimeZone,
+} from '../api/weather-api'
 import {
 	createEmptyAlerts,
 	deriveAlertsFromNext24HoursData,
@@ -54,11 +56,9 @@ export const useWeather = (
 	lat: string,
 	lon: string,
 	locationChangeToken: number,
-	useAirQualityUvOverride: boolean,
+	shouldUseAirQualityUv: boolean,
 ) => {
 	const timeZone = getUserTimeZone()
-	const shouldUseAirQualityUv =
-		useAirQualityUvOverride || isLocationInAustralia(lat, lon)
 	const key = JSON.stringify([
 		lat,
 		lon,
@@ -336,9 +336,17 @@ const getReducedCachedWeather = ({
 	const nowSeconds = Math.floor(now.epochMilliseconds / 1000)
 	const todayStart = now.startOfDay()
 	const todayStartSeconds = Math.floor(todayStart.epochMilliseconds / 1000)
-	const next24HoursData = cached.next24HoursData
-		.filter(({ time }) => time >= nowSeconds)
-		.slice(0, NEXT_24_HOURS_FORECAST_HOURS)
+	const currentHourIndex = getCurrentForecastHourIndex(
+		cached.next24HoursData.map(({ time }) => time),
+		nowSeconds,
+	)
+	const next24HoursData =
+		currentHourIndex < 0
+			? []
+			: cached.next24HoursData.slice(
+					currentHourIndex,
+					currentHourIndex + NEXT_24_HOURS_FORECAST_HOURS,
+				)
 	const weatherData = cached.weatherData.filter(
 		({ day }) => day >= todayStartSeconds,
 	)
@@ -346,7 +354,7 @@ const getReducedCachedWeather = ({
 		? {
 				...cached.weatherMapData,
 				frames: cached.weatherMapData.frames.filter(
-					({ time }) => time >= nowSeconds,
+					({ time }) => time + 3600 > nowSeconds,
 				),
 			}
 		: null

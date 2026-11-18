@@ -3,7 +3,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { prisma } from '../../server/prisma'
 import { enforceRateLimit } from '../../server/rate-limit'
-import { submitForm } from '../actions'
+import { type BugReportState, submitForm } from '../actions'
+
+const initialState: BugReportState = { status: 'idle' }
 
 vi.mock('next/headers', () => ({
 	headers: vi.fn(),
@@ -76,36 +78,42 @@ describe('submitForm', () => {
 			retryAfter: 42,
 		})
 
-		const result = await submitForm({ message: '' }, createFormData())
+		const result = await submitForm(initialState, createFormData())
 
-		expect(result.message).toContain('42')
+		expect(result).toEqual({
+			message: expect.stringContaining('42'),
+			status: 'error',
+		})
 		expect(prisma.formSubmission.create).not.toHaveBeenCalled()
 	})
 
 	it('rejects honeypot submissions', async () => {
 		const result = await submitForm(
-			{ message: '' },
+			initialState,
 			createFormData({ honeypotValue: 'bot' }),
 		)
 
-		expect(result.message).toBe('Message received')
+		expect(result).toEqual({ message: 'Message received', status: 'success' })
 		expect(prisma.formSubmission.create).not.toHaveBeenCalled()
 	})
 
 	it('rejects invalid payloads', async () => {
 		const result = await submitForm(
-			{ message: '' },
+			initialState,
 			createFormData({ message: '' }),
 		)
 
-		expect(result.message.toLowerCase()).toContain('message')
+		expect(result).toEqual({
+			message: expect.stringContaining('message'),
+			status: 'error',
+		})
 		expect(prisma.formSubmission.create).not.toHaveBeenCalled()
 	})
 
 	it('accepts valid submissions', async () => {
-		const result = await submitForm({ message: '' }, createFormData())
+		const result = await submitForm(initialState, createFormData())
 
-		expect(result.message).toBe('Message received')
+		expect(result).toEqual({ message: 'Message received', status: 'success' })
 		expect(prisma.formSubmission.create).toHaveBeenCalledWith(
 			expect.objectContaining({
 				data: expect.objectContaining({
@@ -115,5 +123,19 @@ describe('submitForm', () => {
 				}),
 			}),
 		)
+	})
+
+	it('reports storage failures as retryable errors', async () => {
+		using _log = vi.spyOn(console, 'error').mockImplementation(() => {})
+		vi.mocked(prisma.formSubmission.create).mockRejectedValueOnce(
+			new Error('Database unavailable'),
+		)
+
+		const result = await submitForm(initialState, createFormData())
+
+		expect(result).toEqual({
+			message: expect.stringContaining('try again'),
+			status: 'error',
+		})
 	})
 })

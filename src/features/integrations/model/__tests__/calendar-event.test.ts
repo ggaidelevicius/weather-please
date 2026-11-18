@@ -47,6 +47,20 @@ describe('mergeCalendarEvents', () => {
 		expect(merged.map((event) => event.id)).toEqual(['a', 'b', 'c'])
 	})
 
+	it('retains distinct occurrences and collapses invitations to the same occurrence', () => {
+		const first = createEvent({ icalUid: 'daily', id: 'monday' })
+		const second = createEvent({
+			icalUid: 'daily',
+			id: 'tuesday',
+			startTimestamp: first.startTimestamp + 86_400_000,
+		})
+		const merged = mergeCalendarEvents([
+			[first, second],
+			[{ ...second, accountId: 'account-2', id: 'tuesday-invitation' }],
+		])
+		expect(merged).toEqual([first, second])
+	})
+
 	it('collapses copies of the same event shared across accounts', () => {
 		const merged = mergeCalendarEvents([
 			[createEvent({ icalUid: 'shared-meeting', id: 'personal-copy' })],

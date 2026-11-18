@@ -13,6 +13,8 @@ describe('applySeasonalEventEffectBlur', () => {
 		vi.useFakeTimers()
 
 		const canvas = document.createElement('canvas')
+		const expectedStyle = document.createElement('div').style
+		expectedStyle.transition = 'filter 350ms ease'
 		canvas.style.position = 'fixed'
 		canvas.style.pointerEvents = 'none'
 		canvas.style.filter = 'saturate(120%)'
@@ -22,12 +24,12 @@ describe('applySeasonalEventEffectBlur', () => {
 		applySeasonalEventEffectBlur({ shouldBlurEffects: true })
 
 		expect(canvas.style.filter).toBe('saturate(120%) blur(20px)')
-		expect(canvas.style.transition).toBe('filter 350ms ease')
+		expect(canvas.style.transition).toBe(expectedStyle.transition)
 
 		applySeasonalEventEffectBlur({ shouldBlurEffects: false })
 
 		expect(canvas.style.filter).toBe('saturate(120%)')
-		expect(canvas.style.transition).toBe('filter 350ms ease')
+		expect(canvas.style.transition).toBe(expectedStyle.transition)
 
 		vi.advanceTimersByTime(350)
 

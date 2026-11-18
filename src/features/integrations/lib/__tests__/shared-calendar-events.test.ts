@@ -1,14 +1,19 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { StoredCalendarAccount } from '../connection-storage'
 
-import { getCurrentTimestamp } from '../../../../shared/lib/time'
+import {
+	invalidateCalendarResources,
+	requestSharedResource,
+} from '../../../../shared/lib/shared-resource'
 import { CalendarAccountCategory } from '../../model/account-category'
 import { CalendarProvider } from '../../model/calendar-provider'
 import {
 	createCalendarEventsStore,
 	getAccountEventsKey,
+	getAccountEventsPrefix,
 	type SharedAccountEvents,
+	sharedAccountEventsSchema,
 } from '../shared-calendar-events'
 
 const account: StoredCalendarAccount = {
@@ -23,7 +28,7 @@ const account: StoredCalendarAccount = {
 	sessionId: 'current-session',
 }
 const timeZone = 'UTC'
-const storageKey = `weather-please:shared-resource:v1:${getAccountEventsKey({ account, timeZone })}`
+const key = getAccountEventsKey({ account, timeZone })
 const createEvents = (id: string): SharedAccountEvents => ({
 	events: [
 		{
@@ -42,56 +47,38 @@ const createEvents = (id: string): SharedAccountEvents => ({
 	expiresAt: account.expiresAt,
 	sessionId: account.sessionId ?? null,
 })
-const writeEvents = ({
-	data = createEvents('cached'),
-	failureAt,
-	hasValue = true,
-	updatedAt = getCurrentTimestamp(),
-}: {
-	data?: SharedAccountEvents
-	failureAt?: number
-	hasValue?: boolean
-	updatedAt?: number
-} = {}) => {
-	localStorage.setItem(
-		storageKey,
-		JSON.stringify({
-			data,
-			failureAt,
-			hasValue,
-			id: 'cached-id',
-			revision: '',
-			updatedAt,
-			version: 1,
-		}),
-	)
-}
-const notify = () =>
-	window.dispatchEvent(
-		new StorageEvent('storage', {
-			key: storageKey,
-			storageArea: localStorage,
-		}),
-	)
+const writeEvents = (data = createEvents('cached')) =>
+	requestSharedResource({
+		fetcher: async () => data,
+		force: true,
+		key,
+		maxAgeMs: 60_000,
+		schema: sharedAccountEventsSchema,
+	})
+const notify = () => window.dispatchEvent(new Event('pageshow'))
 
-beforeEach(() => localStorage.clear())
+beforeEach(() => {
+	vi.stubGlobal('BroadcastChannel', undefined)
+	invalidateCalendarResources(getAccountEventsPrefix(account))
+})
+afterEach(() => vi.unstubAllGlobals())
 
 describe('calendar events external store', () => {
-	it('keeps browser and server snapshots stable until event data changes', () => {
-		writeEvents()
+	it('keeps browser and server snapshots stable until event data changes', async () => {
+		await writeEvents()
 		const store = createCalendarEventsStore({ accounts: [account], timeZone })
 		const cached = store.getSnapshot()
 		expect(cached.events[0].id).toBe('cached')
 		expect(store.getSnapshot()).toBe(cached)
 		expect(store.getServerSnapshot()).toBe(store.getServerSnapshot())
 		expect(store.getServerSnapshot().events).toEqual([])
-		writeEvents({ data: createEvents('changed') })
+		await writeEvents(createEvents('changed'))
 		expect(store.getSnapshot()).not.toBe(cached)
 		expect(store.getSnapshot().events[0].id).toBe('changed')
 	})
 
-	it('retains stale same-session events after token rotation but hides expired and replaced sessions', () => {
-		writeEvents({ updatedAt: getCurrentTimestamp() - 60 * 60_000 })
+	it('retains stale same-session events after token rotation but hides expired and replaced sessions', async () => {
+		await writeEvents()
 		const store = createCalendarEventsStore({
 			accounts: [{ ...account, expiresAt: account.expiresAt + 60_000 }],
 			timeZone,
@@ -110,17 +97,16 @@ describe('calendar events external store', () => {
 		}
 	})
 
-	it('does not expose events belonging to a different account', () => {
+	it('does not expose events belonging to a different account', async () => {
 		const data = createEvents('foreign')
 		data.events[0].accountId = 'account-b'
-		writeEvents({ data })
+		await writeEvents(data)
 		const store = createCalendarEventsStore({ accounts: [account], timeZone })
 		expect(store.getSnapshot().events).toEqual([])
 	})
 
-	it('ignores duplicate notifications and retry markers, and removes both subscriptions', () => {
-		const updatedAt = getCurrentTimestamp()
-		writeEvents({ updatedAt })
+	it('ignores duplicate notifications and retry markers, and removes both subscriptions', async () => {
+		await writeEvents()
 		const store = createCalendarEventsStore({ accounts: [account], timeZone })
 		const original = store.getSnapshot()
 		const onChange = vi.fn()
@@ -128,30 +114,40 @@ describe('calendar events external store', () => {
 		const unsubscribe = store.subscribe(onChange)
 		const unsubscribeUpdates = store.subscribeToUpdates(onUpdate)
 		notify()
-		writeEvents({ failureAt: updatedAt, updatedAt })
+		await expect(
+			requestSharedResource({
+				fetcher: async () => {
+					throw new Error('temporary failure')
+				},
+				force: true,
+				key,
+				maxAgeMs: 60_000,
+				schema: sharedAccountEventsSchema,
+			}),
+		).rejects.toThrow('temporary failure')
 		notify()
 		expect(store.getSnapshot()).toBe(original)
 		expect(onUpdate).not.toHaveBeenCalled()
-		writeEvents({ data: createEvents('replacement'), updatedAt })
+		await writeEvents(createEvents('replacement'))
 		notify()
 		expect(onUpdate).toHaveBeenCalledOnce()
 		expect(store.getSnapshot().events[0].id).toBe('replacement')
 		unsubscribeUpdates()
-		writeEvents({ data: createEvents('another'), updatedAt })
+		await writeEvents(createEvents('another'))
 		notify()
 		expect(onUpdate).toHaveBeenCalledOnce()
 		unsubscribe()
 		onChange.mockClear()
-		writeEvents({ data: createEvents('unsubscribed'), updatedAt })
+		await writeEvents(createEvents('unsubscribed'))
 		notify()
 		expect(onChange).not.toHaveBeenCalled()
 	})
 
-	it('clears an invalidated result immediately', () => {
-		writeEvents()
+	it('clears an invalidated result immediately', async () => {
+		await writeEvents()
 		const store = createCalendarEventsStore({ accounts: [account], timeZone })
 		expect(store.getSnapshot().events[0].id).toBe('cached')
-		writeEvents({ hasValue: false })
+		invalidateCalendarResources(getAccountEventsPrefix(account))
 		expect(store.getSnapshot().events).toEqual([])
 	})
 })

@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
+import { deriveAlertsFromNext24HoursData } from '../../model/alerts'
 import { createWeatherResponse } from '../../testing/weather-response'
 import {
 	fetchWeatherMapData,
@@ -9,6 +10,45 @@ import {
 
 describe('fetchWeatherResponse', () => {
 	it.each([
+		{ kind: 'omitted', visibility: undefined },
+		{ kind: 'empty', visibility: [] },
+	])(
+		'keeps the forecast when the visibility series is $kind',
+		async ({ visibility }) => {
+			const weather = createWeatherResponse(0)
+			const fetchMock = vi
+				.spyOn(global, 'fetch')
+				.mockResolvedValueOnce(
+					Response.json({
+						...weather,
+						hourly: { ...weather.hourly, visibility },
+					}),
+				)
+				.mockResolvedValueOnce(Response.json({ hourly: { time: [] } }))
+			try {
+				const data = await fetchWeatherResponse({
+					lat: '40',
+					lon: '-74',
+					shouldUseAirQualityUv: false,
+					timeZone: 'UTC',
+				})
+				const points = mapWeatherResponseToNext24HoursData({
+					currentTime: 0,
+					data,
+				})
+				expect(points).toHaveLength(25)
+				expect(points[0]?.temperature).toBe(20)
+				expect(points.every((point) => point.visibility === null)).toBe(true)
+				expect(
+					deriveAlertsFromNext24HoursData(points).hoursOfLowVisibility,
+				).not.toContain(true)
+			} finally {
+				fetchMock.mockRestore()
+			}
+		},
+	)
+
+	it.each([
 		['daily', 0.5],
 		['daily', 8_640_000_000_001],
 		['hourly', 0.5],
@@ -16,7 +56,7 @@ describe('fetchWeatherResponse', () => {
 	] as const)(
 		'rejects invalid %s timestamp %s at the API boundary',
 		async (period, timestamp) => {
-			const weather = createWeatherResponse()
+			const weather = createWeatherResponse(0)
 			weather[period].time[0] = timestamp
 			const fetchMock = vi
 				.spyOn(global, 'fetch')
@@ -38,7 +78,7 @@ describe('fetchWeatherResponse', () => {
 	)
 
 	it('drops invalid optional sun timestamps while retaining the forecast', async () => {
-		const weather = createWeatherResponse()
+		const weather = createWeatherResponse(0)
 		weather.daily.sunrise = [0.5]
 		weather.daily.sunset = [8_640_000_000_001]
 		const fetchMock = vi
@@ -54,7 +94,7 @@ describe('fetchWeatherResponse', () => {
 			})
 			expect(
 				mapWeatherResponseToNext24HoursData({
-					currentHour: 0,
+					currentTime: 0,
 					data: response,
 				})[0],
 			).toMatchObject({ sunrise: null, sunset: null, temperature: 20 })
@@ -81,7 +121,7 @@ describe('fetchWeatherResponse', () => {
 	})
 
 	it('accepts nullable weather UV values before applying air quality UV data', async () => {
-		const weatherResponse = createWeatherResponse()
+		const weatherResponse = createWeatherResponse(0)
 		weatherResponse.daily.uv_index_max = [null]
 		weatherResponse.hourly.uv_index = Array.from({ length: 30 }, () => null)
 		const fetchMock = vi
@@ -90,7 +130,7 @@ describe('fetchWeatherResponse', () => {
 			.mockResolvedValueOnce(
 				Response.json({
 					hourly: {
-						time: [0, 1],
+						time: [0, 3600],
 						uv_index: [2, 3],
 					},
 				}),
@@ -175,11 +215,42 @@ describe('fetchWeatherMapData', () => {
 })
 
 describe('mapWeatherResponseToNext24HoursData', () => {
+	it.each([
+		['2026-03-08T03:30:00-04:00', '2026-03-08T03:00:00-04:00'],
+		['2026-11-01T01:30:00-04:00', '2026-11-01T01:00:00-04:00'],
+		['2026-11-01T01:30:00-05:00', '2026-11-01T01:00:00-05:00'],
+	])(
+		'selects the instant covering %s across daylight-saving transitions',
+		(instant, expected) => {
+			const now =
+				Temporal.Instant.from(instant).toZonedDateTimeISO('America/New_York')
+			const data = createWeatherResponse(
+				now.startOfDay().epochMilliseconds / 1000,
+			)
+			const points = mapWeatherResponseToNext24HoursData({
+				currentTime: now.epochMilliseconds / 1000,
+				data,
+			})
+			expect(points[0]?.time).toBe(
+				Temporal.Instant.from(expected).epochMilliseconds / 1000,
+			)
+		},
+	)
+
+	it('alerts for measured zero visibility and skips missing visibility', () => {
+		const data = createWeatherResponse(0)
+		data.hourly.visibility = [null, 0, 500]
+		const points = mapWeatherResponseToNext24HoursData({ currentTime: 0, data })
+		expect(
+			deriveAlertsFromNext24HoursData(points).hoursOfLowVisibility.slice(0, 4),
+		).toEqual([false, true, false, false])
+	})
+
 	it('maps the current hour through the next 24 hours', () => {
-		const data = createWeatherResponse()
+		const data = createWeatherResponse(0)
 
 		const result = mapWeatherResponseToNext24HoursData({
-			currentHour: 3,
+			currentTime: 3 * 3600,
 			data,
 		})
 
@@ -201,18 +272,18 @@ describe('mapWeatherResponseToNext24HoursData', () => {
 			sunset: 64_800,
 			sunshineDuration: 36_000,
 			temperature: 23,
-			time: 3,
+			time: 3 * 3600,
 			uv: 3,
 			visibility: 997,
 			weatherCode: 3,
 			wind: 13,
 			windGust: 23,
 		})
-		expect(result.at(-1)?.time).toBe(27)
+		expect(result.at(-1)?.time).toBe(27 * 3600)
 	})
 
 	it('normalizes null hourly weather values with conservative fallbacks', () => {
-		const data = createWeatherResponse()
+		const data = createWeatherResponse(0)
 		data.hourly.apparent_temperature[3] = null
 		data.hourly.dew_point_2m[3] = null
 		data.hourly.precipitation[3] = null
@@ -226,7 +297,7 @@ describe('mapWeatherResponseToNext24HoursData', () => {
 		data.hourly.windspeed_10m[3] = null
 
 		const result = mapWeatherResponseToNext24HoursData({
-			currentHour: 3,
+			currentTime: 3 * 3600,
 			data,
 		})
 
@@ -247,9 +318,9 @@ describe('mapWeatherResponseToNext24HoursData', () => {
 			sunset: 64_800,
 			sunshineDuration: 36_000,
 			temperature: 23,
-			time: 3,
+			time: 3 * 3600,
 			uv: 0,
-			visibility: 0,
+			visibility: null,
 			weatherCode: 0,
 			wind: 0,
 			windGust: 0,
@@ -257,21 +328,21 @@ describe('mapWeatherResponseToNext24HoursData', () => {
 	})
 
 	it('maps hourly air quality values by matching forecast time', () => {
-		const data = createWeatherResponse()
+		const data = createWeatherResponse(0)
 		data.airQuality = {
 			hourly: {
 				nitrogen_dioxide: [4, 5],
 				ozone: [30, 35],
 				pm2_5: [6, 7],
 				pm10: [12, 13],
-				time: [3, 4],
+				time: [3 * 3600, 4 * 3600],
 				us_aqi: [28, 31],
 				uv_index: [],
 			},
 		}
 
 		const result = mapWeatherResponseToNext24HoursData({
-			currentHour: 3,
+			currentTime: 3 * 3600,
 			data,
 		})
 
@@ -299,7 +370,7 @@ describe('optional air quality enrichment', () => {
 				urls.push(String(url))
 				if (String(url).includes('air-quality'))
 					return new Promise<Response>(() => {})
-				return Response.json(createWeatherResponse())
+				return Response.json(createWeatherResponse(0))
 			})
 		try {
 			const request = fetchWeatherResponse({

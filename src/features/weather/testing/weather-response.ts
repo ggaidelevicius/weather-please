@@ -1,15 +1,19 @@
 import type { WeatherResponse } from '../api/weather-api'
 
-export const createWeatherResponse = (): WeatherResponse => ({
+import { getCurrentDateTime } from '../../../shared/lib/time'
+
+export const createWeatherResponse = (
+	startTime = getCurrentDateTime().startOfDay().epochMilliseconds / 1000,
+): WeatherResponse => ({
 	daily: {
 		daylight_duration: [43_200],
 		precipitation_probability_max: [10],
-		sunrise: [21_600],
-		sunset: [64_800],
+		sunrise: [startTime + 21_600],
+		sunset: [startTime + 64_800],
 		sunshine_duration: [36_000],
 		temperature_2m_max: [30],
 		temperature_2m_min: [20],
-		time: [0],
+		time: [startTime],
 		uv_index_max: [8],
 		weathercode: [1],
 		windspeed_10m_max: [15],
@@ -28,7 +32,7 @@ export const createWeatherResponse = (): WeatherResponse => ({
 			(_, index) => index * 10 + 100,
 		),
 		temperature_2m: Array.from({ length: 30 }, (_, index) => index + 20),
-		time: Array.from({ length: 30 }, (_, index) => index),
+		time: Array.from({ length: 30 }, (_, index) => startTime + index * 3600),
 		uv_index: Array.from({ length: 30 }, (_, index) => index),
 		visibility: Array.from({ length: 30 }, (_, index) => 1000 - index),
 		weathercode: Array.from({ length: 30 }, (_, index) => index),

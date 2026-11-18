@@ -19,8 +19,8 @@ export type CalendarEvent = z.infer<typeof calendarEventSchema>
 
 // Merges per-account event lists into one chronological list. The same event
 // can exist in several connected calendars (the user invited their other
-// address, or both were invited); `icalUid` is stable across those copies, so
-// duplicates collapse to the earliest-sorted occurrence.
+// address, or both were invited). Google's recurring instances share one
+// iCalendar UID across the series, so match the occurrence time as well.
 export const mergeCalendarEvents = (
 	eventLists: ReadonlyArray<readonly CalendarEvent[]>,
 ): CalendarEvent[] => {
@@ -30,7 +30,11 @@ export const mergeCalendarEvents = (
 	const seenKeys = new Set<string>()
 
 	return sortedEvents.filter((event) => {
-		const dedupeKey = event.icalUid ?? event.id
+		const dedupeKey = JSON.stringify(
+			event.icalUid
+				? [event.icalUid, event.startTimestamp]
+				: [event.accountId, event.id],
+		)
 		if (seenKeys.has(dedupeKey)) {
 			return false
 		}

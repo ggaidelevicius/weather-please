@@ -54,7 +54,7 @@ const weatherResponseSchema = z
 			temperature_2m: nullableNumberArraySchema,
 			time: z.array(epochSecondsSchema).min(1),
 			uv_index: nullableNumberArraySchema,
-			visibility: nullableNumberArraySchema,
+			visibility: optionalNullableNumberArraySchema,
 			weathercode: nullableNumberArraySchema,
 			windgusts_10m: nullableNumberArraySchema,
 			windspeed_10m: nullableNumberArraySchema,
@@ -497,13 +497,14 @@ export const mapWeatherResponseToForecastData = (data: WeatherResponse): Data =>
 	}))
 
 export const mapWeatherResponseToNext24HoursData = ({
-	currentHour,
+	currentTime,
 	data,
 }: {
-	currentHour: number
+	currentTime: number
 	data: WeatherResponse
 }): Next24HoursData => {
-	const start = Math.max(0, currentHour)
+	const start = getCurrentForecastHourIndex(data.hourly.time, currentTime)
+	if (start < 0) return []
 	const end = Math.min(
 		data.hourly.time.length,
 		start + NEXT_24_HOURS_FORECAST_HOURS,
@@ -592,10 +593,7 @@ export const mapWeatherResponseToNext24HoursData = ({
 			temperature,
 			time,
 			uv: normalizeUvValue(data.hourly.uv_index[index]),
-			visibility: normalizeNumber({
-				fallback: 0,
-				value: data.hourly.visibility[index],
-			}),
+			visibility: normalizeNullableNumber(data.hourly.visibility[index]),
 			weatherCode: normalizeNumber({
 				fallback: 0,
 				value: data.hourly.weathercode[index],
@@ -623,7 +621,6 @@ export const mapWeatherResponseToNext24HoursData = ({
 				point.temperature,
 				point.time,
 				point.uv,
-				point.visibility,
 				point.weatherCode,
 				point.wind,
 				point.windGust,
@@ -635,6 +632,14 @@ export const mapWeatherResponseToNext24HoursData = ({
 
 	return next24HoursData
 }
+
+export const getCurrentForecastHourIndex = (
+	times: number[],
+	currentTime: number,
+): number =>
+	times.findLastIndex(
+		(time) => time <= currentTime && currentTime - time < SECONDS_PER_HOUR,
+	)
 
 const buildTimeIndex = (times: number[]) => {
 	const indexByTime = new Map<number, number>()

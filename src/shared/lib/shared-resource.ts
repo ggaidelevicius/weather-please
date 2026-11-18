@@ -2,6 +2,8 @@ import { z } from 'zod'
 
 import { getCurrentTimestamp } from './time'
 
+export const CALENDAR_EVENTS_RESOURCE_PREFIX = 'calendar-events:'
+
 export type SharedResourceSnapshot<T> = {
 	updatedAt: number
 	value: T
@@ -94,6 +96,14 @@ export const requestSharedResource = async <T>({
 					controller.signal.throwIfAborted()
 					const latest = readMatchingCache()
 					if (latest) return latest.value
+					if (isMemoryOnly(key) && channel) {
+						await requestPeerRecord(key, controller.signal, () =>
+							Boolean(readMatchingCache()),
+						)
+						controller.signal.throwIfAborted()
+						const shared = readMatchingCache()
+						if (shared) return shared.value
+					}
 					// Visibility can change while this tab waits for another owner.
 					// Release the lock before waiting again, without issuing a request.
 					if (
@@ -222,6 +232,26 @@ export const invalidateSharedResource = ({
 	})
 }
 
+// Earlier releases persisted calendar payloads alongside weather data.
+export const clearLegacyCalendarCache = (): void => {
+	try {
+		for (let index = localStorage.length - 1; index >= 0; index -= 1) {
+			const key = localStorage.key(index)
+			if (key?.startsWith(STORAGE_PREFIX + CALENDAR_EVENTS_RESOURCE_PREFIX)) {
+				localStorage.removeItem(key)
+			}
+		}
+	} catch {
+		// Calendar reads never consult storage, even when it cannot be cleaned.
+	}
+}
+
+export const invalidateCalendarResources = (keyPrefix: string): void => {
+	ensureTransport()
+	forgetCalendarResources(keyPrefix)
+	postMessage({ forgetCalendarPrefix: keyPrefix })
+}
+
 const STORAGE_PREFIX = 'weather-please:shared-resource:v1:'
 const CHANNEL_NAME = 'weather-please:shared-resources:v1'
 const MAX_RECORDS = 64
@@ -237,6 +267,11 @@ const recordSchema = z.object({
 	updatedAt: z.number(),
 	version: z.literal(1),
 })
+const memoryMessageSchema = z.union([
+	z.object({ requestMemoryKey: z.string() }),
+	z.object({ memoryKey: z.string(), record: recordSchema }),
+	z.object({ forgetCalendarPrefix: z.string() }),
+])
 const messageSchema = z.object({
 	key: z.string(),
 	record: recordSchema.optional(),
@@ -263,7 +298,11 @@ const isRecent = (updatedAt: number, maxAgeMs: number) => {
 	return age >= 0 && age <= maxAgeMs
 }
 
+const isMemoryOnly = (key: string) =>
+	key.startsWith(CALENDAR_EVENTS_RESOURCE_PREFIX)
+
 const readRecord = (key: string): ResourceRecord | undefined => {
+	if (isMemoryOnly(key)) return records.get(key)
 	try {
 		const raw = window.localStorage.getItem(STORAGE_PREFIX + key)
 		if (
@@ -321,6 +360,12 @@ const hasSameData = (left: unknown, right: unknown) => {
 const writeRecord = (key: string, record: ResourceRecord) => {
 	readRecord(key)
 	cacheRecord(key, record)
+	if (isMemoryOnly(key)) {
+		pruneMemory()
+		postMessage({ memoryKey: key, record })
+		notifySubscribers(key)
+		return record
+	}
 	let hasPersisted = false
 	try {
 		const raw = JSON.stringify(record)
@@ -337,11 +382,7 @@ const writeRecord = (key: string, record: ResourceRecord) => {
 		// Other tabs can still receive the value through the channel.
 	}
 	pruneMemory()
-	try {
-		channel?.postMessage(hasPersisted ? { key } : { key, record })
-	} catch {
-		// Storage events and reads on resume provide another synchronization path.
-	}
+	postMessage(hasPersisted ? { key } : { key, record })
 	notifySubscribers(key)
 	return record
 }
@@ -460,6 +501,10 @@ const ensureTransport = () => {
 				for (const key of subscriptions.keys()) notifySubscribers(key)
 			} else if (event.key.startsWith(STORAGE_PREFIX)) {
 				const key = event.key.slice(STORAGE_PREFIX.length)
+				if (isMemoryOnly(key)) {
+					if (event.newValue !== null) clearLegacyCalendarCache()
+					return
+				}
 				const current = readRecord(key)
 				abortRequests(key, current?.revision ?? '')
 				notifySubscribers(key)
@@ -492,30 +537,116 @@ const ensureTransport = () => {
 		try {
 			channel = new BroadcastChannel(CHANNEL_NAME)
 			channel.addEventListener('message', (event: MessageEvent<unknown>) => {
-				const message = messageSchema.safeParse(event.data)
-				if (!message.success) return
-				const { key, record } = message.data
-				const persisted = readRecord(key)
-				if (record) {
-					const isInvalidation =
-						!record.hasValue && record.failureId === undefined
-					const hasMatchingRevision =
-						!persisted || record.revision === persisted.revision
-					if (
-						(persisted && record.updatedAt < persisted.updatedAt) ||
-						(!hasMatchingRevision && !isInvalidation)
-					)
-						return
-					cacheRecord(key, record)
-					pruneMemory()
+				const memory = memoryMessageSchema.safeParse(event.data)
+				if (memory.success) {
+					const message = memory.data
+					if ('requestMemoryKey' in message) {
+						const key = message.requestMemoryKey
+						const record = records.get(key)
+						if (isMemoryOnly(key) && record?.hasValue) {
+							postMessage({ memoryKey: key, record })
+						}
+					} else if ('forgetCalendarPrefix' in message) {
+						forgetCalendarResources(message.forgetCalendarPrefix)
+					} else if (
+						isMemoryOnly(message.memoryKey) &&
+						(subscriptions.has(message.memoryKey) ||
+							[...activeRequests].some(({ key }) => key === message.memoryKey))
+					) {
+						receiveRecord(message.memoryKey, message.record)
+					}
+					return
 				}
-				const current = records.get(key)
-				abortRequests(key, current?.revision ?? '')
-				notifySubscribers(key)
+				const message = messageSchema.safeParse(event.data)
+				if (message.success && !isMemoryOnly(message.data.key)) {
+					receiveRecord(message.data.key, message.data.record)
+				}
 			})
 		} catch {
 			channel = null
 		}
+	}
+}
+
+const forgetCalendarResources = (prefix: string) => {
+	if (!isMemoryOnly(prefix)) return
+	const keys = new Set([
+		...records.keys(),
+		...subscriptions.keys(),
+		...[...activeRequests].map(({ key }) => key),
+	])
+	for (const key of keys) {
+		if (!key.startsWith(prefix)) continue
+		abortRequests(key)
+		// Discard the payload and reject any earlier peer reply still in transit.
+		cacheRecord(key, {
+			hasValue: false,
+			id: crypto.randomUUID(),
+			revision: crypto.randomUUID(),
+			updatedAt: getCurrentTimestamp(),
+			version: 1,
+		})
+		notifySubscribers(key)
+	}
+	pruneMemory()
+}
+
+const postMessage = (message: object) => {
+	try {
+		channel?.postMessage(message)
+	} catch {
+		// Local consumers can continue when a channel is unavailable.
+	}
+}
+
+const receiveRecord = (key: string, record?: ResourceRecord) => {
+	const previous = readRecord(key)
+	if (record) {
+		const isInvalidation = !record.hasValue && record.failureId === undefined
+		if (
+			previous &&
+			(record.updatedAt < previous.updatedAt ||
+				(record.revision !== previous.revision && !isInvalidation))
+		)
+			return
+		cacheRecord(key, record)
+		pruneMemory()
+	}
+	abortRequests(key, records.get(key)?.revision ?? '')
+	notifySubscribers(key)
+}
+
+// A newly opened tab may have missed the owner's original broadcast. Ask
+// peers while holding the request lock, then fetch if nobody has a result.
+const requestPeerRecord = async (
+	key: string,
+	signal: AbortSignal,
+	hasMatchingRecord: () => boolean,
+) => {
+	let unsubscribe: (() => void) | undefined
+	let timer: ReturnType<typeof setTimeout> | undefined
+	try {
+		await raceWithSignal(
+			new Promise<void>((resolve) => {
+				unsubscribe = subscribeSharedResource({
+					key,
+					onChange: () => {
+						try {
+							if (hasMatchingRecord()) resolve()
+						} catch {
+							// The caller rechecks invalidations and shared failures after the wait.
+							resolve()
+						}
+					},
+				})
+				timer = setTimeout(resolve, 100)
+				postMessage({ requestMemoryKey: key })
+			}),
+			signal,
+		)
+	} finally {
+		clearTimeout(timer)
+		unsubscribe?.()
 	}
 }
 
